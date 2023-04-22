@@ -20,6 +20,12 @@
   display: flex;
 }
 
+.img-border {
+  border-width: 10px;
+  border-color: white;
+  border-radius: 0px;
+}
+
 .page-bg{
   background-color: #BAE4FF;
   display: flex;
