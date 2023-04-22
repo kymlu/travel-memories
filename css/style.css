@@ -15,7 +15,6 @@
   font-size: large;
   font-weight: lighter;
   vertical-align: bottom;
-  /*margin: 50px;*/
   padding: 0px;
   display: flex;
 }
@@ -23,9 +22,9 @@
 .img-border {
   display: flex;
   border: 10px solid white;
-  margin: 10px;
+  border-radius: 20px;
+  margin-bottom: 10px;
   padding: 0px;
-  display: flex;
   max-height: 50% !important;
   max-width: 50% !important;
 }
@@ -33,8 +32,7 @@
 .content-container {
   display: flex;
   flex-wrap: wrap;
-  align-content: center;
-  align-items: center;
+  align-content: space-between;
   justify-content: center;
 }
 
