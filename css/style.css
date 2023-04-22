@@ -4,8 +4,8 @@
   font-size: x-large;
   font-weight: bolder;
   vertical-align: middle;
-  margin: 10;
-  padding: 0;
+  margin: 100px;
+  padding: 0px;
 }
 
 .sub-title {
@@ -14,18 +14,18 @@
   font-size: large;
   font-weight: bold;
   vertical-align: middle;
-  margin: 10;
-  padding: 0;
+  margin: 50px;
+  padding: 0px;
 }
 
 .page-bg{
   background-color: #BAE4FF;
-  /*display: flex;
+  display: flex;
   flex-wrap: wrap;
   align-content: center;
-  align-items: center;*/
+  align-items: center;
   height: 100%;
   width: 100%;
-  margin: 0;
-  padding: 0;
+  margin: 0px;
+  padding: 0px;
 }
