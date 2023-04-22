@@ -6,6 +6,7 @@
   vertical-align: middle;
   margin: 100px;
   padding: 0px;
+  display: flex;
 }
 
 .sub-title {
@@ -16,10 +17,11 @@
   vertical-align: middle;
   margin: 50px;
   padding: 0px;
+  display: flex;
 }
 
 .page-bg{
-  background-color: #BAE4FF;
+  background-color: yellow; /*#BAE4FF;*/
   display: flex;
   flex-wrap: wrap;
   align-content: center;
