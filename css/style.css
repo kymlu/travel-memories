@@ -2,11 +2,14 @@
   font-family: American Typewriter;
   color: #1F271B;
   font-size: x-large;
+  font-weight: bolder;
 }
 
 .page-bg{
-  color: #BAE4FF;
+  background-color: #BAE4FF;
   display: flex;
   flex-wrap: wrap;
   align-content: center;
+  align-items: center;
+  
 }
