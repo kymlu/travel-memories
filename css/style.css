@@ -34,6 +34,7 @@
   flex-wrap: wrap;
   align-content: space-between;
   justify-content: center;
+  direction: column;
 }
 
 .page-bg{
@@ -44,4 +45,5 @@
   width: 100%;
   margin: 0px;
   padding: 40px;
+  direction: column;
 }
