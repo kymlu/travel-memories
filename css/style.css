@@ -1,5 +1,12 @@
-h1 {
-  /*font-family: American Typewriter;*/
-  color: blue;
-  /*'font-size: large;*/
+.main-title {
+  font-family: American Typewriter;
+  color: #1F271B;
+  font-size: x-large;
+}
+
+.page-bg{
+  color: #BAE4FF;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
 }
