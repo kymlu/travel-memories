@@ -26,8 +26,8 @@
   margin: 10px;
   padding: 0px;
   display: flex;
-  max-height: 70%;
-  max-width: 80%;
+  max-height: 70% !important;
+  max-width: 80% !important;
 }
 
 .content-container {
