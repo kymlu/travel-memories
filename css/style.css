@@ -4,8 +4,8 @@
   font-size: x-large;
   font-weight: bolder;
   vertical-align: middle;
-  margin: 100px;
-  padding: 0px;
+  /*margin: 100px;
+  padding: 0px;*/
   display: flex;
 }
 
@@ -15,13 +15,13 @@
   font-size: large;
   font-weight: bold;
   vertical-align: middle;
-  margin: 50px;
-  padding: 0px;
+  /*margin: 50px;
+  padding: 0px;*/
   display: flex;
 }
 
 .page-bg{
-  background-color: yellow; /*#BAE4FF;*/
+  background-color: #BAE4FF;
   display: flex;
   flex-wrap: wrap;
   align-content: center;
