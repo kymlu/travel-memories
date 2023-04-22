@@ -1,11 +1,11 @@
 .main-title {
   font-family: American Typewriter;
-  color: red;
+  color: #1F271B;
   font-size: x-large;
   font-weight: bolder;
   vertical-align: middle;
-  /*margin: 100px;
-  padding: 0px;*/
+  margin-right: 15px;
+  padding: 0px;
   display: flex;
 }
 
@@ -15,8 +15,8 @@
   font-size: large;
   font-weight: bold;
   vertical-align: middle;
-  /*margin: 50px;
-  padding: 0px;*/
+  /*margin: 50px;*/
+  padding: 0px;
   display: flex;
 }
 
@@ -30,4 +30,5 @@
   width: 100%;
   margin: 0px;
   padding: 0px;
+  justify-content: center;
 }
