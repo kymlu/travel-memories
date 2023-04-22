@@ -28,6 +28,10 @@
   display: flex;
 }
 
+.content-container {
+  display: flex;
+}
+
 .page-bg{
   background-color: #BAE4FF;
   display: flex;
