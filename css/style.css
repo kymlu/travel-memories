@@ -6,7 +6,6 @@
   vertical-align: bottom;
   margin-right: 8px;
   padding: 0px;
-  display: flex;
 }
 
 .sub-title {
@@ -16,7 +15,34 @@
   font-weight: lighter;
   vertical-align: bottom;
   padding: 0px;
-  display: flex;
+}
+
+.region-text {
+  font-family: American Typewriter;
+  color: black;
+  font-size: large;
+  font-weight: bold;
+  vertical-align: bottom;
+  padding: 0px;
+}
+
+.prefecture-no-hover {
+  font-family: American Typewriter;
+  color: black;
+  font-size: normal;
+  font-weight: normal;
+  vertical-align: bottom;
+  padding: 0px;
+}
+
+.prefecture-hover {
+  font-family: American Typewriter;
+  color: white;
+  background-color: black;
+  font-size: normal;
+  font-weight: normal;
+  vertical-align: bottom;
+  padding: 0px;
 }
 
 .img-border {
@@ -34,16 +60,13 @@
   flex-wrap: wrap;
   align-content: space-between;
   justify-content: center;
-  direction: column;
+  flex-direction: column;
 }
 
 .page-bg{
   display: flex;
   justify-content: space-between;
-  background-color: #BAE4FF;
-  height: 100%;
-  width: 100%;
   margin: 0px;
   padding: 100px 75px;
-  direction: column;
+  flex-direction: column;
 }
