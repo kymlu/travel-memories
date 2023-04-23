@@ -38,14 +38,13 @@
   font-size: normal;
   font-weight: normal;
   vertical-align: bottom;
-  padding: 0px;
+  padding: 0px 5px;
   text-decoration: none;
   white-space: nowrap;
 }
 
-.prefecture-text .locked {
-  text-decoration: none;
-  color: grey;
+.locked {
+  color: lightgray;
 }
 
 a {
