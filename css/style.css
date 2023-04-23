@@ -84,6 +84,6 @@ a:hover {
   justify-content: center;
   width: 100%;
   margin: 0px;
-  padding: 100px 75px;
+  padding: 75px 100px;
   flex-direction: column;
 }
