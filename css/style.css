@@ -80,6 +80,20 @@ a:hover {
   background-color: white;
 }
 
+div.rotate_right {
+  float: left;
+  -ms-transform: rotate(5deg); /* IE 9 */
+  -webkit-transform: rotate(5deg); /* Safari */
+  transform: rotate(5deg);
+}
+
+div.rotate_left {
+  float: left;
+  -ms-transform: rotate(-3deg); /* IE 9 */
+  -webkit-transform: rotate(-3deg); /* Safari */
+  transform: rotate(-3deg);
+}
+
 .content-container {
   display: flex;
   flex-wrap: wrap;
