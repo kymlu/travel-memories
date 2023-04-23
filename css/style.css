@@ -45,18 +45,21 @@
 
 .prefecture-text .locked {
   text-decoration: none;
-  color: lightgray;
+  color: grey;
 }
 
-.prefecture-text .no-hover {
+a {
   text-decoration: none;
-  color: pink;
 }
 
-.prefecture-text .on-hover {
-  text-decoration: none;
+a:visited, a:active {
+  color: black;
+  background-color: white;
+}
+
+a:hover {
   color: white;
-  background-color: pink;
+  background-color: black;
 }
 
 .img-border {
