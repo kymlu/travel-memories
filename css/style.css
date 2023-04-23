@@ -1,5 +1,5 @@
 :root {
-  --main-color: #ff0000;/*be0029*/
+  --main-color: #be0029;
 }
 
 .main-title {
@@ -65,7 +65,7 @@ a:visited, a:active {
 
 a:hover {
   color: white;
-  box-shadow: inset 100% 0 0 0 red);
+  box-shadow: inset 200px 0 0 0 var(--main-color));
 }
 
 .img-border {
