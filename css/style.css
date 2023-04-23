@@ -1,10 +1,11 @@
 :root {
   --main-color: #be0029;
+  --text-color: #1F271B;
 }
 
 .main-title {
   font-family: American Typewriter;
-  color: #1F271B;
+  color: var(--text-color);
   font-size: xx-large;
   font-weight: bolder;
   vertical-align: bottom;
@@ -30,7 +31,7 @@
 
 .region-text {
   font-family: American Typewriter;
-  color: var(--main-color);
+  color: var(--text-color);
   font-size: large;
   font-weight: bold;
   vertical-align: bottom;
@@ -59,7 +60,7 @@ a {
 }
 
 a:visited, a:active {
-  color: var(--main-color);
+  color: var(--text-color);
   background-color: white;
 }
 
