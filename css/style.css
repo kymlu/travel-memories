@@ -42,7 +42,7 @@
 }
 
 .prefecture-text .locked {
-  color: lightgray;
+  color: red;
 }
 
 .prefecture-text .no-hover {
