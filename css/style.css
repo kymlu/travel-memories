@@ -41,15 +41,15 @@
   text-decoration: none;
 }
 
-.prefecture-text.locked {
+.prefecture-text .locked {
   color: gray;
 }
 
-.prefecture-text.no-hover {
+.prefecture-text .no-hover {
   color: black;
 }
 
-.prefecture-text.on-hover {
+.prefecture-text .on-hover {
   color: white;
   background-color: black;
 }
