@@ -39,19 +39,19 @@
   vertical-align: bottom;
   padding: 0px;
   text-decoration: none;
-  
-  .locked {
-    color: gray;
-  }
-  
-  .no-hover {
-    color: black;
-  }
-  
-  .on-hover {
-    color: white;
-    background-color: black;
-  }
+}
+
+.prefecture-text.locked {
+  color: gray;
+}
+
+.prefecture-text.no-hover {
+  color: black;
+}
+
+.prefecture-text.on-hover {
+  color: white;
+  background-color: black;
 }
 
 .img-border {
