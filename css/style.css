@@ -17,6 +17,12 @@
   padding: 0px;
 }
 
+.region-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
 .region-text {
   font-family: American Typewriter;
   color: black;
