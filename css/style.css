@@ -40,17 +40,21 @@
   vertical-align: bottom;
   padding: 0px;
   text-decoration: none;
+  white-space: nowrap;
 }
 
 .prefecture-text .locked {
+  text-decoration: none;
   color: lightgray;
 }
 
 .prefecture-text .no-hover {
+  text-decoration: none;
   color: pink;
 }
 
 .prefecture-text .on-hover {
+  text-decoration: none;
   color: white;
   background-color: pink;
 }
