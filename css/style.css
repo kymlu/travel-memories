@@ -30,7 +30,7 @@
 
 .region-text {
   font-family: American Typewriter;
-  color: black;
+  color: var(--main-color);
   font-size: large;
   font-weight: bold;
   vertical-align: bottom;
@@ -59,7 +59,7 @@ a {
 }
 
 a:visited, a:active {
-  color: 1F271B;
+  color: var(--main-color);
   background-color: white;
 }
 
