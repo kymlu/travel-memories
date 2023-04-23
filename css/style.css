@@ -48,6 +48,16 @@
   white-space: nowrap;
 }
 
+.caption-text {
+  font-family: American Typewriter;
+  color: var(--text-color);
+  font-size: normal;
+  font-weight: normal;
+  vertical-align: bottom;
+  text-align: center;
+  padding: 5px;
+}  
+
 .locked {
   color: lightgray;
 }
