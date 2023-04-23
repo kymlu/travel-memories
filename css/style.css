@@ -32,25 +32,26 @@
   padding: 0px;
 }
 
-.prefecture-no-hover {
+.prefecture-text {
   font-family: American Typewriter;
-  color: black;
   font-size: normal;
   font-weight: normal;
   vertical-align: bottom;
   padding: 0px;
   text-decoration: none;
-}
-
-.prefecture-hover {
-  font-family: American Typewriter;
-  color: white;
-  background-color: black;
-  font-size: normal;
-  font-weight: normal;
-  vertical-align: bottom;
-  padding: 0px;
-  text-decoration: none;
+  
+  .locked {
+    color: gray;
+  }
+  
+  .no-hover {
+    color: black;
+  }
+  
+  .on-hover {
+    color: white;
+    background-color: black;
+  }
 }
 
 .img-border {
