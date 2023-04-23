@@ -92,6 +92,7 @@ a:hover {
 }
 
 .rotate_right1 {
+  display: inline-block;
   float: left;
   -ms-transform: rotate(5deg); /* IE 9 */
   -webkit-transform: rotate(5deg); /* Safari */
@@ -99,6 +100,7 @@ a:hover {
 }
 
 .rotate_right2 {
+  display: inline-block;
   float: left;
   -ms-transform: rotate(10deg); /* IE 9 */
   -webkit-transform: rotate(10deg); /* Safari */
@@ -106,6 +108,7 @@ a:hover {
 }
 
 .rotate_right3 {
+  display: inline-block;
   float: left;
   -ms-transform: rotate(15deg); /* IE 9 */
   -webkit-transform: rotate(15deg); /* Safari */
@@ -113,6 +116,7 @@ a:hover {
 }
 
 .rotate_left1 {
+  display: inline-block;
   float: left;
   -ms-transform: rotate(-3deg); /* IE 9 */
   -webkit-transform: rotate(-3deg); /* Safari */
@@ -120,6 +124,7 @@ a:hover {
 }
 
 .rotate_left2 {
+  display: inline-block;
   float: left;
   -ms-transform: rotate(-9deg); /* IE 9 */
   -webkit-transform: rotate(-9deg); /* Safari */
@@ -128,6 +133,7 @@ a:hover {
 
 .rotate_left3 {
   float: left;
+  display: inline-block;
   -ms-transform: rotate(-16deg); /* IE 9 */
   -webkit-transform: rotate(-16deg); /* Safari */
   transform: rotate(-16deg);
