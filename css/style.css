@@ -42,16 +42,16 @@
 }
 
 .prefecture-text .locked {
-  color: red;
+  color: lightgray;
 }
 
 .prefecture-text .no-hover {
-  color: black;
+  color: pink;
 }
 
 .prefecture-text .on-hover {
   color: white;
-  background-color: black;
+  background-color: pink;
 }
 
 .img-border {
