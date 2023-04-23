@@ -69,7 +69,7 @@ a:visited, a:active {
 
 a:hover {
   color: white;
-  box-shadow: inset 200px 0 0 0 #be0029;
+  box-shadow: inset 100% 0 0 0 #be0029;
 }
 
 .img-border {
