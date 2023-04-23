@@ -39,6 +39,7 @@
   font-weight: normal;
   vertical-align: bottom;
   padding: 0px;
+  text-decoration: none;
 }
 
 .prefecture-hover {
@@ -49,6 +50,7 @@
   font-weight: normal;
   vertical-align: bottom;
   padding: 0px;
+  text-decoration: none;
 }
 
 .img-border {
