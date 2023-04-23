@@ -65,7 +65,7 @@ a:visited, a:active {
 
 a:hover {
   color: white;
-  box-shadow: inset 100% 0 0 0 var(--main-color);
+  box-shadow: inset 100% 0 0 0 red);
 }
 
 .img-border {
