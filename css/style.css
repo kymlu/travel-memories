@@ -141,7 +141,9 @@ a:hover {
 
 .popup {
   display: flex;
-  position: absolute; 
+  position: absolute;
+  align-self: center;
+  justify-self: center;
   width: 50%; 
   padding: 50px;
   background-color: white;
@@ -156,12 +158,14 @@ a:hover {
 }
 
 .popup-background {
-  background-color: #000000AA;
+  background-color: red;/*#000000AA;*/
   width: 100%;
   height: 100%;
   display: flex;
   position: absolute; 
   visibility: hidden;
+  align-self: center;
+  justify-self: center;
 }
 
 .content-container {
