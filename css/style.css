@@ -140,7 +140,6 @@ a:hover {
 }
 
 .popup {
-  display: flex;
   position: absolute;
   align-self: center;
   justify-self: center;
@@ -152,6 +151,7 @@ a:hover {
 }
 
 .popup-content {
+  display: flex;
   flex-direction: column;
   font-family: American Typewriter;
   color: var(--text-color);
