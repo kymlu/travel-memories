@@ -1,5 +1,6 @@
 let isPopupVisible = false;
 
 function changePopupVisibility(){
-  isPopupVisible = not(isPopupVisible);
+  isPopupVisible = !isPopupVisible;
+  document.getElementById("popup").isVisible = isPopupVisible; // Get the HTML template
 }
