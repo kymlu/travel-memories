@@ -161,7 +161,7 @@ a:hover {
   height: 100%;
   display: flex;
   position: absolute; 
-  
+  visibility: hidden;
 }
 
 .content-container {
