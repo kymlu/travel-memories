@@ -145,10 +145,13 @@ a:hover {
   align-self: center;
   justify-self: center;
   width: 50%; 
-  padding: 50px;
   background-color: white;
   border-radius: 10px;
   visibility: hidden;
+  opacity: 100%;
+}
+
+.popup-content {
   flex-direction: column;
   font-family: American Typewriter;
   color: var(--text-color);
@@ -156,7 +159,7 @@ a:hover {
   font-weight: normal;
   text-align: start;
   gap: 10px;
-  opacity: 100%;
+  padding: 50px;
 }
 
 .popup-background {
