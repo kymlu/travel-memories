@@ -156,6 +156,7 @@ a:hover {
   font-weight: normal;
   text-align: start;
   gap: 10px;
+  opacity: 100%;
 }
 
 .popup-background {
