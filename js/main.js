@@ -1,3 +1,12 @@
+<!-- Photo gallery -->
+let selectedRegion = "";
+
+function changeRegion(newRegion){
+  selectedRegion = newRegion;
+}
+
+<!-- Popup -->
+
 let isPopupVisible = false;
 
 function changePopupVisibility(){
