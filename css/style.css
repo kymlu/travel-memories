@@ -3,10 +3,6 @@
   --text-color: #1F271B;
 }
 
-#my-path {
-  fill: red;
-}
-
 .main-title {
   font-family: American Typewriter;
   color: var(--text-color);
@@ -89,10 +85,12 @@ a:hover {
 .img-border {
   display: inline-block;
   max-width: 300px;
-  border: 1px solid lightgray;
+  border: 4px solid lightgray;
   margin-bottom: 10px;
   padding: 10px;
   background-color: white;
+  stroke: red;
+  fill: blue;
 }
 
 .rotate_right1 {
