@@ -3,6 +3,10 @@
   --text-color: #1F271B;
 }
 
+#my-path {
+  fill: red;
+}
+
 .main-title {
   font-family: American Typewriter;
   color: var(--text-color);
