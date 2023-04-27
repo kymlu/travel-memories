@@ -5,8 +5,7 @@ function changeRegion(newRegion){
   selectedRegion = newRegion;
 }
 
-document.getElementById("Shiga").style.fill = "green";
-document.getElementById("Shiga").style.stroke = "orange";
+<!--document.getElementById("Shiga").style.fill = "green";document.getElementById("Shiga").style.stroke = "orange";-->
 
 <!-- Popup -->
 
