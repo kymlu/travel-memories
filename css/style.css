@@ -144,13 +144,15 @@ a:hover {
 .popup {
   position: fixed;
   align-self: center;
-  justify-self: start;
-  width: 50%; 
+  justify-self: center;
+  width: 70%;
   background-color: white;
   border-radius: 10px;
   visibility: hidden;
   opacity: 100%;
   pointer-events: none;
+  padding: 0px;
+  margin: 0px;
 }
 
 .popup-content {
@@ -174,8 +176,8 @@ a:hover {
   display: flex;
   position: fixed; 
   visibility: hidden;
-  align-self: center;
-  justify-self: start;
+  align-self: start;
+  justify-self: center;
   padding: 0px;
   margin: 0px;
 }
