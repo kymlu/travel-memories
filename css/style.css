@@ -143,8 +143,6 @@ a:hover {
 
 .popup {
   position: fixed;
-  align-self: center;
-  justify-self: center;
   width: 70%;
   background-color: white;
   border-radius: 10px;
@@ -176,10 +174,12 @@ a:hover {
   display: flex;
   position: fixed; 
   visibility: hidden;
-  align-self: start;
-  justify-self: center;
+  align-items: center;
+  justify-content:center;
   padding: 0px;
   margin: 0px;
+  bottom: 0;
+  right: 0;
 }
 
 .content-container {
