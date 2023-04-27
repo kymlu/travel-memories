@@ -1,4 +1,4 @@
-#JAPAN TRAVEL MEMORIES
+# JAPAN TRAVEL MEMORIES
 This is a personal project showcasing my travels around Japan. I hope you enjoy it! 
 There are lots of commits because the beginning of development was done on Github web on my iPad when I was completing other travels.
 
