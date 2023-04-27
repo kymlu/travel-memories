@@ -25,8 +25,8 @@ function changeRegion(newRegion){
   selectedRegion = newRegion;
 }
 
-//document.getElementById("Shiga").style.fill = "green";
-//document.getElementById("Shiga").style.stroke = "orange";
+document.getElementById("Shiga").style.fill = "green";
+document.getElementById("Shiga").style.stroke = "orange";
 // Create a clone of element with id ddl_1:
 //let clone = document.getElementById('Shiga').cloneNode( true ); 
 let clone = document.getElementById('japan').cloneNode( true ); 
