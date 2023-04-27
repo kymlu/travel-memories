@@ -18,7 +18,7 @@ document.addEventListener('keydown', function(event) {
   }
 })
 
-<!-- Photo gallery -->
+// Photo gallery
 let selectedRegion = "";
 
 function changeRegion(newRegion){
