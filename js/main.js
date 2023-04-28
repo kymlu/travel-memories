@@ -26,9 +26,9 @@ window.onload = function() {
   svg.setAttribute('viewBox', '600 600 650 650');
   svg.setAttribute('height', '500');
   svg.setAttribute('width', '500');
-  svg.setAttribute('fill', 'lightseagreen');
+  svg.setAttribute('fill', 'red');
   svg.setAttribute('stroke', 'slategrey');
-  svg.setAttribute('stroke-width', '10px');
+  svg.setAttribute('stroke-width', '20px');
 }
 
 // Sidebar
