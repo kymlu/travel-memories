@@ -10,7 +10,7 @@ function changePopupVisibility(){
 
 document.getElementById("popup-close-btn").addEventListener("click", changePopupVisibility);
 document.getElementById("popup-bg").addEventListener("click", changePopupVisibility);
-document.getElementById("info-button").addEventListener("click", changePopupVisibility);
+document.getElementById("info-btn").addEventListener("click", changePopupVisibility);
 
 document.addEventListener('keydown', function(event) {
   if(event.keyCode == 27 && isPopupVisible) {
@@ -26,6 +26,8 @@ function changeSidebarVisibility(){
   document.getElementById("sidebar").style.visibility = isSidebarVisible ? "visible" : "hidden";
   document.getElementById("sidebar-bg").style.visibility = isSidebarVisible ? "visible" : "hidden";
 }
+document.getElementById("sidebar-btn").addEventListener("click", changeSidebarVisibility);
+document.getElementById("sidebar-bg").addEventListener("click", changeSidebarVisibility);
 
 // Photo gallery
 let selectedRegion = "";
