@@ -18,6 +18,12 @@ document.addEventListener('keydown', function(event) {
   }
 })
 
+// Map
+const svgObject = document.getElementById('my-svg');
+const svgDoc = svgObject.contentDocument;
+const svg = svgDoc.getElementsByTagName('svg')[0];
+svg.setAttribute('viewBox', '600 600 650 650');
+
 // Sidebar
 
 let isSidebarVisible = false;
