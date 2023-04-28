@@ -196,7 +196,7 @@ a:hover {
   justify-content: center;
   /*width: 100%;*/
   margin: 0px;
-  padding: 75px 100px;
+  padding: 75px;
   flex-direction: column;
   max-height: 100%;
 }
