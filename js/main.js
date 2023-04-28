@@ -23,6 +23,8 @@ const svgObject = document.getElementById('my-svg');
 const svgDoc = svgObject.contentDocument;
 const svg = svgDoc.getElementsByTagName('svg')[0];
 svg.setAttribute('viewBox', '600 600 650 650');
+svg.setAttribute('height', '500');
+svg.setAttribute('width', '500');
 
 // Sidebar
 
