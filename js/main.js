@@ -63,7 +63,6 @@ let clone = document.getElementById('Shiga').cloneNode( true );
 // Change the id attribute of the newly created element:
 clone.setAttribute( 'id', "shiga2" );
 
-document.body.appendChild(data);
 //document.body.appendChild( clone );
 //clone.setAttribute("viewBox", "0 0 500 300"); 
 // Append the newly created element on element p 
