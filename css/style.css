@@ -70,18 +70,18 @@
   color: var(--main-color);
 }
 
-.pref-text {  
+.visited-pref-text {  
   box-shadow: inset 0 0 0 0 #be0029;
   text-decoration: none;
   transition: color .3s ease-in-out, box-shadow .3s ease-in-out;
 }
 
-.pref-text:visited, visited-pref-text:active {
+.visited-pref-text:visited, visited-pref-text:active {
   color: var(--text-color);
   background-color: white;
 }
 
-.pref-text:hover {
+.visited-pref-text:hover {
   color: white;
   box-shadow: inset 500px 0 0 0 #be0029;
 }
