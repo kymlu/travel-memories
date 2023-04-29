@@ -224,7 +224,8 @@
 
 .page-bg{
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  align-content: stretch;
   /*width: 100%;*/
   margin: 0px;
   padding: 75px;
