@@ -47,15 +47,24 @@ window.onload = function() {
   svg.setAttribute('stroke', 'pink');
   svg.setAttribute('stroke-width', '20px');
   
-   setTimeout(() => {
-    svg.setAttribute('style', 'stroke: pink; fill: white; stroke-width: 30px;');
-    svg.addEventListener('mouseover', () => {
-      svg.setAttribute('style', 'fill: pink;');
-    });
-    svg.addEventListener('mouseout', () => {
-      svg.setAttribute('style', 'fill: white;');
-    });
-     svg.setAttribute('pointer-events', 'none');
+  
+  const svgObject2 = document.getElementById('akita-img');
+  const svgDoc2 = svgObject2.contentDocument;
+  const svg2 = svgDoc2.getElementsByTagName('svg')[0];
+  svg2.setAttribute('fill', 'blue');
+  svg2.setAttribute('stroke', 'orange');
+  svg2.setAttribute('stroke-width', '20px');
+  
+  /*setTimeout(() => {
+  svg.setAttribute('style', 'stroke: pink; fill: white; stroke-width: 30px;');
+  svg.addEventListener('mouseover', () => {
+    svg.setAttribute('style', 'fill: pink;');
+  });
+  svg.addEventListener('mouseout', () => {
+    svg.setAttribute('style', 'fill: white;');
+  });
+   svg.setAttribute('pointer-events', 'none');
+ });*/
 }
 
 // Sidebar
