@@ -1,6 +1,4 @@
 // Data 
-with open('data.json', 'r', encoding='utf-8') as jsonFile:
-    data = json.load(jsonFile)
 
 // Popup
 
@@ -33,6 +31,10 @@ window.onload = function() {
   svg.setAttribute('fill', 'red');
   svg.setAttribute('stroke', 'slategrey');
   svg.setAttribute('stroke-width', '20px');
+    with open('data.json', 'r', encoding='utf-8') as jsonFile:
+    data = json.load(jsonFile)
+
+  document.getElementById("sidebar").innerhtml= data;
 }
 
 // Sidebar
