@@ -48,12 +48,10 @@ window.onload = function() {
   svg.setAttribute('stroke-width', '20px');
   
   
-  const svgObject2 = document.getElementById('akita-img');
-  const svgDoc2 = svgObject2.contentDocument;
-  const svg2 = svgDoc2.getElementsByTagName('svg')[0];
-  svg2.setAttribute('fill', 'blue');
-  svg2.setAttribute('stroke', 'orange');
-  svg2.setAttribute('stroke-width', '20px');
+  const svg2 = document.getElementById('akita-img');
+  svg2.style.fill='blue';
+  svg2.style.stroke='orange';
+  svg2.style.strokeWidth='20px';
   
   /*setTimeout(() => {
   svg.setAttribute('style', 'stroke: pink; fill: white; stroke-width: 30px;');
