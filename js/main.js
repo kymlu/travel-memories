@@ -52,6 +52,11 @@ window.onload = function() {
   const svg2 = document.getElementById('akita-img');
   svg2.setAttribute("fill", "blue");},100);
   
+  
+			var svgDoc5 = document.getElementsByTagName('object')[0].contentDocument;
+			var path5 = svgDoc5.getElementById('iwate-img');
+			path5.style.fill = 'purple';
+  
   /*setTimeout(() => {
   svg.setAttribute('style', 'stroke: pink; fill: white; stroke-width: 30px;');
   svg.addEventListener('mouseover', () => {
