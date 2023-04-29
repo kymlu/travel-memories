@@ -102,15 +102,17 @@
   fill: grey;
 }
 
-.img-border {
+.polaroid-frame {
   display: inline-block;
   max-width: 300px;
   border: 4px solid lightgray;
   margin-bottom: 10px;
   padding: 10px;
   background-color: white;
-  stroke: red;
-  fill: blue;
+}
+
+.polaroid-img {
+  filter: saturate(0.95) blur(0.00002px) drop-shadow(8px 8px 20px lightgrey);
 }
 
 .rotate_right1 {
