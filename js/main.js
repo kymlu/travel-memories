@@ -49,9 +49,7 @@ window.onload = function() {
   
   
   const svg2 = document.getElementById('akita-img');
-  svg2.style.fill='blue';
-  svg2.style.stroke='orange';
-  svg2.style.strokeWidth='20px';
+  svg2.setAttribute("fill", "blue");
   
   /*setTimeout(() => {
   svg.setAttribute('style', 'stroke: pink; fill: white; stroke-width: 30px;');
