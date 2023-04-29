@@ -30,15 +30,21 @@ document.addEventListener('keydown', function(event) {
 
 // Map
 window.onload = function() {
-  const svgObject = document.getElementById('my-svg');
+  const svgObject = document.getElementById('shiga');
   const svgDoc = svgObject.contentDocument;
   const svg = svgDoc.getElementsByTagName('svg')[0];
-  svg.setAttribute('viewBox', '600 600 650 650');
+  svg.classList.add('pref-pic');
+  
+  const svgObject2 = document.getElementById('aomori');
+  const svgDoc2 = svgObject.contentDocument;
+  const svg2 = svgDoc.getElementsByTagName('svg')[0];
+  svg.classList.add('locked-pref-pic');
+  /*svg.setAttribute('viewBox', '600 600 650 650');
   svg.setAttribute('height', '500');
   svg.setAttribute('width', '500');
   svg.setAttribute('fill', 'red');
   svg.setAttribute('stroke', 'slategrey');
-  svg.setAttribute('stroke-width', '20px');
+  svg.setAttribute('stroke-width', '20px');*/
 }
 
 // Sidebar
