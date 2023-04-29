@@ -62,7 +62,14 @@ window.onload = function() {
     svg.addEventListener('mouseout', () => {
       svg.setAttribute('style', 'fill: white;');
     });
-  }, 1000);
+         svg2.setAttribute('style', 'stroke: pink; fill: white; stroke-width: 30px;');
+    svg2.addEventListener('mouseover', () => {
+      svg2.setAttribute('style', 'fill: blue;');
+    });
+    svg2.addEventListener('mouseout', () => {
+      svg.setAttribute('style', 'fill: white;');
+    });
+   }, 100);
 }
 
 // Sidebar
