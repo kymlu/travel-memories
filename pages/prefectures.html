@@ -7,17 +7,23 @@
 
 <body class="page-bg">
   <div class="content-container" style="display: grid; grid: 600px / 20% 80%; align-content: stretch">
-    <div id="sidebar-btn" class="fa text-main-color" style="grid-area: 1 / 1; font-size: xx-large; align-self: start; text-align: left;">&#xf0c9</div> 
-    <div display="flex" flex-layout="column" style="grid-area: 1 / 1; background-color:PaleVioletRed">
-      <div>Pic of prefecture</div>
-      <div>Name of prefecture</div>
-      <div>Dates visited</div>
-      <div>Cities visited</div>
-      <div>Description etc.</div>
+    <div display="flex" flex-layout="column" style="grid-area: 1 / 1; background-color:PaleVioletRed; gap: 15px;">
+      <div id="sidebar-btn" class="fa text-main-color" style="font-size: xx-large; align-self: start; text-align: left;">&#xf0c9</div> 
+      <div>Pic of prefecture・都道府県の写真</div>
+      <div>Name of prefecture・都道府県</div>
+      <div>Dates visited・日付</div>
+      <div>Cities visited・町</div>
+      <div>Description etc.・説明など</div>
     </div>
     <div display="flex" flex-layout="column" style="grid-area: 1 / 2; background-color: MintCream">
-      <div style="top: 0; background-color: yellow;">fixed filters bar maybe</div>
-      <div class="img-border rotate-left1" style="position: absolute">
+      <div display="flex" flex-layout="row">
+        <div style="background-color: LightSlateGrey; border-radius: 50%">Food・食べ物</div>
+        <div style="background-color: LemonChiffon; border-radius: 50%">Nature・自然</div>
+        <div style="background-color: LightPink; border-radius: 50%">Art Gallery・美術館</div>
+        <div style="background-color: FireBrick; border-radius: 50%">Attractions・観光地</div>
+        <div style="background-color: DeepSkyBlue; border-radius: 50%">Mysterious・謎</div>
+      </div>
+      <div class="img-border rotate-left1">
         <img width="300px" src="../img/BFD9CC0C-53AB-4F00-851A-AAB2D06A37A6.jpeg"/>
         <p class="caption-text">Flowers wahoo</p>
       </div>
