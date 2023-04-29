@@ -2,10 +2,11 @@
 let data = null;
 fetch('data.json')
   .then(response => response.json())
-  .then(d => {data = d; console.log(d)})
-  .catch(error => console.error(error));
-
-document.getElementById("sidebar").innerhtml= data;
+  .then(d => {data = d; 
+              document.getElementById("sidebar").setAttribute('background-color', 'yellowgreen')
+              console.log(d);})
+  .catch(error => {console.error(error); 
+                   document.getElementById("sidebar").setAttribute('background-color', 'magenta');});
 
 // Popup
 
