@@ -41,10 +41,14 @@ window.onload = function() {
   svg2.classList.add('locked-pref-pic');
   /*svg.setAttribute('viewBox', '600 600 650 650');
   svg.setAttribute('height', '500');
-  svg.setAttribute('width', '500');
-  svg.setAttribute('fill', 'red');
-  svg.setAttribute('stroke', 'slategrey');
-  svg.setAttribute('stroke-width', '20px');*/
+  svg.setAttribute('width', '500');*/
+  svg.setAttribute('fill', 'pink');
+  svg.setAttribute('stroke', 'pink');
+  svg.setAttribute('stroke-width', '20px');
+  
+  svg2.setAttribute('fill', 'yellow');
+  svg2.setAttribute('stroke', 'yellow');
+  svg2.setAttribute('stroke-width', '20px');
 }
 
 // Sidebar
