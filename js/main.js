@@ -30,14 +30,10 @@ document.addEventListener('keydown', function(event) {
 
 // Map
 window.onload = function() {
-  const svgObject = document.getElementById('shiga');
+  const svgObject = document.getElementById('japan');
   const svgDoc = svgObject.contentDocument;
   const svg = svgDoc.getElementsByTagName('svg')[0];
   //svg.classList.add('pref-img');
-  
-  const svgObject2 = document.getElementById('aomori');
-  const svgDoc2 = svgObject2.contentDocument;
-  const svg2 = svgDoc2.getElementsByTagName('svg')[0];
   //svg2.classList.add('locked-pref-img');
   //setTimeout(() => {
     //svg.classList.add('pref-img');
@@ -51,9 +47,6 @@ window.onload = function() {
   svg.setAttribute('stroke', 'pink');
   svg.setAttribute('stroke-width', '20px');
   
-  svg2.setAttribute('fill', 'yellow');
-  svg2.setAttribute('stroke', 'yellow');
-  svg2.setAttribute('stroke-width', '20px');
    setTimeout(() => {
     svg.setAttribute('style', 'stroke: pink; fill: white; stroke-width: 30px;');
     svg.addEventListener('mouseover', () => {
@@ -63,15 +56,6 @@ window.onload = function() {
       svg.setAttribute('style', 'fill: white;');
     });
      svg.setAttribute('pointer-events', 'none');
-         svg2.setAttribute('style', 'stroke: pink; fill: white; stroke-width: 30px;');
-    svg2.addEventListener('mouseover', () => {
-      svg2.setAttribute('style', 'fill: blue;');
-    });
-    svg2.addEventListener('mouseout', () => {
-      svg.setAttribute('style', 'fill: white;');
-    });
-     svg2.setAttribute('pointer-events', 'none');
-   }, 100);
 }
 
 // Sidebar
