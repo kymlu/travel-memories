@@ -3,10 +3,10 @@ let data = null;
 fetch('data.json')
   .then(response => response.json())
   .then(d => {data = d; 
-              document.getElementById("sidebar").setAttribute('background-color', 'yellowgreen')
+              document.getElementById("sidebar").style.backgroundColor = 'yellowgreen';
               console.log(d);})
   .catch(error => {console.error(error); 
-                   document.getElementById("sidebar").setAttribute('background-color', 'magenta');});
+                   document.getElementById("sidebar").style.backgroundColor = 'coral';})
 
 // Popup
 
