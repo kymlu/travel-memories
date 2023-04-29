@@ -2,8 +2,6 @@
 with open('data.json', 'r', encoding='utf-8') as jsonFile:
     data = json.load(jsonFile)
 
-document.body.appendChild(data);
-
 // Popup
 
 let isPopupVisible = false;
@@ -62,6 +60,8 @@ let clone = document.getElementById('Shiga').cloneNode( true );
 //let clone = document.getElementById('japan').cloneNode( true ); 
 // Change the id attribute of the newly created element:
 clone.setAttribute( 'id', "shiga2" );
+
+document.body.appendChild(data);
 //document.body.appendChild( clone );
 //clone.setAttribute("viewBox", "0 0 500 300"); 
 // Append the newly created element on element p 
