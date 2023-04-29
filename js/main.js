@@ -33,12 +33,17 @@ window.onload = function() {
   const svgObject = document.getElementById('shiga');
   const svgDoc = svgObject.contentDocument;
   const svg = svgDoc.getElementsByTagName('svg')[0];
-  svg.classList.add('pref-img');
+  //svg.classList.add('pref-img');
   
   const svgObject2 = document.getElementById('aomori');
   const svgDoc2 = svgObject2.contentDocument;
   const svg2 = svgDoc2.getElementsByTagName('svg')[0];
-  svg2.classList.add('locked-pref-img');
+  //svg2.classList.add('locked-pref-img');
+  setTimeout(() => {
+    svg.classList.add('pref-img');
+    svg2.classList.add('locked-pref-img');
+  }, 1000);
+  
   /*svg.setAttribute('viewBox', '600 600 650 650');
   svg.setAttribute('height', '500');
   svg.setAttribute('width', '500');*/
