@@ -43,13 +43,14 @@ window.onload = function() {
   /*svg.setAttribute('viewBox', '600 600 650 650');
   svg.setAttribute('height', '500');
   svg.setAttribute('width', '500');*/
+  setTimeout(()=>{
   svg.setAttribute('fill', 'pink');
   svg.setAttribute('stroke', 'pink');
   svg.setAttribute('stroke-width', '20px');
   
   
   const svg2 = document.getElementById('akita-img');
-  svg2.setAttribute("fill", "blue");
+  svg2.setAttribute("fill", "blue");},100);
   
   /*setTimeout(() => {
   svg.setAttribute('style', 'stroke: pink; fill: white; stroke-width: 30px;');
