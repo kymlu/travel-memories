@@ -39,10 +39,10 @@ window.onload = function() {
   const svgDoc2 = svgObject2.contentDocument;
   const svg2 = svgDoc2.getElementsByTagName('svg')[0];
   //svg2.classList.add('locked-pref-img');
-  setTimeout(() => {
-    svg.classList.add('pref-img');
-    svg2.classList.add('locked-pref-img');
-  }, 1000);
+  //setTimeout(() => {
+    //svg.classList.add('pref-img');
+    //svg2.classList.add('locked-pref-img');
+  //}, 1000);
   
   /*svg.setAttribute('viewBox', '600 600 650 650');
   svg.setAttribute('height', '500');
@@ -54,6 +54,15 @@ window.onload = function() {
   svg2.setAttribute('fill', 'yellow');
   svg2.setAttribute('stroke', 'yellow');
   svg2.setAttribute('stroke-width', '20px');
+   setTimeout(() => {
+    svg.setAttribute('style', 'stroke: pink; fill: white; stroke-width: 30px;');
+    svg.addEventListener('mouseover', () => {
+      svg.setAttribute('style', 'fill: pink;');
+    });
+    svg.addEventListener('mouseout', () => {
+      svg.setAttribute('style', 'fill: white;');
+    });
+  }, 1000);
 }
 
 // Sidebar
