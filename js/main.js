@@ -1,7 +1,7 @@
 // Data 
 let data = null;
 fetch('data.json')
-  .then(response => response.json())
+  .then(response => { console.log(response); response.json();})
   .then(d => {data = d; 
               //document.getElementById("sidebar").style.backgroundColor = 'yellowgreen';
               console.log(d);})
