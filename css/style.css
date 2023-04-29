@@ -86,18 +86,18 @@
   box-shadow: inset 500px 0 0 0 #be0029;
 }
 
-.pref-pic {
+.pref-img {
   stroke: pink;
   fill: white;
   stroke-width: 30px;
   transition: color .3s ease-in-out;
 }
 
-.pref-pic:hover {
+.pref-img:hover {
   fill: pink; 
 }
 
-.locked-pref-pic {
+.locked-pref-img {
   stroke: none;
   fill: grey;
 }
