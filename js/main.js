@@ -1,3 +1,9 @@
+// Data 
+with open('data.json', 'r', encoding='utf-8') as jsonFile:
+    data = json.load(jsonFile)
+
+document.body.appendChild(data);
+
 // Popup
 
 let isPopupVisible = false;
