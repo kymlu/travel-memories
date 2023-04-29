@@ -36,9 +36,9 @@ window.onload = function() {
   svg.classList.add('pref-pic');
   
   const svgObject2 = document.getElementById('aomori');
-  const svgDoc2 = svgObject.contentDocument;
-  const svg2 = svgDoc.getElementsByTagName('svg')[0];
-  svg.classList.add('locked-pref-pic');
+  const svgDoc2 = svgObject2.contentDocument;
+  const svg2 = svgDoc2.getElementsByTagName('svg')[0];
+  svg2.classList.add('locked-pref-pic');
   /*svg.setAttribute('viewBox', '600 600 650 650');
   svg.setAttribute('height', '500');
   svg.setAttribute('width', '500');
