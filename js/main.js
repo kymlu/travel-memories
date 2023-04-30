@@ -67,6 +67,7 @@ function changeSidebarVisibility(){
 }
 
 function createSidebar(){
+	document.getElementById("sidebar").innerHTML = "";
 	const regionGroup = document.createElement("div");
 	regionGroup.classList.add("region-group");
 
