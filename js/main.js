@@ -114,7 +114,7 @@ function createSidebar(data){
 		sidebar.appendChild(newRegion);
 	});
 	const div5 = document.createElement("div");
-	div5.innerHTML = data[0].english-name;
+	div5.innerHTML = data[0].english_name;
 	document.getElementById("pref-info").appendChild(div5);
 }
 
