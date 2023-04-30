@@ -163,7 +163,20 @@
   transform: rotate(-16deg);
 }
 
+.sidebar-content {
+  display: flex; 
+  flex-direction: column; 
+  align-content: start; 
+  justify-content: start; 
+  gap: 20px;
+}
+
 .sidebar {
+  display: flex; 
+  flex-direction: column; 
+  align-content: start; 
+  justify-content: start; 
+  gap: 20px;
   visibility: hidden;
   overflow: scroll;
   position: absolute;
