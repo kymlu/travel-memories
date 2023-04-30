@@ -40,6 +40,7 @@
   font-weight: bold;
   vertical-align: bottom;
   padding: 0px 5px;
+  text-transform: uppercase;
 }
 
 .prefecture-text {
@@ -50,6 +51,7 @@
   padding: 2px 5px;
   text-decoration: none;
   white-space: nowrap;
+  text-transform: capitalize;
 }
 
 .caption-text {
