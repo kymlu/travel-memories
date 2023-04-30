@@ -120,7 +120,13 @@ function createSidebar(data){
 
 // Photo gallery
 function changeRegion(newRegion){
+// add catch error?
   selectedRegion = newRegion;
+  let prefList = data.flatMap(region => region.prefectures);
+  let prefData = prefList.find(pref => pref.english_name == newRegion);
+  document.getElementById("pref-name").innerHTML = getBilingualTitle(prefData.english_name, prefData.japanese_name);
+  document.getElementById("pref-dates").innerHTML = getBilingualTitle(prefData.dates_english, prefData.dates_japanese);
+  document.getElementById("pref-desc").innerHTML = getBilingualTitle(prefData.description_english, prefData.description_japanese);
 }
 
 //document.getElementById("Shiga").style.fill = "green";
@@ -156,14 +162,19 @@ function main(){
 	document.getElementById("switch-btn").addEventListener("click", changeGalleryVisibility);
 	const div1 = document.createElement("div");
 	div1.innerHTML = "Pic of prefecture・都道府県の写真"
+	div1.id = "pref-pic"
 	const div2 = document.createElement("div");
 	div2.innerHTML = "Name of prefecture・都道府県"
+	div2.id = "pref-name"
 	const div3 = document.createElement("div");
 	div3.innerHTML = "Dates visited・日付"
+	div3.id = "pref-dates"
 	const div4 = document.createElement("div");
 	div4.innerHTML = "Cities visited・町"
+	div4.id = "pref-cities"
 	const div5 = document.createElement("div");
 	div5.innerHTML = "Description etc.・説明など"
+	div5.id = "pref-desc"
 	document.getElementById("pref-info").appendChild(div1);
 	document.getElementById("pref-info").appendChild(div2);
 	document.getElementById("pref-info").appendChild(div3);
