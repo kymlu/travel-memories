@@ -3,7 +3,6 @@ let data = null;
 fetch('js/data.json')
   .then(response => { console.log(response); response.json();})
   .then(d => {data = d; 
-              document.getElementById("sidebar").innerhtml = data;
               console.log(d);})
   .catch(error => {console.error(error); })
 
