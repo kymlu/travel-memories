@@ -95,6 +95,7 @@ function createSidebar(){
 				newPrefecture.innerHTML = getBilingualTitle(prefecture.englishName, prefecture.japaneseName);
 				newPrefecture.addEventListener("click", function(){
 					changeRegion(prefecture.englishName);
+					changeSidebarVisibility();
 					}, false);
 				newRegion.appendChild(newPrefecture);
 			} else {
