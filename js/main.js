@@ -68,8 +68,9 @@ function changeSidebarVisibility(){
 
 function createSidebar(){
 	console.log("start");
-	const sidebar =	document.getElementById("sidebar");
+	const sidebar = document.getElementById("sidebar");
 	sidebar.innerHTML = "";
+	
 	const regionGroup = document.createElement("div");
 	regionGroup.classList.add("region-group");
 
