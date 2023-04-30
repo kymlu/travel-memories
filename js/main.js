@@ -146,9 +146,7 @@ function main(){
 		return response.json();})
 	  .then(d => {data = d; 
 	  		console.log(d);
-			document.addEventListener("DOMContentLoaded", function(event) {
-				createSidebar();
-			});
+			createSidebar();
 		})
 	  .catch(error => {console.error(error); });
 	  
