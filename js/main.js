@@ -18,8 +18,8 @@ function changePopupVisibility(){
 }
 function changeGalleryVisibility(){
   isGalleryVisible = !isGalleryVisible;
-  document.getElementById("japan-map").style.visibility = isGalleryVisible ? "hidden" : "visible";
-  document.getElementById("gallery").style.visibility = isGalleryVisible ? "visible" : "hidden";
+  document.getElementById("japan-map").style.visibility = isGalleryVisible ? "none" : "block";
+  document.getElementById("gallery").style.display = isGalleryVisible ? "block" : "none";
 }
 
 // Map
