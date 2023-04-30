@@ -93,21 +93,21 @@ function createSidebar(){
 		console.log(region);
 		const newRegion = regionGroup.cloneNode();
 		const newRegionTitle = regionTitle.cloneNode();
-		newRegionTitle.innerHTML = getBilingualTitle(region.englishName, region.japaneseName);
+		newRegionTitle.innerHTML = getBilingualTitle(region.english-name, region.japanese-name);
 		newRegion.appendChild(newRegionTitle);
 		region.prefectures.forEach(prefecture => {
 			console.log(prefecture);
 			if (prefecture.visited){
 				const newPrefecture = visitedPref.cloneNode();
-				newPrefecture.innerHTML = getBilingualTitle(prefecture.englishName, prefecture.japaneseName);
+				newPrefecture.innerHTML = getBilingualTitle(prefecture.english-name, prefecture.japanese-name);
 				newPrefecture.addEventListener("click", function(){
-					changeRegion(prefecture.englishName);
+					changeRegion(prefecture.english-name);
 					changeSidebarVisibility();
 					}, false);
 				newRegion.appendChild(newPrefecture);
 			} else {
 				const newPrefecture = unvisitedPref.cloneNode();
-				newPrefecture.innerHTML = getBilingualTitle(prefecture.englishName, prefecture.japaneseName);
+				newPrefecture.innerHTML = getBilingualTitle(prefecture.english-name, prefecture.japanese-name);
 				newRegion.appendChild(newPrefecture);
 			}
 		});
