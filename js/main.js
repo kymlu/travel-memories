@@ -2,6 +2,7 @@
 let selectedRegion = "";
 let isSidebarVisible = false;
 let isPopupVisible = false;
+let isGalleryVisible = false;
 let data = null;
 
 // Text
@@ -14,6 +15,11 @@ function changePopupVisibility(){
   isPopupVisible = !isPopupVisible;
   document.getElementById("popup").style.visibility = isPopupVisible ? "visible" : "hidden";
   document.getElementById("popup-bg").style.visibility = isPopupVisible ? "visible" : "hidden";
+}
+function changeGalleryVisibility(){
+  isGalleryVisible = !isGalleryVisible;
+  document.getElementById("japan-map").style.visibility = isGalleryVisible ? "hidden" : "visible";
+  document.getElementById("gallery").style.visibility = isGalleryVisible ? "visible" : "hidden";
 }
 
 // Map
@@ -146,6 +152,7 @@ function main(){
 	document.getElementById("popup-close-btn").addEventListener("click", changePopupVisibility);
 	document.getElementById("popup-bg").addEventListener("click", changePopupVisibility);
 	document.getElementById("info-btn").addEventListener("click", changePopupVisibility);
+	document.getElementById("switch-btn").addEventListener("click", changeGalleryVisibility);
 
 	document.addEventListener('keydown', function(event) {
 	  if(event.keyCode == 27 && isPopupVisible) {
