@@ -72,7 +72,7 @@ function changeSidebarVisibility(){
   document.getElementById("sidebar-bg").style.visibility = isSidebarVisible ? "visible" : "hidden";
 }
 
-function createSidebar(){
+function createSidebar(data){
 	console.log("start");
 	const sidebar = document.getElementById("sidebar");
 	sidebar.innerHTML = "";
@@ -146,7 +146,7 @@ function main(){
 		return response.json();})
 	  .then(d => {data = d; 
 	  		console.log(d);
-			createSidebar();
+			createSidebar(d);
 		})
 	  .catch(error => {console.error(error); });
 	  
