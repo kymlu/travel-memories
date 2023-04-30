@@ -101,17 +101,86 @@
     </div>
   </div>
   <div class="content-container" style="align-content: stretch">
-    <div display="grid" style="grid: auto / auto;">
-      <div id="sidebar-btn" class="fa text-main-color" style="grid-area: 1 / 1; font-size: xx-large; align-self: start; text-align: left;">&#xf0c9</div> 
-      <div class="main-title" id="japan" style="grid-area: 1 / 1; text-align: center; self-justify: center; self-align: center">JAPAN / 日本</div>
-    </div>
-    <div style="display: grid; grid: 500px / auto; justify-self: center; justify-content: center; background-color: lightblue;">
+    <div id="japan-map" style="visibility: visible">
+      <div display="grid" style="grid: auto / auto;">
+        <div id="sidebar-btn" class="fa text-main-color" style="grid-area: 1 / 1; font-size: xx-large; align-self: start; text-align: left;">&#xf0c9</div> 
+        <div class="main-title" id="japan" style="grid-area: 1 / 1; text-align: center; self-justify: center; self-align: center">JAPAN / 日本</div>
+      </div>
+      <div style="display: grid; grid: 500px / auto; justify-self: center; justify-content: center; background-color: lightblue;">
 
-      <!--<img src="img/BFD9CC0C-53AB-4F00-851A-AAB2D06A37A6.jpeg" height="70%" class="img-border">-->
-      <object id="japan" type="image/svg+xml" style="max-height: 500px; grid-area: 1 / 1;" data="img/japan.svg"></object>
+        <!--<img src="img/BFD9CC0C-53AB-4F00-851A-AAB2D06A37A6.jpeg" height="70%" class="img-border">-->
+        <object id="japan" type="image/svg+xml" style="max-height: 500px; grid-area: 1 / 1;" data="img/japan.svg"></object>
+      </div>
+    </div>
+    <div id="gallery" style="visibility: hidden">
+      <div style="display: grid; grid: auto / 1fr 4fr;">
+        <div style="display: flex; flex-direction: column; gap: 15px;">
+          <div>Pic of prefecture・都道府県の写真</div>
+          <div>Name of prefecture・都道府県</div>
+          <div>Dates visited・日付</div>
+          <div>Cities visited・町</div>
+          <div>Description etc.・説明など</div>
+        </div>
+        <div style="display: flex; flex-direction:column; background-color: BurlyWood">
+          <div style="display: flex; justify-items: space-between; gap: 100px; flex-direction: row; align-content: flex-start; background-color: lightgreen;">
+            <div style="background-color: LightSlateGrey; border-radius: 10px; padding: 5px; width: 150px">Food・食べ物</div>
+            <div style="background-color: LemonChiffon; border-radius: 10px; padding: 5px; width: 150px">Nature・自然</div>
+            <div style="background-color: LightPink; border-radius: 10px; padding: 5px; width: 150px">Art Gallery・美術館</div>
+            <div style="background-color: FireBrick; border-radius: 10px; padding: 5px; width: 150px">Attractions・観光地</div>
+            <div style="background-color: DeepSkyBlue; border-radius: 10px; padding: 5px; width: 150px">Mysterious・謎</div>
+          </div>
+          <div display="grid" style="grid-template-rows: 600px; grid-template-columns: 1fr 1fr; overflow: scroll; background-color: chocolate">
+            <div display="flex" style="flex-wrap: wrap; flex-direction:column; border-right: 1px solid black; gap: 100px; justify-content: center; align-content: flex-start; background-color: crimson;">
+              <div class="polaroid-frame">
+                <img class="polaroid-img" height="200px" src="../img/BFD9CC0C-53AB-4F00-851A-AAB2D06A37A6.jpeg"/>
+                <p class="caption-text">Picture 1</p>
+              </div>
+              <div class="polaroid-frame">
+                <img class="polaroid-img" height="200px" src="../img/BFD9CC0C-53AB-4F00-851A-AAB2D06A37A6.jpeg"/>
+                <p class="caption-text">Picture 3</p>
+              </div>
+              <div class="polaroid-frame">
+                <img class="polaroid-img" height="200px" src="../img/BFD9CC0C-53AB-4F00-851A-AAB2D06A37A6.jpeg"/>
+                <p class="caption-text">Picture 5</p>
+              </div>
+              <div class="polaroid-frame">
+                <img class="polaroid-img" height="200px" src="../img/BFD9CC0C-53AB-4F00-851A-AAB2D06A37A6.jpeg"/>
+                <p class="caption-text">Picture 7</p>
+              </div>
+              <div class="polaroid-frame">
+                <img class="polaroid-img" height="200px" src="../img/BFD9CC0C-53AB-4F00-851A-AAB2D06A37A6.jpeg"/>
+                <p class="caption-text">Picture 9</p>
+              </div>
+            </div>
+            <div display="flex" style="flex-wrap: wrap; flex-direction:column; gap: 100px; padding-top: 100px; justify-content: center; align-content: flex-start;background-color: brown;">
+              <div class="polaroid-frame">
+                <img class="polaroid-img" height="200px" src="../img/BFD9CC0C-53AB-4F00-851A-AAB2D06A37A6.jpeg"/>
+                <p class="caption-text">Picture 2</p>
+              </div>
+              <div class="polaroid-frame">
+                <img class="polaroid-img" height="200px" src="../img/BFD9CC0C-53AB-4F00-851A-AAB2D06A37A6.jpeg"/>
+                <p class="caption-text">Picture 4</p>
+              </div>
+              <div class="polaroid-frame">
+                <img class="polaroid-img" height="200px" src="../img/BFD9CC0C-53AB-4F00-851A-AAB2D06A37A6.jpeg"/>
+                <p class="caption-text">Picture 6</p>
+              </div>
+              <div class="polaroid-frame">
+                <img class="polaroid-img" height="200px" src="../img/BFD9CC0C-53AB-4F00-851A-AAB2D06A37A6.jpeg"/>
+                <p class="caption-text">Picture 8</p>
+              </div>
+              <div class="polaroid-frame">
+                <img class="polaroid-img" height="200px" src="../img/BFD9CC0C-53AB-4F00-851A-AAB2D06A37A6.jpeg"/>
+                <p class="caption-text">Picture 10</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <!--<img style="max-height: 500px; grid-area: 1 / 1" src="https://lh3.googleusercontent.com/NY_jWPlYYtLxRK3_VxRE8YPlbFdL-2i-E1KUTsaKOCVuTyJnn2PCEQ_O_nDiaLD8SC7lT75URC2zQDXca8eElNF80f8MDAEIlO7kNGwsB1Hqm1Zi7JEtvybrfwvoEvv06vKEIZJ3NQ=w600-h315-p-k" class="img-border">-->
     <div id="info-btn" class="caption-text" style="align-self: start; text-align: left;"><i style="font-size: xx-large;" class="fa text-main-color">&#xf05a</i> About this site</div> 
+    <div id="switch-btn" class="caption-text" style="align-self: start; text-align: left;"><i style="font-size: xx-large;" class="fa text-main-color">&#xf074</i> switch</div> 
   </div>
   
   <!--<div style="width:20%; height:20%; background-color: pink; position:absolute; font-color: white;">{{isPopupVisible}}</div>-->
