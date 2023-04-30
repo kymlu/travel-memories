@@ -160,7 +160,7 @@ function main(){
 	const div3 = document.createElement("div");
 	div3.innerHTML = "Dates visited・日付"
 	const div4 = document.createElement("div");
-	div4.innerHTML = "Cities visited・町tdrdtrkyt"
+	div4.innerHTML = "Cities visited・町"
 	const div5 = document.createElement("div");
 	div5.innerHTML = "Description etc.・説明など"
 	document.getElementById("pref-info").appendChild(div1);
