@@ -113,6 +113,9 @@ function createSidebar(){
 		});
 		sidebar.appendChild(newRegion);
 	});
+	const div5 = document.createElement("div");
+	div5.innerHTML = data[0].english-name;
+	document.getElementById("pref-info").appendChild(div5);
 }
 
 // Photo gallery
