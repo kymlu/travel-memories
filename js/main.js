@@ -4,7 +4,11 @@ fetch('js/data.json')
   .then(response => { console.log(response); response.json();})
   .then(d => {data = d; 
               console.log(d);})
-  .catch(error => {console.error(error); })
+  .catch(error => {console.error(error); });
+  
+function getBilingualTitle(englishName, japaneseName){
+	return englishName + " / " + japaneseName; 
+}
 
 // Popup
 
