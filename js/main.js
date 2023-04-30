@@ -90,13 +90,11 @@ function createSidebar(data){
 	unvisitedPref.classList.add("prefecture-text", "locked-pref-text");
 	data.forEach(region => 
 	{
-		console.log(region);
 		const newRegion = regionGroup.cloneNode();
 		const newRegionTitle = regionTitle.cloneNode();
 		newRegionTitle.innerHTML = getBilingualTitle(region.english_name, region.japanese_name);
 		newRegion.appendChild(newRegionTitle);
 		region.prefectures.forEach(prefecture => {
-			console.log(prefecture);
 			if (prefecture.visited){
 				const newPrefecture = visitedPref.cloneNode();
 				newPrefecture.innerHTML = getBilingualTitle(prefecture.english_name, prefecture.japanese_name);
@@ -113,9 +111,6 @@ function createSidebar(data){
 		});
 		sidebar.appendChild(newRegion);
 	});
-	const div5 = document.createElement("div");
-	div5.innerHTML = data[0].english_name;
-	document.getElementById("pref-info").appendChild(div5);
 }
 
 // Photo gallery
