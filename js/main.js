@@ -153,6 +153,21 @@ function main(){
 	document.getElementById("popup-bg").addEventListener("click", changePopupVisibility);
 	document.getElementById("info-btn").addEventListener("click", changePopupVisibility);
 	document.getElementById("switch-btn").addEventListener("click", changeGalleryVisibility);
+	const div1 = document.createElement("div");
+	div1.innerHTML = "Pic of prefecture・都道府県の写真"
+	const div2 = document.createElement("div");
+	div2.innerHTML = "Name of prefecture・都道府県"
+	const div3 = document.createElement("div");
+	div3.innerHTML = "Dates visited・日付"
+	const div4 = document.createElement("div");
+	div4.innerHTML = "Cities visited・町"
+	const div5 = document.createElement("div");
+	div5.innerHTML = "Description etc.・説明など"
+	document.getElementById("pref-info").appendChild(div1);
+	document.getElementById("pref-info").appendChild(div2);
+	document.getElementById("pref-info").appendChild(div3);
+	document.getElementById("pref-info").appendChild(div4);
+	document.getElementById("pref-info").appendChild(div5);
 
 	document.addEventListener('keydown', function(event) {
 	  if(event.keyCode == 27 && isPopupVisible) {
