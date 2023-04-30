@@ -18,7 +18,7 @@ function changePopupVisibility(){
 }
 function changeGalleryVisibility(){
   isGalleryVisible = !isGalleryVisible;
-  document.getElementById("japan-map").style.visibility = isGalleryVisible ? "none" : "block";
+  document.getElementById("japan-map").style.display = isGalleryVisible ? "none" : "block";
   document.getElementById("gallery").style.display = isGalleryVisible ? "block" : "none";
 }
 
