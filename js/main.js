@@ -133,7 +133,7 @@ function main(){
 	fetch('js/data.json')
 	  .then(response => { 
 	  	console.log(response); 
-		returnresponse.json();})
+		return response.json();})
 	  .then(d => {data = d; 
 	  		console.log(d);
 			document.addEventListener("DOMContentLoaded", function(event) {
