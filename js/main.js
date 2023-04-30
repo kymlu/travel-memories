@@ -67,7 +67,9 @@ function changeSidebarVisibility(){
 }
 
 function createSidebar(){
-	document.getElementById("sidebar").innerHTML = "";
+	console.log("start");
+	const sidebar =	document.getElementById("sidebar");
+	sidebar.innerHTML = "";
 	const regionGroup = document.createElement("div");
 	regionGroup.classList.add("region-group");
 
@@ -81,11 +83,13 @@ function createSidebar(){
 	unvisitedPref.classList.add("prefecture-text", "locked-pref-text");
 	data.forEach(region => 
 	{
+		console.log(region);
 		const newRegion = regionGroup.cloneNode();
 		const newRegionTitle = regionTitle.cloneNode();
 		newRegionTitle.innerHTML = getBilingualTitle(region.englishName, region.japaneseName);
 		newRegion.appendChild(newRegionTitle);
 		region.prefectures.forEach(prefecture => {
+			console.log(prefecture);
 			if (prefecture.visited){
 				const newPrefecture = visitedPref.cloneNode();
 				newPrefecture.innerHTML = getBilingualTitle(prefecture.englishName, prefecture.japaneseName);
@@ -99,7 +103,7 @@ function createSidebar(){
 				newRegion.appendChild(newPrefecture);
 			}
 		});
-		document.getElementById("sidebar").appendChild(newRegion);
+		sidebar.appendChild(newRegion);
 	});
 }
 
