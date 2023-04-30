@@ -107,7 +107,6 @@
 .polaroid-frame {
   display: inline-block;
   max-width: 300px;
-  margin-bottom: 10px;
   padding: 10px;
   background-color: white;
   drop-shadow: inset 8px 8px 20px gray;
