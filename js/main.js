@@ -114,9 +114,9 @@ data.forEach(region =>
 			newPrefecture.innerHTML = getBilingualTitle(prefecture.englishName, prefecture.japaneseName);
 			newRegion.appendChild(newPrefecture);
 		}
-	}
+	});
 	document.getElementById("sidebar").appendChild(newRegion);
-})
+});
 
 // Photo gallery
 let selectedRegion = "";
