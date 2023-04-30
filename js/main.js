@@ -131,7 +131,9 @@ function main(){
 	document.getElementById("sidebar-bg").addEventListener("click", changeSidebarVisibility);
 	
 	fetch('js/data.json')
-	  .then(response => { console.log(response); response.json();})
+	  .then(response => { 
+	  	console.log(response); 
+		returnresponse.json();})
 	  .then(d => {data = d; 
 	  		console.log(d);
 			document.addEventListener("DOMContentLoaded", function(event) {
