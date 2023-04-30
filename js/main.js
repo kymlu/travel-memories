@@ -84,6 +84,40 @@ function changeSidebarVisibility(){
 document.getElementById("sidebar-btn").addEventListener("click", changeSidebarVisibility);
 document.getElementById("sidebar-bg").addEventListener("click", changeSidebarVisibility);
 
+const regionGroup = document.createElement("div");
+regionGroup.classList.add("region-group");
+
+const regionTitle = document.createElement("div");
+regionTitle.classList.add("region-text");
+
+const visitedPref = document.createElement("div");
+visitedPref.classList.add("prefecture-text", "visited-pref-text");
+
+const unvisitedPref = document.createElement("div");
+unvisitedPref.classList.add("prefecture-text", "locked-pref-text");
+data.forEach(region => 
+{
+	const newRegion = regionGroup.cloneNode();
+	const newRegionTitle = regionTitle.cloneNode();
+	newRegionTitle.innerHTML = getBilingualTitle(region.englishName, region.japaneseName);
+	newRegion.appendChild(newRegionTitle);
+	region.prefectures.forEach(prefecture => {
+		if (prefecture.visited){
+			const newPrefecture = visitedPref.cloneNode();
+			newPrefecture.innerHTML = getBilingualTitle(prefecture.englishName, prefecture.japaneseName);
+			newPrefecture.addEventListener("click", function(){
+				changeRegion(prefecture.englishName);
+				}, false);
+			newRegion.appendChild(newPrefecture);
+		} else {
+			const newPrefecture = unvisitedPref.cloneNode();
+			newPrefecture.innerHTML = getBilingualTitle(prefecture.englishName, prefecture.japaneseName);
+			newRegion.appendChild(newPrefecture);
+		}
+	}
+	document.getElementById("sidebar").appendChild(newRegion);
+})
+
 // Photo gallery
 let selectedRegion = "";
 
