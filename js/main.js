@@ -128,8 +128,11 @@ function main(){
 	fetch('js/data.json')
 	  .then(response => { console.log(response); response.json();})
 	  .then(d => {data = d; 
-		      console.log(d);
-		      createSidebar();})
+	  		console.log(d);
+			document.addEventListener("DOMContentLoaded", function(event) {
+				createSidebar();
+			});
+		})
 	  .catch(error => {console.error(error); });
 	  
 	document.getElementById("popup-close-btn").addEventListener("click", changePopupVisibility);
