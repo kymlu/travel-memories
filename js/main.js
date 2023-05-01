@@ -126,11 +126,13 @@ function createMap(data){
 	iwate.classList.add("pref-img");
 	
 	const prefList = data.flatMap(region => region.prefectures);
+	console.log(prefList);
 	prefList.forEach(pref => {
 		console.log(pref);
 		const prefImg = japanDocument.getElementsById(pref.english_name.toLowerCase() + "-img");
 		if(pref.visited) {
-			prefImg.classList.add("pref-img");
+			prefImg.setAttribute('fill', 'yellow');
+			//prefImg.classList.add("pref-img");
 			prefImg.addEventListener("click", function(){
 				changeRegion(pref.english_name);
 			}, false);
