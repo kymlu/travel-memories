@@ -1,8 +1,10 @@
 // Variables
 let selectedRegion = "";
+let selectedPicture = null;
 let isSidebarVisible = false;
 let isPopupVisible = false;
 let isGalleryVisible = false;
+let isPictureVisible = false;
 let data = null;
 
 // Text
@@ -123,6 +125,14 @@ function changeRegion(newRegion){
   document.getElementById("pref-dates").innerHTML = getBilingualTitle(prefData.dates_english, prefData.dates_japanese);
   document.getElementById("pref-desc").innerHTML = getBilingualTitle(prefData.description_english, prefData.description_japanese);
 	changeGalleryVisibility();
+}
+
+function changeSelectedPicture(newPicture){
+	
+}
+
+function changePictureVisibility(){
+	isPictureVisible = !isPictureVisible;
 }
 
 //document.getElementById("Shiga").style.fill = "green";
