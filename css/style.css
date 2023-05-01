@@ -110,7 +110,7 @@
   max-width: 300px;
   padding: 10px;
   background-color: white;
-  drop-shadow: inset 8px 8px 20px gray;
+  box-shadow: inset 8px 8px 20px gray;
 }
 
 .polaroid-img {
