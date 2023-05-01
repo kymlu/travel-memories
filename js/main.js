@@ -71,7 +71,7 @@ function changeGalleryVisibility(){
 function changeSidebarVisibility(){
   isSidebarVisible = !isSidebarVisible;
   document.getElementById("sidebar").style.visibility = isSidebarVisible ? "visible" : "hidden";
-  document.getElementById("sidebar-bg").style.visibility = isSidebarVisible ? "visible" : "hidden";
+  document.getElementById("popup-bg").style.visibility = isSidebarVisible ? "visible" : "hidden";
 }
 
 function createSidebar(data){
