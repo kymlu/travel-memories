@@ -113,8 +113,7 @@
   height: 420px;
   padding: 10px;
   background-color: white;
-  box-shadow: inset 8px 8px 20px beige;
-  filter: box-shadow(8px 8px 20px lightgray)
+  box-shadow: inset 8px 8px 20px beige, 8px 8px 20px lightgray;
 }
 
 .polaroid-img {
