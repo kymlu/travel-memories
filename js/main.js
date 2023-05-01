@@ -143,7 +143,7 @@ function createMap(data){
 			  });
 
 		} else {
-			prefImg.setAttribute('fill', 'grey');
+			prefImg.setAttribute('fill', 'lightgray');
 		}
 	});
 }
