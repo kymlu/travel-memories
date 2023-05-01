@@ -118,13 +118,18 @@ function createSidebar(data){
 // Map
 function createMap(data){
 	console.log("createmap")
-	const prefList = data.flatMap(region => region.prefectures);
 	const svgObj = document.getElementById('japan-map');
 	const svgDoc = svgObj.contentDocument;
+	const akita = svgDoc.getElementById('akita-img');
+	akita.setAttribute('fill', 'royalblue'); 
+	const iwate = svgDoc.getElementById('iwate-img');
+	iwate.classList.add("pref-img");
+	
+	const prefList = data.flatMap(region => region.prefectures);
 	prefList.forEach(pref => {
 		console.log(pref);
 		const prefImg = japanDocument.getElementsById(pref.english_name.toLowerCase() + "-img");
-		if(pref.visited){
+		if(pref.visited) {
 			prefImg.classList.add("pref-img");
 			prefImg.addEventListener("click", function(){
 				changeRegion(pref.english_name);
@@ -133,11 +138,6 @@ function createMap(data){
 			prefImg.classList.add("locked-pref-img");
 		}
 	});
-			 
-	const akita = svgDoc.getElementById('akita-img');
-	akita.setAttribute('fill', 'royalblue'); 
-	const iwate = svgDoc.getElementById('iwate-img');
-	iwate.classList.add("pref-img");
 }
 
 // Photo gallery
@@ -185,7 +185,7 @@ function main(){
 		return response.json();})
 	  .then(d => {data = d; 
 	  		// console.log(d);
-			createSidebar(d);
+		      createSidebar(d);
 		      createMap(d);
 		})
 	  .catch(error => {console.error(error); });
