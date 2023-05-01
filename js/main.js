@@ -131,15 +131,15 @@ function createMap(data){
 			prefImg.setAttribute('transition', 'fill 0.3s ease-in-out');
 			prefImg.setAttribute('fill', 'white');
 			prefImg.setAttribute('stroke', 'red');
-			prefImg.setAttribute('stroke-width', '30px');
+			prefImg.setAttribute('stroke-width', '20px');
 			prefImg.addEventListener("click", function(){
 				changeRegion(pref.english_name);
 			});  
 			prefImg.addEventListener('mouseover', () => {
-			    prefImg.setAttribute('fill', 'red;');
+			    prefImg.setAttribute('fill', 'red');
 			  });
 			  prefImg.addEventListener('mouseout', () => {
-			    prefImg.setAttribute('fill', 'white;');
+			    prefImg.setAttribute('fill', 'white');
 			  });
 
 		} else {
