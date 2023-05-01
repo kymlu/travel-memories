@@ -107,10 +107,13 @@
 
 .polaroid-frame {
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  align-content: space-between
+  align-content: space-between;
   width: 340px;
   height: 420px;
+  max-width: 340px;
+  max-height: 420px;
   padding: 10px;
   background-color: white;
   box-shadow: inset 8px 8px 20px beige, 8px 8px 20px lightgray;
