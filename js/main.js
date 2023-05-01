@@ -98,7 +98,7 @@ function createMap(data){
 			prefImg.setAttribute('fill', 'lightgray');
 		}
 	});
-	}, 10);
+	}, 100);
 }
 
 // Photo gallery
