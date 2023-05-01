@@ -90,19 +90,23 @@
 }
 
 .timeline-branch-left {
-  translate: 100px 50px;
+  translate: 150px 50px;
   width: 50%;
  /*justify-self: flex-end;*/
   color: black;
   height: 3px;
+  border-width:0;
+  background-color: black;
 }
 
 .timeline-branch-right {
-  translate: -100px 50px;
+  translate: -150px 50px;
   width: 50%;
  /*justify-self: flex-end;*/
   color: black;
   height: 3px;
+  border-width:0;
+  background-color: black;
 }
 
 .polaroid-frame {
