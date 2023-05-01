@@ -259,12 +259,13 @@ function main(){
 	
 	const prefNameTooltip = document.getElementById('pref-name');
 	document.addEventListener('mousemove', function(event) {
-		if(hoveredRegion != ""){
-			const x = event.pageX;
-			const y = event.pageY;
+		//if(hoveredRegion != ""){
+			const x = event.clientX;
+			const y = event.clientY;
 			prefNameTooltip.style.left = x + 'px';
 			prefNameTooltip.style.top = y + 'px';
-		}});
+		//}
+	});
 }
 
   
