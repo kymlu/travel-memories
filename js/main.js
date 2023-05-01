@@ -115,6 +115,23 @@ function createSidebar(data){
 	});
 }
 
+// Map
+function createMap(data){
+	const prefList = data.flatMap(region => region.prefectures);
+	const svgObj = document.getElementById('japan-map');
+	const svgDoc = svgObj.contentDocument;
+	prefList.forEach((pref) => {
+		const prefImg = japanDocument.getElementsById(pref.english_name.toLowerCase() + "-img");
+		if(pref.visited){
+			prefImg.classList.add("pref-img");
+			prefImg.addEventListener("click", function(){
+				changeRegion(prefecture.english_name);}, false);
+		} else {
+			prefImg.classList.add("locked-pref-img");
+		}
+	}
+}
+
 // Photo gallery
 function changeRegion(newRegion){
 // add catch error?
@@ -174,6 +191,7 @@ function main(){
 	  .then(d => {data = d; 
 	  		// console.log(d);
 			createSidebar(d);
+		      createMap();
 		})
 	  .catch(error => {console.error(error); });
 	  
@@ -207,10 +225,11 @@ function main(){
 	    changePopupVisibility();
 	  }
 	})
-	window.onload = function() {
+	
+	/*window.onload = function() {
 		console.log("start");
 		const svgObject = document.getElementById('shiga');
-		const svgDoc = svgObject.contentDocument;
+		const svgDoc = svgObject.contentDocument;*/
 		
 		//so the following works
 		/*const svg = svgDoc.getElementsByTagName('svg')[0];
@@ -219,7 +238,7 @@ function main(){
 		svg.setAttribute('stroke', 'salmonbrown');
 		svg.setAttribute('stroke-width', '20px');*/
 		//the following also works
-		const path = svgDoc.getElementsByTagName('path')[0];
+		/*const path = svgDoc.getElementsByTagName('path')[0];
 		path.classList.add('pref-pic');
 		path.setAttribute('fill', 'purple'); 
 		path.setAttribute('stroke', 'crimson');
@@ -238,10 +257,7 @@ function main(){
 		const akita = japanDocument.getElementById('akita-img');
 		console.log(akita);
 		akita.setAttribute('fill', 'royalblue'); 
-	}
-  
-
-  
+	}*/
 	document.getElementById("filter-food").addEventListener("mouseover", function(event) {document.getElementById("filter-food-txt").style.display = "inline";});
 	document.getElementById("filter-food").addEventListener("mouseout", function(event) {if(currentFilter != "filter-food"){document.getElementById("filter-food-txt").style.display = "none";}});
 	document.getElementById("filter-food").addEventListener("click", function(event) {changeGalleryFilter("filter-food");});
