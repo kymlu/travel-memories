@@ -225,11 +225,14 @@ function main(){
 		path.setAttribute('stroke', 'crimson');
 		path.setAttribute('stroke-width', '20px');
 			
+		// path method
 		const japanImg = document.getElementById('japan');
 		console.log("trying to color the map...");
 		const japanDocument = japanImg.contentDocument;
-		const firstPath = svgDoc.getElementsByTagName('path')[0];
+		const firstPath = japanDocument.getElementsByTagName('path')[0];
 		firstPath.setAttribute("fill", "yellow");
+		
+		// old method?
 		const akita = japanDocument.getElementById('akita-img');
 		console.log(akita);
 		akita.setAttribute('fill', 'royalblue'); 
