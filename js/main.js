@@ -133,14 +133,14 @@ function changeRegion(newRegion){
 
 function changeGalleryFilter(newFilter){
 	if(currentFilter != ""){
-		document.getElementById(currentFilter + "-txt").style.display = none;
+		document.getElementById(currentFilter + "-txt").style.display = "none";
 	}
 	
 	if(newFilter == currentFilter){
 		currentFilter = "";
 	} else {
 		currentFilter = newFilter;
-		document.getElementById(newFilter + "-txt").style.display = inline;
+		document.getElementById(newFilter + "-txt").style.display = "inline";
 	}
 }
 
