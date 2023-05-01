@@ -120,16 +120,23 @@ function createMap(data){
 	const prefList = data.flatMap(region => region.prefectures);
 	const svgObj = document.getElementById('japan-map');
 	const svgDoc = svgObj.contentDocument;
-	prefList.forEach((pref) => {
+	prefList.forEach(pref => {
+		console.log(pref);
 		const prefImg = japanDocument.getElementsById(pref.english_name.toLowerCase() + "-img");
 		if(pref.visited){
 			prefImg.classList.add("pref-img");
 			prefImg.addEventListener("click", function(){
-				changeRegion(prefecture.english_name);}, false);
+				changeRegion(pref.english_name);
+			}, false);
 		} else {
 			prefImg.classList.add("locked-pref-img");
 		}
 	}
+			 
+	const akita = japanDocument.getElementById('akita-img');
+	akita.setAttribute('fill', 'royalblue'); 
+	const iwate = japanDocument.getElementById('iwate-img');
+	iwate.classList.add("pref-img");
 }
 
 // Photo gallery
