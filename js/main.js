@@ -130,7 +130,8 @@ function createMap(data){
 	prefList.forEach(pref => {
 		console.log(pref);
 		const prefImg = japanDocument.getElementsById(pref.english_name.toLowerCase() + "-img");
-		if(pref.visited) {
+		prefImg.setAttribute('fill', 'yellow');
+		/*if(pref.visited) {
 			prefImg.setAttribute('fill', 'yellow');
 			//prefImg.classList.add("pref-img");
 			prefImg.addEventListener("click", function(){
@@ -138,7 +139,7 @@ function createMap(data){
 			}, false);
 		} else {
 			prefImg.classList.add("locked-pref-img");
-		}
+		}*/
 	});
 }
 
