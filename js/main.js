@@ -195,7 +195,7 @@ function main(){
 		  .then(d => {data = d; 
 				// console.log(d);
 			      createSidebar(d);
-			      createMap(d);
+			      setTimeout(()=>{createMap(d);}, 1000);
 			})
 		  .catch(error => {console.error(error); });
 	
