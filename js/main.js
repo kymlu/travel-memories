@@ -210,20 +210,20 @@ function main(){
 	  }
 	})
   
-	document.getElementById("filter-food").addEventListener("hover", function(event) {document.getElementById("filter-food-txt").style.display = "inline";});
-	document.getElementById("filter-food").addEventListener("click", function(event) {changeGalleryFilter("filter-food");});
+	document.getElementById("filter-food").addEventListener("hover", function(event) {console.log("food"); document.getElementById("filter-food-txt").style.display = "inline";});
+	document.getElementById("filter-food").addEventListener("click", function(event) {console.log("food2"); changeGalleryFilter("filter-food");});
 	
-	document.getElementById("filter-nat").addEventListener("hover", function(event) {document.getElementById("filter-nat-txt").style.display = "inline";});
-	document.getElementById("filter-nat").addEventListener("click", function(event) {changeGalleryFilter("filter-nat");});
+	document.getElementById("filter-nat").addEventListener("hover", function(event) {console.log("nature"); document.getElementById("filter-nat-txt").style.display = "inline";});
+	document.getElementById("filter-nat").addEventListener("click", function(event) {console.log("nature2"); changeGalleryFilter("filter-nat");});
 	
-	document.getElementById("filter-art").addEventListener("hover", function(event) {document.getElementById("filter-art-txt").style.display = "inline";});
-	document.getElementById("filter-art").addEventListener("click", function(event) {changeGalleryFilter("filter-art");});
+	document.getElementById("filter-art").addEventListener("hover", function(event) {console.log("art"); document.getElementById("filter-art-txt").style.display = "inline";});
+	document.getElementById("filter-art").addEventListener("click", function(event) {console.log("art2"); changeGalleryFilter("filter-art");});
 	
-	document.getElementById("filter-attr").addEventListener("hover", function(event) {document.getElementById("filter-attr-txt").style.display = "inline";});
-	document.getElementById("filter-attr").addEventListener("click", function(event) {changeGalleryFilter("filter-attr");});
+	document.getElementById("filter-attr").addEventListener("hover", function(event) {console.log("attractions"); document.getElementById("filter-attr-txt").style.display = "inline";});
+	document.getElementById("filter-attr").addEventListener("click", function(event) {console.log("attractions2"); changeGalleryFilter("filter-attr");});
 	
-	document.getElementById("filter-myst").addEventListener("hover", function(event) {document.getElementById("filter-myst-txt").style.display = "inline";});
-	document.getElementById("filter-myst").addEventListener("click", function(event) {changeGalleryFilter("filter-myst");});
+	document.getElementById("filter-myst").addEventListener("hover", function(event) {console.log("mystery"); document.getElementById("filter-myst-txt").style.display = "inline";});
+	document.getElementById("filter-myst").addEventListener("click", function(event) {console.log("mystery2"); changeGalleryFilter("filter-myst");});
 }
 
   
