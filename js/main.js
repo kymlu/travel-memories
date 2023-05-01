@@ -218,11 +218,12 @@ function main(){
 	document.getElementById("filter-myst").addEventListener("mouseout", function(event) {if(currentFilter != "filter-myst"){document.getElementById("filter-myst-txt").style.display = "none";}});
 	document.getElementById("filter-myst").addEventListener("click", function(event) {changeGalleryFilter("filter-myst");});
 	
-	const prefNameTooltip = document.getElementById('pref-name');
+	const prefNameTooltip = document.getElementById('pref-tooltip');
 	document.addEventListener('mousemove', function(event) {
 		setTimeout(function() {
 			const x = event.clientX;
 			const y = event.clientY;
+			console.log(x, y);
 			prefNameTooltip.style.left = x + 'px';
 			prefNameTooltip.style.top = y + 'px';
 		}, 10);
