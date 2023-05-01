@@ -8,6 +8,8 @@ var isPictureVisible = false;
 var currentFilter = "";
 var data = null;
 
+const appColor = "#be0029"
+
 // Text
 function getBilingualTitle(englishName, japaneseName){
 	return englishName + " / " + japaneseName; 
@@ -129,7 +131,7 @@ function createMap(data){
 		const prefImg = svgDoc.getElementById(pref.english_name.toLowerCase() + "-img");
 		if(pref.visited) {
 			prefImg.setAttribute('transition', 'opacity 0.3s ease-in-out');
-			prefImg.setAttribute('fill', 'red');
+			prefImg.setAttribute('fill', appColor);
 			prefImg.setAttribute('stroke', 'none');
 			prefImg.setAttribute('cursor', 'pointer');
 			prefImg.addEventListener("click", function(){
