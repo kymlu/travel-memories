@@ -135,20 +135,19 @@ function createMap(data){
 			prefImg.setAttribute('transition', 'fill 0.3s ease-in-out');
 			prefImg.setAttribute('fill', 'white');
 			prefImg.setAttribute('stroke', 'red');
-			prefImg.setAttribute('stroke-width', '15px');
+			prefImg.setAttribute('stroke-width', '30px');
 			prefImg.addEventListener("click", function(){
 				changeRegion(pref.english_name);
-			}, false);  
-			svg.addEventListener('mouseover', () => {
-			    svg.setAttribute('fill', 'red;');
+			});  
+			prefImg.addEventListener('mouseover', () => {
+			    prefImg.setAttribute('fill', 'red;');
 			  });
-			  svg.addEventListener('mouseout', () => {
-			    svg.setAttribute('fill', 'white;');
+			  prefImg.addEventListener('mouseout', () => {
+			    prefImg.setAttribute('fill', 'white;');
 			  });
 
 		} else {
 			prefImg.setAttribute('fill', 'grey');
-			prefImg.classList.add("locked-pref-img");
 		}
 	});
 }
