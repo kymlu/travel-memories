@@ -121,9 +121,9 @@ function createMap(data){
 	console.log("createmap")
 	const svgObj = document.getElementById('japan-map');
 	const svgDoc = svgObj.contentDocument;
-	/*const akita = svgDoc.getElementById('akita-img');
-	akita.setAttribute('fill', 'royalblue'); 
-	const iwate = svgDoc.getElementById('iwate-img');
+	const akita = svgDoc.getElementById('tokyo-img');
+	akita.setAttribute('fill', 'pink'); 
+	/*const iwate = svgDoc.getElementById('iwate-img');
 	iwate.classList.add("pref-img");*/
 	
 	const prefList = data.flatMap(region => region.prefectures);
