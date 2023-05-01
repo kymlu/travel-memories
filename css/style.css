@@ -97,6 +97,7 @@
   height: 3px;
   border-width:0;
   background-color: black;
+  z-index: -1;
 }
 
 .timeline-branch-right {
@@ -107,6 +108,7 @@
   height: 3px;
   border-width:0;
   background-color: black;
+  z-index: -1;
 }
 
 .polaroid-frame {
