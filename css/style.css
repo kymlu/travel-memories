@@ -89,24 +89,16 @@
   box-shadow: inset 500px 0 0 0 #be0029;
 }
 
-.pref-img {
-  stroke: pink;
-  fill: white;
-  stroke-width: 30px;
-  transition: color .3s ease-in-out;
-}
-
-.pref-img:hover {
-  fill: pink; 
-}
-
-.locked-pref-img {
-  stroke: none;
-  fill: grey;
-}
-
-.timeline-branch {
+.timeline-branch-left {
   translate: 100px 50px;
+  width: 50%;
+ /*justify-self: flex-end;*/
+  color: black;
+  height: 3px;
+}
+
+.timeline-branch-right {
+  translate: -100px 50px;
   width: 50%;
  /*justify-self: flex-end;*/
   color: black;
