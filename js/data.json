@@ -36,7 +36,7 @@
         "dates_english": "October 21-23, 2022",
         "dates_japanese": "2022年10月21〜23日",
         "description_english": "My first solo venture after the school year started! Attended the annual temari competition to see works and report back to my mom, who makes temari.",
-        "description_japanese": "",
+        "description_japanese": "学校始まったからの初一人旅！第53回ごてんまりコンクールを見に行って、手毬作りが趣味母に写真を送ってあげた。",
         "image_list": []
       },
       {
@@ -86,8 +86,8 @@
         "visited": true,
         "dates_english": "December 22, 2022",
         "dates_japanese": "2022年12月22日",
-        "description_english": "Tokyo Disney Sea is technically in the Chiba Prefecture haha",
-        "description_japanese": "「東京ディズニーシー」って名前だけど、千葉県にいた。",
+        "description_english": "Though it's called Tokyo Disney Sea, it's technically located in the Chiba Prefecture.",
+        "description_japanese": "「東京ディズニーシー」って名前だけど、千葉県にあった。",
         "image_list": []
       },
       {
@@ -107,7 +107,7 @@
         "dates_english": "",
         "dates_japanese": "",
         "description_english": "Went several times to different cities and towns with friends on 1-2 day trips. Convenient to access since it's left of Tokyo.",
-        "description_japanese": "神奈川県に日帰り旅は結構行った。東京に近いから便利だし。",
+        "description_japanese": "神奈川県に日帰り旅は結構行った。東京に近くて便利から、行きやすい。",
         "image_list": []
       }
     ]
@@ -137,8 +137,8 @@
         "visited": true,
         "dates_english": "March 22, 2023",
         "dates_japanese": "2023年3月22日",
-        "description_english": "",
-        "description_japanese": "",
+        "description_english": "Went to Kanazawa for the second stop of my Hokuriku trip. Overall, I'd say it's a nice mix of city and culture, I like it quite a bit. Maybe a little too much promotion of gold leaf products though.",
+        "description_japanese": "北陸の旅の中で金沢は二番目。都会と伝統的な文化のバランスが良いから、結構好き。金箔ありすぎけど。",
         "image_list": []
       },
       {
@@ -147,7 +147,7 @@
         "visited": true,
         "dates_english": "March 20-21, 2023",
         "dates_japanese": "2023年3月20〜21日",
-        "description_english": "My first stop in the Hokuriku portion of my trip.",
+        "description_english": "My first stop in the Hokuriku portion of my trip. I felt like the buildings in the main station area had personality and it was convenient getting around. Tojinbo was definitely the highlight.",
         "description_japanese": "",
         "image_list": []
       },
@@ -167,7 +167,7 @@
         "visited": true,
         "dates_english": "February 12-16, 2023",
         "dates_japanese": "2023年2月12〜16日",
-        "description_english": "",
+        "description_english": "Despite actively avoiding snowy places for the longest time, I finally went to Takayama. Thankfully there wasn't much snow around.",
         "description_japanese": "",
         "image_list": []
       },
@@ -175,9 +175,9 @@
         "english_name": "Shizuoka",
         "japanese_name": "静岡県",
         "visited": true,
-        "dates_english": "",
-        "dates_japanese": "March 24-30, 2023",
-        "description_english": "2023年3月24〜30日",
+        "dates_english": "March 24-30, 2023",
+        "dates_japanese": "2023年3月24〜30日",
+        "description_english": "Stayed here for a week to rest after going to so many different places in a short period. Was in Matsuzaki, which is a small town in the south-western portion of the Izu Peninsula. It's a quaint town with good food and very friendly people.",
         "description_japanese": "",
         "image_list": []
       },
@@ -218,7 +218,7 @@
         "visited": true,
         "dates_english": "November 1-6, 2022; February 27-March 1, 2023",
         "dates_japanese": "2022年11月1〜6日、2023年2月27日〜3月1日",
-        "description_english": "",
+        "description_english": "Went the first time during my mid-term school break. I used Kyoto as a home base but made trips most days to other prefectures that were close by. The second time I went after school was complete.",
         "description_japanese": "",
         "image_list": []
       },
@@ -238,7 +238,7 @@
         "visited": true,
         "dates_english": "November 4, 2022",
         "dates_japanese": "2022年11月4日",
-        "description_english": "",
+        "description_english": "Went here on a day trip from Kyoto. I was pretty tired so I didn't get to see many places, but, to be honest, the places that I did go to didn't wow me too much.",
         "description_japanese": "",
         "image_list": []
       },
@@ -248,7 +248,7 @@
         "visited": true,
         "dates_english": "November 3, 2022",
         "dates_japanese": "2022年11月3日",
-        "description_english": "",
+        "description_english": "The first day trip from Kyoto was to here. The deer are extremely fun to watch and the nature is beautiful.",
         "description_japanese": "",
         "image_list": []
       },
@@ -257,8 +257,8 @@
         "japanese_name": "和歌山県",
         "visited": true,
         "dates_english": "February 9-12, 2023",
-        "dates_japanese": "2023年2月9〜12日",
-        "description_english": "",
+        "dates_japanese": "2023年2月9〜12日", 
+        "description_english": "Came here with my mom to go seee Nachi Falls. Unfortunately, winter is the worst time of year to see a waterfall since it's so dry, but the town of Nachi Katsuura, where we stayed, was a nice and peaceful coastal town.",
         "description_japanese": "",
         "image_list": []
       }
@@ -274,7 +274,7 @@
         "visited": true,
         "dates_english": "March 17-20, 2023",
         "dates_japanese": "2023年3月17〜20日",
-        "description_english": "",
+        "description_english": "Tottori is somewhere that I've wanted to go for a long time and I'm happy I was able to go.",
         "description_japanese": "",
         "image_list": []
       },
@@ -289,7 +289,7 @@
         "visited": true,
         "dates_english": "March 15, 17, 2023",
         "dates_japanese": "2023年3月15、17日",
-        "description_english": "",
+        "description_english": "Okayama was more of a place I stopped over to get from Fukuoka to Naoshima, and then from Naoshima to Tottori. I think Okayama City is a good day trip, had lots of statues, interesting building, and a castle on dark mode.",
         "description_japanese": "",
         "image_list": []
       },
@@ -299,7 +299,7 @@
         "visited": true,
         "dates_english": "January 3-5, 2023",
         "dates_japanese": "2023年1月3〜5日",
-        "description_english": "",
+        "description_english": "Came here during my winter break with two of my friends.",
         "description_japanese": "",
         "image_list": []
       },
@@ -325,7 +325,7 @@
         "visited": true,
         "dates_english": "March 16-17, 2023",
         "dates_japanese": "2023年3月16〜17日",
-        "description_english": "",
+        "description_english": "Went specifically for sanuki udon and Naoshima, an art gallery island. It was fun walking around the island trying to find all the sculptures I could.",
         "description_japanese": "",
         "image_list": []
       },
