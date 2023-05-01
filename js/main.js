@@ -1,12 +1,12 @@
 // Variables
-let selectedRegion = "";
-let selectedPicture = null;
-let isSidebarVisible = false;
-let isPopupVisible = false;
-let isGalleryVisible = false;
-let isPictureVisible = false;
-let currentFilter = "";
-let data = null;
+var selectedRegion = "";
+var selectedPicture = null;
+var isSidebarVisible = false;
+var isPopupVisible = false;
+var isGalleryVisible = false;
+var isPictureVisible = false;
+var currentFilter = "";
+var data = null;
 
 // Text
 function getBilingualTitle(englishName, japaneseName){
