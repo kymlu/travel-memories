@@ -105,6 +105,14 @@
   fill: grey;
 }
 
+.timeline-branch {
+  translate: 100px 50px;
+  width: 50%;
+ /*justify-self: flex-end;*/
+  color: black;
+  height: 3px;
+}
+
 .polaroid-frame {
   display: flex;
   flex-direction: column;
