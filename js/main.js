@@ -16,63 +16,6 @@ function getBilingualTitle(englishName, japaneseName){
 	return englishName + " / " + japaneseName; 
 }
 
-// Popup
-function changePopupVisibility(){
-  isPopupVisible = !isPopupVisible;
-  document.getElementById("popup").style.visibility = isPopupVisible ? "visible" : "hidden";
-  document.getElementById("popup-bg").style.visibility = isPopupVisible ? "visible" : "hidden";
-}
-
-function changeGalleryVisibility(){
-  isGalleryVisible = !isGalleryVisible;
-  document.getElementById("japan-map").style.display = isGalleryVisible ? "none" : "block";
-  document.getElementById("gallery").style.display = isGalleryVisible ? "block" : "none";
-  document.getElementById("switch-btn").style.display = isGalleryVisible ? "block" : "none";
-}
-
-// Map
-/*window.onload = function() {
-  const svgObject = document.getElementById('japan');
-  const svgDoc = svgObject.contentDocument;
-  const svg = svgDoc.getElementsByTagName('svg')[0];
-  svg.classList.add('pref-img');
-  svg2.classList.add('locked-pref-img');
-  setTimeout(() => {
-    svg.classList.add('pref-img');
-    svg2.classList.add('locked-pref-img');
-  }, 1000);
-  
-  svg.setAttribute('viewBox', '600 600 650 650');
-  svg.setAttribute('height', '500');
-  svg.setAttribute('width', '500');
-  setTimeout(()=>{
-  svg.setAttribute('fill', 'pink');
-  svg.setAttribute('stroke', 'pink');
-  svg.setAttribute('stroke-width', '20px');
-  
-  
-  const svg2 = document.getElementById('akita-img');
-  svg2.setAttribute("fill", "blue");},100);
-  
-  
-			var svgDoc5 = document.getElementsByTagName('object')[0].contentDocument;
-			var path5 = svgDoc5.getElementById('iwate-img');
-			path5.style.fill = 'purple';
-			const tokyo = document.querySelector('#tokyo-img');
-			tokyo.style.fill = 'peru';
-  
-  setTimeout(() => {
-  svg.setAttribute('style', 'stroke: pink; fill: white; stroke-width: 30px;');
-  svg.addEventListener('mouseover', () => {
-    svg.setAttribute('style', 'fill: pink;');
-  });
-  svg.addEventListener('mouseout', () => {
-    svg.setAttribute('style', 'fill: white;');
-  });
-   svg.setAttribute('pointer-events', 'none');
- });
-}*/
-
 // Sidebar
 function changeSidebarVisibility(){
   isSidebarVisible = !isSidebarVisible;
@@ -127,7 +70,6 @@ function createMap(data){
 	
 	const prefList = data.flatMap(region => region.prefectures);
 	prefList.forEach(pref => {
-		console.log(pref);
 		const prefImg = svgDoc.getElementById(pref.english_name.toLowerCase() + "-img");
 		if(pref.visited) {
 			prefImg.setAttribute('transition', 'opacity 0.3s ease-in-out');
@@ -189,6 +131,23 @@ function changeSelectedPicture(newPicture){
 
 function changePictureVisibility(){
 	isPictureVisible = !isPictureVisible;
+}
+
+// Popup
+function changePopupVisibility(){
+  isPopupVisible = !isPopupVisible;
+  document.getElementById("popup").style.visibility = isPopupVisible ? "visible" : "hidden";
+  document.getElementById("popup-bg").style.visibility = isPopupVisible ? "visible" : "hidden";
+}
+
+function changeGalleryVisibility(){
+  isGalleryVisible = !isGalleryVisible;
+  document.getElementById("japan-map").style.display = isGalleryVisible ? "none" : "block";
+  document.getElementById("gallery").style.display = isGalleryVisible ? "block" : "none";
+  document.getElementById("switch-btn").style.display = isGalleryVisible ? "block" : "none";
+	if (!isGalleryVisible){
+		createMap(data);
+	}
 }
 
 function main(){
