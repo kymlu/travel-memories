@@ -181,17 +181,6 @@ function changePictureVisibility(){
 function main(){
 	document.getElementById("sidebar-btn").addEventListener("click", changeSidebarVisibility);
 	document.getElementById("sidebar-bg").addEventListener("click", changeSidebarVisibility);
-	
-	fetch('js/data.json')
-	  .then(response => { 
-	  	console.log(response); 
-		return response.json();})
-	  .then(d => {data = d; 
-	  		// console.log(d);
-		      createSidebar(d);
-		      createMap(d);
-		})
-	  .catch(error => {console.error(error); });
 	  
 	document.getElementById("popup-close-btn").addEventListener("click", changePopupVisibility);
 	document.getElementById("popup-bg").addEventListener("click", changePopupVisibility);
@@ -252,6 +241,16 @@ function main(){
 		const akita = japanDocument.getElementById('akita-img');
 		console.log(akita);
 		akita.setAttribute('fill', 'royalblue'); 
+		fetch('js/data.json')
+		  .then(response => { 
+			console.log(response); 
+			return response.json();})
+		  .then(d => {data = d; 
+				// console.log(d);
+			      createSidebar(d);
+			      createMap(d);
+			})
+		  .catch(error => {console.error(error); });
 	}
 	document.getElementById("filter-food").addEventListener("mouseover", function(event) {document.getElementById("filter-food-txt").style.display = "inline";});
 	document.getElementById("filter-food").addEventListener("mouseout", function(event) {if(currentFilter != "filter-food"){document.getElementById("filter-food-txt").style.display = "none";}});
