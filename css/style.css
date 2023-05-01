@@ -130,7 +130,7 @@
   overflow: hidden;
 }
 
-.rotate_right1 {
+.rotate-right1 {
   display: inline-block;
   float: left;
   -ms-transform: rotate(5deg); /* IE 9 */
@@ -138,7 +138,7 @@
   transform: rotate(5deg);
 }
 
-.rotate_right2 {
+.rotate-right2 {
   display: inline-block;
   float: left;
   -ms-transform: rotate(10deg); /* IE 9 */
@@ -146,7 +146,7 @@
   transform: rotate(10deg);
 }
 
-.rotate_right3 {
+.rotate-right3 {
   display: inline-block;
   float: left;
   -ms-transform: rotate(15deg); /* IE 9 */
@@ -154,7 +154,7 @@
   transform: rotate(15deg);
 }
 
-.rotate_left1 {
+.rotate-left1 {
   display: inline-block;
   float: left;
   -ms-transform: rotate(-3deg); /* IE 9 */
@@ -162,7 +162,7 @@
   transform: rotate(-3deg);
 }
 
-.rotate_left2 {
+.rotate-left2 {
   display: inline-block;
   float: left;
   -ms-transform: rotate(-9deg); /* IE 9 */
@@ -170,7 +170,7 @@
   transform: rotate(-9deg);
 }
 
-.rotate_left3 {
+.rotate-left3 {
   float: left;
   display: inline-block;
   -ms-transform: rotate(-16deg); /* IE 9 */
