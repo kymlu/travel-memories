@@ -106,7 +106,9 @@
 }
 
 .polaroid-frame {
-  display: inline-block;
+  display: flex;
+  justify-content: center;
+  align-content: space-between
   width: 340px;
   height: 420px;
   padding: 10px;
