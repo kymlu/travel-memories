@@ -142,12 +142,14 @@ function createMap(data){
 				prefImg.setAttribute('opacity', '50%');
 				hoveredRegion = pref.english_name;
 				document.getElementById("pref-name").style.display = "block";
+				document.getElementById("pref-name").innerHTML = pref.english_name;
 			  });
 
 			prefImg.addEventListener('mouseout', () => {
 				prefImg.setAttribute('opacity', '100%');
 				hoveredRegion = "";
 				document.getElementById("pref-name").style.display = "none";
+				document.getElementById("pref-name").innerHTML = "";
 			  });
 
 		} else {
