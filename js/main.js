@@ -208,6 +208,14 @@ function main(){
 	  }
 	})
 	window.onload = function() {
+		
+			const svgObject = document.getElementById('shiga');
+			const svgDoc = svgObject.contentDocument;
+			const svg = svgDoc.getElementsByTagName('svg')[0];
+			svg.classList.add('pref-pic');
+			svg.setAttribute('fill', 'aqua'); 
+			svg.setAttribute('stroke', 'salmonbrown');
+			svg.setAttribute('stroke-width', '20px');
   		setTimeout(()=>{
 			const japanImg = document.getElementById('japan');
 			console.log("trying to color the map...");
@@ -216,13 +224,6 @@ function main(){
 			console.log(akita);
 			akita.setAttribute('fill', 'royalblue'); 
 
-			const svgObject = document.getElementById('shiga');
-			const svgDoc = svgObject.contentDocument;
-			const svg = svgDoc.getElementsByTagName('svg')[0];
-			svg.classList.add('pref-pic');
-			svg.setAttribute('fill', 'aqua'); 
-			svg.setAttribute('stroke', 'salmonbrown');
-			svg.setAttribute('stroke-width', '20px');
 		}, 100);
 	}
   
