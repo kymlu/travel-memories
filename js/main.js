@@ -130,7 +130,7 @@ function createMap(data){
 	console.log(prefList);
 	prefList.forEach(pref => {
 		console.log(pref);
-		const prefImg = japanDocument.getElementsById(pref.english_name.toLowerCase() + "-img");
+		const prefImg = svgDoc.getElementsById(pref.english_name.toLowerCase() + "-img");
 		prefImg.setAttribute('fill', 'yellow');
 		/*if(pref.visited) {
 			prefImg.setAttribute('fill', 'yellow');
