@@ -5,6 +5,7 @@ let isSidebarVisible = false;
 let isPopupVisible = false;
 let isGalleryVisible = false;
 let isPictureVisible = false;
+let currentFilter = "";
 let data = null;
 
 // Text
@@ -127,6 +128,19 @@ function changeRegion(newRegion){
 	changeGalleryVisibility();
 }
 
+function changeGalleryFilter(newFilter){
+	if(currentFilter != ""){
+		document.getElementById(currentFilter + "-txt").style.display = none;
+	}
+	
+	if(newFilter == currentFilter){
+		currentFilter = "";
+	} else {
+		currentFilter = newFilter;
+		document.getElementById(newFilter + "-txt").style.display = inline;
+	}
+}
+
 function changeSelectedPicture(newPicture){
 	
 }
@@ -193,6 +207,21 @@ function main(){
 	  }
 	})
   
-  }
+	document.getElementById("filter-food").addEventListener("hover", ()=> {document.getElementById("filter-food-txt").style.display = "inline";});
+	document.getElementById("filter-food").addEventListener("click", ()=> {changeGalleryFilter("filter-food");});
+	
+	document.getElementById("filter-nat").addEventListener("hover", ()=> {document.getElementById("filter-nat-txt").style.display = "inline";});
+	document.getElementById("filter-nat").addEventListener("click", ()=> {changeGalleryFilter("filter-nat");});
+	
+	document.getElementById("filter-art").addEventListener("hover", ()=> {document.getElementById("filter-art-txt").style.display = "inline";});
+	document.getElementById("filter-art").addEventListener("click", ()=> {changeGalleryFilter("filter-art");});
+	
+	document.getElementById("filter-attr").addEventListener("hover", ()=> {document.getElementById("filter-attr-txt").style.display = "inline";});
+	document.getElementById("filter-attr").addEventListener("click", ()=> {changeGalleryFilter("filter-attr");});
+	
+	document.getElementById("filter-myst").addEventListener("hover", ()=> {document.getElementById("filter-myst-txt").style.display = "inline";});
+	document.getElementById("filter-myst").addEventListener("click", ()=> {changeGalleryFilter("filter-myst");});
+}
+
   
   main();
