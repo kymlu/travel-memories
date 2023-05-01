@@ -135,7 +135,9 @@ function changeGalleryFilter(newFilter){
 	if(newFilter == currentFilter){
 		currentFilter = "";
 	} else {
-		document.getElementById(currentFilter + "-txt").style.display = "none";
+		if(currentFilter != ""){
+			document.getElementById(currentFilter + "-txt").style.display = "none";
+		}
 		currentFilter = newFilter;
 	}
 }
