@@ -264,7 +264,7 @@ function main(){
 		if(hoveredRegion != ""){
 			const x = event.pageX;
 			const y = event.pageY;
-			prefNameTooltip.style.position = 'fixed';
+			prefNameTooltip.style.position = 'absolute';
 			prefNameTooltip.style.left = x + 'px';
 			prefNameTooltip.style.top = y + 'px';
 		}});
