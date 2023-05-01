@@ -131,24 +131,25 @@ function createMap(data){
 	prefList.forEach(pref => {
 		console.log(pref);
 		const prefImg = svgDoc.getElementById(pref.english_name.toLowerCase() + "-img");
-		prefImg.setAttribute('fill', 'yellow');
-		/*if(pref.visited) {
-			prefImg.setAttribute('fill', 'yellow');
-			//prefImg.classList.add("pref-img");
+		if(pref.visited) {
+			prefImg.setAttribute('transition', 'fill 0.3s ease-in-out');
+			prefImg.setAttribute('fill', 'white');
+			prefImg.setAttribute('stroke', 'red');
+			prefImg.setAttribute('stroke-width', '15px');
 			prefImg.addEventListener("click", function(){
 				changeRegion(pref.english_name);
 			}, false);  
 			svg.addEventListener('mouseover', () => {
-			    svg.setAttribute('style', 'fill: pink;');
+			    svg.setAttribute('fill', 'red;');
 			  });
 			  svg.addEventListener('mouseout', () => {
-			    svg.setAttribute('style', 'fill: white;');
+			    svg.setAttribute('fill', 'white;');
 			  });
 
 		} else {
 			prefImg.setAttribute('fill', 'grey');
 			prefImg.classList.add("locked-pref-img");
-		}*/
+		}
 	});
 }
 
