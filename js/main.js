@@ -27,6 +27,7 @@ function changeGalleryVisibility(){
   isGalleryVisible = !isGalleryVisible;
   document.getElementById("japan-map").style.display = isGalleryVisible ? "none" : "block";
   document.getElementById("gallery").style.display = isGalleryVisible ? "block" : "none";
+  document.getElementById("switch-btn").style.display = isGalleryVisible ? "block" : "none";
 }
 
 // Map
@@ -211,7 +212,7 @@ function main(){
 	document.getElementById("popup-close-btn").addEventListener("click", changePopupVisibility);
 	document.getElementById("popup-bg").addEventListener("click", changePopupVisibility);
 	document.getElementById("info-btn").addEventListener("click", changePopupVisibility);
-	//document.getElementById("switch-btn").addEventListener("click", changeGalleryVisibility);
+	document.getElementById("switch-btn").addEventListener("click", changeGalleryVisibility);
 	const div1 = document.createElement("div");
 	div1.innerHTML = "Pic of prefecture・都道府県の写真";
 	div1.id = "pref-pic";
