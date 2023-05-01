@@ -117,6 +117,7 @@ function createSidebar(data){
 
 // Map
 function createMap(data){
+	console.log("createmap")
 	const prefList = data.flatMap(region => region.prefectures);
 	const svgObj = document.getElementById('japan-map');
 	const svgDoc = svgObj.contentDocument;
@@ -131,7 +132,7 @@ function createMap(data){
 		} else {
 			prefImg.classList.add("locked-pref-img");
 		}
-	}
+	});
 			 
 	const akita = japanDocument.getElementById('akita-img');
 	akita.setAttribute('fill', 'royalblue'); 
@@ -174,19 +175,6 @@ function changePictureVisibility(){
 	isPictureVisible = !isPictureVisible;
 }
 
-//document.getElementById("Shiga").style.fill = "green";
-//document.getElementById("Shiga").style.stroke = "orange";
-// Create a clone of element with id ddl_1:
-//let clone = document.getElementById('Shiga').cloneNode( true ); 
-//let clone = document.getElementById('japan').cloneNode( true ); 
-// Change the id attribute of the newly created element:
-//clone.setAttribute( 'id', "shiga2" );
-
-//document.body.appendChild( clone );
-//clone.setAttribute("viewBox", "0 0 500 300"); 
-// Append the newly created element on element p 
-//document.getElementById('shiga').insertAfter( clone );
-
 function main(){
 	document.getElementById("sidebar-btn").addEventListener("click", changeSidebarVisibility);
 	document.getElementById("sidebar-bg").addEventListener("click", changeSidebarVisibility);
@@ -207,20 +195,20 @@ function main(){
 	document.getElementById("info-btn").addEventListener("click", changePopupVisibility);
 	//document.getElementById("switch-btn").addEventListener("click", changeGalleryVisibility);
 	const div1 = document.createElement("div");
-	div1.innerHTML = "Pic of prefecture・都道府県の写真"
-	div1.id = "pref-pic"
+	div1.innerHTML = "Pic of prefecture・都道府県の写真";
+	div1.id = "pref-pic";
 	const div2 = document.createElement("div");
-	div2.innerHTML = "Name of prefecture・都道府県"
-	div2.id = "pref-name"
+	div2.innerHTML = "Name of prefecture・都道府県";
+	div2.id = "pref-name";
 	const div3 = document.createElement("div");
-	div3.innerHTML = "Dates visited・日付"
-	div3.id = "pref-dates"
+	div3.innerHTML = "Dates visited・日付";
+	div3.id = "pref-dates";
 	const div4 = document.createElement("div");
-	div4.innerHTML = "Cities visited・町"
-	div4.id = "pref-cities"
+	div4.innerHTML = "Cities visited・町";
+	div4.id = "pref-cities";
 	const div5 = document.createElement("div");
-	div5.innerHTML = "Description etc.・説明など"
-	div5.id = "pref-desc"
+	div5.innerHTML = "Description etc.・説明など";
+	div5.id = "pref-desc";
 	document.getElementById("pref-info").appendChild(div1);
 	document.getElementById("pref-info").appendChild(div2);
 	document.getElementById("pref-info").appendChild(div3);
@@ -231,7 +219,7 @@ function main(){
 	  if(event.keyCode == 27 && isPopupVisible) {
 	    changePopupVisibility();
 	  }
-	})
+	});
 	
 	/*window.onload = function() {
 		console.log("start");
