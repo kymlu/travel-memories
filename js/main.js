@@ -218,21 +218,21 @@ function main(){
 		svg.setAttribute('fill', 'aqua'); 
 		svg.setAttribute('stroke', 'salmonbrown');
 		svg.setAttribute('stroke-width', '20px');*/
-		//Testing on path
+		//the following also works
 		const path = svgDoc.getElementsByTagName('path')[0];
 		path.classList.add('pref-pic');
 		path.setAttribute('fill', 'purple'); 
 		path.setAttribute('stroke', 'crimson');
 		path.setAttribute('stroke-width', '20px');
-  		setTimeout(()=>{
-			const japanImg = document.getElementById('japan');
-			console.log("trying to color the map...");
-			const japanDocument = japanImg.contentDocument;
-			const akita = japanDocument.getElementById('akita-img');
-			console.log(akita);
-			akita.setAttribute('fill', 'royalblue'); 
-
-		}, 100);
+			
+		const japanImg = document.getElementById('japan');
+		console.log("trying to color the map...");
+		const japanDocument = japanImg.contentDocument;
+		const firstPath = svgDoc.getElementsByTagName('path')[0];
+		firstPath.setAttribute("fill", "yellow");
+		const akita = japanDocument.getElementById('akita-img');
+		console.log(akita);
+		akita.setAttribute('fill', 'royalblue'); 
 	}
   
 
