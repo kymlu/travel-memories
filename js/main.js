@@ -224,10 +224,10 @@ function main(){
 	  }
 	});
 	
-	/*window.onload = function() {
-		console.log("start");
-		const svgObject = document.getElementById('shiga');
-		const svgDoc = svgObject.contentDocument;*/
+	window.onload = function() {
+		//console.log("start");
+		//const svgObject = document.getElementById('shiga');
+		//const svgDoc = svgObject.contentDocument;*/
 		
 		//so the following works
 		/*const svg = svgDoc.getElementsByTagName('svg')[0];
@@ -236,17 +236,14 @@ function main(){
 		svg.setAttribute('stroke', 'salmonbrown');
 		svg.setAttribute('stroke-width', '20px');*/
 		//the following also works
-		/*const path = svgDoc.getElementsByTagName('path')[0];
-		path.classList.add('pref-pic');
-		path.setAttribute('fill', 'purple'); 
-		path.setAttribute('stroke', 'crimson');
-		path.setAttribute('stroke-width', '20px');
+		//const path = svgDoc.getElementsByTagName('path')[0];
+		//path.classList.add('pref-pic');
+		//path.setAttribute('fill', 'purple'); 
+		//path.setAttribute('stroke', 'crimson');
+		//path.setAttribute('stroke-width', '20px');
 			
 		// path method
 		const japanImg = document.getElementById('japan-map');
-		console.log("trying to color the map...");
-		console.log(japanImg);
-		console.log(japanImg.contentDocument);
 		const japanDocument = japanImg.contentDocument;
 		const firstPath = japanDocument.getElementsByTagName('path')[0];
 		firstPath.setAttribute("fill", "yellow");
@@ -255,7 +252,7 @@ function main(){
 		const akita = japanDocument.getElementById('akita-img');
 		console.log(akita);
 		akita.setAttribute('fill', 'royalblue'); 
-	}*/
+	}
 	document.getElementById("filter-food").addEventListener("mouseover", function(event) {document.getElementById("filter-food-txt").style.display = "inline";});
 	document.getElementById("filter-food").addEventListener("mouseout", function(event) {if(currentFilter != "filter-food"){document.getElementById("filter-food-txt").style.display = "none";}});
 	document.getElementById("filter-food").addEventListener("click", function(event) {changeGalleryFilter("filter-food");});
