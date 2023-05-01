@@ -89,6 +89,15 @@
   box-shadow: inset 500px 0 0 0 #be0029;
 }
 
+.timeline-column{
+  display: flex; 
+  flex-direction: column; 
+  flex-wrap: wrap; 
+  flex-grow: 1;
+  justify-align: center; 
+  margin-top: 70px;
+}
+
 .timeline-branch-left {
   translate: 150px 200px;
   width: 50%;
