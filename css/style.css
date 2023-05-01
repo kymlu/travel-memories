@@ -190,17 +190,16 @@
 }
 
 .popup {
+  self-align: center;
+  self-justify: center;
   position: fixed;
   width: 70%;
+  height: 70%;
   background-color: white;
   border-radius: 10px;
   visibility: hidden;
   pointer-events: none;
-  padding: 0px;
   margin: 0px;
-}
-
-.popup-content {
   display: flex;
   flex-direction: column;
   font-family: American Typewriter;
