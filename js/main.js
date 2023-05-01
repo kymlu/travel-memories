@@ -137,8 +137,16 @@ function createMap(data){
 			//prefImg.classList.add("pref-img");
 			prefImg.addEventListener("click", function(){
 				changeRegion(pref.english_name);
-			}, false);
+			}, false);  
+			svg.addEventListener('mouseover', () => {
+			    svg.setAttribute('style', 'fill: pink;');
+			  });
+			  svg.addEventListener('mouseout', () => {
+			    svg.setAttribute('style', 'fill: white;');
+			  });
+
 		} else {
+			prefImg.setAttribute('fill', 'grey');
 			prefImg.classList.add("locked-pref-img");
 		}*/
 	});
@@ -225,7 +233,7 @@ function main(){
 	  }
 	});
 	
-	window.onload = function() {
+	//window.onload = function() {
 		//console.log("start");
 		//const svgObject = document.getElementById('shiga');
 		//const svgDoc = svgObject.contentDocument;*/
@@ -244,16 +252,16 @@ function main(){
 		//path.setAttribute('stroke-width', '20px');
 			
 		// path method
-		const japanImg = document.getElementById('japan-map');
-		const japanDocument = japanImg.contentDocument;
-		const firstPath = japanDocument.getElementsByTagName('path')[0];
-		firstPath.setAttribute("fill", "yellow");
+		//const japanImg = document.getElementById('japan-map');
+		//const japanDocument = japanImg.contentDocument;
+		//const firstPath = japanDocument.getElementsByTagName('path')[0];
+		//firstPath.setAttribute("fill", "yellow");
 		
 		// old method?
-		const akita = japanDocument.getElementById('akita-img');
-		console.log(akita);
-		akita.setAttribute('fill', 'royalblue'); 
-	}
+		//const akita = japanDocument.getElementById('akita-img');
+		//console.log(akita);
+		//akita.setAttribute('fill', 'royalblue'); 
+	//}
 	document.getElementById("filter-food").addEventListener("mouseover", function(event) {document.getElementById("filter-food-txt").style.display = "inline";});
 	document.getElementById("filter-food").addEventListener("mouseout", function(event) {if(currentFilter != "filter-food"){document.getElementById("filter-food-txt").style.display = "none";}});
 	document.getElementById("filter-food").addEventListener("click", function(event) {changeGalleryFilter("filter-food");});
