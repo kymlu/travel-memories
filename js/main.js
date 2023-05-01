@@ -191,7 +191,7 @@ function main(){
 	  .then(d => {data = d; 
 	  		// console.log(d);
 			createSidebar(d);
-		      createMap();
+		      createMap(d);
 		})
 	  .catch(error => {console.error(error); });
 	  
