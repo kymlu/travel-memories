@@ -110,7 +110,8 @@
   max-width: 300px;
   padding: 10px;
   background-color: white;
-  box-shadow: inset 8px 8px 20px gray;
+  box-shadow: inset 8px 8px 20px beige;
+  filter: box-shadow(8px 8px 20px lightgray)
 }
 
 .polaroid-img {
@@ -166,11 +167,13 @@
 }
 
 .filter-btn {
-  padding: 8px;
+  padding: 15px;
   border-radius: 10px; 
   transition: width .3s ease-in-out;
   background-color: thistle;
   cursor: pointer;
+  font-size: normal;
+  text-align: middle;
 }
 
 .sidebar-content {
