@@ -65,6 +65,8 @@ function createSidebar(data){
 
 // Map
 function createMap(data){
+	setTimeout(()=>{
+	console.log("create map!");
 	const svgObj = document.getElementById('japan-map');
 	const svgDoc = svgObj.contentDocument;
 	
@@ -98,6 +100,7 @@ function createMap(data){
 			prefImg.setAttribute('fill', 'lightgray');
 		}
 	});
+	}, 10);
 }
 
 // Photo gallery
