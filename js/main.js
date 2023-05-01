@@ -1,6 +1,7 @@
 // Variables
 var selectedRegion = "";
 var selectedPicture = null;
+var hoveredRegion = "";
 var isSidebarVisible = false;
 var isPopupVisible = false;
 var isGalleryVisible = false;
@@ -138,10 +139,11 @@ function createMap(data){
 				changeRegion(pref.english_name);
 			});  
 			prefImg.addEventListener('mouseover', () => {
-			    prefImg.setAttribute('opacity', '50%');
+				prefImg.setAttribute('opacity', '50%');
+				hoveredRegion = pref.english_name;
 			  });
 			  prefImg.addEventListener('mouseout', () => {
-			    prefImg.setAttribute('opacity', '100%');
+				  prefImg.setAttribute('opacity', '100%');
 			  });
 
 		} else {
@@ -249,6 +251,16 @@ function main(){
 	document.getElementById("filter-myst").addEventListener("mouseover", function(event) {document.getElementById("filter-myst-txt").style.display = "inline";});
 	document.getElementById("filter-myst").addEventListener("mouseout", function(event) {if(currentFilter != "filter-myst"){document.getElementById("filter-myst-txt").style.display = "none";}});
 	document.getElementById("filter-myst").addEventListener("click", function(event) {changeGalleryFilter("filter-myst");});
+	
+	const prefNameTooltip = document.getElementById('pref-name');
+	document.addEventListener('mousemove', function(event) {
+		if(hoveredRegion != ""){
+			const x = event.clientX;
+			const y = event.clientY;
+			prefNameTooltip.style.position = 'fixed';
+			prefNameTooltip.style.left = x + 'px';
+			prefNameTooltip.style.top = y + 'px';
+		}});
 }
 
   
