@@ -207,18 +207,20 @@ function main(){
 	    changePopupVisibility();
 	  }
 	})
-	setTimeout(() => {
+	window.onload = function() {
   		const japanImg = document.getElementById('japan');
-		japanImg.addEventListener('load', function() {
-			console.log("trying to color the map...");
-			const japanDocument = japanImg.contentDocument;
-			const akita = japanDocument.getElementById('akita-img');
-			akita.style.fill = "blue";
-		});
-		const shigaImg = document.getElementById('shiga');
-		const shigaDocument = shigaImg.contentDocument;
-		shigaDocument.style.fill = "aqua";
-	}, 1000);
+		console.log("trying to color the map...");
+		const japanDocument = japanImg.contentDocument;
+		const akita = japanDocument.getElementById('akita-img');
+		akita.style.fill = "blue";
+		
+  		const svgObject = document.getElementById('shiga');
+  		const svgDoc = svgObject.contentDocument;
+  		const svg = svgDoc.getElementsByTagName('svg')[0];
+		svg.setAttribute('fill', 'aqua'); 
+		svg.setAttribute('stroke', 'salmonbrown');
+		svg.setAttribute('stroke-width', '20px');
+	}
   
 
   
