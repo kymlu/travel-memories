@@ -124,7 +124,11 @@ function changeRegion(newRegion){
   document.getElementById("pref-name").innerHTML = getBilingualTitle(prefData.english_name, prefData.japanese_name);
   document.getElementById("pref-dates").innerHTML = getBilingualTitle(prefData.dates_english, prefData.dates_japanese);
   document.getElementById("pref-desc").innerHTML = getBilingualTitle(prefData.description_english, prefData.description_japanese);
-	changeGalleryVisibility();
+	if (!isGalleryVisible){
+	  isGalleryVisible = !isGalleryVisible;
+	  document.getElementById("japan-map").style.display = isGalleryVisible ? "none" : "block";
+	  document.getElementById("gallery").style.display = isGalleryVisible ? "block" : "none";
+	}
 }
 
 function changeGalleryFilter(newFilter){
