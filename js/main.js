@@ -80,20 +80,18 @@ function createMap(data){
 			prefImg.setAttribute('cursor', 'pointer');
 			prefImg.addEventListener("click", function(){
 				changeRegion(pref.english_name);		
-				document.getElementById("pref-tooltip").style.display = "none";
+				document.getElementById("main-title").innerHTML = getBilingualTitle(pref.english_name, pref.japanese_name);
 			});  
 			prefImg.addEventListener('mouseover', () => {
 				prefImg.setAttribute('opacity', '50%');
 				hoveredRegion = pref.english_name;
-				document.getElementById("pref-tooltip").style.display = "block";
-				document.getElementById("pref-tooltip").innerHTML = pref.english_name;
+				document.getElementById("main-title").innerHTML = getBilingualTitle(pref.english_name, pref.japanese_name);
 			  });
 
 			prefImg.addEventListener('mouseout', () => {
 				prefImg.setAttribute('opacity', '100%');
 				hoveredRegion = "";
-				document.getElementById("pref-tooltip").style.display = "none";
-				document.getElementById("pref-tooltip").innerHTML = "";
+				document.getElementById("main-title").innerHTML = "JAPAN / 日本";
 			  });
 
 		} else {
@@ -217,17 +215,6 @@ function main(){
 	document.getElementById("filter-myst").addEventListener("mouseover", function(event) {document.getElementById("filter-myst-txt").style.display = "inline";});
 	document.getElementById("filter-myst").addEventListener("mouseout", function(event) {if(currentFilter != "filter-myst"){document.getElementById("filter-myst-txt").style.display = "none";}});
 	document.getElementById("filter-myst").addEventListener("click", function(event) {changeGalleryFilter("filter-myst");});
-	
-	const prefNameTooltip = document.getElementById('pref-tooltip');
-	document.addEventListener('mousemove', function(event) {
-		setTimeout(function() {
-			const x = event.clientX;
-			const y = event.clientY;
-			console.log(x, y);
-			prefNameTooltip.style.left = x + 'px';
-			prefNameTooltip.style.top = y + 'px';
-		}, 10);
-	});
 }
 
   
