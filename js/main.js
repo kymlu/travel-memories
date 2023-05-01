@@ -211,11 +211,19 @@ function main(){
 		console.log("start");
 		const svgObject = document.getElementById('shiga');
 		const svgDoc = svgObject.contentDocument;
-		const svg = svgDoc.getElementsByTagName('svg')[0];
+		
+		//so the following works
+		/*const svg = svgDoc.getElementsByTagName('svg')[0];
 		svg.classList.add('pref-pic');
 		svg.setAttribute('fill', 'aqua'); 
 		svg.setAttribute('stroke', 'salmonbrown');
-		svg.setAttribute('stroke-width', '20px');
+		svg.setAttribute('stroke-width', '20px');*/
+		//Testing on path
+		const path = svgDoc.getElementsByTagName('path')[0];
+		path.classList.add('pref-pic');
+		path.setAttribute('fill', 'aqua'); 
+		path.setAttribute('stroke', 'salmonbrown');
+		path.setAttribute('stroke-width', '20px');
   		setTimeout(()=>{
 			const japanImg = document.getElementById('japan');
 			console.log("trying to color the map...");
