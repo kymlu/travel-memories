@@ -217,10 +217,12 @@ function main(){
 	
 	const prefNameTooltip = document.getElementById('pref-name');
 	document.addEventListener('mousemove', function(event) {
-		const x = event.clientX;
-		const y = event.clientY;
-		prefNameTooltip.style.left = x + 'px';
-		prefNameTooltip.style.top = y + 'px';
+		setTimeout(function() {
+			const x = event.clientX;
+			const y = event.clientY;
+			prefNameTooltip.style.left = x + 'px';
+			prefNameTooltip.style.top = y + 'px';
+		}, 10);
 	});
 }
 
