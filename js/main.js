@@ -142,7 +142,7 @@ function changePopupVisibility(){
 
 function changeGalleryVisibility(){
   isGalleryVisible = !isGalleryVisible;
-  document.getElementById("japan-map").style.display = isGalleryVisible ? "none" : "block";
+  document.getElementById("japan").style.display = isGalleryVisible ? "none" : "block";
   document.getElementById("gallery").style.display = isGalleryVisible ? "block" : "none";
   document.getElementById("switch-btn").style.display = isGalleryVisible ? "block" : "none";
 	if (!isGalleryVisible){
@@ -217,12 +217,10 @@ function main(){
 	
 	const prefNameTooltip = document.getElementById('pref-name');
 	document.addEventListener('mousemove', function(event) {
-		//if(hoveredRegion != ""){
-			const x = event.clientX;
-			const y = event.clientY;
-			prefNameTooltip.style.left = x + 'px';
-			prefNameTooltip.style.top = y + 'px';
-		//}
+		const x = event.clientX;
+		const y = event.clientY;
+		prefNameTooltip.style.left = x + 'px';
+		prefNameTooltip.style.top = y + 'px';
 	});
 }
 
