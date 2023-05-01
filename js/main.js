@@ -215,6 +215,9 @@ function main(){
 			const akita = japanDocument.getElementById('akita-img');
 			akita.style.fill = "blue";
 		});
+		const shigaImg = document.getElementById('shiga');
+		const shigaDocument = shigaImg.contentDocument;
+		shigaDocument.style.fill = "aqua";
 	}, 1000);
   
 
