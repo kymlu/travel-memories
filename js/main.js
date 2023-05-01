@@ -122,12 +122,10 @@ function createSidebar(data){
 
 // Map
 function createMap(data){
-	console.log("createmap")
 	const svgObj = document.getElementById('japan-map');
 	const svgDoc = svgObj.contentDocument;
 	
 	const prefList = data.flatMap(region => region.prefectures);
-	console.log(prefList);
 	prefList.forEach(pref => {
 		console.log(pref);
 		const prefImg = svgDoc.getElementById(pref.english_name.toLowerCase() + "-img");
@@ -137,7 +135,8 @@ function createMap(data){
 			prefImg.setAttribute('stroke', 'none');
 			prefImg.setAttribute('cursor', 'pointer');
 			prefImg.addEventListener("click", function(){
-				changeRegion(pref.english_name);
+				changeRegion(pref.english_name);		
+				document.getElementById("pref-name").style.display = "none";
 			});  
 			prefImg.addEventListener('mouseover', () => {
 				prefImg.setAttribute('opacity', '50%');
