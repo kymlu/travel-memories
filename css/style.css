@@ -91,6 +91,7 @@
   flex-direction: column; 
   flex-wrap: wrap; 
   justify-align: center; 
+  width: 50%;
 }
 
 .timeline-branch-left {
