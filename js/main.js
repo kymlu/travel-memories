@@ -205,13 +205,15 @@ function main(){
 	    changePopupVisibility();
 	  }
 	})
-	const japanImg = document.getElementById('japan');
-	japanImg.addEventListener('load', function() {
-		const japanDocument = japanImg.contentDocument;
-		const akita = japanDocument.getElementById('akita-img');
-		akita.style.fill = "blue";
-	});
-
+	setTimeout(() => {
+  		const japanImg = document.getElementById('japan');
+		japanImg.addEventListener('load', function() {
+			const japanDocument = japanImg.contentDocument;
+			const akita = japanDocument.getElementById('akita-img');
+			akita.style.fill = "blue";
+		});
+	}, 1000);
+  
 
   
 	document.getElementById("filter-food").addEventListener("mouseover", function(event) {document.getElementById("filter-food-txt").style.display = "inline";});
