@@ -228,6 +228,8 @@ function main(){
 		// path method
 		const japanImg = document.getElementById('japan');
 		console.log("trying to color the map...");
+		console.log(japanImg);
+		console.log(japanImg.contentDocument);
 		const japanDocument = japanImg.contentDocument;
 		const firstPath = japanDocument.getElementsByTagName('path')[0];
 		firstPath.setAttribute("fill", "yellow");
