@@ -122,6 +122,7 @@ function changeRegion(newRegion){
   document.getElementById("pref-name").innerHTML = getBilingualTitle(prefData.english_name, prefData.japanese_name);
   document.getElementById("pref-dates").innerHTML = getBilingualTitle(prefData.dates_english, prefData.dates_japanese);
   document.getElementById("pref-desc").innerHTML = getBilingualTitle(prefData.description_english, prefData.description_japanese);
+	changeGalleryVisibility();
 }
 
 //document.getElementById("Shiga").style.fill = "green";
@@ -146,7 +147,7 @@ function main(){
 	  	console.log(response); 
 		return response.json();})
 	  .then(d => {data = d; 
-	  		console.log(d);
+	  		// console.log(d);
 			createSidebar(d);
 		})
 	  .catch(error => {console.error(error); });
