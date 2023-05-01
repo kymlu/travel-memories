@@ -107,7 +107,8 @@
 
 .polaroid-frame {
   display: inline-block;
-  max-width: 300px;
+  width: 340px;
+  height: 420px;
   padding: 10px;
   background-color: white;
   box-shadow: inset 8px 8px 20px beige;
@@ -116,6 +117,9 @@
 
 .polaroid-img {
   filter: saturate(0.95);
+  width: 306px;
+  height: 313px;
+  overflow: hidden;
 }
 
 .rotate_right1 {
