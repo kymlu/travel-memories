@@ -151,7 +151,7 @@ function changeRegion(newRegion){
   document.getElementById("pref-desc").innerHTML = getBilingualTitle(prefData.description_english, prefData.description_japanese);
 	if (!isGalleryVisible){
 	  isGalleryVisible = !isGalleryVisible;
-	  document.getElementById("japan-map").style.display = isGalleryVisible ? "none" : "block";
+	  document.getElementById("japan").style.display = isGalleryVisible ? "none" : "block";
 	  document.getElementById("gallery").style.display = isGalleryVisible ? "block" : "none";
 	}
 }
