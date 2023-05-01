@@ -122,7 +122,7 @@ function createMap(data){
 	const svgDoc = svgObj.contentDocument;
 	const akita = svgDoc.getElementById('akita-img');
 	akita.setAttribute('fill', 'royalblue'); 
-	const iwate = svgDoc.getElementById('iwate-img');
+	/*const iwate = svgDoc.getElementById('iwate-img');
 	iwate.classList.add("pref-img");
 	
 	const prefList = data.flatMap(region => region.prefectures);
@@ -140,7 +140,7 @@ function createMap(data){
 		} else {
 			prefImg.classList.add("locked-pref-img");
 		}*/
-	});
+	//});
 }
 
 // Photo gallery
