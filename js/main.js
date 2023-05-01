@@ -141,7 +141,7 @@ function createMap(data){
 		} else {
 			prefImg.classList.add("locked-pref-img");
 		}*/
-	//});
+	});
 }
 
 // Photo gallery
