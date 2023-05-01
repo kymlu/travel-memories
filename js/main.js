@@ -261,8 +261,8 @@ function main(){
 	const prefNameTooltip = document.getElementById('pref-name');
 	document.addEventListener('mousemove', function(event) {
 		if(hoveredRegion != ""){
-			const x = event.clientX;
-			const y = event.clientY;
+			const x = event.pageX;
+			const y = event.pageY;
 			prefNameTooltip.style.position = 'fixed';
 			prefNameTooltip.style.left = x + 'px';
 			prefNameTooltip.style.top = y + 'px';
