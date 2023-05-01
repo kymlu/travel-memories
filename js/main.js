@@ -212,7 +212,7 @@ function main(){
 		console.log("trying to color the map...");
 		const japanDocument = japanImg.contentDocument;
 		const akita = japanDocument.getElementById('akita-img');
-		akita.style.fill = "blue";
+		akita.setAttribute('fill', 'royalblue'); 
 		
   		const svgObject = document.getElementById('shiga');
   		const svgDoc = svgObject.contentDocument;
