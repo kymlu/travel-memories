@@ -19,6 +19,7 @@ function changePopupVisibility(){
   document.getElementById("popup").style.visibility = isPopupVisible ? "visible" : "hidden";
   document.getElementById("popup-bg").style.visibility = isPopupVisible ? "visible" : "hidden";
 }
+
 function changeGalleryVisibility(){
   isGalleryVisible = !isGalleryVisible;
   document.getElementById("japan-map").style.display = isGalleryVisible ? "none" : "block";
@@ -179,6 +180,17 @@ function changePictureVisibility(){
 }
 
 function main(){
+	fetch('js/data.json')
+		  .then(response => { 
+			console.log(response); 
+			return response.json();})
+		  .then(d => {data = d; 
+				// console.log(d);
+			      createSidebar(d);
+			      createMap(d);
+			})
+		  .catch(error => {console.error(error); });
+	
 	document.getElementById("sidebar-btn").addEventListener("click", changeSidebarVisibility);
 	document.getElementById("sidebar-bg").addEventListener("click", changeSidebarVisibility);
 	  
@@ -212,16 +224,7 @@ function main(){
 	    changePopupVisibility();
 	  }
 	});
-	fetch('js/data.json')
-		  .then(response => { 
-			console.log(response); 
-			return response.json();})
-		  .then(d => {data = d; 
-				// console.log(d);
-			      createSidebar(d);
-			      createMap(d);
-			})
-		  .catch(error => {console.error(error); });
+	
 	window.onload = function() {
 		//console.log("start");
 		//const svgObject = document.getElementById('shiga');
