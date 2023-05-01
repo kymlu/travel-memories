@@ -132,15 +132,11 @@ function changeRegion(newRegion){
 }
 
 function changeGalleryFilter(newFilter){
-	if(currentFilter != ""){
-		document.getElementById(currentFilter + "-txt").style.display = "none";
-	}
-	
 	if(newFilter == currentFilter){
 		currentFilter = "";
 	} else {
+		document.getElementById(currentFilter + "-txt").style.display = "none";
 		currentFilter = newFilter;
-		document.getElementById(newFilter + "-txt").style.display = "inline";
 	}
 }
 
