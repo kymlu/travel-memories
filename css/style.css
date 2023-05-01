@@ -93,7 +93,7 @@
   translate: 150px 200px;
   width: 50%;
   color: black;
-  height: 3px;
+  height: 2px;
   border-width:0;
   background-color: black;
   z-index: -1;
@@ -103,7 +103,7 @@
   translate: -150px 109px;
   width: 50%;
   color: black;
-  height: 3px;
+  height: 2px;
   border-width:0;
   background-color: black;
   z-index: -1;
