@@ -210,6 +210,7 @@ function main(){
 	setTimeout(() => {
   		const japanImg = document.getElementById('japan');
 		japanImg.addEventListener('load', function() {
+			console.log("trying to color the map...");
 			const japanDocument = japanImg.contentDocument;
 			const akita = japanDocument.getElementById('akita-img');
 			akita.style.fill = "blue";
