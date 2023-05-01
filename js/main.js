@@ -141,9 +141,13 @@ function createMap(data){
 			prefImg.addEventListener('mouseover', () => {
 				prefImg.setAttribute('opacity', '50%');
 				hoveredRegion = pref.english_name;
+				document.getElementById("pref-name").style.display = "block";
 			  });
-			  prefImg.addEventListener('mouseout', () => {
-				  prefImg.setAttribute('opacity', '100%');
+
+			prefImg.addEventListener('mouseout', () => {
+				prefImg.setAttribute('opacity', '100%');
+				hoveredRegion = "";
+				document.getElementById("pref-name").style.display = "none";
 			  });
 
 		} else {
