@@ -226,7 +226,7 @@ function main(){
 		path.setAttribute('stroke-width', '20px');
 			
 		// path method
-		const japanImg = document.getElementById('japan');
+		const japanImg = document.getElementById('japan-map');
 		console.log("trying to color the map...");
 		console.log(japanImg);
 		console.log(japanImg.contentDocument);
