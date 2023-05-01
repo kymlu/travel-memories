@@ -221,8 +221,8 @@ function main(){
 		//Testing on path
 		const path = svgDoc.getElementsByTagName('path')[0];
 		path.classList.add('pref-pic');
-		path.setAttribute('fill', 'aqua'); 
-		path.setAttribute('stroke', 'salmonbrown');
+		path.setAttribute('fill', 'purple'); 
+		path.setAttribute('stroke', 'crimson');
 		path.setAttribute('stroke-width', '20px');
   		setTimeout(()=>{
 			const japanImg = document.getElementById('japan');
