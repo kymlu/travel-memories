@@ -121,10 +121,6 @@ function createMap(data){
 	console.log("createmap")
 	const svgObj = document.getElementById('japan-map');
 	const svgDoc = svgObj.contentDocument;
-	const akita = svgDoc.getElementById('tokyo-img');
-	akita.setAttribute('fill', 'pink'); 
-	/*const iwate = svgDoc.getElementById('iwate-img');
-	iwate.classList.add("pref-img");*/
 	
 	const prefList = data.flatMap(region => region.prefectures);
 	console.log(prefList);
@@ -232,36 +228,6 @@ function main(){
 	    changePopupVisibility();
 	  }
 	});
-	
-	//window.onload = function() {
-		//console.log("start");
-		//const svgObject = document.getElementById('shiga');
-		//const svgDoc = svgObject.contentDocument;*/
-		
-		//so the following works
-		/*const svg = svgDoc.getElementsByTagName('svg')[0];
-		svg.classList.add('pref-pic');
-		svg.setAttribute('fill', 'aqua'); 
-		svg.setAttribute('stroke', 'salmonbrown');
-		svg.setAttribute('stroke-width', '20px');*/
-		//the following also works
-		//const path = svgDoc.getElementsByTagName('path')[0];
-		//path.classList.add('pref-pic');
-		//path.setAttribute('fill', 'purple'); 
-		//path.setAttribute('stroke', 'crimson');
-		//path.setAttribute('stroke-width', '20px');
-			
-		// path method
-		//const japanImg = document.getElementById('japan-map');
-		//const japanDocument = japanImg.contentDocument;
-		//const firstPath = japanDocument.getElementsByTagName('path')[0];
-		//firstPath.setAttribute("fill", "yellow");
-		
-		// old method?
-		//const akita = japanDocument.getElementById('akita-img');
-		//console.log(akita);
-		//akita.setAttribute('fill', 'royalblue'); 
-	//}
 	document.getElementById("filter-food").addEventListener("mouseover", function(event) {document.getElementById("filter-food-txt").style.display = "inline";});
 	document.getElementById("filter-food").addEventListener("mouseout", function(event) {if(currentFilter != "filter-food"){document.getElementById("filter-food-txt").style.display = "none";}});
 	document.getElementById("filter-food").addEventListener("click", function(event) {changeGalleryFilter("filter-food");});
