@@ -182,7 +182,7 @@ function changePopupVisibility(){
 
 function changePrefInfoVisibility(){
 	isPrefInfoVisible = !isPrefInfoVisible;
-	document.getElementById("pref-info").style.visibility = isPopupVisible ? "visible" : "hidden";
+	document.getElementById("pref-info").style.visibility = isPrefInfoVisible ? "visible" : "hidden";
 }
 
 function changeGalleryVisibility(){
