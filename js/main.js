@@ -25,6 +25,7 @@ function changeSidebarVisibility(){
 }
 
 function createSidebar(data){
+	console.log("sidebar start");
 	const sidebar = document.getElementById("sidebar");
 	sidebar.innerHTML = "";
 	
@@ -41,6 +42,7 @@ function createSidebar(data){
 	unvisitedPref.classList.add("prefecture-text", "locked-pref-text");
 	data.forEach(region => 
 	{
+		console.log("next region");
 		const newRegion = regionGroup.cloneNode();
 		const newRegionTitle = regionTitle.cloneNode();
 		newRegionTitle.innerHTML = getBilingualText(region.english_name, region.japanese_name);
@@ -62,6 +64,7 @@ function createSidebar(data){
 		});
 		sidebar.appendChild(newRegion);
 	});
+	console.log("completed sidebar");
 }
 
 // Map
@@ -203,7 +206,7 @@ function main(){
 			console.log(response); 
 			return response.json();})
 		  .then(d => {data = d; 
-			      console.log(d);
+			      console.log(d, "test");
 			      createSidebar(d);
 			      /*document.getElementById("japan-map").onload = function(){
 				      console.log("loaded"); 
