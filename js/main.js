@@ -110,7 +110,7 @@ function changeRegion(newRegion){
   document.getElementById("pref-name").innerHTML = getBilingualTitle(selectedRegion.english_name, selectedRegion.japanese_name);
   document.getElementById("pref-dates").innerHTML = getBilingualTitle(selectedRegion.dates_english, selectedRegion.dates_japanese);
   document.getElementById("pref-desc").innerHTML = getBilingualTitle(selectedRegion.description_english, selectedRegion.description_japanese);
-  document.getElementById("pref-name-btn").innerHTML = getBilingualText(selectedRegion.english_name, selectedRegion.japanese_name);
+  document.getElementById("pref-name-btn").innerHTML = getBilingualTitle(selectedRegion.english_name, selectedRegion.japanese_name);
 	if (!isGalleryVisible){
 		changeGalleryVisibility();
 	}
