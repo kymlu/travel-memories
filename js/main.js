@@ -205,7 +205,11 @@ function main(){
 		  .then(d => {data = d; 
 			      console.log(d);
 			      createSidebar(d);
-			      document.getElementById("japan-map").onload = function(){setTimeout(()=>{createMap(d);}, 1000);};
+			      document.getElementById("japan-map").onload = function(){
+				      console.log("loaded"); 
+				      setTimeout(()=>{console.log("creating..."); 
+						      createMap(d);}, 1000);
+			      };
 			})
 		  .catch(error => {console.error(error); });
 	
