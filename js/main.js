@@ -149,7 +149,7 @@ function changePrefInfoVisibility(){
 
 function changeGalleryVisibility(){
   isGalleryVisible = !isGalleryVisible;
-  document.getElementById("japan").style.display = isGalleryVisible ? "none" : "block";
+  document.getElementById("japan").style.display = isGalleryVisible ? "none" : "flex";
   document.getElementById("gallery").style.display = isGalleryVisible ? "block" : "none";
   document.getElementById("switch-btn").style.display = isGalleryVisible ? "block" : "none";
   document.getElementById("filter-bar").style.display = isGalleryVisible ? "flex" : "none";
