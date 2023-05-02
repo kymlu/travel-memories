@@ -193,7 +193,7 @@ function changeGalleryVisibility(){
   document.getElementById("filter-bar").style.display = isGalleryVisible ? "flex" : "none";
   document.getElementById("pref-name-btn").style.display = isGalleryVisible ? "block" : "none";
 	if (!isGalleryVisible){
-		createMap(data);
+		//createMap(data);
 	}
 }
 
@@ -205,11 +205,11 @@ function main(){
 		  .then(d => {data = d; 
 			      console.log(d);
 			      createSidebar(d);
-			      document.getElementById("japan-map").onload = function(){
+			      /*document.getElementById("japan-map").onload = function(){
 				      console.log("loaded"); 
 				      setTimeout(()=>{console.log("creating..."); 
 						      createMap(d);}, 1000);
-			      };
+			      };*/
 			})
 		  .catch(error => {console.error(error); });
 	
