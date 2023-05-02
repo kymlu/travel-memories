@@ -191,6 +191,7 @@
   cursor: pointer;
   font-size: normal;
   text-align: middle;
+  height: 40px;
 }
 
 .sidebar-content {
