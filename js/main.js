@@ -72,6 +72,7 @@ function createMap(data){
 	const svgDoc = svgObj.contentDocument;
 	
 	const prefList = data.flatMap(region => region.prefectures);
+	console.log(prefList);
 	prefList.forEach(pref => {
 		const prefImg = svgDoc.getElementById(pref.english_name.toLowerCase() + "-img");
 		if(pref.visited) {
