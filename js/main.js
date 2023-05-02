@@ -19,13 +19,13 @@ function getBilingualText(english, japanese){
 
 // Sidebar
 function changeSidebarVisibility(){
+	console.log("toggle sidebar");
   isSidebarVisible = !isSidebarVisible;
   document.getElementById("sidebar").style.visibility = isSidebarVisible ? "visible" : "hidden";
   document.getElementById("sidebar-bg").style.visibility = isSidebarVisible ? "visible" : "hidden";
 }
 
 function createSidebar(data){
-	console.log("sidebar start");
 	const sidebar = document.getElementById("sidebar");
 	sidebar.innerHTML = "";
 	
@@ -42,7 +42,6 @@ function createSidebar(data){
 	unvisitedPref.classList.add("prefecture-text", "locked-pref-text");
 	data.forEach(region => 
 	{
-		console.log("next region");
 		const newRegion = regionGroup.cloneNode();
 		const newRegionTitle = regionTitle.cloneNode();
 		newRegionTitle.innerHTML = getBilingualText(region.english_name, region.japanese_name);
@@ -64,7 +63,6 @@ function createSidebar(data){
 		});
 		sidebar.appendChild(newRegion);
 	});
-	console.log("completed sidebar");
 }
 
 // Map
