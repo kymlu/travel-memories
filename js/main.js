@@ -146,7 +146,7 @@ function changeGalleryVisibility(){
   document.getElementById("japan").style.display = isGalleryVisible ? "none" : "block";
   document.getElementById("gallery").style.display = isGalleryVisible ? "block" : "none";
   document.getElementById("switch-btn").style.display = isGalleryVisible ? "block" : "none";
-  document.getElementById("filter-bar").style.display = isGalleryVisible ? "block" : "none";
+  document.getElementById("filter-bar").style.display = isGalleryVisible ? "flex" : "none";
 	if (!isGalleryVisible){
 		createMap(data);
 	}
