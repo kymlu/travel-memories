@@ -203,9 +203,9 @@ function main(){
 			console.log(response); 
 			return response.json();})
 		  .then(d => {data = d; 
-				console.log(d);
+			      console.log(d);
 			      createSidebar(d);
-			      setTimeout(()=>{createMap(d);}, 1000);
+			      document.getElementById("japan-map").onload = function(){setTimeout(()=>{createMap(d);}, 1000);};
 			})
 		  .catch(error => {console.error(error); });
 	
