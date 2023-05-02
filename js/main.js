@@ -1,11 +1,12 @@
 // Variables
-var selectedRegion = "";
+var selectedRegion = null;
 var selectedPicture = null;
 var hoveredRegion = "";
 var isSidebarVisible = false;
 var isPopupVisible = false;
 var isGalleryVisible = false;
 var isPictureVisible = false;
+var isPrefInfoVisible = false;
 var currentFilter = "";
 var data = null;
 
@@ -141,6 +142,11 @@ function changePopupVisibility(){
   document.getElementById("popup-bg").style.visibility = isPopupVisible ? "visible" : "hidden";
 }
 
+function changePrefInfoVisibility(){
+	isPrefInfoVisible = !isPrefInfoVisible;
+	document.getElementById("pref-info").style.visibility = isPopupVisible ? "visible" : "hidden";
+}
+
 function changeGalleryVisibility(){
   isGalleryVisible = !isGalleryVisible;
   document.getElementById("japan").style.display = isGalleryVisible ? "none" : "block";
@@ -172,6 +178,8 @@ function main(){
 	document.getElementById("popup-bg").addEventListener("click", changePopupVisibility);
 	document.getElementById("info-btn").addEventListener("click", changePopupVisibility);
 	document.getElementById("switch-btn").addEventListener("click", changeGalleryVisibility);
+	document.getElementById("pref-name-btn").addEventListener("click", changePrefInfoVisibility);
+	
 	const div1 = document.createElement("div");
 	div1.innerHTML = "Pic of prefecture・都道府県の写真";
 	div1.id = "pref-pic";
