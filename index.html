@@ -7,8 +7,9 @@
 
 <body class="page-bg" style="max-height: 100%">
   <div class="content-container" style="align-content: stretch">
-    <div style="display: flex; flex-direction: row; justify-content: space-between; position: fixed;">
+    <div style="display: flex; flex-direction: row; justify-content: space-between; position: fixed; align-content: stretch;">
       <div id="sidebar-btn" class="fa text-main-color" style="font-size: xx-large; align-self: start; text-align: left; top: 50px; left: 50px;">&#xf0c9</div>
+      <div id="pref-name-btn"><div>
       <div id="filter-bar" style="display: none; justify-items: space-around; gap: 10px; flex-direction: row; align-content: flex-end;">
         <div id="filter-food" class="filter-btn"><i class="fa text-main-color">&#xf805</i><div id="filter-food-txt" style="display:none">Food・食べ物</div></div>
         <div id="filter-nat" class="filter-btn"><i class="fa text-main-color">&#xf06c</i><div id="filter-nat-txt" style="display:none">Nature・自然</div></div>
@@ -17,17 +18,13 @@
         <div id="filter-myst" class="filter-btn"><i class="fa text-main-color">&#x3f</i><div id="filter-myst-txt" style="display:none">Mysterious・謎</div></div>
       </div>
     </div>
-    <div id="japan" style="display: flex; flex-direction: column; justify-content: center; max-width: 100%;">
-      <object id="japan-map" type="image/svg+xml" style="height: 75%;" data="img/japan.svg"></object>
+    <div id="japan" style="display: flex; flex-direction: column; justify-content: center; max-width: 100%; height: 75%">
+      <object id="japan-map" type="image/svg+xml" style="height: 75%; max-height: 100%" data="img/japan.svg"></object>
       <div id="main-title" class="main-title" style="grid-area: 1 / 1; text-align: center; self-justify: center; self-align: center">JAPAN / 日本</div>
     </div>
     <div id="gallery" style="display: none; max-width: 100%; align-content: stretch;">
       <!-- div style="display: grid; grid: auto / 1fr 3fr;">-->
       <div style="display: flex; flex-direction: column;">
-        <div style="display: flex; flex-direction: column; align-content: space-between; position: fixed; background-color: white;"> <!--What if I make this absolute/fixed instead? Overlap with the timeline?-->
-          <div id="pref-info" style="display: flex; flex-direction: column; gap: 15px;"></div>
-          <div id="switch-btn" class="caption-text" style="display: none; align-self: start; text-align: left;"><i style="font-size: xx-large;" class="fa text-main-color">&#xf015</i> Return home</div> 
-        </div>
         <div id="pref-pics" style="display: flex; flex-direction:column; flex-overflow: scroll;">
           <div style="display: flex; flex-wrap: wrap; overflow: scroll; flex-direction: row;
                       justify-content: space-around; align-content: flex-start; max-height: 500px;">
@@ -92,6 +89,10 @@
               </div>
             </div>
           </div>
+        </div>
+        <div style="display: flex; flex-direction: column; align-content: space-between; width: 30%; height: 100% position: fixed; background-color: white; top: 75px; left: 75px"> <!--What if I make this absolute/fixed instead? Overlap with the timeline?-->
+          <div id="pref-info" style="display: flex; flex-direction: column; gap: 15px;"></div>
+          <div id="switch-btn" class="caption-text" style="display: none; align-self: start; text-align: left;"><i style="font-size: xx-large;" class="fa text-main-color">&#xf015</i> Return home</div> 
         </div>
       </div>
     </div>
