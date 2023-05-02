@@ -67,7 +67,7 @@ function createSidebar(data){
 // Map
 function createMap(data){
 	setTimeout(()=>{
-	console.log("create map!");
+	console.log("create map!1");
 	const svgObj = document.getElementById('japan-map');
 	const svgDoc = svgObj.contentDocument;
 	
@@ -80,7 +80,7 @@ function createMap(data){
 			prefImg.setAttribute('fill', appColor);
 			prefImg.setAttribute('stroke', 'none');
 			prefImg.setAttribute('cursor', 'pointer');
-			prefImg.setAttribute('opacity', 'visibility 0.3 ease-in-out');
+			prefImg.setAttribute('transition', 'opacity 0.3 ease-in-out');
 			prefImg.addEventListener("click", function(){
 				changeRegion(pref);		
 				document.getElementById("main-title").innerHTML = getBilingualText(pref.english_name, pref.japanese_name);
