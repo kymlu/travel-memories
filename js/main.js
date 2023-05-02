@@ -80,7 +80,7 @@ function createMap(data){
 			prefImg.setAttribute('stroke', 'none');
 			prefImg.setAttribute('cursor', 'pointer');
 			prefImg.addEventListener("click", function(){
-				changeRegion(pref.english_name);		
+				changeRegion(pref);		
 				document.getElementById("main-title").innerHTML = getBilingualTitle(pref.english_name, pref.japanese_name);
 			});  
 			prefImg.addEventListener('mouseover', () => {
@@ -105,8 +105,8 @@ function createMap(data){
 // Photo gallery
 function changeRegion(newRegion){
 // add catch error?
-  let prefList = data.flatMap(region => region.prefectures);
-  selectedRegion = prefList.find(pref => pref.english_name == newRegion);
+	console.log("change region");
+  selectedRegion = newRegion;
   document.getElementById("pref-name").innerHTML = getBilingualTitle(selectedRegion.english_name, selectedRegion.japanese_name);
   document.getElementById("pref-dates").innerHTML = getBilingualTitle(selectedRegion.dates_english, selectedRegion.dates_japanese);
   document.getElementById("pref-desc").innerHTML = getBilingualTitle(selectedRegion.description_english, selectedRegion.description_japanese);
@@ -149,7 +149,7 @@ function changePrefInfoVisibility(){
 
 function changeGalleryVisibility(){
   isGalleryVisible = !isGalleryVisible;
-  document.getElementById("japan").style.display = isGalleryVisible ? "none" : "flex";
+  document.getElementById("japan").style.display = isGalleryVisible ? "none" : "block";
   document.getElementById("gallery").style.display = isGalleryVisible ? "block" : "none";
   document.getElementById("switch-btn").style.display = isGalleryVisible ? "block" : "none";
   document.getElementById("filter-bar").style.display = isGalleryVisible ? "flex" : "none";
