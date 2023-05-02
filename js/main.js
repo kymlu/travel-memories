@@ -101,7 +101,7 @@ function createMap(data){
 			prefImg.setAttribute('fill', 'lightgray');
 		}
 	});
-	}, 100);
+	}, 1000);
 }
 
 function shuffle(array) {
@@ -141,8 +141,10 @@ function closeMapTransition(){
 function changeRegion(newRegion){
 // add catch error?
 	console.log("change region");
-  selectedRegion = newRegion;
-	//closeMapTransition();
+	selectedRegion = newRegion;
+	/*if(!isGalleryVisible){
+		closeMapTransition();
+	}*/
   document.getElementById("pref-name").innerHTML = getBilingualText(selectedRegion.english_name, selectedRegion.japanese_name);
   document.getElementById("pref-dates").innerHTML = getBilingualText(selectedRegion.dates_english, selectedRegion.dates_japanese);
   document.getElementById("pref-desc").innerHTML = getBilingualText(selectedRegion.description_english, selectedRegion.description_japanese);
