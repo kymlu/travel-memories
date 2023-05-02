@@ -104,12 +104,12 @@ function createMap(data){
 // Photo gallery
 function changeRegion(newRegion){
 // add catch error?
-  selectedRegion = newRegion;
   let prefList = data.flatMap(region => region.prefectures);
-  let prefData = prefList.find(pref => pref.english_name == newRegion);
-  document.getElementById("pref-name").innerHTML = getBilingualTitle(prefData.english_name, prefData.japanese_name);
-  document.getElementById("pref-dates").innerHTML = getBilingualTitle(prefData.dates_english, prefData.dates_japanese);
-  document.getElementById("pref-desc").innerHTML = getBilingualTitle(prefData.description_english, prefData.description_japanese);
+  selectedRegion = prefList.find(pref => pref.english_name == newRegion);
+  document.getElementById("pref-name").innerHTML = getBilingualTitle(selectedRegion.english_name, selectedRegion.japanese_name);
+  document.getElementById("pref-dates").innerHTML = getBilingualTitle(selectedRegion.dates_english, selectedRegion.dates_japanese);
+  document.getElementById("pref-desc").innerHTML = getBilingualTitle(selectedRegion.description_english, selectedRegion.description_japanese);
+  document.getElementById("pref-name-btn").innerHTML = getBilingualText(selectedRegion.english_name, selectedRegion.japanese_name);
 	if (!isGalleryVisible){
 		changeGalleryVisibility();
 	}
@@ -147,6 +147,7 @@ function changeGalleryVisibility(){
   document.getElementById("gallery").style.display = isGalleryVisible ? "block" : "none";
   document.getElementById("switch-btn").style.display = isGalleryVisible ? "block" : "none";
   document.getElementById("filter-bar").style.display = isGalleryVisible ? "flex" : "none";
+  document.getElementById("pref-name-btn").style.display = isGalleryVisible ? "block" : "none";
 	if (!isGalleryVisible){
 		createMap(data);
 	}
