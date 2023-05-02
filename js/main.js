@@ -13,8 +13,8 @@ var data = null;
 const appColor = "#be0029"
 
 // Text
-function getBilingualTitle(englishName, japaneseName){
-	return englishName + " / " + japaneseName; 
+function getBilingualText(english, japanese){
+	return english + " / " + japanese; 
 }
 
 // Sidebar
@@ -43,12 +43,12 @@ function createSidebar(data){
 	{
 		const newRegion = regionGroup.cloneNode();
 		const newRegionTitle = regionTitle.cloneNode();
-		newRegionTitle.innerHTML = getBilingualTitle(region.english_name, region.japanese_name);
+		newRegionTitle.innerHTML = getBilingualText(region.english_name, region.japanese_name);
 		newRegion.appendChild(newRegionTitle);
 		region.prefectures.forEach(prefecture => {
 			if (prefecture.visited){
 				const newPrefecture = visitedPref.cloneNode();
-				newPrefecture.innerHTML = getBilingualTitle(prefecture.english_name, prefecture.japanese_name);
+				newPrefecture.innerHTML = getBilingualText(prefecture.english_name, prefecture.japanese_name);
 				newPrefecture.addEventListener("click", function(){
 					changeRegion(prefecture.english_name);
 					changeSidebarVisibility();
@@ -56,7 +56,7 @@ function createSidebar(data){
 				newRegion.appendChild(newPrefecture);
 			} else {
 				const newPrefecture = unvisitedPref.cloneNode();
-				newPrefecture.innerHTML = getBilingualTitle(prefecture.english_name, prefecture.japanese_name);
+				newPrefecture.innerHTML = getBilingualText(prefecture.english_name, prefecture.japanese_name);
 				newRegion.appendChild(newPrefecture);
 			}
 		});
@@ -81,12 +81,12 @@ function createMap(data){
 			prefImg.setAttribute('cursor', 'pointer');
 			prefImg.addEventListener("click", function(){
 				changeRegion(pref);		
-				document.getElementById("main-title").innerHTML = getBilingualTitle(pref.english_name, pref.japanese_name);
+				document.getElementById("main-title").innerHTML = getBilingualText(pref.english_name, pref.japanese_name);
 			});  
 			prefImg.addEventListener('mouseover', () => {
 				prefImg.setAttribute('opacity', '50%');
 				hoveredRegion = pref.english_name;
-				document.getElementById("main-title").innerHTML = getBilingualTitle(pref.english_name, pref.japanese_name);
+				document.getElementById("main-title").innerHTML = getBilingualText(pref.english_name, pref.japanese_name);
 			  });
 
 			prefImg.addEventListener('mouseout', () => {
@@ -107,10 +107,10 @@ function changeRegion(newRegion){
 // add catch error?
 	console.log("change region");
   selectedRegion = newRegion;
-  document.getElementById("pref-name").innerHTML = getBilingualTitle(selectedRegion.english_name, selectedRegion.japanese_name);
-  document.getElementById("pref-dates").innerHTML = getBilingualTitle(selectedRegion.dates_english, selectedRegion.dates_japanese);
-  document.getElementById("pref-desc").innerHTML = getBilingualTitle(selectedRegion.description_english, selectedRegion.description_japanese);
-  document.getElementById("pref-name-btn").innerHTML = getBilingualTitle(selectedRegion.english_name, selectedRegion.japanese_name);
+  document.getElementById("pref-name").innerHTML = getBilingualText(selectedRegion.english_name, selectedRegion.japanese_name);
+  document.getElementById("pref-dates").innerHTML = getBilingualText(selectedRegion.dates_english, selectedRegion.dates_japanese);
+  document.getElementById("pref-desc").innerHTML = getBilingualText(selectedRegion.description_english, selectedRegion.description_japanese);
+  document.getElementById("pref-name-btn").innerHTML = getBilingualText(selectedRegion.english_name, selectedRegion.japanese_name);
 	if (!isGalleryVisible){
 		changeGalleryVisibility();
 	}
