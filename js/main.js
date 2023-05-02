@@ -10,7 +10,7 @@ var isPrefInfoVisible = false;
 var currentFilter = "";
 var data = null;
 
-const appColor = "#be0029"
+const appColor = "#be0029";
 
 // Text
 function getBilingualText(english, japanese){
