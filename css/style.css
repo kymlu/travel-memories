@@ -270,7 +270,7 @@
 .page-bg{
   display: flex;
   justify-content: space-between;
-  align-content: stretch;
+  /*align-content: stretch;
   /*width: 100%;*/
   margin: 0px;
   padding: 75px;
