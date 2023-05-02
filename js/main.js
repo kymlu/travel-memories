@@ -141,7 +141,7 @@ function changeRegion(newRegion){
 // add catch error?
 	console.log("change region");
   selectedRegion = newRegion;
-	closeMapTransition();
+	//closeMapTransition();
   document.getElementById("pref-name").innerHTML = getBilingualText(selectedRegion.english_name, selectedRegion.japanese_name);
   document.getElementById("pref-dates").innerHTML = getBilingualText(selectedRegion.dates_english, selectedRegion.dates_japanese);
   document.getElementById("pref-desc").innerHTML = getBilingualText(selectedRegion.description_english, selectedRegion.description_japanese);
@@ -200,7 +200,7 @@ function main(){
 			console.log(response); 
 			return response.json();})
 		  .then(d => {data = d; 
-				// console.log(d);
+				console.log(d);
 			      createSidebar(d);
 			      setTimeout(()=>{createMap(d);}, 1000);
 			})
