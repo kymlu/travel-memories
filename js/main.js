@@ -79,6 +79,7 @@ function createMap(data){
 			prefImg.setAttribute('fill', appColor);
 			prefImg.setAttribute('stroke', 'none');
 			prefImg.setAttribute('cursor', 'pointer');
+			prefImg.setAttribute('opacity', 'visibility 0.3 ease-in-out');
 			prefImg.addEventListener("click", function(){
 				changeRegion(pref);		
 				document.getElementById("main-title").innerHTML = getBilingualText(pref.english_name, pref.japanese_name);
@@ -102,11 +103,45 @@ function createMap(data){
 	}, 100);
 }
 
+function shuffle(array) {
+  let currentIndex = array.length,  randomIndex;
+
+  // While there remain elements to shuffle.
+  while (currentIndex != 0) {
+
+    // Pick a remaining element.
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+
+    // And swap it with the current element.
+    [array[currentIndex], array[randomIndex]] = [
+      array[randomIndex], array[currentIndex]];
+  }
+
+  return array;
+}
+
+function closeMapTransition(){
+	const prefList = data.flatMap(region => region.prefectures);
+	var shuffledList = shuffle(prefList);
+	
+	const svgObj = document.getElementById('japan-map');
+	const svgDoc = svgObj.contentDocument;
+	shuffledList.forEach(pref => {
+		if(pref.english_name != selectedRegion.english_name){
+			setTimeout(() => {
+				const prefImg = svgDoc.getElementById(pref.english_name.toLowerCase() + "-img");
+				prefImg.setAttribute('opacity', '0%');}, 100);
+		}
+	});
+}
+
 // Photo gallery
 function changeRegion(newRegion){
 // add catch error?
 	console.log("change region");
   selectedRegion = newRegion;
+	closeMapTransition();
   document.getElementById("pref-name").innerHTML = getBilingualText(selectedRegion.english_name, selectedRegion.japanese_name);
   document.getElementById("pref-dates").innerHTML = getBilingualText(selectedRegion.dates_english, selectedRegion.dates_japanese);
   document.getElementById("pref-desc").innerHTML = getBilingualText(selectedRegion.description_english, selectedRegion.description_japanese);
