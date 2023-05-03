@@ -12,6 +12,8 @@
   margin-right: 8px;
   padding: 0px;
   text-transform: uppercase;
+  opacity: 100%;
+  transition: opacity 0.1s ease-in-out;
 }
 
 .sub-title {
