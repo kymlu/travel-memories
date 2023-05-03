@@ -190,8 +190,8 @@ function changeGalleryVisibility(){
   isGalleryVisible = !isGalleryVisible;
   document.getElementById("japan").style.display = isGalleryVisible ? "none" : "block";
   document.getElementById("gallery").style.display = isGalleryVisible ? "block" : "none";
-  document.getElementById("switch-btn").style.display = isGalleryVisible ? "block" : "none";
-  document.getElementById("filter-bar").style.display = isGalleryVisible ? "flex" : "none";
+  /*document.getElementById("switch-btn").style.display = isGalleryVisible ? "block" : "none";
+  document.getElementById("filter-bar").style.display = isGalleryVisible ? "flex" : "none";*/
   document.getElementById("pref-name-btn").style.display = isGalleryVisible ? "block" : "none";
 	if (!isGalleryVisible){
 		//createMap(data);
@@ -214,13 +214,13 @@ function main(){
 			})
 		  .catch(error => {console.error(error); });
 	
-	document.getElementById("sidebar-btn").addEventListener("click", changeSidebarVisibility);
+	document.getElementById("map-btn").addEventListener("click", changeSidebarVisibility);
 	document.getElementById("sidebar-bg").addEventListener("click", changeSidebarVisibility);
 	  
 	document.getElementById("popup-close-btn").addEventListener("click", changePopupVisibility);
 	document.getElementById("popup-bg").addEventListener("click", changePopupVisibility);
 	document.getElementById("info-btn").addEventListener("click", changePopupVisibility);
-	document.getElementById("switch-btn").addEventListener("click", changeGalleryVisibility);
+	/*document.getElementById("switch-btn").addEventListener("click", changeGalleryVisibility);*/
 	document.getElementById("pref-name-btn").addEventListener("click", changePrefInfoVisibility);
 	
 	const div1 = document.createElement("div");
@@ -249,7 +249,7 @@ function main(){
 	    changePopupVisibility();
 	  }
 	});
-	document.getElementById("filter-food").addEventListener("mouseover", function(event) {document.getElementById("filter-food-txt").style.display = "inline";});
+	/*document.getElementById("filter-food").addEventListener("mouseover", function(event) {document.getElementById("filter-food-txt").style.display = "inline";});
 	document.getElementById("filter-food").addEventListener("mouseout", function(event) {if(currentFilter != "filter-food"){document.getElementById("filter-food-txt").style.display = "none";}});
 	document.getElementById("filter-food").addEventListener("click", function(event) {changeGalleryFilter("filter-food");});
 	
@@ -267,7 +267,7 @@ function main(){
 	
 	document.getElementById("filter-myst").addEventListener("mouseover", function(event) {document.getElementById("filter-myst-txt").style.display = "inline";});
 	document.getElementById("filter-myst").addEventListener("mouseout", function(event) {if(currentFilter != "filter-myst"){document.getElementById("filter-myst-txt").style.display = "none";}});
-	document.getElementById("filter-myst").addEventListener("click", function(event) {changeGalleryFilter("filter-myst");});
+	document.getElementById("filter-myst").addEventListener("click", function(event) {changeGalleryFilter("filter-myst");});*/
 }
 
   
