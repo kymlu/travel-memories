@@ -194,9 +194,11 @@ function changeGalleryVisibility(){
   isGalleryVisible = !isGalleryVisible;
   document.getElementById("japan").style.display = isGalleryVisible ? "none" : "block";
   document.getElementById("gallery").style.display = isGalleryVisible ? "block" : "none";
-  /*document.getElementById("switch-btn").style.display = isGalleryVisible ? "block" : "none";
-  document.getElementById("filter-bar").style.display = isGalleryVisible ? "flex" : "none";*/
+  document.getElementById("map-btn").style.display = isGalleryVisible ? "block" : "none";
+	document.getElementById("sidebar-btn").style.display = isGalleryVisible ? "none" : "block";
+  /*document.getElementById("filter-bar").style.display = isGalleryVisible ? "flex" : "none";*/
   document.getElementById("pref-name-btn").style.display = isGalleryVisible ? "block" : "none";
+	document.getElementById("filter-btn").style.display = isGalleryVisible ? "block" : "none";
 	if (!isGalleryVisible){
 		createMap(data);
 	}
@@ -212,13 +214,13 @@ function main(){
 			})
 		  .catch(error => {console.error(error); });
 	
-	document.getElementById("map-btn").addEventListener("click", changeSidebarVisibility);
+	document.getElementById("sidebar-btn").addEventListener("click", changeSidebarVisibility);
 	document.getElementById("sidebar-bg").addEventListener("click", changeSidebarVisibility);
 	  
 	document.getElementById("popup-close-btn").addEventListener("click", changePopupVisibility);
 	document.getElementById("popup-bg").addEventListener("click", changePopupVisibility);
 	document.getElementById("info-btn").addEventListener("click", changePopupVisibility);
-	/*document.getElementById("switch-btn").addEventListener("click", changeGalleryVisibility);*/
+	document.getElementById("map-btn").addEventListener("click", changeGalleryVisibility);
 	document.getElementById("pref-name-btn").addEventListener("click", changePrefInfoVisibility);
 	
 	const div1 = document.createElement("div");
