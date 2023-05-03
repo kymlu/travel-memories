@@ -88,16 +88,20 @@ function createMap(data){
 				prefImg.setAttribute('opacity', '50%');
 				hoveredRegion = pref.english_name;
 				document.getElementById("main-title").style.opacity = "0%";
-				document.getElementById("main-title").innerHTML = getBilingualText(pref.english_name, pref.japanese_name);
-				setTimeout(()=>{document.getElementById("main-title").style.opacity = "100%";}, 100);
+				setTimeout(()=>{				
+					document.getElementById("main-title").innerHTML = getBilingualText(pref.english_name, pref.japanese_name);
+					document.getElementById("main-title").style.opacity = "100%";
+				}, 100);
 			  });
 
 			prefImg.addEventListener('mouseout', () => {
 				prefImg.setAttribute('opacity', '100%');
 				hoveredRegion = "";
 				document.getElementById("main-title").style.opacity = "0%";
-				document.getElementById("main-title").innerHTML = "JAPAN / 日本";
-				setTimeout(()=>{document.getElementById("main-title").style.opacity = "100%";}, 100);
+				setTimeout(()=>{				
+					document.getElementById("main-title").innerHTML = "JAPAN / 日本";
+					document.getElementById("main-title").style.opacity = "100%";
+				}, 100);
 			  });
 
 		} else {
@@ -147,7 +151,6 @@ function changeRegion(newRegion){
 	/*if(!isGalleryVisible){
 		closeMapTransition();
 	}*/
-  	document.getElementById("pref-name").innerHTML = getBilingualText(selectedRegion.english_name, selectedRegion.japanese_name);
  	document.getElementById("pref-dates").innerHTML = getBilingualText(selectedRegion.dates_english, selectedRegion.dates_japanese);
   	document.getElementById("pref-desc").innerHTML = getBilingualText(selectedRegion.description_english, selectedRegion.description_japanese);
   	document.getElementById("pref-name-btn").innerHTML = getBilingualText(selectedRegion.english_name, selectedRegion.japanese_name);
