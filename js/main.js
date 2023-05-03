@@ -51,7 +51,7 @@ function createSidebar(data){
 				const newPrefecture = visitedPref.cloneNode();
 				newPrefecture.innerHTML = getBilingualText(prefecture.english_name, prefecture.japanese_name);
 				newPrefecture.addEventListener("click", function(){
-					changeRegion(prefecture.english_name);
+					changeRegion(prefecture);
 					changeSidebarVisibility();
 					}, false);
 				newRegion.appendChild(newPrefecture);
