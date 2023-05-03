@@ -141,7 +141,7 @@ function closeMapTransition(){
 // Photo gallery
 function changeRegion(newRegion){
 // add catch error?
-	console.log("change region");
+	console.log("change region", newRegion);
 	selectedRegion = newRegion;
 	/*if(!isGalleryVisible){
 		closeMapTransition();
@@ -204,9 +204,7 @@ function main(){
 			return response.json();})
 		  .then(d => {data = d; 
 			      createSidebar(d);
-			      document.getElementById("japan-map").onload = function(){
-				      setTimeout(()=>{createMap(d);}, 1000);
-			      };
+			      createMap(d);
 			})
 		  .catch(error => {console.error(error); });
 	
