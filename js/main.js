@@ -19,7 +19,6 @@ function getBilingualText(english, japanese){
 
 // Sidebar
 function changeSidebarVisibility(){
-	console.log("toggle sidebar");
   isSidebarVisible = !isSidebarVisible;
   document.getElementById("sidebar").style.visibility = isSidebarVisible ? "visible" : "hidden";
   document.getElementById("sidebar-bg").style.visibility = isSidebarVisible ? "visible" : "hidden";
@@ -68,7 +67,6 @@ function createSidebar(data){
 // Map
 function createMap(data){
 	setTimeout(()=>{
-	console.log("create map!1");
 	const svgObj = document.getElementById('japan-map');
 	const svgDoc = svgObj.contentDocument;
 	
@@ -145,15 +143,14 @@ function closeMapTransition(){
 // Photo gallery
 function changeRegion(newRegion){
 // add catch error?
-	console.log("change region", newRegion);
 	selectedRegion = newRegion;
 	/*if(!isGalleryVisible){
 		closeMapTransition();
 	}*/
-  document.getElementById("pref-name").innerHTML = getBilingualText(selectedRegion.english_name, selectedRegion.japanese_name);
-  document.getElementById("pref-dates").innerHTML = getBilingualText(selectedRegion.dates_english, selectedRegion.dates_japanese);
-  document.getElementById("pref-desc").innerHTML = getBilingualText(selectedRegion.description_english, selectedRegion.description_japanese);
-  document.getElementById("pref-name-btn").innerHTML = getBilingualText(selectedRegion.english_name, selectedRegion.japanese_name);
+  	document.getElementById("pref-name").innerHTML = getBilingualText(selectedRegion.english_name, selectedRegion.japanese_name);
+ 	document.getElementById("pref-dates").innerHTML = getBilingualText(selectedRegion.dates_english, selectedRegion.dates_japanese);
+  	document.getElementById("pref-desc").innerHTML = getBilingualText(selectedRegion.description_english, selectedRegion.description_japanese);
+  	document.getElementById("pref-name-btn").innerHTML = getBilingualText(selectedRegion.english_name, selectedRegion.japanese_name);
 	if (!isGalleryVisible){
 		changeGalleryVisibility();
 	}
@@ -191,13 +188,13 @@ function changePrefInfoVisibility(){
 }
 
 function changeGalleryVisibility(){
-  isGalleryVisible = !isGalleryVisible;
-  document.getElementById("japan").style.display = isGalleryVisible ? "none" : "block";
-  document.getElementById("gallery").style.display = isGalleryVisible ? "block" : "none";
-  document.getElementById("map-btn").style.display = isGalleryVisible ? "block" : "none";
+	isGalleryVisible = !isGalleryVisible;
+	document.getElementById("japan").style.display = isGalleryVisible ? "none" : "block";
+  	document.getElementById("gallery").style.display = isGalleryVisible ? "block" : "none";
+  	document.getElementById("map-btn").style.display = isGalleryVisible ? "block" : "none";
 	document.getElementById("sidebar-btn").style.display = isGalleryVisible ? "none" : "block";
-  /*document.getElementById("filter-bar").style.display = isGalleryVisible ? "flex" : "none";*/
-  document.getElementById("pref-name-btn").style.display = isGalleryVisible ? "block" : "none";
+	/*document.getElementById("filter-bar").style.display = isGalleryVisible ? "flex" : "none";*/
+  	document.getElementById("pref-name-btn").style.display = isGalleryVisible ? "block" : "none";
 	document.getElementById("filter-btn").style.display = isGalleryVisible ? "block" : "none";
 	if (!isGalleryVisible){
 		createMap(data);
@@ -222,27 +219,6 @@ function main(){
 	document.getElementById("info-btn").addEventListener("click", changePopupVisibility);
 	document.getElementById("map-btn").addEventListener("click", changeGalleryVisibility);
 	document.getElementById("pref-name-btn").addEventListener("click", changePrefInfoVisibility);
-	
-	const div1 = document.createElement("div");
-	div1.innerHTML = "Pic of prefecture・都道府県の写真";
-	div1.id = "pref-pic";
-	const div2 = document.createElement("div");
-	div2.innerHTML = "Name of prefecture・都道府県";
-	div2.id = "pref-name";
-	const div3 = document.createElement("div");
-	div3.innerHTML = "Dates visited・日付";
-	div3.id = "pref-dates";
-	const div4 = document.createElement("div");
-	div4.innerHTML = "Cities visited・町";
-	div4.id = "pref-cities";
-	const div5 = document.createElement("div");
-	div5.innerHTML = "Description etc.・説明など";
-	div5.id = "pref-desc";
-	document.getElementById("pref-info").appendChild(div1);
-	document.getElementById("pref-info").appendChild(div2);
-	document.getElementById("pref-info").appendChild(div3);
-	document.getElementById("pref-info").appendChild(div4);
-	document.getElementById("pref-info").appendChild(div5);
 
 	document.addEventListener('keydown', function(event) {
 	  if(event.keyCode == 27 && isPopupVisible) {
