@@ -5,7 +5,7 @@ var hoveredRegion = "";
 var isSidebarVisible = false;
 var isPopupVisible = false;
 var isGalleryVisible = false;
-var isPictureVisible = false;
+var isFullscreen = false;
 var isPrefInfoVisible = false;
 var currentFilter = "";
 var data = null;
@@ -174,8 +174,9 @@ function changeSelectedPicture(newPicture){
 	
 }
 
-function changePictureVisibility(){
-	isPictureVisible = !isPictureVisible;
+function changeFullscreen(){
+	isFullscreen = !isFullscreen;
+	document.getElementById("fullscreen").style.visibility = isFullscreen ? "visible" : "hidden";
 }
 
 // Popup
@@ -222,6 +223,8 @@ function main(){
 	document.getElementById("info-btn").addEventListener("click", changePopupVisibility);
 	document.getElementById("map-btn").addEventListener("click", changeGalleryVisibility);
 	document.getElementById("pref-name-btn").addEventListener("click", changePrefInfoVisibility);
+	document.getElementById("picture1").addEventListener("click", changeFullscreen);
+	document.getElementById("fullscreen-pic-bg").addEventListener("click", changeFullscreen);
 
 	document.addEventListener('keydown', function(event) {
 	  if(event.keyCode == 27 && isPopupVisible) {
