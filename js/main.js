@@ -194,23 +194,19 @@ function changeGalleryVisibility(){
   document.getElementById("filter-bar").style.display = isGalleryVisible ? "flex" : "none";*/
   document.getElementById("pref-name-btn").style.display = isGalleryVisible ? "block" : "none";
 	if (!isGalleryVisible){
-		//createMap(data);
+		createMap(data);
 	}
 }
 
 function main(){
 	fetch('js/data.json')
 		  .then(response => { 
-			console.log(response); 
 			return response.json();})
 		  .then(d => {data = d; 
-			      console.log(d, "test");
 			      createSidebar(d);
-			      /*document.getElementById("japan-map").onload = function(){
-				      console.log("loaded"); 
-				      setTimeout(()=>{console.log("creating..."); 
-						      createMap(d);}, 1000);
-			      };*/
+			      document.getElementById("japan-map").onload = function(){
+				      setTimeout(()=>{createMap(d);}, 1000);
+			      };
 			})
 		  .catch(error => {console.error(error); });
 	
