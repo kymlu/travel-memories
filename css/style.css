@@ -69,6 +69,10 @@
   max-height: 1em;
 }
 
+.one-line-text-jp {
+  max-height: 1.5em !important;
+}
+
 .date-text {
   font-family: American Typewriter;
   color: var(--text-color);
