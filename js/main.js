@@ -87,21 +87,23 @@ function createMap(data){
 			prefImg.addEventListener('mouseover', () => {
 				prefImg.setAttribute('opacity', '50%');
 				hoveredRegion = pref.english_name;
-				document.getElementById("main-title").style.opacity = "0%";
+				document.getElementById("main-title").innerHTML = getBilingualText(pref.english_name, pref.japanese_name);
+				/*document.getElementById("main-title").style.opacity = "0%";
 				setTimeout(()=>{				
 					document.getElementById("main-title").innerHTML = getBilingualText(pref.english_name, pref.japanese_name);
 					document.getElementById("main-title").style.opacity = "100%";
-				}, 300);
+				}, 300);*/
 			  });
 
 			prefImg.addEventListener('mouseout', () => {
 				prefImg.setAttribute('opacity', '100%');
 				hoveredRegion = "";
 				document.getElementById("main-title").style.opacity = "0%";
-				setTimeout(()=>{				
+					document.getElementById("main-title").innerHTML = "JAPAN / 日本";
+				/*setTimeout(()=>{				
 					document.getElementById("main-title").innerHTML = "JAPAN / 日本";
 					document.getElementById("main-title").style.opacity = "100%";
-				}, 300);
+				}, 300);*/
 			  });
 
 		} else {
