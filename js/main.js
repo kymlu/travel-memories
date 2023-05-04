@@ -180,6 +180,7 @@ function changeFullscreen(){
 	console.log("fullscreen");
 	isFullscreen = !isFullscreen;
 	document.getElementById("fullscreen").style.visibility = isFullscreen ? "visible" : "hidden";
+	document.getElementById("fullscreen-bg").style.visibility = isFullscreen ? "visible" : "hidden";
 }
 
 // Popup
