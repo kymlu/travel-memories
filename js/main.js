@@ -228,7 +228,7 @@ function main(){
 	document.getElementById("map-btn").addEventListener("click", changeGalleryVisibility);
 	document.getElementById("pref-name-btn").addEventListener("click", changePrefInfoVisibility);
 	document.getElementById("picture1").addEventListener("click", changeFullscreen);
-	document.getElementById("fullscreen-pic-bg").addEventListener("click", changeFullscreen);
+	document.getElementById("fullscreen-bg").addEventListener("click", changeFullscreen);
 
 	document.addEventListener('keydown', function(event) {
 	  if(event.keyCode == 27 && isPopupVisible) {
