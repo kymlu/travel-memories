@@ -60,8 +60,24 @@
   font-weight: normal;
   vertical-align: bottom;
   text-align: center;
-  padding: 5px;
-}  
+}
+
+.one-line-text {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-height: 1em;
+}
+
+.date-text {
+  font-family: American Typewriter;
+  color: var(--text-color);
+  font-weight: normal;
+  vertical-align: bottom;
+  text-align: center;
+  font-size: x-small; 
+  margin: 0px;
+}
 
 .locked-pref-text {
   color: lightgray;
