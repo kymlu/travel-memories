@@ -98,9 +98,9 @@ function createMap(data){
 			prefImg.addEventListener('mouseout', () => {
 				prefImg.setAttribute('opacity', '100%');
 				hoveredRegion = "";
-				document.getElementById("main-title").style.opacity = "0%";
-					document.getElementById("main-title").innerHTML = "JAPAN / 日本";
-				/*setTimeout(()=>{				
+				document.getElementById("main-title").innerHTML = "JAPAN / 日本";
+				/*document.getElementById("main-title").style.opacity = "0%";
+				setTimeout(()=>{				
 					document.getElementById("main-title").innerHTML = "JAPAN / 日本";
 					document.getElementById("main-title").style.opacity = "100%";
 				}, 300);*/
