@@ -121,6 +121,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  align-content: flex-start;
   width: 255px;
   height: 315px;
   max-width: 255px;
