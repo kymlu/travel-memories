@@ -52,7 +52,18 @@
               <div class="polaroid-img">
                 <img style="width: 100%" src="img/BFD9CC0C-53AB-4F00-851A-AAB2D06A37A6.jpeg"/>
               </div>
-              <p class="caption-text">Picture 75871</p>
+              <div style="display: flex; flex-direction: row; justify-content: space-between">
+                <p class="caption-text" style="font-size: small;">January 1, 2023</p> 
+                <p class="caption-text" style="font-size: small; text-align: right;">2023年1月1日</p>
+              </div>
+              <p class="caption-text" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis; max-height: 1em;">
+                                      Peter Piper picked a peck of pickled peppers,
+                                      A peck of pickled peppers Peter Piper picked;
+                                      If Peter Piper picked a peck of pickled peppers,
+                                      Where’s the peck of pickled peppers Peter Piper picked?</p>
+              <p class="caption-text" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis; max-height: 1em;">
+                                      あいうえおかきくけこさしすせそたちつてとなにぬねの
+                                      はひふへほまみむめもやゆよらりるれろわをん</p> 
             </div>
             <hr class="timeline-branch-left">
             <div class="polaroid-frame rotate-left2" style="translate: 0px 0px">
@@ -124,17 +135,18 @@
     <div id="sidebar-bg" class="popup-bg"></div>
     <div id="sidebar" class="sidebar"></div>
     
-    <div id="fullscreen" style="height: 100%; visibility: hidden; position: absolute; display: flex; align-items: stretch; align-contents: stretch; justify-contents: center;">
+    <div id="fullscreen" style="height: 100%; visibility: hidden; position: absolute; display: flex; align-items: center; align-content: center; justify-contents: center;">
       <div id="fullscreen-bg" class="popup-bg" style=""></div>
-      <div id="fullscreen-pic" style="background-color: white; padding: 10px; display: flex; flex-direction: column; z-index: 1001;">
-        <img style="height: 500px" src="img/BFD9CC0C-53AB-4F00-851A-AAB2D06A37A6.jpeg"/>
-                <div id="pic-info" class="fa" style="position: absolute; self-align: center; self-justify: flex-end; z-index: 1002; font-size: xx-large; margin-top: -30px">&#xf05a</div>
+      <div id="fullscreen-pic" style="background-color: white; padding: 10px; display: flex; flex-direction: column; justify-content: center; align-content: center; align-items: center; z-index: 1001;">
+        <div>
+          <img style="height: 500px; position: absolute; z-index: 1001;" src="img/BFD9CC0C-53AB-4F00-851A-AAB2D06A37A6.jpeg"/>
+          <div id="pic-info" class="fa" style="position: absolute; bottom: 20px; right: 20px; self-align: center; self-justify: flex-end; z-index: 1002; font-size: xx-large; margin-top: -30px">&#xf05a</div>
+        </div>
         <div>Sample info about picture etc etc</div>
       </div>
-      <div id="left-arrow" class="fa" style="position: absolute; self-align: center; self-justify: flex-start; z-index: 1001; font-size: xx-large;">&#xf0d9</div>
-      <div id="right-arrow" class="fa" style="position: absolute; self-align: center; self-justify: flex-end; z-index: 1001; font-size: xx-large;">&#xf0da</div>
+      <div id="left-arrow" class="fa" style="position: absolute; self-align: center; left: 20px; z-index: 1001; font-size: xx-large;">&#xf0d9</div>
+      <div id="right-arrow" class="fa" style="position: absolute; self-align: center; right: 20px; z-index: 1001; font-size: xx-large;">&#xf0da</div>
     </div>
-  
   </div>
   
   <!--<div style="width:20%; height:20%; background-color: pink; position:absolute; font-color: white;">{{isPopupVisible}}</div>-->
