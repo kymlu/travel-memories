@@ -37,7 +37,26 @@
         "dates_japanese": "2022年10月21〜23日",
         "description_english": "My first solo venture after the school year started! Attended the annual temari competition to see works and report back to my mom, who makes temari.",
         "description_japanese": "学校始まったからの初一人旅！第53回ごてんまりコンクールを見に行って、手毬作りが趣味母に写真を送ってあげた。",
-        "image_list": []
+        "image_list": [
+          {
+            "link": "https://lh3.googleusercontent.com/pw/AJFCJaX--n4Tp8cqnWRORHMif0od670DSht1cex22Qr98YKV8KgkEdmtGvP582nF2qMvGOQK-rmX_KzS13QB6qO5NbYEten_GT4kyEgVe4jIsa0gpIgN7Nc=w2400",
+            "date_english": "October 21, 2022",
+            "date_japanese": "2022年10月21日",
+            "description_english": "Decorations welcoming you to Akita Station",
+            "description_japanese": "「秋田へようこそ！」",
+            "city_english": "Akita City",
+            "city_japanese": "秋田市"
+          },
+          {
+            "link": "",
+            "date_english": "",
+            "date_japanese": "",
+            "description_english": "",
+            "description_japanese": "",
+            "city_english": "",
+            "city_japanese": ""
+          }
+        ]
       },
       {
         "english_name": "Yamagata",
