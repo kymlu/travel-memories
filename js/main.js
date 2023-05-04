@@ -159,6 +159,9 @@ function changeRegion(newRegion){
 	if (!isGalleryVisible){
 		changeGalleryVisibility();
 	}
+	if (newRegion.image_list.length > 0){
+		document.getElementById("picture2").src = newRegion.image_list[0].link;
+	}
 }
 
 function changeGalleryFilter(newFilter){
