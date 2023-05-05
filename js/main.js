@@ -160,7 +160,12 @@ function changeRegion(newRegion){
 		changeGalleryVisibility();
 	}
 	if (newRegion.image_list.length > 0){
-		document.getElementById("picture2").src = newRegion.image_list[0].link;
+		let pic = document.getElementById("picture2");
+		pic.src = newRegion.image_list[0].link;
+		EXIF.getData(pic, function() {
+			const dateTaken = this.exifdata.DateTimeOriginal;
+			console.log(dateTaken); // prints the date the photo was taken in string format
+  });
 	}
 }
 
