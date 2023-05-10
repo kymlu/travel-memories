@@ -7,7 +7,7 @@
 
 <body class="page-bg">
   <div class="content-container" style="align-content: stretch; height: 100vh">
-    <div style="display: flex; flex-direction: row; justify-content: space-between; position: sticky; align-content: stretch; z-index: 1000000">
+    <div style="display: flex; flex-direction: row; justify-content: space-between; position: sticky; align-content: stretch; z-index: 10000; background-color: purple;">
       <div id="sidebar-btn" class="fa text-main-color" style="font-size: xx-large; align-self: start; text-align: left;">&#xf0c9</div>
       <div id="map-btn" class="fa text-main-color" style="display: none; font-size: xx-large; align-self: start; text-align: left;">&#xf279</div>
       <!--<div id="switch-btn" class="caption-text" style="display: none; align-self: start; text-align: left;"><i style="font-size: xx-large;" class="fa text-main-color">&#xf015</i> Return home</div> -->
@@ -70,7 +70,7 @@
             <hr class="timeline-branch-left">
             <div class="polaroid-frame rotate-left2" style="translate: 0px 0px">
               <div class="polaroid-img">
-                <img id="picture2" style="width: 100%" src="img/BFD9CC0C-53AB-4F00-851A-AAB2D06A37A6.jpeg"/>
+                <img id="picture2" style="width: 100vw" src="img/BFD9CC0C-53AB-4F00-851A-AAB2D06A37A6.jpeg"/>
               </div>
               <p class="caption-text">Picture 324124</p>
             </div>
@@ -126,18 +126,18 @@
     <div id="info-btn" class="caption-text" style="align-self: start; text-align: left;"><i style="font-size: xx-large;" class="fa text-main-color">&#xf05a</i> About this site / このサイトについて</div> 
     
     <!--Popups-->
-    <div id="popup-bg" class="popup-bg"></div>
-    <div id="popup" class="popup">
+    <div id="popup-bg" class="popup-bg" style="z-index: 10001"></div>
+    <div id="popup" class="popup" style="z-index: 10002">
       <div id="popup-close-btn" style="position: absolute; margin: 10px; font-size: large; pointer-events: auto;"><i class="fa">&#xf00d</i></div>
       <div>I was in Japan on exchange in September 2022 - April 2023. This site contains the highlights of the sidetrips I made. For privacy reasons, I do not plan on uploading pictures of myself or my friends to this page.</div>
       <div>留学のため、2022年9月から2023年4月まで日本に滞在しました。このウェブページでは 皆さんに私の旅行のハイライトを紹介したいと思います。プライバシーのため、自分と知り合いの写真を掲載しません。</div>
       <div>Design, coding, and photography: Katherine (Katie) Lu / デザイン・プログラミング・写真：ルー・キャサリン</div>
     </div>
     
-    <div id="sidebar-bg" class="popup-bg"></div>
-    <div id="sidebar" class="sidebar"></div>
+    <div id="sidebar-bg" class="popup-bg" style="z-index: 10001"></div>
+    <div id="sidebar" class="sidebar" style="z-index: 10002"></div>
     
-    <div id="fullscreen" style="height: 100%; visibility: hidden; position: absolute; display: flex; align-items: center; align-content: center; justify-contents: center;">
+    <div id="fullscreen" style="height: 100vh; visibility: hidden; position: absolute; display: flex; align-items: center; align-content: center; justify-contents: center;">
       <div id="fullscreen-bg" class="popup-bg" style=""></div>
       <div style="display: flex; flex-direction: row; justify-items: center;">
         <div id="left-arrow" class="fa" style="margin: 20px; z-index: 1001; font-size: xx-large; color: white;">&#xf0d9</div>
