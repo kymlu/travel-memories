@@ -109,12 +109,12 @@
   flex-direction: column; 
   flex-wrap: wrap; 
   justify-align: center; 
-  width: 40%;
+  width: 40vw;
 }
 
 .timeline-branch-left {
   translate: 150px 200px;
-  width: 50%;
+  width: 50vw;
   color: black;
   height: 2px;
   border-width:0;
@@ -124,7 +124,7 @@
 
 .timeline-branch-right {
   translate: -150px 109px;
-  width: 50%;
+  width: 50vw;
   color: black;
   height: 2px;
   border-width:0;
@@ -231,8 +231,8 @@
   visibility: hidden;
   overflow: scroll;
   position: absolute;
-  height: 100%;
-  max-width: 50%;
+  height: 100vh;
+  max-width: 50vw;
   background-color: white;
   left: 0;
   top: 0;
@@ -243,8 +243,8 @@
   self-align: center;
   self-justify: center;
   position: fixed;
-  width: 70%;
-  height: 70%;
+  width: 70vh;
+  height: 70vw;
   background-color: white;
   border-radius: 10px;
   visibility: hidden;
