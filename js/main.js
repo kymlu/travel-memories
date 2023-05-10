@@ -87,6 +87,7 @@ function createMap(data){
 			prefImg.addEventListener('mouseover', () => {
 				prefImg.setAttribute('opacity', '50%');
 				hoveredRegion = pref.english_name;
+				$("#main-title-2").html(hoveredRegionTemplate(hoveredRegion));
 				document.getElementById("main-title").innerHTML = getBilingualText(pref.english_name, pref.japanese_name);
 				/*document.getElementById("main-title").style.opacity = "0%";
 				setTimeout(()=>{				
@@ -98,6 +99,7 @@ function createMap(data){
 			prefImg.addEventListener('mouseout', () => {
 				prefImg.setAttribute('opacity', '100%');
 				hoveredRegion = "";
+				$("#main-title-2").html(hoveredRegionTemplate(hoveredRegion));
 				document.getElementById("main-title").innerHTML = "JAPAN / 日本";
 				/*document.getElementById("main-title").style.opacity = "0%";
 				setTimeout(()=>{				
