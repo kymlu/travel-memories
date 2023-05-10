@@ -243,8 +243,8 @@
   self-align: center;
   self-justify: center;
   position: fixed;
-  width: 70vh;
-  height: 70vw;
+  width: 50vw;
+  height: 50vh;
   background-color: white;
   border-radius: 10px;
   visibility: hidden;
@@ -265,8 +265,8 @@
 .popup-bg {
   background-color: #000000;
   opacity: 30%;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   display: flex;
   position: fixed; 
   visibility: hidden;
