@@ -5,16 +5,16 @@
   --reg-text-size: 1.2rem;
   --lrg-text-size: 1.5rem;
   --icn-text-size: 2.0rem;
-  --xlrg-text-size: 2.2rem;
+  --xlrg-text-size: 2.4rem;
 }
 
 @media screen and (max-width: 768px) {
   :root {
-    --sml-text-size: 1.2rem;
-    --reg-text-size: 1.6rem;
-    --lrg-text-size: 1.9rem;
-    --icn-text-size: 3.2rem; /*TO DO: make this a reasonable size*/
-    --xlrg-text-size: 2.6rem;
+    --sml-text-size: 1.6rem;
+    --reg-text-size: 2.6rem;
+    --lrg-text-size: 2.5rem;
+    --icn-text-size: 4.5rem;
+    --xlrg-text-size: 5.6rem;
   }
 }
 
