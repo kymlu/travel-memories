@@ -153,6 +153,7 @@ function changeRegion(newRegion) {
 	window.scrollTo(0, 0);
 
 	const svgObj = document.getElementById('japan-map-mini');
+	svgObj.data = "img/japan.svg"; //Fix? -> will only execute below once as is
 	svgObj.addEventListener('load', function () {
 		const svgDoc = svgObj.contentDocument;
 		if (svgDoc) {
@@ -164,7 +165,7 @@ function changeRegion(newRegion) {
 					prefImg.setAttribute('fill', 'none');
 					prefImg.setAttribute('stroke', 'none');
 				} else {
-					prefImg.setAttribute('fill', 'white');
+					prefImg.setAttribute('fill', appColor);
 					prefImg.setAttribute('stroke', 'none');
 				}
 			}
@@ -188,7 +189,7 @@ function changeRegion(newRegion) {
 	selectedRegion = newRegion;
 	/*if(!isGalleryVisible){
 		closeMapTransition();
-	}*/
+	}*/	
 	document.getElementById("pref-dates").innerHTML = getBilingualText(selectedRegion.dates_english, selectedRegion.dates_japanese);
 	document.getElementById("pref-desc").innerHTML = getBilingualText(selectedRegion.description_english, selectedRegion.description_japanese);
 	document.getElementById("pref-name").innerHTML = getBilingualText(selectedRegion.english_name, selectedRegion.japanese_name);

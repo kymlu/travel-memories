@@ -1,11 +1,21 @@
 :root {
   --main-color: #be0029;
   --text-color: #1F271B;
-  --sml-text-size: 14px;
-  --reg-text-size: 20px;
-  --lrg-text-size: 24px;
-  --icn-text-size: 32px;
-  --xlrg-text-size: 34px;
+  --sml-text-size: 0.8rem;
+  --reg-text-size: 1.2rem;
+  --lrg-text-size: 1.5rem;
+  --icn-text-size: 2.0rem;
+  --xlrg-text-size: 2.2rem;
+}
+
+@media screen and (max-width: 768px) {
+  :root {
+    --sml-text-size: 1.0rem;
+    --reg-text-size: 1.4rem;
+    --lrg-text-size: 1.7rem;
+    --icn-text-size: 2.2rem;
+    --xlrg-text-size: 2.4rem;
+  }
 }
 
 /* Fonts */
@@ -263,7 +273,7 @@ body {
 }
 
 .rotate-left3 {
-  -ms-transform: rotate(-16deg); /* IE 9 */
+-ms-transform: rotate(-16deg); /* IE 9 */
   -webkit-transform: rotate(-16deg); /* Safari */
   transform: rotate(-16deg);
 }
