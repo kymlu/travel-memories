@@ -7,12 +7,12 @@
 
 <body class="page-bg">
   <div class="content-container" style="align-content: stretch;">
-    <div style="display: flex; flex-direction: column; margin-top: 50px; top: 0; padding: 20px 75px; gap: 20px; position: sticky; z-index: 5000;  background-color: white;  box-shadow: 0 8px 10px -10px grey;">
+    <div style="display: flex; flex-direction: column; margin-top: 50px; top: 0; padding: 20px 75px; gap: 20px; position: sticky; z-index: 5000;  background-color: white; box-shadow: 0 8px 10px -10px grey;">
       <div style="display: flex; flex-direction: row; justify-content: space-between; position: sticky; align-content: stretch;">
-        <div id="sidebar-btn" class="text-main-color large-icon" style="align-self: start; text-align: left; z-index: 5001;">&#xf0c9</div>
+        <!-- <div id="sidebar-btn" class="text-main-color large-icon" style="align-self: start; text-align: left; z-index: 5001;">&#xf0c9</div> -->
         <div id="map-btn" class="text-main-color large-icon" style="display: none; align-self: start; text-align: left; z-index: 5001;">&#xf279</div>
         <div style="display: flex; flex-direction: row; gap: 15px; align-items: center;">
-          <div id="pref-name" class="regular-text" style="display: none"></div>
+          <div id="pref-name" class="regular-text" style="display: none; font-size: 24px; font-weight: bold;"></div>
           <div id="pref-name-btn-up" class="text-main-color large-icon" style="display: none">&#xf0d7</div>
           <div id="pref-name-btn-down" class="text-main-color large-icon" style="display: none">&#xf0d8</div>
         </div>
@@ -50,12 +50,13 @@
       <object id="japan-map" type="image/svg+xml" data="img/japan.svg"
         style="margin: auto; max-height: 500px;"></object>
       <div id="main-title" class="main-title" style="text-align: center;">JAPAN / 日本</div>
+      <div id="pref-list" style="display: flex; flex-direction: row; flex-wrap: wrap; gap: 20px; justify-content: space-between; padding: 30px 75px 0px 75px;"></div>
     </div>
-    <div id="gallery" style="display: none; max-width: 100%; align-content: stretch; padding: 50px 75px;">
+    <div id="gallery" style="display: none; align-content: stretch; padding: 0px 75px 50px 75px;">
       <div id="pref-pics" style="display: flex; flex-direction:column;">
         <div style="display: grid; grid: auto /1fr 1fr; justify-content: space-around; align-content: flex-start;">
           <div class="timeline-column" style="border-right: 2px solid black">
-            <hr class="timeline-branch-left">
+            <hr class="timeline-branch left">
             <div id="picture1" class="polaroid-frame rotate-right2">
               <div class="polaroid-img" style="justify-content: center;">
                 <img style="width: 100%" src="img/BFD9CC0C-53AB-4F00-851A-AAB2D06A37A6.jpeg" />
@@ -76,21 +77,21 @@
                 </div>
               </div>
             </div>
-            <hr class="timeline-branch-left">
+            <hr class="timeline-branch left">
             <div class="polaroid-frame rotate-left2">
               <div class="polaroid-img">
                 <img id="picture2" style="width: 100%" src="img/BFD9CC0C-53AB-4F00-851A-AAB2D06A37A6.jpeg" />
               </div>
               <p class="caption-text en">Picture 324124</p>
             </div>
-            <hr class="timeline-branch-left">
+            <hr class="timeline-branch left">
             <div class="polaroid-frame rotate-right2">
               <div class="polaroid-img">
                 <img style="width: 100%" src="img/BFD9CC0C-53AB-4F00-851A-AAB2D06A37A6.jpeg" />
               </div>
               <p class="caption-text en">Picture 213921</p>
             </div>
-            <hr class="timeline-branch-left ">
+            <hr class="timeline-branch left ">
             <div class="polaroid-frame rotate-left1">
               <div class="polaroid-img">
                 <img style="width: 100%" src="img/BFD9CC0C-53AB-4F00-851A-AAB2D06A37A6.jpeg" />
@@ -99,28 +100,28 @@
             </div>
           </div>
           <div class="timeline-column" style="margin-top:140px;">
-            <hr class="timeline-branch-right">
+            <hr class="timeline-branch right">
             <div class="polaroid-frame rotate-left3">
               <div class="polaroid-img">
                 <img style="width: 100%" src="img/BFD9CC0C-53AB-4F00-851A-AAB2D06A37A6.jpeg" />
               </div>
               <p class="caption-text en">Picture 1</p>
             </div>
-            <hr class="timeline-branch-right">
+            <hr class="timeline-branch right">
             <div class="polaroid-frame rotate-right2">
               <div class="polaroid-img">
                 <img style="width: 100%" src="img/BFD9CC0C-53AB-4F00-851A-AAB2D06A37A6.jpeg" />
               </div>
               <p class="caption-text en">Picture 3</p>
             </div>
-            <hr class="timeline-branch-right">
+            <hr class="timeline-branch right">
             <div class="polaroid-frame rotate-left1">
               <div class="polaroid-img">
                 <img style="width: 100%" src="img/BFD9CC0C-53AB-4F00-851A-AAB2D06A37A6.jpeg" />
               </div>
               <p class="caption-text en">Picture 0</p>
             </div>
-            <hr class="timeline-branch-right">
+            <hr class="timeline-branch right">
             <div class="polaroid-frame rotate-right1">
               <div class="polaroid-img">
                 <img style="width: 100%" src="img/BFD9CC0C-53AB-4F00-851A-AAB2D06A37A6.jpeg" />
@@ -138,10 +139,13 @@
     <div id="popup" class="popup" style="z-index: 10002">
       <div id="popup-close-btn" class="large-icon"
         style="position: absolute; top: 15px; left: 15px; pointer-events: auto;">&#xf00d</div>
-      <div class="regular-text en">I was in Japan on exchange in September 2022 - April 2023. This site contains the highlights of the sidetrips
+        <div class="regular-text" style="font-weight: bold;">About this site</div>
+      <div class="regular-text">I was in Japan on exchange in September 2022 - April 2023. This site contains the highlights of the sidetrips
         I made. For privacy reasons, I do not plan on uploading pictures of myself or my friends to this page.</div>
-      <div class="regular-text ja">留学のため、2022年9月から2023年4月まで日本に滞在しました。このウェブページでは 皆さんに私の旅行のハイライトを紹介したいと思います。プライバシーのため、自分と知り合いの写真を掲載しません。</div>
-      <div><span class="regular-text en">Design, coding, and photography: Katherine (Katie) Lu</span><span class="regular-text ja"> / デザイン・プログラミング・写真：ルー・キャサリン</span></div>
+      <div class="regular-text">Design, coding, and photography: Katherine (Katie) Lu</div>
+      <div class="regular-text" style="font-weight: bold;">このサイトについて</div>
+      <div class="regular-text">留学のため、2022年9月から2023年4月まで日本に滞在しました。このウェブページでは 皆さんに私の旅行のハイライトを紹介したいと思います。プライバシーのため、自分と知り合いの写真を掲載しません。</div>
+      <div class="regular-text">デザイン・プログラミング・写真：ルー・キャサリン（ケイティー）</div>
     </div>
 
     <div id="sidebar-bg" class="popup-bg" style="z-index: 10001"></div>
@@ -151,15 +155,18 @@
       <div id="fullscreen-bg" class="popup-bg"></div>
       <div style="display: flex; flex-direction: row; align-items: center; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);">
         <div id="left-arrow" class="large-icon" style="margin: 20px; z-index: 1001; color: white;">&#xf0d9</div>
-        <div id="fullscreen-pic"
-          style="background-color: white; padding: 10px; display: flex; flex-direction: column; justify-content: center; align-content: center; align-items: center; z-index: 1001;">
+        <div id="fullscreen-pic" class="fullscreen-pic"
+          style="z-index: 1001;">
           <div style="display: flex; align-items: end; justify-content: end;">
             <img style="height: 500px; z-index: 1001;" src="img/BFD9CC0C-53AB-4F00-851A-AAB2D06A37A6.jpeg" />
-            <div id="pic-info" class="large-icon" style="position: fixed; margin: 10px; z-index: 1002; color: white;">&#xf05a</div>
+            <div id="pic-info-btn" class="large-icon" style="position: fixed; margin: 10px; z-index: 1002; color: white;">&#xf05a</div>
           </div>
-          <div class="caption-text en">Full English caption</div>
-          <div class="caption-text en">Full Japanese caption</div>
-          <div class="caption-text ja">Date / 日付 City / 町</div>
+          <div id="pic-info" style="display: flex; flex-direction: column; align-items: flex-start; gap: 15px;">
+            <div class="caption-text">Date / 日付</div>
+            <div class="caption-text">City / 町</div>
+            <div class="caption-text">Full English caption</div>
+            <div class="caption-text">Full Japanese caption</div>
+         </div>
         </div>
         <div id="right-arrow" class="large-icon" style="margin: 20px; z-index: 1001; color: white;">&#xf0da</div>
       </div>

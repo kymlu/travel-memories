@@ -7,6 +7,7 @@ var isPopupVisible = false;
 var isGalleryVisible = false;
 var isFullscreen = false;
 var isPrefInfoVisible = false;
+var isPicInfoVisible = true;
 var currentFilter = "";
 var data = null;
 
@@ -19,14 +20,16 @@ function getBilingualText(english, japanese) {
 
 // Sidebar
 function changeSidebarVisibility() {
-	isSidebarVisible = !isSidebarVisible;
-	document.getElementById("sidebar").style.visibility = isSidebarVisible ? "visible" : "hidden";
-	document.getElementById("sidebar-bg").style.visibility = isSidebarVisible ? "visible" : "hidden";
+	// isSidebarVisible = !isSidebarVisible;
+	// document.getElementById("sidebar").style.visibility = isSidebarVisible ? "visible" : "hidden";
+	// document.getElementById("sidebar-bg").style.visibility = isSidebarVisible ? "visible" : "hidden";
 }
 
 function createSidebar(data) {
-	const sidebar = document.getElementById("sidebar");
-	sidebar.innerHTML = "";
+	// const sidebar = document.getElementById("sidebar");
+	// sidebar.innerHTML = "";
+	const prefList = document.getElementById("pref-list");
+	prefList.innerHTML = "";
 
 	const regionGroup = document.createElement("div");
 	regionGroup.classList.add("region-group");
@@ -59,7 +62,8 @@ function createSidebar(data) {
 				newRegion.appendChild(newPrefecture);
 			}
 		});
-		sidebar.appendChild(newRegion);
+		// sidebar.appendChild(newRegion);
+		prefList.appendChild(newRegion);
 	});
 }
 
@@ -79,10 +83,8 @@ function createMap(data) {
 				prefImg.setAttribute('stroke', 'none');
 				prefImg.setAttribute('cursor', 'pointer');
 				prefImg.setAttribute('transition', 'opacity 0.3 ease-in-out');
-				const bbox = prefImg.getBBox();
-				console.log(bbox);
 				prefImg.addEventListener("click", function () {
-					changeRegion(pref, bbox.x + " " + bbox.y + " " + bbox.width + " " + bbox.height);
+					changeRegion(pref);
 					document.getElementById("main-title").innerHTML = getBilingualText(pref.english_name, pref.japanese_name);
 				});
 				prefImg.addEventListener('mouseover', () => {
@@ -90,7 +92,7 @@ function createMap(data) {
 					hoveredRegion = pref.english_name;
 					document.getElementById("main-title").innerHTML = getBilingualText(pref.english_name, pref.japanese_name);
 					/*document.getElementById("main-title").style.opacity = "0%";
-					setTimeout(()=>{				
+					setTimeout(()=>{
 						document.getElementById("main-title").innerHTML = getBilingualText(pref.english_name, pref.japanese_name);
 						document.getElementById("main-title").style.opacity = "100%";
 					}, 300);*/
@@ -101,7 +103,7 @@ function createMap(data) {
 					hoveredRegion = "";
 					document.getElementById("main-title").innerHTML = "JAPAN / 日本";
 					/*document.getElementById("main-title").style.opacity = "0%";
-					setTimeout(()=>{				
+					setTimeout(()=>{
 						document.getElementById("main-title").innerHTML = "JAPAN / 日本";
 						document.getElementById("main-title").style.opacity = "100%";
 					}, 300);*/
@@ -147,33 +149,29 @@ function closeMapTransition() {
 }
 
 // Photo gallery
-function changeRegion(newRegion, bindingBox) {
-	console.log("change start");
+function changeRegion(newRegion) {
+	window.scrollTo(0, 0);
+
 	const svgObj = document.getElementById('japan-map-mini');
 	svgObj.addEventListener('load', function () {
-		console.log("start recolouring");
-		const intervalId = setInterval(function () {
-			console.log("hiya");
-			const svgDoc = svgObj.contentDocument;
-			if (svgDoc) {
-				console.log("content");
-				clearInterval(intervalId);
-				const prefList = data.flatMap(region => region.prefectures);
-				console.log(svgObj, svgDoc);
-				prefList.forEach(pref => {
-					const prefImg = svgDoc.getElementById(pref.english_name.toLowerCase() + "-img");
-					if (pref.english_name != newRegion.english_name) {
-						prefImg.setAttribute('fill', 'none');
-						prefImg.setAttribute('stroke', 'none');
-					} else {
-						prefImg.setAttribute('fill', 'white');
-						prefImg.setAttribute('stroke', 'none');
-					}
+		const svgDoc = svgObj.contentDocument;
+		if (svgDoc) {
+			clearInterval(intervalId);
+			const prefList = data.flatMap(region => region.prefectures);
+			console.log(svgObj, svgDoc);
+			prefList.forEach(pref => {
+				const prefImg = svgDoc.getElementById(pref.english_name.toLowerCase() + "-img");
+				if (pref.english_name != newRegion.english_name) {
+					prefImg.setAttribute('fill', 'none');
+					prefImg.setAttribute('stroke', 'none');
+				} else {
+					prefImg.setAttribute('fill', 'white');
+					prefImg.setAttribute('stroke', 'none');
 				}
-				);
-				svgDoc.viewBox = bindingBox;
 			}
-		}, 100);
+			);
+			svgDoc.prefImg.setAttribute("viewBox", newRegion.viewbox);
+		}
 	});
 
 	document.addEventListener("DOMContentLoaded", function () {
@@ -186,7 +184,6 @@ function changeRegion(newRegion, bindingBox) {
 		};}
 	);
 
-	console.log("change displayed data");
 	// add catch error?
 	selectedRegion = newRegion;
 	/*if(!isGalleryVisible){
@@ -244,12 +241,17 @@ function changePrefInfoVisibility() {
 	document.getElementById("pref-name-btn-up").style.display = isPrefInfoVisible ? "none" : "block";
 }
 
+function changePicInfoVisibility() {
+	isPicInfoVisible = !isPicInfoVisible;
+	document.getElementById("pic-info").style.display = isPicInfoVisible ? "flex" : "none";
+}
+
 function changeGalleryVisibility() {
 	isGalleryVisible = !isGalleryVisible;
-	document.getElementById("japan").style.display = isGalleryVisible ? "none" : "block";
+	document.getElementById("japan").style.display = isGalleryVisible ? "none" : "flex";
 	document.getElementById("gallery").style.display = isGalleryVisible ? "block" : "none";
 	document.getElementById("map-btn").style.display = isGalleryVisible ? "block" : "none";
-	document.getElementById("sidebar-btn").style.display = isGalleryVisible ? "none" : "block";
+	// document.getElementById("sidebar-btn").style.display = isGalleryVisible ? "none" : "block";
 	/*document.getElementById("filter-bar").style.display = isGalleryVisible ? "flex" : "none";*/
 	document.getElementById("pref-name").style.display = isGalleryVisible ? "block" : "none";
 	document.getElementById("pref-name-btn-down").style.display = isGalleryVisible ? "block" : "none";
@@ -274,13 +276,14 @@ function main() {
 		})
 		.catch(error => { console.error(error); });
 
-	document.getElementById("sidebar-btn").addEventListener("click", changeSidebarVisibility);
-	document.getElementById("sidebar-bg").addEventListener("click", changeSidebarVisibility);
+	// document.getElementById("sidebar-btn").addEventListener("click", changeSidebarVisibility);
+	// document.getElementById("sidebar-bg").addEventListener("click", changeSidebarVisibility);
 
 	document.getElementById("popup-close-btn").addEventListener("click", changePopupVisibility);
 	document.getElementById("popup").addEventListener("click", (event) => {
 		event.stopPropagation();
 	});
+	document.getElementById("pic-info-btn").addEventListener("click", changePicInfoVisibility);
 	document.getElementById("popup-bg").addEventListener("click", changePopupVisibility);
 	document.getElementById("info-btn").addEventListener("click", changePopupVisibility);
 	document.getElementById("map-btn").addEventListener("click", changeGalleryVisibility);
@@ -300,7 +303,7 @@ function main() {
 	// 	var element = document.getElementById('pref-info');
 	// 	var rect = element.getBoundingClientRect();
 	// 	if (rect.bottom < 0 || rect.top > window.innerHeight) {
-	// 	  // element is off the page 
+	// 	  // element is off the page
 	// 	} else {
 	// 	  // element is on the page
 

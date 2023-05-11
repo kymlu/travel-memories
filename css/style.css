@@ -141,6 +141,7 @@ body {
   text-decoration: none;
   transition: color .3s ease-in-out, box-shadow .3s ease-in-out;
   cursor: pointer;
+  border-radius: 5px;
 }
 
 .visited-pref-text:visited, visited-pref-text:active {
@@ -166,8 +167,9 @@ body {
   max-height: 315px;
   padding:  25px 10px 10px 10px;
   background-color: white;
-  box-shadow: inset 8px 8px 20px FloralWhite, 8px 8px 20px lightgray;
+  box-shadow: inset 8px 8px 20px FloralWhite, 8px 8px 20px #00000050;
   cursor: pointer;
+  border-radius: 10px;
 }
 
 .polaroid-img {
@@ -269,24 +271,21 @@ body {
   align-items: center;
 }
 
-.timeline-branch-left {
-  translate: 70% 200px;
+.timeline-branch {
   width: 50%;
-  color: black;
+  color: var(--text-color);
   height: 2px;
   border-width:0;
-  background-color: black;
+  background-color: var(--text-color);
   z-index: -1;
 }
 
-.timeline-branch-right {
-  translate: -70% 225px;
-  width: 50%;
-  color: black;
-  height: 2px;
-  border-width:0;
-  background-color: black;
-  z-index: -1;
+.timeline-branch.left {
+  translate: 50% 200px;
+}
+
+.timeline-branch.right {
+  translate: -50% 225px;
 }
 
 /* Popup */
@@ -325,6 +324,23 @@ body {
   margin: 0px;
   bottom: 0;
   right: 0;
+}
+
+/* Fullscreen picture */
+.fullscreen-pic {
+  transition: width 1.0 ease-in-out;
+  border-radius: 20px;
+  flex-wrap: wrap;
+  background-color: white; 
+  padding: 10px;
+  display: flex; 
+  flex-direction: row;
+  justify-content: start; 
+  align-content: center; 
+  align-items: flex-start;
+  gap: 15px;
+  width: max-content;
+  max-width: 70vw;
 }
 
 /* Other */
