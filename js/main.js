@@ -169,8 +169,8 @@ function changeRegion(newRegion) {
 				}
 			}
 			);
-			svgDoc.viewBox = newRegion.viewBox;
-			// svgDoc.setAttribute("viewBox", newRegion.viewbox);
+			const japanImg = svgDoc.getElementById("japan-img");
+			japanImg.setAttribute("viewBox", newRegion.viewbox);
 		}
 	});
 
