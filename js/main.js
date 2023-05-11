@@ -169,7 +169,8 @@ function changeRegion(newRegion) {
 				}
 			}
 			);
-			svgDoc.setAttribute("viewBox", newRegion.viewbox);
+			svgDoc.viewBox = newRegion.viewBox;
+			// svgDoc.setAttribute("viewBox", newRegion.viewbox);
 		}
 	});
 
