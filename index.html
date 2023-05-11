@@ -7,10 +7,8 @@
 
 <body class="page-bg">
   <div class="content-container" style="align-content: stretch;">
-    <div
-      style="display: flex; flex-direction: column; margin-top: 50px; top: 0; padding: 20px 75px; gap: 20px; position: sticky; z-index: 5000;  background-color: white; box-shadow: 0 8px 10px -10px grey;">
-      <div
-        style="display: flex; flex-direction: row; justify-content: space-between; position: sticky; align-content: stretch;">
+    <div id="top-bar" style="display: flex; flex-direction: column; margin-top: 50px; top: 0; padding: 20px 75px; gap: 20px; position: fixed; right: 0px; z-index: 5000;  background-color: white;">
+      <div style="display: flex; flex-direction: row; justify-content: space-between; align-content: stretch;">
         <!-- <div id="sidebar-btn" class="text-main-color large-icon" style="align-self: start; text-align: left; z-index: 5001;">&#xf0c9</div> -->
         <div id="map-btn" class="text-main-color large-icon"
           style="display: none; align-self: start; text-align: left; z-index: 5001;">&#xf279</div>
@@ -29,8 +27,7 @@
           <div id="filter-myst" class="filter-btn"><span class="fa text-main-color">&#x3f</span><div id="filter-myst-txt" style="display:none">Mysterious・謎</div></div>
         </div>-->
       </div>
-      <div id="pref-info"
-        style="display: none; flex-direction: row; gap: 15px; align-content: stretch; max-height: 50vh;">
+      <div id="pref-info" style="display: none; flex-direction: row; gap: 15px; align-content: stretch; max-height: 50vh;">
         <div style="height: 200px; width: 200px; min-width: 200px; min-height: 200px;">
           <object id="japan-map-mini" type="image/svg+xml" data="img/japan.svg"
             style="margin: auto; max-height: 200px;"></object>

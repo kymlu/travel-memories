@@ -248,6 +248,8 @@ function changePicInfoVisibility() {
 
 function changeGalleryVisibility() {
 	isGalleryVisible = !isGalleryVisible;
+	document.getElementById("top-bar").style.position = isGalleryVisible ? "sticky" : "absolute";
+	document.getElementById("top-bar").style.boxShadow = isGalleryVisible ? "box-shadow: 0 8px 10px -10px #00000050;" : "none";
 	document.getElementById("japan").style.display = isGalleryVisible ? "none" : "flex";
 	document.getElementById("gallery").style.display = isGalleryVisible ? "block" : "none";
 	document.getElementById("map-btn").style.display = isGalleryVisible ? "block" : "none";

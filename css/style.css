@@ -10,11 +10,11 @@
 
 @media screen and (max-width: 768px) {
   :root {
-    --sml-text-size: 1.0rem;
-    --reg-text-size: 1.4rem;
-    --lrg-text-size: 1.7rem;
-    --icn-text-size: 2.2rem;
-    --xlrg-text-size: 2.4rem;
+    --sml-text-size: 1.2rem;
+    --reg-text-size: 1.6rem;
+    --lrg-text-size: 1.9rem;
+    --icn-text-size: 3.2rem; /*TO DO: make this a reasonable size*/
+    --xlrg-text-size: 2.6rem;
   }
 }
 
