@@ -169,7 +169,7 @@ function changeRegion(newRegion) {
 				}
 			}
 			);
-			svgDoc.prefImg.setAttribute("viewBox", newRegion.viewbox);
+			svgDoc.setAttribute("viewBox", newRegion.viewbox);
 		}
 	});
 
@@ -186,7 +186,6 @@ function changeRegion(newRegion) {
 	// add catch error?
 	selectedRegion = newRegion;
 	/*if(!isGalleryVisible){
-		bbox stuff
 		closeMapTransition();
 	}*/
 	document.getElementById("pref-dates").innerHTML = getBilingualText(selectedRegion.dates_english, selectedRegion.dates_japanese);
