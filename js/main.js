@@ -79,8 +79,10 @@ function createMap(data) {
 				prefImg.setAttribute('stroke', 'none');
 				prefImg.setAttribute('cursor', 'pointer');
 				prefImg.setAttribute('transition', 'opacity 0.3 ease-in-out');
+				const bbox = prefImg.getBBox();
+				console.log(bbox);
 				prefImg.addEventListener("click", function () {
-					changeRegion(pref);
+					changeRegion(pref, bbox.x + " " + bbox.y + " " + bbox.width + " " + bbox.height);
 					document.getElementById("main-title").innerHTML = getBilingualText(pref.english_name, pref.japanese_name);
 				});
 				prefImg.addEventListener('mouseover', () => {
@@ -104,7 +106,6 @@ function createMap(data) {
 						document.getElementById("main-title").style.opacity = "100%";
 					}, 300);*/
 				});
-
 			} else {
 				prefImg.setAttribute('fill', 'lightgray');
 			}
@@ -146,7 +147,35 @@ function closeMapTransition() {
 }
 
 // Photo gallery
-function changeRegion(newRegion) {
+function changeRegion(newRegion, bindingBox) {
+	console.log("change start");
+	const svgObj = document.getElementById('japan-map-mini');
+	svgObj.addEventListener('load', function () {
+		console.log("start recolouring");
+		const intervalId = setInterval(function () {
+			console.log("hiya");
+			const svgDoc = svgObj.contentDocument;
+			if (svgDoc) {
+				console.log("content");
+				clearInterval(intervalId);
+				const prefList = data.flatMap(region => region.prefectures);
+				console.log(svgObj, svgDoc);
+				prefList.forEach(pref => {
+					const prefImg = svgDoc.getElementById(pref.english_name.toLowerCase() + "-img");
+					if (pref.english_name != newRegion.english_name) {
+						prefImg.setAttribute('fill', 'none');
+						prefImg.setAttribute('stroke', 'none');
+					} else {
+						prefImg.setAttribute('fill', 'white');
+						prefImg.setAttribute('stroke', 'none');
+					}
+				}
+				);
+				svgDoc.viewBox = bindingBox;
+			}
+		}, 100);
+	});
+
 	document.addEventListener("DOMContentLoaded", function () {
 		const img = document.getElementById('picture1');
 		img.onload = function () {
@@ -157,9 +186,11 @@ function changeRegion(newRegion) {
 		};}
 	);
 
+	console.log("change displayed data");
 	// add catch error?
 	selectedRegion = newRegion;
 	/*if(!isGalleryVisible){
+		bbox stuff
 		closeMapTransition();
 	}*/
 	document.getElementById("pref-dates").innerHTML = getBilingualText(selectedRegion.dates_english, selectedRegion.dates_japanese);

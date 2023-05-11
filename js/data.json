@@ -6,7 +6,8 @@
       {
         "english_name": "Hokkaido",
         "japanese_name": "北海道",
-        "visited": false
+        "visited": false,
+        "viewport": "950 7 440.000000 440.000000"
       }
     ]
   }, 
