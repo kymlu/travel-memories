@@ -1,6 +1,11 @@
 :root {
   --main-color: #be0029;
   --text-color: #1F271B;
+  --sml-text-size: 14px;
+  --reg-text-size: 20px;
+  --lrg-text-size: 24px;
+  --icn-text-size: 32px;
+  --xlrg-text-size: 34px;
 }
 
 /* Fonts */
@@ -40,7 +45,7 @@ body {
 /* General Text */
 .main-title {
   color: var(--text-color);
-  font-size: xx-large;
+  font-size: var(--xlrg-text-size);
   font-weight: bolder;
   vertical-align: bottom;
   margin-right: 8px;
@@ -52,7 +57,7 @@ body {
 
 .sub-title {
   color: #611C35;
-  font-size: large;
+  font-size: var(--lrg-text-size);
   font-weight: lighter;
   vertical-align: bottom;
   padding: 0px;
@@ -63,13 +68,13 @@ body {
 }
 
 .large-icon{
-  font-size: xx-large;
+  font-size: var(--icn-text-size);
   font-family: FontAwesome;
   cursor: pointer;
 }
 
 .regular-text{
-  font-size: 16px;
+  font-size: var(--reg-text-size);
 }
 
  /* Sidebar */
@@ -107,7 +112,7 @@ body {
 
 .region-text {
   color: var(--text-color);
-  font-size: large;
+  font-size: var(--lrg-text-size);
   font-weight: bold;
   vertical-align: bottom;
   padding: 0px 5px;
@@ -115,7 +120,7 @@ body {
 }
 
 .prefecture-text {
-  font-size: normal;
+  font-size: var(--reg-text-size);
   font-weight: normal;
   vertical-align: bottom;
   padding: 2px 5px;
@@ -200,7 +205,7 @@ body {
   font-weight: normal;
   vertical-align: bottom;
   text-align: center;
-  font-size: 12px; 
+  font-size: var(--sml-text-size); 
   margin: 0px;
 }
 
@@ -209,7 +214,7 @@ body {
   font-weight: normal;
   vertical-align: bottom;
   text-align: center;
-  font-size: 20px;
+  font-size: var(--reg-text-size);
 }
 
 .date-text.en, .caption-text.en{
@@ -295,7 +300,8 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
   width: 50vw;
-  height: 50vh;
+  height: max-content;
+  max-height: 75vh;
   background-color: white;
   border-radius: 10px;
   visibility: hidden;
@@ -303,10 +309,9 @@ body {
   display: flex;
   flex-direction: column;
   color: var(--text-color);
-  font-size: normal;
+  font-size: var(--reg-text-size);
   font-weight: normal;
   text-align: start;
-  gap: 10px;
   padding: 50px;
 }
 
@@ -363,7 +368,7 @@ body {
   transition: width .3s ease-in-out;
   background-color: thistle;
   cursor: pointer;
-  font-size: normal;
+  font-size: var(--reg-text-size);
   text-align: middle;
   height: 30px;
   align-content: center;

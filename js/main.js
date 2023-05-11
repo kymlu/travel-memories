@@ -156,7 +156,6 @@ function changeRegion(newRegion) {
 	svgObj.addEventListener('load', function () {
 		const svgDoc = svgObj.contentDocument;
 		if (svgDoc) {
-			clearInterval(intervalId);
 			const prefList = data.flatMap(region => region.prefectures);
 			console.log(svgObj, svgDoc);
 			prefList.forEach(pref => {
