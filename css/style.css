@@ -276,8 +276,26 @@ body {
   align-items: center;
 }
 
-.timeline-branch {
+.timeline-branch-grp {
   width: 50%;
+  height: 10px;
+  display: flex;
+  gap: 0px;
+  align-items: center;
+}
+
+.timeline-branch-grp.left {
+  justify-content: end;
+  translate: 50% 200px;
+}
+
+.timeline-branch-grp.right {
+  justify-content: start;
+  translate: -50% 225px;
+}
+
+.timeline-branch {
+  width: 100%;
   color: var(--text-color);
   height: 2px;
   border-width:0;
@@ -285,12 +303,20 @@ body {
   z-index: -1;
 }
 
-.timeline-branch.left {
-  translate: 50% 200px;
+.timeline-point {
+  width: 10px;
+  height: 10px;
+  background-color: var(--text-color);
+  border-radius: 50%;
+  position: fixed;
+ }
+
+.timeline-point.left {
+  translate: 50% 0px;
 }
 
-.timeline-branch.right {
-  translate: -50% 225px;
+.timeline-point.right {
+  translate: -50% 0px;
 }
 
 /* Popup */
