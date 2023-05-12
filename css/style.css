@@ -384,6 +384,11 @@ body {
   max-width: 70vw;
 }
 
+.fullscreen-arrow {
+  margin: 20px;
+  color: white;
+}
+
 /* Other */
 .content-container {
   display: flex;

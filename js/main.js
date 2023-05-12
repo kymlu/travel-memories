@@ -1,17 +1,21 @@
 // Variables
-var selectedRegion = null;
-var selectedPicture = null;
-var hoveredRegion = "";
-var isSidebarVisible = false;
-var isPopupVisible = false;
-var isGalleryVisible = false;
-var isFullscreen = false;
-var isPrefInfoVisible = false;
-var isPicInfoVisible = true;
-var currentFilter = "";
-var data = null;
+let selectedRegion = null;
+let selectedPicture = null;
+let selectedPictureIndex = 0;
+let hoveredRegion = "";
+let isSidebarVisible = false;
+let isPopupVisible = false;
+let isGalleryVisible = false;
+let isFullscreen = false;
+let isPrefInfoVisible = false;
+let isPicInfoVisible = true;
+let currentFilter = "";
+let data = null;
 
-const appColor = "#be0029";
+let branch, leftBranch, leftPoint, rightBranch, rightPoint;
+let polaroid, polaroidImgFrame, polaroidImg, polaroidCaption, polaroidCaptionText, polaroidDate, singleDate;
+
+let appColor = "#be0029";
 
 // Text
 function getBilingualText(english, japanese) {
@@ -149,7 +153,50 @@ function closeMapTransition() {
 }
 
 // Photo gallery
+function createTemplates(){
+	// sample branch
+	branch = document.createElement("hr");
+	branch.classList.add("timeline-branch");
+	
+	// sample left branch
+	leftBranch = document.createElement("div");
+	leftBranch.classList.add("timeline-branch-grp", "left");
+	leftPoint = document.createElement("div");
+	leftPoint.classList.add("timeline-point", "left");
+	leftBranch.appendChild(branch.cloneNode());
+	leftBranch.appendChild(leftPoint);
+	
+	// sample right branch
+	rightBranch = document.createElement("div");
+	rightBranch.classList.add("timeline-branch-grp", "right");
+	rightPoint = document.createElement("div");
+	rightPoint.classList.add("timeline-point", "right");
+	rightBranch.appendChild(branch.cloneNode());
+	rightBranch.appendChild(rightPoint);
+	
+	// sample polaroid
+	polaroid = document.createElement("div");
+	polaroid.classList.add("polaroid-frame");
+	
+	polaroidImgFrame = document.createElement("div");
+	polaroidImgFrame.classList.add("polaroid-img");
+	polaroidImg = document.createElement("img");
+	polaroidImg.style.width = "100%"
+	
+	polaroidCaption = document.createElement("div");
+	polaroidCaption.classList.add("polaroid-caption");
+	polaroidDate = document.createElement("div");
+	polaroidDate.classList.add("polaroid-date");
+	singleDate = document.createElement("p");
+	singleDate.classList.add("date-text");
+	polaroidCaptionText = document.createElement("div");
+	polaroidCaptionText.classList.add("caption-text");
+	polaroidCaptionText.classList.add("one-line-text");
+}
+
 function changeRegion(newRegion) {
+	selectedRegion = newRegion;
+	
 	window.scrollTo(0, 0);
 
 	const svgObj = document.getElementById('japan-map-mini');
@@ -161,7 +208,7 @@ function changeRegion(newRegion) {
 			console.log(svgObj, svgDoc);
 			prefList.forEach(pref => {
 				const prefImg = svgDoc.getElementById(pref.english_name.toLowerCase() + "-img");
-				if (pref.english_name != newRegion.english_name) {
+				if (pref.english_name != selectedRegion.english_name) {
 					prefImg.setAttribute('fill', 'none');
 					prefImg.setAttribute('stroke', 'none');
 				} else {
@@ -171,46 +218,74 @@ function changeRegion(newRegion) {
 			}
 			);
 			const japanImg = svgDoc.getElementById("japan-img");
-			japanImg.setAttribute("viewBox", newRegion.viewbox);
+			japanImg.setAttribute("viewBox", selectedRegion.viewbox);
 		}
 	});
 
-	// document.addEventListener("DOMContentLoaded", function () {
-	// 	const img = document.getElementById('picture1');
-	// 	img.onload = function () {
-	// 		EXIF.getData(this, function () {
-	// 			const dateTaken = this.exifdata.DateTimeOriginal;
-	// 			console.log(dateTaken); // prints the date the photo was taken in string format
-	// 		});
-	// 	};}
-	// );
-
 	// add catch error?
-	selectedRegion = newRegion;
 	/*if(!isGalleryVisible){
 		closeMapTransition();
 	}*/	
+
 	document.getElementById("pref-dates").innerHTML = getBilingualText(selectedRegion.dates_english, selectedRegion.dates_japanese);
 	document.getElementById("pref-desc").innerHTML = getBilingualText(selectedRegion.description_english, selectedRegion.description_japanese);
 	document.getElementById("pref-name").innerHTML = getBilingualText(selectedRegion.english_name, selectedRegion.japanese_name);
 	if (!isGalleryVisible) {
 		changeGalleryVisibility();
 	}
-
-	if (newRegion.image_list.length > 0) {
-		console.log("get pic");
-		let pic = document.getElementById("picture2");
-		pic.src = "";
-		let newPic = pic.cloneNode()
-		newPic.src = newRegion.image_list[0].link;
-		pic.after(newPic);
-		newPic.onload = function () {
-			console.log("Get date");
-			EXIF.getData(newPic, function () {
-				const dateTaken = this.exifdata.DateTimeOriginal;
-				console.log(dateTaken); // prints the date the photo was taken in string format
+	
+	let isLeft = true;
+	let leftColumn = document.getElementById("left-column");
+	leftColumn.innerHTML = "";
+	let rightColumn = document.getElementById("right-column");
+	rightColumn.innerHTML = "";
+	if (selectedRegion.image_list.length > 0) {
+		let i = 0;
+		selectedRegion.image_list.forEach(img => {
+			let pol = polaroid.cloneNode();
+			let randRotation = Math.round(Math.random() * 12) % 12;
+			pol.style.transform = "rotate(" + randRotation +"deg)";
+			let polImgFrame = polaroidImgFrame.cloneNode();
+			let polImg = polaroidImg.cloneNode();
+			let polCaption = polaroidCaption.cloneNode();
+			let polDate = polaroidDate.cloneNode();
+			let polDateEn = singleDate.cloneNode();
+			let polDateJp = singleDate.cloneNode();
+			let polCaptionTextEn = polaroidCaptionText.cloneNode();
+			let polCaptionTextJp = polaroidCaptionText.cloneNode();
+			pol.appendChild(polImgFrame);
+			polImgFrame.appendChild(polImg);
+			pol.appendChild(polCaption);
+			polCaption.appendChild(polDate);
+			polDate.appendChild(polDateEn);
+			polDate.appendChild(polDateJp);
+			polCaption.appendChild(polCaptionTextEn);
+			polCaption.appendChild(polCaptionTextJp);
+			polImg.src = img.link;
+			let date = new Date(img.date);
+			polDateEn.innerHTML = date;
+			polDateJp.innerHTML = date;
+			polCaptionTextEn.innerHTML = img.description_english;
+			polCaptionTextJp.innerHTML = img.description_japanese;
+			pol.addEventListener("click", function(){
+				selectedPicture = img;
+				selectedPictureIndex = i;
+				setFullscreenPicture();
+				changeFullscreen();
 			});
-		};
+			i++;
+
+			if(isLeft){
+				leftColumn.appendChild(leftBranch.cloneNode());
+				leftColumn.appendChild(pol);
+			} else {
+				rightColumn.appendChild(rightBranch.cloneNode());
+				rightColumn.appendChild(pol);
+			}
+			isLeft = !isLeft;
+		});
+	} else {
+		leftColumn.innerHTML = "Pictures coming soon!"
 	}
 }
 
@@ -225,8 +300,22 @@ function changeGalleryFilter(newFilter) {
 	}
 }
 
-function changeSelectedPicture(newPicture) {
+function changeFullscreenPicture(isForward) {
+	if (isForward){
+		selectedPictureIndex = (selectedPictureIndex + 1) % selectedRegion.image_list.length;
+	} else {
+		selectedPictureIndex = (selectedPictureIndex - 1) % selectedRegion.image_list.length;
+	}
+	selectedPicture = selectedRegion.image_list[selectedPictureIndex];
+	setFullscreenPicture();
+}
 
+function setFullscreenPicture(){
+	document.getElementById("fullscreen-pic").src = selectedPicture.src;
+	document.getElementById("fullscreen-date").innerHTML = selectedPicture.date;
+	document.getElementById("fullscreen-city").innerHTML = selectedPicture.city;
+	document.getElementById("fullscreen-eng-caption").innerHTML = selectedPicture.description_english;
+	document.getElementById("fullscreen-jp-caption").innerHTML = selectedPicture.description_japanese;
 }
 
 function changeFullscreen() {
@@ -281,8 +370,15 @@ function main() {
 		})
 		.then(d => {
 			data = d;
-			createSidebar(d);
-			createMap(d);
+			data.forEach(region => {
+				region.prefectures.forEach(pref => {
+					if (pref.image_list != null){
+						pref.image_list.sort(function (a, b) {return a.date - b.date;});
+					}
+				});
+			});
+			createSidebar(data);
+			createMap(data);
 		})
 		.catch(error => { console.error(error); });
 
@@ -301,12 +397,16 @@ function main() {
 	document.getElementById("pref-name-btn-down").addEventListener("click", changePrefInfoVisibility);
 	document.getElementById("picture1").addEventListener("click", changeFullscreen);
 	document.getElementById("fullscreen-bg").addEventListener("click", changeFullscreen);
+	document.getElementById("left-arrow").addEventListener("click", function(){changeFullscreenPicture(false);});
+	document.getElementById("right-arrow").addEventListener("click", function(){changeFullscreenPicture(true);});
 
 	document.addEventListener('keydown', function (event) {
 		if (event.key === 'Escape' && isPopupVisible) {
 			changePopupVisibility();
 		}
 	});
+
+	createTemplates();
 
 	// TODO: figure out pref info behaviour
 	// window.addEventListener('scroll', function() {

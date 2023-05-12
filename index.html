@@ -62,7 +62,7 @@
     <div id="gallery" style="display: none; align-content: stretch; padding: 0px 75px 50px 75px;">
       <div id="pref-pics" style="display: flex; flex-direction:column;">
         <div style="display: grid; grid: auto /1fr 1fr; justify-content: space-around; align-content: flex-start;">
-          <div class="timeline-column" style="border-right: 2px solid black">
+          <div id="left-column" class="timeline-column" style="border-right: 2px solid black">
             <div class="timeline-branch-grp left">
               <hr class="timeline-branch">
               <div class="timeline-point left"></div>
@@ -118,7 +118,7 @@
               <p class="caption-text en">Picture 102303</p>
             </div>
           </div>
-          <div class="timeline-column" style="margin-top:140px;">
+          <div id="right-column" class="timeline-column" style="margin-top:140px;">
             <div class="timeline-branch-grp right">
               <hr class="timeline-branch">
               <div class="timeline-point right"></div>
@@ -191,24 +191,23 @@
 
     <div id="fullscreen" style="visibility: hidden; position: absolute; z-index: 6000;">
       <div id="fullscreen-bg" class="popup-bg"></div>
-      <div
-        style="display: flex; flex-direction: row; align-items: center; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);">
-        <div id="left-arrow" class="large-icon" style="margin: 20px; z-index: 1001; color: white;">&#xf0d9</div>
-        <div id="fullscreen-pic" class="fullscreen-pic" style="z-index: 1001;">
+      <div style="display: flex; flex-direction: row; align-items: center; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+        <div id="left-arrow" class="large-icon fullscreen-arrow" style="z-index: 1001;">&#xf0d9</div>
+        <div id="fullscreen-frame" class="fullscreen-pic" style="z-index: 1001;">
           <div style="display: flex; align-items: end; justify-content: end;">
-            <img style="border-radius: 15px; max-height: 70vh; max-width: 50vw; z-index: 1001;"
+            <img id="fullscreen-pic" style="border-radius: 15px; max-height: 70vh; max-width: 50vw; z-index: 1001;"
               src="img/BFD9CC0C-53AB-4F00-851A-AAB2D06A37A6.jpeg" />
             <div id="pic-info-btn" class="large-icon"
               style="position: fixed; margin: 10px; z-index: 1002; color: white;">&#xf05a</div>
           </div>
           <div id="pic-info" style="display: flex; flex-direction: column; align-items: flex-start; gap: 15px;">
-            <div class="caption-text">Date / 日付</div>
-            <div class="caption-text">City / 町</div>
-            <div class="caption-text">Full English caption</div>
-            <div class="caption-text">Full Japanese caption</div>
+            <div id="fullscreen-date" class="caption-text">Date / 日付</div>
+            <div id="fullscreen-city" class="caption-text">City / 町</div>
+            <div id="fullscreen-eng-caption" class="caption-text">Full English caption</div>
+            <div id="fullscreen-jp-caption" class="caption-text">Full Japanese caption</div>
           </div>
         </div>
-        <div id="right-arrow" class="large-icon" style="margin: 20px; z-index: 1001; color: white;">&#xf0da</div>
+        <div id="right-arrow" class="large-icon fullscreen-arrow" style="z-index: 1001;">&#xf0da</div>
       </div>
     </div>
   </div>
