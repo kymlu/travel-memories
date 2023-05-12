@@ -12,6 +12,10 @@ let isPicInfoVisible = true;
 let currentFilter = "";
 let data = null;
 
+const monthNames = ["January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"
+];
+
 let branch, leftBranch, leftPoint, rightBranch, rightPoint;
 let polaroid, polaroidImgFrame, polaroidImg, polaroidCaption, polaroidCaptionText, polaroidDate, singleDate;
 
@@ -20,6 +24,14 @@ let appColor = "#be0029";
 // Text
 function getBilingualText(english, japanese) {
 	return english + " / " + japanese;
+}
+
+function getEnglishDate(date){
+	return monthNames[date.getMonth()] + " " + date.getDate() + ", " + date.getFullYear();
+}
+
+function getJapaneseDate(date){
+	return date.getFullYear() + "年" + (date.getMonth() + 1) + "月" +date.getDate() + "日";
 }
 
 // Sidebar
@@ -78,7 +90,7 @@ function createMap(data) {
 		const svgDoc = svgObj.contentDocument;
 
 		const prefList = data.flatMap(region => region.prefectures);
-		console.log(svgObj, svgDoc);
+		//console.log(svgObj, svgDoc);
 		prefList.forEach(pref => {
 			const prefImg = svgDoc.getElementById(pref.english_name.toLowerCase() + "-img");
 			if (pref.visited) {
@@ -205,7 +217,7 @@ function changeRegion(newRegion) {
 		const svgDoc = svgObj.contentDocument;
 		if (svgDoc) {
 			const prefList = data.flatMap(region => region.prefectures);
-			console.log(svgObj, svgDoc);
+			//console.log(svgObj, svgDoc);
 			prefList.forEach(pref => {
 				const prefImg = svgDoc.getElementById(pref.english_name.toLowerCase() + "-img");
 				if (pref.english_name != selectedRegion.english_name) {
@@ -241,10 +253,11 @@ function changeRegion(newRegion) {
 	rightColumn.innerHTML = "";
 	if (selectedRegion.image_list.length > 0) {
 		let i = 0;
+		let angleI = 3
 		selectedRegion.image_list.forEach(img => {
 			let pol = polaroid.cloneNode();
 			let randRotation = Math.round(Math.random() * 12) % 12;
-			pol.style.transform = "rotate(" + randRotation +"deg)";
+			pol.style.transform = "rotate(" + (angleI >= 2 ? "" : "-") + randRotation +"deg)";
 			let polImgFrame = polaroidImgFrame.cloneNode();
 			let polImg = polaroidImg.cloneNode();
 			let polCaption = polaroidCaption.cloneNode();
@@ -263,8 +276,8 @@ function changeRegion(newRegion) {
 			polCaption.appendChild(polCaptionTextJp);
 			polImg.src = img.link;
 			let date = new Date(img.date);
-			polDateEn.innerHTML = date;
-			polDateJp.innerHTML = date;
+			polDateEn.innerHTML = getEnglishDate(date);
+			polDateJp.innerHTML = getJapaneseDate(date);
 			polCaptionTextEn.innerHTML = img.description_english;
 			polCaptionTextJp.innerHTML = img.description_japanese;
 			pol.addEventListener("click", function(){
@@ -273,16 +286,17 @@ function changeRegion(newRegion) {
 				setFullscreenPicture();
 				changeFullscreen();
 			});
-			i++;
 
 			if(isLeft){
-				leftColumn.appendChild(leftBranch.cloneNode());
+				leftColumn.appendChild(leftBranch.cloneNode(true));
 				leftColumn.appendChild(pol);
 			} else {
-				rightColumn.appendChild(rightBranch.cloneNode());
+				rightColumn.appendChild(rightBranch.cloneNode(true));
 				rightColumn.appendChild(pol);
 			}
 			isLeft = !isLeft;
+			i++;
+			angleI = (angleI + 1) % 4;
 		});
 	} else {
 		leftColumn.innerHTML = "Pictures coming soon!"
@@ -312,8 +326,10 @@ function changeFullscreenPicture(isForward) {
 
 function setFullscreenPicture(){
 	document.getElementById("fullscreen-pic").src = selectedPicture.src;
-	document.getElementById("fullscreen-date").innerHTML = selectedPicture.date;
-	document.getElementById("fullscreen-city").innerHTML = selectedPicture.city;
+	let date = new Date(selectedPicture.date);
+	document.getElementById("fullscreen-date").innerHTML = getBilingualText(getEnglishDate(date), getJapaneseDate(date));
+	let area = selectedRegion.areas.find(function(area){return area.id == selectedPicture.city});
+	document.getElementById("fullscreen-city").innerHTML = getBilingualText(area.english_name, area.japanese_name);
 	document.getElementById("fullscreen-eng-caption").innerHTML = selectedPicture.description_english;
 	document.getElementById("fullscreen-jp-caption").innerHTML = selectedPicture.description_japanese;
 }
@@ -373,7 +389,7 @@ function main() {
 			data.forEach(region => {
 				region.prefectures.forEach(pref => {
 					if (pref.image_list != null){
-						pref.image_list.sort(function (a, b) {return a.date - b.date;});
+						pref.image_list.sort(function (a, b) {return new Date(a.date) - new Date(b.date);});
 					}
 				});
 			});
