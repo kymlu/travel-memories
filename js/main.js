@@ -199,7 +199,7 @@ function createTemplates(){
 	polaroidCaption.classList.add("polaroid-caption");
 	polaroidDate = document.createElement("div");
 	polaroidDate.classList.add("polaroid-date");
-	singleDate = document.createElement("p");
+	singleDate = document.createElement("div");
 	singleDate.classList.add("date-text");
 	polaroidCaptionText = document.createElement("div");
 	polaroidCaptionText.classList.add("caption-text");
@@ -256,7 +256,7 @@ function changeRegion(newRegion) {
 		let angleI = 3
 		selectedRegion.image_list.forEach(img => {
 			let pol = polaroid.cloneNode();
-			let randRotation = Math.round(Math.random() * 12) % 12;
+			let randRotation = (Math.round(Math.random() * 8) % 8) + 4;
 			pol.style.transform = "rotate(" + (angleI >= 2 ? "" : "-") + randRotation +"deg)";
 			let polImgFrame = polaroidImgFrame.cloneNode();
 			let polImg = polaroidImg.cloneNode();
@@ -274,7 +274,6 @@ function changeRegion(newRegion) {
 			polDate.appendChild(polDateJp);
 			polCaption.appendChild(polCaptionTextEn);
 			polCaption.appendChild(polCaptionTextJp);
-			polImg.src = img.link;
 			let date = new Date(img.date);
 			polDateEn.innerHTML = getEnglishDate(date);
 			polDateJp.innerHTML = getJapaneseDate(date);
@@ -286,6 +285,13 @@ function changeRegion(newRegion) {
 				setFullscreenPicture();
 				changeFullscreen();
 			});
+			polImg.onload = function() {
+				if(this.width > this.height){
+					polImg.style.height = "100%";
+					polImg.style.width = "auto";
+				}
+			}
+			polImg.src = img.link;
 
 			if(isLeft){
 				leftColumn.appendChild(leftBranch.cloneNode(true));
@@ -411,7 +417,6 @@ function main() {
 	document.getElementById("map-btn").addEventListener("click", changeGalleryVisibility);
 	document.getElementById("pref-name-btn-up").addEventListener("click", changePrefInfoVisibility);
 	document.getElementById("pref-name-btn-down").addEventListener("click", changePrefInfoVisibility);
-	document.getElementById("picture1").addEventListener("click", changeFullscreen);
 	document.getElementById("fullscreen-bg").addEventListener("click", changeFullscreen);
 	document.getElementById("left-arrow").addEventListener("click", function(){changeFullscreenPicture(false);});
 	document.getElementById("right-arrow").addEventListener("click", function(){changeFullscreenPicture(true);});
