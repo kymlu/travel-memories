@@ -108,7 +108,16 @@
         "dates_japanese": "2022年12月3日",
         "description_english": "Went to Chichibu for the Chichibu Festival! It was cold, but there were lots of people nonetheless. The fireworks show took a long time to start.",
         "description_japanese": "秩父祭り行った！外が寒くても人がいっぱいいた。でも長い時間花火大会を待っていた。",
-        "image_list": []
+        "image_list": [
+          {
+            "link": "https://photos.app.goo.gl/vNdJhZQN9ga7bLcJ8",
+            "date_english": "October 21, 2022",
+            "date_japanese": "2022年10月21日",
+            "description_english": "Decorations welcoming you to Akita Station",
+            "description_japanese": "「秋田へようこそ！」",
+            "city_english": "Akita City",
+            "city_japanese": "秋田市"
+          }]
       },
       {
         "english_name": "Chiba",
