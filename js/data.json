@@ -40,7 +40,7 @@
         "areas": [
           {
             "id": "akita",
-            "english_name": "Akita City",
+            "english_name": "Akita",
             "japanese_name": "秋田市"
           },
           {
@@ -357,7 +357,45 @@
         "dates_japanese": "2023年2月9、12、16日",
         "description_english": "I stopped at Nagoya Station three times, but each time we only stopped for lunch.",
         "description_japanese": "3回名古屋駅で降りたけど、毎回は昼ご飯のためだけだった。",
-        "image_list": []
+        "image_list": 
+        [
+          {
+            "link": "https://lh3.googleusercontent.com/pw/AJFCJaWVs9a9H2D_WOg6Bb4hS-xVTidSR_IMzJqr81eB0TLt_zkOI6gyGYSJwhRbIfkwEruQDsBc7VER1Z1fBFafsTKbTyBOGxGxd1mcYHnTH2lGwva8DJ8=w2400",
+            "date": "44966.4902777778",
+            "description_english": "Though I've passed through Nagoya Station several times, it was my first time getting off the train... for lunch",
+            "description_japanese": "電車で何回も名古屋駅を過ぎたけど、今日は初めてこの駅で降りた。昼ご飯のため。",
+            "city": "nagoya",
+            "location_english": "Nagoya Station",
+            "location_japanese": "名古屋駅"
+          },
+          {
+            "link": "https://lh3.googleusercontent.com/pw/AJFCJaXtaKnjVehBf1fEj3KlKqurNBGn-dFoHHeZm5JJ2Uu8ZSiydOMLqHB19cxsbLiDSNi83gCuKzawKzVt4ZsJrb9NrifCGRbxvu2lY2RVQFwkAjHL7H4=w2400",
+            "date": "44966.5013888889",
+            "description_english": "Chicken kishimen",
+            "description_japanese": "名古屋名物ーきしめん",
+            "city": "nagoya",
+            "location_english": "Nagoya Station",
+            "location_japanese": "名古屋駅"
+          },
+          {
+            "link": "https://lh3.googleusercontent.com/pw/AJFCJaXZT8qIsL32DoV8eMtDG3zecq8aIscnpzx9GHT8mEQG4F3j8zhiDmfDca648xkoJQq_k-D_m81pPZGcrrrBpwINVKs4F3Iljcj6EFH-qm8mM60ahiY=w2400",
+            "date": "44969.5444444444",
+            "description_english": "Oyakodon",
+            "description_japanese": "親子丼",
+            "city": "nagoya",
+            "location_english": "Nagoya Station",
+            "location_japanese": "名古屋駅"
+          },
+           {
+            "link": "https://lh3.googleusercontent.com/pw/AJFCJaVXJ9BIKJEnSmAksVwJQCnnka1lraymOckM5vdYkI-XV2fIOHSvVoiVkqCpo4cOG7yUr3JxUVS4pE4oTKxxT1ccoT50pXcLxpcVm6j6VKNMRQ1p0Qg=w2400",
+            "date": "44973.4701388889",
+            "description_english": "Chicken tempura soba - portion was massive",
+            "description_japanese": "とり天そば　デカすぎて全部食べられなかった",
+            "city": "nagoya",
+            "location_english": "Nagoya Station",
+            "location_japanese": "名古屋駅"
+          }
+        ]
       }
     ]
   }, 
