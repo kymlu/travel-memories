@@ -175,15 +175,15 @@ function changeRegion(newRegion) {
 		}
 	});
 
-	document.addEventListener("DOMContentLoaded", function () {
-		const img = document.getElementById('picture1');
-		img.onload = function () {
-			EXIF.getData(this, function () {
-				const dateTaken = this.exifdata.DateTimeOriginal;
-				console.log(dateTaken); // prints the date the photo was taken in string format
-			});
-		};}
-	);
+	// document.addEventListener("DOMContentLoaded", function () {
+	// 	const img = document.getElementById('picture1');
+	// 	img.onload = function () {
+	// 		EXIF.getData(this, function () {
+	// 			const dateTaken = this.exifdata.DateTimeOriginal;
+	// 			console.log(dateTaken); // prints the date the photo was taken in string format
+	// 		});
+	// 	};}
+	// );
 
 	// add catch error?
 	selectedRegion = newRegion;
@@ -196,13 +196,21 @@ function changeRegion(newRegion) {
 	if (!isGalleryVisible) {
 		changeGalleryVisibility();
 	}
+
 	if (newRegion.image_list.length > 0) {
+		console.log("get pic");
 		let pic = document.getElementById("picture2");
-		pic.src = newRegion.image_list[0].link;
-		EXIF.getData(pic, function () {
-			const dateTaken = this.exifdata.DateTimeOriginal;
-			console.log(dateTaken); // prints the date the photo was taken in string format
-		});
+		pic.src = "";
+		let newPic = pic.cloneNode()
+		newPic.src = newRegion.image_list[0].link;
+		pic.after(newPic);
+		newPic.onload = function () {
+			console.log("Get date");
+			EXIF.getData(newPic, function () {
+				const dateTaken = this.exifdata.DateTimeOriginal;
+				console.log(dateTaken); // prints the date the photo was taken in string format
+			});
+		};
 	}
 }
 
