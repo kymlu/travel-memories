@@ -37,6 +37,18 @@
         "english_name": "Akita",
         "japanese_name": "秋田県",
         "visited": true,
+        "areas": [
+          {
+            "id": "akita",
+            "english_name": "Akita City",
+            "japanese_name": "秋田市"
+          },
+          {
+            "id": "yurihonjo",
+            "english_name": "Yurihonjo",
+            "japanese_name": "由利本荘市"
+          }
+        ],
         "viewbox": "955 538 167 167",
         "dates_english": "October 21-23, 2022",
         "dates_japanese": "2022年10月21〜23日",
@@ -103,6 +115,13 @@
         "english_name": "Saitama",
         "japanese_name": "埼玉県",
         "visited": true,
+        "areas": [
+          {
+            "id": "chichibu",
+            "english_name": "Chichibu",
+            "japanese_name": "秩父市"
+          }
+        ],
         "viewbox": "810 914 196 196",
         "dates_english": "December 3, 2022",
         "dates_japanese": "2022年12月3日",
@@ -123,6 +142,18 @@
         "english_name": "Chiba",
         "japanese_name": "千葉県",
         "visited": true,
+        "areas": [
+          {
+            "id": "narita",
+            "english_name": "Narita",
+            "japanese_name": "成田市"
+          },
+          {
+            "id": "disney",
+            "english_name": "Tokyo DisneySea",
+            "japanese_name": "東京ディズニーシー"
+          }
+        ],
         "viewbox": "1037 998 114 114",
         "dates_english": "December 22, 2022",
         "dates_japanese": "2022年12月22日",
@@ -134,6 +165,18 @@
         "english_name": "Tokyo",
         "japanese_name": "東京都",
         "visited": true,
+        "areas": [
+          {
+            "id": "shibuya",
+            "english_name": "Shibuya",
+            "japanese_name": "渋谷"
+          },
+          {
+            "id": "shinjuku",
+            "english_name": "Shinjuku",
+            "japanese_name": "新宿"
+          }
+        ],
         "viewbox": "994 1002 66 66",
         "dates_english": "",
         "dates_japanese": "",
@@ -145,6 +188,33 @@
         "english_name": "Kanagawa",
         "japanese_name": "神奈川県",
         "visited": true,
+        "areas": [
+          {
+            "id": "yokohama",
+            "english_name": "Yokohama",
+            "japanese_name": "横浜市"
+          },
+          {
+            "id": "yokosuka",
+            "english_name": "Yokosuka",
+            "japanese_name": "横須賀市"
+          },
+          {
+            "id": "enoshima",
+            "english_name": "Enoshima",
+            "japanese_name": "江の島"
+          },
+          {
+            "id": "kawasaki",
+            "english_name": "Kawasaki",
+            "japanese_name": "川崎市"
+          },
+          {
+            "id": "kamakura",
+            "english_name": "Kamakura",
+            "japanese_name": "鎌倉市"
+          }
+        ],
         "viewbox": "988 1030 73 73",
         "dates_english": "",
         "dates_japanese": "",
@@ -168,6 +238,13 @@
         "english_name": "Toyama",
         "japanese_name": "富山県",
         "visited": true,
+        "areas": [
+          {
+            "id": "toyama",
+            "english_name": "Toyama",
+            "japanese_name": "富山市"
+          }
+        ],
         "viewbox": "801 927 75 75",
         "dates_english": "March 23, 2023",
         "dates_japanese": "2023年3月23日",
@@ -179,6 +256,13 @@
         "english_name": "Ishikawa",
         "japanese_name": "石川県",
         "visited": true,
+        "areas": [
+          {
+            "id": "kanazawa",
+            "english_name": "Kanazawa",
+            "japanese_name": "金沢市"
+          }
+        ],
         "viewbox": "721 873 153 153",
         "dates_english": "March 22, 2023",
         "dates_japanese": "2023年3月22日",
@@ -190,6 +274,13 @@
         "english_name": "Fukui",
         "japanese_name": "福井県",
         "visited": true,
+        "areas": [
+          {
+            "id": "fukui",
+            "english_name": "Fukui",
+            "japanese_name": "福井市"
+          }
+        ],
         "viewbox": "699 1003 106 106",
         "dates_english": "March 20-21, 2023",
         "dates_japanese": "2023年3月20〜21日",
@@ -213,6 +304,13 @@
         "english_name": "Gifu",
         "japanese_name": "岐阜県",
         "visited": true,
+        "areas": [
+          {
+            "id": "takayama",
+            "english_name": "Takayama",
+            "japanese_name": "高山市"
+          }
+        ],
         "viewbox": "754 987 137 137",
         "dates_english": "February 12-16, 2023",
         "dates_japanese": "2023年2月12〜16日",
@@ -224,6 +322,18 @@
         "english_name": "Shizuoka",
         "japanese_name": "静岡県",
         "visited": true,
+        "areas": [
+          {
+            "id": "matsuzaki",
+            "english_name": "Matsuzaki",
+            "japanese_name": "松崎町"
+          },
+          {
+            "id": "shimoda",
+            "english_name": "Shimoda",
+            "japanese_name": "下田市"
+          }
+        ],
         "viewbox": "873 1045 145 145",
         "dates_english": "March 24-30, 2023",
         "dates_japanese": "2023年3月24〜30日",
@@ -235,6 +345,13 @@
         "english_name": "Aichi",
         "japanese_name": "愛知県",
         "visited": true,
+        "areas": [
+          {
+            "id": "nagoya",
+            "english_name": "Nagoya",
+            "japanese_name": "名古屋市"
+          }
+        ],
         "viewbox": "802 1084 100 100",
         "dates_english": "February 9, 12, 16, 2023",
         "dates_japanese": "2023年2月9、12、16日",
@@ -258,6 +375,18 @@
         "english_name": "Shiga",
         "japanese_name": "滋賀県",
         "visited": true,
+        "areas": [
+          {
+            "id": "hikone",
+            "english_name": "Hikone",
+            "japanese_name": "高山市"
+          },
+          {
+            "id": "aisho",
+            "english_name": "Aisho",
+            "japanese_name": "愛荘町"
+          }
+        ],
         "viewbox": "705 1074 95 95",
         "dates_english": "November 5, 2022; February 16-17, 2023",
         "dates_japanese": "2022年11月5日、2023年2月16〜17日",
@@ -269,6 +398,13 @@
         "english_name": "Kyoto",
         "japanese_name": "京都府",
         "visited": true,
+        "areas": [
+          {
+            "id": "kyoto",
+            "english_name": "Kyoto",
+            "japanese_name": "京都市"
+          }
+        ],
         "viewbox": "646 1068 104 104",
         "dates_english": "November 1-6, 2022; February 27-March 1, 2023",
         "dates_japanese": "2022年11月1〜6日、2023年2月27日〜3月1日",
@@ -280,6 +416,18 @@
         "english_name": "Osaka",
         "japanese_name": "大阪府",
         "visited": true,
+        "areas": [
+          {
+            "id": "osaka",
+            "english_name": "Osaka",
+            "japanese_name": "大阪市"
+          },
+          {
+            "id": "usj",
+            "english_name": "Universal Studios Japan",
+            "japanese_name": "ユニバーサル・スタジオ・ジャパン"
+          }
+        ],
         "viewbox": "680 1148 61 61",
         "dates_english": "January 2-3, 5-6, 2023",
         "dates_japanese": "2023年1月2〜3日、5〜6日",
@@ -291,6 +439,13 @@
         "english_name": "Hyogo",
         "japanese_name": "兵庫県",
         "visited": true,
+        "areas": [
+          {
+            "id": "kobe",
+            "english_name": "Kobe",
+            "japanese_name": "神戸市"
+          }
+        ],
         "viewbox": "603 1083 104 104",
         "dates_english": "November 4, 2022",
         "dates_japanese": "2022年11月4日",
@@ -302,6 +457,13 @@
         "english_name": "Nara",
         "japanese_name": "奈良県",
         "visited": true,
+        "areas": [
+          {
+            "id": "nara",
+            "english_name": "Nara",
+            "japanese_name": "奈良市"
+          }
+        ],
         "viewbox": "694 1167 93 93",
         "dates_english": "November 3, 2022",
         "dates_japanese": "2022年11月3日",
@@ -313,6 +475,13 @@
         "english_name": "Wakayama",
         "japanese_name": "和歌山県",
         "visited": true,
+        "areas": [
+          {
+            "id": "nachikatsuura",
+            "english_name": "Nachikatsuura",
+            "japanese_name": "那智勝浦町"
+          }
+        ],
         "viewbox": "671 1206 97 97",
         "dates_english": "February 9-12, 2023",
         "dates_japanese": "2023年2月9〜12日", 
@@ -330,6 +499,23 @@
         "english_name": "Tottori",
         "japanese_name": "鳥取県",
         "visited": true,
+        "areas": [
+          {
+            "id": "tottori",
+            "english_name": "Tottori",
+            "japanese_name": "鳥取市"
+          },
+          {
+            "id": "yonago",
+            "english_name": "Yonago",
+            "japanese_name": "米子市"
+          },
+          {
+            "id": "kurayoshi",
+            "english_name": "Kurayoshi",
+            "japanese_name": "倉吉市"
+          }
+        ],
         "viewbox": "505 1060 118 118",
         "dates_english": "March 17-20, 2023",
         "dates_japanese": "2023年3月17〜20日",
@@ -347,6 +533,13 @@
         "english_name": "Okayama",
         "japanese_name": "岡山県",
         "visited": true,
+        "areas": [
+          {
+            "id": "okayama",
+            "english_name": "Okayama",
+            "japanese_name": "岡山市"
+          }
+        ],
         "viewbox": "517 1119 97 97",
         "dates_english": "March 15, 17, 2023",
         "dates_japanese": "2023年3月15、17日",
@@ -358,6 +551,13 @@
         "english_name": "Hiroshima",
         "japanese_name": "広島県",
         "visited": true,
+        "areas": [
+          {
+            "id": "hiroshima",
+            "english_name": "Hiroshima",
+            "japanese_name": "広島市"
+          }
+        ],
         "viewbox": "417 1138 125 125",
         "dates_english": "January 3-5, 2023",
         "dates_japanese": "2023年1月3〜5日",
@@ -387,6 +587,13 @@
         "english_name": "Kagawa",
         "japanese_name": "香川県",
         "visited": true,
+        "areas": [
+          {
+            "id": "naoshima",
+            "english_name": "Naoshima",
+            "japanese_name": "直島"
+          }
+        ],
         "viewbox": "554 1203 67 67",
         "dates_english": "March 16-17, 2023",
         "dates_japanese": "2023年3月16〜17日",
@@ -416,6 +623,18 @@
         "english_name": "Fukuoka",
         "japanese_name": "福岡県",
         "visited": true,
+        "areas": [
+          {
+            "id": "fukuoka",
+            "english_name": "Fukuoka",
+            "japanese_name": "福岡市"
+          },
+          {
+            "id": "shikashima",
+            "english_name": "Shikashima",
+            "japanese_name": "志賀島"
+          }
+        ],
         "viewbox": "254 1274 104 104",
         "dates_english": "March 7-9, 2023",
         "dates_japanese": "2023年3月7〜9日",
@@ -433,6 +652,18 @@
         "english_name": "Nagasaki",
         "japanese_name": "長崎県",
         "visited": true,
+        "areas": [
+          {
+            "id": "nagasaki",
+            "english_name": "Nagasaki",
+            "japanese_name": "長崎市"
+          },
+          {
+            "id": "sasebo",
+            "english_name": "Sasebo",
+            "japanese_name": "佐世保市"
+          }
+        ],
         "viewbox": "211 1342 81 81",
         "dates_english": "March 12-15, 2023",
         "dates_japanese": "2023年3月12〜15日",
@@ -444,6 +675,13 @@
         "english_name": "Kumamoto",
         "japanese_name": "熊本県",
         "visited": true,
+        "areas": [
+          {
+            "id": "kumamoto",
+            "english_name": "Kumamoto",
+            "japanese_name": "熊本市"
+          }
+        ],
         "viewbox": "268 1356 117 117",
         "dates_english": "March 5-7, 2023",
         "dates_japanese": "2023年3月5〜7日",
@@ -455,6 +693,23 @@
         "english_name": "Oita",
         "japanese_name": "大分県",
         "visited": true,
+        "areas": [
+          {
+            "id": "kitsuki",
+            "english_name": "Kitsuki",
+            "japanese_name": "杵築市"
+          },
+          {
+            "id": "yufuin",
+            "english_name": "Yufuin",
+            "japanese_name": "湯布院町"
+          },
+          {
+            "id": "beppu",
+            "english_name": "Beppu",
+            "japanese_name": "別府市"
+          }
+        ],
         "viewbox": "326 1301 102 102",
         "dates_english": "March 9-12, 2023",
         "dates_japanese": "2023年3月9〜12日",
@@ -472,6 +727,23 @@
         "english_name": "Kagoshima",
         "japanese_name": "鹿児島県",
         "visited": true,
+        "areas": [
+          {
+            "id": "soo",
+            "english_name": "Soo",
+            "japanese_name": "曽於市"
+          },
+          {
+            "id": "kagoshima",
+            "english_name": "Kagoshima",
+            "japanese_name": "鹿児島市"
+          },
+          {
+            "id": "kirishima",
+            "english_name": "Kirishima",
+            "japanese_name": "霧島市"
+          }
+        ],
         "viewbox": "263 1463 113 113",
         "dates_english": "March 3-5, 2023",
         "dates_japanese": "2023年3月3〜5日",
