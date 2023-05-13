@@ -331,7 +331,7 @@ function changeFullscreenPicture(isForward) {
 }
 
 function setFullscreenPicture(){
-	document.getElementById("fullscreen-pic").src = selectedPicture.src;
+	document.getElementById("fullscreen-pic").src = selectedPicture.link;
 	let date = new Date(selectedPicture.date);
 	document.getElementById("fullscreen-date").innerHTML = getBilingualText(getEnglishDate(date), getJapaneseDate(date));
 	let area = selectedRegion.areas.find(function(area){return area.id == selectedPicture.city});

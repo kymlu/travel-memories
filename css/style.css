@@ -8,16 +8,6 @@
   --xlrg-text-size: 2.4rem;
 }
 
-@media screen and (max-width: 768px) {
-  :root {
-    --sml-text-size: 1.6rem;
-    --reg-text-size: 2.6rem;
-    --lrg-text-size: 2.5rem;
-    --icn-text-size: 4.5rem;
-    --xlrg-text-size: 5.6rem;
-  }
-}
-
 /* Fonts */
 @font-face {
   font-family: 'Senja Santuy';
@@ -87,6 +77,19 @@ body {
   font-size: var(--reg-text-size);
 }
 
+/* Topbar */
+.top-bar {
+  display: flex;
+  flex-direction: column; 
+  margin-top: 50px; 
+  top: 0; 
+  padding: 20px 75px; 
+  gap: 20px; 
+  position: fixed; 
+  right: 0px;
+  background-color: white;
+}
+
  /* Sidebar */
  .sidebar-content {
   display: flex; 
@@ -139,14 +142,6 @@ body {
   text-transform: capitalize;
 }
 
-.main-title.en, .sub-title.en, .regular-text.en, .region-text.en, .prefecture-text.en, .region-text.en{
-  /* font-family: Lato; */
-}
-
-.main-title.ja, .sub-title.ja, .regular-text.ja, .region-text.ja, .prefecture-text.ja, .region-text.ja{
-  /* font-family: Zen Maru Gothic; */
-}
-
 .locked-pref-text {
   color: lightgray;
 }
@@ -187,7 +182,7 @@ body {
 }
 
 .polaroid-img {
-  display: inline;
+  display: flex;
   filter: saturate(0.95);
   width: 230px;
   height: 235px;
@@ -224,16 +219,7 @@ body {
   color: var(--text-color);
   font-weight: normal;
   vertical-align: bottom;
-  text-align: center;
   font-size: var(--reg-text-size);
-}
-
-.date-text.en, .caption-text.en{
-  /* font-family: Senja Santuy; */
-}
-
-.date-text.ja, .caption-text.ja{
-  /* font-family: Zen Kurenaido; */
 }
 
 .one-line-text {
@@ -241,6 +227,7 @@ body {
   white-space: nowrap;
   text-overflow: ellipsis;
   max-height: 1.5em;
+  text-align: center;
 }
 
 /* Timeline */
@@ -249,6 +236,14 @@ body {
   flex-direction: column; 
   flex-wrap: wrap; 
   align-items: center;
+}
+
+.timeline-column.left{
+  border-right: 2px solid var(--text-color);
+}
+
+.timeline-column.right{
+  margin-top: 140px;
 }
 
 .timeline-branch-grp {
@@ -295,11 +290,14 @@ body {
 }
 
 /* Popup */
-.popup {
+.centered {
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+.popup {
   width: 50vw;
   height: max-content;
   max-height: 75vh;
@@ -336,7 +334,6 @@ body {
 .fullscreen-pic {
   transition: width 1.0 ease-in-out;
   border-radius: 20px;
-  flex-wrap: wrap;
   background-color: white; 
   padding: 10px;
   display: flex; 
@@ -355,6 +352,17 @@ body {
 }
 
 /* Other */
+.flex-column {
+  display: flex; 
+  flex-direction: column;
+}
+
+.close-button {
+  position: absolute; 
+  top: 15px; 
+  left: 15px;
+}
+
 .content-container {
   display: flex;
   flex-wrap: wrap;
@@ -378,4 +386,14 @@ body {
   text-align: middle;
   height: 30px;
   align-content: center;
+}
+
+@media screen and (max-width: 768px) {
+  :root {
+    --sml-text-size: 1.6rem;
+    --reg-text-size: 2.6rem;
+    --lrg-text-size: 2.5rem;
+    --icn-text-size: 4.5rem;
+    --xlrg-text-size: 5.6rem;
+  }
 }
