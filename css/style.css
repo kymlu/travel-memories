@@ -10,29 +10,8 @@
 
 /* Fonts */
 @font-face {
-  font-family: 'Senja Santuy';
-  src: url('../fonts/SenjaSantuy/SenjaSantuy-yw5qq.otf') format('opentype');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Lato';
-  src: url('../fonts/Lato/Lato-Regular.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
   font-family: 'Zen Maru Gothic';
   src: url('../fonts/Zen_Maru_Gothic/ZenMaruGothic-Regular.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Zen Kurenaido';
-  src: url('../fonts/Zen_Kurenaido/ZenKurenaido-Regular.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
@@ -351,6 +330,14 @@ body {
   color: white;
 }
 
+.fullscreen-caption {
+  display: flex; 
+  flex-direction: column;
+  align-items: flex-start; 
+  gap: 15px;
+  padding: 15px;
+}
+
 /* Other */
 .flex-column {
   display: flex; 
@@ -388,12 +375,18 @@ body {
   align-content: center;
 }
 
-@media screen and (max-width: 768px) {
+@media only screen and (max-width: 768px) {
   :root {
     --sml-text-size: 1.6rem;
     --reg-text-size: 2.6rem;
     --lrg-text-size: 2.5rem;
     --icn-text-size: 4.5rem;
     --xlrg-text-size: 5.6rem;
+  }
+}
+
+@media only screen and (orientation: portrait) {
+  .fullscreen-pic {
+    flex-direction: column;
   }
 }

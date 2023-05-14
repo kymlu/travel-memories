@@ -1,3 +1,5 @@
+//todo: add narita pictures in chiba, add tamano pictures in okayama
+
 // Variables
 let selectedRegion = null;
 let selectedPicture = null;
