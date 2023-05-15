@@ -1,114 +1,93 @@
 <head>
   <meta charset="utf-8">
-  <title>Memories from Japan / 日本の思い出</title>
+  <meta content="width=device-width, initial-scale=1" name="viewport" />
+  <title>Memories from Japan・日本の思い出</title>
   <link rel="stylesheet" type="text/css" href="css/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body class="page-bg">
-  <div class="content-container" style="align-content: stretch;">
-    <div id="top-bar" class="top-bar" style="z-index: 5000;">
-      <div style="display: flex; flex-direction: row; justify-content: space-between; align-content: stretch;">
-        <div id="map-btn" class="text-main-color large-icon"
-          style="display: none; align-self: start; text-align: left; z-index: 5001;">&#xf279</div>
-        <div style="display: flex; flex-direction: row; gap: 15px; align-items: center;">
-          <div id="pref-name" class="regular-text" style="display: none; font-weight: bold;"></div>
-          <div id="pref-name-btn-up" class="text-main-color large-icon" style="display: none">&#xf0d7</div>
-          <div id="pref-name-btn-down" class="text-main-color large-icon" style="display: none">&#xf0d8</div>
-        </div>
-        <div id="info-btn" class="text-main-color large-icon" style="align-self: start; text-align: left;">&#xf05a</div>
-        <!-- <div id="filter-btn" class="fa text-main-color" style="display: none; font-size: xx-large; align-self: start; text-align: left; opacity: 50%; cursor: default;">&#xf0b0</div> -->
-        <!--<div id="filter-bar" style="display: none; justify-items: space-around; gap: 10px; flex-direction: row; align-content: flex-end;">
-          <div id="filter-food" class="filter-btn"><span class="fa text-main-color">&#xf805</span><div id="filter-food-txt" style="display:none">Food・食べ物</div></div>
-          <div id="filter-nat" class="filter-btn"><span class="fa text-main-color">&#xf06c</span><div id="filter-nat-txt" style="display:none">Nature・自然</div></div>
-          <div id="filter-art" class="filter-btn"><span class="fa text-main-color">&#xe206</span><div id="filter-art-txt" style="display:none">Art Gallery・美術館</div></div>
-          <div id="filter-attr" class="filter-btn"><span class="fa text-main-color">&#xf005</span><div id="filter-attr-txt" style="display:none">Attractions・観光地</div></div>
-          <div id="filter-myst" class="filter-btn"><span class="fa text-main-color">&#x3f</span><div id="filter-myst-txt" style="display:none">Mysterious・謎</div></div>
-        </div>-->
+  <div id="top-bar" class="top-bar" style="z-index: 5000;">
+    <div style="display: flex; flex-direction: row; justify-content: space-between;">
+      <div id="map-btn" class="text-main-color large-icon"
+        style="display: none; z-index: 5001;">&#xf279</div>
+      <div id="pref-title" class="pref-title">
+        <div id="pref-name" class="regular-text" style="display: none; font-weight: bold;"></div>
+        <div id="pref-name-btn-up" class="text-main-color large-icon" style="display: none">&#xf0d7</div>
+        <div id="pref-name-btn-down" class="text-main-color large-icon" style="display: none">&#xf0d8</div>
       </div>
-      <div id="pref-info" style="display: none; flex-direction: row; gap: 15px; align-content: stretch; max-height: 50vh;">
-        <div style="height: 200px; width: 200px; min-width: 200px; min-height: 200px;">
-          <object id="japan-map-mini" type="image/svg+xml" data="img/japan.svg"
-            style="margin: auto; max-height: 200px;"></object>
+      <div id="info-btn" class="text-main-color large-icon">&#xf05a</div>
+    </div>
+    <div id="pref-info" class="pref-info">
+      <object id="japan-map-mini" type="image/svg+xml" data="img/japan.svg" class="mini-map"></object>
+      <div class="flex-column regular-text pref-info-text">
+        <div class="flex-column">
+          <div style="font-weight: bold;">Dates visited・日付</div>
+          <div id="pref-dates"></div>
         </div>
-        <div class="flex-column regular-text" style="gap: 10px;">
-          <div class="flex-column">
-            <div style="font-weight: bold;">Dates visited・日付</div>
-            <div id="pref-dates"></div>
-          </div>
-          <div class="flex-column">
-            <div style="font-weight: bold;">Cities visited・町</div>
-            <div id="pref-cities"></div>
-          </div>
-          <div class="flex-column">
-            <div style="font-weight: bold;">Description etc.・説明など</div>
-            <div id="pref-desc"></div>
-          </div>
+        <div class="flex-column">
+          <div style="font-weight: bold;">Cities visited・町</div>
+          <div id="pref-cities"></div>
+        </div>
+        <div class="flex-column">
+          <div style="font-weight: bold;">Description etc.・説明など</div>
+          <div id="pref-desc"></div>
         </div>
       </div>
     </div>
-    <div id="japan" class="flex-column" style="justify-content: center; padding: 50px 75px;">
-      <object id="japan-map" type="image/svg+xml" data="img/japan.svg"
-        style="margin: auto; width: 70vw; max-height: 80vh;"></object>
-      <div id="main-title" class="main-title" style="text-align: center;">JAPAN / 日本</div>
-      <div id="pref-list"
-        style="display: flex; flex-direction: row; flex-wrap: wrap; gap: 20px; justify-content: space-between; padding: 30px 75px 0px 75px;">
-      </div>
+  </div>
+  <div id="japan" class="map-page">
+    <object id="japan-map" type="image/svg+xml" data="img/japan.svg" class="japan-map"></object>
+    <div id="main-title" class="main-title">JAPAN・日本</div>
+    <div id="pref-list" class="pref-list"></div>
+  </div>
+  <div>
+    <div id="timeline" class="timeline">
+      <div id="left-column" class="timeline-column left"></div>
+      <div id="right-column" class="timeline-column right"></div>
     </div>
-    <div id="gallery" style="display: none; align-content: stretch; padding: 0px 75px 50px 75px;">
-      <div id="pref-pics" class="flex-column">
-        <div style="display: grid; grid: auto /1fr 1fr; justify-content: space-around; align-content: flex-start;">
-          <div id="left-column" class="timeline-column left">
-          </div>
-          <div id="right-column" class="timeline-column right">
-          </div>
-        </div>
-      </div>
-    </div>
+    <div id="gallery" class="gallery"></div>
+  </div>
 
-    <!--Popups-->
-    <div id="popup-bg" class="popup-bg" style="z-index: 10001"></div>
-    <div id="popup" class="popup centered" style="z-index: 10002">
-      <div id="popup-close-btn" class="large-icon close-button">&#xf00d</div>
-      <div class="flex-column" style="overflow-y: scroll; gap: 15px;">
-        <div class="regular-text">
-          <p style="font-weight: bold;">About this site</p>
-          <p>I was in Japan on exchange in September 2022 - April 2023. This site contains the highlights of the
-            sidetrips
-            I made. For privacy reasons, I do not plan on uploading pictures of myself or my friends to this page.</p>
-          <p>Design, coding, and photography: Katherine (Katie) Lu</p>
-        </div>
-        <div class="regular-text">
-          <p style="font-weight: bold;">このサイトについて</p>
-          <p>留学のため、2022年9月から2023年4月まで日本に滞在しました。このウェブページでは 皆さんに私の旅行のハイライトを紹介したいと思います。プライバシーのため、自分と知り合いの写真を掲載しません。</p>
-          <p>デザイン・プログラミング・写真：ルー・キャサリン（ケイティー）</p>
-        </div>
+  <!--Popups-->
+  <div id="popup-bg" class="popup-bg" style="z-index: 10001"></div>
+  <div id="popup" class="popup centered" style="z-index: 10002">
+    <div id="popup-close-btn" class="large-icon close-button">&#xf00d</div>
+    <div class="flex-column" style="overflow-y: scroll; gap: 15px;">
+      <div class="regular-text">
+        <p style="font-weight: bold;">About this site</p>
+        <p>I was in Japan on exchange in September 2022 - April 2023. This site contains the highlights of the
+          sidetrips
+          I made. For privacy reasons, I do not plan on uploading pictures of myself or my friends to this page.</p>
+        <p>Design, coding, and photography: Katherine (Katie) Lu</p>
+      </div>
+      <div class="regular-text">
+        <p style="font-weight: bold;">このサイトについて</p>
+        <p>留学のため、2022年9月から2023年4月まで日本に滞在しました。このウェブページでは 皆さんに私の旅行のハイライトを紹介したいと思います。プライバシーのため、自分と知り合いの写真を掲載しません。</p>
+        <p>デザイン・プログラミング・写真：ルー・キャサリン（ケイティー）</p>
       </div>
     </div>
+  </div>
 
-    <div id="sidebar-bg" class="popup-bg" style="z-index: 10001"></div>
-    <div id="sidebar" class="sidebar" style="z-index: 10002"></div>
-
-    <div id="fullscreen" style="visibility: hidden; position: absolute; z-index: 6000;">
-      <div id="fullscreen-bg" class="popup-bg"></div>
-      <div class="centered" style="display: flex; align-items: center;">
-        <div id="left-arrow" class="large-icon fullscreen-arrow" style="z-index: 1001;">&#xf0d9</div>
-        <div id="fullscreen-frame" class="fullscreen-pic" style="z-index: 1001;">
-          <div style="display: flex; align-items: end; justify-content: end;">
-            <img id="fullscreen-pic" style="border-radius: 15px; max-height: 70vh; max-width: 50vw; z-index: 1001;"
-              src="img/BFD9CC0C-53AB-4F00-851A-AAB2D06A37A6.jpeg" />
-            <div id="pic-info-btn" class="large-icon"
-              style="position: fixed; margin: 10px; z-index: 1002; color: white;">&#xf05a</div>
-          </div>
-          <div id="pic-info" class="fullscreen-caption">
-            <div id="fullscreen-date" class="caption-text">Date / 日付</div>
-            <div id="fullscreen-city" class="caption-text">City / 町</div>
-            <div id="fullscreen-eng-caption" class="caption-text">Full English caption</div>
-            <div id="fullscreen-jp-caption" class="caption-text">Full Japanese caption</div>
-          </div>
+  <div id="fullscreen" style="visibility: hidden; position: absolute; z-index: 6000;">
+    <div id="fullscreen-bg" class="popup-bg"></div>
+    <div class="centered" style="display: flex; align-items: center;">
+      <div id="left-arrow" class="large-icon fullscreen-arrow" style="z-index: 1001;">&#xf0d9</div>
+      <div id="fullscreen-frame" class="fullscreen-pic" style="z-index: 1001;">
+        <div style="display: flex; align-items: end; justify-content: end;">
+          <img id="fullscreen-pic" style="border-radius: 15px; max-height: 70vh; max-width: 50vw; z-index: 1001;"
+            src="img/BFD9CC0C-53AB-4F00-851A-AAB2D06A37A6.jpeg" />
+          <div id="pic-info-btn" class="large-icon"
+            style="position: fixed; margin: 10px; z-index: 1002; color: white;">&#xf05a</div>
         </div>
-        <div id="right-arrow" class="large-icon fullscreen-arrow" style="z-index: 1001;">&#xf0da</div>
+        <div id="pic-info" class="fullscreen-caption">
+          <div id="fullscreen-date" class="caption-text">Date・日付</div>
+          <div id="fullscreen-city" class="caption-text">City・町</div>
+          <div id="fullscreen-eng-caption" class="caption-text"></div>
+          <div id="fullscreen-jp-caption" class="caption-text"></div>
+        </div>
       </div>
+      <div id="right-arrow" class="large-icon fullscreen-arrow" style="z-index: 1001;">&#xf0da</div>
     </div>
   </div>
 

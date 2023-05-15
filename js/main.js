@@ -1,4 +1,13 @@
-//todo: add narita pictures in chiba, add tamano pictures in okayama
+/* To implement
+	- top bar pref info --> scroll up to hide automatically
+	- lazy load images
+	- transition when selecting a prefecture (text) in mobile
+	- transition after selecting a prefecture to view pictures
+	- little icon to represent each prefecture
+	- polaroid rotation on landscape vs portrait (switch after 2 vs 1)
+	- change polaroid rotation on orientation change
+
+*/
 
 // Variables
 let selectedRegion = null;
@@ -14,6 +23,9 @@ let isPicInfoVisible = true;
 let currentFilter = "";
 let data = null;
 
+let initialX = null;
+let initialY = null;
+
 const monthNames = ["January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December"
 ];
@@ -25,7 +37,7 @@ let appColor = "#be0029";
 
 // Text
 function getBilingualText(english, japanese) {
-	return english + " / " + japanese;
+	return english + "・" + japanese;
 }
 
 function getEnglishDate(date){
@@ -119,7 +131,7 @@ function createMap(data) {
 				prefImg.addEventListener('mouseout', () => {
 					prefImg.setAttribute('opacity', '100%');
 					hoveredRegion = "";
-					document.getElementById("main-title").innerHTML = "JAPAN / 日本";
+					document.getElementById("main-title").innerHTML = "JAPAN・日本";
 					/*document.getElementById("main-title").style.opacity = "0%";
 					setTimeout(()=>{
 						document.getElementById("main-title").innerHTML = "JAPAN / 日本";
@@ -242,12 +254,19 @@ function changeRegion(newRegion) {
 	}*/	
 
 	document.getElementById("pref-dates").innerHTML = getBilingualText(selectedRegion.dates_english, selectedRegion.dates_japanese);
+	document.getElementById("pref-cities").innerHTML = selectedRegion.areas.map(area => 
+		{
+			return getBilingualText(area.english_name, area.japanese_name);
+		}
+	).sort().join(" | ");
 	document.getElementById("pref-desc").innerHTML = getBilingualText(selectedRegion.description_english, selectedRegion.description_japanese);
 	document.getElementById("pref-name").innerHTML = getBilingualText(selectedRegion.english_name, selectedRegion.japanese_name);
 	if (!isGalleryVisible) {
 		changeGalleryVisibility();
 	}
 	
+	let gallery = document.getElementById("gallery");
+	gallery.innerHTML = "";
 	let isLeft = true;
 	let leftColumn = document.getElementById("left-column");
 	leftColumn.innerHTML = "";
@@ -255,11 +274,11 @@ function changeRegion(newRegion) {
 	rightColumn.innerHTML = "";
 	if (selectedRegion.image_list.length > 0) {
 		let i = 0;
-		let angleI = 3
+		let angleI = 2;
+		let angleJ = 1;
 		selectedRegion.image_list.forEach(img => {
 			let pol = polaroid.cloneNode();
-			let randRotation = (Math.round(Math.random() * 8) % 8) + 4;
-			pol.style.transform = "rotate(" + (angleI >= 2 ? "" : "-") + randRotation +"deg)";
+			pol.classList.add("rotate-" + ((angleI % 3 >= 1) ? "right-" : "left-") + angleJ);
 			let polImgFrame = polaroidImgFrame.cloneNode();
 			let polImg = polaroidImg.cloneNode();
 			let polCaption = polaroidCaption.cloneNode();
@@ -297,17 +316,25 @@ function changeRegion(newRegion) {
 
 			if(isLeft){
 				leftColumn.appendChild(leftBranch.cloneNode(true));
-				leftColumn.appendChild(pol);
+				pol.classList.add("gallery-left");
+				gallery.appendChild(pol);
 			} else {
 				rightColumn.appendChild(rightBranch.cloneNode(true));
-				rightColumn.appendChild(pol);
+				pol.classList.add("gallery-right");
+				gallery.appendChild(pol);
 			}
 			isLeft = !isLeft;
+			if(isLeft){
+				angleJ++;
+				if(angleJ > 4){
+					angleJ = 1;
+				}
+			}
 			i++;
 			angleI = (angleI + 1) % 4;
 		});
 	} else {
-		leftColumn.innerHTML = "Pictures coming soon!"
+		gallery.innerHTML = "Pictures coming soon!"
 	}
 }
 
@@ -348,6 +375,42 @@ function changeFullscreen() {
 	document.getElementById("fullscreen-bg").style.visibility = isFullscreen ? "visible" : "hidden";
 }
 
+// Source: https://stackoverflow.com/questions/53192433/how-to-detect-swipe-in-javascript
+function startTouch(e) {
+    initialX = e.touches[0].clientX;
+    initialY = e.touches[0].clientY;
+};
+
+function moveTouch(e) {
+    if (initialX === null) {
+      return;
+    }
+
+    if (initialY === null) {
+      return;
+    }
+
+    var currentX = e.touches[0].clientX;
+    var currentY = e.touches[0].clientY;
+
+    var diffX = initialX - currentX;
+    var diffY = initialY - currentY;
+
+    if (Math.abs(diffX) > Math.abs(diffY)) {
+      if (diffX > 0) {
+        changeFullscreenPicture(true);
+      } else {
+        changeFullscreenPicture(false);
+      }  
+    }
+
+    initialX = null;
+    initialY = null;
+
+    e.preventDefault();
+};
+
+
 // Popup
 function changePopupVisibility() {
 	isPopupVisible = !isPopupVisible;
@@ -369,19 +432,18 @@ function changePicInfoVisibility() {
 
 function changeGalleryVisibility() {
 	isGalleryVisible = !isGalleryVisible;
-	document.getElementById("top-bar").style.position = isGalleryVisible ? "sticky" : "absolute";
+	document.getElementById("top-bar").style.position = isGalleryVisible ? "sticky" : "fixed";
+	document.getElementById("top-bar").style.backgroundColor = isGalleryVisible ? "white" : "transparent";
 	document.getElementById("top-bar").style.boxShadow = isGalleryVisible ? "box-shadow: 0 8px 10px -10px #00000050;" : "none";
 	document.getElementById("japan").style.display = isGalleryVisible ? "none" : "flex";
-	document.getElementById("gallery").style.display = isGalleryVisible ? "block" : "none";
+	document.getElementById("gallery").style.display = isGalleryVisible ? "flex" : "none";
+	document.getElementById("timeline").style.display = isGalleryVisible ? "inline-grid" : "none";
 	document.getElementById("map-btn").style.display = isGalleryVisible ? "block" : "none";
-	// document.getElementById("sidebar-btn").style.display = isGalleryVisible ? "none" : "block";
-	/*document.getElementById("filter-bar").style.display = isGalleryVisible ? "flex" : "none";*/
 	document.getElementById("pref-name").style.display = isGalleryVisible ? "block" : "none";
 	document.getElementById("pref-name-btn-down").style.display = isGalleryVisible ? "block" : "none";
 	document.getElementById("pref-name-btn-up").style.display = "none";
 	document.getElementById("pref-info").style.display = isGalleryVisible ? "flex" : "none";
 	isPrefInfoVisible = isGalleryVisible ? true : false;
-	// document.getElementById("filter-btn").style.display = isGalleryVisible ? "block" : "none";
 	if (!isGalleryVisible) {
 		createMap(data);
 	}
@@ -417,8 +479,7 @@ function main() {
 	document.getElementById("popup-bg").addEventListener("click", changePopupVisibility);
 	document.getElementById("info-btn").addEventListener("click", changePopupVisibility);
 	document.getElementById("map-btn").addEventListener("click", changeGalleryVisibility);
-	document.getElementById("pref-name-btn-up").addEventListener("click", changePrefInfoVisibility);
-	document.getElementById("pref-name-btn-down").addEventListener("click", changePrefInfoVisibility);
+	document.getElementById("pref-title").addEventListener("click", changePrefInfoVisibility);
 	document.getElementById("fullscreen-bg").addEventListener("click", changeFullscreen);
 	document.getElementById("left-arrow").addEventListener("click", function(){changeFullscreenPicture(false);});
 	document.getElementById("right-arrow").addEventListener("click", function(){changeFullscreenPicture(true);});
@@ -427,7 +488,20 @@ function main() {
 		if (event.key === 'Escape' && isPopupVisible) {
 			changePopupVisibility();
 		}
+
+		if (isFullscreen) {
+			if (event.key === 'ArrowRight') {
+				changeFullscreenPicture(true);
+			} else if (event.key == 'ArrowLeft') {
+				changeFullscreenPicture(false);
+			}
+		}
 	});
+
+	var swipeContainer = document.getElementById("fullscreen");
+	swipeContainer.addEventListener("touchstart", startTouch, false);
+	swipeContainer.addEventListener("touchmove", moveTouch, false);
+  
 
 	createTemplates();
 
