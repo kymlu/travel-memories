@@ -223,8 +223,6 @@ function createTemplates(){
 function changeRegion(newRegion) {
 	selectedRegion = newRegion;
 	
-	window.scrollTo(0, 0);
-
 	const svgObj = document.getElementById('japan-map-mini');
 	svgObj.data = "img/japan.svg"; //Fix? -> will only execute below once as is
 	svgObj.addEventListener('load', function () {
@@ -273,7 +271,6 @@ function changeRegion(newRegion) {
 	let rightColumn = document.getElementById("right-column");
 	rightColumn.innerHTML = "";
 	if (selectedRegion.image_list.length > 0) {
-		let i = 0;
 		let angleI = 2;
 		let angleJ = 1;
 		selectedRegion.image_list.forEach(img => {
@@ -302,7 +299,7 @@ function changeRegion(newRegion) {
 			polCaptionTextJp.innerHTML = img.description_japanese;
 			pol.addEventListener("click", function(){
 				selectedPicture = img;
-				selectedPictureIndex = i;
+				selectedPictureIndex = selectedRegion.image_list.indexOf(selectedPicture);
 				setFullscreenPicture();
 				changeFullscreen();
 			});
@@ -330,7 +327,6 @@ function changeRegion(newRegion) {
 					angleJ = 1;
 				}
 			}
-			i++;
 			angleI = (angleI + 1) % 4;
 		});
 	} else {
@@ -350,10 +346,19 @@ function changeGalleryFilter(newFilter) {
 }
 
 function changeFullscreenPicture(isForward) {
+	console.log(selectedPictureIndex, selectedRegion.image_list.length);
 	if (isForward){
-		selectedPictureIndex = (selectedPictureIndex + 1) % selectedRegion.image_list.length;
+		if(selectedPictureIndex == (selectedRegion.image_list.length - 1)){
+			selectedPictureIndex = 0;
+		} else {
+			selectedPictureIndex++;
+		}
 	} else {
-		selectedPictureIndex = (selectedPictureIndex - 1) % selectedRegion.image_list.length;
+		if(selectedPictureIndex == 0){
+			selectedPictureIndex = selectedRegion.image_list.length - 1;
+		} else {
+			selectedPictureIndex--;
+		}
 	}
 	selectedPicture = selectedRegion.image_list[selectedPictureIndex];
 	setFullscreenPicture();
@@ -431,6 +436,7 @@ function changePicInfoVisibility() {
 }
 
 function changeGalleryVisibility() {
+	window.scrollTo(0, 0);
 	isGalleryVisible = !isGalleryVisible;
 	document.getElementById("top-bar").style.position = isGalleryVisible ? "sticky" : "fixed";
 	document.getElementById("top-bar").style.backgroundColor = isGalleryVisible ? "white" : "transparent";
