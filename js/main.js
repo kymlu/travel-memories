@@ -90,49 +90,47 @@ function createPrefList(data) {
 
 // Map
 function createMap(data) {
-	setTimeout(() => {
-		const svgObj = document.getElementById('japan-map');
-		const svgDoc = svgObj.contentDocument;
+	const svgObj = document.getElementById('japan-map');
+	const svgDoc = svgObj.contentDocument;
 
-		const prefList = data.flatMap(region => region.prefectures);
-		prefList.forEach(pref => {
-			const prefImg = svgDoc.getElementById(pref.english_name.toLowerCase() + "-img");
-			if (pref.visited) {
-				prefImg.setAttribute('transition', 'opacity 0.3s ease-in-out');
-				prefImg.setAttribute('fill', appColor);
-				prefImg.setAttribute('stroke', 'none');
-				prefImg.setAttribute('cursor', 'pointer');
-				prefImg.setAttribute('transition', 'opacity 0.3 ease-in-out');
-				prefImg.addEventListener("click", function () {
-					selectPref(pref);
+	const prefList = data.flatMap(region => region.prefectures);
+	prefList.forEach(pref => {
+		const prefImg = svgDoc.getElementById(pref.english_name.toLowerCase() + "-img");
+		if (pref.visited) {
+			prefImg.setAttribute('transition', 'opacity 0.3s ease-in-out');
+			prefImg.setAttribute('fill', appColor);
+			prefImg.setAttribute('stroke', 'none');
+			prefImg.setAttribute('cursor', 'pointer');
+			prefImg.setAttribute('transition', 'opacity 0.3 ease-in-out');
+			prefImg.addEventListener("click", function () {
+				selectPref(pref);
+				document.getElementById("main-title").innerHTML = getBilingualText(pref.english_name, pref.japanese_name);
+			});
+			prefImg.addEventListener('mouseover', () => {
+				prefImg.setAttribute('opacity', '50%');
+				hoveredRegion = pref.english_name;
+				document.getElementById("main-title").innerHTML = getBilingualText(pref.english_name, pref.japanese_name);
+				/*document.getElementById("main-title").style.opacity = "0%";
+				setTimeout(()=>{
 					document.getElementById("main-title").innerHTML = getBilingualText(pref.english_name, pref.japanese_name);
-				});
-				prefImg.addEventListener('mouseover', () => {
-					prefImg.setAttribute('opacity', '50%');
-					hoveredRegion = pref.english_name;
-					document.getElementById("main-title").innerHTML = getBilingualText(pref.english_name, pref.japanese_name);
-					/*document.getElementById("main-title").style.opacity = "0%";
-					setTimeout(()=>{
-						document.getElementById("main-title").innerHTML = getBilingualText(pref.english_name, pref.japanese_name);
-						document.getElementById("main-title").style.opacity = "100%";
-					}, 300);*/
-				});
+					document.getElementById("main-title").style.opacity = "100%";
+				}, 300);*/
+			});
 
-				prefImg.addEventListener('mouseout', () => {
-					prefImg.setAttribute('opacity', '100%');
-					hoveredRegion = "";
-					document.getElementById("main-title").innerHTML = "JAPAN・日本";
-					/*document.getElementById("main-title").style.opacity = "0%";
-					setTimeout(()=>{
-						document.getElementById("main-title").innerHTML = "JAPAN / 日本";
-						document.getElementById("main-title").style.opacity = "100%";
-					}, 300);*/
-				});
-			} else {
-				prefImg.setAttribute('fill', 'lightgray');
-			}
-		});
-	}, 1000);
+			prefImg.addEventListener('mouseout', () => {
+				prefImg.setAttribute('opacity', '100%');
+				hoveredRegion = "";
+				document.getElementById("main-title").innerHTML = "JAPAN・日本";
+				/*document.getElementById("main-title").style.opacity = "0%";
+				setTimeout(()=>{
+					document.getElementById("main-title").innerHTML = "JAPAN / 日本";
+					document.getElementById("main-title").style.opacity = "100%";
+				}, 300);*/
+			});
+		} else {
+			prefImg.setAttribute('fill', 'lightgray');
+		}
+	});
 }
 
 function shuffle(array) {
@@ -337,6 +335,7 @@ function createGallery(){
 			direction = (direction + 1) % 4;
 		});
 	} else {
+		document.getElementById("timeline").style.display = "none";
 		gallery.innerHTML = "Pictures coming soon!"
 	}
 }
@@ -520,7 +519,7 @@ function changePrefInfoVisibility(isVisible) {
 		document.getElementById("pref-name-arrow").style.transform = "rotate(" + prefInfoArrowRotation + "deg)";
 		setTimeout(() => {
 			document.getElementById("pref-info").style.display = "none";
-		}, 1000);
+		}, 500);
 	} else {
 		document.getElementById("pref-info").style.display = "flex";
 		setTimeout(() => {
