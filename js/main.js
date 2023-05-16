@@ -240,10 +240,11 @@ function lazyLoad(target) {
 	const obs = new IntersectionObserver((entries, observer) => {
 		entries.forEach(entry => {
 			if (entry.isIntersecting) {
-				const img = entry.target.querySelector(".polaroid-img").getElementsByTagName("img")[0];
-				const src = img.getAttribute('img-src');
+				const thisPolaroid = entry.target;
+				console.log(thisPolaroid.querySelector(".polaroid-img"));
+				const img = thisPolaroid.querySelector(".polaroid-img").getElementsByTagName("img")[0];				const src = img.getAttribute('img-src');
 				img.setAttribute('src', src);
-				polaroid.style.opacity = "100%";
+				thisPolaroid.style.opacity = "100%";
 				observer.disconnect();
 			}
 		});
