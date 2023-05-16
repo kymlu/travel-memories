@@ -21,15 +21,15 @@
     <div class="pref-info">
       <object id="japan-map-mini" type="image/svg+xml" data="img/japan.svg" class="mini-map"></object>
       <div class="flex-column regular-text pref-info-text">
-        <div class="flex-column">
+        <div>
           <div style="font-weight: bold;">Dates visited・日付</div>
           <div id="pref-dates"></div>
         </div>
-        <div class="flex-column">
+        <div>
           <div style="font-weight: bold;">Cities visited・町</div>
           <div id="pref-cities"></div>
         </div>
-        <div class="flex-column">
+        <div>
           <div style="font-weight: bold;">Description etc.・説明など</div>
           <div id="pref-desc">
             <div id="pred-desc-eng"></div>
@@ -58,7 +58,7 @@
     <div id="popup-bg" class="popup-bg"></div>
     <div id="site-info-popup" class="popup centered">
       <div id="info-popup-close-btn" class="large-icon close-button">&#xf00d</div>
-      <div id="site-info" class="flex-column" style="opacity: 0%; display: none; gap: 15px; transition: opacity 0.5s ease-in-out;">
+      <div id="site-info" class="flex-column" style="overflow-y: auto; opacity: 0%; display: none; gap: 15px; transition: opacity 0.5s ease-in-out;">
         <div class="regular-text">
           <p style="font-weight: bold;">About this site</p>
           <p>I was in Japan on exchange in September 2022 - April 2023. This site contains the highlights of the

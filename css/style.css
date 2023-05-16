@@ -111,7 +111,7 @@ body {
 }
 
 .rotate-transition {
-  transition: transform 1s ease-in-out;
+  transition: transform 0.5s ease-in-out;
 }
 
 .slider {
@@ -124,6 +124,8 @@ body {
   transition: top 1s ease-in-out;
   display: none;
   flex-direction: column;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 @media only screen and (orientation: portrait) {
@@ -211,6 +213,7 @@ body {
 
 @media only screen and (orientation: portrait) {
   .mini-map {
+    margin: 0px auto;
     width: 80vw;
     height: 80vw;
   }
@@ -310,6 +313,8 @@ body {
   box-shadow: inset 8px 8px 20px FloralWhite, 8px 8px 20px #00000050;
   cursor: pointer;
   border-radius: 10px;
+  opacity: 0%;
+  transition: opacity 0.5s ease-in-out;
 }
 
 .polaroid-img {
@@ -528,7 +533,7 @@ body {
 /* Popup */
 .hidden-popup {
   visibility: hidden;
-  position: absolute; 
+  position: absolute;
 }
 
 .centered {
@@ -559,7 +564,6 @@ body {
 @media only screen and (orientation: portrait) {
  .popup {
    padding: 20px;
-   width: 80vw;
    max-height: 70vh;
  }
 }
@@ -630,7 +634,6 @@ body {
 .flex-column {
   display: flex;
   flex-direction: column;
-  overflow-y: auto; 
 }
 
 .page-bg{

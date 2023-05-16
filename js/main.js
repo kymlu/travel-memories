@@ -1,13 +1,14 @@
 /* To implement
-	- top bar pref info --> scroll up to hide automatically
+	- loading icon
 	- lazy load images
 	- transition when selecting a prefecture (text) in mobile
 	- transition after selecting a prefecture to view pictures
 	- little icon to represent each prefecture
+	- draggable handlebar
 */
 
 // Variables
-let selectedRegion = null;
+let selectedPref = null;
 let selectedPicture = null;
 let selectedPictureIndex = 0;
 let hoveredRegion = "";
@@ -16,6 +17,8 @@ let isGalleryVisible = false;
 let isFullscreen = false;
 let isPrefInfoVisible = false;
 let prefInfoOffset = 0;
+let prefInfoArrowRotation = 0;
+let throttleScroll = false;
 let isPicInfoVisible = true;
 let currentFilter = "";
 let data = null;
@@ -63,25 +66,25 @@ function createPrefList(data) {
 	const unvisitedPref = document.createElement("div");
 	unvisitedPref.classList.add("prefecture-text", "locked-pref-text");
 	data.forEach(region => {
-		const newRegion = regionGroup.cloneNode();
-		const newRegionTitle = regionTitle.cloneNode();
-		newRegionTitle.innerHTML = getBilingualText(region.english_name, region.japanese_name);
-		newRegion.appendChild(newRegionTitle);
+		const newPref = regionGroup.cloneNode();
+		const newPrefTitle = regionTitle.cloneNode();
+		newPrefTitle.innerHTML = getBilingualText(region.english_name, region.japanese_name);
+		newPref.appendChild(newPrefTitle);
 		region.prefectures.forEach(prefecture => {
 			if (prefecture.visited) {
-				const newPrefecture = visitedPref.cloneNode();
-				newPrefecture.innerHTML = getBilingualText(prefecture.english_name, prefecture.japanese_name);
-				newPrefecture.addEventListener("click", function () {
-					selectRegion(prefecture);
+				const prefNode = visitedPref.cloneNode();
+				prefNode.innerHTML = getBilingualText(prefecture.english_name, prefecture.japanese_name);
+				prefNode.addEventListener("click", function () {
+					selectPref(prefecture);
 				}, false);
-				newRegion.appendChild(newPrefecture);
+				newPref.appendChild(prefNode);
 			} else {
-				const newPrefecture = unvisitedPref.cloneNode();
-				newPrefecture.innerHTML = getBilingualText(prefecture.english_name, prefecture.japanese_name);
-				newRegion.appendChild(newPrefecture);
+				const prefNode = unvisitedPref.cloneNode();
+				prefNode.innerHTML = getBilingualText(prefecture.english_name, prefecture.japanese_name);
+				newPref.appendChild(prefNode);
 			}
 		});
-		prefList.appendChild(newRegion);
+		prefList.appendChild(newPref);
 	});
 }
 
@@ -101,7 +104,7 @@ function createMap(data) {
 				prefImg.setAttribute('cursor', 'pointer');
 				prefImg.setAttribute('transition', 'opacity 0.3 ease-in-out');
 				prefImg.addEventListener("click", function () {
-					selectRegion(pref);
+					selectPref(pref);
 					document.getElementById("main-title").innerHTML = getBilingualText(pref.english_name, pref.japanese_name);
 				});
 				prefImg.addEventListener('mouseover', () => {
@@ -156,7 +159,7 @@ function closeMapTransition() {
 	const svgObj = document.getElementById('japan-map');
 	const svgDoc = svgObj.contentDocument;
 	shuffledList.forEach(pref => {
-		if (pref.english_name != selectedRegion.english_name) {
+		if (pref.english_name != selectedPref.english_name) {
 			setTimeout(() => {
 				const prefImg = svgDoc.getElementById(pref.english_name.toLowerCase() + "-img");
 				prefImg.setAttribute('opacity', '0%');
@@ -207,9 +210,7 @@ function createTemplates(){
 	polaroidCaptionText.classList.add("one-line-text");
 }
 
-function selectRegion(newRegion) {
-	selectedRegion = newRegion;
-	
+function editMiniMap(){
 	const svgObj = document.getElementById('japan-map-mini');
 	svgObj.data = "img/japan.svg";
 	svgObj.addEventListener('load', function () {
@@ -218,7 +219,7 @@ function selectRegion(newRegion) {
 			const prefList = data.flatMap(region => region.prefectures);
 			prefList.forEach(pref => {
 				const prefImg = svgDoc.getElementById(pref.english_name.toLowerCase() + "-img");
-				if (pref.english_name != selectedRegion.english_name) {
+				if (pref.english_name != selectedPref.english_name) {
 					prefImg.setAttribute('fill', 'none');
 					prefImg.setAttribute('stroke', 'none');
 				} else {
@@ -228,28 +229,33 @@ function selectRegion(newRegion) {
 			}
 			);
 			const japanImg = svgDoc.getElementById("japan-img");
-			japanImg.setAttribute("viewBox", selectedRegion.viewbox);
+			japanImg.setAttribute("viewBox", selectedPref.viewbox);
 		}
 	});
+}
 
-	// add catch error?
-	/*if(!isGalleryVisible){
-		closeMapTransition();
-	}*/	
+// Source: https://www.codepel.com/vanilla-javascript/javascript-image-loaded/
+// The lazy loading observer
+function lazyLoad(target) {
+	const obs = new IntersectionObserver((entries, observer) => {
+		entries.forEach(entry => {
+			if (entry.isIntersecting) {
+				const polaroid = entry.target;
+				console.log(polaroid.querySelector(".polaroid-img"));
+				const img = polaroid.querySelector(".polaroid-img").getElementsByTagName("img")[0];
+				const src = img.getAttribute('img-src');
+				img.setAttribute('src', src);
+				polaroid.style.opacity = "100%";
 
-	document.getElementById("pref-dates").innerHTML = getBilingualText(selectedRegion.dates_english, selectedRegion.dates_japanese);
-	document.getElementById("pref-cities").innerHTML = selectedRegion.areas.map(area => 
-		{
-			return getBilingualText(area.english_name, area.japanese_name);
-		}
-	).sort().join(" | ");
-	document.getElementById("pred-desc-eng").innerHTML = selectedRegion.description_english;
-	document.getElementById("pred-desc-jp").innerHTML = selectedRegion.description_japanese;
-	document.getElementById("pref-name").innerHTML = getBilingualText(selectedRegion.english_name, selectedRegion.japanese_name);
-	if (!isGalleryVisible) {
-		changeGalleryVisibility();
-	}
-	
+				observer.disconnect();
+			}
+		});
+	});
+	obs.observe(target);
+}
+
+function createGallery(){
+	// clear existing
 	let gallery = document.getElementById("gallery");
 	gallery.innerHTML = "";
 	let isLeft = true;
@@ -257,12 +263,14 @@ function selectRegion(newRegion) {
 	leftColumn.innerHTML = "";
 	let rightColumn = document.getElementById("right-column");
 	rightColumn.innerHTML = "";
-	if (selectedRegion.image_list.length > 0) {
-		let angleI = 2;
-		let angleJ = 1;
-		selectedRegion.image_list.forEach(img => {
+
+	// add pictures
+	if (selectedPref.image_list.length > 0) {
+		let direction = 2; // 0, 1 = left; 2, 3 = right
+		let angle = 1; // 1-4 for the rotation class
+		selectedPref.image_list.forEach(img => {
+			// clone all relevant nodes
 			let pol = polaroid.cloneNode();
-			pol.classList.add("rotate-" + ((angleI % 3 >= 1) ? "right-" : "left-") + angleJ);
 			let polImgFrame = polaroidImgFrame.cloneNode();
 			let polImg = polaroidImg.cloneNode();
 			let polCaption = polaroidCaption.cloneNode();
@@ -271,6 +279,8 @@ function selectRegion(newRegion) {
 			let polDateJp = singleDate.cloneNode();
 			let polCaptionTextEn = polaroidCaptionText.cloneNode();
 			let polCaptionTextJp = polaroidCaptionText.cloneNode();
+
+			// append elements in correct order
 			pol.appendChild(polImgFrame);
 			polImgFrame.appendChild(polImg);
 			pol.appendChild(polCaption);
@@ -279,16 +289,23 @@ function selectRegion(newRegion) {
 			polDate.appendChild(polDateJp);
 			polCaption.appendChild(polCaptionTextEn);
 			polCaption.appendChild(polCaptionTextJp);
+
+			// rotate picture
+			pol.classList.add("rotate-" + ((direction % 4 >= 1) ? "right-" : "left-") + angle);
+
+			// add info
 			let date = new Date(img.date);
 			polDateEn.innerHTML = getEnglishDate(date);
 			polDateJp.innerHTML = getJapaneseDate(date);
 			polCaptionTextEn.innerHTML = img.description_english;
 			polCaptionTextJp.innerHTML = img.description_japanese;
+
+			// listeners
 			pol.addEventListener("click", function(){
 				selectedPicture = img;
-				selectedPictureIndex = selectedRegion.image_list.indexOf(selectedPicture);
+				selectedPictureIndex = selectedPref.image_list.indexOf(selectedPicture);
 				setFullscreenPicture();
-				changeFullscreen();
+				openFullscreen();
 			});
 			polImg.onload = function() {
 				if(this.width > this.height){
@@ -296,8 +313,11 @@ function selectRegion(newRegion) {
 					polImg.style.width = "auto";
 				}
 			}
-			polImg.src = img.link;
 
+			polImg.setAttribute('img-src', img.link);
+			lazyLoad(pol);
+
+			// add to screen
 			if(isLeft){
 				leftColumn.appendChild(leftBranch.cloneNode(true));
 				pol.classList.add("gallery-left");
@@ -307,18 +327,42 @@ function selectRegion(newRegion) {
 				pol.classList.add("gallery-right");
 				gallery.appendChild(pol);
 			}
+
+			// change iterators
 			isLeft = !isLeft;
 			if(isLeft){
-				angleJ++;
-				if(angleJ > 4){
-					angleJ = 1;
+				angle++;
+				if(angle > 4){
+					angle = 1;
 				}
 			}
-			angleI = (angleI + 1) % 4;
+			direction = (direction + 1) % 4;
 		});
 	} else {
 		gallery.innerHTML = "Pictures coming soon!"
 	}
+}
+
+function selectPref(newPref) {
+	selectedPref = newPref;
+	prefInfoArrowRotation = 0;
+	document.getElementById("pref-name-arrow").style.transform = "rotate(0deg)";
+
+	editMiniMap(newPref);
+
+	//To do: add transition from home to pref pages	
+
+	document.getElementById("pref-dates").innerHTML = getBilingualText(selectedPref.dates_english, selectedPref.dates_japanese);
+	document.getElementById("pref-cities").innerHTML = selectedPref.areas.map(area => 
+		{
+			return getBilingualText(area.english_name, area.japanese_name);
+		}
+	).sort().join(" | ");
+	document.getElementById("pred-desc-eng").innerHTML = selectedPref.description_english;
+	document.getElementById("pred-desc-jp").innerHTML = selectedPref.description_japanese;
+	document.getElementById("pref-name").innerHTML = getBilingualText(selectedPref.english_name, selectedPref.japanese_name);
+	changeGalleryVisibility(true);
+	createGallery();
 }
 
 function changeGalleryFilter(newFilter) {
@@ -333,21 +377,20 @@ function changeGalleryFilter(newFilter) {
 }
 
 function changeFullscreenPicture(isForward) {
-	console.log(selectedPictureIndex, selectedRegion.image_list.length);
 	if (isForward){
-		if(selectedPictureIndex == (selectedRegion.image_list.length - 1)){
+		if(selectedPictureIndex == (selectedPref.image_list.length - 1)){
 			selectedPictureIndex = 0;
 		} else {
 			selectedPictureIndex++;
 		}
 	} else {
 		if(selectedPictureIndex == 0){
-			selectedPictureIndex = selectedRegion.image_list.length - 1;
+			selectedPictureIndex = selectedPref.image_list.length - 1;
 		} else {
 			selectedPictureIndex--;
 		}
 	}
-	selectedPicture = selectedRegion.image_list[selectedPictureIndex];
+	selectedPicture = selectedPref.image_list[selectedPictureIndex];
 	setFullscreenPicture();
 }
 
@@ -355,16 +398,34 @@ function setFullscreenPicture(){
 	document.getElementById("fullscreen-pic").src = selectedPicture.link;
 	let date = new Date(selectedPicture.date);
 	document.getElementById("fullscreen-date").innerHTML = getBilingualText(getEnglishDate(date), getJapaneseDate(date));
-	let area = selectedRegion.areas.find(function(area){return area.id == selectedPicture.city});
+	let area = selectedPref.areas.find(function(area){return area.id == selectedPicture.city});
 	document.getElementById("fullscreen-city").innerHTML = getBilingualText(area.english_name, area.japanese_name);
 	document.getElementById("fullscreen-eng-caption").innerHTML = selectedPicture.description_english;
 	document.getElementById("fullscreen-jp-caption").innerHTML = selectedPicture.description_japanese;
 }
 
-function changeFullscreen() {
-	isFullscreen = !isFullscreen;
-	document.getElementById("fullscreen").style.visibility = isFullscreen ? "visible" : "hidden";
-	document.getElementById("fullscreen-bg").style.visibility = isFullscreen ? "visible" : "hidden";
+function openFullscreen(){
+	isFullscreen = true;
+	document.getElementById("fullscreen").style.visibility = "visible";
+	document.getElementById("fullscreen-bg").style.opacity = "30%";
+}
+
+function closeFullscreen(forceClose){
+	isFullscreen = false;
+	if(forceClose){
+		document.getElementById("fullscreen").style.visibility = "hidden";
+		document.getElementById("fullscreen-bg").style.opacity = "0%";
+		// document.getElementById("site-info-popup").style.height = "10vh";
+		// document.getElementById("site-info").style.display = "none";
+		// document.getElementById("site-info-popup").style.width = "0vw";
+		// document.getElementById("site-info-popup").style.opacity = "0%";
+		// document.getElementById("popup-bg").style.opacity = "0%";
+	} else {
+		document.getElementById("fullscreen-bg").style.opacity = "0%";
+		setTimeout(() => {
+			document.getElementById("fullscreen").style.visibility = "hidden";
+		}, 500);
+	}
 }
 
 // Source: https://stackoverflow.com/questions/53192433/how-to-detect-swipe-in-javascript
@@ -409,11 +470,11 @@ function openInfoPopup(){
 	document.getElementById("site-info-popup").style.opacity = "100%";
 	document.getElementById("info-popup").style.visibility = "visible";
 	document.getElementById("popup-bg").style.opacity = "30%";
-	document.getElementById("site-info-popup").style.width = screen.orientation =="portrait" ? "80vw" : "50vw";
+	document.getElementById("site-info-popup").style.width = (screen.orientation.type =="portrait-secondary"|| screen.orientation.type =="portrait-primary") ? "80vw" : "50vw";
 	setTimeout(() => {
 		document.getElementById("site-info").style.display = "block";
 		document.getElementById("site-info").style.opacity = "100%";
-		document.getElementById("site-info-popup").style.height = screen.orientation =="portrait" ? "70vh": "50vh";
+		document.getElementById("site-info-popup").style.height = (screen.orientation.type =="portrait-secondary"|| screen.orientation.type =="portrait-primary") ? "70vh": "50vh";
 	}, 500);
 }
 
@@ -447,15 +508,18 @@ function closeInfoPopup(forceClose){
 
 // Prefecture info
 function changePrefInfoVisibility(isVisible) {
+	if(isPrefInfoVisible == isVisible){
+		return;
+	}
 	if(isVisible == undefined){
 		isPrefInfoVisible = !isPrefInfoVisible;
 	} else {
 		isPrefInfoVisible = isVisible;
 	}
-
+	prefInfoArrowRotation += 180;
 	if(!isPrefInfoVisible){
 		document.getElementById("pref-info").style.top = "-" + (document.getElementById('pref-info').getBoundingClientRect().height + prefInfoOffset) + "px";
-		document.getElementById("pref-name-arrow").style.transform = "rotate(180deg)";
+		document.getElementById("pref-name-arrow").style.transform = "rotate(" + prefInfoArrowRotation + "deg)";
 		setTimeout(() => {
 			document.getElementById("pref-info").style.display = "none";
 		}, 1000);
@@ -463,22 +527,23 @@ function changePrefInfoVisibility(isVisible) {
 		document.getElementById("pref-info").style.display = "flex";
 		setTimeout(() => {
 			document.getElementById("pref-info").style.top = prefInfoOffset + "px";
-			document.getElementById("pref-name-arrow").style.transform = "rotate(360deg)";
+			document.getElementById("pref-name-arrow").style.transform = "rotate("+ prefInfoArrowRotation +"deg)";
 		}, 10);
 	}
 }
 
-// bug: keeps firing
+// bug: when scroll up quickly, does not show animation
 function scrollPrefInfo() {
-	// if (isGalleryVisible) {
-	// 	if (isPrefInfoVisible && (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50)) {
-	// 		console.log("hide");
-	// 		changePrefInfoVisibility(false);
-	// 	} else if (!isPrefInfoVisible && (document.body.scrollTop <= 50 || document.documentElement.scrollTop <= 50)) {
-	// 		console.log("show");
-	// 		changePrefInfoVisibility(true);
-	// 	}
-	// }
+	if (throttleScroll || !isGalleryVisible) return;
+	throttleScroll = true;
+	setTimeout(() => { 
+		if (isPrefInfoVisible && document.body.scrollTop > 150) {
+			changePrefInfoVisibility(false);
+		} else if (!isPrefInfoVisible && document.body.scrollTop <= 150) {
+			changePrefInfoVisibility(true);
+		}
+		throttleScroll = false;
+	}, 500);
 }
 
 function changePicInfoVisibility() {
@@ -493,9 +558,13 @@ function resetTopbar() {
 	}
 }
 
-function changeGalleryVisibility() {
+function changeGalleryVisibility(isVisible) {
 	window.scrollTo(0, 0);
-	isGalleryVisible = !isGalleryVisible;
+	if(isVisible == undefined){
+		isGalleryVisible = !isGalleryVisible;
+	} else {
+		isGalleryVisible = isVisible;
+	}
 	resetTopbar();
 	document.getElementById("top-bar").style.position = isGalleryVisible ? "sticky" : "fixed";
 	document.getElementById("top-bar").style.backgroundColor = isGalleryVisible ? "white" : "transparent";
@@ -539,15 +608,19 @@ function main() {
 	document.getElementById("pic-info-btn").addEventListener("click", changePicInfoVisibility);
 	document.getElementById("popup-bg").addEventListener("click", function(){closeInfoPopup(true);});
 	document.getElementById("info-btn").addEventListener("click", openInfoPopup);
-	document.getElementById("map-btn").addEventListener("click", changeGalleryVisibility);
+	document.getElementById("map-btn").addEventListener("click", function(){changeGalleryVisibility(false);});
 	document.getElementById("pref-title").addEventListener("click", function(){changePrefInfoVisibility();});
-	document.getElementById("fullscreen-bg").addEventListener("click", changeFullscreen);
+	document.getElementById("fullscreen-bg").addEventListener("click", function(){closeFullscreen(true)});
 	document.getElementById("left-arrow").addEventListener("click", function(){changeFullscreenPicture(false);});
 	document.getElementById("right-arrow").addEventListener("click", function(){changeFullscreenPicture(true);});
 
 	document.addEventListener('keydown', function (event) {
-		if (event.key === 'Escape' && isPopupVisible) {
-			closeInfoPopup(true);
+		if (event.key === 'Escape'){
+			if (isPopupVisible) {
+				closeInfoPopup(true);
+			} else if (isFullscreen){
+				closeFullscreen(true);
+			}
 		}
 
 		if (isFullscreen) {
