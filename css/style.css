@@ -60,12 +60,13 @@ body {
 /* Topbar */
 .top-bar {
   display: flex;
-  flex-direction: column; 
-  top: 0; 
+  flex-direction: row;
+  top: 0;
   right: 0px;
-  padding: 70px 75px 20px 75px; 
-  position: fixed; 
+  padding: 70px 75px 20px 75px;
+  position: fixed;
   background-color: transparent;
+  justify-content: space-between;
 }
 
 @media only screen and (max-width: 768px) {
@@ -76,21 +77,21 @@ body {
 
  /* Sidebar */
  .sidebar-content {
-  display: flex; 
-  flex-direction: column; 
-  align-content: start; 
-  justify-content: start; 
+  display: flex;
+  flex-direction: column;
+  align-content: start;
+  justify-content: start;
   gap: 20px;
 }
 
 .sidebar {
-  display: flex; 
-  flex-direction: column; 
-  align-content: start; 
-  justify-content: start; 
+  display: flex;
+  flex-direction: column;
+  align-content: start;
+  justify-content: start;
   gap: 20px;
   visibility: hidden;
-  overflow: scroll;
+  overflow: auto;
   position: absolute;
   height: 100vh;
   max-width: 50vw;
@@ -109,32 +110,67 @@ body {
   cursor: pointer;
 }
 
-.pref-info {
-  display: none; 
-  flex-direction: row; 
-  gap: 15px; 
-  align-content: stretch; 
+.rotate-transition {
+  transition: transform 1s ease-in-out;
+}
+
+.slider {
+  background-color: white;
+  border-radius: 0px 0px 20px 20px;
+  box-shadow: 0px 8px 15px -10px #00000050;
   max-height: 50vh;
+  padding:  20px 20px 30px 20px;
+  position: fixed;
+  transition: top 1s ease-in-out;
+  display: none;
+  flex-direction: column;
+}
+
+@media only screen and (orientation: portrait) {
+  .slider {
+    padding: 20px 20px 10px 20px;
+    max-height: 75vh;
+  }
+}
+
+.pref-info {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+  align-content: stretch;
 }
 
 @media only screen and (orientation: portrait) {
   .pref-info {
     flex-direction: column;
-    max-height: 80vh;
-    overflow-y: scroll;
-    padding-bottom: 30px;
+    overflow-y: auto;
   }
 }
 
 .pref-info-text {
   gap: 15px;
-  overflow-y: scroll;
+  overflow-y: auto;
+}
+
+.pref-info-handle {
+  display: none;
 }
 
 @media only screen and (orientation: portrait) {
   .pref-info-text {
     gap: 15px;
     overflow-y: visible;
+  }
+
+  .pref-info-handle {
+    display: block;
+    height: 6px;
+    width: 30vw;
+    background-color: var(--main-color);
+    color: var(--main-color);
+    border-width: 0px;
+    border-radius: 3px;
+    margin: 15px auto;
   }
 }
 
@@ -154,7 +190,7 @@ body {
 
 .japan-map {
   margin: auto;
-  width: 70vw; 
+  width: 70vw;
   max-height: 80vh;
 }
 
@@ -166,10 +202,10 @@ body {
 }
 
 .mini-map{
-  margin: auto; 
-  height: 200px; 
-  width: 200px; 
-  min-width: 200px; 
+  margin: 0px;
+  height: 200px;
+  width: 200px;
+  min-width: 200px;
   min-height: 200px;
 }
 
@@ -288,9 +324,9 @@ body {
 
 .polaroid-caption{
   width: 100%;
-  display: flex; 
-  flex-direction: column; 
-  margin: 0px; 
+  display: flex;
+  flex-direction: column;
+  margin: 0px;
   align-content: space-between;
 }
 
@@ -356,7 +392,7 @@ body {
   font-weight: normal;
   vertical-align: bottom;
   text-align: center;
-  font-size: var(--sml-text-size); 
+  font-size: var(--sml-text-size);
   margin: 0px;
 }
 
@@ -410,12 +446,13 @@ body {
   .gallery {
     overflow: hidden;
     padding-top: 25px;
+    padding-bottom: 25px;
   }
 }
 
 /* Timeline */
 .timeline {
-  display: none; 
+  display: none;
   grid: auto /50vw 50vw;
   justify-content: space-around;
   align-content: flex-start;
@@ -430,9 +467,9 @@ body {
 }
 
 .timeline-column{
-  display: flex; 
-  flex-direction: column; 
-  flex-wrap: wrap; 
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
   align-items: center;
 }
 
@@ -450,7 +487,7 @@ body {
   display: flex;
   gap: 0px;
   align-items: center;
-  margin: 150px 0px;
+  margin: 185px 0px;
 }
 
 .timeline-branch-grp.left {
@@ -489,6 +526,11 @@ body {
 }
 
 /* Popup */
+.hidden-popup {
+  visibility: hidden;
+  position: absolute; 
+}
+
 .centered {
   position: fixed;
   top: 50%;
@@ -497,12 +539,11 @@ body {
 }
 
 .popup {
-  width: 50vw;
-  height: max-content;
+  width: 0vw;
+  height: 10vh;
   max-height: 75vh;
   background-color: white;
   border-radius: 10px;
-  visibility: hidden;
   margin: 0px;
   display: flex;
   flex-direction: column;
@@ -511,6 +552,8 @@ body {
   font-weight: normal;
   text-align: start;
   padding: 50px;
+  opacity: 0%;
+  transition: width 0.5s ease-in-out, height 0.5s ease-in-out, opacity 0.5s ease-in-out;
 }
 
 @media only screen and (orientation: portrait) {
@@ -523,23 +566,23 @@ body {
 
 .popup-bg {
   background-color: #000000;
-  opacity: 30%;
+  opacity: 0%;
   width: 100vw;
   height: 100vh;
   display: flex;
-  position: fixed; 
-  visibility: hidden;
+  position: fixed;
   align-items: center;
   justify-content:center;
   padding: 0px;
   margin: 0px;
   bottom: 0;
   right: 0;
+  transition: opacity 0.5s ease-in-out;
 }
 
 .close-button {
-  position: absolute; 
-  top: 15px; 
+  position: absolute;
+  top: 15px;
   left: 15px;
   background-color: white;
   border-radius: 5px;
@@ -549,12 +592,12 @@ body {
 .fullscreen-pic {
   transition: width 1.0 ease-in-out;
   border-radius: 20px;
-  background-color: white; 
+  background-color: white;
   padding: 10px;
-  display: flex; 
+  display: flex;
   flex-direction: row;
-  justify-content: start; 
-  align-content: center; 
+  justify-content: start;
+  align-content: center;
   align-items: flex-start;
   gap: 15px;
   width: max-content;
@@ -565,6 +608,8 @@ body {
   .fullscreen-pic {
     flex-direction: column;
     align-items: center;
+    gap: 0px;
+    padding: 5px;
   }
 }
 
@@ -574,17 +619,18 @@ body {
 }
 
 .fullscreen-caption {
-  display: flex; 
+  display: flex;
   flex-direction: column;
-  align-items: flex-start; 
+  align-items: flex-start;
   gap: 15px;
   padding: 15px;
 }
 
 /* Other */
 .flex-column {
-  display: flex; 
+  display: flex;
   flex-direction: column;
+  overflow-y: auto; 
 }
 
 .page-bg{

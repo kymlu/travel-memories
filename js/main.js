@@ -4,9 +4,6 @@
 	- transition when selecting a prefecture (text) in mobile
 	- transition after selecting a prefecture to view pictures
 	- little icon to represent each prefecture
-	- polaroid rotation on landscape vs portrait (switch after 2 vs 1)
-	- change polaroid rotation on orientation change
-
 */
 
 // Variables
@@ -14,11 +11,11 @@ let selectedRegion = null;
 let selectedPicture = null;
 let selectedPictureIndex = 0;
 let hoveredRegion = "";
-let isSidebarVisible = false;
 let isPopupVisible = false;
 let isGalleryVisible = false;
 let isFullscreen = false;
 let isPrefInfoVisible = false;
+let prefInfoOffset = 0;
 let isPicInfoVisible = true;
 let currentFilter = "";
 let data = null;
@@ -48,16 +45,9 @@ function getJapaneseDate(date){
 	return date.getFullYear() + "年" + (date.getMonth() + 1) + "月" +date.getDate() + "日";
 }
 
-// Sidebar
-function changeSidebarVisibility() {
-	// isSidebarVisible = !isSidebarVisible;
-	// document.getElementById("sidebar").style.visibility = isSidebarVisible ? "visible" : "hidden";
-	// document.getElementById("sidebar-bg").style.visibility = isSidebarVisible ? "visible" : "hidden";
-}
+// Prefecture List
 
-function createSidebar(data) {
-	// const sidebar = document.getElementById("sidebar");
-	// sidebar.innerHTML = "";
+function createPrefList(data) {
 	const prefList = document.getElementById("pref-list");
 	prefList.innerHTML = "";
 
@@ -82,8 +72,7 @@ function createSidebar(data) {
 				const newPrefecture = visitedPref.cloneNode();
 				newPrefecture.innerHTML = getBilingualText(prefecture.english_name, prefecture.japanese_name);
 				newPrefecture.addEventListener("click", function () {
-					changeRegion(prefecture);
-					changeSidebarVisibility();
+					selectRegion(prefecture);
 				}, false);
 				newRegion.appendChild(newPrefecture);
 			} else {
@@ -92,7 +81,6 @@ function createSidebar(data) {
 				newRegion.appendChild(newPrefecture);
 			}
 		});
-		// sidebar.appendChild(newRegion);
 		prefList.appendChild(newRegion);
 	});
 }
@@ -104,7 +92,6 @@ function createMap(data) {
 		const svgDoc = svgObj.contentDocument;
 
 		const prefList = data.flatMap(region => region.prefectures);
-		//console.log(svgObj, svgDoc);
 		prefList.forEach(pref => {
 			const prefImg = svgDoc.getElementById(pref.english_name.toLowerCase() + "-img");
 			if (pref.visited) {
@@ -114,7 +101,7 @@ function createMap(data) {
 				prefImg.setAttribute('cursor', 'pointer');
 				prefImg.setAttribute('transition', 'opacity 0.3 ease-in-out');
 				prefImg.addEventListener("click", function () {
-					changeRegion(pref);
+					selectRegion(pref);
 					document.getElementById("main-title").innerHTML = getBilingualText(pref.english_name, pref.japanese_name);
 				});
 				prefImg.addEventListener('mouseover', () => {
@@ -220,16 +207,15 @@ function createTemplates(){
 	polaroidCaptionText.classList.add("one-line-text");
 }
 
-function changeRegion(newRegion) {
+function selectRegion(newRegion) {
 	selectedRegion = newRegion;
 	
 	const svgObj = document.getElementById('japan-map-mini');
-	svgObj.data = "img/japan.svg"; //Fix? -> will only execute below once as is
+	svgObj.data = "img/japan.svg";
 	svgObj.addEventListener('load', function () {
 		const svgDoc = svgObj.contentDocument;
 		if (svgDoc) {
 			const prefList = data.flatMap(region => region.prefectures);
-			//console.log(svgObj, svgDoc);
 			prefList.forEach(pref => {
 				const prefImg = svgDoc.getElementById(pref.english_name.toLowerCase() + "-img");
 				if (pref.english_name != selectedRegion.english_name) {
@@ -257,7 +243,8 @@ function changeRegion(newRegion) {
 			return getBilingualText(area.english_name, area.japanese_name);
 		}
 	).sort().join(" | ");
-	document.getElementById("pref-desc").innerHTML = getBilingualText(selectedRegion.description_english, selectedRegion.description_japanese);
+	document.getElementById("pred-desc-eng").innerHTML = selectedRegion.description_english;
+	document.getElementById("pred-desc-jp").innerHTML = selectedRegion.description_japanese;
 	document.getElementById("pref-name").innerHTML = getBilingualText(selectedRegion.english_name, selectedRegion.japanese_name);
 	if (!isGalleryVisible) {
 		changeGalleryVisibility();
@@ -419,15 +406,69 @@ function moveTouch(e) {
 // Popup
 function changePopupVisibility() {
 	isPopupVisible = !isPopupVisible;
-	document.getElementById("popup").style.visibility = isPopupVisible ? "visible" : "hidden";
-	document.getElementById("popup-bg").style.visibility = isPopupVisible ? "visible" : "hidden";
+	if(isPopupVisible){
+		document.getElementById("site-info-popup").style.opacity = "100%";
+		document.getElementById("info-popup").style.visibility = "visible";
+		document.getElementById("popup-bg").style.opacity = "30%";
+		document.getElementById("site-info-popup").style.width = screen.orientation =="portrait" ? "80vw" : "50vw";
+		setTimeout(() => {
+			document.getElementById("site-info").style.display = "block";
+			document.getElementById("site-info").style.opacity = "100%";
+			document.getElementById("site-info-popup").style.height = screen.orientation =="portrait" ? "70vh": "50vh";
+		}, 500);
+	} else {
+		document.getElementById("site-info").style.opacity = "0%";
+		setTimeout(() => {
+			document.getElementById("site-info-popup").style.height = "10vh";
+			setTimeout(() => {
+				document.getElementById("site-info").style.display = "none";
+				document.getElementById("site-info-popup").style.width = "0vw";
+				setTimeout(() => {
+					document.getElementById("site-info-popup").style.opacity = "0%";
+					document.getElementById("popup-bg").style.opacity = "0%";
+					setTimeout(() => {
+						document.getElementById("info-popup").style.visibility = "hidden";
+					}, 500);
+				}, 500);
+			}, 500);
+		}, 500);
+	}
 }
 
-function changePrefInfoVisibility() {
-	isPrefInfoVisible = !isPrefInfoVisible;
-	document.getElementById("pref-info").style.display = isPrefInfoVisible ? "flex" : "none";
-	document.getElementById("pref-name-btn-down").style.display = isPrefInfoVisible ? "block" : "none";
-	document.getElementById("pref-name-btn-up").style.display = isPrefInfoVisible ? "none" : "block";
+// Prefecture info
+function changePrefInfoVisibility(isVisible) {
+	if(isVisible == undefined){
+		isPrefInfoVisible = !isPrefInfoVisible;
+	} else {
+		isPrefInfoVisible = isVisible;
+	}
+
+	if(!isPrefInfoVisible){
+		document.getElementById("pref-info").style.top = "-" + (document.getElementById('pref-info').getBoundingClientRect().height + prefInfoOffset) + "px";
+		document.getElementById("pref-name-arrow").style.transform = "rotate(180deg)";
+		setTimeout(() => {
+			document.getElementById("pref-info").style.display = "none";
+		}, 1000);
+	} else {
+		document.getElementById("pref-info").style.display = "flex";
+		setTimeout(() => {
+			document.getElementById("pref-info").style.top = prefInfoOffset + "px";
+			document.getElementById("pref-name-arrow").style.transform = "rotate(0deg)";
+		}, 10);
+	}
+}
+
+// bug: keeps firing
+function scrollPrefInfo() {
+	// if (isGalleryVisible) {
+	// 	if (isPrefInfoVisible && (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50)) {
+	// 		console.log("hide");
+	// 		changePrefInfoVisibility(false);
+	// 	} else if (!isPrefInfoVisible && (document.body.scrollTop <= 50 || document.documentElement.scrollTop <= 50)) {
+	// 		console.log("show");
+	// 		changePrefInfoVisibility(true);
+	// 	}
+	// }
 }
 
 function changePicInfoVisibility() {
@@ -435,20 +476,27 @@ function changePicInfoVisibility() {
 	document.getElementById("pic-info").style.display = isPicInfoVisible ? "flex" : "none";
 }
 
+function resetTopbar() {
+	prefInfoOffset = document.getElementById('top-bar').getBoundingClientRect().height;
+	if(isGalleryVisible){
+		document.getElementById("pref-info").style.top = prefInfoOffset + "px";
+	}
+}
+
 function changeGalleryVisibility() {
 	window.scrollTo(0, 0);
 	isGalleryVisible = !isGalleryVisible;
+	resetTopbar();
 	document.getElementById("top-bar").style.position = isGalleryVisible ? "sticky" : "fixed";
 	document.getElementById("top-bar").style.backgroundColor = isGalleryVisible ? "white" : "transparent";
-	document.getElementById("top-bar").style.boxShadow = isGalleryVisible ? "box-shadow: 0 8px 10px -10px #00000050;" : "none";
 	document.getElementById("japan").style.display = isGalleryVisible ? "none" : "flex";
 	document.getElementById("gallery").style.display = isGalleryVisible ? "flex" : "none";
 	document.getElementById("timeline").style.display = isGalleryVisible ? "inline-grid" : "none";
 	document.getElementById("map-btn").style.display = isGalleryVisible ? "block" : "none";
 	document.getElementById("pref-name").style.display = isGalleryVisible ? "block" : "none";
-	document.getElementById("pref-name-btn-down").style.display = isGalleryVisible ? "block" : "none";
-	document.getElementById("pref-name-btn-up").style.display = "none";
+	document.getElementById("pref-name-arrow").style.display = isGalleryVisible ? "block" : "none";
 	document.getElementById("pref-info").style.display = isGalleryVisible ? "flex" : "none";
+	document.getElementById("pref-info").style.top = prefInfoOffset + "px";
 	isPrefInfoVisible = isGalleryVisible ? true : false;
 	if (!isGalleryVisible) {
 		createMap(data);
@@ -469,23 +517,20 @@ function main() {
 					}
 				});
 			});
-			createSidebar(data);
+			createPrefList(data);
 			createMap(data);
 		})
 		.catch(error => { console.error(error); });
 
-	// document.getElementById("sidebar-btn").addEventListener("click", changeSidebarVisibility);
-	// document.getElementById("sidebar-bg").addEventListener("click", changeSidebarVisibility);
-
-	document.getElementById("popup-close-btn").addEventListener("click", changePopupVisibility);
-	document.getElementById("popup").addEventListener("click", (event) => {
+	document.getElementById("info-popup-close-btn").addEventListener("click", changePopupVisibility);
+	document.getElementById("site-info-popup").addEventListener("click", (event) => {
 		event.stopPropagation();
 	});
 	document.getElementById("pic-info-btn").addEventListener("click", changePicInfoVisibility);
 	document.getElementById("popup-bg").addEventListener("click", changePopupVisibility);
 	document.getElementById("info-btn").addEventListener("click", changePopupVisibility);
 	document.getElementById("map-btn").addEventListener("click", changeGalleryVisibility);
-	document.getElementById("pref-title").addEventListener("click", changePrefInfoVisibility);
+	document.getElementById("pref-title").addEventListener("click", function(){changePrefInfoVisibility();});
 	document.getElementById("fullscreen-bg").addEventListener("click", changeFullscreen);
 	document.getElementById("left-arrow").addEventListener("click", function(){changeFullscreenPicture(false);});
 	document.getElementById("right-arrow").addEventListener("click", function(){changeFullscreenPicture(true);});
@@ -507,21 +552,11 @@ function main() {
 	var swipeContainer = document.getElementById("fullscreen");
 	swipeContainer.addEventListener("touchstart", startTouch, false);
 	swipeContainer.addEventListener("touchmove", moveTouch, false);
-  
+
+	window.onscroll = function() {scrollPrefInfo()};
+	window.onresize = function() {resetTopbar();}
 
 	createTemplates();
-
-	// TODO: figure out pref info behaviour
-	// window.addEventListener('scroll', function() {
-	// 	var element = document.getElementById('pref-info');
-	// 	var rect = element.getBoundingClientRect();
-	// 	if (rect.bottom < 0 || rect.top > window.innerHeight) {
-	// 	  // element is off the page
-	// 	} else {
-	// 	  // element is on the page
-
-	// 	}
-	//   });
 }
 
 
