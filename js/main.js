@@ -234,19 +234,16 @@ function editMiniMap(){
 	});
 }
 
-// Source: https://www.codepel.com/vanilla-javascript/javascript-image-loaded/
+// Based on: https://www.codepel.com/vanilla-javascript/javascript-image-loaded/
 // The lazy loading observer
 function lazyLoad(target) {
 	const obs = new IntersectionObserver((entries, observer) => {
 		entries.forEach(entry => {
 			if (entry.isIntersecting) {
-				const polaroid = entry.target;
-				console.log(polaroid.querySelector(".polaroid-img"));
-				const img = polaroid.querySelector(".polaroid-img").getElementsByTagName("img")[0];
+				const img = entry.target.querySelector(".polaroid-img").getElementsByTagName("img")[0];
 				const src = img.getAttribute('img-src');
 				img.setAttribute('src', src);
 				polaroid.style.opacity = "100%";
-
 				observer.disconnect();
 			}
 		});
@@ -291,7 +288,7 @@ function createGallery(){
 			polCaption.appendChild(polCaptionTextJp);
 
 			// rotate picture
-			pol.classList.add("rotate-" + ((direction % 4 >= 1) ? "right-" : "left-") + angle);
+			pol.classList.add("rotate-" + ((direction % 3 >= 1) ? "right-" : "left-") + angle);
 
 			// add info
 			let date = new Date(img.date);
