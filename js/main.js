@@ -404,18 +404,28 @@ function moveTouch(e) {
 
 
 // Popup
-function changePopupVisibility() {
-	isPopupVisible = !isPopupVisible;
-	if(isPopupVisible){
-		document.getElementById("site-info-popup").style.opacity = "100%";
-		document.getElementById("info-popup").style.visibility = "visible";
-		document.getElementById("popup-bg").style.opacity = "30%";
-		document.getElementById("site-info-popup").style.width = screen.orientation =="portrait" ? "80vw" : "50vw";
-		setTimeout(() => {
-			document.getElementById("site-info").style.display = "block";
-			document.getElementById("site-info").style.opacity = "100%";
-			document.getElementById("site-info-popup").style.height = screen.orientation =="portrait" ? "70vh": "50vh";
-		}, 500);
+function openInfoPopup(){
+	isPopupVisible = true;
+	document.getElementById("site-info-popup").style.opacity = "100%";
+	document.getElementById("info-popup").style.visibility = "visible";
+	document.getElementById("popup-bg").style.opacity = "30%";
+	document.getElementById("site-info-popup").style.width = screen.orientation =="portrait" ? "80vw" : "50vw";
+	setTimeout(() => {
+		document.getElementById("site-info").style.display = "block";
+		document.getElementById("site-info").style.opacity = "100%";
+		document.getElementById("site-info-popup").style.height = screen.orientation =="portrait" ? "70vh": "50vh";
+	}, 500);
+}
+
+function closeInfoPopup(forceClose){
+	if(forceClose){
+		document.getElementById("info-popup").style.visibility = "hidden";
+		document.getElementById("site-info").style.opacity = "0%";
+		document.getElementById("site-info-popup").style.height = "10vh";
+		document.getElementById("site-info").style.display = "none";
+		document.getElementById("site-info-popup").style.width = "0vw";
+		document.getElementById("site-info-popup").style.opacity = "0%";
+		document.getElementById("popup-bg").style.opacity = "0%";
 	} else {
 		document.getElementById("site-info").style.opacity = "0%";
 		setTimeout(() => {
@@ -453,7 +463,7 @@ function changePrefInfoVisibility(isVisible) {
 		document.getElementById("pref-info").style.display = "flex";
 		setTimeout(() => {
 			document.getElementById("pref-info").style.top = prefInfoOffset + "px";
-			document.getElementById("pref-name-arrow").style.transform = "rotate(0deg)";
+			document.getElementById("pref-name-arrow").style.transform = "rotate(360deg)";
 		}, 10);
 	}
 }
@@ -522,13 +532,13 @@ function main() {
 		})
 		.catch(error => { console.error(error); });
 
-	document.getElementById("info-popup-close-btn").addEventListener("click", changePopupVisibility);
+	document.getElementById("info-popup-close-btn").addEventListener("click", function(){closeInfoPopup(false);});
 	document.getElementById("site-info-popup").addEventListener("click", (event) => {
 		event.stopPropagation();
 	});
 	document.getElementById("pic-info-btn").addEventListener("click", changePicInfoVisibility);
-	document.getElementById("popup-bg").addEventListener("click", changePopupVisibility);
-	document.getElementById("info-btn").addEventListener("click", changePopupVisibility);
+	document.getElementById("popup-bg").addEventListener("click", function(){closeInfoPopup(true);});
+	document.getElementById("info-btn").addEventListener("click", openInfoPopup);
 	document.getElementById("map-btn").addEventListener("click", changeGalleryVisibility);
 	document.getElementById("pref-title").addEventListener("click", function(){changePrefInfoVisibility();});
 	document.getElementById("fullscreen-bg").addEventListener("click", changeFullscreen);
@@ -537,7 +547,7 @@ function main() {
 
 	document.addEventListener('keydown', function (event) {
 		if (event.key === 'Escape' && isPopupVisible) {
-			changePopupVisibility();
+			closeInfoPopup(true);
 		}
 
 		if (isFullscreen) {
