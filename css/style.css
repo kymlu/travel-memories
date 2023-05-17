@@ -173,6 +173,7 @@ body {
     border-width: 0px;
     border-radius: 3px;
     margin: 15px auto;
+    cursor: grab;
   }
 }
 
@@ -314,7 +315,6 @@ body {
   cursor: pointer;
   border-radius: 10px;
   opacity: 0%;
-  transition: opacity 0.5s ease-in-out;
 }
 
 .polaroid-img {
@@ -581,7 +581,6 @@ body {
   margin: 0px;
   bottom: 0;
   right: 0;
-  transition: opacity 0.5s ease-in-out;
 }
 
 .close-button {
@@ -606,6 +605,7 @@ body {
   gap: 15px;
   width: max-content;
   max-width: 70vw;
+  min-width: 50vw;
 }
 
 @media only screen and (orientation: portrait) {
@@ -630,7 +630,21 @@ body {
   padding: 15px;
 }
 
+.divider {
+  height: 2px;
+  width: 100%;
+  background-color: var(--main-color);
+  color: var(--main-color);
+  border-width: 0px;
+  margin: 0px auto;
+  cursor: grab;
+}
+
 /* Other */
+.opacity-transition {
+  transition: opacity 0.5s ease-in-out;
+}
+
 .flex-column {
   display: flex;
   flex-direction: column;
@@ -641,4 +655,36 @@ body {
   margin: 0px;
   padding: 0px;
   flex-direction: column;
+  overflow: hidden;
+}
+
+.loading-screen {
+  background-color: white;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  opacity: 100%;
+}
+
+.loader {
+  width: 150px;
+  animation: spin 4s linear infinite;
+  margin: auto auto;
+  transform: rotate(0deg);
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loader-text {
+  opacity: 0%;
+  display: hidden;
+  position: absolute;
+  text-align: center;
+  color: white;
+  font-weight: bold;
 }

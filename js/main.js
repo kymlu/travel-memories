@@ -1,13 +1,14 @@
 /* To implement
-	- loading icon
-	- lazy load images
 	- transition when selecting a prefecture (text) in mobile
 	- transition after selecting a prefecture to view pictures
+	- transition between fullscreen pictures when tapping the arrows?
 	- little icon to represent each prefecture
 	- draggable handlebar
+	- separate sections for each language in polaroid
 */
 
 // Variables
+let isLoading = true;
 let selectedPref = null;
 let selectedPicture = null;
 let selectedPictureIndex = 0;
@@ -40,12 +41,12 @@ function getBilingualText(english, japanese) {
 	return english + "・" + japanese;
 }
 
-function getEnglishDate(date){
-	return monthNames[date.getMonth()] + " " + date.getDate() + ", " + date.getFullYear();
+function getEnglishDate(date, isFullDate){
+	return monthNames[date.getMonth()] + " " + date.getDate() + ", " + date.getFullYear() + (isFullDate ? " " + date.getHours().toString().padStart(2, "0") + ":"+ date.getMinutes().toString().padStart(2, "0") : "");
 }
 
-function getJapaneseDate(date){
-	return date.getFullYear() + "年" + (date.getMonth() + 1) + "月" +date.getDate() + "日";
+function getJapaneseDate(date, isFullDate){
+	return date.getFullYear() + "年" + (date.getMonth() + 1) + "月" +date.getDate() + "日" + (isFullDate ? " " + date.getHours().toString().padStart(2, "0") + ":"+ date.getMinutes().toString().padStart(2, "0") : "");
 }
 
 // Prefecture List
@@ -90,24 +91,24 @@ function createPrefList(data) {
 
 // Map
 function createMap(data) {
-	const svgObj = document.getElementById('japan-map');
+	const svgObj = document.getElementById("japan-map");
 	const svgDoc = svgObj.contentDocument;
 
 	const prefList = data.flatMap(region => region.prefectures);
 	prefList.forEach(pref => {
 		const prefImg = svgDoc.getElementById(pref.english_name.toLowerCase() + "-img");
 		if (pref.visited) {
-			prefImg.setAttribute('transition', 'opacity 0.3s ease-in-out');
-			prefImg.setAttribute('fill', appColor);
-			prefImg.setAttribute('stroke', 'none');
-			prefImg.setAttribute('cursor', 'pointer');
-			prefImg.setAttribute('transition', 'opacity 0.3 ease-in-out');
+			prefImg.setAttribute("transition", "opacity 0.3s ease-in-out");
+			prefImg.setAttribute("fill", appColor);
+			prefImg.setAttribute("stroke", "none");
+			prefImg.setAttribute("cursor", "pointer");
+			prefImg.setAttribute("transition", "opacity 0.3 ease-in-out");
 			prefImg.addEventListener("click", function () {
 				selectPref(pref);
 				document.getElementById("main-title").innerHTML = getBilingualText(pref.english_name, pref.japanese_name);
 			});
-			prefImg.addEventListener('mouseover', () => {
-				prefImg.setAttribute('opacity', '50%');
+			prefImg.addEventListener("mouseover", () => {
+				prefImg.setAttribute("opacity", "50%");
 				hoveredRegion = pref.english_name;
 				document.getElementById("main-title").innerHTML = getBilingualText(pref.english_name, pref.japanese_name);
 				/*document.getElementById("main-title").style.opacity = "0%";
@@ -117,8 +118,8 @@ function createMap(data) {
 				}, 300);*/
 			});
 
-			prefImg.addEventListener('mouseout', () => {
-				prefImg.setAttribute('opacity', '100%');
+			prefImg.addEventListener("mouseout", () => {
+				prefImg.setAttribute("opacity", "100%");
 				hoveredRegion = "";
 				document.getElementById("main-title").innerHTML = "JAPAN・日本";
 				/*document.getElementById("main-title").style.opacity = "0%";
@@ -128,7 +129,7 @@ function createMap(data) {
 				}, 300);*/
 			});
 		} else {
-			prefImg.setAttribute('fill', 'lightgray');
+			prefImg.setAttribute("fill", "lightgray");
 		}
 	});
 }
@@ -154,13 +155,13 @@ function closeMapTransition() {
 	const prefList = data.flatMap(region => region.prefectures);
 	var shuffledList = shuffle(prefList);
 
-	const svgObj = document.getElementById('japan-map');
+	const svgObj = document.getElementById("japan-map");
 	const svgDoc = svgObj.contentDocument;
 	shuffledList.forEach(pref => {
 		if (pref.english_name != selectedPref.english_name) {
 			setTimeout(() => {
 				const prefImg = svgDoc.getElementById(pref.english_name.toLowerCase() + "-img");
-				prefImg.setAttribute('opacity', '0%');
+				prefImg.setAttribute("opacity", "0%");
 			}, 100);
 		}
 	});
@@ -191,6 +192,7 @@ function createTemplates(){
 	// sample polaroid
 	polaroid = document.createElement("div");
 	polaroid.classList.add("polaroid-frame");
+	polaroid.classList.add("opacity-transition");
 	
 	polaroidImgFrame = document.createElement("div");
 	polaroidImgFrame.classList.add("polaroid-img");
@@ -209,20 +211,20 @@ function createTemplates(){
 }
 
 function editMiniMap(){
-	const svgObj = document.getElementById('japan-map-mini');
+	const svgObj = document.getElementById("japan-map-mini");
 	svgObj.data = "img/japan.svg";
-	svgObj.addEventListener('load', function () {
+	svgObj.addEventListener("load", function () {
 		const svgDoc = svgObj.contentDocument;
 		if (svgDoc) {
 			const prefList = data.flatMap(region => region.prefectures);
 			prefList.forEach(pref => {
 				const prefImg = svgDoc.getElementById(pref.english_name.toLowerCase() + "-img");
 				if (pref.english_name != selectedPref.english_name) {
-					prefImg.setAttribute('fill', 'none');
-					prefImg.setAttribute('stroke', 'none');
+					prefImg.setAttribute("fill", "none");
+					prefImg.setAttribute("stroke", "none");
 				} else {
-					prefImg.setAttribute('fill', appColor);
-					prefImg.setAttribute('stroke', 'none');
+					prefImg.setAttribute("fill", appColor);
+					prefImg.setAttribute("stroke", "none");
 				}
 			}
 			);
@@ -239,9 +241,8 @@ function lazyLoad(target) {
 		entries.forEach(entry => {
 			if (entry.isIntersecting) {
 				const thisPolaroid = entry.target;
-				console.log(thisPolaroid.querySelector(".polaroid-img"));
-				const img = thisPolaroid.querySelector(".polaroid-img").getElementsByTagName("img")[0];				const src = img.getAttribute('img-src');
-				img.setAttribute('src', src);
+				const img = thisPolaroid.querySelector(".polaroid-img").getElementsByTagName("img")[0];				const src = img.getAttribute("img-src");
+				img.setAttribute("src", src);
 				thisPolaroid.style.opacity = "100%";
 				observer.disconnect();
 			}
@@ -291,8 +292,8 @@ function createGallery(){
 
 			// add info
 			let date = new Date(img.date);
-			polDateEn.innerHTML = getEnglishDate(date);
-			polDateJp.innerHTML = getJapaneseDate(date);
+			polDateEn.innerHTML = getEnglishDate(date, false);
+			polDateJp.innerHTML = getJapaneseDate(date, false);
 			polCaptionTextEn.innerHTML = img.description_english;
 			polCaptionTextJp.innerHTML = img.description_japanese;
 
@@ -310,7 +311,7 @@ function createGallery(){
 				}
 			}
 
-			polImg.setAttribute('img-src', img.link);
+			polImg.setAttribute("img-src", img.link);
 			lazyLoad(pol);
 
 			// add to screen
@@ -394,9 +395,11 @@ function changeFullscreenPicture(isForward) {
 function setFullscreenPicture(){
 	document.getElementById("fullscreen-pic").src = selectedPicture.link;
 	let date = new Date(selectedPicture.date);
-	document.getElementById("fullscreen-date").innerHTML = getBilingualText(getEnglishDate(date), getJapaneseDate(date));
+	document.getElementById("fullscreen-eng-date").innerHTML = getEnglishDate(date, true);
+	document.getElementById("fullscreen-jp-date").innerHTML = getJapaneseDate(date, true);
 	let area = selectedPref.areas.find(function(area){return area.id == selectedPicture.city});
-	document.getElementById("fullscreen-city").innerHTML = getBilingualText(area.english_name, area.japanese_name);
+	document.getElementById("fullscreen-eng-city").innerHTML = area.english_name;
+	document.getElementById("fullscreen-jp-city").innerHTML = area.japanese_name;
 	document.getElementById("fullscreen-eng-caption").innerHTML = selectedPicture.description_english;
 	document.getElementById("fullscreen-jp-caption").innerHTML = selectedPicture.description_japanese;
 }
@@ -404,6 +407,7 @@ function setFullscreenPicture(){
 function openFullscreen(){
 	isFullscreen = true;
 	document.getElementById("fullscreen").style.visibility = "visible";
+	document.getElementById("fullscreen").style.opacity = "100%";
 	document.getElementById("fullscreen-bg").style.opacity = "30%";
 }
 
@@ -411,6 +415,7 @@ function closeFullscreen(forceClose){
 	isFullscreen = false;
 	if(forceClose){
 		document.getElementById("fullscreen").style.visibility = "hidden";
+		document.getElementById("fullscreen").style.opacity = "0%";
 		document.getElementById("fullscreen-bg").style.opacity = "0%";
 		// document.getElementById("site-info-popup").style.height = "10vh";
 		// document.getElementById("site-info").style.display = "none";
@@ -418,6 +423,7 @@ function closeFullscreen(forceClose){
 		// document.getElementById("site-info-popup").style.opacity = "0%";
 		// document.getElementById("popup-bg").style.opacity = "0%";
 	} else {
+		document.getElementById("fullscreen").style.opacity = "0%";
 		document.getElementById("fullscreen-bg").style.opacity = "0%";
 		setTimeout(() => {
 			document.getElementById("fullscreen").style.visibility = "hidden";
@@ -515,7 +521,7 @@ function changePrefInfoVisibility(isVisible) {
 	}
 	prefInfoArrowRotation += 180;
 	if(!isPrefInfoVisible){
-		document.getElementById("pref-info").style.top = "-" + (document.getElementById('pref-info').getBoundingClientRect().height + prefInfoOffset) + "px";
+		document.getElementById("pref-info").style.top = "-" + (document.getElementById("pref-info").getBoundingClientRect().height + prefInfoOffset) + "px";
 		document.getElementById("pref-name-arrow").style.transform = "rotate(" + prefInfoArrowRotation + "deg)";
 		setTimeout(() => {
 			document.getElementById("pref-info").style.display = "none";
@@ -536,9 +542,10 @@ function scrollPrefInfo() {
 	setTimeout(() => { 
 		if (isPrefInfoVisible && document.body.scrollTop > 150) {
 			changePrefInfoVisibility(false);
-		} else if (!isPrefInfoVisible && document.body.scrollTop <= 150) {
-			changePrefInfoVisibility(true);
 		}
+		// } else if (!isPrefInfoVisible && document.body.scrollTop <= 150) {
+		// 	changePrefInfoVisibility(true);
+		// }
 		throttleScroll = false;
 	}, 500);
 }
@@ -549,7 +556,7 @@ function changePicInfoVisibility() {
 }
 
 function resetTopbar() {
-	prefInfoOffset = document.getElementById('top-bar').getBoundingClientRect().height;
+	prefInfoOffset = document.getElementById("top-bar").getBoundingClientRect().height;
 	if(isGalleryVisible){
 		document.getElementById("pref-info").style.top = prefInfoOffset + "px";
 	}
@@ -565,7 +572,7 @@ function changeGalleryVisibility(isVisible) {
 	resetTopbar();
 	document.getElementById("top-bar").style.position = isGalleryVisible ? "sticky" : "fixed";
 	document.getElementById("top-bar").style.backgroundColor = isGalleryVisible ? "white" : "transparent";
-	document.getElementById("japan").style.display = isGalleryVisible ? "none" : "flex";
+	document.getElementById("map-page").style.display = isGalleryVisible ? "none" : "flex";
 	document.getElementById("gallery").style.display = isGalleryVisible ? "flex" : "none";
 	document.getElementById("timeline").style.display = isGalleryVisible ? "inline-grid" : "none";
 	document.getElementById("map-btn").style.display = isGalleryVisible ? "block" : "none";
@@ -579,8 +586,22 @@ function changeGalleryVisibility(isVisible) {
 	}
 }
 
+function openGallery(){
+	document.getElementById("top-bar").style.display = "flex";
+	document.getElementById("map-page").style.display = "flex";
+	document.getElementById("loading-screen").style.opacity = "0%";
+	setTimeout(() => {
+		document.body.style.overflowY = "auto";
+		document.getElementById("loading-screen").style.visibility = "hidden";
+	}, 1000);
+}
+
 function main() {
-	fetch('https://raw.githubusercontent.com/kymlu/travel-memories/main/js/data.json')
+	window.scrollTo(0, 0);
+	document.getElementById("top-bar").style.display = "none";
+	document.getElementById("map-page").style.display = "none";
+
+	fetch("https://raw.githubusercontent.com/kymlu/travel-memories/main/js/data.json")
 		.then(response => {
 			return response.json();
 		})
@@ -611,8 +632,8 @@ function main() {
 	document.getElementById("left-arrow").addEventListener("click", function(){changeFullscreenPicture(false);});
 	document.getElementById("right-arrow").addEventListener("click", function(){changeFullscreenPicture(true);});
 
-	document.addEventListener('keydown', function (event) {
-		if (event.key === 'Escape'){
+	document.addEventListener("keydown", function (event) {
+		if (event.key === "Escape"){
 			if (isPopupVisible) {
 				closeInfoPopup(true);
 			} else if (isFullscreen){
@@ -621,9 +642,9 @@ function main() {
 		}
 
 		if (isFullscreen) {
-			if (event.key === 'ArrowRight') {
+			if (event.key === "ArrowRight") {
 				changeFullscreenPicture(true);
-			} else if (event.key == 'ArrowLeft') {
+			} else if (event.key == "ArrowLeft") {
 				changeFullscreenPicture(false);
 			}
 		}
@@ -637,7 +658,15 @@ function main() {
 	window.onresize = function() {resetTopbar();}
 
 	createTemplates();
-}
 
+	setTimeout(() => {
+		document.getElementById("loader").style.animationIterationCount = "1";
+		document.getElementById("loader").addEventListener("animationend", function(){
+			document.getElementById("loader").style.cursor = "pointer";
+			document.getElementById("loader-text").style.opacity = "100%";
+			document.getElementById("loader").addEventListener("click", openGallery);
+		});
+	}, 1000);
+}
 
 main();
