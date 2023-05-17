@@ -17,29 +17,33 @@
     </div>
     <div id="info-btn" class="text-main-color large-icon">&#xf05a</div>
   </div>
-  <div id="pref-info" class="slider" style="z-index: 4999;">
-    <div class="pref-info">
-      <object id="japan-map-mini" type="image/svg+xml" data="img/japan.svg" class="mini-map"></object>
-      <div class="flex-column regular-text pref-info-text">
-        <div>
-          <div style="font-weight: bold;">Dates visited・日付</div>
-          <div id="pref-dates"></div>
-        </div>
-        <div>
-          <div style="font-weight: bold;">Cities visited・町</div>
-          <div id="pref-cities"></div>
-        </div>
-        <div>
-          <div style="font-weight: bold;">Description etc.・説明など</div>
-          <div id="pref-desc">
-            <div id="pred-desc-eng"></div>
-            <div id="pred-desc-jp"></div>
+  <div id="top-drawer" style="display:none; z-index: 4999;">
+    <div id="pref-info-bg" class="popup-bg opacity-transition portrait-only" style="opacity: 30%"></div>
+    <div id="pref-info" class="slider">
+      <div class="pref-info">
+        <object id="japan-map-mini" type="image/svg+xml" data="img/japan.svg" class="mini-map"></object>
+        <div class="flex-column regular-text pref-info-text">
+          <div>
+            <div style="font-weight: bold;">Dates visited・日付</div>
+            <div id="pref-dates"></div>
+          </div>
+          <div>
+            <div style="font-weight: bold;">Cities visited・町</div>
+            <div id="pref-cities"></div>
+          </div>
+          <div>
+            <div style="font-weight: bold;">Description etc.・説明など</div>
+            <div id="pref-desc">
+              <div id="pred-desc-eng"></div>
+              <div id="pred-desc-jp"></div>
+            </div>
           </div>
         </div>
       </div>
+      <hr id="pref-info-handle" class="pref-info-handle" />
     </div>
-    <hr id="pref-info-handle" class="pref-info-handle" />
   </div>
+
   <div id="map-page" class="map-page">
     <object id="japan-map" type="image/svg+xml" data="img/japan.svg" class="japan-map"></object>
     <div id="main-title" class="main-title">JAPAN・日本</div>
@@ -100,7 +104,7 @@
     </div>
   </div>
 
-  <div id="loading-screen" class="loading-screen opacity-transition">
+  <div id="loading-screen" class="loading-screen opacity-transition" style="z-index: 6000">
     <div id="loader" class="loader">
       <img src="img/sakura.svg" class="centered" style="position: absolute; width: 100%;">
       <div id="loader-text" class="centered loader-text opacity-transition">

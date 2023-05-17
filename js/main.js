@@ -521,12 +521,16 @@ function changePrefInfoVisibility(isVisible) {
 	}
 	prefInfoArrowRotation += 180;
 	if(!isPrefInfoVisible){
+		document.getElementById("pref-info-bg").style.opacity = "0%";
 		document.getElementById("pref-info").style.top = "-" + (document.getElementById("pref-info").getBoundingClientRect().height + prefInfoOffset) + "px";
 		document.getElementById("pref-name-arrow").style.transform = "rotate(" + prefInfoArrowRotation + "deg)";
 		setTimeout(() => {
 			document.getElementById("pref-info").style.display = "none";
+			document.getElementById("pref-info-bg").style.visibility = "hidden";
 		}, 500);
 	} else {
+		document.getElementById("pref-info-bg").style.opacity = "30%";
+		document.getElementById("pref-info-bg").style.visibility = "visible";
 		document.getElementById("pref-info").style.display = "flex";
 		setTimeout(() => {
 			document.getElementById("pref-info").style.top = prefInfoOffset + "px";
@@ -578,6 +582,8 @@ function changeGalleryVisibility(isVisible) {
 	document.getElementById("map-btn").style.display = isGalleryVisible ? "block" : "none";
 	document.getElementById("pref-name").style.display = isGalleryVisible ? "block" : "none";
 	document.getElementById("pref-name-arrow").style.display = isGalleryVisible ? "block" : "none";
+	document.getElementById("top-drawer").style.display = isGalleryVisible ? "block" : "none";
+	document.getElementById("pref-info-bg").style.visibility = isGalleryVisible ? "visible" : "hidden";
 	document.getElementById("pref-info").style.display = isGalleryVisible ? "flex" : "none";
 	document.getElementById("pref-info").style.top = prefInfoOffset + "px";
 	isPrefInfoVisible = isGalleryVisible ? true : false;
@@ -619,6 +625,8 @@ function main() {
 		})
 		.catch(error => { console.error(error); });
 
+	document.getElementById("pref-info-bg").addEventListener("click", function(){changePrefInfoVisibility(false);});
+	document.getElementById("info-popup-close-btn").addEventListener("click", function(){closeInfoPopup(false);});
 	document.getElementById("info-popup-close-btn").addEventListener("click", function(){closeInfoPopup(false);});
 	document.getElementById("site-info-popup").addEventListener("click", (event) => {
 		event.stopPropagation();
