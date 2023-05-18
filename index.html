@@ -7,17 +7,27 @@
 </head>
 
 <body class="page-bg">
-  <div id="top-bar" class="top-bar" style="z-index: 5000;">
+  <!-- Top bar -->
+  <div id="top-bar" class="top-bar" style="z-index: 5000; opacity: 0%;">
     <div id="map-btn" class="text-main-color large-icon"
-      style="display: none; z-index: 5001;">&#xf279</div>
-    <div id="pref-title" class="pref-title">
+      style="display: none; z-index: 5001;" title="Return to map・地図に戻る">&#xf279</div>
+    <div id="pref-title" class="pref-title" title="See prefecture info・都道府県の情報を見る">
       <div id="pref-name" class="regular-text" style="display: none; font-weight: bold;"></div>
       <!-- <div id="pref-name-btn-up" class="text-main-color large-icon" style="display: none">&#xf0d7</div> -->
       <div id="pref-name-arrow" class="text-main-color large-icon rotate-transition" style="display: none">&#xf0d8</div>
     </div>
-    <div id="info-btn" class="text-main-color large-icon">&#xf05a</div>
+    <div id="info-btn" class="text-main-color large-icon" title="About the site・このサイトについて">&#xf05a</div>
   </div>
-  <div id="top-drawer" style="display:none; z-index: 4999;">
+
+  <!-- Map Page (Map and Prefecture List) -->
+  <div id="map-page" class="map-page" style="opacity: 0%">
+    <object id="japan-map" type="image/svg+xml" data="img/japan.svg" class="japan-map"></object>
+    <div id="main-title" class="main-title">JAPAN・日本</div>
+    <div id="pref-list" class="pref-list"></div>
+  </div>
+
+  <!-- Prefecture Info -->
+  <div id="top-drawer" style="display:none; z-index: 4999; position: relative; scroll-snap-align: start;">
     <div id="pref-info-bg" class="popup-bg opacity-transition portrait-only" style="opacity: 30%"></div>
     <div id="pref-info" class="slider">
       <div class="pref-info">
@@ -44,12 +54,8 @@
     </div>
   </div>
 
-  <div id="map-page" class="map-page">
-    <object id="japan-map" type="image/svg+xml" data="img/japan.svg" class="japan-map"></object>
-    <div id="main-title" class="main-title">JAPAN・日本</div>
-    <div id="pref-list" class="pref-list"></div>
-  </div>
-  <div>
+  <!-- Timeline and Picture Gallery -->
+  <div style="scroll-snap-align: start;">
     <div id="timeline" class="timeline">
       <div id="left-column" class="timeline-column left"></div>
       <div id="right-column" class="timeline-column right"></div>
@@ -57,7 +63,7 @@
     <div id="gallery" class="gallery" style="z-index: 4000;"></div>
   </div>
 
-  <!--Popups-->
+  <!-- Info Popup -->
   <div id="info-popup" class="hidden-popup" style="z-index: 10000;">
     <div id="popup-bg" class="popup-bg opacity-transition"></div>
     <div id="site-info-popup" class="popup centered">
@@ -79,41 +85,53 @@
     </div>
   </div>
 
+  <!-- Fullscreen Picture -->
   <div id="fullscreen" class="hidden-popup opacity-transition" style="z-index: 6000; opacity: 0%;">
-    <div id="fullscreen-bg" class="popup-bg"></div>
-    <div class="centered" style="display: flex; align-items: center;">
-      <div id="left-arrow" class="large-icon fullscreen-arrow" style="z-index: 1001;">&#xf0d9</div>
-      <div id="fullscreen-frame" class="fullscreen-pic" style="z-index: 1001;">
-        <div style="display: flex; align-items: end; justify-content: end;">
-          <img id="fullscreen-pic" style="border-radius: 15px; max-height: 70vh; max-width: 50vw; z-index: 1001;"
-            src="img/BFD9CC0C-53AB-4F00-851A-AAB2D06A37A6.jpeg" />
-          <div id="pic-info-btn" class="large-icon"
-            style="position: fixed; margin: 10px; z-index: 1002; color: white;">&#xf05a</div>
+    <div id="fullscreen2" class="centered" style="display: flex; width: 100%; height: 100%;">
+      <div style="position: relative; height: 100%; flex-grow: 1">
+          <div id="fullscreen-bg" class="popup-bg" style="opacity: 30%; z-index: 0;"></div>
+          <div class="centered" style="display: flex; align-items: center; position: absolute;">
+          <div id="left-arrow" class="large-icon fullscreen-arrow">&#xf0d9</div>
+          <div id="fullscreen-frame" class="fullscreen-pic">
+            <img id="fullscreen-pic" style="border-radius: 15px; max-height: 70vh; max-width: 50vw;"
+              src="img/BFD9CC0C-53AB-4F00-851A-AAB2D06A37A6.jpeg" />
+          </div>
+          <div id="right-arrow" class="large-icon fullscreen-arrow">&#xf0da</div>
         </div>
-        <div id="pic-info" class="fullscreen-caption">
-          <div id="fullscreen-eng-date" class="caption-text"></div>
-          <div id="fullscreen-eng-city" class="caption-text"></div>
-          <div id="fullscreen-eng-caption" class="caption-text"></div>
-          <hr class="divider">
-          <div id="fullscreen-jp-date" class="caption-text"></div>
-          <div id="fullscreen-jp-city" class="caption-text"></div>
-          <div id="fullscreen-jp-caption" class="caption-text"></div>
-        </div>
+        <div id="pic-info-btn" class="large-icon" style="position: absolute; top: 0px; right: 0px; margin: 10px; color: white;">&#xf05a</div>
       </div>
-      <div id="right-arrow" class="large-icon fullscreen-arrow" style="z-index: 1001;">&#xf0da</div>
+      <div id="pic-info" class="fullscreen-caption" title="See picture information・写真の情報を見る" style="z-index: 1;">
+        <div id="fullscreen-eng-date" class="caption-text">date</div>
+        <div id="fullscreen-eng-city" class="caption-text">city</div>
+        <div id="fullscreen-eng-caption" class="caption-text">caption</div>
+        <hr class="divider">
+        <div id="fullscreen-jp-date" class="caption-text">date</div>
+        <div id="fullscreen-jp-city" class="caption-text">city</div>
+        <div id="fullscreen-jp-caption" class="caption-text">caption</div>
+      </div>
     </div>
   </div>
 
+  <!-- Loading Screen -->
   <div id="loading-screen" class="loading-screen opacity-transition" style="z-index: 6000">
     <div id="loader" class="loader">
-      <img src="img/sakura.svg" class="centered" style="position: absolute; width: 100%;">
+      <div id="load1" class="loader-dot" style="transform: rotate(270deg) translate(80px)rotate(270deg); animation-delay: 0s;"></div>
+      <div id="load2" class="loader-dot" style="transform: rotate(315deg) translate(80px)rotate(315deg); animation-delay: 0.25s;"></div>
+      <div id="load3" class="loader-dot" style="transform: rotate(0deg) translate(80px)rotate(0deg); animation-delay: 0.5s;"></div>
+      <div id="load4" class="loader-dot" style="transform: rotate(45deg) translate(80px)rotate(45deg); animation-delay: 0.75s;"></div>
+      <div id="load5" class="loader-dot" style="transform: rotate(90deg) translate(80px)rotate(90deg); animation-delay: 1s;"></div>
+      <div id="load6" class="loader-dot" style="transform: rotate(135deg) translate(80px)rotate(135deg); animation-delay: 1.25s;"></div>
+      <div id="load7" class="loader-dot" style="transform: rotate(180deg) translate(80px)rotate(180deg); animation-delay: 1.5s;"></div>
+      <div id="load8" class="loader-dot" style="transform: rotate(225deg) translate(80px)rotate(225deg); animation-delay: 1.75s;"></div>
+      <img id="sakura" src="img/sakura.svg" class="centered" style="opacity: 0%; position: absolute; width: 85%; transition: opacity 0.5s ease-in-out;">
       <div id="loader-text" class="centered loader-text opacity-transition">
-        <p style="margin: 0.5em">Enter</p>
-        <p style="margin: 0.5em">入る</p>
+        <p style="margin: 0.5em">Start</p>
+        <p style="margin: 0.5em">スタート</p>
       </div>
     </div>
   </div>
 
+  <!-- Scripts -->
   <script src="js/main.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/exif-js/2.3.0/exif.js"></script>

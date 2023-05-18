@@ -120,8 +120,8 @@ body {
   box-shadow: 0px 8px 15px -10px #00000050;
   max-height: 50vh;
   padding:  20px 20px 30px 20px;
-  position: fixed;
-  transition: top 0.5s ease-in-out;
+  position: relative;
+  transition: top 0.5s ease-in-out, margin-top 0.5s ease-in-out;
   display: none;
   flex-direction: column;
   width: 100%;
@@ -593,7 +593,7 @@ body {
 
 /* Fullscreen picture */
 .fullscreen-pic {
-  transition: width 1.0 ease-in-out;
+  transition: width 1.0s ease-in-out;
   border-radius: 20px;
   background-color: white;
   padding: 10px;
@@ -602,17 +602,13 @@ body {
   justify-content: start;
   align-content: center;
   align-items: flex-start;
-  gap: 15px;
-  width: max-content;
   max-width: 70vw;
-  min-width: 50vw;
 }
 
 @media only screen and (orientation: portrait) {
   .fullscreen-pic {
     flex-direction: column;
     align-items: center;
-    gap: 0px;
     padding: 5px;
   }
 }
@@ -627,7 +623,12 @@ body {
   flex-direction: column;
   align-items: flex-start;
   gap: 15px;
-  padding: 15px;
+  padding: 50px;
+  width: 30vw;
+  height: 100%;
+  background-color: white;
+  box-sizing: border-box;
+  transition: margin-right 0.5s ease-in-out;
 }
 
 .divider {
@@ -656,6 +657,7 @@ body {
   padding: 0px;
   flex-direction: column;
   overflow: hidden;
+  scroll-snap-type: y mandatory;
 }
 
 .loading-screen {
@@ -669,15 +671,39 @@ body {
 }
 
 .loader {
-  width: 150px;
-  animation: spin 3.5s linear infinite;
+  width: 200px;
+  /* animation: spin 3.5s linear infinite; */
   margin: auto auto;
   transform: rotate(0deg);
+  display: flex;
+  justify-content: center;
 }
 
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+.loader-dot {
+  animation: loader-grow-shrink 1.5s ease-in-out infinite;
+  background-color: var(--main-color);
+  border-radius: 50%;
+  position: absolute;
+}
+
+@keyframes loader-grow-shrink {
+  0% { 
+    width: 0px;
+    height: 0px; 
+  }
+  50% { 
+    width: 25px;
+    height: 25px; 
+  }
+  100% { 
+    width: 0px;
+    height: 0px; 
+  }
 }
 
 .loader-text {
@@ -686,6 +712,7 @@ body {
   text-align: center;
   color: white;
   font-weight: bold;
+  cursor: default;
 }
 
 @media only screen and (orientation: landscape) {
