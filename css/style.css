@@ -726,8 +726,6 @@ body {
 }
 
 .loader-text {
-  opacity: 0%;
-  display: hidden;
   text-align: center;
   color: white;
   font-weight: bold;

@@ -586,6 +586,16 @@ function changePicInfoVisibility() {
 	}
 }
 
+function openGallery(){
+	document.getElementById("top-bar").style.opacity = "100%";
+	document.getElementById("map-page").style.opacity = "100%";
+	document.getElementById("loading-screen").style.opacity = "0%";
+	setTimeout(() => {
+		document.body.style.overflowY = "auto";
+		document.getElementById("loading-screen").style.visibility = "hidden";
+	}, 1000);
+}
+
 function changeGalleryVisibility(isVisible) {
 	window.scrollTo(0, 0);
 	if(isVisible == undefined){
@@ -607,18 +617,24 @@ function changeGalleryVisibility(isVisible) {
 	document.getElementById("pref-info").style.display = isGalleryVisible ? "flex" : "none";
 	isPrefInfoVisible = isGalleryVisible ? true : false;
 	if (!isGalleryVisible) {
+		openLoader();
 		createMap(data);
+		setTimeout(() => {
+			openGallery();
+		}, 200);
 	}
 }
 
-function openGallery(){
-	document.getElementById("top-bar").style.opacity = "100%";
-	document.getElementById("map-page").style.opacity = "100%";
-	document.getElementById("loading-screen").style.opacity = "0%";
-	setTimeout(() => {
-		document.body.style.overflowY = "auto";
-		document.getElementById("loading-screen").style.visibility = "hidden";
-	}, 1000);
+function openLoader(){
+	document.getElementById("top-bar").style.opacity = "0%";
+	document.getElementById("map-page").style.opacity = "0%";
+	document.getElementById("loader-btn").style.display = "none";
+	document.getElementById("loading-screen").style.visibility = "visible";
+	document.getElementById("loading-screen").style.opacity = "100%";
+	for (let i = 1; i <= 9; i++) {
+		document.getElementById("load" + i).style.animationIterationCount = "infinite";
+	}
+	document.getElementById("map-page").style.opacity = "0%";
 }
 
 function retry(){
@@ -719,11 +735,10 @@ function main() {
 				document.getElementById("load" + i).style.animationIterationCount = iterationCount - (i==1 ? 1 : 0);
 			}
 			document.getElementById("load8").addEventListener("animationend", function () {
-				document.getElementById("sakura").style.opacity = "100%";
-				document.getElementById("loader").style.cursor = "pointer";
-				document.getElementById("loader-text").style.cursor = "pointer";
-				document.getElementById("loader-text").style.opacity = "100%";
-				document.getElementById("loader").addEventListener("click", openGallery);
+				document.getElementById("loader-btn").style.display = "block";
+				setTimeout(() => {
+					document.getElementById("loader-btn").style.opacity = "100%";
+				}, 10);
 			});
 		}, 100);
 	}

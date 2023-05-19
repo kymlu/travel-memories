@@ -124,10 +124,12 @@
       <div id="load7" class="loader-dot" style="transform: rotate(180deg) translate(80px)rotate(180deg); animation-delay: -0.5s;"></div>
       <div id="load8" class="loader-dot" style="transform: rotate(225deg) translate(80px)rotate(225deg); animation-delay: -0.25s;"></div>
       <div id="load9" class="loader-dot" style="transform: rotate(270deg) translate(80px)rotate(270deg); animation-delay: 0s;"></div>
-      <img id="sakura" src="img/sakura.svg" class="centered" style="opacity: 0%; position: absolute; width: 85%; transition: opacity 0.5s ease-in-out;">
-      <div id="loader-text" class="centered loader-text opacity-transition">
-        <p style="margin: 0.5em">Start</p>
-        <p style="margin: 0.5em">スタート</p>
+      <div id="loader-btn" class="centered opacity-transition" style="opacity: 0%; display: none; cursor: pointer; height: 100%; width: 100%" onclick="openGallery()">
+        <img id="sakura" src="img/sakura.svg" class="centered" style="position: absolute; width: 85%;">
+        <div id="loader-text" class="centered loader-text">
+          <p style="margin: 0.5em">Start</p>
+          <p style="margin: 0.5em">スタート</p>
+        </div>
       </div>
       <div id="error-btn" class="error-btn centered loader-text" onclick="retry()">
         <p style="margin: 0.5em">Failed to fetch data. Try again?</p>
