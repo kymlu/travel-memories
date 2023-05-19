@@ -37,7 +37,7 @@ let appColor = "#be0029";
 
 // Text
 function getBilingualText(english, japanese) {
-	return english + "・" + japanese;
+	return english + " — " + japanese;
 }
 
 function getEnglishDate(date, isFullDate){
@@ -504,7 +504,6 @@ function spinArrow() {
 function showPrefInfo(isForced) {
 	document.getElementById("pref-info-bg").style.opacity = "30%";
 	document.getElementById("pref-info-bg").style.visibility = "visible";
-	// document.getElementById("pref-info").style.display = "flex";
 	if (isForced) {
 		if (document.body.scrollTop < document.getElementById("top-drawer").getBoundingClientRect().height) {
 			window.scrollTo({
@@ -555,7 +554,6 @@ function changePrefInfoVisibility(isVisible, isForced) {
 	}
 }
 
-// bug: when scroll up quickly, does not show animation
 function scrollPrefInfo() {
 	if (throttlePrefInfo || !isGalleryVisible) return;
 	throttlePrefInfo = true;
@@ -605,6 +603,7 @@ function changeGalleryVisibility(isVisible) {
 	document.getElementById("pref-name-arrow").style.display = isGalleryVisible ? "block" : "none";
 	document.getElementById("top-drawer").style.display = isGalleryVisible ? "block" : "none";
 	document.getElementById("pref-info-bg").style.visibility = isGalleryVisible ? "visible" : "hidden";
+	document.getElementById("pref-info-bg").style.opacity = "30%";
 	document.getElementById("pref-info").style.display = isGalleryVisible ? "flex" : "none";
 	isPrefInfoVisible = isGalleryVisible ? true : false;
 	if (!isGalleryVisible) {
