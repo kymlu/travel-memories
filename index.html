@@ -11,7 +11,7 @@
   <div id="top-bar" class="top-bar" style="z-index: 5000; opacity: 0%;">
     <div id="map-btn" class="text-main-color large-icon"
       style="display: none; z-index: 5001;" title="Return to map・地図に戻る">&#xf279</div>
-    <div id="pref-title" class="pref-title" title="See prefecture info・都道府県の情報を見る">
+    <div id="pref-title" class="pref-title" title="Toggle prefecture info・都道府県の情報をトグル">
       <div id="pref-name" class="regular-text" style="display: none; font-weight: bold;"></div>
       <!-- <div id="pref-name-btn-up" class="text-main-color large-icon" style="display: none">&#xf0d7</div> -->
       <div id="pref-name-arrow" class="text-main-color large-icon rotate-transition" style="display: none">&#xf0d8</div>
@@ -115,18 +115,23 @@
   <!-- Loading Screen -->
   <div id="loading-screen" class="loading-screen opacity-transition" style="z-index: 6000">
     <div id="loader" class="loader">
-      <div id="load1" class="loader-dot" style="transform: rotate(270deg) translate(80px)rotate(270deg); animation-delay: 0s;"></div>
-      <div id="load2" class="loader-dot" style="transform: rotate(315deg) translate(80px)rotate(315deg); animation-delay: 0.25s;"></div>
-      <div id="load3" class="loader-dot" style="transform: rotate(0deg) translate(80px)rotate(0deg); animation-delay: 0.5s;"></div>
-      <div id="load4" class="loader-dot" style="transform: rotate(45deg) translate(80px)rotate(45deg); animation-delay: 0.75s;"></div>
-      <div id="load5" class="loader-dot" style="transform: rotate(90deg) translate(80px)rotate(90deg); animation-delay: 1s;"></div>
-      <div id="load6" class="loader-dot" style="transform: rotate(135deg) translate(80px)rotate(135deg); animation-delay: 1.25s;"></div>
-      <div id="load7" class="loader-dot" style="transform: rotate(180deg) translate(80px)rotate(180deg); animation-delay: 1.5s;"></div>
-      <div id="load8" class="loader-dot" style="transform: rotate(225deg) translate(80px)rotate(225deg); animation-delay: 1.75s;"></div>
+      <div id="load1" class="loader-dot" style="transform: rotate(270deg) translate(80px)rotate(270deg); animation-delay: 2s;"></div>
+      <div id="load2" class="loader-dot" style="transform: rotate(315deg) translate(80px)rotate(315deg); animation-delay: -1.75s;"></div>
+      <div id="load3" class="loader-dot" style="transform: rotate(0deg) translate(80px)rotate(0deg); animation-delay: -1.5s;"></div>
+      <div id="load4" class="loader-dot" style="transform: rotate(45deg) translate(80px)rotate(45deg); animation-delay: -1.25s;"></div>
+      <div id="load5" class="loader-dot" style="transform: rotate(90deg) translate(80px)rotate(90deg); animation-delay: -1s;"></div>
+      <div id="load6" class="loader-dot" style="transform: rotate(135deg) translate(80px)rotate(135deg); animation-delay: -0.75s;"></div>
+      <div id="load7" class="loader-dot" style="transform: rotate(180deg) translate(80px)rotate(180deg); animation-delay: -0.5s;"></div>
+      <div id="load8" class="loader-dot" style="transform: rotate(225deg) translate(80px)rotate(225deg); animation-delay: -0.25s;"></div>
+      <div id="load9" class="loader-dot" style="transform: rotate(270deg) translate(80px)rotate(270deg); animation-delay: 0s;"></div>
       <img id="sakura" src="img/sakura.svg" class="centered" style="opacity: 0%; position: absolute; width: 85%; transition: opacity 0.5s ease-in-out;">
       <div id="loader-text" class="centered loader-text opacity-transition">
         <p style="margin: 0.5em">Start</p>
         <p style="margin: 0.5em">スタート</p>
+      </div>
+      <div id="error-btn" class="error-btn centered loader-text" onclick="retry()">
+        <p style="margin: 0.5em">Failed to fetch data. Try again?</p>
+        <p style="margin: 0.5em">データアクセスに失敗しました。再試行する？</p>
       </div>
     </div>
   </div>

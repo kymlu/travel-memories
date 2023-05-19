@@ -17,10 +17,8 @@ let isPopupVisible = false;
 let isGalleryVisible = false;
 let isFullscreen = false;
 let isPrefInfoVisible = false;
-let prefInfoOffset = 0;
 let prefInfoArrowRotation = 0;
-let isPrefInfoForced = false;
-let throttleScroll = false;
+let throttlePrefInfo = false;
 let isPicInfoVisible = true;
 let currentFilter = "";
 let data = null;
@@ -459,11 +457,11 @@ function openInfoPopup(){
 	document.getElementById("site-info-popup").style.opacity = "100%";
 	document.getElementById("info-popup").style.visibility = "visible";
 	document.getElementById("popup-bg").style.opacity = "30%";
-	document.getElementById("site-info-popup").style.width = (screen.orientation.type =="portrait-secondary"|| screen.orientation.type =="portrait-primary") ? "80vw" : "50vw";
+	document.getElementById("site-info-popup").classList.add("popup-width");
 	setTimeout(() => {
 		document.getElementById("site-info").style.display = "block";
 		document.getElementById("site-info").style.opacity = "100%";
-		document.getElementById("site-info-popup").style.height = (screen.orientation.type =="portrait-secondary"|| screen.orientation.type =="portrait-primary") ? "70vh": "50vh";
+	document.getElementById("site-info-popup").classList.add("popup-height");
 	}, 500);
 }
 
@@ -471,18 +469,18 @@ function closeInfoPopup(forceClose){
 	if(forceClose){
 		document.getElementById("info-popup").style.visibility = "hidden";
 		document.getElementById("site-info").style.opacity = "0%";
-		document.getElementById("site-info-popup").style.height = "10vh";
+		document.getElementById("site-info-popup").classList.remove("popup-height");
 		document.getElementById("site-info").style.display = "none";
-		document.getElementById("site-info-popup").style.width = "0vw";
+		document.getElementById("site-info-popup").classList.remove("popup-width");
 		document.getElementById("site-info-popup").style.opacity = "0%";
 		document.getElementById("popup-bg").style.opacity = "0%";
 	} else {
 		document.getElementById("site-info").style.opacity = "0%";
 		setTimeout(() => {
-			document.getElementById("site-info-popup").style.height = "10vh";
+			document.getElementById("site-info-popup").classList.remove("popup-height");
 			setTimeout(() => {
 				document.getElementById("site-info").style.display = "none";
-				document.getElementById("site-info-popup").style.width = "0vw";
+				document.getElementById("site-info-popup").classList.remove("popup-width");
 				setTimeout(() => {
 					document.getElementById("site-info-popup").style.opacity = "0%";
 					document.getElementById("popup-bg").style.opacity = "0%";
@@ -496,6 +494,48 @@ function closeInfoPopup(forceClose){
 }
 
 // Prefecture info
+function spinArrow() {
+	prefInfoArrowRotation += 180;
+	document.getElementById("pref-name-arrow").style.transform = "rotate(" + prefInfoArrowRotation + "deg)";
+}
+
+function showPrefInfo(isForced) {
+	document.getElementById("pref-info-bg").style.opacity = "30%";
+	document.getElementById("pref-info-bg").style.visibility = "visible";
+	// document.getElementById("pref-info").style.display = "flex";
+	if (isForced) {
+		if (document.body.scrollTop < document.getElementById("top-drawer").getBoundingClientRect().height) {
+			window.scrollTo({
+				top: 0,
+				left: 0,
+				behavior: 'smooth'
+			});
+		} else {
+			document.getElementById("top-drawer").style.position = "sticky";
+			document.getElementById("top-drawer").style.top = document.getElementById("top-bar").getBoundingClientRect().height;
+			document.getElementById("pref-info-bg").style.opacity = "30%";
+		}
+	}
+	spinArrow();
+}
+
+function hidePrefInfo(isForced) {
+	if (isForced) {
+		var prefInfoOffset = document.getElementById("top-drawer").getBoundingClientRect().height;
+		if (document.body.scrollTop <= prefInfoOffset) {
+			window.scrollTo({
+				top: prefInfoOffset,
+				left: 0,
+				behavior: 'smooth'
+			});
+		}
+	}
+	document.getElementById("pref-info-bg").style.opacity = "0%";
+	document.getElementById("top-drawer").style.position = "relative";
+	document.getElementById("top-drawer").style.top = "0";
+	spinArrow();
+}
+
 function changePrefInfoVisibility(isVisible, isForced) {
 	if(isPrefInfoVisible == isVisible){
 		return;
@@ -505,63 +545,29 @@ function changePrefInfoVisibility(isVisible, isForced) {
 	} else {
 		isPrefInfoVisible = isVisible;
 	}
-	if(isForced == undefined){
-		isForced = false;
-	}
 
-	prefInfoArrowRotation += 180;
-	if(!isPrefInfoVisible){
-		document.getElementById("pref-info-bg").style.opacity = "0%";
-		if(isForced){
-			if(isPrefInfoForced){
-				document.getElementById("top-drawer").style.position = "relative";
-				document.getElementById("pref-info").style.margin = "-" + (document.getElementById("pref-info").getBoundingClientRect().height + prefInfoOffset) + "px";
-			} else {
-				window.scrollTo({
-					top: document.getElementById("pref-info").getBoundingClientRect().height,
-					left: 0,
-					behavior: 'smooth'
-				  });
-			}
-		}
-		document.getElementById("pref-name-arrow").style.transform = "rotate(" + prefInfoArrowRotation + "deg)";
-		// setTimeout(() => {
-		// 	document.getElementById("pref-info").style.display = "none";
-		// 	document.getElementById("pref-info-bg").style.visibility = "hidden";
-		// }, 500);
+	if (isPrefInfoVisible){
+		showPrefInfo(isForced);
 	} else {
-		document.getElementById("pref-info-bg").style.opacity = "30%";
-		document.getElementById("pref-info-bg").style.visibility = "visible";
-		document.getElementById("pref-info").style.display = "flex";
-		setTimeout(() => {
-			if(isForced){
-				window.scrollTo({
-					top: 0,
-					left: 0,
-					behavior: 'smooth'
-				  });
-				//document.getElementById("top-drawer").style.position = "fixed";
-				//document.getElementById("pref-info").style.top = prefInfoOffset + "px";
-			}
-			//document.getElementById("pref-info").style.top = prefInfoOffset + "px";
-			document.getElementById("pref-name-arrow").style.transform = "rotate("+ prefInfoArrowRotation +"deg)";
-		}, 10);
+		hidePrefInfo(isForced);
 	}
 }
 
 // bug: when scroll up quickly, does not show animation
 function scrollPrefInfo() {
-	if (throttleScroll || !isGalleryVisible) return;
-	throttleScroll = true;
-	setTimeout(() => { 
-		if (isPrefInfoVisible && document.body.scrollTop > 150) {
-			changePrefInfoVisibility(false);
+	if (throttlePrefInfo || !isGalleryVisible) return;
+	throttlePrefInfo = true;
+	setTimeout(() => {
+		let prefInfoOffset = document.getElementById("top-drawer").getBoundingClientRect().height / 2;
+		if (isPrefInfoVisible && document.body.scrollTop > prefInfoOffset) {
+			isPrefInfoVisible = false;
+			hidePrefInfo(false);
+		} else if (!isPrefInfoVisible && document.body.scrollTop < prefInfoOffset) {
+			isPrefInfoVisible = true;
+			showPrefInfo(false);
 		}
-		// } else if (!isPrefInfoVisible && document.body.scrollTop <= 150) {
-		// 	changePrefInfoVisibility(true);
-		// }
-		throttleScroll = false;
-	}, 500);
+		throttlePrefInfo = false;
+	}, 250);
 }
 
 function changePicInfoVisibility() {
@@ -580,13 +586,6 @@ function changePicInfoVisibility() {
 	}
 }
 
-function resetTopbar() {
-	prefInfoOffset = document.getElementById("top-bar").getBoundingClientRect().height;
-	// if(isGalleryVisible){
-	// 	document.getElementById("pref-info").style.top = prefInfoOffset + "px";
-	// }
-}
-
 function changeGalleryVisibility(isVisible) {
 	window.scrollTo(0, 0);
 	if(isVisible == undefined){
@@ -594,7 +593,6 @@ function changeGalleryVisibility(isVisible) {
 	} else {
 		isGalleryVisible = isVisible;
 	}
-	resetTopbar();
 	document.getElementById("top-bar").style.position = isGalleryVisible ? "sticky" : "fixed";
 	document.getElementById("top-bar").style.backgroundColor = isGalleryVisible ? "white" : "transparent";
 	document.getElementById("map-page").style.display = isGalleryVisible ? "none" : "flex";
@@ -606,7 +604,6 @@ function changeGalleryVisibility(isVisible) {
 	document.getElementById("top-drawer").style.display = isGalleryVisible ? "block" : "none";
 	document.getElementById("pref-info-bg").style.visibility = isGalleryVisible ? "visible" : "hidden";
 	document.getElementById("pref-info").style.display = isGalleryVisible ? "flex" : "none";
-	//document.getElementById("pref-info").style.top = prefInfoOffset + "px";
 	isPrefInfoVisible = isGalleryVisible ? true : false;
 	if (!isGalleryVisible) {
 		createMap(data);
@@ -623,50 +620,34 @@ function openGallery(){
 	}, 1000);
 }
 
-function main() {
-	var now = new Date();
-	window.scrollTo(0, 0);
-	//document.getElementById("top-bar").style.display = "none";
-	//document.getElementById("map-page").style.display = "none";
+function retry(){
+	document.getElementById("error-btn").style.display = "none";
+	for(let i = 1; i <= 9; i++){
+		document.getElementById("load"+i).style.animationPlayState = "running";
+	}
+	main();
+}
 
-	fetch("https://raw.githubusercontent.com/kymlu/travel-memories/main/js/data.json")
-		.then(response => {
-			return response.json();
-		})
-		.then(d => {
-			data = d;
-			data.forEach(region => {
-				region.prefectures.forEach(pref => {
-					if (pref.image_list != null){
-						pref.image_list.sort(function (a, b) {return new Date(a.date) - new Date(b.date);});
-					}
-				});
-			});
-			createPrefList(data);
-			createMap(data);
-		})
-		.catch(error => { console.error(error); });
-
-	document.getElementById("pref-info-bg").addEventListener("click", function(){changePrefInfoVisibility(false);});
-	document.getElementById("info-popup-close-btn").addEventListener("click", function(){closeInfoPopup(false);});
-	document.getElementById("info-popup-close-btn").addEventListener("click", function(){closeInfoPopup(false);});
+function setupSite(){
+	document.getElementById("pref-info-bg").addEventListener("click", function () { changePrefInfoVisibility(false, true); });
+	document.getElementById("info-popup-close-btn").addEventListener("click", function () { closeInfoPopup(false); });
 	document.getElementById("site-info-popup").addEventListener("click", (event) => {
 		event.stopPropagation();
 	});
 	document.getElementById("pic-info-btn").addEventListener("click", changePicInfoVisibility);
-	document.getElementById("popup-bg").addEventListener("click", function(){closeInfoPopup(true);});
+	document.getElementById("popup-bg").addEventListener("click", function () { closeInfoPopup(true); });
 	document.getElementById("info-btn").addEventListener("click", openInfoPopup);
-	document.getElementById("map-btn").addEventListener("click", function(){changeGalleryVisibility(false);});
-	document.getElementById("pref-title").addEventListener("click", function(){changePrefInfoVisibility(undefined, true);});
-	document.getElementById("fullscreen-bg").addEventListener("click", function(){closeFullscreen(true)});
-	document.getElementById("left-arrow").addEventListener("click", function(){changeFullscreenPicture(false);});
-	document.getElementById("right-arrow").addEventListener("click", function(){changeFullscreenPicture(true);});
+	document.getElementById("map-btn").addEventListener("click", function () { changeGalleryVisibility(false); });
+	document.getElementById("pref-title").addEventListener("click", function () { changePrefInfoVisibility(undefined, true); });
+	document.getElementById("fullscreen-bg").addEventListener("click", function () { closeFullscreen(true) });
+	document.getElementById("left-arrow").addEventListener("click", function () { changeFullscreenPicture(false); });
+	document.getElementById("right-arrow").addEventListener("click", function () { changeFullscreenPicture(true); });
 
 	document.addEventListener("keydown", function (event) {
-		if (event.key === "Escape"){
+		if (event.key === "Escape") {
 			if (isPopupVisible) {
 				closeInfoPopup(true);
-			} else if (isFullscreen){
+			} else if (isFullscreen) {
 				closeFullscreen(true);
 			}
 		}
@@ -684,24 +665,67 @@ function main() {
 	swipeContainer.addEventListener("touchstart", startTouch, false);
 	swipeContainer.addEventListener("touchmove", moveTouch, false);
 
-	window.onscroll = function() {/*scrollPrefInfo()*/};
-	window.onresize = function() {resetTopbar();}
+	window.onscroll = function () { scrollPrefInfo() };
 
 	createTemplates();
+}
 
-	setTimeout(() => {
-		var iterationCount = Math.ceil((new Date() - now)/1000/2);
-		for(let i = 1; i <= 8; i++){
-			document.getElementById("load"+i).style.animationIterationCount = iterationCount;
-		}
-		document.getElementById("load8").addEventListener("animationend", function(){
-			document.getElementById("sakura").style.opacity = "100%";
-			document.getElementById("loader").style.cursor = "pointer";
-			document.getElementById("loader-text").style.cursor = "pointer";
-			document.getElementById("loader-text").style.opacity = "100%";
-			document.getElementById("loader").addEventListener("click", openGallery);
+function main() {
+	var now = new Date();
+	var hasError = false;
+	window.scrollTo(0, 0);
+
+	fetch("https://raw.githubusercontent.com/kymlu/travel-memories/main/js/data.json")
+		.then(response => {
+			return response.json();
+		}).then(d => {
+			data = d;
+		}).catch(error => {
+			console.error(error);
+			if (data == null){
+				hasError = true;
+			}
+		}).finally(() => {
+			if (data == null){
+				hasError = true;
+			} else {
+				data.forEach(region => {
+					region.prefectures.forEach(pref => {
+						if (pref.image_list != null) {
+							pref.image_list.sort(function (a, b) { return new Date(a.date) - new Date(b.date); });
+						}
+					});
+				});
+				createPrefList(data);
+				createMap(data);
+			}
 		});
-	}, 100);
+	
+	setupSite();
+
+	if (hasError) {
+		setTimeout(() => {
+			document.getElementById("error-btn").style.display = "block";
+			document.getElementById("error-btn").style.opacity = "100%";
+			for (let i = 1; i <= 9; i++) {
+				document.getElementById("load" + i).style.animationPlayState = "paused";
+			}
+		}, 500);
+	} else {
+		setTimeout(() => {
+			var iterationCount = Math.ceil((new Date() - now) / 1000 / 2);
+			for (let i = 1; i <= 9; i++) {
+				document.getElementById("load" + i).style.animationIterationCount = iterationCount - (i==1 ? 1 : 0);
+			}
+			document.getElementById("load8").addEventListener("animationend", function () {
+				document.getElementById("sakura").style.opacity = "100%";
+				document.getElementById("loader").style.cursor = "pointer";
+				document.getElementById("loader-text").style.cursor = "pointer";
+				document.getElementById("loader-text").style.opacity = "100%";
+				document.getElementById("loader").addEventListener("click", openGallery);
+			});
+		}, 100);
+	}
 }
 
 main();

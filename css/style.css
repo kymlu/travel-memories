@@ -583,6 +583,24 @@ body {
   right: 0;
 }
 
+.popup-width {
+  width: 50vw;
+}
+
+.popup-height {
+  height: 50vh;
+}
+
+@media only screen and (orientation: portrait) {
+  .popup-width {
+    width: 80vw;
+  }
+  
+  .popup-height {
+    height: 70vh;
+  }  
+}
+
 .close-button {
   position: absolute;
   top: 15px;
@@ -658,6 +676,7 @@ body {
   flex-direction: column;
   overflow: hidden;
   scroll-snap-type: y mandatory;
+  scroll-snap-stop: always;
 }
 
 .loading-screen {
@@ -685,7 +704,7 @@ body {
 }
 
 .loader-dot {
-  animation: loader-grow-shrink 1.5s ease-in-out infinite;
+  animation: loader-grow-shrink 2s ease-in-out infinite;
   background-color: var(--main-color);
   border-radius: 50%;
   position: absolute;
@@ -719,4 +738,13 @@ body {
   .portrait-only {
     display: none;
   }
+}
+
+.error-btn{
+  display: none;
+  cursor: pointer;
+  width: 30vw;
+  text-align: center;
+  border-radius: 5px;
+  background-color: var(--main-color);
 }
