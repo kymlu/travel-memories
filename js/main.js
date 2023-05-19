@@ -2,7 +2,7 @@
 	- transition when selecting a prefecture (text) in mobile
 	- transition after selecting a prefecture to view pictures
 	- transition between fullscreen pictures when tapping the arrows?
-	- fix the prefecture info
+	- prefecture info spinny arrow
 	- little icon to represent each prefecture
 	- draggable handlebar
 */
@@ -201,6 +201,7 @@ function createTemplates(){
 
 function editMiniMap(){
 	const svgObj = document.getElementById("japan-map-mini");
+	svgObj.style.opacity = "0%";
 	svgObj.data = "img/japan.svg";
 	svgObj.addEventListener("load", function () {
 		const svgDoc = svgObj.contentDocument;
@@ -219,7 +220,8 @@ function editMiniMap(){
 			);
 			const japanImg = svgDoc.getElementById("japan-img");
 			japanImg.setAttribute("viewBox", selectedPref.viewbox);
-		}
+			svgObj.style.opacity = "100%";
+	}
 	});
 }
 
