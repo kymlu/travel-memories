@@ -196,7 +196,8 @@ function createTemplates(){
 	singleDate = document.createElement("div");
 	singleDate.classList.add("date-text");
 	polaroidCaptionText = document.createElement("div");
-	polaroidCaptionText.classList.add(["caption-text", "one-line-text"]);
+	polaroidCaptionText.classList.add("caption-text");
+	polaroidCaptionText.classList.add("one-line-text");
 }
 
 function editMiniMap(){
@@ -699,6 +700,11 @@ function setupSite(){
 	document.getElementById("cities-title").innerHTML = getBilingualText("Cities and significant places visited", "訪れた都市・名所");
 	document.getElementById("description-title").innerHTML = getBilingualText("Description etc.", "説明など");
 	
+	document.getElementById("loader-btn").addEventListener("click", function () { 
+		setTimeout(() => {
+			openGallery(true);
+		}, 50); 
+	});
 	document.getElementById("pref-info-bg").addEventListener("click", function () { changePrefInfoVisibility(false, true); });
 	document.getElementById("info-popup-close-btn").addEventListener("click", function () { closeInfoPopup(false); });
 	document.getElementById("site-info-popup").addEventListener("click", (event) => {
