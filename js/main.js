@@ -17,14 +17,16 @@ let isPopupVisible = false;
 let isGalleryVisible = false;
 let isFullscreen = false;
 let isPrefInfoVisible = false;
-let prefInfoArrowRotation = 0;
 let throttlePrefInfo = false;
 let isPicInfoVisible = true;
 let currentFilter = "";
 let data = null;
+let japanTitle = null;
+let now = null;
 
 let initialX = null;
 let initialY = null;
+
 
 const monthNames = ["January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December"
@@ -97,7 +99,7 @@ function createMap(data) {
 	prefList.forEach(pref => {
 		const prefImg = svgDoc.getElementById(pref.english_name.toLowerCase() + "-img");
 		if (pref.visited) {
-			prefImg.setAttribute("transition", "opacity 0.3s ease-in-out");
+			// CSS won't work on documents
 			prefImg.setAttribute("fill", appColor);
 			prefImg.setAttribute("stroke", "none");
 			prefImg.setAttribute("cursor", "pointer");
@@ -115,7 +117,7 @@ function createMap(data) {
 			prefImg.addEventListener("mouseout", () => {
 				prefImg.setAttribute("opacity", "100%");
 				hoveredRegion = "";
-				document.getElementById("main-title").innerHTML = "JAPAN・日本";
+				document.getElementById("main-title").innerHTML = japanTitle;
 			});
 		} else {
 			prefImg.setAttribute("fill", "lightgray");
@@ -186,7 +188,6 @@ function createTemplates(){
 	polaroidImgFrame = document.createElement("div");
 	polaroidImgFrame.classList.add("polaroid-img");
 	polaroidImg = document.createElement("img");
-	polaroidImg.style.width = "100%"
 	
 	polaroidCaption = document.createElement("div");
 	polaroidCaption.classList.add("polaroid-caption");
@@ -195,8 +196,7 @@ function createTemplates(){
 	singleDate = document.createElement("div");
 	singleDate.classList.add("date-text");
 	polaroidCaptionText = document.createElement("div");
-	polaroidCaptionText.classList.add("caption-text");
-	polaroidCaptionText.classList.add("one-line-text");
+	polaroidCaptionText.classList.add(["caption-text", "one-line-text"]);
 }
 
 function editMiniMap(){
@@ -232,7 +232,8 @@ function lazyLoad(target) {
 		entries.forEach(entry => {
 			if (entry.isIntersecting) {
 				const thisPolaroid = entry.target;
-				const img = thisPolaroid.querySelector(".polaroid-img").getElementsByTagName("img")[0];				const src = img.getAttribute("img-src");
+				const img = thisPolaroid.querySelector(".polaroid-img").getElementsByTagName("img")[0];
+				const src = img.getAttribute("img-src");
 				img.setAttribute("src", src);
 				thisPolaroid.style.opacity = "100%";
 				observer.disconnect();
@@ -297,8 +298,9 @@ function createGallery(){
 			});
 			polImg.onload = function() {
 				if(this.width > this.height){
-					polImg.style.height = "100%";
-					polImg.style.width = "auto";
+					polImg.classList.add("landscape-img");
+				} else {
+					polImg.classList.add("portrait-img");
 				}
 			}
 
@@ -334,8 +336,8 @@ function createGallery(){
 
 function selectPref(newPref) {
 	selectedPref = newPref;
-	prefInfoArrowRotation = 0;
-	document.getElementById("pref-name-arrow").style.transform = "rotate(0deg)";
+	document.getElementById("pref-name-arrow").classList.add("arrow-down");
+	document.getElementById("pref-name-arrow").classList.remove("arrow-up");
 
 	editMiniMap(newPref);
 
@@ -347,8 +349,8 @@ function selectPref(newPref) {
 			return getBilingualText(area.english_name, area.japanese_name);
 		}
 	).sort().join(" | ");
-	document.getElementById("pred-desc-eng").innerHTML = selectedPref.description_english;
-	document.getElementById("pred-desc-jp").innerHTML = selectedPref.description_japanese;
+	document.getElementById("pref-desc-eng").innerHTML = selectedPref.description_english;
+	document.getElementById("pref-desc-jp").innerHTML = selectedPref.description_japanese;
 	document.getElementById("pref-name").innerHTML = getBilingualText(selectedPref.english_name, selectedPref.japanese_name);
 	changeGalleryVisibility(true);
 	createGallery();
@@ -497,8 +499,8 @@ function closeInfoPopup(forceClose){
 
 // Prefecture info
 function spinArrow() {
-	prefInfoArrowRotation += 180;
-	document.getElementById("pref-name-arrow").style.transform = "rotate(" + prefInfoArrowRotation + "deg)";
+	document.getElementById("pref-name-arrow").classList.toggle("arrow-down");
+	document.getElementById("pref-name-arrow").classList.toggle("arrow-up");
 }
 
 function showPrefInfo(isForced) {
@@ -618,10 +620,12 @@ function changeGalleryVisibility(isVisible) {
 	isPrefInfoVisible = isGalleryVisible ? true : false;
 	if (!isGalleryVisible) {
 		openLoader();
-		createMap(data);
 		setTimeout(() => {
-			openGallery();
-		}, 200);
+			createMap(data);
+			setTimeout(() => {
+				openGallery();
+			}, 200);
+		}, 50);
 	}
 }
 
@@ -637,15 +641,64 @@ function openLoader(){
 	document.getElementById("map-page").style.opacity = "0%";
 }
 
+function fetchData() {
+	var hasError = false;
+
+	fetch("https://raw.githubusercontent.com/kymlu/travel-memories/main/js/data.json")
+		.then(response => {
+			return response.json();
+		}).then(d => {
+			data = d;
+		}).catch(error => {
+			hasError = true;
+			showDataLoadError();
+			console.error(error);
+		}).then(() => {
+			if (!hasError && data != null) {
+				data.forEach(region => {
+					region.prefectures.forEach(pref => {
+						if (pref.image_list != null) {
+							pref.image_list.sort(function (a, b) { return new Date(a.date) - new Date(b.date); });
+						}
+					});
+				});
+
+				createPrefList(data);
+				setTimeout(() => {
+					createMap(data);
+				}, 50);
+
+				setTimeout(() => {
+					var iterationCount = Math.ceil((new Date() - now) / 1000 / 2);
+					for (let i = 1; i <= 9; i++) {
+						document.getElementById("load" + i).style.animationIterationCount = iterationCount - (i == 1 ? 1 : 0);
+					}
+					document.getElementById("load8").addEventListener("animationend", function () {
+						document.getElementById("loader-btn").style.display = "block";
+						setTimeout(() => {
+							document.getElementById("loader-btn").style.opacity = "100%";
+						}, 10);
+					});
+				}, 100);
+			}
+		});
+}
+
 function retry(){
 	document.getElementById("error-btn").style.display = "none";
 	for(let i = 1; i <= 9; i++){
 		document.getElementById("load"+i).style.animationPlayState = "running";
 	}
-	main();
+	fetchData();
 }
 
 function setupSite(){
+	japanTitle = getBilingualText("JAPAN", "日本");
+	document.getElementById("main-title").innerHTML = japanTitle;
+	document.getElementById("dates-title").innerHTML = getBilingualText("Dates visited", "訪れた日付");
+	document.getElementById("cities-title").innerHTML = getBilingualText("Cities and significant places visited", "訪れた都市・名所");
+	document.getElementById("description-title").innerHTML = getBilingualText("Description etc.", "説明など");
+	
 	document.getElementById("pref-info-bg").addEventListener("click", function () { changePrefInfoVisibility(false, true); });
 	document.getElementById("info-popup-close-btn").addEventListener("click", function () { closeInfoPopup(false); });
 	document.getElementById("site-info-popup").addEventListener("click", (event) => {
@@ -687,61 +740,21 @@ function setupSite(){
 	createTemplates();
 }
 
+function showDataLoadError(){
+	setTimeout(() => {
+		document.getElementById("error-btn").style.display = "block";
+		document.getElementById("error-btn").style.opacity = "100%";
+		for (let i = 1; i <= 9; i++) {
+			document.getElementById("load" + i).style.animationPlayState = "paused";
+		}
+	}, 500);
+}
+
 function main() {
-	var now = new Date();
-	var hasError = false;
+	now = new Date();
 	window.scrollTo(0, 0);
-
-	fetch("https://raw.githubusercontent.com/kymlu/travel-memories/main/js/data.json")
-		.then(response => {
-			return response.json();
-		}).then(d => {
-			data = d;
-		}).catch(error => {
-			console.error(error);
-			if (data == null){
-				hasError = true;
-			}
-		}).finally(() => {
-			if (data == null){
-				hasError = true;
-			} else {
-				data.forEach(region => {
-					region.prefectures.forEach(pref => {
-						if (pref.image_list != null) {
-							pref.image_list.sort(function (a, b) { return new Date(a.date) - new Date(b.date); });
-						}
-					});
-				});
-				createPrefList(data);
-				createMap(data);
-			}
-		});
-	
 	setupSite();
-
-	if (hasError) {
-		setTimeout(() => {
-			document.getElementById("error-btn").style.display = "block";
-			document.getElementById("error-btn").style.opacity = "100%";
-			for (let i = 1; i <= 9; i++) {
-				document.getElementById("load" + i).style.animationPlayState = "paused";
-			}
-		}, 500);
-	} else {
-		setTimeout(() => {
-			var iterationCount = Math.ceil((new Date() - now) / 1000 / 2);
-			for (let i = 1; i <= 9; i++) {
-				document.getElementById("load" + i).style.animationIterationCount = iterationCount - (i==1 ? 1 : 0);
-			}
-			document.getElementById("load8").addEventListener("animationend", function () {
-				document.getElementById("loader-btn").style.display = "block";
-				setTimeout(() => {
-					document.getElementById("loader-btn").style.opacity = "100%";
-				}, 10);
-			});
-		}, 100);
-	}
+	fetchData();
 }
 
 main();

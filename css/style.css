@@ -57,6 +57,10 @@ body {
   font-size: var(--reg-text-size);
 }
 
+.bold-text{
+  font-weight: bold;
+}
+
 /* Topbar */
 .top-bar {
   display: flex;
@@ -110,8 +114,16 @@ body {
   cursor: pointer;
 }
 
-.rotate-transition {
+.transform-transition {
   transition: transform 0.5s ease-in-out;
+}
+
+.arrow-up {
+  transform: scaleY(1);
+}
+
+.arrow-down {
+  transform: scaleY(-1);
 }
 
 .slider {
@@ -325,6 +337,16 @@ body {
   overflow: hidden;
   align-items: center;
   justify-content: center;
+}
+
+.portrait-img {
+  width: 100%;
+  height: auto;
+}
+
+.landscape-img {
+  width: auto;
+  height: 100%;
 }
 
 .polaroid-caption{

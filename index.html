@@ -12,9 +12,9 @@
     <div id="map-btn" class="text-main-color large-icon"
       style="display: none; z-index: 5001;" title="Return to map — 地図に戻る">&#xf279</div>
     <div id="pref-title" class="pref-title" title="Toggle prefecture info — 都道府県の情報をトグル">
-      <div id="pref-name" class="regular-text" style="display: none; font-weight: bold;"></div>
+      <div id="pref-name" class="regular-text bold-text" style="display: none;"></div>
       <!-- <div id="pref-name-btn-up" class="text-main-color large-icon" style="display: none">&#xf0d7</div> -->
-      <div id="pref-name-arrow" class="text-main-color large-icon rotate-transition" style="display: none">&#xf0d8</div>
+      <div id="pref-name-arrow" class="text-main-color large-icon transform-transition down-arrow" style="display: none">&#xf0d8</div>
     </div>
     <div id="info-btn" class="text-main-color large-icon" title="About the site — このサイトについて">&#xf05a</div>
   </div>
@@ -22,7 +22,7 @@
   <!-- Map Page (Map and Prefecture List) -->
   <div id="map-page" class="map-page" style="opacity: 0%">
     <object id="japan-map" type="image/svg+xml" data="img/japan.svg" class="japan-map"></object>
-    <div id="main-title" class="main-title">JAPAN — 日本</div>
+    <div id="main-title" class="main-title"></div>
     <div id="pref-list" class="pref-list"></div>
   </div>
 
@@ -34,18 +34,18 @@
         <object id="japan-map-mini" type="image/svg+xml" data="img/japan.svg" class="mini-map opacity-transition"></object>
         <div class="flex-column regular-text pref-info-text">
           <div>
-            <div style="font-weight: bold;">Dates visited — 訪れた日付</div>
+            <div id="dates-title" class="bold-text">Dates visited — 訪れた日付</div>
             <div id="pref-dates"></div>
           </div>
           <div>
-            <div style="font-weight: bold;">Cities and significant places visited — 訪れた都市・名所</div>
+            <div id="cities-title" class="bold-text">Cities and significant places visited — 訪れた都市・名所</div>
             <div id="pref-cities"></div>
           </div>
           <div>
-            <div style="font-weight: bold;">Description etc. — 説明など</div>
+            <div id="description-title" class="bold-text">Description etc. — 説明など</div>
             <div id="pref-desc">
-              <div id="pred-desc-eng"></div>
-              <div id="pred-desc-jp"></div>
+              <div id="pref-desc-eng"></div>
+              <div id="pref-desc-jp"></div>
             </div>
           </div>
         </div>
@@ -70,14 +70,14 @@
       <div id="info-popup-close-btn" class="large-icon close-button">&#xf00d</div>
       <div id="site-info" class="flex-column" style="overflow-y: auto; opacity: 0%; display: none; gap: 15px; transition: opacity 0.5s ease-in-out;">
         <div class="regular-text">
-          <p style="font-weight: bold;">About this site</p>
+          <p class="bold-text">About this site</p>
           <p>I was in Japan on exchange in September 2022 - April 2023. This site contains the highlights of the
             sidetrips
             I made. For privacy reasons, I do not plan on uploading pictures of myself or my friends to this page.</p>
           <p>Design, coding, and photography: Katherine (Katie) Lu</p>
         </div>
         <div class="regular-text">
-          <p style="font-weight: bold;">このサイトについて</p>
+          <p class="bold-text">このサイトについて</p>
           <p>留学のため、2022年9月から2023年4月まで日本に滞在しました。このウェブページでは 皆さんに私の旅行のハイライトを紹介したいと思います。プライバシーのため、自分と知り合いの写真を掲載しません。</p>
           <p>デザイン・プログラミング・写真：ルー・キャサリン（ケイティー）</p>
         </div>
