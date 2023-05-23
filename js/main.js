@@ -520,7 +520,7 @@ function showPrefInfo(isForced) {
 		} else {
 			document.getElementById("top-drawer").style.position = "sticky";
 			document.getElementById("top-drawer").style.top = document.getElementById("top-bar").getBoundingClientRect().height;
-			//document.getElementById("pref-info-bg").classList.remove("transparent");
+			document.getElementById("pref-info-bg").classList.remove("transparent");
 		}
 	}
 	spinArrow();
@@ -537,6 +537,7 @@ function hidePrefInfo(isForced) {
 			});
 		}
 	}
+	document.getElementById("pref-info-bg").style.visibility = "hidden";
 	document.getElementById("pref-info-bg").classList.add("transparent");
 	document.getElementById("top-drawer").style.position = "relative";
 	document.getElementById("top-drawer").style.top = "0";
@@ -582,9 +583,11 @@ function changePicInfoVisibility() {
 	if (isPicInfoVisible){
 		element.style.display = "flex";
 		setTimeout(() => {
+			element.style.bottom = "0";
 			element.style.marginRight = "0px";
 		}, 10);
 	} else {
+		element.style.bottom = "-" + element.getBoundingClientRect().height + "px";
 		element.style.marginRight = "-" + element.getBoundingClientRect().width + "px";
 		setTimeout(() => {
 			element.style.display = "none";
@@ -623,6 +626,7 @@ function changeGalleryVisibility(isVisible) {
 	document.getElementById("pref-info").style.display = isGalleryVisible ? "flex" : "none";
 	isPrefInfoVisible = isGalleryVisible;
 	if (!isGalleryVisible) {
+		document.getElementById("map-page").classList.add("transparent");
 		openLoader();
 		setTimeout(() => {
 			createMap(data);
