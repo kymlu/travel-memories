@@ -93,35 +93,37 @@ function createPrefList(data) {
 // Map
 function createMap(data) {
 	const svgObj = document.getElementById("japan-map");
-	const svgDoc = svgObj.contentDocument;
+	svgObj.data = "img/japan.svg";
+	svgObj.addEventListener("load", function () {
+		const svgDoc = svgObj.contentDocument;
+		const prefList = data.flatMap(region => region.prefectures);
+		prefList.forEach(pref => {
+			const prefImg = svgDoc.getElementById(pref.english_name.toLowerCase() + "-img");
+			if (pref.visited) {
+				// CSS won't work on documents
+				prefImg.setAttribute("fill", appColor);
+				prefImg.setAttribute("stroke", "none");
+				prefImg.setAttribute("cursor", "pointer");
+				prefImg.setAttribute("transition", "opacity 0.3 ease-in-out");
+				prefImg.addEventListener("click", function () {
+					selectPref(pref);
+					document.getElementById("main-title").innerHTML = getBilingualText(pref.english_name, pref.japanese_name);
+				});
+				prefImg.addEventListener("mouseover", () => {
+					prefImg.setAttribute("opacity", "50%");
+					hoveredRegion = pref.english_name;
+					document.getElementById("main-title").innerHTML = getBilingualText(pref.english_name, pref.japanese_name);
+				});
 
-	const prefList = data.flatMap(region => region.prefectures);
-	prefList.forEach(pref => {
-		const prefImg = svgDoc.getElementById(pref.english_name.toLowerCase() + "-img");
-		if (pref.visited) {
-			// CSS won't work on documents
-			prefImg.setAttribute("fill", appColor);
-			prefImg.setAttribute("stroke", "none");
-			prefImg.setAttribute("cursor", "pointer");
-			prefImg.setAttribute("transition", "opacity 0.3 ease-in-out");
-			prefImg.addEventListener("click", function () {
-				selectPref(pref);
-				document.getElementById("main-title").innerHTML = getBilingualText(pref.english_name, pref.japanese_name);
-			});
-			prefImg.addEventListener("mouseover", () => {
-				prefImg.setAttribute("opacity", "50%");
-				hoveredRegion = pref.english_name;
-				document.getElementById("main-title").innerHTML = getBilingualText(pref.english_name, pref.japanese_name);
-			});
-
-			prefImg.addEventListener("mouseout", () => {
-				prefImg.setAttribute("opacity", "100%");
-				hoveredRegion = "";
-				document.getElementById("main-title").innerHTML = japanTitle;
-			});
-		} else {
-			prefImg.setAttribute("fill", "lightgray");
-		}
+				prefImg.addEventListener("mouseout", () => {
+					prefImg.setAttribute("opacity", "100%");
+					hoveredRegion = "";
+					document.getElementById("main-title").innerHTML = japanTitle;
+				});
+			} else {
+				prefImg.setAttribute("fill", "lightgray");
+			}
+		});
 	});
 }
 
@@ -184,6 +186,7 @@ function createTemplates(){
 	polaroid = document.createElement("div");
 	polaroid.classList.add("polaroid-frame");
 	polaroid.classList.add("opacity-transition");
+	polaroid.classList.add("transparent");
 	
 	polaroidImgFrame = document.createElement("div");
 	polaroidImgFrame.classList.add("polaroid-img");
@@ -202,7 +205,7 @@ function createTemplates(){
 
 function editMiniMap(){
 	const svgObj = document.getElementById("japan-map-mini");
-	svgObj.style.opacity = "0%";
+	svgObj.classList.add("transparent");
 	svgObj.data = "img/japan.svg";
 	svgObj.addEventListener("load", function () {
 		const svgDoc = svgObj.contentDocument;
@@ -221,7 +224,7 @@ function editMiniMap(){
 			);
 			const japanImg = svgDoc.getElementById("japan-img");
 			japanImg.setAttribute("viewBox", selectedPref.viewbox);
-			svgObj.style.opacity = "100%";
+			svgObj.classList.remove("transparent");
 	}
 	});
 }
@@ -236,7 +239,7 @@ function lazyLoad(target) {
 				const img = thisPolaroid.querySelector(".polaroid-img").getElementsByTagName("img")[0];
 				const src = img.getAttribute("img-src");
 				img.setAttribute("src", src);
-				thisPolaroid.style.opacity = "100%";
+				thisPolaroid.classList.remove("transparent");
 				observer.disconnect();
 			}
 		});
@@ -401,19 +404,19 @@ function setFullscreenPicture(){
 function openFullscreen(){
 	isFullscreen = true;
 	document.getElementById("fullscreen").style.visibility = "visible";
-	document.getElementById("fullscreen").style.opacity = "100%";
-	document.getElementById("fullscreen-bg").style.opacity = "30%";
+	document.getElementById("fullscreen").classList.remove("transparent");
+	document.getElementById("fullscreen-bg").classList.remove("transparent");
 }
 
 function closeFullscreen(forceClose){
 	isFullscreen = false;
 	if(forceClose){
 		document.getElementById("fullscreen").style.visibility = "hidden";
-		document.getElementById("fullscreen").style.opacity = "0%";
-		document.getElementById("fullscreen-bg").style.opacity = "0%";
+		document.getElementById("fullscreen").classList.add("transparent");
+		document.getElementById("fullscreen-bg").classList.add("transparent");
 	} else {
-		document.getElementById("fullscreen").style.opacity = "0%";
-		document.getElementById("fullscreen-bg").style.opacity = "0%";
+		document.getElementById("fullscreen").classList.add("transparent");
+		document.getElementById("fullscreen-bg").classList.add("transparent");
 		setTimeout(() => {
 			document.getElementById("fullscreen").style.visibility = "hidden";
 		}, 500);
@@ -459,13 +462,13 @@ function moveTouch(e) {
 // Popup
 function openInfoPopup(){
 	isPopupVisible = true;
-	document.getElementById("site-info-popup").style.opacity = "100%";
+	document.getElementById("site-info-popup").classList.remove("transparent");
 	document.getElementById("info-popup").style.visibility = "visible";
-	document.getElementById("popup-bg").style.opacity = "30%";
+	document.getElementById("popup-bg").classList.remove("transparent");
 	document.getElementById("site-info-popup").classList.add("popup-width");
 	setTimeout(() => {
 		document.getElementById("site-info").style.display = "block";
-		document.getElementById("site-info").style.opacity = "100%";
+		document.getElementById("site-info").classList.remove("transparent");
 	document.getElementById("site-info-popup").classList.add("popup-height");
 	}, 500);
 }
@@ -473,22 +476,22 @@ function openInfoPopup(){
 function closeInfoPopup(forceClose){
 	if(forceClose){
 		document.getElementById("info-popup").style.visibility = "hidden";
-		document.getElementById("site-info").style.opacity = "0%";
+		document.getElementById("site-info").classList.add("transparent");
 		document.getElementById("site-info-popup").classList.remove("popup-height");
 		document.getElementById("site-info").style.display = "none";
 		document.getElementById("site-info-popup").classList.remove("popup-width");
-		document.getElementById("site-info-popup").style.opacity = "0%";
-		document.getElementById("popup-bg").style.opacity = "0%";
+		document.getElementById("site-info-popup").classList.add("transparent");
+		document.getElementById("popup-bg").classList.add("transparent");
 	} else {
-		document.getElementById("site-info").style.opacity = "0%";
+		document.getElementById("site-info").classList.add("transparent");
 		setTimeout(() => {
 			document.getElementById("site-info-popup").classList.remove("popup-height");
 			setTimeout(() => {
 				document.getElementById("site-info").style.display = "none";
 				document.getElementById("site-info-popup").classList.remove("popup-width");
 				setTimeout(() => {
-					document.getElementById("site-info-popup").style.opacity = "0%";
-					document.getElementById("popup-bg").style.opacity = "0%";
+					document.getElementById("site-info-popup").classList.add("transparent");
+					document.getElementById("popup-bg").classList.add("transparent");
 					setTimeout(() => {
 						document.getElementById("info-popup").style.visibility = "hidden";
 					}, 500);
@@ -505,7 +508,7 @@ function spinArrow() {
 }
 
 function showPrefInfo(isForced) {
-	document.getElementById("pref-info-bg").style.opacity = "30%";
+	document.getElementById("pref-info-bg").classList.remove("transparent");
 	document.getElementById("pref-info-bg").style.visibility = "visible";
 	if (isForced) {
 		if (document.body.scrollTop < document.getElementById("top-drawer").getBoundingClientRect().height) {
@@ -517,7 +520,7 @@ function showPrefInfo(isForced) {
 		} else {
 			document.getElementById("top-drawer").style.position = "sticky";
 			document.getElementById("top-drawer").style.top = document.getElementById("top-bar").getBoundingClientRect().height;
-			document.getElementById("pref-info-bg").style.opacity = "30%";
+			//document.getElementById("pref-info-bg").classList.remove("transparent");
 		}
 	}
 	spinArrow();
@@ -534,7 +537,7 @@ function hidePrefInfo(isForced) {
 			});
 		}
 	}
-	document.getElementById("pref-info-bg").style.opacity = "0%";
+	document.getElementById("pref-info-bg").classList.add("transparent");
 	document.getElementById("top-drawer").style.position = "relative";
 	document.getElementById("top-drawer").style.top = "0";
 	spinArrow();
@@ -590,9 +593,9 @@ function changePicInfoVisibility() {
 }
 
 function openGallery(){
-	document.getElementById("top-bar").style.opacity = "100%";
-	document.getElementById("map-page").style.opacity = "100%";
-	document.getElementById("loading-screen").style.opacity = "0%";
+	document.getElementById("top-bar").classList.remove("transparent");
+	document.getElementById("map-page").classList.remove("transparent");
+	document.getElementById("loading-screen").classList.add("transparent");
 	setTimeout(() => {
 		document.body.style.overflowY = "auto";
 		document.getElementById("loading-screen").style.visibility = "hidden";
@@ -616,9 +619,9 @@ function changeGalleryVisibility(isVisible) {
 	document.getElementById("pref-name-arrow").style.display = isGalleryVisible ? "block" : "none";
 	document.getElementById("top-drawer").style.display = isGalleryVisible ? "block" : "none";
 	document.getElementById("pref-info-bg").style.visibility = isGalleryVisible ? "visible" : "hidden";
-	document.getElementById("pref-info-bg").style.opacity = "30%";
+	document.getElementById("pref-info-bg").classList.remove("transparent");
 	document.getElementById("pref-info").style.display = isGalleryVisible ? "flex" : "none";
-	isPrefInfoVisible = isGalleryVisible ? true : false;
+	isPrefInfoVisible = isGalleryVisible;
 	if (!isGalleryVisible) {
 		openLoader();
 		setTimeout(() => {
@@ -631,15 +634,15 @@ function changeGalleryVisibility(isVisible) {
 }
 
 function openLoader(){
-	document.getElementById("top-bar").style.opacity = "0%";
-	document.getElementById("map-page").style.opacity = "0%";
+	document.getElementById("top-bar").classList.add("transparent");
+	document.getElementById("map-page").classList.add("transparent");
 	document.getElementById("loader-btn").style.display = "none";
 	document.getElementById("loading-screen").style.visibility = "visible";
-	document.getElementById("loading-screen").style.opacity = "100%";
+	document.getElementById("loading-screen").classList.remove("transparent");
 	for (let i = 1; i <= 9; i++) {
 		document.getElementById("load" + i).style.animationIterationCount = "infinite";
 	}
-	document.getElementById("map-page").style.opacity = "0%";
+	document.getElementById("map-page").classList.add("transparent");
 }
 
 function fetchData() {
@@ -677,7 +680,7 @@ function fetchData() {
 					document.getElementById("load8").addEventListener("animationend", function () {
 						document.getElementById("loader-btn").style.display = "block";
 						setTimeout(() => {
-							document.getElementById("loader-btn").style.opacity = "100%";
+							document.getElementById("loader-btn").classList.remove("transparent");
 						}, 10);
 					});
 				}, 100);
@@ -749,7 +752,7 @@ function setupSite(){
 function showDataLoadError(){
 	setTimeout(() => {
 		document.getElementById("error-btn").style.display = "block";
-		document.getElementById("error-btn").style.opacity = "100%";
+		document.getElementById("error-btn").classList.remove("transparent");
 		for (let i = 1; i <= 9; i++) {
 			document.getElementById("load" + i).style.animationPlayState = "paused";
 		}

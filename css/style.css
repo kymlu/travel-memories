@@ -119,11 +119,11 @@ body {
 }
 
 .arrow-up {
-  transform: scaleY(1);
+  transform: scaleY(-1);
 }
 
 .arrow-down {
-  transform: scaleY(-1);
+  transform: scaleY(1);
 }
 
 .slider {
@@ -326,7 +326,6 @@ body {
   box-shadow: inset 8px 8px 20px FloralWhite, 8px 8px 20px #00000050;
   cursor: pointer;
   border-radius: 10px;
-  opacity: 0%;
 }
 
 .polaroid-img {
@@ -579,7 +578,6 @@ body {
   font-weight: normal;
   text-align: start;
   padding: 50px;
-  opacity: 0%;
   transition: width 0.5s ease-in-out, height 0.5s ease-in-out, opacity 0.5s ease-in-out;
 }
 
@@ -590,9 +588,15 @@ body {
  }
 }
 
+.popup-content{
+  overflow-y: auto;
+  display: none;
+  gap: 15px;
+}
+
 .popup-bg {
   background-color: #000000;
-  opacity: 0%;
+  opacity: 30%;
   width: 100vw;
   height: 100vh;
   display: flex;
@@ -682,6 +686,10 @@ body {
 }
 
 /* Other */
+.transparent {
+  opacity: 0%;
+}
+
 .opacity-transition {
   transition: opacity 0.5s ease-in-out;
 }
@@ -713,7 +721,7 @@ body {
 
 .loader {
   width: 200px;
-  /* animation: spin 3.5s linear infinite; */
+  /* animation: spin 3.5s linear infinite;*/
   margin: auto auto;
   transform: rotate(0deg);
   display: flex;
@@ -721,8 +729,8 @@ body {
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% { transform: rotate(0deg);}
+  100% { transform: rotate(360deg);}
 }
 
 .loader-dot {
@@ -735,15 +743,15 @@ body {
 @keyframes loader-grow-shrink {
   0% { 
     width: 0px;
-    height: 0px; 
+    height: 0px;
   }
   50% { 
     width: 25px;
-    height: 25px; 
+    height: 25px;
   }
   100% { 
     width: 0px;
-    height: 0px; 
+    height: 0px;
   }
 }
 
@@ -752,6 +760,13 @@ body {
   color: white;
   font-weight: bold;
   cursor: default;
+}
+
+.loader-btn {
+  display: none;
+  cursor: pointer;
+  height: 100%;
+  width: 100%
 }
 
 @media only screen and (orientation: landscape) {

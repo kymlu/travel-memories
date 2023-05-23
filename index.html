@@ -8,7 +8,7 @@
 
 <body class="page-bg">
   <!-- Top bar -->
-  <div id="top-bar" class="top-bar" style="z-index: 5000; opacity: 0%;">
+  <div id="top-bar" class="top-bar transparent" style="z-index: 5000;">
     <div id="map-btn" class="text-main-color large-icon"
       style="display: none; z-index: 5001;" title="Return to map — 地図に戻る">&#xf279</div>
     <div id="pref-title" class="pref-title" title="Toggle prefecture info — 都道府県の情報をトグル">
@@ -20,15 +20,15 @@
   </div>
 
   <!-- Map Page (Map and Prefecture List) -->
-  <div id="map-page" class="map-page" style="opacity: 0%">
-    <object id="japan-map" type="image/svg+xml" data="img/japan.svg" class="japan-map"></object>
+  <div id="map-page" class="map-page transparent">
+    <object id="japan-map" type="image/svg+xml" class="japan-map"></object>
     <div id="main-title" class="main-title"></div>
     <div id="pref-list" class="pref-list"></div>
   </div>
 
   <!-- Prefecture Info -->
   <div id="top-drawer" style="display:none; z-index: 4999; position: relative; scroll-snap-align: start;">
-    <div id="pref-info-bg" class="popup-bg opacity-transition portrait-only" style="opacity: 30%"></div>
+    <div id="pref-info-bg" class="popup-bg opacity-transition portrait-only transparent"></div>
     <div id="pref-info" class="slider">
       <div class="pref-info">
         <object id="japan-map-mini" type="image/svg+xml" data="img/japan.svg" class="mini-map opacity-transition"></object>
@@ -65,10 +65,10 @@
 
   <!-- Info Popup -->
   <div id="info-popup" class="hidden-popup" style="z-index: 10000;">
-    <div id="popup-bg" class="popup-bg opacity-transition"></div>
-    <div id="site-info-popup" class="popup centered">
+    <div id="popup-bg" class="popup-bg opacity-transition transparent"></div>
+    <div id="site-info-popup" class="popup centered transparent">
       <div id="info-popup-close-btn" class="large-icon close-button">&#xf00d</div>
-      <div id="site-info" class="flex-column" style="overflow-y: auto; opacity: 0%; display: none; gap: 15px; transition: opacity 0.5s ease-in-out;">
+      <div id="site-info" class="flex-column opacity-transition popup-content transparent">
         <div class="regular-text">
           <p class="bold-text">About this site</p>
           <p>I was in Japan on exchange in September 2022 - April 2023. This site contains the highlights of the
@@ -86,11 +86,11 @@
   </div>
 
   <!-- Fullscreen Picture -->
-  <div id="fullscreen" class="hidden-popup opacity-transition" style="z-index: 6000; opacity: 0%;">
+  <div id="fullscreen" class="hidden-popup opacity-transition transparent" style="z-index: 6000;">
     <div id="fullscreen2" class="centered" style="display: flex; width: 100%; height: 100%;">
       <div style="position: relative; height: 100%; flex-grow: 1">
-          <div id="fullscreen-bg" class="popup-bg" style="opacity: 30%; z-index: 0;"></div>
-          <div class="centered" style="display: flex; align-items: center; position: absolute;">
+        <div id="fullscreen-bg" class="popup-bg transparent" style="z-index: 0;"></div>
+        <div class="centered" style="display: flex; align-items: center; position: absolute;">
           <div id="left-arrow" class="large-icon fullscreen-arrow">&#xf0d9</div>
           <div id="fullscreen-frame" class="fullscreen-pic">
             <img id="fullscreen-pic" style="border-radius: 15px; max-height: 70vh; max-width: 50vw;"
@@ -98,7 +98,8 @@
           </div>
           <div id="right-arrow" class="large-icon fullscreen-arrow">&#xf0da</div>
         </div>
-        <div id="pic-info-btn" class="large-icon" style="position: absolute; top: 0px; right: 0px; margin: 10px; color: white;">&#xf05a</div>
+        <div id="pic-info-btn" class="large-icon"
+          style="position: absolute; top: 0px; right: 0px; margin: 10px; color: white;">&#xf05a</div>
       </div>
       <div id="pic-info" class="fullscreen-caption" title="See picture information — 写真の情報を見る" style="z-index: 1;">
         <div id="fullscreen-eng-date" class="caption-text">date</div>
@@ -124,7 +125,7 @@
       <div id="load7" class="loader-dot" style="transform: rotate(180deg) translate(80px)rotate(180deg); animation-delay: -0.5s;"></div>
       <div id="load8" class="loader-dot" style="transform: rotate(225deg) translate(80px)rotate(225deg); animation-delay: -0.25s;"></div>
       <div id="load9" class="loader-dot" style="transform: rotate(270deg) translate(80px)rotate(270deg); animation-delay: 0s;"></div>
-      <div id="loader-btn" class="centered opacity-transition" style="opacity: 0%; display: none; cursor: pointer; height: 100%; width: 100%" onclick="openGallery()">
+      <div id="loader-btn" class="centered opacity-transition loader-btn transparent">
         <img id="sakura" src="img/sakura.svg" class="centered" style="position: absolute; width: 85%;">
         <div id="loader-text" class="centered loader-text">
           <p style="margin: 0.5em">Start</p>
