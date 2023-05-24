@@ -50,7 +50,9 @@
           </div>
         </div>
       </div>
-      <hr id="pref-info-handle" class="pref-info-handle" />
+      <div id="pref-info-handle">
+        <hr class="drawer-handle" />
+      </div>
     </div>
   </div>
 
@@ -87,21 +89,21 @@
 
   <!-- Fullscreen Picture -->
   <div id="fullscreen" class="centered hidden-popup opacity-transition transparent fullscreen-container" style="z-index: 6000;">
-    <div style="position: relative; height: 100%; flex-grow: 1">
+    <div id="fullscreen-gallery" style="position: relative; height: 100%; flex-grow: 1">
       <div id="fullscreen-bg" class="popup-bg opacity-transition transparent" style="z-index: 0;"></div>
-      <div class="centered" style="display: flex; align-items: center; position: absolute;">
+      <div class="fullscreen-ctrl centered">
         <div id="left-arrow" class="large-icon fullscreen-arrow">&#xf0d9</div>
-        <div id="fullscreen-frame" class="fullscreen-pic">
-          <img id="fullscreen-pic" style="border-radius: 15px; max-height: 70vh; max-width: 50vw;"
-            src="img/BFD9CC0C-53AB-4F00-851A-AAB2D06A37A6.jpeg" />
+        <div id="fullscreen-frame" class="fullscreen-frame">
+          <img id="fullscreen-pic" class="fullscreen-pic" src="img/BFD9CC0C-53AB-4F00-851A-AAB2D06A37A6.jpeg" />
         </div>
         <div id="right-arrow" class="large-icon fullscreen-arrow">&#xf0da</div>
       </div>
-      <div id="pic-info-btn" class="large-icon"
-        style="position: absolute; top: 0px; right: 0px; margin: 10px; color: white;">&#xf05a</div>
+      <div id="pic-info-btn" class="large-icon pic-info-btn" title="See picture information — 写真の情報を見る">&#xf05a</div>
     </div>
-    <div id="pic-info" class="fullscreen-info" title="See picture information — 写真の情報を見る" style="z-index: 1;">
-      <hr id="pref-info-handle" class="pref-info-handle" />
+    <div id="pic-info" class="pic-info" style="z-index: 1;">
+      <div id="pic-info-handle" style="align-self: center;">
+        <hr class="drawer-handle"/>
+      </div>
       <div id="fullscreen-eng-date" class="caption-text"></div>
       <div id="fullscreen-eng-city" class="caption-text"></div>
       <div id="fullscreen-eng-caption" class="caption-text"></div>
