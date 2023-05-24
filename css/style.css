@@ -643,6 +643,14 @@ body {
   flex-direction: row;
 }
 
+.fullscreen-gallery {
+  position: relative;
+  height: 100%;
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+}
+
 @media only screen and (orientation: portrait) {
   .fullscreen-container {
     flex-direction: column;
@@ -676,7 +684,7 @@ body {
   }
 }
 
-.fullcreen-pic {
+.fullscreen-pic {
   border-radius: 15px;
   max-height: 70vh;
   max-width: 50vw;
@@ -818,7 +826,6 @@ body {
   text-align: center;
   color: white;
   font-weight: bold;
-  cursor: default;
 }
 
 .loader-btn {

@@ -31,7 +31,7 @@ const defaultTimeout = 500;
 let initialX = null;
 let initialY = null;
 let initialX2 = null;
-let initialY2 = null;
+let initialYHandle = null;
 
 
 const monthNames = ["January", "February", "March", "April", "May", "June",
@@ -439,26 +439,26 @@ function closeFullscreen(forceClose) {
 function startHandleDrag(e, id) {
 	isHandleGrabbed = true;
 	grabbedHandleId = id;
-	initialY2 = e.touches[0].clientY;
+	initialYHandle = e.touches[0].clientY;
 };
 function endHandleDrag(e) {
 	if (isHandleGrabbed) {
 		isHandleGrabbed = false;
 		var currentY = e.changedTouches[0].clientY;
-		if (currentY > initialY2) {
+		if (currentY > initialYHandle) {
 			if (grabbedHandleId == "pic-info-handle") {
 				hidePicInfo();
 			} else if (grabbedHandleId == "pref-info-handle") {
 				showPrefInfo(true);
 			}
-		} else if (currentY < initialY2) {
+		} else if (currentY < initialYHandle) {
 			if (grabbedHandleId == "pic-info-handle") {
 				showPicInfo();
 			} else if (grabbedHandleId == "pref-info-handle") {
 				hidePrefInfo(true);
 			}
 		}
-		initialY2 = null;
+		initialYHandle = null;
 	}
 };
 
