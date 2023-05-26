@@ -49,18 +49,18 @@ function getBilingualText(english, japanese) {
 }
 
 function getEnglishDate(date, isFullDate) {
-	return monthNames[date.getMonth()] + " " + date.getDate() + ", " + date.getFullYear() + (isFullDate ? " " + date.getHours().toString().padStart(2, "0") + ":" + date.getMinutes().toString().padStart(2, "0") : "");
+	return monthNames[date.getMonth()] + " " + date.getDate() + ", " + date.getFullYear() + (isFullDate ? " " + date.getHours().toString().padStart(2, "0") + ":" + date.getMinutes().toString().padStart(2, "0") + ":" + date.getSeconds().toString().padStart(2, "0"): "");
 }
 
 function getJapaneseDate(date, isFullDate) {
-	return date.getFullYear() + "年" + (date.getMonth() + 1) + "月" + date.getDate() + "日" + (isFullDate ? " " + date.getHours().toString().padStart(2, "0") + ":" + date.getMinutes().toString().padStart(2, "0") : "");
+	return date.getFullYear() + "年" + (date.getMonth() + 1) + "月" + date.getDate() + "日" + (isFullDate ? " " + date.getHours().toString().padStart(2, "0") + ":" + date.getMinutes().toString().padStart(2, "0") + ":" + date.getSeconds().toString().padStart(2, "0") : "");
 }
 
 // Prefecture List
 
 function createPrefList(data) {
 	const prefList = document.getElementById("pref-list");
-	prefList.innerHTML = "";
+	prefList.replaceChildren();
 
 	const regionGroup = document.createElement("div");
 	regionGroup.classList.add("region-group");
@@ -256,12 +256,12 @@ function lazyLoad(target) {
 function createGallery() {
 	// clear existing
 	let gallery = document.getElementById("gallery");
-	gallery.innerHTML = "";
+	gallery.replaceChildren();
 	let isLeft = true;
 	let leftColumn = document.getElementById("left-column");
-	leftColumn.innerHTML = "";
+	leftColumn.replaceChildren();
 	let rightColumn = document.getElementById("right-column");
-	rightColumn.innerHTML = "";
+	rightColumn.replaceChildren();
 
 	// add pictures
 	if (selectedPref.image_list.length > 0) {
@@ -405,8 +405,8 @@ function setFullscreenPicture() {
 	document.getElementById("fullscreen-eng-date").innerHTML = getEnglishDate(date, true);
 	document.getElementById("fullscreen-jp-date").innerHTML = getJapaneseDate(date, true);
 	let area = selectedPref.areas.find(function (area) { return area.id == selectedPicture.city });
-	document.getElementById("fullscreen-eng-city").innerHTML = area.english_name;
-	document.getElementById("fullscreen-jp-city").innerHTML = area.japanese_name;
+	document.getElementById("fullscreen-eng-city").innerHTML = (selectedPicture.location_english ? (selectedPicture.location_english + ", ") : "") + area.english_name;
+	document.getElementById("fullscreen-jp-city").innerHTML = area.japanese_name + (selectedPicture.location_japanese ? ("、" + selectedPicture.location_japanese + "") : "");
 	document.getElementById("fullscreen-eng-caption").innerHTML = selectedPicture.description_english;
 	document.getElementById("fullscreen-jp-caption").innerHTML = selectedPicture.description_japanese;
 }
@@ -835,6 +835,7 @@ function showDataLoadError() {
 
 function main() {
 	now = new Date();
+	document.body.style.overflowY = "auto";
 	window.scrollTo(0, 0);
 	setupSite();
 	fetchData();
