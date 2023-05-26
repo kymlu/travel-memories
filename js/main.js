@@ -314,7 +314,7 @@ function createGallery() {
 				}
 			}
 
-			polImg.setAttribute("img-src", img.link);
+			polImg.setAttribute("img-src", img.link ?? "img/" + selectedPref.english_name.toLowerCase() + "/" + img.file_name);
 			lazyLoad(pol);
 
 			// add to screen
@@ -400,7 +400,7 @@ function changeFullscreenPicture(isForward) {
 }
 
 function setFullscreenPicture() {
-	document.getElementById("fullscreen-pic").src = selectedPicture.link;
+	document.getElementById("fullscreen-pic").src = selectedPicture.link ?? "img/" + selectedPref.english_name.toLowerCase() + "/" + selectedPicture.file_name;
 	let date = new Date(selectedPicture.date);
 	document.getElementById("fullscreen-eng-date").innerHTML = getEnglishDate(date, true);
 	document.getElementById("fullscreen-jp-date").innerHTML = getJapaneseDate(date, true);
@@ -766,6 +766,10 @@ function setupSite() {
 	document.getElementById("dates-title").innerHTML = getBilingualText("Dates visited", "訪れた日付");
 	document.getElementById("cities-title").innerHTML = getBilingualText("Cities and significant places visited", "訪れた都市・名所");
 	document.getElementById("description-title").innerHTML = getBilingualText("Description etc.", "説明など");
+	document.getElementById("pic-info-btn").title = getBilingualText("See picture information", "写真の情報を見る");
+	document.getElementById("map-btn").title = getBilingualText("Return to map", "地図に戻る");
+	document.getElementById("pref-title").title = getBilingualText("Toggle prefecture info", "都道府県の情報をトグル");
+	document.getElementById("info-btn").title = getBilingualText("About the site", "このサイトについて");
 
 	document.getElementById("loader-btn").addEventListener("click", function () {
 		setTimeout(() => {
