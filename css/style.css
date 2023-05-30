@@ -686,7 +686,7 @@ body {
 
 .fullscreen-pic {
   border-radius: 15px;
-  max-height: 70vh;
+  max-height: 80vh;
   max-width: 50vw;
 }
 
@@ -743,6 +743,12 @@ body {
   }
 }
 
+.search-icon {
+  font-family: FontAwesome;
+  color: var(--main-color);
+  cursor: pointer;
+}
+
 .divider {
   height: 2px;
   width: 100%;
@@ -772,14 +778,13 @@ body {
   margin: 0px;
   padding: 0px;
   flex-direction: column;
-  overflow: hidden;
   scroll-snap-type: y mandatory;
   scroll-snap-stop: always;
 }
 
 .loading-screen {
   background-color: white;
-  position: absolute;
+  position: fixed;
   width: 100%;
   height: 100%;
   overflow: hidden;

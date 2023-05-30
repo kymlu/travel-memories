@@ -25,6 +25,7 @@ let japanTitle = null;
 let now = null;
 let isHandleGrabbed = false;
 let grabbedHandleId = null;
+let searchTerm = ["", ""];
 
 const defaultTimeout = 500;
 
@@ -32,7 +33,6 @@ let initialX = null;
 let initialY = null;
 let initialX2 = null;
 let initialYHandle = null;
-
 
 const monthNames = ["January", "February", "March", "April", "May", "June",
 	"July", "August", "September", "October", "November", "December"
@@ -212,7 +212,6 @@ function createTemplates() {
 function editMiniMap() {
 	const svgObj = document.getElementById("japan-map-mini");
 	svgObj.classList.add("transparent");
-	svgObj.data = "img/japan.svg";
 	svgObj.addEventListener("load", function () {
 		const svgDoc = svgObj.contentDocument;
 		if (svgDoc) {
@@ -233,6 +232,7 @@ function editMiniMap() {
 			svgObj.classList.remove("transparent");
 		}
 	});
+	svgObj.data = "img/japan.svg";
 }
 
 // Based on: https://www.codepel.com/vanilla-javascript/javascript-image-loaded/
@@ -399,14 +399,36 @@ function changeFullscreenPicture(isForward) {
 	setFullscreenPicture();
 }
 
+function search(searchTerm) {
+	window.open("https://www.google.com/search?q=" + searchTerm);
+}
+
+function searchEnglish() {
+	search(searchTerm[0]);
+}
+
+function searchJapanese() {
+	search(searchTerm[1])
+}
+
 function setFullscreenPicture() {
+	document.getElementById("search-eng").removeEventListener("click", searchEnglish);
+	document.getElementById("search-jp").removeEventListener("click", searchJapanese);
+
 	document.getElementById("fullscreen-pic").src = selectedPicture.link ?? "img/" + selectedPref.english_name.toLowerCase() + "/" + selectedPicture.file_name;
+
 	let date = new Date(selectedPicture.date);
 	document.getElementById("fullscreen-eng-date").innerHTML = getEnglishDate(date, true);
 	document.getElementById("fullscreen-jp-date").innerHTML = getJapaneseDate(date, true);
+
 	let area = selectedPref.areas.find(function (area) { return area.id == selectedPicture.city });
-	document.getElementById("fullscreen-eng-city").innerHTML = (selectedPicture.location_english ? (selectedPicture.location_english + ", ") : "") + area.english_name;
-	document.getElementById("fullscreen-jp-city").innerHTML = area.japanese_name + (selectedPicture.location_japanese ? ("、" + selectedPicture.location_japanese + "") : "");
+	searchTerm[0] = (selectedPicture.location_english ? (selectedPicture.location_english + ", ") : "") + area.english_name;
+	document.getElementById("fullscreen-eng-city").innerHTML = searchTerm[0];
+	document.getElementById("search-eng").addEventListener("click", searchEnglish);
+	searchTerm[1] = area.japanese_name + (selectedPicture.location_japanese ? ("、" + selectedPicture.location_japanese + "") : "");
+	document.getElementById("fullscreen-jp-city").innerHTML = searchTerm[1];
+	document.getElementById("search-jp").addEventListener("click", searchJapanese);
+
 	document.getElementById("fullscreen-eng-caption").innerHTML = selectedPicture.description_english;
 	document.getElementById("fullscreen-jp-caption").innerHTML = selectedPicture.description_japanese;
 }
@@ -651,6 +673,7 @@ function changePicInfoVisibility(isVisible) {
 }
 
 function openGallery() {
+	window.scrollTo(0, 0);
 	document.getElementById("top-bar").classList.remove("transparent");
 	document.getElementById("map-page").classList.remove("transparent");
 	document.getElementById("loading-screen").classList.add("transparent");
@@ -835,7 +858,6 @@ function showDataLoadError() {
 
 function main() {
 	now = new Date();
-	document.body.style.overflowY = "auto";
 	window.scrollTo(0, 0);
 	setupSite();
 	fetchData();

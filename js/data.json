@@ -1003,7 +1003,7 @@
         "description_japanese": "3回名古屋駅で降りたけど、毎回は昼ご飯のためだけだった。",
         "image_list": [
           {
-            "file_name": "IMG_8424.JPEG",
+            "file_name": "IMG_8424.jpeg",
             "date": "2023-02-09T02:46:21.000Z",
             "offset": "+09:00",
             "city": "nagoya",
@@ -1018,7 +1018,7 @@
             "iso": 32
           },
           {
-            "file_name": "IMG_8425.JPEG",
+            "file_name": "IMG_8425.jpeg",
             "date": "2023-02-09T03:02:36.000Z",
             "offset": "+09:00",
             "city": "nagoya",
@@ -1033,7 +1033,7 @@
             "iso": 80
           },
           {
-            "file_name": "IMG_8722.JPEG",
+            "file_name": "IMG_8722.jpeg",
             "date": "2023-02-12T04:04:00.000Z",
             "offset": "+09:00",
             "city": "nagoya",
@@ -1048,7 +1048,7 @@
             "iso": 125
           },
           {
-            "file_name": "IMG_9273.JPEG",
+            "file_name": "IMG_9273.jpeg",
             "date": "2023-02-16T02:17:28.000Z",
             "offset": "+09:00",
             "city": "nagoya",
@@ -1084,7 +1084,7 @@
           {
             "id": "hikone",
             "english_name": "Hikone",
-            "japanese_name": "高山市"
+            "japanese_name": "彦根市"
           },
           {
             "id": "aisho",
@@ -1465,7 +1465,7 @@
             "date": "2023-01-03T02:39:17.000Z",
             "offset": "+09:00",
             "city": "osaka",
-            "location_english": "Taiwan Breakfast wanna manna \u53F0\u7063\u65E9\u9910",
+            "location_english": "Taiwan Breakfast wanna manna",
             "location_japanese": "wanna manna",
             "description_english": "Taiwanese breakfast",
             "description_japanese": "\u5927\u962A\u884C\u3063\u3066\u3001\u53F0\u6E7E\u306E\u671D\u3054\u306F\u3093\u98DF\u3079\u3061\u3083\u3063\u305F\u3002",
@@ -1813,7 +1813,7 @@
             "offset": "+09:00",
             "city": "usj",
             "description_english": "I didn't expect to see Red Lobster here",
-            "description_japanese": "\u65E5\u672C\u3082\u30EC\u30C3\u30C9\u30FB\u30ED\u30D6\u30B9\u30BF\u30FC\u3042\u3063\u3066\u3073\u3063\u304F\u308A\u3057\u305F\u3002",
+            "description_japanese": "\u65E5\u672C\u3082\u30EC\u30C3\u30C9\u30FB\u30ED\u30D6\u30B9\u30BF\u30FC\u3042\u308B\u306A\u3093\u3066\u3073\u3063\u304F\u308A\u3057\u305F\u3002",
             "camera_model": "iPhone 12 mini",
             "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
             "exposure": "1/60",
@@ -3152,7 +3152,7 @@
             "location_english": "Kumamon Village",
             "location_japanese": "\u304F\u307E\u30E2\u30F3\u30D3\u30EC\u30C3\u30B8",
             "description_english": "Kumamon supremacy",
-            "description_japanese": "\u304F\u307E\u30E2\u30F3\u306F\u3082\u3046\u75B2\u308C\u305F\u30FC",
+            "description_japanese": "\u304F\u307E\u30E2\u30F3\u306F\u3082\u3046\u98FD\u304D\u305F\u30FC",
             "camera_model": "iPhone 12 mini",
             "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
             "exposure": "1/120",
