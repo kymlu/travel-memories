@@ -49,7 +49,7 @@ function getBilingualText(english, japanese) {
 }
 
 function getEnglishDate(date, isFullDate) {
-	return monthNames[date.getMonth()] + " " + date.getDate() + ", " + date.getFullYear() + (isFullDate ? " " + date.getHours().toString().padStart(2, "0") + ":" + date.getMinutes().toString().padStart(2, "0") + ":" + date.getSeconds().toString().padStart(2, "0"): "");
+	return monthNames[date.getMonth()] + " " + date.getDate() + ", " + date.getFullYear() + (isFullDate ? " " + date.getHours().toString().padStart(2, "0") + ":" + date.getMinutes().toString().padStart(2, "0") + ":" + date.getSeconds().toString().padStart(2, "0") : "");
 }
 
 function getJapaneseDate(date, isFullDate) {
@@ -57,8 +57,7 @@ function getJapaneseDate(date, isFullDate) {
 }
 
 // Prefecture List
-
-function createPrefList(data) {
+function createPrefList() {
 	const prefList = document.getElementById("pref-list");
 	prefList.replaceChildren();
 
@@ -97,40 +96,42 @@ function createPrefList(data) {
 }
 
 // Map
-function createMap(data) {
+function colourMap() {
+	const svgObj = document.getElementById("japan-map");
+	const svgDoc = svgObj.contentDocument;
+	const prefList = data.flatMap(region => region.prefectures);
+	prefList.forEach(pref => {
+		const prefImg = svgDoc.getElementById(pref.english_name.toLowerCase() + "-img");
+		if (pref.visited) {
+			// CSS won't work on documents
+			prefImg.setAttribute("fill", appColor);
+			prefImg.setAttribute("stroke", "none");
+			prefImg.setAttribute("cursor", "pointer");
+			prefImg.setAttribute("transition", "opacity 0.3 ease-in-out");
+			prefImg.addEventListener("click", function () {
+				selectPref(pref);
+				document.getElementById("main-title").innerHTML = getBilingualText(pref.english_name, pref.japanese_name);
+			});
+			prefImg.addEventListener("mouseover", () => {
+				prefImg.setAttribute("opacity", "50%");
+				hoveredRegion = pref.english_name;
+				document.getElementById("main-title").innerHTML = getBilingualText(pref.english_name, pref.japanese_name);
+			});
+
+			prefImg.addEventListener("mouseout", () => {
+				prefImg.setAttribute("opacity", "100%");
+				hoveredRegion = "";
+				document.getElementById("main-title").innerHTML = japanTitle;
+			});
+		} else {
+			prefImg.setAttribute("fill", "lightgray");
+		}
+	});
+}
+
+function createMap() {
 	const svgObj = document.getElementById("japan-map");
 	svgObj.data = "img/japan.svg";
-	svgObj.addEventListener("load", function () {
-		const svgDoc = svgObj.contentDocument;
-		const prefList = data.flatMap(region => region.prefectures);
-		prefList.forEach(pref => {
-			const prefImg = svgDoc.getElementById(pref.english_name.toLowerCase() + "-img");
-			if (pref.visited) {
-				// CSS won't work on documents
-				prefImg.setAttribute("fill", appColor);
-				prefImg.setAttribute("stroke", "none");
-				prefImg.setAttribute("cursor", "pointer");
-				prefImg.setAttribute("transition", "opacity 0.3 ease-in-out");
-				prefImg.addEventListener("click", function () {
-					selectPref(pref);
-					document.getElementById("main-title").innerHTML = getBilingualText(pref.english_name, pref.japanese_name);
-				});
-				prefImg.addEventListener("mouseover", () => {
-					prefImg.setAttribute("opacity", "50%");
-					hoveredRegion = pref.english_name;
-					document.getElementById("main-title").innerHTML = getBilingualText(pref.english_name, pref.japanese_name);
-				});
-
-				prefImg.addEventListener("mouseout", () => {
-					prefImg.setAttribute("opacity", "100%");
-					hoveredRegion = "";
-					document.getElementById("main-title").innerHTML = japanTitle;
-				});
-			} else {
-				prefImg.setAttribute("fill", "lightgray");
-			}
-		});
-	});
 }
 
 function shuffle(array) {
@@ -209,29 +210,29 @@ function createTemplates() {
 	polaroidCaptionText.classList.add("one-line-text");
 }
 
+function filterMiniMap() {
+	const svgObj = document.getElementById("japan-map-mini");
+	const svgDoc = svgObj.contentDocument;
+	const prefList = data.flatMap(region => region.prefectures);
+	prefList.forEach(pref => {
+		const prefImg = svgDoc.getElementById(pref.english_name.toLowerCase() + "-img");
+		if (pref.english_name != selectedPref.english_name) {
+			prefImg.setAttribute("fill", "none");
+			prefImg.setAttribute("stroke", "none");
+		} else {
+			prefImg.setAttribute("fill", appColor);
+			prefImg.setAttribute("stroke", "none");
+		}
+	}
+	);
+	const japanImg = svgDoc.getElementById("japan-img");
+	japanImg.setAttribute("viewBox", selectedPref.viewbox);
+	svgObj.classList.remove("transparent");
+}
+
 function editMiniMap() {
 	const svgObj = document.getElementById("japan-map-mini");
 	svgObj.classList.add("transparent");
-	svgObj.addEventListener("load", function () {
-		const svgDoc = svgObj.contentDocument;
-		if (svgDoc) {
-			const prefList = data.flatMap(region => region.prefectures);
-			prefList.forEach(pref => {
-				const prefImg = svgDoc.getElementById(pref.english_name.toLowerCase() + "-img");
-				if (pref.english_name != selectedPref.english_name) {
-					prefImg.setAttribute("fill", "none");
-					prefImg.setAttribute("stroke", "none");
-				} else {
-					prefImg.setAttribute("fill", appColor);
-					prefImg.setAttribute("stroke", "none");
-				}
-			}
-			);
-			const japanImg = svgDoc.getElementById("japan-img");
-			japanImg.setAttribute("viewBox", selectedPref.viewbox);
-			svgObj.classList.remove("transparent");
-		}
-	});
 	svgObj.data = "img/japan.svg";
 }
 
@@ -707,7 +708,7 @@ function changeGalleryVisibility(isVisible) {
 		document.getElementById("map-page").classList.add("transparent");
 		openLoader();
 		setTimeout(() => {
-			createMap(data);
+			createMap();
 			setTimeout(() => {
 				openGallery();
 			}, 200);
@@ -749,9 +750,9 @@ function fetchData() {
 					});
 				});
 
-				createPrefList(data);
+				createPrefList();
 				setTimeout(() => {
-					createMap(data);
+					createMap();
 				}, 50);
 
 				setTimeout(() => {
@@ -812,7 +813,8 @@ function setupSite() {
 	document.getElementById("fullscreen-bg").addEventListener("click", function () { closeFullscreen(true) });
 	document.getElementById("left-arrow").addEventListener("click", function () { changeFullscreenPicture(false); });
 	document.getElementById("right-arrow").addEventListener("click", function () { changeFullscreenPicture(true); });
-
+	document.getElementById("japan-map-mini").addEventListener("load", filterMiniMap);
+	document.getElementById("japan-map").addEventListener("load", colourMap);
 	let drawers = Array.from(document.getElementsByClassName("drawer-handle"));
 	drawers.forEach(handle => {
 		handle.parentElement.addEventListener("touchstart", e => { startHandleDrag(e, handle.parentElement.id) }, false);
