@@ -151,22 +151,6 @@ function shuffle(array) {
 	return array;
 }
 
-function closeMapTransition() {
-	const prefList = data.flatMap(region => region.prefectures);
-	var shuffledList = shuffle(prefList);
-
-	const svgObj = document.getElementById("japan-map");
-	const svgDoc = svgObj.contentDocument;
-	shuffledList.forEach(pref => {
-		if (pref.english_name != selectedPref.english_name) {
-			setTimeout(() => {
-				const prefImg = svgDoc.getElementById(pref.english_name.toLowerCase() + "-img");
-				prefImg.setAttribute("opacity", "0%");
-			}, 100);
-		}
-	});
-}
-
 // Photo gallery
 function createTemplates() {
 	// sample branch
@@ -227,12 +211,12 @@ function filterMiniMap() {
 	);
 	const japanImg = svgDoc.getElementById("japan-img");
 	japanImg.setAttribute("viewBox", selectedPref.viewbox);
-	svgObj.classList.remove("transparent");
+	//svgObj.classList.remove("transparent");
 }
 
 function editMiniMap() {
 	const svgObj = document.getElementById("japan-map-mini");
-	svgObj.classList.add("transparent");
+	//svgObj.classList.add("transparent");
 	svgObj.data = "img/japan.svg";
 }
 

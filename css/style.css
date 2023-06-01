@@ -504,7 +504,7 @@ body {
 }
 
 .timeline-column.right{
-  margin-top: 140px;
+  margin-top: 175px;
 }
 
 .timeline-branch-grp {
@@ -513,7 +513,7 @@ body {
   display: flex;
   gap: 0px;
   align-items: center;
-  margin: 185px 0px;
+  margin: 180px 0px;
 }
 
 .timeline-branch-grp.left {
