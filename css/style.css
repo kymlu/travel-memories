@@ -473,6 +473,8 @@ body {
     overflow: hidden;
     padding-top: 25px;
     padding-bottom: 25px;
+    flex-direction: row;
+    justify-content: space-around;
   }
 }
 
@@ -483,7 +485,6 @@ body {
   justify-content: space-around;
   align-content: flex-start;
   position: absolute;
-  
 }
 
 @media only screen and (orientation: portrait) {
@@ -843,6 +844,12 @@ body {
 
 @media only screen and (orientation: landscape) {
   .portrait-only {
+    display: none;
+  }
+}
+
+@media only screen and (orientation: portrait) {
+  .landscape-only {
     display: none;
   }
 }
