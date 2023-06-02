@@ -2,17 +2,25 @@
 	- transition when selecting a prefecture (text) in mobile
 	- transition after selecting a prefecture to view pictures
 	- transition between fullscreen pictures when tapping the arrows?
-	- prefecture info spinny arrow
 	- little icon to represent each prefecture
 	- draggable handlebar
+	- fix mini map, map
+	- add 6 prefectures
+	- add picture info
+	- add tags
+	- add filters for town, tags
 */
+
+// Imports
+//import { Region } from "https://raw.githubusercontent.com/kymlu/travel-memories/main/js/region.js";
+//import { Prefecture } from "https://raw.githubusercontent.com/kymlu/travel-memories/main/js/prefecture.js";
+//import { Image } from "https://raw.githubusercontent.com/kymlu/travel-memories/main/js/image.js";
 
 // Variables
 let isLoading = true;
 let selectedPref = null;
 let selectedPicture = null;
 let selectedPictureIndex = 0;
-let hoveredRegion = "";
 let isPopupVisible = false;
 let isGalleryVisible = false;
 let isFullscreen = false;
@@ -26,12 +34,12 @@ let now = null;
 let isHandleGrabbed = false;
 let grabbedHandleId = null;
 let searchTerm = ["", ""];
+let isFullscreenFirst = true;
 
 const defaultTimeout = 500;
 
 let initialX = null;
 let initialY = null;
-let initialX2 = null;
 let initialYHandle = null;
 
 const monthNames = ["January", "February", "March", "April", "May", "June",
@@ -97,6 +105,7 @@ function createPrefList() {
 
 // Map
 function colourMap() {
+	console.log("color map");
 	const svgObj = document.getElementById("japan-map");
 	const svgDoc = svgObj.contentDocument;
 	const prefList = data.flatMap(region => region.prefectures);
@@ -195,6 +204,7 @@ function createTemplates() {
 }
 
 function filterMiniMap() {
+	console.log("filter");
 	const svgObj = document.getElementById("japan-map-mini");
 	const svgDoc = svgObj.contentDocument;
 	const prefList = data.flatMap(region => region.prefectures);
@@ -211,18 +221,18 @@ function filterMiniMap() {
 	);
 	const japanImg = svgDoc.getElementById("japan-img");
 	japanImg.setAttribute("viewBox", selectedPref.viewbox);
-	//svgObj.classList.remove("transparent");
+	svgObj.classList.remove("transparent");
 }
 
 function editMiniMap() {
 	const svgObj = document.getElementById("japan-map-mini");
-	//svgObj.classList.add("transparent");
+	svgObj.classList.add("transparent");
 	svgObj.data = "img/japan.svg";
 }
 
 // Based on: https://www.codepel.com/vanilla-javascript/javascript-image-loaded/
 // The lazy loading observer
-function lazyLoad(target) {
+function lazyLoadPolaroid(target) {
 	const obs = new IntersectionObserver((entries, observer) => {
 		entries.forEach(entry => {
 			if (entry.isIntersecting) {
@@ -300,7 +310,7 @@ function createGallery() {
 			}
 
 			polImg.setAttribute("img-src", img.link ?? "img/" + selectedPref.english_name.toLowerCase() + "/" + img.file_name);
-			lazyLoad(pol);
+			lazyLoadPolaroid(pol);
 
 			// add to screen
 			if (isLeft) {
@@ -419,6 +429,12 @@ function setFullscreenPicture() {
 }
 
 function openFullscreen() {
+	// set up not visible by default
+	if (isFullscreenFirst && window.innerHeight > window.innerWidth) {
+		isPicInfoVisible = false;
+		isFullscreenFirst = false;
+	}
+	
 	isFullscreen = true;
 	document.body.style.overflowY = "hidden";
 	document.getElementById("fullscreen").style.visibility = "visible";
@@ -720,6 +736,19 @@ function fetchData() {
 			return response.json();
 		}).then(d => {
 			data = d;
+			// data = [];
+			// d.forEach(region => {
+			// 	const prefectures = region.prefectures.map(prefecture => {
+			// 		if (prefecture.image_list) {
+			// 			const images = prefecture.image_list.map(image => Object.assign(new Image(), image));
+			// 			region.image_list = images;
+			// 		}
+			// 		return Object.assign(new Prefecture(), region);
+			// 	});
+			// 	region.prefectures = prefectures;
+			// 	const newRegion = Object.assign(new Region(), region);
+			// 	data.push(newRegion);
+			// });
 		}).catch(error => {
 			hasError = true;
 			showDataLoadError();
@@ -764,11 +793,6 @@ function retry() {
 }
 
 function setupSite() {
-	// set up not visible by default
-	if (screen.orientation.type.includes("portrait")) {
-		isPicInfoVisible = false;
-	}
-
 	japanTitle = getBilingualText("JAPAN", "日本");
 	document.getElementById("main-title").innerHTML = japanTitle;
 	document.getElementById("dates-title").innerHTML = getBilingualText("Dates visited", "訪れた日付");
@@ -790,6 +814,7 @@ function setupSite() {
 		event.stopPropagation();
 	});
 	document.getElementById("pic-info-btn").addEventListener("click", function () { changePicInfoVisibility(); });
+	document.getElementById("pic-info-close-btn").addEventListener("click", function () { hidePicInfo(); });
 	document.getElementById("popup-bg").addEventListener("click", function () { closeInfoPopup(true); });
 	document.getElementById("info-btn").addEventListener("click", openInfoPopup);
 	document.getElementById("map-btn").addEventListener("click", function () { changeGalleryVisibility(false); });

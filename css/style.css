@@ -633,6 +633,7 @@ body {
   left: 15px;
   background-color: white;
   border-radius: 5px;
+  color: var(--main-color);
 }
 
 /* Fullscreen picture */
