@@ -2,7 +2,7 @@ export const monthNames = ["January", "February", "March", "April", "May", "June
 ];
 
 export default class Image {
-    constructor(file_name, date, offset, city, location_english, location_japanese, description_english, description_japanese, camera_model, lens, exposure, f_stop, iso) {
+    constructor(file_name, date, offset, city, location_english, location_japanese, description_english, description_japanese, tags, camera_model, lens, exposure, f_stop, iso, focal_length) {
         this.file_name = file_name;
         this.date = date;
         this.offset = offset;
@@ -16,6 +16,11 @@ export default class Image {
         this.exposure = exposure;
         this.f_stop = f_stop;
         this.iso = iso;
+        this.focal_length = focal_length;
+        this.tags = [];
+        if(tags != null && Array.isArray(tags)){
+            this.tags = tags;
+        }
     }
 
     getEnglishDate(isFullDate) {
