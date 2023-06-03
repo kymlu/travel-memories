@@ -23,6 +23,7 @@
   <div id="map-page" class="map-page transparent opacity-transition">
     <object id="japan-map" type="image/svg+xml" class="japan-map"></object>
     <div id="main-title" class="main-title"></div>
+    <div id="map-instructions" class="regular-text" style="text-align: center; cursor: pointer; display: none;"></div>
     <div id="pref-list" class="pref-list"></div>
   </div>
 
@@ -31,7 +32,7 @@
     <div id="pref-info-bg" class="popup-bg opacity-transition portrait-only transparent"></div>
     <div id="pref-info" class="slider">
       <div class="pref-info">
-        <object id="japan-map-mini" type="image/svg+xml" data="img/japan.svg" class="mini-map opacity-transition"></object>
+        <object id="japan-map-mini" type="image/svg+xml" data="img/japan.svg" class="mini-map opacity-transition transparent"></object>
         <div class="flex-column regular-text pref-info-text">
           <div>
             <div id="dates-title" class="bold-text">Dates visited — 訪れた日付</div>
@@ -93,7 +94,7 @@
   <div id="fullscreen" class="centered hidden-popup opacity-transition transparent fullscreen-container" style="z-index: 6000;">
     <div id="fullscreen-gallery" class="fullscreen-gallery">
       <div id="fullscreen-bg" class="popup-bg opacity-transition transparent" style="z-index: 0;"></div>
-      <div class="fullscreen-ctrl" style="z-index: 1;">
+      <div id="fullscreen-ctrl" class="fullscreen-ctrl" style="z-index: 1;">
         <div id="left-arrow" class="large-icon fullscreen-arrow">&#xf0d9</div>
         <div id="fullscreen-frame" class="fullscreen-frame">
           <img id="fullscreen-pic" class="fullscreen-pic" src="img/BFD9CC0C-53AB-4F00-851A-AAB2D06A37A6.jpeg" />

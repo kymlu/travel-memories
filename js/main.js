@@ -4,8 +4,6 @@
 	- transition between fullscreen pictures when tapping the arrows?
 	- little icon to represent each prefecture
 	- draggable handlebar
-	- fix mini map, map
-	- add 6 prefectures
 	- add picture info
 	- add tags
 	- add filters for town, tags
@@ -54,6 +52,11 @@ let appColor = "#be0029";
 // Text
 function getBilingualText(english, japanese) {
 	return english + " — " + japanese;
+}
+
+function getPictureDate(date, picOffset){
+	const localOffset = now.getTimezoneOffset();
+	return new Date(date.getTime() + (picOffset - localOffset) * 60000);
 }
 
 function getEnglishDate(date, isFullDate) {
@@ -105,7 +108,6 @@ function createPrefList() {
 
 // Map
 function colourMap() {
-	console.log("color map");
 	const svgObj = document.getElementById("japan-map");
 	const svgDoc = svgObj.contentDocument;
 	const prefList = data.flatMap(region => region.prefectures);
@@ -204,7 +206,6 @@ function createTemplates() {
 }
 
 function filterMiniMap() {
-	console.log("filter");
 	const svgObj = document.getElementById("japan-map-mini");
 	const svgDoc = svgObj.contentDocument;
 	const prefList = data.flatMap(region => region.prefectures);
@@ -217,8 +218,7 @@ function filterMiniMap() {
 			prefImg.setAttribute("fill", appColor);
 			prefImg.setAttribute("stroke", "none");
 		}
-	}
-	);
+	});
 	const japanImg = svgDoc.getElementById("japan-img");
 	japanImg.setAttribute("viewBox", selectedPref.viewbox);
 	svgObj.classList.remove("transparent");
@@ -288,7 +288,7 @@ function createGallery() {
 			pol.classList.add("rotate-" + ((direction % 3 >= 1) ? "right-" : "left-") + angle);
 
 			// add info
-			let date = new Date(img.date);
+			let date = getPictureDate(new Date(img.date), -540);
 			polDateEn.innerHTML = getEnglishDate(date, false);
 			polDateJp.innerHTML = getJapaneseDate(date, false);
 			polCaptionTextEn.innerHTML = img.description_english;
@@ -348,9 +348,10 @@ function selectPref(newPref) {
 
 	document.getElementById("pref-name-arrow").classList.add("arrow-down");
 	document.getElementById("pref-name-arrow").classList.remove("arrow-up");
-
-	editMiniMap(newPref);
-
+	setTimeout(() => {
+		editMiniMap(newPref);
+	}, 50);
+	
 	//To do: add transition from home to pref pages	
 
 	document.getElementById("pref-dates").innerHTML = getBilingualText(selectedPref.dates_english, selectedPref.dates_japanese);
@@ -361,8 +362,9 @@ function selectPref(newPref) {
 	document.getElementById("pref-desc-eng").innerHTML = selectedPref.description_english;
 	document.getElementById("pref-desc-jp").innerHTML = selectedPref.description_japanese;
 	document.getElementById("pref-name").innerHTML = getBilingualText(selectedPref.english_name, selectedPref.japanese_name);
-	changeGalleryVisibility(true);
+
 	createGallery();
+	changeGalleryVisibility(true);
 }
 
 function changeGalleryFilter(newFilter) {
@@ -412,7 +414,7 @@ function setFullscreenPicture() {
 
 	document.getElementById("fullscreen-pic").src = selectedPicture.link ?? "img/" + selectedPref.english_name.toLowerCase() + "/" + selectedPicture.file_name;
 
-	let date = new Date(selectedPicture.date);
+	let date = getPictureDate(new Date(selectedPicture.date), -540);
 	document.getElementById("fullscreen-eng-date").innerHTML = getEnglishDate(date, true);
 	document.getElementById("fullscreen-jp-date").innerHTML = getJapaneseDate(date, true);
 
@@ -802,6 +804,7 @@ function setupSite() {
 	document.getElementById("map-btn").title = getBilingualText("Return to map", "地図に戻る");
 	document.getElementById("pref-title").title = getBilingualText("Toggle prefecture info", "都道府県の情報をトグル");
 	document.getElementById("info-btn").title = getBilingualText("About the site", "このサイトについて");
+	document.getElementById("map-instructions").innerHTML = getBilingualText("Select a prefecture to see pictures from that location, or click here to see all pictures", "都道府県を選択して、その地域の写真を表示する。または、こちらを選択して、全部の写真を表示する。");
 
 	document.getElementById("loader-btn").addEventListener("click", function () {
 		setTimeout(() => {
@@ -820,10 +823,21 @@ function setupSite() {
 	document.getElementById("map-btn").addEventListener("click", function () { changeGalleryVisibility(false); });
 	document.getElementById("pref-title").addEventListener("click", function () { changePrefInfoVisibility(undefined, true); });
 	document.getElementById("fullscreen-bg").addEventListener("click", function () { closeFullscreen(true) });
+	document.getElementById("fullscreen-ctrl").addEventListener("click", function () { closeFullscreen(true) });
+	document.getElementById("left-arrow").addEventListener("click", (event) => {
+		event.stopPropagation();
+	});
+	document.getElementById("fullscreen-frame").addEventListener("click", (event) => {
+		event.stopPropagation();
+	});
+	document.getElementById("right-arrow").addEventListener("click", (event) => {
+		event.stopPropagation();
+	});
 	document.getElementById("left-arrow").addEventListener("click", function () { changeFullscreenPicture(false); });
 	document.getElementById("right-arrow").addEventListener("click", function () { changeFullscreenPicture(true); });
 	document.getElementById("japan-map-mini").addEventListener("load", filterMiniMap);
 	document.getElementById("japan-map").addEventListener("load", colourMap);
+	document.getElementById("map-instructions").addEventListener("click", openInfoPopup);
 	let drawers = Array.from(document.getElementsByClassName("drawer-handle"));
 	drawers.forEach(handle => {
 		handle.parentElement.addEventListener("touchstart", e => { startHandleDrag(e, handle.parentElement.id) }, false);

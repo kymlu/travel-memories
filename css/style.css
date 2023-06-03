@@ -79,32 +79,6 @@ body {
   }
 }
 
- /* Sidebar */
- .sidebar-content {
-  display: flex;
-  flex-direction: column;
-  align-content: start;
-  justify-content: start;
-  gap: 20px;
-}
-
-.sidebar {
-  display: flex;
-  flex-direction: column;
-  align-content: start;
-  justify-content: start;
-  gap: 20px;
-  visibility: hidden;
-  overflow: auto;
-  position: absolute;
-  height: 100vh;
-  max-width: 50vw;
-  background-color: white;
-  left: 0;
-  top: 0;
-  padding: 50px;
-}
-
 /* Prefecture info*/
 .pref-title {
   display: flex;
@@ -364,52 +338,52 @@ body {
 }
 
 .rotate-left-1 {
-  transform: rotate(4deg);
+  transform: rotate(3deg);
 }
 
 .rotate-left-2 {
-  transform: rotate(8deg);
+  transform: rotate(7deg);
 }
 
 .rotate-left-3 {
-  transform: rotate(6deg);
+  transform: rotate(5deg);
 }
 
 .rotate-left-4 {
-  transform: rotate(10deg);
+  transform: rotate(9deg);
 }
 
 .rotate-right-1 {
-  transform: rotate(-4deg);
+  transform: rotate(-3deg);
 }
 
 .rotate-right-2 {
-  transform: rotate(-8deg);
+  transform: rotate(-7deg);
 }
 
 .rotate-right-3 {
-  transform: rotate(-6deg);
+  transform: rotate(-5deg);
 }
 
 .rotate-right-4 {
-  transform: rotate(-10deg);
+  transform: rotate(-9deg);
 }
 
 @media only screen and (orientation: portrait) {
   .rotate-left-1 {
-    transform: rotate(-4deg);
+    transform: rotate(-3deg);
   }
   
   .rotate-left-3 {
-    transform: rotate(-6deg);
+    transform: rotate(-7deg);
   }
   
   .rotate-right-1 {
-    transform: rotate(4deg);
+    transform: rotate(5deg);
   }
   
   .rotate-right-3 {
-    transform: rotate(6deg);
+    transform: rotate(9deg);
   }
 }
 
