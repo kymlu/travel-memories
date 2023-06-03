@@ -227,7 +227,9 @@ function filterMiniMap() {
 function editMiniMap() {
 	const svgObj = document.getElementById("japan-map-mini");
 	svgObj.classList.add("transparent");
-	svgObj.data = "img/japan.svg";
+	setTimeout(() => {	
+		svgObj.data = "img/japan.svg";
+	}, 50);
 }
 
 // Based on: https://www.codepel.com/vanilla-javascript/javascript-image-loaded/
@@ -348,9 +350,7 @@ function selectPref(newPref) {
 
 	document.getElementById("pref-name-arrow").classList.add("arrow-down");
 	document.getElementById("pref-name-arrow").classList.remove("arrow-up");
-	setTimeout(() => {
-		editMiniMap(newPref);
-	}, 50);
+	editMiniMap(newPref);
 	
 	//To do: add transition from home to pref pages	
 
