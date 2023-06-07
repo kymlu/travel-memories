@@ -338,52 +338,63 @@ body {
 }
 
 .rotate-left-1 {
-  transform: rotate(3deg);
+  transform: rotate(2deg);
 }
 
 .rotate-left-2 {
-  transform: rotate(7deg);
+  transform: rotate(6deg);
 }
 
 .rotate-left-3 {
-  transform: rotate(5deg);
+  transform: rotate(4deg);
 }
 
 .rotate-left-4 {
-  transform: rotate(9deg);
+  transform: rotate(8deg);
 }
 
 .rotate-right-1 {
-  transform: rotate(-3deg);
+  transform: rotate(-2deg);
 }
 
 .rotate-right-2 {
-  transform: rotate(-7deg);
+  transform: rotate(-6deg);
 }
 
 .rotate-right-3 {
-  transform: rotate(-5deg);
+  transform: rotate(-4deg);
 }
 
 .rotate-right-4 {
-  transform: rotate(-9deg);
+  transform: rotate(-8deg);
+}
+
+.rotate-left-1:hover, 
+.rotate-left-2:hover, 
+.rotate-left-3:hover, 
+.rotate-left-4:hover,
+.rotate-right-1:hover, 
+.rotate-right-2:hover, 
+.rotate-right-3:hover, 
+.rotate-right-4:hover {
+  transform: rotate(0deg);
 }
 
 @media only screen and (orientation: portrait) {
   .rotate-left-1 {
-    transform: rotate(-3deg);
+    transform: rotate(-2deg);
   }
   
   .rotate-left-3 {
-    transform: rotate(-7deg);
+    transform: rotate(-6deg);
   }
   
   .rotate-right-1 {
-    transform: rotate(5deg);
+    transform: rotate(4deg);
   }
   
   .rotate-right-3 {
-    transform: rotate(9deg);
+    transform: rotate(8deg);
   }
 }
 
@@ -735,6 +746,14 @@ body {
   cursor: grab;
 }
 
+.img-tag {
+  padding: 2px 5px;
+  border-radius: 6px;
+  background-color: var(--main-color);
+  color: white;
+  font-size: var(--reg-text-size);
+}
+
 /* Other */
 .transparent {
   opacity: 0%;
@@ -742,6 +761,10 @@ body {
 
 .opacity-transition {
   transition: opacity 0.5s ease-in-out;
+}
+
+.opacity-transform-transition {
+  transition: opacity 0.5s ease-in-out, transform 0.25s ease-in-out;
 }
 
 .flex-column {

@@ -526,7 +526,7 @@
             "date": "2022-12-03T06:07:19.000Z",
             "offset": "+09:00",
             "city": "chichibu",
-            "description_english": "Suddenly the countryside",
+            "description_english": "Suddenly, the countryside",
             "description_japanese": "\u6025\u306B\u7530\u820E\u306B\u7740\u3044\u3061\u3083\u3063\u305F",
             "tags": ["event"],
             "camera_model": "iPhone 12 mini",
@@ -914,14 +914,225 @@
             "japanese_name": "渋谷"
           },
           {
+            "id": "marunouchi",
+            "english_name": "Marunouchi",
+            "japanese_name": "丸の内"
+          },
+          {
+            "id": "harajuku",
+            "english_name": "Harajuku",
+            "japanese_name": "原宿"
+          },
+          {
+            "id": "shibamata",
+            "english_name": "Shibamata",
+            "japanese_name": "柴又"
+          },
+          {
+            "id": "matsubara",
+            "english_name": "Matsubara",
+            "japanese_name": "松原"
+          },
+          {
+            "id": "mejiro",
+            "english_name": "Mejiro",
+            "japanese_name": "松原"
+          },
+          {
+            "id": "shinokubo",
+            "english_name": "Shin-Okubo",
+            "japanese_name": "新大久保"
+          },
+          {
+            "id": "kiyosumi",
+            "english_name": "Kiyosumi",
+            "japanese_name": "清澄"
+          },
+          {
+            "id": "ogawamachi",
+            "english_name": "Ogawamachi",
+            "japanese_name": "小川町"
+          },
+          {
+            "id": "ryogoku",
+            "english_name": "Ryogoku",
+            "japanese_name": "両国"
+          },
+          {
+            "id": "chiyoda",
+            "english_name": "Chiyoda",
+            "japanese_name": "千代田"
+          },
+          {
+            "id": "sasazuka",
+            "english_name": "Sasazuka",
+            "japanese_name": "笹塚"
+          },
+          {
+            "id": "surugadai",
+            "english_name": "Kanda Surugadai",
+            "japanese_name": "神田駿河台"
+          },
+          {
+            "id": "jimbocho",
+            "english_name": "Jimbocho",
+            "japanese_name": "神田神保町"
+          },
+          {
+            "id": "shimbashi",
+            "english_name": "Shimbashi",
+            "japanese_name": "新橋"
+          },
+          {
+            "id": "yanaka",
+            "english_name": "Yanaka",
+            "japanese_name": "谷中"
+          },
+          {
+            "id": "shinkiba",
+            "english_name": "Shin-Kiba",
+            "japanese_name": "新木場"
+          },
+          {
+            "id": "sangenjaya",
+            "english_name": "Sangenjaya",
+            "japanese_name": "三軒茶屋"
+          },
+          
+          {
+            "id": "hitotsubashi",
+            "english_name": "Hitotsubashi",
+            "japanese_name": "一ツ橋"
+          },
+          {
+            "id": "senzoku",
+            "english_name": "Senzoku",
+            "japanese_name": "千束"
+          },
+          {
+            "id": "omotesando",
+            "english_name": "Omotesando",
+            "japanese_name": "表参道"
+          },
+          {
+            "id": "tsukishima",
+            "english_name": "Tsukishima",
+            "japanese_name": "月島"
+          },
+          {
             "id": "shinjuku",
             "english_name": "Shinjuku",
             "japanese_name": "新宿"
+          },
+          {
+            "id": "ginza",
+            "english_name": "Ginza",
+            "japanese_name": "銀座"
+          },
+          {
+            "id": "ikebukuro",
+            "english_name": "Ikebukuro",
+            "japanese_name": "池袋"
+          },
+          {
+            "id": "akihabara",
+            "english_name": "Akihabara",
+            "japanese_name": "秋葉原"
+          },
+          {
+            "id": "nakano",
+            "english_name": "Nakano",
+            "japanese_name": "中野"
+          },
+          {
+            "id": "setagaya",
+            "english_name": "Setagaya",
+            "japanese_name": "世田谷"
+          },
+          {
+            "id": "shimokitazawa",
+            "english_name": "Shimokitazawa",
+            "japanese_name": "下北沢"
+          },
+          {
+            "id": "kichijoji",
+            "english_name": "Kichijoji",
+            "japanese_name": "吉祥寺"
+          },
+          {
+            "id": "suginami",
+            "english_name": "Suginami",
+            "japanese_name": "杉並"
+          },
+          {
+            "id": "odaiba",
+            "english_name": "Odaiba",
+            "japanese_name": "お台場"
+          },
+          {
+            "id": "asakusa",
+            "english_name": "Asakusa",
+            "japanese_name": "浅草"
+          },
+          {
+            "id": "hamamatsucho",
+            "english_name": "Hamamatsucho",
+            "japanese_name": "浜松町"
+          },
+          {
+            "id": "roppongi",
+            "english_name": "Roppongi",
+            "japanese_name": "六本木"
+          },
+          {
+            "id": "bunkyo",
+            "english_name": "Bunkyo",
+            "japanese_name": "文京区"
+          },
+          {
+            "id": "ueno",
+            "english_name": "Ueno",
+            "japanese_name": "上野"
+          },
+          {
+            "id": "oshiage",
+            "english_name": "Oshiage",
+            "japanese_name": "押上"
+          },
+          {
+            "id": "shinagawa",
+            "english_name": "Shinagawa",
+            "japanese_name": "品川"
+          },
+          {
+            "id": "ebisu",
+            "english_name": "Ebisu",
+            "japanese_name": "恵比寿"
+          },
+          {
+            "id": "nippori",
+            "english_name": "Nippori",
+            "japanese_name": "日暮里"
+          },
+          {
+            "id": "tsukiji",
+            "english_name": "Tsukiji",
+            "japanese_name": "築地"
+          },
+          {
+            "id": "nakameguro",
+            "english_name": "Nakameguro",
+            "japanese_name": "目黒"
+          },
+          {
+            "id": "kanda",
+            "english_name": "Kanda",
+            "japanese_name": "神田"
           }
         ],
         "viewbox": "994 1002 66 66",
-        "dates_english": "",
-        "dates_japanese": "",
+        "dates_english": "August 28, 2022 - April 2, 2023",
+        "dates_japanese": "2022年8月28日～2023年4月2日",
         "description_english": "My homebase :)",
         "description_japanese": "ここに住んでいた！！",
         "image_list": []
@@ -4127,7 +4338,7 @@
             "location_japanese": "\u767D\u6D5C\u6D77\u5CB8",
             "description_english": "Waves",
             "description_japanese": "\u6CE2",
-            "tags": [],
+            "tags": ["nature"],
             "camera_model": "Canon EOS 90D",
             "lens": "EF-S18-135mm f/3.5-5.6 IS USM",
             "exposure": "1/3200",

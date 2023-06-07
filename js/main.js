@@ -44,6 +44,49 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
 	"July", "August", "September", "October", "November", "December"
 ];
 
+const tags = [
+	{
+		"id": "animal",
+		"english_name": "Animals",
+		"japanese_name": "動物"
+	},
+	{
+		"id": "attraction",
+		"english_name": "Attractions and Museums",
+		"japanese_name": "観光地・博物館・美術館"
+	},
+	{
+		"id": "art",
+		"english_name": "Art",
+		"japanese_name": "美術"
+	},
+	{
+		"id": "event",
+		"english_name": "Events",
+		"japanese_name": "イベント"
+	},
+	{
+		"id": "food",
+		"english_name": "Food",
+		"japanese_name": "食べ物"
+	},
+	{
+		"id": "nature",
+		"english_name": "Nature",
+		"japanese_name": "自然"
+	},
+	{
+		"id": "relax",
+		"english_name": "Daily life",
+		"japanese_name": "日常"
+	},
+	{
+		"id": "town",
+		"english_name": "Around town",
+		"japanese_name": "街中で"
+	}
+];
+
 let branch, leftBranch, leftPoint, rightBranch, rightPoint;
 let polaroid, polaroidImgFrame, polaroidImg, polaroidCaption, polaroidCaptionText, polaroidDate, singleDate;
 
@@ -87,6 +130,7 @@ function createPrefList() {
 		const newPref = regionGroup.cloneNode();
 		const newPrefTitle = regionTitle.cloneNode();
 		newPrefTitle.innerHTML = getBilingualText(region.english_name, region.japanese_name);
+		newPrefTitle.title = getBilingualText("See images from this prefecture", "この地域の写真を表示する");
 		newPref.appendChild(newPrefTitle);
 		region.prefectures.forEach(prefecture => {
 			if (prefecture.visited) {
@@ -115,6 +159,7 @@ function colourMap() {
 		const prefImg = svgDoc.getElementById(pref.english_name.toLowerCase() + "-img");
 		if (pref.visited) {
 			// CSS won't work on documents
+			prefImg.title = getBilingualText("See images from this prefecture", "この地域の写真を表示する");
 			prefImg.setAttribute("fill", appColor);
 			prefImg.setAttribute("stroke", "none");
 			prefImg.setAttribute("cursor", "pointer");
@@ -187,8 +232,9 @@ function createTemplates() {
 	// sample polaroid
 	polaroid = document.createElement("div");
 	polaroid.classList.add("polaroid-frame");
-	polaroid.classList.add("opacity-transition");
+	polaroid.classList.add("opacity-transform-transition");
 	polaroid.classList.add("transparent");
+	polaroid.title = getBilingualText("Expand image", "画像を拡大する");
 
 	polaroidImgFrame = document.createElement("div");
 	polaroidImgFrame.classList.add("polaroid-img");
@@ -428,6 +474,8 @@ function setFullscreenPicture() {
 
 	document.getElementById("fullscreen-eng-caption").innerHTML = selectedPicture.description_english;
 	document.getElementById("fullscreen-jp-caption").innerHTML = selectedPicture.description_japanese;
+
+	document.getElementById("technical-info").innerHTML = (selectedPicture.f_stop ? "\u0192/"+selectedPicture.f_stop + " " : "") + selectedPicture.shutter_speed ?? "" + selectedPicture.iso ?? "" + selectedPicture.focal_length ?? "";
 }
 
 function openFullscreen() {
@@ -805,6 +853,10 @@ function setupSite() {
 	document.getElementById("pref-title").title = getBilingualText("Toggle prefecture info", "都道府県の情報をトグル");
 	document.getElementById("info-btn").title = getBilingualText("About the site", "このサイトについて");
 	document.getElementById("map-instructions").innerHTML = getBilingualText("Select a prefecture to see pictures from that location, or click here to see all pictures", "都道府県を選択して、その地域の写真を表示する。または、こちらを選択して、全部の写真を表示する。");
+	document.getElementById("left-arrow").title = getBilingualText("Previous picture", "前の写真");
+	document.getElementById("right-arrow").title = getBilingualText("Next picture", "次の写真");
+	document.getElementById("search-eng").title = getBilingualText("Google in English", "英語でググる");
+	document.getElementById("search-jp").title = getBilingualText("Google in Japanese", "日本語でググる");
 
 	document.getElementById("loader-btn").addEventListener("click", function () {
 		setTimeout(() => {
