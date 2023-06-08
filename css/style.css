@@ -328,7 +328,13 @@ visited-pref-text:active {
   display: flex;
   flex-direction: column;
   margin: 0px;
-  align-content: space-between;
+}
+
+.polaroid-caption-text-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 3.5em;
 }
 
 .polaroid-date {
@@ -678,16 +684,12 @@ visited-pref-text:active {
   justify-content: space-between;
 }
 
-.fullscreen-pic-out-right {
+.fullscreen-pic-right {
   translate: 50px;
 }
 
-.fullscreen-pic-out-left {
+.fullscreen-pic-left {
   translate: -50px;
-}
-
-.fullscreen-pic-in {
-  translate: 0px;
 }
 
 .fullscreen-pic {
@@ -738,6 +740,7 @@ visited-pref-text:active {
 .pic-info-details {
   gap: 15px;
   width: 100%;
+  overflow-y: auto;
 }
 
 .pic-info-btn {

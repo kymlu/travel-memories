@@ -52,7 +52,7 @@ const tags = [
 		"japanese_name": "動物"
 	},
 	{
-		"id": "attraction",
+		"id": "attractions",
 		"english_name": "Attractions",
 		"japanese_name": "観光地"
 	},
@@ -89,7 +89,7 @@ const tags = [
 ];
 
 let branch, leftBranch, leftPoint, rightBranch, rightPoint;
-let polaroid, polaroidImgFrame, polaroidImg, polaroidCaption, polaroidCaptionText, polaroidDate, singleDate;
+let polaroid, polaroidImgFrame, polaroidImg, polaroidCaption, polaroidCaptionText, polaroidCaptionContainer, polaroidDate, singleDate;
 
 let appColor = "#be0029";
 
@@ -100,6 +100,7 @@ function getBilingualText(english, japanese) {
 
 function getPictureDate(date, picOffset){
 	const localOffset = now.getTimezoneOffset();
+	console.log(new Date(date.getTime() + (picOffset - localOffset) * 60000), date);
 	return new Date(date.getTime() + (picOffset - localOffset) * 60000);
 }
 
@@ -257,6 +258,9 @@ function createTemplates() {
 	polaroidCaptionText = document.createElement("div");
 	polaroidCaptionText.classList.add("caption-text");
 	polaroidCaptionText.classList.add("one-line-text");
+
+	polaroidCaptionContainer = document.createElement("div");
+	polaroidCaptionContainer.classList.add("polaroid-caption-text-container");
 }
 
 function filterMiniMap() {
@@ -327,6 +331,7 @@ function createGallery() {
 			let polDate = polaroidDate.cloneNode();
 			let polDateEn = singleDate.cloneNode();
 			let polDateJp = singleDate.cloneNode();
+			let polCaptionText = polaroidCaptionContainer.cloneNode()
 			let polCaptionTextEn = polaroidCaptionText.cloneNode();
 			let polCaptionTextJp = polaroidCaptionText.cloneNode();
 
@@ -337,17 +342,21 @@ function createGallery() {
 			polCaption.appendChild(polDate);
 			polDate.appendChild(polDateEn);
 			polDate.appendChild(polDateJp);
-			polCaption.appendChild(polCaptionTextEn);
-			polCaption.appendChild(polCaptionTextJp);
+			polCaption.appendChild(polCaptionText);
+			polCaptionText.appendChild(polCaptionTextEn);
+			polCaptionText.appendChild(polCaptionTextJp);
 
 			// rotate picture
 			pol.classList.add("rotate-" + ((direction % 3 >= 1) ? "right-" : "left-") + angle);
 
 			// add info
-			let date = getPictureDate(new Date(img.date), -540);
-			if(date){
+			if(img.date){
+				let date = new Date(img.date);
 				polDateEn.innerHTML = getEnglishDate(date, false);
 				polDateJp.innerHTML = getJapaneseDate(date, false);
+			} else {
+				polDateEn.innerHTML = "";
+				polDateJp.innerHTML = "";
 			}
 			if(img.description_english){
 				polCaptionTextEn.innerHTML = img.description_english;
@@ -486,19 +495,19 @@ function setFullscreenPicture(isForward) {
 		
 		nextPic.style.display = "none";
 		nextPic.src = src;
-		nextPic.classList.add(isForward ? "fullscreen-pic-out-left":"fullscreen-pic-out-right");
+		nextPic.classList.add(isForward ? "fullscreen-pic-right":"fullscreen-pic-left");
 
 		setTimeout(() => {
 			nextPic.style.display = "block";
 			nextPic.classList.remove("transparent");
-			nextPic.classList.remove(isForward ? "fullscreen-pic-out-left":"fullscreen-pic-out-right");
-			currentPic.classList.add(isForward ? "fullscreen-pic-out-right" : "fullscreen-pic-out-left");
+			nextPic.classList.remove(isForward ? "fullscreen-pic-right" : "fullscreen-pic-left");
+			currentPic.classList.add(isForward ? "fullscreen-pic-left" : "fullscreen-pic-right");
 			currentPic.classList.add("transparent");
 
 			setTimeout(() => {
 				currentPic.style.display = "none";
 				currentPic.src = src;
-				currentPic.classList.remove(isForward ? "fullscreen-pic-out-right" : "fullscreen-pic-out-left");
+				currentPic.classList.remove(isForward ? "fullscreen-pic-left" : "fullscreen-pic-right");
 				currentPic.classList.remove("transparent");
 				setTimeout(() => {
 					currentPic.style.display = "block";
@@ -512,10 +521,14 @@ function setFullscreenPicture(isForward) {
 		lastSwipeTime = new Date();
 	}
 
-	let date = getPictureDate(new Date(selectedPicture.date), -540);
-	document.getElementById("fullscreen-eng-date").innerHTML = date ? getEnglishDate(date, true) : "No date";
-	document.getElementById("fullscreen-jp-date").innerHTML = date ? getJapaneseDate(date, true) : "不明な日付";
-
+	if(selectedPicture.date){
+		let date = new Date(selectedPicture.date);
+		document.getElementById("fullscreen-eng-date").innerHTML = getEnglishDate(date, true);
+		document.getElementById("fullscreen-jp-date").innerHTML = getJapaneseDate(date, true);
+	} else {
+		document.getElementById("fullscreen-eng-date").innerHTML = "Unknown date";
+		document.getElementById("fullscreen-jp-date").innerHTML = "不明な日付";
+	}
 	let area = selectedPref.areas.find(function (area) { return area.id == selectedPicture.city });
 	searchTerm[0] = (selectedPicture.location_english ? (selectedPicture.location_english + ", ") : "") + (area.english_name ?? "");
 	document.getElementById("fullscreen-eng-city").innerHTML = searchTerm[0];
@@ -575,13 +588,14 @@ function setFullscreenPicture(isForward) {
 	// 	document.getElementById("technical-info").appendChild(tempElement);
 	// }
 
-	selectedPicture.tags.forEach(tag => {
-		tempElement = document.createElement("div");
-		tempElement.classList.add("img-tag");
-		var tempTag = tags.find(function (t) {return t.id == tag});
-		tempElement.innerHTML = getBilingualText(tempTag.english_name, tempTag.japanese_name);
-		document.getElementById("tags").appendChild(tempElement);
-	})
+	selectedPicture.tags.map(x => { return tags.find(function (t) { return t.id == x }) })
+		.sort()
+		.forEach(tag => {
+			tempElement = document.createElement("div");
+			tempElement.classList.add("img-tag");
+			tempElement.innerHTML = getBilingualText(tag.english_name, tag.japanese_name);
+			document.getElementById("tags").appendChild(tempElement);
+		});
 }
 
 function openFullscreen() {
@@ -613,36 +627,30 @@ function closeFullscreen(forceClose) {
 }
 
 // Source: https://stackoverflow.com/questions/53192433/how-to-detect-swipe-in-javascript
-function startHandleDrag(e, id) {
+function startHandleDrag(e) {
 	isHandleGrabbed = true;
-	grabbedHandleId = id;
-	initialYHandle = e.touches[0].clientY;
-};
+	//initialYHandle = e.touches[0].clientY;
+}
+
 function endHandleDrag(e) {
 	if (isHandleGrabbed) {
 		isHandleGrabbed = false;
 		var currentY = e.changedTouches[0].clientY;
 		if (currentY > initialYHandle) {
-			if (grabbedHandleId == "pic-info-handle") {
-				hidePicInfo();
-			} else if (grabbedHandleId == "pref-info-handle") {
-				showPrefInfo(true);
-			}
+			showPrefInfo(true);
 		} else if (currentY < initialYHandle) {
-			if (grabbedHandleId == "pic-info-handle") {
-				showPicInfo();
-			} else if (grabbedHandleId == "pref-info-handle") {
-				hidePrefInfo(true);
-			}
+			hidePrefInfo(true);
 		}
 		initialYHandle = null;
 	}
-};
+}
 
 function startFullscreenSwipe(e) {
-	initialX = e.touches[0].clientX;
-	initialY = e.touches[0].clientY;
-};
+	if (e.touches.length == 1) {
+		initialX = e.touches[0].clientX;
+		initialY = e.touches[0].clientY;
+	}
+}
 
 function moveFullscreenSwipe(e) {
 	if (initialX === null) {
@@ -653,35 +661,37 @@ function moveFullscreenSwipe(e) {
 		return;
 	}
 
-	var currentX = e.touches[0].clientX;
-	var currentY = e.touches[0].clientY;
+	if (e.touches.length == 1) {
+		var currentX = e.touches[0].clientX;
+		var currentY = e.touches[0].clientY;
 
-	var diffX = initialX - currentX;
-	var diffY = initialY - currentY;
+		var diffX = initialX - currentX;
+		var diffY = initialY - currentY;
 
-	if (Math.abs(diffX) > Math.abs(diffY)) {
-		if (diffX > 0) {
-			changeFullscreenPicture(false);
-		} else {
-			changeFullscreenPicture(true);
-		}
-	} else {
-		if (diffY > 0) {
-			if (!isPicInfoVisible) {
-				showPicInfo();
+		if (Math.abs(diffX) > Math.abs(diffY)) {
+			if (diffX > 0) {
+				changeFullscreenPicture(true);
+			} else {
+				changeFullscreenPicture(false);
 			}
 		} else {
-			if (isPicInfoVisible) {
-				hidePicInfo();
+			if (diffY > 0) {
+				if (!isPicInfoVisible) {
+					showPicInfo();
+				}
+			} else {
+				if (isPicInfoVisible) {
+					hidePicInfo();
+				}
 			}
 		}
+
+		initialX = null;
+		initialY = null;
+
+		e.preventDefault();
 	}
-
-	initialX = null;
-	initialY = null;
-
-	e.preventDefault();
-};
+}
 
 
 // Popup
@@ -1011,10 +1021,7 @@ function setupSite() {
 	document.getElementById("japan-map-mini").addEventListener("load", filterMiniMap);
 	document.getElementById("japan-map").addEventListener("load", colourMap);
 	document.getElementById("map-instructions").addEventListener("click", openInfoPopup);
-	let drawers = Array.from(document.getElementsByClassName("drawer-handle"));
-	drawers.forEach(handle => {
-		handle.parentElement.addEventListener("touchstart", e => { startHandleDrag(e, handle.parentElement.id) }, false);
-	});
+	document.getElementById("pref-info-handle").parentElement.addEventListener("touchstart", e => { startHandleDrag(e, handle.parentElement.id) }, false);
 	document.addEventListener("touchend", endHandleDrag, false);
 
 	document.addEventListener("keydown", function (event) {
@@ -1035,7 +1042,7 @@ function setupSite() {
 		}
 	});
 
-	var swipeContainer = document.getElementById("fullscreen-gallery");
+	var swipeContainer = document.getElementById("fullscreen");
 	swipeContainer.addEventListener("touchstart", startFullscreenSwipe, false);
 	swipeContainer.addEventListener("touchmove", moveFullscreenSwipe, false);
 
