@@ -735,7 +735,7 @@
             "tags": ["event"],
             "camera_model": "iPhone 12 mini",
             "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-            "exposure": "2023-01-24T15:00:00.000Z",
+            "exposure": "1/2024",
             "f_stop": 1.6,
             "iso": 640,
             "focal_length": "4.2mm"
@@ -836,7 +836,7 @@
             "tags": ["attractions"],
             "camera_model": "iPhone 12 mini",
             "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-            "exposure": 44943,
+            "exposure": "1/17",
             "f_stop": 1.6,
             "iso": 1250,
             "focal_length": "4.2mm"
@@ -1164,7 +1164,7 @@
               "tags": ["art", "attractions"],
               "camera_model": "iPhone 12 mini",
               "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-              "exposure": 44941,
+              "exposure": "1/15",
               "f_stop": 1.6,
               "iso": 3200,
               "focal_length": "4.2 mm"
@@ -1196,7 +1196,7 @@
               "tags": ["art", "attractions"],
               "camera_model": "iPhone 12 mini",
               "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-              "exposure": 44941,
+              "exposure": "1/15",
               "f_stop": 1.6,
               "iso": 2500,
               "focal_length": "4.2 mm"
@@ -1245,7 +1245,7 @@
               "tags": ["town"],
               "camera_model": "iPhone 12 mini",
               "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-              "exposure": "6493-12-31T15:00:00.000Z",
+              "exposure": "1/6494",
               "f_stop": 1.6,
               "iso": 32,
               "focal_length": "4.2 mm"
@@ -1260,7 +1260,7 @@
               "tags": ["town"],
               "camera_model": "iPhone 12 mini",
               "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-              "exposure": 44951,
+              "exposure": "1/25",
               "f_stop": 1.6,
               "iso": 500,
               "focal_length": "4.2 mm"
@@ -1275,7 +1275,7 @@
               "tags": ["town"],
               "camera_model": "iPhone 12 mini",
               "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-              "exposure": 44951,
+              "exposure": "1/25",
               "f_stop": 1.6,
               "iso": 800,
               "focal_length": "4.2 mm"
@@ -1326,7 +1326,7 @@
               "tags": ["town"],
               "camera_model": "iPhone 12 mini",
               "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-              "exposure": 44934,
+              "exposure": "1/8",
               "f_stop": 1.6,
               "iso": 500,
               "focal_length": "4.2 mm"
@@ -1343,7 +1343,7 @@
               "tags": ["attractions"],
               "camera_model": "iPhone 12 mini",
               "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-              "exposure": "5290-12-31T15:00:00.000Z",
+              "exposure": "1/5291",
               "f_stop": 1.6,
               "iso": 32,
               "focal_length": "4.2 mm"
@@ -1360,7 +1360,7 @@
               "tags": ["attractions"],
               "camera_model": "iPhone 12 mini",
               "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-              "exposure": "9803-12-31T15:00:00.000Z",
+              "exposure": "1/9804",
               "f_stop": 1.6,
               "iso": 32,
               "focal_length": "4.2 mm"
@@ -1377,7 +1377,7 @@
               "tags": ["attractions"],
               "camera_model": "iPhone 12 mini",
               "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-              "exposure": "5290-12-31T15:00:00.000Z",
+              "exposure": "1/5291",
               "f_stop": 1.6,
               "iso": 32,
               "focal_length": "4.2 mm"
@@ -1443,7 +1443,7 @@
               "tags": ["town"],
               "camera_model": "iPhone 12 mini",
               "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-              "exposure": "3860-12-31T15:00:00.000Z",
+              "exposure": "1/3861",
               "f_stop": 1.6,
               "iso": 32,
               "focal_length": "4.2 mm"
@@ -1475,7 +1475,7 @@
               "tags": ["attractions"],
               "camera_model": "iPhone 12 mini",
               "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-              "exposure": "5813-12-31T15:00:00.000Z",
+              "exposure": "1/5814",
               "f_stop": 1.6,
               "iso": 32,
               "focal_length": "4.2 mm"
@@ -1558,7 +1558,7 @@
               "tags": ["attractions"],
               "camera_model": "iPhone 12 mini",
               "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-              "exposure": "2746-12-31T15:00:00.000Z",
+              "exposure": "1/2747",
               "f_stop": 1.6,
               "iso": 32,
               "focal_length": "4.2 mm"
@@ -1592,7 +1592,7 @@
               "tags": ["attractions"],
               "camera_model": "iPhone 12 mini",
               "lens": "iPhone 12 mini back dual wide camera 1.55mm f/2.4",
-              "exposure": 44939,
+              "exposure": "1/13",
               "f_stop": 2.4,
               "iso": 1000,
               "focal_length": "1.6 mm"
@@ -2059,7 +2059,7 @@
               "tags": ["relax"],
               "camera_model": "iPhone 12 mini",
               "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-              "exposure": 44953,
+              "exposure": "1/27",
               "f_stop": 1.6,
               "iso": "4.2 mm",
               "focal_length": 1000
@@ -2342,7 +2342,7 @@
               "tags": ["food", "town"],
               "camera_model": "iPhone XR",
               "lens": "iPhone XR back camera 4.25mm f/1.8",
-              "exposure": 44951,
+              "exposure": "1/25",
               "f_stop": 1.8,
               "iso": "4.2 mm",
               "focal_length": 640
@@ -2442,7 +2442,7 @@
               "city": "kiyosumi",
               "location_english": "Kiyosumi Gardens",
               "location_japanese": "\u6E05\u6F84\u5EAD\u5712",
-              "tags": ["animals"],
+              "tags": ["animal"],
               "camera_model": "iPhone 12 mini",
               "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
               "exposure": "1/491",
@@ -2456,7 +2456,7 @@
               "offset": "+09:00",
               "city": "kiyosumi",
               "location_english": "Kiyosumi Gardens",
-              "tags": ["animals"],
+              "tags": ["animal"],
               "camera_model": "iPhone 12 mini",
               "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
               "exposure": "1/121",
@@ -2545,7 +2545,7 @@
               "tags": ["town"],
               "camera_model": "iPhone 12 mini",
               "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-              "exposure": 44951,
+              "exposure": "1/25",
               "f_stop": 1.6,
               "iso": "4.2 mm",
               "focal_length": 640
@@ -2619,7 +2619,7 @@
               "tags": ["nature"],
               "camera_model": "iPhone 12 mini",
               "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-              "exposure": 44943,
+              "exposure": "1/17",
               "f_stop": 1.6,
               "iso": "4.2 mm",
               "focal_length": 1600
@@ -2978,7 +2978,7 @@
               "tags": ["town"],
               "camera_model": "iPhone 12 mini",
               "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-              "exposure": "3860-12-31T15:00:00.000Z",
+              "exposure": "1/3861",
               "f_stop": 1.6,
               "iso": 32,
               "focal_length": "4.2 mm"
@@ -3427,7 +3427,7 @@
               "tags": ["town"],
               "camera_model": "iPhone 12 mini",
               "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-              "exposure": 44941,
+              "exposure": "1/15",
               "f_stop": 1.6,
               "iso": 640,
               "focal_length": "4.2 mm"
@@ -3454,7 +3454,7 @@
               "tags": ["relax"],
               "camera_model": "iPhone 12 mini",
               "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-              "exposure": 44951,
+              "exposure": "1/25",
               "f_stop": 1.6,
               "iso": 640,
               "focal_length": "4.2 mm"
@@ -3544,7 +3544,7 @@
               "tags": ["town"],
               "camera_model": "iPhone 12 mini",
               "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-              "exposure": "2450-12-31T15:00:00.000Z",
+              "exposure": "1/2451",
               "f_stop": 1.6,
               "iso": 32,
               "focal_length": "4.2 mm"
@@ -3557,7 +3557,7 @@
               "tags": ["town"],
               "camera_model": "iPhone 12 mini",
               "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-              "exposure": "6896-12-31T15:00:00.000Z",
+              "exposure": "1/6897",
               "f_stop": 1.6,
               "iso": 32,
               "focal_length": "4.2 mm"
@@ -3786,7 +3786,7 @@
               "tags": ["event"],
               "camera_model": "iPhone 12 mini",
               "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-              "exposure": "2211-12-31T15:00:00.000Z",
+              "exposure": "1/2212",
               "f_stop": 1.6,
               "iso": 32,
               "focal_length": "4.2 mm"
@@ -3817,7 +3817,7 @@
               "tags": ["event"],
               "camera_model": "iPhone 12 mini",
               "lens": "iPhone 12 mini back dual wide camera 1.55mm f/2.4",
-              "exposure": "2993-12-31T15:00:00.000Z",
+              "exposure": "1/2994",
               "f_stop": 2.4,
               "iso": 25,
               "focal_length": "1.6 mm"
@@ -3922,7 +3922,7 @@
               "tags": ["town"],
               "camera_model": "iPhone 12 mini",
               "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-              "exposure": 44943,
+              "exposure": "1/17",
               "f_stop": 1.6,
               "iso": 1250,
               "focal_length": "4.2 mm"
@@ -3952,7 +3952,7 @@
               "tags": ["town"],
               "camera_model": "iPhone 12 mini",
               "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-              "exposure": "7812-12-31T15:00:00.000Z",
+              "exposure": "1/7813",
               "f_stop": 1.6,
               "iso": 32,
               "focal_length": "4.2 mm"
@@ -3981,7 +3981,7 @@
               "tags": ["nature"],
               "camera_model": "iPhone 12 mini",
               "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-              "exposure": 44941,
+              "exposure": "1/15",
               "f_stop": 1.6,
               "iso": "4.2 mm",
               "focal_length": 6400
@@ -3998,7 +3998,7 @@
               "tags": ["town", "nature"],
               "camera_model": "iPhone 12 mini",
               "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-              "exposure": "4131-12-31T15:00:00.000Z",
+              "exposure": "1/4132",
               "f_stop": 1.6,
               "iso": 32,
               "focal_length": "4.2 mm"
@@ -4243,7 +4243,7 @@
               "tags": ["town"],
               "camera_model": "iPhone 12 mini",
               "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-              "exposure": "3730-12-31T15:00:00.000Z",
+              "exposure": "1/3731",
               "f_stop": 1.6,
               "iso": 32,
               "focal_length": "4.2 mm"
@@ -4484,7 +4484,7 @@
               "tags": ["event"],
               "camera_model": "iPhone 12 mini",
               "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-              "exposure": "3124-12-31T15:00:00.000Z",
+              "exposure": "1/3125",
               "f_stop": 1.6,
               "iso": 32,
               "focal_length": "4.2 mm"
@@ -4820,7 +4820,7 @@
               "tags": ["food", "relax"],
               "camera_model": "iPhone 12 mini",
               "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-              "exposure": 44951,
+              "exposure": "1/25",
               "f_stop": 1.6,
               "iso": 640,
               "focal_length": "4.2 mm"
@@ -5022,7 +5022,7 @@
               "tags": ["town", "event"],
               "camera_model": "iPhone 12 mini",
               "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-              "exposure": 44951,
+              "exposure": "1/25",
               "f_stop": 1.6,
               "iso": 640,
               "focal_length": "4.2 mm"
@@ -5164,7 +5164,7 @@
               "tags": ["attractions"],
               "camera_model": "iPhone 12 mini",
               "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-              "exposure": 44950,
+              "exposure": "1/24",
               "f_stop": 1.6,
               "iso": 640,
               "focal_length": "4.2 mm"
@@ -5194,7 +5194,7 @@
               "tags": ["attractions", "town"],
               "camera_model": "iPhone 12 mini",
               "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-              "exposure": 44956,
+              "exposure": "1/30",
               "f_stop": 1.6,
               "iso": 800,
               "focal_length": "4.2 mm"
@@ -5602,7 +5602,7 @@
               "tags": ["food"],
               "camera_model": "iPhone 12 mini",
               "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-              "exposure": 44946,
+              "exposure": "1/20",
               "f_stop": 1.6,
               "iso": 1000,
               "focal_length": "4.2 mm"
@@ -5749,7 +5749,7 @@
               "location_japanese": "\u3042\u3046\u308B\u3071\u30FC\u304F \u30D5\u30AF\u30ED\u30A6\u30AB\u30D5\u30A7\u6C60\u888B",
               "description_english": "Hedgehogs",
               "description_japanese": "\u30CF\u30EA\u30CD\u30BA\u30DF",
-              "tags": ["relax", "animals"],
+              "tags": ["relax", "animal"],
               "camera_model": "iPhone 12 mini",
               "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
               "exposure": "1/50",
@@ -5766,7 +5766,7 @@
               "location_japanese": "\u3042\u3046\u308B\u3071\u30FC\u304F \u30D5\u30AF\u30ED\u30A6\u30AB\u30D5\u30A7\u6C60\u888B",
               "description_english": "Owls",
               "description_japanese": "\u30D5\u30AF\u30ED\u30A6",
-              "tags": ["relax", "animals"],
+              "tags": ["relax", "animal"],
               "camera_model": "iPhone 12 mini",
               "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
               "exposure": "1/50",
@@ -5781,7 +5781,7 @@
               "city": "ikebukuro",
               "location_english": "Owlpark ikebukuro",
               "location_japanese": "\u3042\u3046\u308B\u3071\u30FC\u304F \u30D5\u30AF\u30ED\u30A6\u30AB\u30D5\u30A7\u6C60\u888B",
-              "tags": ["animals"],
+              "tags": ["animal"],
               "camera_model": "iPhone 12 mini",
               "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
               "exposure": "1/100",
@@ -5917,7 +5917,7 @@
               "tags": ["town", "nature"],
               "camera_model": "iPhone 12 mini",
               "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-              "exposure": "2617-12-31T15:00:00.000Z",
+              "exposure": "1/2618",
               "f_stop": 1.6,
               "iso": 32,
               "focal_length": "4.2 mm"
@@ -5951,7 +5951,7 @@
               "tags": ["event"],
               "camera_model": "iPhone 12 mini",
               "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-              "exposure": "3039-12-31T15:00:00.000Z",
+              "exposure": "1/3040",
               "f_stop": 1.6,
               "iso": 32,
               "focal_length": "4.2 mm"
@@ -6070,7 +6070,7 @@
               "tags": ["food"],
               "camera_model": "iPhone 12 mini",
               "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-              "exposure": 44951,
+              "exposure": "1/25",
               "f_stop": 1.6,
               "iso": 640,
               "focal_length": "4.2 mm"
@@ -6181,7 +6181,7 @@
               "tags": ["nature"],
               "camera_model": "iPhone 12 mini",
               "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-              "exposure": "3999-12-31T15:00:00.000Z",
+              "exposure": "1/4000",
               "f_stop": 1.6,
               "iso": 32,
               "focal_length": "4.2 mm"
@@ -6756,7 +6756,7 @@
               "tags": ["town"],
               "camera_model": "iPhone 12 mini",
               "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-              "exposure": "5290-12-31T15:00:00.000Z",
+              "exposure": "1/5291",
               "f_stop": 1.6,
               "iso": 32,
               "focal_length": "4.2 mm"
@@ -6801,7 +6801,7 @@
               "tags": ["food"],
               "camera_model": "iPhone 12 mini",
               "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-              "exposure": 44956,
+              "exposure": "1/30",
               "f_stop": 1.6,
               "iso": 800,
               "focal_length": "4.2 mm"
@@ -6978,10 +6978,10 @@
               "location_japanese": "\u30B5\u30F3\u30B7\u30E3\u30A4\u30F3\u30A2\u30AF\u30A2\u30EA\u30A6\u30E0",
               "description_english": "Jellyfish",
               "description_japanese": "\u30AD\u30AF\u30E9\u30B2",
-              "tags": ["animals", "attractions"],
+              "tags": ["animal", "attractions"],
               "camera_model": "iPhone 12 mini",
               "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-              "exposure": 44955,
+              "exposure": "1/29",
               "f_stop": 1.6,
               "iso": 800,
               "focal_length": "4.2 mm"
@@ -7037,7 +7037,7 @@
               "file_name": "IMG_5420.jpg",
               "offset": "+09:00",
               "description_english": "Christmas party~",
-              "tags": ["animals"]
+              "tags": ["animal"]
           },
           {
               "file_name": "IMG_8326.jpg",
@@ -8233,7 +8233,7 @@
             "tags": ["town"],
             "camera_model": "iPhone 12 mini",
             "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-            "exposure": 44941,
+            "exposure": "1/15",
             "f_stop": 1.6,
             "iso": 3200,
             "focal_length": "4.2mm"
@@ -9365,7 +9365,7 @@
             "tags": ["attractions"],
             "camera_model": "iPhone 12 mini",
             "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-            "exposure": "2023-01-29T15:00:00.000Z",
+            "exposure": "1/2024",
             "f_stop": 1.6,
             "iso": 1000,
             "focal_length": "4.2mm"
@@ -9563,7 +9563,7 @@
             "tags": ["food"],
             "camera_model": "iPhone 12 mini",
             "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-            "exposure": "2023-01-29T15:00:00.000Z",
+            "exposure": "1/2024",
             "f_stop": 1.6,
             "iso": 500,
             "focal_length": "4.2mm"
@@ -9777,7 +9777,7 @@
             "tags": ["town"],
             "camera_model": "iPhone 12 mini",
             "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-            "exposure": 44943,
+            "exposure": "1/17",
             "f_stop": 1.6,
             "iso": 4000,
             "focal_length": "4.2mm"
@@ -9977,7 +9977,7 @@
             "tags": ["attractions"],
             "camera_model": "iPhone 12 mini",
             "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-            "exposure": 44941,
+            "exposure": "1/15",
             "f_stop": 1.6,
             "iso": 3200,
             "focal_length": "4.2mm"
@@ -10970,7 +10970,7 @@
             "tags": ["town"],
             "camera_model": "iPhone 12 mini",
             "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-            "exposure": "2023-01-29T15:00:00.000Z",
+            "exposure": "1/2024",
             "f_stop": 1.6,
             "iso": 800,
             "focal_length": "4.2mm"
@@ -10987,7 +10987,7 @@
             "tags": ["town"],
             "camera_model": "iPhone 12 mini",
             "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-            "exposure": "2023-01-29T15:00:00.000Z",
+            "exposure": "1/2024",
             "f_stop": 1.6,
             "iso": 640,
             "focal_length": "4.2mm"
@@ -11750,7 +11750,7 @@
             "tags": ["attractions"],
             "camera_model": "iPhone 12 mini",
             "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-            "exposure": 44956,
+            "exposure": "1/30",
             "f_stop": 1.6,
             "iso": 640,
             "focal_length": "4.2mm"
@@ -12686,7 +12686,7 @@
             "tags": ["town"],
             "camera_model": "iPhone 12 mini",
             "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-            "exposure": 44956,
+            "exposure": "1/30",
             "f_stop": 1.6,
             "iso": 500,
             "focal_length": "4.2mm"
@@ -12862,7 +12862,7 @@
             "tags": ["town", "food"],
             "camera_model": "iPhone 12 mini",
             "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-            "exposure": 44956,
+            "exposure": "1/30",
             "f_stop": 1.6,
             "iso": 640,
             "focal_length": "4.2mm"
@@ -15182,7 +15182,7 @@
             "tags": ["town"],
             "camera_model": "iPhone 12 mini",
             "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-            "exposure": 44956,
+            "exposure": "1/30",
             "f_stop": 1.6,
             "iso": 1000,
             "focal_length": "4.2mm"
@@ -15358,7 +15358,7 @@
             "tags": ["town"],
             "camera_model": "iPhone 12 mini",
             "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-            "exposure": 44956,
+            "exposure": "1/30",
             "f_stop": 1.6,
             "iso": 1000,
             "focal_length": "4.2mm"
@@ -15375,7 +15375,7 @@
             "tags": ["attractions", "art"],
             "camera_model": "iPhone 12 mini",
             "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-            "exposure": 44941,
+            "exposure": "1/15",
             "f_stop": 1.6,
             "iso": 4000,
             "focal_length": "4.2mm"
@@ -15392,7 +15392,7 @@
             "tags": ["attractions"],
             "camera_model": "iPhone 12 mini",
             "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-            "exposure": 44941,
+            "exposure": "1/15",
             "f_stop": 1.6,
             "iso": 1600,
             "focal_length": "4.2mm"
@@ -15606,7 +15606,7 @@
             "tags": ["town"],
             "camera_model": "iPhone 12 mini",
             "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-            "exposure": 44956,
+            "exposure": "1/30",
             "f_stop": 1.6,
             "iso": 800,
             "focal_length": "4.2mm"
@@ -15623,7 +15623,7 @@
             "tags": ["attractions", "town"],
             "camera_model": "iPhone 12 mini",
             "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-            "exposure": 44956,
+            "exposure": "1/30",
             "f_stop": 1.6,
             "iso": 500,
             "focal_length": "4.2mm"
@@ -15843,7 +15843,7 @@
             "tags": ["attractions"],
             "camera_model": "iPhone 12 mini",
             "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-            "exposure": 44943,
+            "exposure": "1/17",
             "f_stop": 1.6,
             "iso": 1000,
             "focal_length": "4.2mm"
