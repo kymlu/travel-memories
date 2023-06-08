@@ -32,7 +32,8 @@ let now = null;
 let isHandleGrabbed = false;
 let grabbedHandleId = null;
 let searchTerm = ["", ""];
-let isFullscreenFirst = true;
+let isNewFullscreenInstance = true;
+let lastSwipeTime = null;
 
 const defaultTimeout = 500;
 
@@ -52,8 +53,8 @@ const tags = [
 	},
 	{
 		"id": "attraction",
-		"english_name": "Attractions and Museums",
-		"japanese_name": "観光地・博物館・美術館"
+		"english_name": "Attractions",
+		"japanese_name": "観光地"
 	},
 	{
 		"id": "art",
@@ -236,6 +237,13 @@ function createTemplates() {
 	polaroid.classList.add("transparent");
 	polaroid.title = getBilingualText("Expand image", "画像を拡大する");
 
+	var polaroidPin = document.createElement("div");
+	polaroidPin.classList.add("polaroid-pin");
+	var polaroidPinShine = document.createElement("div");
+	polaroidPinShine.classList.add("polaroid-pin-shine");
+	polaroidPin.appendChild(polaroidPinShine);
+	polaroid.appendChild(polaroidPin);
+
 	polaroidImgFrame = document.createElement("div");
 	polaroidImgFrame.classList.add("polaroid-img");
 	polaroidImg = document.createElement("img");
@@ -312,7 +320,7 @@ function createGallery() {
 		let angle = 1; // 1-4 for the rotation class
 		selectedPref.image_list.forEach(img => {
 			// clone all relevant nodes
-			let pol = polaroid.cloneNode();
+			let pol = polaroid.cloneNode(true);
 			let polImgFrame = polaroidImgFrame.cloneNode();
 			let polImg = polaroidImg.cloneNode();
 			let polCaption = polaroidCaption.cloneNode();
@@ -346,7 +354,9 @@ function createGallery() {
 			pol.addEventListener("click", function () {
 				selectedPicture = img;
 				selectedPictureIndex = selectedPref.image_list.indexOf(selectedPicture);
+				isNewFullscreenInstance = true;
 				setFullscreenPicture();
+				lastSwipeTime = new Date();
 				openFullscreen();
 			});
 			polImg.onload = function () {
@@ -439,7 +449,7 @@ function changeFullscreenPicture(isForward) {
 		}
 	}
 	selectedPicture = selectedPref.image_list[selectedPictureIndex];
-	setFullscreenPicture();
+	setFullscreenPicture(isForward);
 }
 
 function search(searchTerm) {
@@ -454,11 +464,47 @@ function searchJapanese() {
 	search(searchTerm[1])
 }
 
-function setFullscreenPicture() {
+function setFullscreenPicture(isForward) {
 	document.getElementById("search-eng").removeEventListener("click", searchEnglish);
 	document.getElementById("search-jp").removeEventListener("click", searchJapanese);
+	document.getElementById("tags").replaceChildren();
 
-	document.getElementById("fullscreen-pic").src = selectedPicture.link ?? "img/" + selectedPref.english_name.toLowerCase() + "/" + selectedPicture.file_name;
+	var src = selectedPicture.link ?? "img/" + selectedPref.english_name.toLowerCase() + "/" + selectedPicture.file_name;
+
+	if (isNewFullscreenInstance || (new Date() - lastSwipeTime) < 300) {
+		document.getElementById("fullscreen-pic").src = src;
+		isNewFullscreenInstance = false;
+	} else {
+		var nextPic = document.getElementById("fullscreen-pic-next");
+		var currentPic = document.getElementById("fullscreen-pic");
+		
+		nextPic.style.display = "none";
+		nextPic.src = src;
+		nextPic.classList.add(isForward ? "fullscreen-pic-out-left":"fullscreen-pic-out-right");
+
+		setTimeout(() => {
+			nextPic.style.display = "block";
+			nextPic.classList.remove("transparent");
+			nextPic.classList.remove(isForward ? "fullscreen-pic-out-left":"fullscreen-pic-out-right");
+			currentPic.classList.add(isForward ? "fullscreen-pic-out-right" : "fullscreen-pic-out-left");
+			currentPic.classList.add("transparent");
+
+			setTimeout(() => {
+				currentPic.style.display = "none";
+				currentPic.src = src;
+				currentPic.classList.remove(isForward ? "fullscreen-pic-out-right" : "fullscreen-pic-out-left");
+				currentPic.classList.remove("transparent");
+				setTimeout(() => {
+					currentPic.style.display = "block";
+					nextPic.style.display = "none";
+					//nextPic.classList.add("transparent");
+					nextPic.classList.remove("fullscreen-pic-in");
+				}, 100);
+			}, 100);
+		}, 20);
+
+		lastSwipeTime = new Date();
+	}
 
 	let date = getPictureDate(new Date(selectedPicture.date), -540);
 	document.getElementById("fullscreen-eng-date").innerHTML = getEnglishDate(date, true);
@@ -475,16 +521,46 @@ function setFullscreenPicture() {
 	document.getElementById("fullscreen-eng-caption").innerHTML = selectedPicture.description_english;
 	document.getElementById("fullscreen-jp-caption").innerHTML = selectedPicture.description_japanese;
 
-	document.getElementById("technical-info").innerHTML = (selectedPicture.f_stop ? "\u0192/"+selectedPicture.f_stop + " " : "") + selectedPicture.shutter_speed ?? "" + selectedPicture.iso ?? "" + selectedPicture.focal_length ?? "";
+	document.getElementById("camera-info").innerHTML = (selectedPicture.camera_model ? selectedPicture.camera_model + " ": "");
+	document.getElementById("lens-info").innerHTML = (selectedPicture.lens ? selectedPicture.lens + " ": "");
+	
+	document.getElementById("technical-info").replaceChildren();
+	var tempElement = null;
+	if(selectedPicture.f_stop){
+		tempElement = document.createElement("div");
+		tempElement.innerHTML = "\u0192/" + selectedPicture.f_stop;
+		document.getElementById("technical-info").appendChild(tempElement);
+	}
+	if(selectedPicture.exposure){
+		tempElement = document.createElement("div");
+		tempElement.innerHTML = selectedPicture.exposure;
+		document.getElementById("technical-info").appendChild(tempElement);
+	}
+	if(selectedPicture.iso){
+		tempElement = document.createElement("div");
+		tempElement.innerHTML = "iso " + selectedPicture.iso;
+		document.getElementById("technical-info").appendChild(tempElement);
+	}
+	// if(selectedPicture.focal_length){
+	// 	tempElement = document.createElement("div");
+	// 	tempElement.innerHTML = selectedPicture.focal_length;
+	// 	document.getElementById("technical-info").appendChild(tempElement);
+	// }
+
+	selectedPicture.tags.forEach(tag => {
+		tempElement = document.createElement("div");
+		tempElement.classList.add("img-tag");
+		var tempTag = tags.find(function (t) {return t.id == tag});
+		tempElement.innerHTML = getBilingualText(tempTag.english_name, tempTag.japanese_name);
+		document.getElementById("tags").appendChild(tempElement);
+	})
 }
 
 function openFullscreen() {
 	// set up not visible by default
-	if (isFullscreenFirst && window.innerHeight > window.innerWidth) {
-		isPicInfoVisible = false;
-		isFullscreenFirst = false;
+	if (window.innerHeight > window.innerWidth) {
+		hidePicInfo();
 	}
-	
 	isFullscreen = true;
 	document.body.style.overflowY = "hidden";
 	document.getElementById("fullscreen").style.visibility = "visible";
@@ -557,9 +633,19 @@ function moveFullscreenSwipe(e) {
 
 	if (Math.abs(diffX) > Math.abs(diffY)) {
 		if (diffX > 0) {
-			changeFullscreenPicture(true);
-		} else {
 			changeFullscreenPicture(false);
+		} else {
+			changeFullscreenPicture(true);
+		}
+	} else {
+		if (diffY > 0) {
+			if (!isPicInfoVisible) {
+				showPicInfo();
+			}
+		} else {
+			if (isPicInfoVisible) {
+				hidePicInfo();
+			}
 		}
 	}
 
@@ -693,21 +779,24 @@ function scrollPrefInfo() {
 
 function showPicInfo() {
 	isPicInfoVisible = true;
-	var element = document.getElementById("pic-info");
+	document.getElementById("pic-info").style.display="flex";
+	var element = document.getElementById("pic-info-drawer");
+	//TODO: transition on first portrait mode open
 	element.style.display = "flex";
 	setTimeout(() => {
 		element.style.bottom = "0";
 		element.style.marginRight = "0px";
-	}, 10);
+	}, 20);
 }
 
 function hidePicInfo() {
 	isPicInfoVisible = false;
-	var element = document.getElementById("pic-info");
+	var element = document.getElementById("pic-info-drawer");
 	element.style.bottom = "-" + element.getBoundingClientRect().height + "px";
 	element.style.marginRight = "-" + element.getBoundingClientRect().width + "px";
 	setTimeout(() => {
 		element.style.display = "none";
+		document.getElementById("pic-info").style.display="none";
 	}, defaultTimeout);
 }
 
@@ -879,7 +968,7 @@ function setupSite() {
 	document.getElementById("left-arrow").addEventListener("click", (event) => {
 		event.stopPropagation();
 	});
-	document.getElementById("fullscreen-frame").addEventListener("click", (event) => {
+	document.getElementById("fullscreen-pic").addEventListener("click", (event) => {
 		event.stopPropagation();
 	});
 	document.getElementById("right-arrow").addEventListener("click", (event) => {
@@ -887,6 +976,10 @@ function setupSite() {
 	});
 	document.getElementById("left-arrow").addEventListener("click", function () { changeFullscreenPicture(false); });
 	document.getElementById("right-arrow").addEventListener("click", function () { changeFullscreenPicture(true); });
+	document.getElementById("pic-info-bg").addEventListener("click", function () { hidePicInfo(); });
+	document.getElementById("pic-info-drawer").addEventListener("click", (event) => {
+		event.stopPropagation();
+	});
 	document.getElementById("japan-map-mini").addEventListener("load", filterMiniMap);
 	document.getElementById("japan-map").addEventListener("load", colourMap);
 	document.getElementById("map-instructions").addEventListener("click", openInfoPopup);

@@ -96,27 +96,35 @@
       <div id="fullscreen-bg" class="popup-bg opacity-transition transparent" style="z-index: 0;"></div>
       <div id="fullscreen-ctrl" class="fullscreen-ctrl" style="z-index: 1;">
         <div id="left-arrow" class="large-icon fullscreen-arrow">&#xf0d9</div>
-        <div id="fullscreen-frame" class="fullscreen-frame">
-          <img id="fullscreen-pic" class="fullscreen-pic" src="img/BFD9CC0C-53AB-4F00-851A-AAB2D06A37A6.jpeg" />
+        <div>
+          <img id="fullscreen-pic-next" class="fullscreen-pic transparent centered" style="display: none; position: absolute;" src="img/BFD9CC0C-53AB-4F00-851A-AAB2D06A37A6.jpeg" />
+          <img id="fullscreen-pic" class="fullscreen-pic centered" style="position: absolute;" src="img/BFD9CC0C-53AB-4F00-851A-AAB2D06A37A6.jpeg" />
         </div>
         <div id="right-arrow" class="large-icon fullscreen-arrow">&#xf0da</div>
       </div>
-      <div id="pic-info-btn" class="large-icon pic-info-btn" style="z-index: 10;">&#xf05a</div>
+      <div id="pic-info-btn" class="large-icon pic-info-btn" style="z-index: 3;">&#xf05a</div>
     </div>
-    <div id="pic-info" class="pic-info" style="z-index: 1;">
-      <div id="pic-info-close-btn" class="large-icon close-button portrait-only">&#xf00d</div>
-      <div id="pic-info-handle" style="align-self: center;">
-        <hr class="drawer-handle"/>
-      </div>
-      <div id="fullscreen-eng-date" class="caption-text"></div>
-        <div class="caption-text"><span id="fullscreen-eng-city"></span> <span id="search-eng" class="search-icon">&#xf002</span></div>
-      <div id="fullscreen-eng-caption" class="caption-text"></div>
-      <hr class="divider">
-      <div id="fullscreen-jp-date" class="caption-text"></div>
-      <div class="caption-text"><span id="fullscreen-jp-city"></span> <span id="search-jp" class="search-icon">&#xf002</span></div>
-      <div id="fullscreen-jp-caption" class="caption-text"></div>
-      <div id="technical-info" class="caption-text"></div>
-      <div id="tags" style="display: flex; flex-wrap: wrap; gap: 5px;">
+    <div id="pic-info" style="z-index: 3;">
+      <div id="pic-info-bg" class="portrait-only popup-bg transparent"></div>
+      <div id="pic-info-drawer" class="pic-info">
+        <div id="pic-info-close-btn" class="large-icon close-button portrait-only">&#xf00d</div>
+        <div id="pic-info-handle" style="align-self: center;">
+          <hr class="drawer-handle" />
+        </div>
+        <div id="fullscreen-eng-date" class="caption-text"></div>
+        <div class="caption-text"><span id="fullscreen-eng-city"></span> <span id="search-eng"
+            class="search-icon">&#xf002</span></div>
+        <div id="fullscreen-eng-caption" class="caption-text"></div>
+        <hr class="divider">
+        <div id="fullscreen-jp-date" class="caption-text"></div>
+        <div class="caption-text"><span id="fullscreen-jp-city"></span> <span id="search-jp"
+            class="search-icon">&#xf002</span></div>
+        <div id="fullscreen-jp-caption" class="caption-text"></div>
+        <hr class="divider">
+        <div id="camera-info" class="caption-text"></div>
+        <div id="lens-info" class="caption-text"></div>
+        <div id="technical-info" class="caption-text" style="display: flex; gap: 20px;"></div>
+        <div id="tags" style="display: flex; flex-wrap: wrap; gap: 10px;"></div>
       </div>
     </div>
   </div>
