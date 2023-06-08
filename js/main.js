@@ -345,10 +345,16 @@ function createGallery() {
 
 			// add info
 			let date = getPictureDate(new Date(img.date), -540);
-			polDateEn.innerHTML = getEnglishDate(date, false);
-			polDateJp.innerHTML = getJapaneseDate(date, false);
-			polCaptionTextEn.innerHTML = img.description_english;
-			polCaptionTextJp.innerHTML = img.description_japanese;
+			if(date){
+				polDateEn.innerHTML = getEnglishDate(date, false);
+				polDateJp.innerHTML = getJapaneseDate(date, false);
+			}
+			if(img.description_english){
+				polCaptionTextEn.innerHTML = img.description_english;
+			}
+			if(img.description_japanese){
+				polCaptionTextJp.innerHTML = img.description_japanese;
+			}
 
 			// listeners
 			pol.addEventListener("click", function () {
@@ -507,22 +513,44 @@ function setFullscreenPicture(isForward) {
 	}
 
 	let date = getPictureDate(new Date(selectedPicture.date), -540);
-	document.getElementById("fullscreen-eng-date").innerHTML = getEnglishDate(date, true);
-	document.getElementById("fullscreen-jp-date").innerHTML = getJapaneseDate(date, true);
+	document.getElementById("fullscreen-eng-date").innerHTML = date ? getEnglishDate(date, true) : "No date";
+	document.getElementById("fullscreen-jp-date").innerHTML = date ? getJapaneseDate(date, true) : "不明な日付";
 
 	let area = selectedPref.areas.find(function (area) { return area.id == selectedPicture.city });
-	searchTerm[0] = (selectedPicture.location_english ? (selectedPicture.location_english + ", ") : "") + area.english_name;
+	searchTerm[0] = (selectedPicture.location_english ? (selectedPicture.location_english + ", ") : "") + (area.english_name ?? "");
 	document.getElementById("fullscreen-eng-city").innerHTML = searchTerm[0];
 	document.getElementById("search-eng").addEventListener("click", searchEnglish);
-	searchTerm[1] = area.japanese_name + (selectedPicture.location_japanese ? ("、" + selectedPicture.location_japanese + "") : "");
+	searchTerm[1] = (area.japanese_name ?? "") + (selectedPicture.location_japanese ? ("、" + selectedPicture.location_japanese + "") : "");
 	document.getElementById("fullscreen-jp-city").innerHTML = searchTerm[1];
 	document.getElementById("search-jp").addEventListener("click", searchJapanese);
 
-	document.getElementById("fullscreen-eng-caption").innerHTML = selectedPicture.description_english;
-	document.getElementById("fullscreen-jp-caption").innerHTML = selectedPicture.description_japanese;
+	
+	if (selectedPicture.description_english) {
+		document.getElementById("fullscreen-eng-caption").style.display = "initial";
+		document.getElementById("fullscreen-eng-caption").innerHTML = selectedPicture.description_english;
+	} else {
+		document.getElementById("fullscreen-eng-caption").style.display = "none";
+	}
+	if (selectedPicture.description_japanese) {
+		document.getElementById("fullscreen-jp-caption").style.display = "initial";
+		document.getElementById("fullscreen-jp-caption").innerHTML = selectedPicture.description_japanese;
+	} else {
+		document.getElementById("fullscreen-jp-caption").style.display = "none";
+	}
 
-	document.getElementById("camera-info").innerHTML = (selectedPicture.camera_model ? selectedPicture.camera_model + " ": "");
-	document.getElementById("lens-info").innerHTML = (selectedPicture.lens ? selectedPicture.lens + " ": "");
+	if (selectedPicture.camera_model) {
+		document.getElementById("camera-info").style.display = "initial";
+		document.getElementById("camera-info").innerHTML = selectedPicture.camera_model;
+	} else {
+		document.getElementById("camera-info").style.display = "none";
+	}
+	
+	if (selectedPicture.lens) {
+		document.getElementById("lens-info").style.display = "initial";
+		document.getElementById("lens-info").innerHTML = selectedPicture.lens;
+	} else {
+		document.getElementById("lens-info").style.display = "none";
+	}
 	
 	document.getElementById("technical-info").replaceChildren();
 	var tempElement = null;
@@ -779,7 +807,7 @@ function scrollPrefInfo() {
 
 function showPicInfo() {
 	isPicInfoVisible = true;
-	document.getElementById("pic-info").style.display="flex";
+	document.getElementById("pic-info").style.display = "flex";
 	var element = document.getElementById("pic-info-drawer");
 	//TODO: transition on first portrait mode open
 	element.style.display = "flex";
@@ -796,7 +824,7 @@ function hidePicInfo() {
 	element.style.marginRight = "-" + element.getBoundingClientRect().width + "px";
 	setTimeout(() => {
 		element.style.display = "none";
-		document.getElementById("pic-info").style.display="none";
+		document.getElementById("pic-info").style.display = "none";
 	}, defaultTimeout);
 }
 

@@ -710,7 +710,7 @@ visited-pref-text:active {
   color: white;
 }
 
-.pic-info {
+.pic-info-container {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -724,7 +724,7 @@ visited-pref-text:active {
 }
 
 @media only screen and (orientation: portrait) {
-  .pic-info {
+  .pic-info-container {
     display: none;
     position: fixed;
     bottom: 0;
@@ -733,6 +733,11 @@ visited-pref-text:active {
     padding: 10px 20px 20px 20px;
     border-radius: 20px 20px 0px 0px;
   }
+}
+
+.pic-info-details {
+  gap: 15px;
+  width: 100%;
 }
 
 .pic-info-btn {
