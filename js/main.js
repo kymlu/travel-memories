@@ -36,6 +36,7 @@ let isNewFullscreenInstance = true;
 let lastSwipeTime = null;
 
 const defaultTimeout = 500;
+const jpnTimeDiff = -540;
 
 let initialX = null;
 let initialY = null;
@@ -100,16 +101,37 @@ function getBilingualText(english, japanese) {
 
 function getPictureDate(date, picOffset){
 	const localOffset = now.getTimezoneOffset();
-	console.log(new Date(date.getTime() + (picOffset - localOffset) * 60000), date);
-	return new Date(date.getTime() + (picOffset - localOffset) * 60000);
+	return new Date(date.getTime() - (picOffset - localOffset) * 60000);
 }
 
 function getEnglishDate(date, isFullDate) {
-	return monthNames[date.getMonth()] + " " + date.getDate() + ", " + date.getFullYear() + (isFullDate ? " " + date.getHours().toString().padStart(2, "0") + ":" + date.getMinutes().toString().padStart(2, "0") + ":" + date.getSeconds().toString().padStart(2, "0") : "");
+	var hours = date.getHours();
+	return monthNames[date.getMonth()] + " " + 
+		date.getDate() + ", " + 
+		date.getFullYear() + 
+		(isFullDate ? 
+			" " + (hours > 12 ? hours - 12 : hours).toString() + ":" + 
+			date.getMinutes().toString().padStart(2, "0") + ":" + 
+			date.getSeconds().toString().padStart(2, "0")  + 
+			(hours >= 12 ? "PM" : "AM") 
+			: "");
 }
 
 function getJapaneseDate(date, isFullDate) {
-	return date.getFullYear() + "年" + (date.getMonth() + 1) + "月" + date.getDate() + "日" + (isFullDate ? " " + date.getHours().toString().padStart(2, "0") + ":" + date.getMinutes().toString().padStart(2, "0") + ":" + date.getSeconds().toString().padStart(2, "0") : "");
+	var hours = date.getHours();
+	return date.getFullYear() + "年" + 
+		(date.getMonth() + 1) + "月" + 
+		date.getDate() + "日" + 
+		(isFullDate ? 
+			" " + (hours >= 12 ? "午後" : "午前") + 
+			(hours > 12 ? hours - 12 : hours).toString() + ":" + 
+			date.getMinutes().toString().padStart(2, "0") + ":" + 
+			date.getSeconds().toString().padStart(2, "0") 
+			: "");
+}
+
+function isPortraitMode(){
+	return window.innerHeight > window.innerWidth;
 }
 
 // Prefecture List
@@ -351,7 +373,7 @@ function createGallery() {
 
 			// add info
 			if(img.date){
-				let date = new Date(img.date);
+				let date = getPictureDate(new Date(img.date), jpnTimeDiff);
 				polDateEn.innerHTML = getEnglishDate(date, false);
 				polDateJp.innerHTML = getJapaneseDate(date, false);
 			} else {
@@ -512,17 +534,16 @@ function setFullscreenPicture(isForward) {
 				setTimeout(() => {
 					currentPic.style.display = "block";
 					nextPic.style.display = "none";
-					//nextPic.classList.add("transparent");
+					nextPic.classList.add("transparent");
 					nextPic.classList.remove("fullscreen-pic-in");
 				}, 100);
 			}, 100);
 		}, 20);
-
-		lastSwipeTime = new Date();
 	}
+	lastSwipeTime = new Date();
 
 	if(selectedPicture.date){
-		let date = new Date(selectedPicture.date);
+		let date = getPictureDate(new Date(img.date), jpnTimeDiff);
 		document.getElementById("fullscreen-eng-date").innerHTML = getEnglishDate(date, true);
 		document.getElementById("fullscreen-jp-date").innerHTML = getJapaneseDate(date, true);
 	} else {
@@ -533,7 +554,7 @@ function setFullscreenPicture(isForward) {
 	searchTerm[0] = (selectedPicture.location_english ? (selectedPicture.location_english + ", ") : "") + (area.english_name ?? "");
 	document.getElementById("fullscreen-eng-city").innerHTML = searchTerm[0];
 	document.getElementById("search-eng").addEventListener("click", searchEnglish);
-	searchTerm[1] = (area.japanese_name ?? "") + (selectedPicture.location_japanese ? ("、" + selectedPicture.location_japanese + "") : "");
+	searchTerm[1] = (area.japanese_name ?? "") + (selectedPicture.location_japanese ? ("　" + selectedPicture.location_japanese + "") : "");
 	document.getElementById("fullscreen-jp-city").innerHTML = searchTerm[1];
 	document.getElementById("search-jp").addEventListener("click", searchJapanese);
 
@@ -599,8 +620,7 @@ function setFullscreenPicture(isForward) {
 }
 
 function openFullscreen() {
-	// set up not visible by default
-	if (window.innerHeight > window.innerWidth) {
+	if (isPortraitMode()) {
 		hidePicInfo();
 	}
 	isFullscreen = true;
@@ -680,7 +700,7 @@ function moveFullscreenSwipe(e) {
 					showPicInfo();
 				}
 			} else {
-				if (isPicInfoVisible) {
+				if (isPicInfoVisible && document.getElementById("pic-info-details").scrollTop == 0) {
 					hidePicInfo();
 				}
 			}
@@ -973,13 +993,15 @@ function setupSite() {
 	japanTitle = getBilingualText("JAPAN", "日本");
 	document.getElementById("main-title").innerHTML = japanTitle;
 	document.getElementById("dates-title").innerHTML = getBilingualText("Dates visited", "訪れた日付");
-	document.getElementById("cities-title").innerHTML = getBilingualText("Cities and significant places visited", "訪れた都市・名所");
+	document.getElementById("cities-title").innerHTML = getBilingualText("Cities and significant places visited", "訪れた所");
 	document.getElementById("description-title").innerHTML = getBilingualText("Description etc.", "説明など");
 	document.getElementById("pic-info-btn").title = getBilingualText("See picture information", "写真の情報を見る");
 	document.getElementById("map-btn").title = getBilingualText("Return to map", "地図に戻る");
 	document.getElementById("pref-title").title = getBilingualText("Toggle prefecture info", "都道府県の情報をトグル");
 	document.getElementById("info-btn").title = getBilingualText("About the site", "このサイトについて");
-	document.getElementById("map-instructions").innerHTML = getBilingualText("Select a prefecture to see pictures from that location, or click here to see all pictures", "都道府県を選択して、その地域の写真を表示する。または、こちらを選択して、全部の写真を表示する。");
+	document.getElementById("map-instructions").innerHTML = getBilingualText(
+		"Select a prefecture to see pictures from that location, or click here to see all pictures", 
+		"都道府県を選択して、その地域の写真を表示する。または、こちらを選択して、全部の写真を表示する。");
 	document.getElementById("left-arrow").title = getBilingualText("Previous picture", "前の写真");
 	document.getElementById("right-arrow").title = getBilingualText("Next picture", "次の写真");
 	document.getElementById("search-eng").title = getBilingualText("Google in English", "英語でググる");

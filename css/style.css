@@ -126,12 +126,12 @@ body {
   flex-direction: row;
   gap: 15px;
   align-content: stretch;
+  overflow-y: auto;
 }
 
 @media only screen and (orientation: portrait) {
   .pref-info {
     flex-direction: column;
-    overflow-y: auto;
   }
 }
 
@@ -696,7 +696,7 @@ visited-pref-text:active {
   border-radius: 15px;
   max-height: 80vh;
   max-width: 50vw;
-  transition: opacity 0.1s ease-in, translate 0.1s ease-in;
+  transition: opacity 0.133s ease-in, translate 0.133s ease-in;
 }
 
 @media only screen and (orientation: portrait) {
@@ -765,6 +765,7 @@ visited-pref-text:active {
 }
 
 .divider {
+  min-height: 2px;
   height: 2px;
   width: 100%;
   background-color: var(--main-color);
