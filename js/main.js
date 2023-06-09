@@ -543,7 +543,7 @@ function setFullscreenPicture(isForward) {
 	lastSwipeTime = new Date();
 
 	if(selectedPicture.date){
-		let date = getPictureDate(new Date(img.date), jpnTimeDiff);
+		let date = getPictureDate(new Date(selectedPicture.date), jpnTimeDiff);
 		document.getElementById("fullscreen-eng-date").innerHTML = getEnglishDate(date, true);
 		document.getElementById("fullscreen-jp-date").innerHTML = getJapaneseDate(date, true);
 	} else {
