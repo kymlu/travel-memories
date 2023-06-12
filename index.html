@@ -9,14 +9,14 @@
 <body class="page-bg">
   <!-- Top bar -->
   <div id="top-bar" class="top-bar transparent" style="z-index: 5000;">
-    <div id="map-btn" class="text-main-color large-icon"
-      style="display: none; z-index: 5001;">&#xf279</div>
+    <button id="map-btn" class="text-main-color large-icon"
+      style="display: none; z-index: 5001;">&#xf279</button>
     <div id="pref-title" class="pref-title">
       <div id="pref-name" class="regular-text bold-text" style="display: none;"></div>
       <!-- <div id="pref-name-btn-up" class="text-main-color large-icon" style="display: none">&#xf0d7</div> -->
-      <div id="pref-name-arrow" class="text-main-color large-icon transform-transition down-arrow" style="display: none">&#xf0d8</div>
+      <button id="pref-name-arrow" class="text-main-color large-icon transform-transition down-arrow" style="display: none">&#xf0d8</button>
     </div>
-    <div id="info-btn" class="text-main-color large-icon">&#xf05a</div>
+    <button id="info-btn" class="text-main-color large-icon">&#xf05a</button>
   </div>
 
   <!-- Map Page (Map and Prefecture List) -->
@@ -59,6 +59,7 @@
 
   <!-- Timeline and Picture Gallery -->
   <div style="scroll-snap-align: start;">
+    <button id="filter-btn" class="filter-btn large-icon"> &#xf0b0</button>
     <div class="landscape-only" style="position: absolute;">
       <div id="timeline" class="timeline">
         <div id="left-column" class="timeline-column left"></div>
@@ -69,13 +70,44 @@
   </div>
 
   <!-- Scroll to top btn -->
-  <div id="to-top-btn" class="large-icon floating-btn transparent opacity-transition">&#xf102</div>
+  <button id="to-top-btn" class="large-icon floating-btn transparent opacity-transition">&#xf102</button>
+
+  <!-- Filter Popup -->
+  <div id="filter-popup" class="hidden-popup" style="z-index: 10000;">
+    <div id="filter-popup-bg" class="popup-bg opacity-transition transparent"></div>
+    <div id="img-filter-popup" class="popup centered transparent">
+      <button id="filter-popup-close-btn" class="large-icon close-btn">&#xf00d</button>
+      <div id="filters" class="flex-column popup-content transparent opacity-transition" style="height: 100%">
+        <div class="flex-column" style="justify-content: space-between; height: 100%;">
+          <div class="flex-column" style="gap: 15px;">
+            <div id="filter-title" class="bold-text"></div>
+            <div>
+              <label id="keyword-title" class="bold-text" for="keyword"></label><br>
+              <input type="text" id="keyword"><br>
+            </div>
+            <div>
+              <label id="location-title" class="bold-text"></label><br>
+              <div id="location-list" class="tag-list"></div>
+            </div>
+            <div>
+              <label id="tags-title" class="bold-text"></label><br>
+              <div id="tags-list" class="tag-list"></div>
+            </div>
+          </div>
+          <div style="display: flex; width: 100%; justify-content: center; gap: 15px; margin-top: 15px;">
+            <button id="clear-btn" class="action-btn"></button>
+            <button id="submit-btn" class="action-btn"></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Info Popup -->
   <div id="info-popup" class="hidden-popup" style="z-index: 10000;">
     <div id="popup-bg" class="popup-bg opacity-transition transparent"></div>
     <div id="site-info-popup" class="popup centered transparent">
-      <div id="info-popup-close-btn" class="large-icon close-btn">&#xf00d</div>
+      <button id="info-popup-close-btn" class="large-icon close-btn">&#xf00d</button>
       <div id="site-info" class="flex-column opacity-transition popup-content transparent">
         <div class="regular-text">
           <p class="bold-text">About this site</p>
@@ -98,19 +130,19 @@
     <div id="fullscreen-gallery" class="fullscreen-gallery">
       <div id="fullscreen-bg" class="popup-bg opacity-transition transparent" style="z-index: 0;"></div>
       <div id="fullscreen-ctrl" class="fullscreen-ctrl" style="z-index: 1;">
-        <div id="left-arrow" class="large-icon fullscreen-arrow">&#xf0d9</div>
+        <button id="left-arrow" class="large-icon fullscreen-arrow">&#xf0d9</button>
         <div>
           <img id="fullscreen-pic-next" class="fullscreen-pic transparent centered" style="display: none; position: absolute;" src="img/BFD9CC0C-53AB-4F00-851A-AAB2D06A37A6.jpeg" />
           <img id="fullscreen-pic" class="fullscreen-pic centered" style="position: absolute;" src="img/BFD9CC0C-53AB-4F00-851A-AAB2D06A37A6.jpeg" />
         </div>
-        <div id="right-arrow" class="large-icon fullscreen-arrow">&#xf0da</div>
+        <button id="right-arrow" class="large-icon fullscreen-arrow">&#xf0da</button>
       </div>
-      <div id="pic-info-btn" class="large-icon pic-info-btn" style="z-index: 3;">&#xf05a</div>
+      <button id="pic-info-btn" class="large-icon pic-info-btn" style="z-index: 3;">&#xf05a</button>
     </div>
     <div id="pic-info" style="z-index: 3;">
       <div id="pic-info-bg" class="portrait-only popup-bg transparent"></div>
       <div id="pic-info-drawer" class="pic-info-container">
-        <div id="pic-info-close-btn" class="large-icon close-btn portrait-only">&#xf00d</div>
+        <button id="pic-info-close-btn" class="large-icon close-btn portrait-only">&#xf00d</button>
         <div id="pic-info-handle" style="align-self: center;">
           <hr class="drawer-handle" />
         </div>
@@ -128,7 +160,7 @@
           <div id="camera-info"></div>
           <div id="lens-info"></div>
           <div id="technical-info" style="display: flex; gap: 20px; flex-wrap: wrap;"></div>
-          <div id="tags" style="display: flex; flex-wrap: wrap; gap: 10px;"></div>
+          <div id="img-tags" class="tag-list"></div>
         </div>
       </div>
     </div>
