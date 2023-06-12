@@ -646,7 +646,7 @@ visited-pref-text:active {
   }
 }
 
-.close-button {
+.close-btn {
   position: absolute;
   top: 15px;
   left: 15px;
@@ -785,33 +785,7 @@ visited-pref-text:active {
   text-align: center;
 }
 
-/* Other */
-.transparent {
-  opacity: 0%;
-}
-
-.opacity-transition {
-  transition: opacity 0.5s ease-in-out;
-}
-
-.opacity-transform-transition {
-  transition: opacity 0.5s ease-in-out, transform 0.25s ease-in-out;
-}
-
-.flex-column {
-  display: flex;
-  flex-direction: column;
-}
-
-.page-bg {
-  display: flex;
-  margin: 0px;
-  padding: 0px;
-  flex-direction: column;
-  scroll-snap-type: y mandatory;
-  scroll-snap-stop: always;
-}
-
+/* loading screen */
 .loading-screen {
   background-color: white;
   position: fixed;
@@ -896,4 +870,44 @@ visited-pref-text:active {
   text-align: center;
   border-radius: 5px;
   background-color: var(--main-color);
+}
+
+/* Other */
+.transparent {
+  opacity: 0%;
+}
+
+.opacity-transition {
+  transition: opacity 0.5s ease-in-out;
+}
+
+.opacity-transform-transition {
+  transition: opacity 0.5s ease-in-out, transform 0.25s ease-in-out;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.page-bg {
+  display: flex;
+  margin: 0px;
+  padding: 0px;
+  flex-direction: column;
+  scroll-snap-type: y mandatory;
+  scroll-snap-stop: always;
+}
+
+.floating-btn {
+  position: fixed;
+  bottom: 15px;
+  right: 15px;
+  color: white;
+  background-color: var(--main-color);
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  text-align: center;
+  vertical-align: middle;
 }

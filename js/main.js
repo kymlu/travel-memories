@@ -25,7 +25,6 @@ let isFullscreen = false;
 let isPrefInfoVisible = false;
 let throttlePrefInfo = false;
 let isPicInfoVisible = true;
-let currentFilter = "";
 let data = null;
 let japanTitle = null;
 let now = null;
@@ -34,6 +33,7 @@ let grabbedHandleId = null;
 let searchTerm = ["", ""];
 let isNewFullscreenInstance = true;
 let lastSwipeTime = null;
+let isToTopVisible = false;
 
 const defaultTimeout = 500;
 const jpnTimeDiff = -540;
@@ -94,6 +94,50 @@ let polaroid, polaroidImgFrame, polaroidImg, polaroidCaption, polaroidCaptionTex
 
 let appColor = "#be0029";
 
+// General
+function isPortraitMode(){
+	return window.innerHeight > window.innerWidth;
+}
+
+function shuffle(array) {
+	let currentIndex = array.length, randomIndex;
+
+	// While there remain elements to shuffle.
+	while (currentIndex != 0) {
+
+		// Pick a remaining element.
+		randomIndex = Math.floor(Math.random() * currentIndex);
+		currentIndex--;
+
+		// And swap it with the current element.
+		[array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+	}
+
+	return array;
+}
+
+function scrollToTop(isSmooth){
+	window.scrollTo({
+		top: 0,
+		left: 0,
+		behavior: isSmooth ? 'smooth' : "instant"
+	});
+}
+
+function showHideFloatingBtn(){
+	var btn = document.getElementById("to-top-btn");
+	var threshold = 500;
+	if(!isToTopVisible && document.body.scrollTop > threshold){
+		btn.style.display = "inline";
+		btn.classList.remove("transparent");
+		isToTopVisible = true;
+	} else if (isToTopVisible && document.body.scrollTop <= threshold) {
+		btn.classList.add("transparent");
+		setTimeout(() => { btn.style.display = "none"; }, defaultTimeout)
+		isToTopVisible = false;
+	}
+}
+
 // Text
 function getBilingualText(english, japanese) {
 	return english + " — " + japanese;
@@ -129,13 +173,9 @@ function getJapaneseDate(date, isFullDate) {
 			date.getSeconds().toString().padStart(2, "0") 
 			: "");
 }
-
-function isPortraitMode(){
-	return window.innerHeight > window.innerWidth;
-}
-
 // Prefecture List
 function createPrefList() {
+	// Create templates
 	const prefList = document.getElementById("pref-list");
 	prefList.replaceChildren();
 
@@ -150,6 +190,8 @@ function createPrefList() {
 
 	const unvisitedPref = document.createElement("div");
 	unvisitedPref.classList.add("prefecture-text", "locked-pref-text");
+
+	// Iterate each region and prefecture, sort by visited/not visited
 	data.forEach(region => {
 		const newPref = regionGroup.cloneNode();
 		const newPrefTitle = regionTitle.cloneNode();
@@ -179,10 +221,11 @@ function colourMap() {
 	const svgObj = document.getElementById("japan-map");
 	const svgDoc = svgObj.contentDocument;
 	const prefList = data.flatMap(region => region.prefectures);
+
 	prefList.forEach(pref => {
 		const prefImg = svgDoc.getElementById(pref.english_name.toLowerCase() + "-img");
 		if (pref.visited) {
-			// CSS won't work on documents
+			// CSS won't work on document objects
 			prefImg.title = getBilingualText("See images from this prefecture", "この地域の写真を表示する");
 			prefImg.setAttribute("fill", appColor);
 			prefImg.setAttribute("stroke", "none");
@@ -214,23 +257,6 @@ function createMap() {
 	svgObj.data = "img/japan.svg";
 }
 
-function shuffle(array) {
-	let currentIndex = array.length, randomIndex;
-
-	// While there remain elements to shuffle.
-	while (currentIndex != 0) {
-
-		// Pick a remaining element.
-		randomIndex = Math.floor(Math.random() * currentIndex);
-		currentIndex--;
-
-		// And swap it with the current element.
-		[array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
-	}
-
-	return array;
-}
-
 // Photo gallery
 function createTemplates() {
 	// sample branch
@@ -260,6 +286,7 @@ function createTemplates() {
 	polaroid.classList.add("transparent");
 	polaroid.title = getBilingualText("Expand image", "画像を拡大する");
 
+	// polaroid pin
 	var polaroidPin = document.createElement("div");
 	polaroidPin.classList.add("polaroid-pin");
 	var polaroidPinShine = document.createElement("div");
@@ -267,10 +294,12 @@ function createTemplates() {
 	polaroidPin.appendChild(polaroidPinShine);
 	polaroid.appendChild(polaroidPin);
 
+	// image
 	polaroidImgFrame = document.createElement("div");
 	polaroidImgFrame.classList.add("polaroid-img");
 	polaroidImg = document.createElement("img");
 
+	// caption
 	polaroidCaption = document.createElement("div");
 	polaroidCaption.classList.add("polaroid-caption");
 	polaroidDate = document.createElement("div");
@@ -280,15 +309,16 @@ function createTemplates() {
 	polaroidCaptionText = document.createElement("div");
 	polaroidCaptionText.classList.add("caption-text");
 	polaroidCaptionText.classList.add("one-line-text");
-
 	polaroidCaptionContainer = document.createElement("div");
 	polaroidCaptionContainer.classList.add("polaroid-caption-text-container");
 }
 
 function filterMiniMap() {
+	// get the selected prefecture only
 	const svgObj = document.getElementById("japan-map-mini");
 	const svgDoc = svgObj.contentDocument;
 	const prefList = data.flatMap(region => region.prefectures);
+
 	prefList.forEach(pref => {
 		const prefImg = svgDoc.getElementById(pref.english_name.toLowerCase() + "-img");
 		if (pref.english_name != selectedPref.english_name) {
@@ -299,6 +329,8 @@ function filterMiniMap() {
 			prefImg.setAttribute("stroke", "none");
 		}
 	});
+
+	// show the map
 	const japanImg = svgDoc.getElementById("japan-img");
 	japanImg.setAttribute("viewBox", selectedPref.viewbox);
 	svgObj.classList.remove("transparent");
@@ -312,6 +344,7 @@ function editMiniMap() {
 	}, 50);
 }
 
+// Polaroid gallery
 // Based on: https://www.codepel.com/vanilla-javascript/javascript-image-loaded/
 // The lazy loading observer
 function lazyLoadPolaroid(target) {
@@ -436,10 +469,7 @@ function createGallery() {
 
 function selectPref(newPref) {
 	selectedPref = newPref;
-	document.getElementById("pref-info").scrollTo({
-		top: 0,
-		left: 0,
-	});
+	document.getElementById("pref-info").scrollTo(0, 0);
 
 	document.getElementById("pref-name-arrow").classList.add("arrow-down");
 	document.getElementById("pref-name-arrow").classList.remove("arrow-up");
@@ -460,15 +490,20 @@ function selectPref(newPref) {
 	changeGalleryVisibility(true);
 }
 
-function changeGalleryFilter(newFilter) {
-	if (newFilter == currentFilter) {
-		currentFilter = "";
-	} else {
-		if (currentFilter != "") {
-			document.getElementById(currentFilter + "-txt").style.display = "none";
-		}
-		currentFilter = newFilter;
-	}
+// filtering
+
+
+// fullscreen
+function search(searchTerm) {
+	window.open("https://www.google.com/search?q=" + searchTerm);
+}
+
+function searchEnglish() {
+	search(searchTerm[0]);
+}
+
+function searchJapanese() {
+	search(searchTerm[1])
 }
 
 function changeFullscreenPicture(isForward) {
@@ -489,59 +524,7 @@ function changeFullscreenPicture(isForward) {
 	setFullscreenPicture(isForward);
 }
 
-function search(searchTerm) {
-	window.open("https://www.google.com/search?q=" + searchTerm);
-}
-
-function searchEnglish() {
-	search(searchTerm[0]);
-}
-
-function searchJapanese() {
-	search(searchTerm[1])
-}
-
-function setFullscreenPicture(isForward) {
-	document.getElementById("search-eng").removeEventListener("click", searchEnglish);
-	document.getElementById("search-jp").removeEventListener("click", searchJapanese);
-	document.getElementById("tags").replaceChildren();
-
-	var src = selectedPicture.link ?? "img/" + selectedPref.english_name.toLowerCase() + "/" + selectedPicture.file_name;
-
-	if (isNewFullscreenInstance || (new Date() - lastSwipeTime) < 300) {
-		document.getElementById("fullscreen-pic").src = src;
-		isNewFullscreenInstance = false;
-	} else {
-		var nextPic = document.getElementById("fullscreen-pic-next");
-		var currentPic = document.getElementById("fullscreen-pic");
-		
-		nextPic.style.display = "none";
-		nextPic.src = src;
-		nextPic.classList.add(isForward ? "fullscreen-pic-right":"fullscreen-pic-left");
-
-		setTimeout(() => {
-			nextPic.style.display = "block";
-			nextPic.classList.remove("transparent");
-			nextPic.classList.remove(isForward ? "fullscreen-pic-right" : "fullscreen-pic-left");
-			currentPic.classList.add(isForward ? "fullscreen-pic-left" : "fullscreen-pic-right");
-			currentPic.classList.add("transparent");
-
-			setTimeout(() => {
-				currentPic.style.display = "none";
-				currentPic.src = src;
-				currentPic.classList.remove(isForward ? "fullscreen-pic-left" : "fullscreen-pic-right");
-				currentPic.classList.remove("transparent");
-				setTimeout(() => {
-					currentPic.style.display = "block";
-					nextPic.style.display = "none";
-					nextPic.classList.add("transparent");
-					nextPic.classList.remove("fullscreen-pic-in");
-				}, 100);
-			}, 100);
-		}, 20);
-	}
-	lastSwipeTime = new Date();
-
+function setFullscreenInfo(){
 	if(selectedPicture.date){
 		let date = getPictureDate(new Date(selectedPicture.date), jpnTimeDiff);
 		document.getElementById("fullscreen-eng-date").innerHTML = getEnglishDate(date, true);
@@ -619,6 +602,49 @@ function setFullscreenPicture(isForward) {
 		});
 }
 
+function setFullscreenPicture(isForward) {
+	document.getElementById("search-eng").removeEventListener("click", searchEnglish);
+	document.getElementById("search-jp").removeEventListener("click", searchJapanese);
+	document.getElementById("tags").replaceChildren();
+
+	var src = selectedPicture.link ?? "img/" + selectedPref.english_name.toLowerCase() + "/" + selectedPicture.file_name;
+
+	if (isNewFullscreenInstance || (new Date() - lastSwipeTime) < 300) {
+		document.getElementById("fullscreen-pic").src = src;
+		isNewFullscreenInstance = false;
+	} else {
+		var nextPic = document.getElementById("fullscreen-pic-next");
+		var currentPic = document.getElementById("fullscreen-pic");
+		
+		nextPic.style.display = "none";
+		nextPic.src = src;
+		nextPic.classList.add(isForward ? "fullscreen-pic-right":"fullscreen-pic-left");
+
+		setTimeout(() => {
+			nextPic.style.display = "block";
+			nextPic.classList.remove("transparent");
+			nextPic.classList.remove(isForward ? "fullscreen-pic-right" : "fullscreen-pic-left");
+			currentPic.classList.add(isForward ? "fullscreen-pic-left" : "fullscreen-pic-right");
+			currentPic.classList.add("transparent");
+
+			setTimeout(() => {
+				currentPic.style.display = "none";
+				currentPic.src = src;
+				currentPic.classList.remove(isForward ? "fullscreen-pic-left" : "fullscreen-pic-right");
+				currentPic.classList.remove("transparent");
+				setTimeout(() => {
+					currentPic.style.display = "block";
+					nextPic.style.display = "none";
+					nextPic.classList.add("transparent");
+					nextPic.classList.remove("fullscreen-pic-in");
+				}, 100);
+			}, 100);
+		}, 20);
+	}
+	lastSwipeTime = new Date();
+	setFullscreenInfo();
+}
+
 function openFullscreen() {
 	if (isPortraitMode()) {
 		hidePicInfo();
@@ -646,10 +672,47 @@ function closeFullscreen(forceClose) {
 	}
 }
 
+// Fullscreen picture info
+function showPicInfo() {
+	isPicInfoVisible = true;
+	document.getElementById("pic-info").style.display = "flex";
+	var element = document.getElementById("pic-info-drawer");
+	//TODO: transition on first portrait mode open
+	element.style.display = "flex";
+	setTimeout(() => {
+		element.style.bottom = "0";
+		element.style.marginRight = "0px";
+	}, 20);
+}
+
+function hidePicInfo() {
+	isPicInfoVisible = false;
+	var element = document.getElementById("pic-info-drawer");
+	element.style.bottom = "-" + element.getBoundingClientRect().height + "px";
+	element.style.marginRight = "-" + element.getBoundingClientRect().width + "px";
+	setTimeout(() => {
+		element.style.display = "none";
+		document.getElementById("pic-info").style.display = "none";
+	}, defaultTimeout);
+}
+
+function changePicInfoVisibility(isVisible) {
+	if (isVisible == undefined) {
+		isVisible = !isPicInfoVisible;
+	}
+
+	if (isVisible) {
+		showPicInfo();
+	} else {
+		hidePicInfo();
+	}
+}
+
+// Gestures
 // Source: https://stackoverflow.com/questions/53192433/how-to-detect-swipe-in-javascript
 function startHandleDrag(e) {
 	isHandleGrabbed = true;
-	//initialYHandle = e.touches[0].clientY;
+	initialYHandle = e.touches[0].clientY;
 }
 
 function endHandleDrag(e) {
@@ -769,11 +832,7 @@ function showPrefInfo(isForced) {
 	spinArrow();
 	if (isForced) {
 		if (document.body.scrollTop < document.getElementById("top-drawer").getBoundingClientRect().height) {
-			window.scrollTo({
-				top: 0,
-				left: 0,
-				behavior: 'smooth'
-			});
+			scrollToTop(true);
 		} else {
 			document.getElementById("top-drawer").style.position = "sticky";
 			document.getElementById("top-drawer").style.top = document.getElementById("top-bar").getBoundingClientRect().height;
@@ -835,43 +894,8 @@ function scrollPrefInfo() {
 	}, 250);
 }
 
-function showPicInfo() {
-	isPicInfoVisible = true;
-	document.getElementById("pic-info").style.display = "flex";
-	var element = document.getElementById("pic-info-drawer");
-	//TODO: transition on first portrait mode open
-	element.style.display = "flex";
-	setTimeout(() => {
-		element.style.bottom = "0";
-		element.style.marginRight = "0px";
-	}, 20);
-}
-
-function hidePicInfo() {
-	isPicInfoVisible = false;
-	var element = document.getElementById("pic-info-drawer");
-	element.style.bottom = "-" + element.getBoundingClientRect().height + "px";
-	element.style.marginRight = "-" + element.getBoundingClientRect().width + "px";
-	setTimeout(() => {
-		element.style.display = "none";
-		document.getElementById("pic-info").style.display = "none";
-	}, defaultTimeout);
-}
-
-function changePicInfoVisibility(isVisible) {
-	if (isVisible == undefined) {
-		isVisible = !isPicInfoVisible;
-	}
-
-	if (isVisible) {
-		showPicInfo();
-	} else {
-		hidePicInfo();
-	}
-}
-
 function openGallery() {
-	window.scrollTo(0, 0);
+	scrollToTop(false);
 	document.getElementById("top-bar").classList.remove("transparent");
 	document.getElementById("map-page").classList.remove("transparent");
 	document.getElementById("loading-screen").classList.add("transparent");
@@ -882,7 +906,7 @@ function openGallery() {
 }
 
 function changeGalleryVisibility(isVisible) {
-	window.scrollTo(0, 0);
+	scrollToTop(false);
 	if (isVisible == undefined) {
 		isGalleryVisible = !isGalleryVisible;
 	} else {
@@ -913,6 +937,102 @@ function changeGalleryVisibility(isVisible) {
 	}
 }
 
+function setupSite() {
+	japanTitle = getBilingualText("JAPAN", "日本");
+	document.getElementById("main-title").innerHTML = japanTitle;
+	document.getElementById("dates-title").innerHTML = getBilingualText("Dates visited", "訪れた日付");
+	document.getElementById("cities-title").innerHTML = getBilingualText("Areas visited", "訪れた所");
+	document.getElementById("description-title").innerHTML = getBilingualText("Description etc.", "説明など");
+	document.getElementById("pic-info-btn").title = getBilingualText("See picture information", "写真の情報を見る");
+	document.getElementById("map-btn").title = getBilingualText("Return to map", "地図に戻る");
+	document.getElementById("pref-title").title = getBilingualText("Toggle prefecture info", "都道府県の情報をトグル");
+	document.getElementById("info-btn").title = getBilingualText("About the site", "このサイトについて");
+	document.getElementById("map-instructions").innerHTML = getBilingualText(
+		"Select a prefecture to see pictures from that location, or click here to see all pictures", 
+		"都道府県を選択して、その地域の写真を表示する。または、こちらを選択して、全部の写真を表示する。");
+	document.getElementById("left-arrow").title = getBilingualText("Previous picture", "前の写真");
+	document.getElementById("right-arrow").title = getBilingualText("Next picture", "次の写真");
+	document.getElementById("search-eng").title = getBilingualText("Google in English", "英語でググる");
+	document.getElementById("search-jp").title = getBilingualText("Google in Japanese", "日本語でググる");
+
+	document.getElementById("loader-btn").addEventListener("click", function () {
+		setTimeout(() => {
+			openGallery(true);
+		}, 50);
+	});
+	document.getElementById("pref-info-bg").addEventListener("click", function () { changePrefInfoVisibility(false, true); });
+	document.getElementById("info-popup-close-btn").addEventListener("click", function () { closeInfoPopup(false); });
+	document.getElementById("site-info-popup").addEventListener("click", (event) => {
+		event.stopPropagation();
+	});
+	document.getElementById("to-top-btn").addEventListener("click", function () { scrollToTop(true); });
+	document.getElementById("pic-info-btn").addEventListener("click", function () { changePicInfoVisibility(); });
+	document.getElementById("pic-info-close-btn").addEventListener("click", function () { hidePicInfo(); });
+	document.getElementById("popup-bg").addEventListener("click", function () { closeInfoPopup(true); });
+	document.getElementById("info-btn").addEventListener("click", openInfoPopup);
+	document.getElementById("map-btn").addEventListener("click", function () { changeGalleryVisibility(false); });
+	document.getElementById("pref-title").addEventListener("click", function () { changePrefInfoVisibility(undefined, true); });
+	document.getElementById("fullscreen-bg").addEventListener("click", function () { closeFullscreen(true) });
+	document.getElementById("fullscreen-ctrl").addEventListener("click", function () { closeFullscreen(true) });
+	document.getElementById("left-arrow").addEventListener("click", (event) => {
+		event.stopPropagation();
+	});
+	document.getElementById("fullscreen-pic").addEventListener("click", (event) => {
+		event.stopPropagation();
+	});
+	document.getElementById("right-arrow").addEventListener("click", (event) => {
+		event.stopPropagation();
+	});
+	document.getElementById("left-arrow").addEventListener("click", function () { changeFullscreenPicture(false); });
+	document.getElementById("right-arrow").addEventListener("click", function () { changeFullscreenPicture(true); });
+	document.getElementById("pic-info-bg").addEventListener("click", function () { hidePicInfo(); });
+	document.getElementById("pic-info-drawer").addEventListener("click", (event) => {
+		event.stopPropagation();
+	});
+	document.getElementById("japan-map-mini").addEventListener("load", filterMiniMap);
+	document.getElementById("japan-map").addEventListener("load", colourMap);
+	document.getElementById("map-instructions").addEventListener("click", openInfoPopup);
+	document.getElementById("pref-info-handle").parentElement.addEventListener("touchstart", e => { startHandleDrag(e) }, false);
+	document.addEventListener("touchend", endHandleDrag, false);
+
+	document.addEventListener("keydown", function (event) {
+		if (event.key === "Escape") {
+			if (isPopupVisible) {
+				closeInfoPopup(true);
+			} else if (isFullscreen) {
+				closeFullscreen(true);
+			}
+		}
+
+		if (isFullscreen) {
+			if (event.key === "ArrowRight") {
+				changeFullscreenPicture(true);
+			} else if (event.key == "ArrowLeft") {
+				changeFullscreenPicture(false);
+			}
+		}
+	});
+
+	var swipeContainer = document.getElementById("fullscreen");
+	swipeContainer.addEventListener("touchstart", startFullscreenSwipe, false);
+	swipeContainer.addEventListener("touchmove", moveFullscreenSwipe, false);
+	
+	document.getElementById("pic-info-details").addEventListener("touchstart", (event) => {
+		event.stopPropagation();
+	});
+	document.getElementById("pic-info-details").addEventListener("touchmove", (event) => {
+		event.stopPropagation();
+	});
+
+	window.onscroll = function () {
+		showHideFloatingBtn();
+		scrollPrefInfo();
+	};
+
+	createTemplates();
+}
+
+// Loading data
 function openLoader() {
 	document.getElementById("top-bar").classList.add("transparent");
 	document.getElementById("map-page").classList.add("transparent");
@@ -933,19 +1053,6 @@ function fetchData() {
 			return response.json();
 		}).then(d => {
 			data = d;
-			// data = [];
-			// d.forEach(region => {
-			// 	const prefectures = region.prefectures.map(prefecture => {
-			// 		if (prefecture.image_list) {
-			// 			const images = prefecture.image_list.map(image => Object.assign(new Image(), image));
-			// 			region.image_list = images;
-			// 		}
-			// 		return Object.assign(new Prefecture(), region);
-			// 	});
-			// 	region.prefectures = prefectures;
-			// 	const newRegion = Object.assign(new Region(), region);
-			// 	data.push(newRegion);
-			// });
 		}).catch(error => {
 			hasError = true;
 			showDataLoadError();
@@ -989,97 +1096,6 @@ function retry() {
 	fetchData();
 }
 
-function setupSite() {
-	japanTitle = getBilingualText("JAPAN", "日本");
-	document.getElementById("main-title").innerHTML = japanTitle;
-	document.getElementById("dates-title").innerHTML = getBilingualText("Dates visited", "訪れた日付");
-	document.getElementById("cities-title").innerHTML = getBilingualText("Areas visited", "訪れた所");
-	document.getElementById("description-title").innerHTML = getBilingualText("Description etc.", "説明など");
-	document.getElementById("pic-info-btn").title = getBilingualText("See picture information", "写真の情報を見る");
-	document.getElementById("map-btn").title = getBilingualText("Return to map", "地図に戻る");
-	document.getElementById("pref-title").title = getBilingualText("Toggle prefecture info", "都道府県の情報をトグル");
-	document.getElementById("info-btn").title = getBilingualText("About the site", "このサイトについて");
-	document.getElementById("map-instructions").innerHTML = getBilingualText(
-		"Select a prefecture to see pictures from that location, or click here to see all pictures", 
-		"都道府県を選択して、その地域の写真を表示する。または、こちらを選択して、全部の写真を表示する。");
-	document.getElementById("left-arrow").title = getBilingualText("Previous picture", "前の写真");
-	document.getElementById("right-arrow").title = getBilingualText("Next picture", "次の写真");
-	document.getElementById("search-eng").title = getBilingualText("Google in English", "英語でググる");
-	document.getElementById("search-jp").title = getBilingualText("Google in Japanese", "日本語でググる");
-
-	document.getElementById("loader-btn").addEventListener("click", function () {
-		setTimeout(() => {
-			openGallery(true);
-		}, 50);
-	});
-	document.getElementById("pref-info-bg").addEventListener("click", function () { changePrefInfoVisibility(false, true); });
-	document.getElementById("info-popup-close-btn").addEventListener("click", function () { closeInfoPopup(false); });
-	document.getElementById("site-info-popup").addEventListener("click", (event) => {
-		event.stopPropagation();
-	});
-	document.getElementById("pic-info-btn").addEventListener("click", function () { changePicInfoVisibility(); });
-	document.getElementById("pic-info-close-btn").addEventListener("click", function () { hidePicInfo(); });
-	document.getElementById("popup-bg").addEventListener("click", function () { closeInfoPopup(true); });
-	document.getElementById("info-btn").addEventListener("click", openInfoPopup);
-	document.getElementById("map-btn").addEventListener("click", function () { changeGalleryVisibility(false); });
-	document.getElementById("pref-title").addEventListener("click", function () { changePrefInfoVisibility(undefined, true); });
-	document.getElementById("fullscreen-bg").addEventListener("click", function () { closeFullscreen(true) });
-	document.getElementById("fullscreen-ctrl").addEventListener("click", function () { closeFullscreen(true) });
-	document.getElementById("left-arrow").addEventListener("click", (event) => {
-		event.stopPropagation();
-	});
-	document.getElementById("fullscreen-pic").addEventListener("click", (event) => {
-		event.stopPropagation();
-	});
-	document.getElementById("right-arrow").addEventListener("click", (event) => {
-		event.stopPropagation();
-	});
-	document.getElementById("left-arrow").addEventListener("click", function () { changeFullscreenPicture(false); });
-	document.getElementById("right-arrow").addEventListener("click", function () { changeFullscreenPicture(true); });
-	document.getElementById("pic-info-bg").addEventListener("click", function () { hidePicInfo(); });
-	document.getElementById("pic-info-drawer").addEventListener("click", (event) => {
-		event.stopPropagation();
-	});
-	document.getElementById("japan-map-mini").addEventListener("load", filterMiniMap);
-	document.getElementById("japan-map").addEventListener("load", colourMap);
-	document.getElementById("map-instructions").addEventListener("click", openInfoPopup);
-	document.getElementById("pref-info-handle").parentElement.addEventListener("touchstart", e => { startHandleDrag(e, handle.parentElement.id) }, false);
-	document.addEventListener("touchend", endHandleDrag, false);
-
-	document.addEventListener("keydown", function (event) {
-		if (event.key === "Escape") {
-			if (isPopupVisible) {
-				closeInfoPopup(true);
-			} else if (isFullscreen) {
-				closeFullscreen(true);
-			}
-		}
-
-		if (isFullscreen) {
-			if (event.key === "ArrowRight") {
-				changeFullscreenPicture(true);
-			} else if (event.key == "ArrowLeft") {
-				changeFullscreenPicture(false);
-			}
-		}
-	});
-
-	var swipeContainer = document.getElementById("fullscreen");
-	swipeContainer.addEventListener("touchstart", startFullscreenSwipe, false);
-	swipeContainer.addEventListener("touchmove", moveFullscreenSwipe, false);
-	
-	document.getElementById("pic-info-details").addEventListener("touchstart", (event) => {
-		event.stopPropagation();
-	});
-	document.getElementById("pic-info-details").addEventListener("touchmove", (event) => {
-		event.stopPropagation();
-	});
-
-	window.onscroll = function () { scrollPrefInfo() };
-
-	createTemplates();
-}
-
 function showDataLoadError() {
 	setTimeout(() => {
 		document.getElementById("error-btn").style.display = "block";
@@ -1092,7 +1108,7 @@ function showDataLoadError() {
 
 function main() {
 	now = new Date();
-	window.scrollTo(0, 0);
+	scrollToTop(false);
 	setupSite();
 	fetchData();
 }
