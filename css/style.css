@@ -21,6 +21,14 @@ body {
   overflow-x: hidden;
 }
 
+button {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  text-align: center;
+  vertical-align: middle;
+}
+
 /* General Text */
 .main-title {
   color: var(--text-color);
@@ -298,7 +306,7 @@ visited-pref-text:active {
   max-height: 315px;
   padding: 25px 10px 10px 10px;
   background-color: white;
-  box-shadow: inset 8px 8px 20px FloralWhite, 8px 8px 20px #00000050;
+  box-shadow: inset 4px 5px 20px 5px FloralWhite, 8px 8px 20px #00000050;
   cursor: pointer;
   border-radius: 10px;
 }
@@ -369,66 +377,59 @@ visited-pref-text:active {
   z-index: 100;
 }
 
-.rotate-left-1 {
+.pic-rotate.left-1 {
   transform: rotate(2deg);
 }
 
-.rotate-left-2 {
+.pic-rotate.left-2 {
   transform: rotate(6deg);
 }
 
-.rotate-left-3 {
+.pic-rotate.left-3 {
   transform: rotate(4deg);
 }
 
-.rotate-left-4 {
+.pic-rotate.left-4 {
   transform: rotate(8deg);
 }
 
-.rotate-right-1 {
+.pic-rotate.right-1 {
   transform: rotate(-2deg);
 }
 
-.rotate-right-2 {
+.pic-rotate.right-2 {
   transform: rotate(-6deg);
 }
 
-.rotate-right-3 {
+.pic-rotate.right-3 {
   transform: rotate(-4deg);
 }
 
-.rotate-right-4 {
+.pic-rotate.right-4 {
   transform: rotate(-8deg);
 }
 
-.rotate-left-1:hover,
-.rotate-left-2:hover,
-.rotate-left-3:hover,
-.rotate-left-4:hover,
-.rotate-right-1:hover,
-.rotate-right-2:hover,
-.rotate-right-3:hover,
-.rotate-right-4:hover {
-  transform: rotate(0deg) scale(115%);
-  z-index: 10;
-}
-
 @media only screen and (orientation: portrait) {
-  .rotate-left-1 {
+  .pic-rotate.rotate-left-1 {
     transform: rotate(-2deg);
   }
 
-  .rotate-left-3 {
+  .pic-rotate.rotate-left-3 {
     transform: rotate(-6deg);
   }
 
-  .rotate-right-1 {
+  .pic-rotate.rotate-right-1 {
     transform: rotate(4deg);
   }
 
-  .rotate-right-3 {
+  .pic-rotate.rotate-right-3 {
     transform: rotate(8deg);
   }
+}
+
+.pic-rotate:hover {
+  transform: rotate(0deg) scale(115%);
+  z-index: 10;
 }
 
 .date-text {
@@ -494,6 +495,65 @@ visited-pref-text:active {
     flex-direction: row;
     justify-content: space-around;
   }
+}
+
+/* Filter */
+.filter-btn {
+  background-color: var(--main-color);
+  color: white;
+  padding: 10px;
+  margin: 0px auto;
+  border-radius: 10px;
+  width: 50px;
+  height: 50px;
+  display: none;
+}
+
+input {
+  font-family: Zen Maru Gothic;
+  font-size: var(--reg-text-size);
+  height: 2em;
+  width: 100%;
+  border-color: var(--main-color);
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 10px;
+}
+
+.img-tag, .filter-opt, .action-btn {
+  padding: 2px 5px;
+  border-radius: 6px;
+  font-size: var(--reg-text-size);
+  font-family: Zen Maru Gothic;
+  text-align: center;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 10px;
+}
+
+.filter-opt, .action-btn:hover {
+  background-color: white;
+  border-color: var(--main-color);
+  color: var(--text-color);
+}
+
+.img-tag, .filter-opt:hover, .filter-opt.active, .action-btn {
+  background-color: var(--main-color);
+  color: white;
+}
+
+.img-tag {
+  cursor: default;
+}
+
+.action-btn {
+  padding: 5px 7px;
+}
+
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 /* Timeline */
@@ -775,16 +835,6 @@ visited-pref-text:active {
   cursor: grab;
 }
 
-.img-tag {
-  padding: 2px 5px;
-  border-radius: 6px;
-  background-color: var(--main-color);
-  color: white;
-  font-size: var(--reg-text-size);
-  cursor: default;
-  text-align: center;
-}
-
 /* loading screen */
 .loading-screen {
   background-color: white;
@@ -908,6 +958,4 @@ visited-pref-text:active {
   border-radius: 50%;
   width: 35px;
   height: 35px;
-  text-align: center;
-  vertical-align: middle;
 }
