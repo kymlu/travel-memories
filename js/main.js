@@ -993,7 +993,7 @@ function setupSite() {
 	japanTitle = getBilingualText("JAPAN", "日本");
 	document.getElementById("main-title").innerHTML = japanTitle;
 	document.getElementById("dates-title").innerHTML = getBilingualText("Dates visited", "訪れた日付");
-	document.getElementById("cities-title").innerHTML = getBilingualText("Cities and significant places visited", "訪れた所");
+	document.getElementById("cities-title").innerHTML = getBilingualText("Areas visited", "訪れた所");
 	document.getElementById("description-title").innerHTML = getBilingualText("Description etc.", "説明など");
 	document.getElementById("pic-info-btn").title = getBilingualText("See picture information", "写真の情報を見る");
 	document.getElementById("map-btn").title = getBilingualText("Return to map", "地図に戻る");
@@ -1067,6 +1067,13 @@ function setupSite() {
 	var swipeContainer = document.getElementById("fullscreen");
 	swipeContainer.addEventListener("touchstart", startFullscreenSwipe, false);
 	swipeContainer.addEventListener("touchmove", moveFullscreenSwipe, false);
+	
+	document.getElementById("pic-info-details").addEventListener("touchstart", (event) => {
+		event.stopPropagation();
+	});
+	document.getElementById("pic-info-details").addEventListener("touchmove", (event) => {
+		event.stopPropagation();
+	});
 
 	window.onscroll = function () { scrollPrefInfo() };
 
