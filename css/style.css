@@ -535,6 +535,13 @@ input {
   border-radius: 10px;
 }
 
+.clear-icon {
+  font-family: FontAwesome;
+  color: var(--text-color);
+  cursor: pointer;
+  margin-left: -30px;
+}
+
 .img-tag, .filter-opt, .action-btn {
   padding: 2px 5px;
   border-radius: 6px;
@@ -727,7 +734,6 @@ input {
 
 @media only screen and (orientation: portrait) {
   .pic-info-container {
-    display: none;
     position: fixed;
     bottom: 0;
     width: 100%;

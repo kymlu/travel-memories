@@ -80,10 +80,14 @@
       <div id="filters" class="flex-column popup-content transparent opacity-transition no-display" style="height: 100%">
         <div class="flex-column" style="justify-content: space-between; height: 100%;">
           <div class="flex-column" style="gap: 15px;">
-            <p id="filter-title" class="bold-text"></p>
+            <p id="filter-title" class="bold-text" style="margin-bottom: 0;"></p>
             <div>
-              <label id="keyword-title" class="bold-text" for="keyword"></label><br>
-              <input type="text" id="keyword"><br>
+              <label id="keyword-title" class="bold-text" for="keyword-input"></label><br>
+              <div style="display: flex; align-items: center;">
+                <input type="text" id="keyword-input">
+                <div id="kw-clear-btn" class="clear-icon no-display">&#xf057</div>
+              </div>
+              <br>
             </div>
             <div>
               <label id="location-title" class="bold-text"></label><br>

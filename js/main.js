@@ -461,7 +461,7 @@ function createGallery() {
 			polCaptionText.appendChild(polCaptionTextJp);
 
 			// rotate picture
-			pol.classList.add((isLeft ? "right-" : "left-") + angle);
+			pol.classList.add((isLeft ? "left-" : "right-") + angle);
 
 			// add info
 			if(img.date){
@@ -634,7 +634,7 @@ function showFilter() {
 		document.getElementById("img-filter-popup").classList.add("popup-height");
 	}, defaultTimeout);
 
-	document.getElementById("keyword").value = filterKeyword;
+	document.getElementById("keyword-input").value = filterKeyword;
 	tempFilterLocations = filterLocationsList.slice();
 	tempFilterTags = filterTagsList.slice();
 	Array.from(document.getElementById("location-list").getElementsByClassName("filter-opt"))
@@ -684,8 +684,21 @@ function hideFilter(forceClose) {
 	}
 }
 
+function checkEmptyKeywordInput(){
+	if (document.getElementById("keyword-input").value == ""){
+		addNoDisplay("kw-clear-btn");
+	} else if (document.getElementById("kw-clear-btn").classList.contains("no-display")) {
+		removeNoDisplay("kw-clear-btn");
+	}
+}
+
+function clearKeyword() {
+	document.getElementById("keyword-input").value = "";
+	checkEmptyKeywordInput();
+}
+
 function clearFilters() {
-	document.getElementById("keyword").value = "";
+	clearKeyword();
 	tempFilterLocations = [];
 	tempFilterTags = [];
 	Array.from(document.getElementById("location-list").getElementsByClassName("active"))
@@ -755,7 +768,7 @@ function filterImages() {
 	if(visibleImgs.length == 0){
 		let temp = document.createElement("div");
 		temp.id = "none";
-		temp.display.margin = "-125px";
+		temp.style.margin = "-125px";
 		temp.innerHTML = getBilingualText("No pictures available","写真はありません");
 		document.getElementById("gallery").appendChild(temp);
 	}
@@ -763,11 +776,11 @@ function filterImages() {
 }
 
 function submitFilters() {
-	filterKeyword = document.getElementById("keyword").value;
+	filterKeyword = document.getElementById("keyword-input").value;
 	filterLocationsList = tempFilterLocations.slice();
 	filterTagsList = tempFilterTags.slice();
 	filterImages();
-	hideFilter();
+	hideFilter(true);
 }
 
 // fullscreen
@@ -942,7 +955,11 @@ function setFullscreenPicture(isForward) {
 
 function openFullscreen() {
 	if (isPortraitMode()) {
+		document.getElementById("pic-info").classList.add("transparent");
 		hidePicInfo();
+		setTimeout(() => {
+			document.getElementById("pic-info").classList.remove("transparent");
+		}, defaultTimeout);
 	}
 	isFullscreen = true;
 	document.body.style.overflowY = "hidden";
@@ -1244,7 +1261,7 @@ function setupSite() {
 	document.getElementById("cities-title").innerHTML = getBilingualText("Areas visited", "訪れた所");
 	document.getElementById("description-title").innerHTML = getBilingualText("About", "都道府県について");
 	document.getElementById("filter-title").innerHTML = getBilingualText("Filters", "フィルター");
-	document.getElementById("keyword-title").innerHTML = getBilingualText("Keywords", "キーワード");
+	document.getElementById("keyword-title").innerHTML = getBilingualText("Keyword", "キーワード");
 	document.getElementById("tags-title").innerHTML = getBilingualText("Tags", "タグ");
 	document.getElementById("location-title").innerHTML = getBilingualText("Areas", "所");
 	document.getElementById("clear-btn").innerHTML = getBilingualText("Clear", "クリアする");
@@ -1308,6 +1325,8 @@ function setupSite() {
 	document.getElementById("filter-btn").addEventListener("click", function () { showFilter(); });
 	document.getElementById("filter-popup-bg").addEventListener("click", function () { hideFilter(true); });
 	document.getElementById("filter-popup-close-btn").addEventListener("click", function () { hideFilter(false); });
+	document.getElementById("keyword-input").addEventListener("input", function () { checkEmptyKeywordInput(); });
+	document.getElementById("kw-clear-btn").addEventListener("click", function () { clearKeyword(); });
 	document.getElementById("clear-btn").addEventListener("click", function () { clearFilters(); });
 	document.getElementById("submit-btn").addEventListener("click", function () { submitFilters(); });
 	document.getElementById("pic-info-btn").addEventListener("click", function () { changePicInfoVisibility(); });
@@ -1335,7 +1354,7 @@ function setupSite() {
 	});
 	document.getElementById("japan-map-mini").addEventListener("load", filterMiniMap);
 	document.getElementById("japan-map").addEventListener("load", colourMap);
-	document.getElementById("pref-info-handle").parentElement.addEventListener("touchstart", e => { startHandleDrag(e) }, false);
+	document.getElementById("pref-info-handle").addEventListener("touchstart", e => { startHandleDrag(e) }, false);
 	document.addEventListener("touchend", endHandleDrag, false);
 
 	document.addEventListener("keydown", function (event) {
