@@ -49,6 +49,8 @@ let initialYHandle = null;
 const monthNames = ["January", "February", "March", "April", "May", "June",
 	"July", "August", "September", "October", "November", "December"
 ];
+const dayNamesEn = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+const dayNamesJp = ["日", "月", "火", "水", "木", "金", "土"];
 
 const tags = [
 	{
@@ -203,14 +205,15 @@ function getPictureDate(date, picOffset){
 
 function getEnglishDate(date, isFullDate) {
 	var hours = date.getHours();
-	return monthNames[date.getMonth()] + " " + 
+	return (isFullDate ? dayNamesEn[date.getDay()] +", " : "") +
+		monthNames[date.getMonth()] + " " + 
 		date.getDate() + ", " + 
 		date.getFullYear() + 
 		(isFullDate ? 
 			" " + (hours > 12 ? hours - 12 : hours).toString() + ":" + 
 			date.getMinutes().toString().padStart(2, "0") + ":" + 
 			date.getSeconds().toString().padStart(2, "0")  + 
-			(hours >= 12 ? "PM" : "AM") 
+			(hours >= 12 ? " PM" : " AM") 
 			: "");
 }
 
@@ -220,7 +223,8 @@ function getJapaneseDate(date, isFullDate) {
 		(date.getMonth() + 1) + "月" + 
 		date.getDate() + "日" + 
 		(isFullDate ? 
-			" " + (hours >= 12 ? "午後" : "午前") + 
+			"（" + dayNamesJp[date.getDay()] + "）" +
+			(hours >= 12 ? "午後" : "午前") + 
 			(hours > 12 ? hours - 12 : hours).toString() + ":" + 
 			date.getMinutes().toString().padStart(2, "0") + ":" + 
 			date.getSeconds().toString().padStart(2, "0") 
