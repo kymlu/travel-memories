@@ -28,6 +28,7 @@ let isHandleGrabbed = false;
 let grabbedHandleId = null;
 let searchTerm = ["", ""];
 let isNewFullscreenInstance = true;
+let isNewPref = true;
 let lastSwipeTime = null;
 let isToTopVisible = false;
 let filterKeyword = "";
@@ -91,7 +92,6 @@ const tags = [
 	}
 ];
 
-let branch, leftBranch, leftPoint, rightBranch, rightPoint;
 let polaroid, polaroidImgFrame, polaroidImg, polaroidCaption, polaroidCaptionText, polaroidCaptionContainer, polaroidDate, singleDate;
 let filterTagButton;
 
@@ -127,17 +127,60 @@ function scrollToTop(isSmooth){
 	});
 }
 
-function showHideFloatingBtn(){
+function showHideFloatingBtn() {
 	var btn = document.getElementById("to-top-btn");
 	var threshold = 500;
-	if(!isToTopVisible && document.body.scrollTop > threshold){
-		btn.style.display = "inline";
-		btn.classList.remove("transparent");
-		isToTopVisible = true;
-	} else if (isToTopVisible && document.body.scrollTop <= threshold) {
-		btn.classList.add("transparent");
-		setTimeout(() => { btn.style.display = "none"; }, defaultTimeout)
-		isToTopVisible = false;
+	if (document.body.scrollTop > threshold) {
+		if(isGalleryVisible && !isToTopVisible){
+			btn.classList.remove("arrow-down");
+			btn.classList.add("arrow-up");
+			removeNoDisplay([btn]);
+			btn.classList.remove("transparent");
+			isToTopVisible = true;
+		} else if (!isGalleryVisible){
+			btn.classList.remove("arrow-down");
+			btn.classList.add("arrow-up");
+		}
+	} else if (document.body.scrollTop <= threshold) {
+		if (isGalleryVisible && isToTopVisible) {
+			btn.classList.remove("arrow-down");
+			btn.classList.add("arrow-up");
+			btn.classList.add("transparent");
+			setTimeout(() => { addNoDisplay([btn]); }, defaultTimeout)
+			isToTopVisible = false;
+		} else if (!isGalleryVisible) {
+			btn.classList.remove("arrow-up");
+			btn.classList.add("arrow-down");
+		}
+	}
+}
+
+function addNoDisplay(elements){
+	if (typeof (elements) == 'string') {
+		document.getElementById(elements).classList.add("no-display")
+	} else {
+		if (elements && elements.length > 0) {
+			if (typeof (elements[0]) == 'string') {
+				elements.forEach(element => document.getElementById(element).classList.add("no-display"));
+			} else {
+				elements.forEach(element => element.classList.add("no-display"));
+			}
+		}
+	}
+}
+
+function removeNoDisplay(elements) {
+	if (typeof (elements) == 'string') {
+		document.getElementById(elements).classList.remove("no-display")
+	} else {
+		if (elements && elements.length > 0) {
+			if (typeof (elements[0]) == 'string') {
+
+				elements.forEach(element => document.getElementById(element).classList.remove("no-display"));
+			} else {
+				elements.forEach(element => element.classList.remove("no-display"));
+			}
+		}
 	}
 }
 
@@ -182,6 +225,9 @@ function createPrefList() {
 	const prefList = document.getElementById("pref-list");
 	prefList.replaceChildren();
 
+	const dropDownPrefList = document.getElementById("pref-drop-down");
+	dropDownPrefList.replaceChildren();
+
 	const regionGroup = document.createElement("div");
 	regionGroup.classList.add("region-group");
 
@@ -194,6 +240,12 @@ function createPrefList() {
 	const unvisitedPref = document.createElement("div");
 	unvisitedPref.classList.add("prefecture-text", "locked-pref-text");
 
+	const regionDrop = document.createElement("div");
+	regionDrop.classList.add("region-text", "regular-text");
+	
+	const prefDrop = document.createElement("div");
+	prefDrop.classList.add("prefecture-text", "regular-text");
+
 	// Iterate each region and prefecture, sort by visited/not visited
 	data.forEach(region => {
 		const newPref = regionGroup.cloneNode();
@@ -201,7 +253,15 @@ function createPrefList() {
 		newPrefTitle.innerHTML = getBilingualText(region.english_name, region.japanese_name);
 		newPrefTitle.title = getBilingualText("See images from this prefecture", "この地域の写真を表示する");
 		newPref.appendChild(newPrefTitle);
+
+		var ddRegion = regionDrop.cloneNode();
+		ddRegion.innerHTML = getBilingualText(region.english_name, region.japanese_name);
+		ddRegion.id = region.english_name + "-dropdown";
+		dropDownPrefList.appendChild(ddRegion);
 		region.prefectures.forEach(prefecture => {
+			var ddPref = prefDrop.cloneNode();
+			ddPref.innerHTML = getBilingualText(prefecture.english_name, prefecture.japanese_name);
+			ddPref.id = prefecture.english_name + "-dropdown";
 			if (prefecture.visited) {
 				const prefNode = visitedPref.cloneNode();
 				prefNode.innerHTML = getBilingualText(prefecture.english_name, prefecture.japanese_name);
@@ -209,12 +269,20 @@ function createPrefList() {
 					selectPref(prefecture);
 				}, false);
 				newPref.appendChild(prefNode);
+
+				ddPref.classList.add("visited-pref-text");
+				ddPref.addEventListener("click", function () {
+					selectPref(prefecture);
+				}, false);
 			} else {
 				const prefNode = unvisitedPref.cloneNode();
 				prefNode.innerHTML = getBilingualText(prefecture.english_name, prefecture.japanese_name);
 				newPref.appendChild(prefNode);
+				ddPref.classList.add("locked-pref-text");
 			}
-		});
+			
+			dropDownPrefList.appendChild(ddPref);
+			});
 		prefList.appendChild(newPref);
 	});
 }
@@ -262,26 +330,6 @@ function createMap() {
 
 // Photo gallery
 function createTemplates() {
-	// sample branch
-	branch = document.createElement("hr");
-	branch.classList.add("timeline-branch");
-
-	// sample left branch
-	leftBranch = document.createElement("div");
-	leftBranch.classList.add("timeline-branch-grp", "left");
-	leftPoint = document.createElement("div");
-	leftPoint.classList.add("timeline-point", "left");
-	leftBranch.appendChild(branch.cloneNode());
-	leftBranch.appendChild(leftPoint);
-
-	// sample right branch
-	rightBranch = document.createElement("div");
-	rightBranch.classList.add("timeline-branch-grp", "right");
-	rightPoint = document.createElement("div");
-	rightPoint.classList.add("timeline-point", "right");
-	rightBranch.appendChild(branch.cloneNode());
-	rightBranch.appendChild(rightPoint);
-
 	// sample polaroid
 	polaroid = document.createElement("div");
 	polaroid.classList.add("polaroid-frame");
@@ -374,15 +422,10 @@ function createGallery() {
 	// clear existing
 	let gallery = document.getElementById("gallery");
 	gallery.replaceChildren();
-	let isLeft = true;
-	let leftColumn = document.getElementById("left-column");
-	leftColumn.replaceChildren();
-	let rightColumn = document.getElementById("right-column");
-	rightColumn.replaceChildren();
+	let isLeft = false;
 
 	// add pictures
 	if (selectedPref.image_list.length > 0) {
-		let direction = 2; // 0, 1 = left; 2, 3 = right
 		let angle = 1; // 1-4 for the rotation class
 		selectedPref.image_list.forEach(img => {
 			// clone all relevant nodes
@@ -409,7 +452,7 @@ function createGallery() {
 			polCaptionText.appendChild(polCaptionTextJp);
 
 			// rotate picture
-			pol.classList.add(((direction % 3 >= 1) ? "right-" : "left-") + angle);
+			pol.classList.add((isLeft ? "right-" : "left-") + angle);
 
 			// add info
 			if(img.date){
@@ -448,15 +491,7 @@ function createGallery() {
 			lazyLoadPolaroid(pol);
 
 			// add to screen
-			if (isLeft) {
-				leftColumn.appendChild(leftBranch.cloneNode(true));
-				pol.classList.add("gallery-left");
-				gallery.appendChild(pol);
-			} else {
-				rightColumn.appendChild(rightBranch.cloneNode(true));
-				pol.classList.add("gallery-right");
-				gallery.appendChild(pol);
-			}
+			gallery.appendChild(pol);
 
 			// change iterators
 			isLeft = !isLeft;
@@ -466,25 +501,26 @@ function createGallery() {
 					angle = 1;
 				}
 			}
-			direction = (direction + 1) % 4;
 		});
 	} else {
-		document.getElementById("timeline").style.display = "none";
 		gallery.innerHTML = getBilingualText("No pictures available","写真はありません");
 	}
 }
 
 function selectPref(newPref) {
 	openLoader();
-	selectedPref = newPref;
-	document.getElementById("pref-info").scrollTo(0, 0);
+	isNewPref = true;
 
+	if (selectedPref) {
+		document.getElementById(selectedPref.english_name + "-dropdown").classList.remove("active");
+	}
+	document.getElementById(newPref.english_name + "-dropdown").classList.add("active");
+
+	selectedPref = newPref;
 	document.getElementById("pref-name-arrow").classList.add("arrow-down");
 	document.getElementById("pref-name-arrow").classList.remove("arrow-up");
 	editMiniMap(newPref);
 	
-	//To do: add transition from home to pref pages	
-
 	document.getElementById("pref-dates").innerHTML = getBilingualText(selectedPref.dates_english, selectedPref.dates_japanese);
 	document.getElementById("pref-cities").innerHTML = selectedPref.areas.map(area => {
 		return getBilingualText(area.english_name, area.japanese_name);
@@ -493,6 +529,7 @@ function selectPref(newPref) {
 	document.getElementById("pref-desc-eng").innerHTML = selectedPref.description_english;
 	document.getElementById("pref-desc-jp").innerHTML = selectedPref.description_japanese;
 	document.getElementById("pref-name").innerHTML = getBilingualText(selectedPref.english_name, selectedPref.japanese_name);
+	document.getElementById("dates-title").scrollIntoView({block: isPortraitMode() ? "end" : "start"});
 
 	var filterLocations = document.getElementById("location-list");
 	filterLocations.replaceChildren();
@@ -522,7 +559,11 @@ function selectPref(newPref) {
 	var presentTags = selectedPref.image_list.flatMap(x => {return x.tags});
 	filterTags.forEach(tag => {
 		var id = tag.id.replace("-tag", "");
-		tag.style.display = presentTags.includes(id) ? "block" : "none";
+		if(presentTags.includes(id)){
+			removeNoDisplay([tag]);
+		} else {
+			addNoDisplay([tag]);
+		}
 		tag.classList.remove("active");
 	});
 	clearFilters();
@@ -532,6 +573,27 @@ function selectPref(newPref) {
 	createGallery();
 	changeGalleryVisibility(true);
 	hideLoader();
+}
+
+function togglePrefDropdown() {
+	document.getElementById("pref-drop-down-container").classList.toggle("no-display");
+	spinArrow();
+	if(isNewPref){
+		isNewPref = false;
+		document.getElementById(selectedPref.english_name + "-dropdown").scrollIntoView({ behavior: "smooth", block: "center" });
+	}
+}
+
+function closePrefDropdown() {
+	addNoDisplay("pref-drop-down-container");
+	document.getElementById("pref-name-arrow").classList.add("arrow-down");
+	document.getElementById("pref-name-arrow").classList.remove("arrow-up");
+}
+
+function showPrefDropdown() {
+	removeNoDisplay("pref-drop-down-container");
+	document.getElementById("pref-name-arrow").classList.remove("arrow-down");
+	document.getElementById("pref-name-arrow").classList.add("arrow-up");
 }
 
 // filtering
@@ -558,7 +620,7 @@ function showFilter() {
 	document.getElementById("filter-popup-bg").classList.remove("transparent");
 	document.getElementById("img-filter-popup").classList.add("popup-width");
 	setTimeout(() => {
-		document.getElementById("filters").style.display = "block";
+		removeNoDisplay("filters");
 		document.getElementById("filters").classList.remove("transparent");
 		document.getElementById("img-filter-popup").classList.add("popup-height");
 	}, defaultTimeout);
@@ -591,7 +653,7 @@ function hideFilter(forceClose) {
 		document.getElementById("filters").classList.add("transparent");
 		document.getElementById("img-filter-popup").classList.remove("popup-height");
 		document.getElementById("img-filter-popup").classList.remove("popup-width");
-		document.getElementById("filters").style.display = "none";
+		removeNoDisplay("filters");
 		document.getElementById("img-filter-popup").classList.add("transparent");
 		document.getElementById("filter-popup-bg").classList.add("transparent");
 	} else {
@@ -599,7 +661,7 @@ function hideFilter(forceClose) {
 		setTimeout(() => {
 			document.getElementById("img-filter-popup").classList.remove("popup-height");
 			setTimeout(() => {
-				document.getElementById("filters").style.display = "none";
+				addNoDisplay("filters");
 				document.getElementById("img-filter-popup").classList.remove("popup-width");
 				setTimeout(() => {
 					document.getElementById("img-filter-popup").classList.add("transparent");
@@ -633,7 +695,7 @@ function doesTextIncludeKeyword(text){
 
 function includeImage(img) {
 	let area = selectedPref.areas.find(x => {return x.id == img.city;});
-	let tempTags = tags.filter(tag => img.tags.includes(tag.id) && (tag.english_name.includes(keyword) || tag.japanese_name.includes(keyword)));
+	let tempTags = tags.filter(tag => img.tags.includes(tag.id) && (doesTextIncludeKeyword(tag.english_name) || doesTextIncludeKeyword(tag.japanese_name)));
 	return (filterKeyword == "" ||
 		doesTextIncludeKeyword(img.description_english) ||
 		doesTextIncludeKeyword(img.description_japanese) ||
@@ -648,48 +710,24 @@ function includeImage(img) {
 
 function filterImages() {
 	var i = 0;	
-	let direction = 2; // 0, 1 = left; 2, 3 = right
 	let angle = 1; // 1-4 for the rotation class
-	isLeft = true;
+	isLeft = false;
 	visibleImgs = [];
 
 	if(document.getElementById("none")){
 		document.getElementById("none").remove();
-		document.getElementById("timeline").style.display = "inline-grid";
 	}
 	var allPolaroids = Array.from(document.getElementsByClassName("polaroid-frame"));
-	// let lastLeftBranch = document.getElementById("left-column").lastChild;
-	// let lastRightBranch = document.getElementById("right-column").lastChild;
-	// let isLastBranchLeft = selectedPref.image_list.length % 2 == 1;
 
 	selectedPref.image_list.forEach(img => {
 		if(includeImage(img)){
-			allPolaroids[i].style.display = "flex";
+			removeNoDisplay([allPolaroids[i]]);
 			var classList = Array.from(allPolaroids[i].classList).filter(className => {return className.includes("left") || className.includes("right")});
-			if (classList.includes("gallery-left")){
-				if(!isLeft){
-					allPolaroids[i].classList.remove("gallery-left");
-					allPolaroids[i].classList.add("gallery-right");
-				}
-				const index = classList.indexOf("gallery-left");
-				if (index > -1) {
-					classList.splice(index, 1);
-				}
-			} else if (classList.includes("gallery-right")){
-				if(isLeft){
-					allPolaroids[i].classList.remove("gallery-right");
-					allPolaroids[i].classList.add("gallery-left");
-				}
-				const index = classList.indexOf("gallery-right");
-				if (index > -1) {
-					classList.splice(index, 1);
-				}
-			}
 			
-			if ((classList.filter(className => className.includes("left")).length > 0 && direction % 3 >= 1) ||
-				(classList.filter(className => className.includes("right")).length > 0 && direction % 3 < 1)) {
+			if ((classList.filter(className => className.includes("left")).length > 0 && !isLeft) ||
+				(classList.filter(className => className.includes("right")).length > 0 && isLeft)) {
 				allPolaroids[i].classList.remove(classList[0]);
-				allPolaroids[i].classList.add(((direction % 3 >= 1) ? "right-" : "left-") + angle);
+				allPolaroids[i].classList.add((isLeft ? "right-" : "left-") + angle);
 			}
 
 			isLeft = !isLeft;
@@ -699,39 +737,18 @@ function filterImages() {
 					angle = 1;
 				}
 			}
-			direction = (direction + 1) % 4;
 			visibleImgs.push(i);
 		} else {
-			allPolaroids[i].style.display = "none";
+			addNoDisplay([allPolaroids[i]]);
 		}
 		i++;
 	})
-	var leftBranches = Array.from(document.getElementById("left-column").childNodes);
-	var rightBranches = Array.from(document.getElementById("right-column").childNodes);
-	i = 0;
-	for (let index = 0; index < leftBranches.length; index++) {
-		if(i < visibleImgs.length){
-			leftBranches[index].style.display = "flex";
-		} else {
-			leftBranches[index].style.display = "none";
-		}
-		i++;
-		if (index < rightBranches.length) {
-			if (i < visibleImgs.length) {
-				rightBranches[index].style.display = "flex";
-			} else {
-				rightBranches[index].style.display = "none";
-			}
-			i++;
-		}
-	}
 	if(visibleImgs.length == 0){
 		let temp = document.createElement("div");
 		temp.id = "none";
 		temp.display.margin = "-125px";
 		temp.innerHTML = getBilingualText("No pictures available","写真はありません");
 		document.getElementById("gallery").appendChild(temp);
-		document.getElementById("timeline").style.display = "none";
 	}
 	
 }
@@ -812,30 +829,30 @@ function setFullscreenInfo(){
 
 	
 	if (selectedPicture.description_english) {
-		document.getElementById("fullscreen-eng-caption").style.display = "initial";
+		removeNoDisplay("fullscreen-eng-caption");
 		document.getElementById("fullscreen-eng-caption").innerHTML = selectedPicture.description_english;
 	} else {
-		document.getElementById("fullscreen-eng-caption").style.display = "none";
+		addNoDisplay("fullscreen-eng-caption");
 	}
 	if (selectedPicture.description_japanese) {
-		document.getElementById("fullscreen-jp-caption").style.display = "initial";
+		removeNoDisplay("fullscreen-jp-caption");
 		document.getElementById("fullscreen-jp-caption").innerHTML = selectedPicture.description_japanese;
 	} else {
-		document.getElementById("fullscreen-jp-caption").style.display = "none";
+		addNoDisplay("fullscreen-jp-caption");
 	}
 
 	if (selectedPicture.camera_model) {
-		document.getElementById("camera-info").style.display = "initial";
+		removeNoDisplay("camera-info");
 		document.getElementById("camera-info").innerHTML = selectedPicture.camera_model;
 	} else {
-		document.getElementById("camera-info").style.display = "none";
+		addNoDisplay("camera-info");
 	}
 	
 	if (selectedPicture.lens) {
-		document.getElementById("lens-info").style.display = "initial";
+		removeNoDisplay("lens-info");
 		document.getElementById("lens-info").innerHTML = selectedPicture.lens;
 	} else {
-		document.getElementById("lens-info").style.display = "none";
+		addNoDisplay("lens-info");
 	}
 	
 	document.getElementById("technical-info").replaceChildren();
@@ -885,25 +902,25 @@ function setFullscreenPicture(isForward) {
 		var nextPic = document.getElementById("fullscreen-pic-next");
 		var currentPic = document.getElementById("fullscreen-pic");
 		
-		nextPic.style.display = "none";
+		addNoDisplay(nextPic);
 		nextPic.src = src;
 		nextPic.classList.add(isForward ? "fullscreen-pic-right":"fullscreen-pic-left");
 
 		setTimeout(() => {
-			nextPic.style.display = "block";
+			removeNoDisplay(nextPic);
 			nextPic.classList.remove("transparent");
 			nextPic.classList.remove(isForward ? "fullscreen-pic-right" : "fullscreen-pic-left");
 			currentPic.classList.add(isForward ? "fullscreen-pic-left" : "fullscreen-pic-right");
 			currentPic.classList.add("transparent");
 
 			setTimeout(() => {
-				currentPic.style.display = "none";
+				addNoDisplay(currentPic);
 				currentPic.src = src;
 				currentPic.classList.remove(isForward ? "fullscreen-pic-left" : "fullscreen-pic-right");
 				currentPic.classList.remove("transparent");
 				setTimeout(() => {
-					currentPic.style.display = "block";
-					nextPic.style.display = "none";
+					removeNoDisplay(currentPic);
+					addNoDisplay(nextPic);
 					nextPic.classList.add("transparent");
 					nextPic.classList.remove("fullscreen-pic-in");
 				}, 100);
@@ -944,10 +961,10 @@ function closeFullscreen(forceClose) {
 // Fullscreen picture info
 function showPicInfo() {
 	isPicInfoVisible = true;
-	document.getElementById("pic-info").style.display = "flex";
+	removeNoDisplay("pic-info");
 	var element = document.getElementById("pic-info-drawer");
 	//TODO: transition on first portrait mode open
-	element.style.display = "flex";
+	removeNoDisplay([element]);
 	setTimeout(() => {
 		element.style.bottom = "0";
 		element.style.marginRight = "0px";
@@ -960,8 +977,8 @@ function hidePicInfo() {
 	element.style.bottom = "-" + element.getBoundingClientRect().height + "px";
 	element.style.marginRight = "-" + element.getBoundingClientRect().width + "px";
 	setTimeout(() => {
-		element.style.display = "none";
-		document.getElementById("pic-info").style.display = "none";
+		addNoDisplay([element]);
+		addNoDisplay("pic-info");
 	}, defaultTimeout);
 }
 
@@ -1054,7 +1071,7 @@ function openInfoPopup() {
 	document.getElementById("popup-bg").classList.remove("transparent");
 	document.getElementById("site-info-popup").classList.add("popup-width");
 	setTimeout(() => {
-		document.getElementById("site-info").style.display = "block";
+		removeNoDisplay("site-info");
 		document.getElementById("site-info").classList.remove("transparent");
 		document.getElementById("site-info-popup").classList.add("popup-height");
 	}, defaultTimeout);
@@ -1065,7 +1082,7 @@ function closeInfoPopup(forceClose) {
 		document.getElementById("info-popup").style.visibility = "hidden";
 		document.getElementById("site-info").classList.add("transparent");
 		document.getElementById("site-info-popup").classList.remove("popup-height");
-		document.getElementById("site-info").style.display = "none";
+		addNoDisplay("site-info");
 		document.getElementById("site-info-popup").classList.remove("popup-width");
 		document.getElementById("site-info-popup").classList.add("transparent");
 		document.getElementById("popup-bg").classList.add("transparent");
@@ -1074,7 +1091,7 @@ function closeInfoPopup(forceClose) {
 		setTimeout(() => {
 			document.getElementById("site-info-popup").classList.remove("popup-height");
 			setTimeout(() => {
-				document.getElementById("site-info").style.display = "none";
+				addNoDisplay("site-info");
 				document.getElementById("site-info-popup").classList.remove("popup-width");
 				setTimeout(() => {
 					document.getElementById("site-info-popup").classList.add("transparent");
@@ -1098,7 +1115,6 @@ function showPrefInfo(isForced) {
 	isPrefInfoVisible = true;
 	document.getElementById("pref-info-bg").classList.remove("transparent");
 	document.getElementById("pref-info-bg").style.visibility = "visible";
-	spinArrow();
 	if (isForced) {
 		if (document.body.scrollTop < document.getElementById("top-drawer").getBoundingClientRect().height) {
 			scrollToTop(true);
@@ -1112,7 +1128,6 @@ function showPrefInfo(isForced) {
 
 function hidePrefInfo(isForced) {
 	isPrefInfoVisible = false;
-	spinArrow();
 	if (isForced) {
 		var prefInfoOffset = document.getElementById("top-drawer").getBoundingClientRect().height;
 		if (document.body.scrollTop <= prefInfoOffset) {
@@ -1170,25 +1185,31 @@ function openGallery() {
 }
 
 function changeGalleryVisibility(isVisible) {
+	closePrefDropdown();
 	scrollToTop(false);
 	if (isVisible == undefined) {
 		isGalleryVisible = !isGalleryVisible;
 	} else {
 		isGalleryVisible = isVisible;
 	}
-	document.getElementById("top-bar").style.position = isGalleryVisible ? "sticky" : "fixed";
-	document.getElementById("top-bar").style.backgroundColor = isGalleryVisible ? "white" : "transparent";
-	document.getElementById("map-page").style.display = isGalleryVisible ? "none" : "flex";
-	document.getElementById("gallery").style.display = isGalleryVisible ? "flex" : "none";
-	document.getElementById("filter-btn").style.display = isGalleryVisible ? "inline" : "none";
-	document.getElementById("timeline").style.display = isGalleryVisible ? "inline-grid" : "none";
-	document.getElementById("map-btn").style.display = isGalleryVisible ? "block" : "none";
-	document.getElementById("pref-name").style.display = isGalleryVisible ? "block" : "none";
-	document.getElementById("pref-name-arrow").style.display = isGalleryVisible ? "block" : "none";
-	document.getElementById("top-drawer").style.display = isGalleryVisible ? "block" : "none";
-	document.getElementById("pref-info-bg").style.visibility = isGalleryVisible ? "visible" : "hidden";
+	
+	if (isGalleryVisible) {
+		document.getElementById("top-bar").style.position = "sticky";
+		document.getElementById("top-bar").style.backgroundColor = "white";
+		addNoDisplay(["map-page", "to-top-btn"]);
+		removeNoDisplay(["gallery", "filter-btn", "map-btn", "info-btn", "pref-title-btn", "top-drawer", "pref-info"]);
+		document.getElementById("pref-info-bg").style.visibility = "visible";
+		document.getElementById("to-top-btn").classList.add("transparent");
+	} else {
+		document.getElementById("top-bar").style.position = "fixed";
+		document.getElementById("top-bar").style.backgroundColor = "transparent";
+		removeNoDisplay(["map-page", "to-top-btn"]);
+		addNoDisplay(["gallery", "filter-btn", "map-btn", "info-btn", "pref-title-btn", "top-drawer", "pref-info"]);
+		document.getElementById("pref-info-bg").style.visibility = "hidden";
+		document.getElementById("to-top-btn").classList.remove("transparent");
+	}
 	document.getElementById("pref-info-bg").classList.remove("transparent");
-	document.getElementById("pref-info").style.display = isGalleryVisible ? "flex" : "none";
+
 	isPrefInfoVisible = isGalleryVisible;
 	if (!isGalleryVisible) {
 		document.getElementById("map-page").classList.add("transparent");
@@ -1207,6 +1228,9 @@ function setupSite() {
 
 	japanTitle = getBilingualText("JAPAN", "日本");
 	document.getElementById("main-title").innerHTML = japanTitle;
+	document.getElementById("map-instructions").innerHTML = getBilingualText(
+		"Select a prefecture to see pictures from that location.", 
+		"都道府県を選択して、その地域の写真を表示する。");
 	document.getElementById("dates-title").innerHTML = getBilingualText("Dates visited", "訪れた日付");
 	document.getElementById("cities-title").innerHTML = getBilingualText("Areas visited", "訪れた所");
 	document.getElementById("description-title").innerHTML = getBilingualText("About", "都道府県について");
@@ -1218,16 +1242,17 @@ function setupSite() {
 	document.getElementById("submit-btn").innerHTML = getBilingualText("Save", "保存する");
 	document.getElementById("pic-info-btn").title = getBilingualText("See picture information", "写真の情報を見る");
 	document.getElementById("map-btn").title = getBilingualText("Return to map", "地図に戻る");
-	document.getElementById("pref-title").title = getBilingualText("Toggle prefecture info", "都道府県の情報をトグル");
-	document.getElementById("info-btn").title = getBilingualText("About the site", "このサイトについて");
-	document.getElementById("filter-title").title = getBilingualText("Filter Pictures", "写真をフィルターする");
-	document.getElementById("map-instructions").innerHTML = getBilingualText(
-		"Select a prefecture to see pictures from that location, or click here to see all pictures", 
-		"都道府県を選択して、その地域の写真を表示する。または、こちらを選択して、全部の写真を表示する。");
+	document.getElementById("pref-title-btn").title = getBilingualText("Change prefecture", "都道府県を切り替える");
+	document.getElementById("info-btn").title = getBilingualText("Toggle prefecture info", "都道府県の情報をトグル");
+	document.getElementById("creator-btn").title = getBilingualText("About the site", "このサイトについて");
+	document.getElementById("filter-btn").title = getBilingualText("Filter Pictures", "写真をフィルターする");
 	document.getElementById("left-arrow").title = getBilingualText("Previous picture", "前の写真");
 	document.getElementById("right-arrow").title = getBilingualText("Next picture", "次の写真");
 	document.getElementById("search-eng").title = getBilingualText("Google in English", "英語でググる");
 	document.getElementById("search-jp").title = getBilingualText("Google in Japanese", "日本語でググる");
+	Array.from(document.getElementsByClassName("close-btn")).forEach(element => {
+		element.title = getBilingualText("Close", "閉じる");
+	})
 
 	var filterTags = document.getElementById("tags-list");
 	tags.sort((a, b) => { 
@@ -1257,12 +1282,14 @@ function setupSite() {
 			openGallery(true);
 		}, 50);
 	});
+	document.getElementById("pref-drop-down-bg").addEventListener("click", function () { closePrefDropdown(); });
 	document.getElementById("pref-info-bg").addEventListener("click", function () { changePrefInfoVisibility(false, true); });
 	document.getElementById("info-popup-close-btn").addEventListener("click", function () { closeInfoPopup(false); });
 	document.getElementById("site-info-popup").addEventListener("click", (event) => {
 		event.stopPropagation();
 	});
 	document.getElementById("to-top-btn").addEventListener("click", function () { scrollToTop(true); });
+	document.getElementById("pref-title-btn").addEventListener("click", function () { togglePrefDropdown() });
 	document.getElementById("filter-btn").addEventListener("click", function () { showFilter(); });
 	document.getElementById("filter-popup-bg").addEventListener("click", function () { hideFilter(true); });
 	document.getElementById("filter-popup-close-btn").addEventListener("click", function () { hideFilter(false); });
@@ -1271,9 +1298,9 @@ function setupSite() {
 	document.getElementById("pic-info-btn").addEventListener("click", function () { changePicInfoVisibility(); });
 	document.getElementById("pic-info-close-btn").addEventListener("click", function () { hidePicInfo(); });
 	document.getElementById("popup-bg").addEventListener("click", function () { closeInfoPopup(true); });
-	document.getElementById("info-btn").addEventListener("click", openInfoPopup);
+	document.getElementById("creator-btn").addEventListener("click", openInfoPopup);
 	document.getElementById("map-btn").addEventListener("click", function () { changeGalleryVisibility(false); });
-	document.getElementById("pref-title").addEventListener("click", function () { changePrefInfoVisibility(undefined, true); });
+	document.getElementById("info-btn").addEventListener("click", function () { changePrefInfoVisibility(undefined, true); });
 	document.getElementById("fullscreen-bg").addEventListener("click", function () { closeFullscreen(true) });
 	document.getElementById("fullscreen-ctrl").addEventListener("click", function () { closeFullscreen(true) });
 	document.getElementById("left-arrow").addEventListener("click", (event) => {
@@ -1293,7 +1320,6 @@ function setupSite() {
 	});
 	document.getElementById("japan-map-mini").addEventListener("load", filterMiniMap);
 	document.getElementById("japan-map").addEventListener("load", colourMap);
-	document.getElementById("map-instructions").addEventListener("click", openInfoPopup);
 	document.getElementById("pref-info-handle").parentElement.addEventListener("touchstart", e => { startHandleDrag(e) }, false);
 	document.addEventListener("touchend", endHandleDrag, false);
 
@@ -1336,7 +1362,7 @@ function setupSite() {
 function openLoader() {
 	document.getElementById("top-bar").classList.add("transparent");
 	document.getElementById("map-page").classList.add("transparent");
-	document.getElementById("loader-btn").style.display = "none";
+	addNoDisplay("loader-btn");
 	document.getElementById("loading-screen").style.visibility = "visible";
 	document.getElementById("loading-screen").classList.remove("transparent");
 	for (let i = 1; i <= 9; i++) {
@@ -1387,7 +1413,7 @@ function fetchData() {
 						document.getElementById("load" + i).style.animationIterationCount = iterationCount - (i == 1 ? 1 : 0);
 					}
 					document.getElementById("load8").addEventListener("animationend", function () {
-						document.getElementById("loader-btn").style.display = "block";
+						removeNoDisplay("loader-btn");
 						setTimeout(() => {
 							document.getElementById("loader-btn").classList.remove("transparent");
 						}, 10);
@@ -1398,7 +1424,7 @@ function fetchData() {
 }
 
 function retry() {
-	document.getElementById("error-btn").style.display = "none";
+	addNoDisplay("error-btn");
 	for (let i = 1; i <= 9; i++) {
 		document.getElementById("load" + i).style.animationPlayState = "running";
 	}
@@ -1407,7 +1433,7 @@ function retry() {
 
 function showDataLoadError() {
 	setTimeout(() => {
-		document.getElementById("error-btn").style.display = "block";
+		removeNoDisplay("error-btn");
 		document.getElementById("error-btn").classList.remove("transparent");
 		for (let i = 1; i <= 9; i++) {
 			document.getElementById("load" + i).style.animationPlayState = "paused";

@@ -9,31 +9,40 @@
 <body class="page-bg">
   <!-- Top bar -->
   <div id="top-bar" class="top-bar transparent" style="z-index: 5000;">
-    <button id="map-btn" class="text-main-color large-icon"
-      style="display: none; z-index: 5001;">&#xf279</button>
-    <div id="pref-title" class="pref-title">
-      <div id="pref-name" class="regular-text bold-text" style="display: none;"></div>
-      <!-- <div id="pref-name-btn-up" class="text-main-color large-icon" style="display: none">&#xf0d7</div> -->
-      <button id="pref-name-arrow" class="text-main-color large-icon transform-transition down-arrow" style="display: none">&#xf0d8</button>
+    <button id="map-btn" class="text-main-color large-icon no-display" style="z-index: 5001;">&#xf279</button>
+    <div id="pref-title" style="display: flex; justify-content: center;">
+      <div id="pref-title-btn" class="pref-title no-display">
+        <div id="pref-name" class="regular-text bold-text"></div>
+        <button id="pref-name-arrow" class="text-main-color large-icon transform-transition arrow-down">&#xf0d7</button>
+      </div>
     </div>
-    <button id="info-btn" class="text-main-color large-icon">&#xf05a</button>
+    <div id="btn-grp">
+      <button id="filter-btn" class="text-main-color large-icon no-display"> &#xf0b0</button>
+      <button id="info-btn" class="text-main-color large-icon no-display">&#xf05a</button>
+      <button id="creator-btn" class="text-main-color large-icon">&#xf005</button>
+    </div>
+  </div>
+
+  <div id="pref-drop-down-container" class="flex-column no-display" style="z-index: 5001;">
+    <div id="pref-drop-down-bg" class="popup-bg opacity-transition transparent"></div>
+    <div id="pref-drop-down" class="pref-drop-down regular-text"></div>
   </div>
 
   <!-- Map Page (Map and Prefecture List) -->
   <div id="map-page" class="map-page transparent opacity-transition">
     <object id="japan-map" type="image/svg+xml" class="japan-map"></object>
-    <div id="main-title" class="main-title"></div>
-    <div id="map-instructions" class="regular-text" style="text-align: center; cursor: pointer; display: none;"></div>
+    <h1 id="main-title"></h1>
+    <p id="map-instructions" class="regular-text" style="text-align: center; margin-top: 0;"></p>
     <div id="pref-list" class="pref-list"></div>
   </div>
 
   <!-- Prefecture Info -->
-  <div id="top-drawer" style="display:none; z-index: 4999; position: relative; scroll-snap-align: start;">
+  <div id="top-drawer" class="no-display" style="z-index: 4999; position: relative; scroll-snap-align: start;">
     <div id="pref-info-bg" class="popup-bg opacity-transition portrait-only transparent"></div>
-    <div id="pref-info" class="slider">
+    <div id="pref-info" class="slider no-display">
       <div class="pref-info">
         <object id="japan-map-mini" type="image/svg+xml" data="img/japan.svg" class="mini-map opacity-transition transparent"></object>
-        <div class="flex-column regular-text pref-info-text">
+        <div id="pref-info-txt" class="flex-column regular-text pref-info-text">
           <div>
             <div id="dates-title" class="bold-text">Dates visited — 訪れた日付</div>
             <div id="pref-dates"></div>
@@ -57,30 +66,21 @@
     </div>
   </div>
 
-  <!-- Timeline and Picture Gallery -->
-  <div style="scroll-snap-align: start;">
-    <button id="filter-btn" class="filter-btn large-icon"> &#xf0b0</button>
-    <div class="landscape-only" style="position: absolute;">
-      <div id="timeline" class="timeline">
-        <div id="left-column" class="timeline-column left"></div>
-        <div id="right-column" class="timeline-column right"></div>
-      </div>
-    </div>
-    <div id="gallery" class="gallery" style="z-index: 4000;"></div>
-  </div>
+  <!-- Picture Gallery -->
+  <div id="gallery" class="gallery no-display"></div>
 
   <!-- Scroll to top btn -->
-  <button id="to-top-btn" class="large-icon floating-btn transparent opacity-transition">&#xf102</button>
+  <button id="to-top-btn" class="large-icon floating-btn opacity-transform-transition arrow-down">&#xf103</button>
 
   <!-- Filter Popup -->
   <div id="filter-popup" class="hidden-popup" style="z-index: 10000;">
     <div id="filter-popup-bg" class="popup-bg opacity-transition transparent"></div>
     <div id="img-filter-popup" class="popup centered transparent">
       <button id="filter-popup-close-btn" class="large-icon close-btn">&#xf00d</button>
-      <div id="filters" class="flex-column popup-content transparent opacity-transition" style="height: 100%">
+      <div id="filters" class="flex-column popup-content transparent opacity-transition no-display" style="height: 100%">
         <div class="flex-column" style="justify-content: space-between; height: 100%;">
           <div class="flex-column" style="gap: 15px;">
-            <div id="filter-title" class="bold-text"></div>
+            <p id="filter-title" class="bold-text"></p>
             <div>
               <label id="keyword-title" class="bold-text" for="keyword"></label><br>
               <input type="text" id="keyword"><br>
@@ -108,7 +108,7 @@
     <div id="popup-bg" class="popup-bg opacity-transition transparent"></div>
     <div id="site-info-popup" class="popup centered transparent">
       <button id="info-popup-close-btn" class="large-icon close-btn">&#xf00d</button>
-      <div id="site-info" class="flex-column opacity-transition popup-content transparent">
+      <div id="site-info" class="flex-column opacity-transition popup-content transparent no-display">
         <div class="regular-text">
           <p class="bold-text">About this site</p>
           <p>I was in Japan on exchange in September 2022 - April 2023. This site contains the highlights of the
@@ -132,7 +132,7 @@
       <div id="fullscreen-ctrl" class="fullscreen-ctrl" style="z-index: 1;">
         <button id="left-arrow" class="large-icon fullscreen-arrow">&#xf0d9</button>
         <div>
-          <img id="fullscreen-pic-next" class="fullscreen-pic transparent centered" style="display: none; position: absolute;" src="img/BFD9CC0C-53AB-4F00-851A-AAB2D06A37A6.jpeg" />
+          <img id="fullscreen-pic-next" class="fullscreen-pic transparent centered no-display" style="position: absolute;" src="img/BFD9CC0C-53AB-4F00-851A-AAB2D06A37A6.jpeg" />
           <img id="fullscreen-pic" class="fullscreen-pic centered" style="position: absolute;" src="img/BFD9CC0C-53AB-4F00-851A-AAB2D06A37A6.jpeg" />
         </div>
         <button id="right-arrow" class="large-icon fullscreen-arrow">&#xf0da</button>
@@ -178,7 +178,7 @@
       <div id="load7" class="loader-dot" style="transform: rotate(180deg) translate(80px)rotate(180deg); animation-delay: -0.5s;"></div>
       <div id="load8" class="loader-dot" style="transform: rotate(225deg) translate(80px)rotate(225deg); animation-delay: -0.25s;"></div>
       <div id="load9" class="loader-dot" style="transform: rotate(270deg) translate(80px)rotate(270deg); animation-delay: 0s;"></div>
-      <div id="loader-btn" class="centered opacity-transition loader-btn transparent">
+      <div id="loader-btn" class="centered opacity-transition loader-btn transparent no-display">
         <img id="sakura" src="img/sakura.svg" class="centered" style="position: absolute; width: 85%;">
         <div id="loader-text" class="centered loader-text">
           <p style="margin: 0.5em">Start</p>
