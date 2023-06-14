@@ -40,6 +40,7 @@ let visibleImgs = [];
 
 const defaultTimeout = 500;
 const jpnTimeDiff = -540;
+const threshold = 500;
 
 let initialX = null;
 let initialY = null;
@@ -127,9 +128,15 @@ function scrollToTop(isSmooth){
 	});
 }
 
+function scrollDown(){
+	document.getElementById("main-title").scrollIntoView({
+		behavior: 'smooth',
+		block: "start"
+	});
+}
+
 function showHideFloatingBtn() {
 	var btn = document.getElementById("to-top-btn");
-	var threshold = 500;
 	if (document.body.scrollTop > threshold) {
 		if(isGalleryVisible && !isToTopVisible){
 			btn.classList.remove("arrow-down");
@@ -388,7 +395,9 @@ function filterMiniMap() {
 	// show the map
 	const japanImg = svgDoc.getElementById("japan-img");
 	japanImg.setAttribute("viewBox", selectedPref.viewbox);
-	svgObj.classList.remove("transparent");
+	setTimeout(() => {
+		svgObj.classList.remove("transparent");
+	}, 50);
 }
 
 function editMiniMap() {
@@ -727,7 +736,7 @@ function filterImages() {
 			if ((classList.filter(className => className.includes("left")).length > 0 && !isLeft) ||
 				(classList.filter(className => className.includes("right")).length > 0 && isLeft)) {
 				allPolaroids[i].classList.remove(classList[0]);
-				allPolaroids[i].classList.add((isLeft ? "right-" : "left-") + angle);
+				allPolaroids[i].classList.add((isLeft ? "left-" : "right-") + angle);
 			}
 
 			isLeft = !isLeft;
@@ -1288,7 +1297,13 @@ function setupSite() {
 	document.getElementById("site-info-popup").addEventListener("click", (event) => {
 		event.stopPropagation();
 	});
-	document.getElementById("to-top-btn").addEventListener("click", function () { scrollToTop(true); });
+	document.getElementById("to-top-btn").addEventListener("click", function () {
+		if (document.body.scrollTop > threshold) {
+			scrollToTop(true);
+		} else {
+			scrollDown();
+		}
+	});
 	document.getElementById("pref-title-btn").addEventListener("click", function () { togglePrefDropdown() });
 	document.getElementById("filter-btn").addEventListener("click", function () { showFilter(); });
 	document.getElementById("filter-popup-bg").addEventListener("click", function () { hideFilter(true); });
