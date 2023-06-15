@@ -1034,24 +1034,32 @@ function changePicInfoVisibility(isVisible) {
 
 // Gestures
 // Source: https://stackoverflow.com/questions/53192433/how-to-detect-swipe-in-javascript
-function startHandleDrag(e) {
+function startHandleDrag(e, handleId) {
 	if(isPortraitMode()){
 		isHandleGrabbed = true;
+		grabbedHandleId = handleId
 		initialYHandle = e.touches[0].clientY;
 	}
 }
 
 function endHandleDrag(e) {
 	if(isPortraitMode()){
-		if (isHandleGrabbed) {
+		if (isHandleGrabbed && grabbedHandleId) {
 			isHandleGrabbed = false;
 			var currentY = e.changedTouches[0].clientY;
 			if (currentY > initialYHandle) {
-				showPrefInfo(true);
+				if(grabbedHandleId == "pic-info-handle"){
+					hidePicInfo();
+				} else {
+					showPrefInfo(true);
+				}
 			} else if (currentY < initialYHandle) {
-				hidePrefInfo(true);
+				if(grabbedHandleId == "pref-info-handle"){
+					hidePrefInfo(true);
+				}
 			}
 			initialYHandle = null;
+			grabbedHandleId = null;
 		}
 	}
 }
@@ -1096,10 +1104,11 @@ function moveFullscreenSwipe(e) {
 				if (!isPicInfoVisible) {
 					showPicInfo();
 				}
-			} else {
-				if (isPicInfoVisible && document.getElementById("pic-info-details").scrollTop == 0) {
-					hidePicInfo();
-				}
+			// removed because will not work with Apple
+			// } else {
+			// 	if (isPicInfoVisible && document.getElementById("pic-info-details").scrollTop == 0) {
+			// 		hidePicInfo();
+			// 	}
 			}
 		}
 
@@ -1376,7 +1385,8 @@ function setupSite() {
 	});
 	document.getElementById("japan-map-mini").addEventListener("load", filterMiniMap);
 	document.getElementById("japan-map").addEventListener("load", colourMap);
-	document.getElementById("pref-info-handle").addEventListener("touchstart", e => { startHandleDrag(e) }, false);
+	document.getElementById("pref-info-handle").addEventListener("touchstart", e => { startHandleDrag(e,"pref-info-handle") }, false);
+	document.getElementById("pic-info-handle").addEventListener("touchstart", e => { startHandleDrag(e,"pic-info-handle") }, false);
 	document.addEventListener("touchend", endHandleDrag, false);
 
 	document.addEventListener("keydown", function (event) {
@@ -1401,6 +1411,7 @@ function setupSite() {
 	swipeContainer.addEventListener("touchstart", startFullscreenSwipe, false);
 	swipeContainer.addEventListener("touchmove", moveFullscreenSwipe, false);
 	
+	// currently remove because it will not work on Apple
 	document.getElementById("pic-info-details").addEventListener("touchstart", (event) => {
 		//event.stopPropagation();
 	});
