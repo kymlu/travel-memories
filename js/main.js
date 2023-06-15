@@ -11,30 +11,37 @@
 
 // Variables
 let isLoading = true;
-let selectedPref = null;
-let selectedPicture = null;
-let selectedPictureIndex = 0;
-let isPopupVisible = false;
-let isFilterVisible = false;
-let isGalleryVisible = false;
-let isFullscreen = false;
-let isPrefInfoVisible = false;
-let throttlePrefInfo = false;
-let isPicInfoVisible = true;
+let now = null;
+
 let data = null;
 let japanTitle = null;
-let now = null;
+let selectedPref = null;
+let selectedPic = null;
+let selectedPicInd = 0;
+
+let throttlePrefInfo = false;
+let isPopupVisible = false;
+let isToTopVisible = false;
+let isFilterVisible = false;
+let isGalleryVisible = false;
+let isNewPref = true;
+let isFullscreen = false;
+let isNewFullscreenInstance = true;
+let isPrefInfoVisible = false;
+let isPicInfoVisible = true;
+
+let initialX = null;
+let initialY = null;
+let initialYHandle = null;
 let isHandleGrabbed = false;
 let grabbedHandleId = null;
-let searchTerm = ["", ""];
-let isNewFullscreenInstance = true;
-let isNewPref = true;
 let lastSwipeTime = null;
-let isToTopVisible = false;
+
+let searchTerm = ["", ""];
 let filterKeyword = "";
 let filterLocationsList = [];
-let filterTagsList = [];
 let tempFilterLocations = [];
+let filterTagsList = [];
 let tempFilterTags = [];
 let visibleImgs = [];
 
@@ -42,13 +49,7 @@ const defaultTimeout = 500;
 const jpnTimeDiff = -540;
 const threshold = 500;
 
-let initialX = null;
-let initialY = null;
-let initialYHandle = null;
-
-const monthNames = ["January", "February", "March", "April", "May", "June",
-	"July", "August", "September", "October", "November", "December"
-];
+const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 const dayNamesEn = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 const dayNamesJp = ["日", "月", "火", "水", "木", "金", "土"];
 
@@ -96,7 +97,7 @@ const tags = [
 ];
 
 let polaroid, polaroidImgFrame, polaroidImg, polaroidCaption, polaroidCaptionText, polaroidCaptionContainer, polaroidDate, singleDate;
-let filterTagButton;
+let filterTagBtn;
 
 let appColor = "#be0029";
 
@@ -120,48 +121,6 @@ function shuffle(array) {
 	}
 
 	return array;
-}
-
-function scrollToTop(isSmooth){
-	window.scrollTo({
-		top: 0,
-		left: 0,
-		behavior: isSmooth ? 'smooth' : "instant"
-	});
-}
-
-function scrollDown(){
-	document.getElementById("main-title").scrollIntoView({
-		behavior: 'smooth',
-		block: "start"
-	});
-}
-
-function showHideFloatingBtn() {
-	var btn = document.getElementById("to-top-btn");
-	if (document.body.scrollTop > threshold) {
-		if(isGalleryVisible && !isToTopVisible){
-			btn.classList.remove("arrow-down");
-			btn.classList.add("arrow-up");
-			removeNoDisplay([btn]);
-			btn.classList.remove("transparent");
-			isToTopVisible = true;
-		} else if (!isGalleryVisible){
-			btn.classList.remove("arrow-down");
-			btn.classList.add("arrow-up");
-		}
-	} else if (document.body.scrollTop <= threshold) {
-		if (isGalleryVisible && isToTopVisible) {
-			btn.classList.remove("arrow-down");
-			btn.classList.add("arrow-up");
-			btn.classList.add("transparent");
-			setTimeout(() => { addNoDisplay([btn]); }, defaultTimeout)
-			isToTopVisible = false;
-		} else if (!isGalleryVisible) {
-			btn.classList.remove("arrow-up");
-			btn.classList.add("arrow-down");
-		}
-	}
 }
 
 function addNoDisplay(elements){
@@ -191,6 +150,14 @@ function removeNoDisplay(elements) {
 			}
 		}
 	}
+}
+
+function scrollToTop(isSmooth){
+	window.scrollTo({
+		top: 0,
+		left: 0,
+		behavior: isSmooth ? 'smooth' : "instant"
+	});
 }
 
 // Text
@@ -230,6 +197,42 @@ function getJapaneseDate(date, isFullDate) {
 			date.getSeconds().toString().padStart(2, "0") 
 			: "");
 }
+
+// Floating Button
+function scrollDown(){
+	document.getElementById("main-title").scrollIntoView({
+		behavior: 'smooth',
+		block: "start"
+	});
+}
+
+function showHideFloatingBtn() {
+	var btn = document.getElementById("to-top-btn");
+	if (document.body.scrollTop > threshold) {
+		if(isGalleryVisible && !isToTopVisible){
+			btn.classList.remove("arrow-down");
+			btn.classList.add("arrow-up");
+			removeNoDisplay([btn]);
+			btn.classList.remove("transparent");
+			isToTopVisible = true;
+		} else if (!isGalleryVisible){
+			btn.classList.remove("arrow-down");
+			btn.classList.add("arrow-up");
+		}
+	} else if (document.body.scrollTop <= threshold) {
+		if (isGalleryVisible && isToTopVisible) {
+			btn.classList.remove("arrow-down");
+			btn.classList.add("arrow-up");
+			btn.classList.add("transparent");
+			setTimeout(() => { addNoDisplay([btn]); }, defaultTimeout)
+			isToTopVisible = false;
+		} else if (!isGalleryVisible) {
+			btn.classList.remove("arrow-up");
+			btn.classList.add("arrow-down");
+		}
+	}
+}
+
 // Prefecture List
 function createPrefList() {
 	// Create templates
@@ -246,16 +249,16 @@ function createPrefList() {
 	regionTitle.classList.add("region-text");
 
 	const visitedPref = document.createElement("div");
-	visitedPref.classList.add("prefecture-text", "visited-pref-text");
+	visitedPref.classList.add("pref-txt", "visited-pref-text");
 
 	const unvisitedPref = document.createElement("div");
-	unvisitedPref.classList.add("prefecture-text", "locked-pref-text");
+	unvisitedPref.classList.add("pref-txt", "locked-pref-text");
 
 	const regionDrop = document.createElement("div");
 	regionDrop.classList.add("region-text", "regular-text");
 	
 	const prefDrop = document.createElement("div");
-	prefDrop.classList.add("prefecture-text", "regular-text");
+	prefDrop.classList.add("pref-txt", "regular-text");
 
 	// Iterate each region and prefecture, sort by visited/not visited
 	data.forEach(region => {
@@ -296,6 +299,28 @@ function createPrefList() {
 			});
 		prefList.appendChild(newPref);
 	});
+}
+
+// Prefecture selector dropdown
+function togglePrefDropdown() {
+	document.getElementById("pref-drop-down-container").classList.toggle("no-display");
+	spinArrow();
+	if(isNewPref){
+		isNewPref = false;
+		document.getElementById(selectedPref.english_name + "-dropdown").scrollIntoView({ behavior: "smooth", block: "center" });
+	}
+}
+
+function closePrefDropdown() {
+	addNoDisplay("pref-drop-down-container");
+	document.getElementById("pref-name-arrow").classList.add("arrow-down");
+	document.getElementById("pref-name-arrow").classList.remove("arrow-up");
+}
+
+function showPrefDropdown() {
+	removeNoDisplay("pref-drop-down-container");
+	document.getElementById("pref-name-arrow").classList.remove("arrow-down");
+	document.getElementById("pref-name-arrow").classList.add("arrow-up");
 }
 
 // Map
@@ -375,8 +400,8 @@ function createTemplates() {
 	polaroidCaptionContainer = document.createElement("div");
 	polaroidCaptionContainer.classList.add("polaroid-caption-text-container");
 
-	filterTagButton = document.createElement("button");
-	filterTagButton.classList.add("filter-opt");
+	filterTagBtn = document.createElement("button");
+	filterTagBtn.classList.add("filter-opt");
 }
 
 function filterMiniMap() {
@@ -423,7 +448,9 @@ function lazyLoadPolaroid(target) {
 				const img = thisPolaroid.querySelector(".polaroid-img").getElementsByTagName("img")[0];
 				const src = img.getAttribute("img-src");
 				img.setAttribute("src", src);
-				thisPolaroid.classList.remove("transparent");
+				setTimeout(() => {
+					thisPolaroid.classList.remove("transparent");
+				}, 50);
 				observer.disconnect();
 			}
 		});
@@ -485,8 +512,8 @@ function createGallery() {
 
 			// listeners
 			pol.addEventListener("click", function () {
-				selectedPicture = img;
-				selectedPictureIndex = selectedPref.image_list.indexOf(selectedPicture);
+				selectedPic = img;
+				selectedPicInd = selectedPref.image_list.indexOf(selectedPic);
 				isNewFullscreenInstance = true;
 				setFullscreenPicture();
 				lastSwipeTime = new Date();
@@ -558,14 +585,14 @@ function selectPref(newPref) {
 		}
 		return 0;
 	}).forEach(area => {
-		var tempButton = filterTagButton.cloneNode();
-		tempButton.id = area.id + "-tag";
-		tempButton.innerHTML = getBilingualText(area.english_name, area.japanese_name);
-		tempButton.addEventListener("click", () => {
+		var tempBtn = filterTagBtn.cloneNode();
+		tempBtn.id = area.id + "-tag";
+		tempBtn.innerHTML = getBilingualText(area.english_name, area.japanese_name);
+		tempBtn.addEventListener("click", () => {
 			toggleLocation(area.id);
-			tempButton.classList.toggle("active");
+			tempBtn.classList.toggle("active");
 		});
-		filterLocations.appendChild(tempButton);
+		filterLocations.appendChild(tempBtn);
 	});
 
 	var filterTags = Array.from(document.getElementById("tags-list").getElementsByClassName("filter-opt"));
@@ -580,33 +607,13 @@ function selectPref(newPref) {
 		tag.classList.remove("active");
 	});
 	clearFilters();
+	filterKeyword = "";
 	visibleImgs = [];
 	filterLocationsList = [];
 	filterTagsList = [];
 	createGallery();
 	changeGalleryVisibility(true);
 	hideLoader();
-}
-
-function togglePrefDropdown() {
-	document.getElementById("pref-drop-down-container").classList.toggle("no-display");
-	spinArrow();
-	if(isNewPref){
-		isNewPref = false;
-		document.getElementById(selectedPref.english_name + "-dropdown").scrollIntoView({ behavior: "smooth", block: "center" });
-	}
-}
-
-function closePrefDropdown() {
-	addNoDisplay("pref-drop-down-container");
-	document.getElementById("pref-name-arrow").classList.add("arrow-down");
-	document.getElementById("pref-name-arrow").classList.remove("arrow-up");
-}
-
-function showPrefDropdown() {
-	removeNoDisplay("pref-drop-down-container");
-	document.getElementById("pref-name-arrow").classList.remove("arrow-down");
-	document.getElementById("pref-name-arrow").classList.add("arrow-up");
 }
 
 // filtering
@@ -721,14 +728,15 @@ function doesTextIncludeKeyword(text){
 
 function includeImage(img) {
 	let area = selectedPref.areas.find(x => {return x.id == img.city;});
+	if(area == null){console.log(img)}
 	let tempTags = tags.filter(tag => img.tags.includes(tag.id) && (doesTextIncludeKeyword(tag.english_name) || doesTextIncludeKeyword(tag.japanese_name)));
 	return (filterKeyword == "" ||
 		doesTextIncludeKeyword(img.description_english) ||
 		doesTextIncludeKeyword(img.description_japanese) ||
 		doesTextIncludeKeyword(img.location_english) ||
 		doesTextIncludeKeyword(img.location_japanese) ||
-		doesTextIncludeKeyword(area.english_name) ||
-		doesTextIncludeKeyword(area.japanese_name) || 
+		doesTextIncludeKeyword(area?.english_name) ||
+		doesTextIncludeKeyword(area?.japanese_name) || 
 		tempTags.length > 0) &&
 		(filterLocationsList.length == 0 || filterLocationsList.includes(img.city)) &&
 		(filterTagsList.length == 0 || filterTagsList.filter(value => img.tags.includes(value)).length > 0);
@@ -803,108 +811,108 @@ function searchJapanese() {
 function changeFullscreenPicture(isForward) {
 	if (isForward) {
 		if (visibleImgs.length > 0){
-			var ind = visibleImgs.indexOf(selectedPictureIndex);
+			var ind = visibleImgs.indexOf(selectedPicInd);
 			if (ind == visibleImgs.length - 1) {
-				selectedPictureIndex = visibleImgs[0];
+				selectedPicInd = visibleImgs[0];
 			} else {
-				selectedPictureIndex = visibleImgs[ind + 1];
+				selectedPicInd = visibleImgs[ind + 1];
 			}
 		} else {
-			if (selectedPictureIndex == (selectedPref.image_list.length - 1)) {
-				selectedPictureIndex = 0;
+			if (selectedPicInd == (selectedPref.image_list.length - 1)) {
+				selectedPicInd = 0;
 			} else {
-				selectedPictureIndex++;
+				selectedPicInd++;
 			}
 		}
 	} else {
 		if (visibleImgs.length > 0) {
-			var ind = visibleImgs.indexOf(selectedPictureIndex);
+			var ind = visibleImgs.indexOf(selectedPicInd);
 			if (ind == 0) {
-				selectedPictureIndex = visibleImgs[visibleImgs.length - 1];
+				selectedPicInd = visibleImgs[visibleImgs.length - 1];
 			} else {
-				selectedPictureIndex = visibleImgs[ind - 1];
+				selectedPicInd = visibleImgs[ind - 1];
 			}
 		} else {
-			if (selectedPictureIndex == 0) {
-				selectedPictureIndex = selectedPref.image_list.length - 1;
+			if (selectedPicInd == 0) {
+				selectedPicInd = selectedPref.image_list.length - 1;
 			} else {
-				selectedPictureIndex--;
+				selectedPicInd--;
 			}
 		}
 	}
-	selectedPicture = selectedPref.image_list[selectedPictureIndex];
+	selectedPic = selectedPref.image_list[selectedPicInd];
 	setFullscreenPicture(isForward);
 }
 
 function setFullscreenInfo(){
-	if(selectedPicture.date){
-		let date = getPictureDate(new Date(selectedPicture.date), jpnTimeDiff);
+	if(selectedPic.date){
+		let date = getPictureDate(new Date(selectedPic.date), jpnTimeDiff);
 		document.getElementById("fullscreen-eng-date").innerHTML = getEnglishDate(date, true);
 		document.getElementById("fullscreen-jp-date").innerHTML = getJapaneseDate(date, true);
 	} else {
 		document.getElementById("fullscreen-eng-date").innerHTML = "Unknown date";
 		document.getElementById("fullscreen-jp-date").innerHTML = "不明な日付";
 	}
-	let area = selectedPref.areas.find(function (area) { return area.id == selectedPicture.city });
-	searchTerm[0] = (selectedPicture.location_english ? (selectedPicture.location_english + ", ") : "") + (area.english_name ?? "");
+	let area = selectedPref.areas.find(function (area) { return area.id == selectedPic.city });
+	searchTerm[0] = (selectedPic.location_english ? (selectedPic.location_english + ", ") : "") + (area.english_name ?? "");
 	document.getElementById("fullscreen-eng-city").innerHTML = searchTerm[0];
 	document.getElementById("search-eng").addEventListener("click", searchEnglish);
-	searchTerm[1] = (area.japanese_name ?? "") + (selectedPicture.location_japanese ? ("　" + selectedPicture.location_japanese + "") : "");
+	searchTerm[1] = (area.japanese_name ?? "") + (selectedPic.location_japanese ? ("　" + selectedPic.location_japanese + "") : "");
 	document.getElementById("fullscreen-jp-city").innerHTML = searchTerm[1];
 	document.getElementById("search-jp").addEventListener("click", searchJapanese);
 
 	
-	if (selectedPicture.description_english) {
+	if (selectedPic.description_english) {
 		removeNoDisplay("fullscreen-eng-caption");
-		document.getElementById("fullscreen-eng-caption").innerHTML = selectedPicture.description_english;
+		document.getElementById("fullscreen-eng-caption").innerHTML = selectedPic.description_english;
 	} else {
 		addNoDisplay("fullscreen-eng-caption");
 	}
-	if (selectedPicture.description_japanese) {
+	if (selectedPic.description_japanese) {
 		removeNoDisplay("fullscreen-jp-caption");
-		document.getElementById("fullscreen-jp-caption").innerHTML = selectedPicture.description_japanese;
+		document.getElementById("fullscreen-jp-caption").innerHTML = selectedPic.description_japanese;
 	} else {
 		addNoDisplay("fullscreen-jp-caption");
 	}
 
-	if (selectedPicture.camera_model) {
+	if (selectedPic.camera_model) {
 		removeNoDisplay("camera-info");
-		document.getElementById("camera-info").innerHTML = selectedPicture.camera_model;
+		document.getElementById("camera-info").innerHTML = selectedPic.camera_model;
 	} else {
 		addNoDisplay("camera-info");
 	}
 	
-	if (selectedPicture.lens) {
+	if (selectedPic.lens) {
 		removeNoDisplay("lens-info");
-		document.getElementById("lens-info").innerHTML = selectedPicture.lens;
+		document.getElementById("lens-info").innerHTML = selectedPic.lens;
 	} else {
 		addNoDisplay("lens-info");
 	}
 	
 	document.getElementById("technical-info").replaceChildren();
 	var tempElement = null;
-	if(selectedPicture.f_stop){
+	if(selectedPic.f_stop){
 		tempElement = document.createElement("div");
-		tempElement.innerHTML = "\u0192/" + selectedPicture.f_stop;
+		tempElement.innerHTML = "\u0192/" + selectedPic.f_stop;
 		document.getElementById("technical-info").appendChild(tempElement);
 	}
-	if(selectedPicture.exposure){
+	if(selectedPic.exposure){
 		tempElement = document.createElement("div");
-		tempElement.innerHTML = selectedPicture.exposure;
+		tempElement.innerHTML = selectedPic.exposure;
 		document.getElementById("technical-info").appendChild(tempElement);
 	}
-	if(selectedPicture.iso){
+	if(selectedPic.iso){
 		tempElement = document.createElement("div");
-		tempElement.innerHTML = "iso " + selectedPicture.iso;
+		tempElement.innerHTML = "iso " + selectedPic.iso;
 		document.getElementById("technical-info").appendChild(tempElement);
 	}
-	// if(selectedPicture.focal_length){
+	// if(selectedPic.focal_length){
 	// 	tempElement = document.createElement("div");
-	// 	tempElement.innerHTML = selectedPicture.focal_length;
+	// 	tempElement.innerHTML = selectedPic.focal_length;
 	// 	document.getElementById("technical-info").appendChild(tempElement);
 	// }
 
-	selectedPicture.tags.map(x => { return tags.find(function (t) { return t.id == x }) })
+	selectedPic.tags.map(x => { return tags.find(function (t) { return t.id == x }) })
 		.sort()
 		.forEach(tag => {
 			tempElement = document.createElement("div");
@@ -919,7 +927,7 @@ function setFullscreenPicture(isForward) {
 	document.getElementById("search-jp").removeEventListener("click", searchJapanese);
 	document.getElementById("img-tags").replaceChildren();
 
-	var src = selectedPicture.link ?? "img/" + selectedPref.english_name.toLowerCase() + "/" + selectedPicture.file_name;
+	var src = selectedPic.link ?? "img/" + selectedPref.english_name.toLowerCase() + "/" + selectedPic.file_name;
 
 	if (isNewFullscreenInstance || (new Date() - lastSwipeTime) < 300) {
 		document.getElementById("fullscreen-pic").src = src;
@@ -1027,27 +1035,33 @@ function changePicInfoVisibility(isVisible) {
 // Gestures
 // Source: https://stackoverflow.com/questions/53192433/how-to-detect-swipe-in-javascript
 function startHandleDrag(e) {
-	isHandleGrabbed = true;
-	initialYHandle = e.touches[0].clientY;
+	if(isPortraitMode()){
+		isHandleGrabbed = true;
+		initialYHandle = e.touches[0].clientY;
+	}
 }
 
 function endHandleDrag(e) {
-	if (isHandleGrabbed) {
-		isHandleGrabbed = false;
-		var currentY = e.changedTouches[0].clientY;
-		if (currentY > initialYHandle) {
-			showPrefInfo(true);
-		} else if (currentY < initialYHandle) {
-			hidePrefInfo(true);
+	if(isPortraitMode()){
+		if (isHandleGrabbed) {
+			isHandleGrabbed = false;
+			var currentY = e.changedTouches[0].clientY;
+			if (currentY > initialYHandle) {
+				showPrefInfo(true);
+			} else if (currentY < initialYHandle) {
+				hidePrefInfo(true);
+			}
+			initialYHandle = null;
 		}
-		initialYHandle = null;
 	}
 }
 
 function startFullscreenSwipe(e) {
-	if (e.touches.length == 1) {
-		initialX = e.touches[0].clientX;
-		initialY = e.touches[0].clientY;
+	if(isPortraitMode()){
+		if (e.touches.length == 1) {
+			initialX = e.touches[0].clientX;
+			initialY = e.touches[0].clientY;
+		}
 	}
 }
 
@@ -1057,6 +1071,10 @@ function moveFullscreenSwipe(e) {
 	}
 
 	if (initialY === null) {
+		return;
+	}
+
+	if(!isPortraitMode()){
 		return;
 	}
 
@@ -1091,7 +1109,6 @@ function moveFullscreenSwipe(e) {
 		e.preventDefault();
 	}
 }
-
 
 // Popup
 function openInfoPopup() {
@@ -1146,11 +1163,11 @@ function showPrefInfo(isForced) {
 	document.getElementById("pref-info-bg").classList.remove("transparent");
 	document.getElementById("pref-info-bg").style.visibility = "visible";
 	if (isForced) {
-		if (document.body.scrollTop < document.getElementById("top-drawer").getBoundingClientRect().height) {
+		if (document.body.scrollTop < document.getElementById("pref-info").getBoundingClientRect().height) {
 			scrollToTop(true);
 		} else {
-			document.getElementById("top-drawer").style.position = "sticky";
-			document.getElementById("top-drawer").style.top = document.getElementById("top-bar").getBoundingClientRect().height;
+			document.getElementById("pref-info").style.position = "sticky";
+			document.getElementById("pref-info").style.top = document.getElementById("top-bar").getBoundingClientRect().height;
 			document.getElementById("pref-info-bg").classList.remove("transparent");
 		}
 	}
@@ -1159,7 +1176,7 @@ function showPrefInfo(isForced) {
 function hidePrefInfo(isForced) {
 	isPrefInfoVisible = false;
 	if (isForced) {
-		var prefInfoOffset = document.getElementById("top-drawer").getBoundingClientRect().height;
+		var prefInfoOffset = document.getElementById("pref-info").getBoundingClientRect().height;
 		if (document.body.scrollTop <= prefInfoOffset) {
 			window.scrollTo({
 				top: prefInfoOffset,
@@ -1171,8 +1188,8 @@ function hidePrefInfo(isForced) {
 	document.getElementById("pref-info-bg").classList.add("transparent");
 	setTimeout(() => {
 		document.getElementById("pref-info-bg").style.visibility = "hidden";
-		document.getElementById("top-drawer").style.position = "relative";
-		document.getElementById("top-drawer").style.top = "0";
+		document.getElementById("pref-info").style.position = "relative";
+		document.getElementById("pref-info").style.top = "0";
 	}, defaultTimeout);
 }
 
@@ -1196,7 +1213,7 @@ function scrollPrefInfo() {
 	if (throttlePrefInfo || !isGalleryVisible) return;
 	throttlePrefInfo = true;
 	setTimeout(() => {
-		let prefInfoOffset = document.getElementById("top-drawer").getBoundingClientRect().height / 2;
+		let prefInfoOffset = document.getElementById("pref-info").getBoundingClientRect().height / 2;
 		if (isPrefInfoVisible && document.body.scrollTop > prefInfoOffset) {
 			isPrefInfoVisible = false;
 			hidePrefInfo(false);
@@ -1208,6 +1225,7 @@ function scrollPrefInfo() {
 	}, 250);
 }
 
+// Main pages and setup
 function openGallery() {
 	scrollToTop(false);
 	document.getElementById("map-page").classList.remove("transparent");
@@ -1227,14 +1245,14 @@ function changeGalleryVisibility(isVisible) {
 		document.getElementById("top-bar").style.position = "sticky";
 		document.getElementById("top-bar").style.backgroundColor = "white";
 		addNoDisplay(["map-page", "to-top-btn"]);
-		removeNoDisplay(["gallery", "filter-btn", "map-btn", "info-btn", "pref-title-btn", "top-drawer", "pref-info"]);
+		removeNoDisplay(["gallery", "filter-btn", "map-btn", "info-btn", "pref-title-btn", "pref-info", "pref-info-drawer"]);
 		document.getElementById("pref-info-bg").style.visibility = "visible";
 		document.getElementById("to-top-btn").classList.add("transparent");
 	} else {
 		document.getElementById("top-bar").style.position = "fixed";
 		document.getElementById("top-bar").style.backgroundColor = "transparent";
 		removeNoDisplay(["map-page", "to-top-btn"]);
-		addNoDisplay(["gallery", "filter-btn", "map-btn", "info-btn", "pref-title-btn", "top-drawer", "pref-info"]);
+		addNoDisplay(["gallery", "filter-btn", "map-btn", "info-btn", "pref-title-btn", "pref-info", "pref-info-drawer"]);
 		document.getElementById("pref-info-bg").style.visibility = "hidden";
 		document.getElementById("to-top-btn").classList.remove("transparent");
 	}
@@ -1297,14 +1315,14 @@ function setupSite() {
 			}
 			return 0;
 		}).forEach(tag => {
-			var tempButton = filterTagButton.cloneNode();
-			tempButton.innerHTML = getBilingualText(tag.english_name, tag.japanese_name);
-			tempButton.id = tag.id + "-tag"
-			tempButton.addEventListener("click", () => {
+			var tempBtn = filterTagBtn.cloneNode();
+			tempBtn.innerHTML = getBilingualText(tag.english_name, tag.japanese_name);
+			tempBtn.id = tag.id + "-tag"
+			tempBtn.addEventListener("click", () => {
 				toggleTag(tag.id);
-				tempButton.classList.toggle("active");
+				tempBtn.classList.toggle("active");
 			});
-			filterTags.appendChild(tempButton);
+			filterTags.appendChild(tempBtn);
 	});
 
 	document.getElementById("loader-btn").addEventListener("click", function () {
@@ -1384,10 +1402,10 @@ function setupSite() {
 	swipeContainer.addEventListener("touchmove", moveFullscreenSwipe, false);
 	
 	document.getElementById("pic-info-details").addEventListener("touchstart", (event) => {
-		event.stopPropagation();
+		//event.stopPropagation();
 	});
 	document.getElementById("pic-info-details").addEventListener("touchmove", (event) => {
-		event.stopPropagation();
+		//event.stopPropagation();
 	});
 
 	window.onscroll = function () {

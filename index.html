@@ -23,6 +23,7 @@
     </div>
   </div>
 
+  <!-- Dropdown prefecture selector -->
   <div id="pref-drop-down-container" class="flex-column no-display" style="z-index: 5001;">
     <div id="pref-drop-down-bg" class="popup-bg opacity-transition transparent"></div>
     <div id="pref-drop-down" class="pref-drop-down regular-text"></div>
@@ -37,9 +38,9 @@
   </div>
 
   <!-- Prefecture Info -->
-  <div id="top-drawer" class="no-display" style="z-index: 4999; position: relative; scroll-snap-align: start;">
+  <div id="pref-info" class="no-display" style="z-index: 4999; position: relative;">
     <div id="pref-info-bg" class="popup-bg opacity-transition portrait-only transparent"></div>
-    <div id="pref-info" class="slider no-display">
+    <div id="pref-info-drawer" class="pref-info-container no-display">
       <div class="pref-info">
         <object id="japan-map-mini" type="image/svg+xml" data="img/japan.svg" class="mini-map opacity-transition transparent"></object>
         <div id="pref-info-txt" class="flex-column regular-text pref-info-text">
