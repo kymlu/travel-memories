@@ -10,10 +10,10 @@
   <!-- Top bar -->
   <div id="top-bar" class="top-bar transparent" style="z-index: 5000;">
     <button id="map-btn" class="text-main-color large-icon no-display" style="z-index: 5001;">&#xf279</button>
-    <div id="pref-title" style="display: flex; justify-content: center;">
-      <div id="pref-title-btn" class="pref-title no-display">
-        <div id="pref-name" class="regular-text bold-text"></div>
-        <button id="pref-name-arrow" class="text-main-color large-icon transform-transition arrow-down">&#xf0d7</button>
+    <div id="o-rgn-title" style="display: flex; justify-content: center;">
+      <div id="o-rgn-title-btn" class="o-rgn-title no-display">
+        <div id="o-rgn-name" class="regular-text bold-text"></div>
+        <button id="o-rgn-name-arrow" class="text-main-color large-icon transform-transition arrow-down">&#xf0d7</button>
       </div>
     </div>
     <div id="btn-grp">
@@ -23,45 +23,45 @@
     </div>
   </div>
 
-  <!-- Dropdown prefecture selector -->
-  <div id="pref-drop-down-container" class="flex-column no-display" style="z-index: 5001;">
-    <div id="pref-drop-down-bg" class="popup-bg opacity-transition transparent"></div>
-    <div id="pref-drop-down" class="pref-drop-down regular-text"></div>
+  <!-- Dropdown official region selector -->
+  <div id="o-rgn-drop-down-container" class="flex-column no-display" style="z-index: 5001;">
+    <div id="o-rgn-drop-down-bg" class="popup-bg opacity-transition transparent"></div>
+    <div id="o-rgn-drop-down" class="o-rgn-drop-down regular-text"></div>
   </div>
 
-  <!-- Map Page (Map and Prefecture List) -->
+  <!-- Map Page (Map and Official Region List) -->
   <div id="map-page" class="map-page transparent opacity-transition">
-    <object id="japan-map" type="image/svg+xml" class="japan-map"></object>
+    <object id="country-map" type="image/svg+xml" class="country-map"></object>
     <h1 id="main-title"></h1>
     <p id="map-instructions" class="regular-text" style="text-align: center; margin-top: 0;"></p>
-    <div id="pref-list" class="pref-list"></div>
+    <div id="o-rgn-list" class="o-rgn-list"></div>
   </div>
 
-  <!-- Prefecture Info -->
-  <div id="pref-info" class="no-display" style="z-index: 4999; position: relative;">
-    <div id="pref-info-bg" class="popup-bg opacity-transition portrait-only transparent"></div>
-    <div id="pref-info-drawer" class="pref-info-container no-display">
-      <div class="pref-info">
-        <object id="japan-map-mini" type="image/svg+xml" data="img/japan.svg" class="mini-map opacity-transition transparent"></object>
-        <div id="pref-info-txt" class="flex-column regular-text pref-info-text">
+  <!-- Official Region Info -->
+  <div id="o-rgn-info" class="no-display" style="z-index: 4999; position: relative;">
+    <div id="o-rgn-info-bg" class="popup-bg opacity-transition portrait-only transparent"></div>
+    <div id="o-rgn-info-drawer" class="o-rgn-info-container no-display">
+      <div class="o-rgn-info">
+        <object id="country-map-mini" type="image/svg+xml" data="img/japan.svg" class="mini-map opacity-transition transparent"></object>
+        <div id="o-rgn-info-txt" class="flex-column regular-text o-rgn-info-text">
           <div>
             <div id="dates-title" class="bold-text"></div>
-            <div id="pref-dates"></div>
+            <div id="o-rgn-dates"></div>
           </div>
           <div>
             <div id="cities-title" class="bold-text"></div>
-            <div id="pref-cities"></div>
+            <div id="o-rgn-cities"></div>
           </div>
           <div>
             <div id="description-title" class="bold-text"></div>
-            <div id="pref-desc">
-              <div id="pref-desc-eng"></div>
-              <div id="pref-desc-jp"></div>
+            <div id="o-rgn-desc">
+              <div id="o-rgn-desc-eng"></div>
+              <div id="o-rgn-desc-jp"></div>
             </div>
           </div>
         </div>
       </div>
-      <div id="pref-info-handle">
+      <div id="o-rgn-info-handle">
         <hr class="drawer-handle" />
       </div>
     </div>
@@ -116,13 +116,14 @@
       <div id="site-info" class="flex-column opacity-transition popup-content transparent no-display">
         <div class="regular-text">
           <p class="bold-text">About this site</p>
-          <p>I was in Japan on exchange in September 2022 - April 2023. This site contains the highlights of the sidetrips 
-             I made. For privacy reasons, I do not plan to upload close-up pictures of myself or my friends to this page.</p>
+          <p>I was in Japan on exchange in September 2022 - April 2023. After Japan, I decided to travel around to Taiwan, Australia, and New Zealand in April and May 2023.
+            This site contains the highlights of all the trips that I made. I made. For privacy reasons, I do not plan to upload close-up pictures of myself or my friends to this page.</p>
           <p>Design, coding, and photography: Katherine (Katie) Lu</p>
         </div>
         <div class="regular-text">
           <p class="bold-text">このサイトについて</p>
-          <p>留学のため、2022年9月から2023年4月まで日本に滞在しました。このウェブページでは、皆さんに私の旅行のハイライトを紹介したいと思います。プライバシーのため、自分と知り合いの写真を掲載しません。</p>
+          <p>留学のため、2022年9月から2023年4月まで日本に滞在しました。出国した後、台湾、オーストラリアとニュージーランドの旅行もした。
+            このウェブページでは、皆さんに私の旅行のハイライトを紹介したいと思います。プライバシーのため、自分と知り合いの写真を掲載しません。</p>
           <p>デザイン・プログラミング・写真：ルー・キャサリン（ケイティー）</p>
         </div>
       </div>
