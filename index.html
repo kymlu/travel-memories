@@ -1,7 +1,7 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1" name="viewport" />
-  <title>Memories from Japan — 日本の思い出</title>
+  <title>Trip Memories — 旅行の思い出</title>
   <link rel="stylesheet" type="text/css" href="css/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
@@ -9,14 +9,17 @@
 <body class="page-bg">
   <!-- Top bar -->
   <div id="top-bar" class="top-bar transparent" style="z-index: 5000;">
-    <button id="map-btn" class="text-main-color large-icon no-display" style="z-index: 5001;">&#xf279</button>
+    <div id="btn-grp-left" class="btn-grp">
+      <button id="globe-btn" class="text-main-color large-icon" style="z-index: 5001;">&#xf0ac</button>
+      <button id="map-btn" class="text-main-color large-icon no-display" style="z-index: 5001;">&#xf279</button>
+    </div>
     <div id="o-rgn-title" style="display: flex; justify-content: center;">
       <div id="o-rgn-title-btn" class="o-rgn-title no-display">
         <div id="o-rgn-name" class="regular-text bold-text"></div>
         <button id="o-rgn-name-arrow" class="text-main-color large-icon transform-transition arrow-down">&#xf0d7</button>
       </div>
     </div>
-    <div id="btn-grp">
+    <div id="btn-grp-right" class="btn-grp">
       <button id="filter-btn" class="text-main-color large-icon no-display"> &#xf0b0</button>
       <button id="info-btn" class="text-main-color large-icon no-display">&#xf05a</button>
       <button id="creator-btn" class="text-main-color large-icon">&#xf005</button>
@@ -71,7 +74,7 @@
   <div id="gallery" class="gallery no-display"></div>
 
   <!-- Scroll to top btn -->
-  <button id="to-top-btn" class="large-icon floating-btn opacity-transform-transition arrow-down">&#xf103</button>
+  <button id="to-top-btn" class="large-icon floating-btn opacity-transform-transition arrow-down no-display">&#xf103</button>
 
   <!-- Filter Popup -->
   <div id="filter-popup" class="hidden-popup" style="z-index: 10000;">
@@ -172,29 +175,53 @@
   </div>
 
   <!-- Loading Screen -->
-  <div id="loading-screen" class="loading-screen opacity-transition" style="z-index: 6000">
-    <div id="loader" class="loader">
-      <div id="load1" class="loader-dot" style="transform: rotate(270deg) translate(80px)rotate(270deg); animation-delay: 2s;"></div>
-      <div id="load2" class="loader-dot" style="transform: rotate(315deg) translate(80px)rotate(315deg); animation-delay: -1.75s;"></div>
-      <div id="load3" class="loader-dot" style="transform: rotate(0deg) translate(80px)rotate(0deg); animation-delay: -1.5s;"></div>
-      <div id="load4" class="loader-dot" style="transform: rotate(45deg) translate(80px)rotate(45deg); animation-delay: -1.25s;"></div>
-      <div id="load5" class="loader-dot" style="transform: rotate(90deg) translate(80px)rotate(90deg); animation-delay: -1s;"></div>
-      <div id="load6" class="loader-dot" style="transform: rotate(135deg) translate(80px)rotate(135deg); animation-delay: -0.75s;"></div>
-      <div id="load7" class="loader-dot" style="transform: rotate(180deg) translate(80px)rotate(180deg); animation-delay: -0.5s;"></div>
-      <div id="load8" class="loader-dot" style="transform: rotate(225deg) translate(80px)rotate(225deg); animation-delay: -0.25s;"></div>
-      <div id="load9" class="loader-dot" style="transform: rotate(270deg) translate(80px)rotate(270deg); animation-delay: 0s;"></div>
-      <div id="loader-btn" class="centered opacity-transition loader-btn transparent no-display">
-        <img id="sakura" src="img/sakura.svg" class="centered" style="position: absolute; width: 85%;">
-        <div id="loader-text" class="centered loader-text">
-          <p style="margin: 0.5em">Start</p>
-          <p style="margin: 0.5em">スタート</p>
-        </div>
+  <div id="start-screen" class="start-screen opacity-transition transparent no-display" style="z-index: 6000">
+    <div id="start-btn-jp" class="start-btn">
+      <img id="sakura" src="img/icons/sakura.svg" class="start-img">
+      <div id="start-text-jp" class="centered start-text">
+        <p style="margin: 0.5em">Start</p>
+        <p style="margin: 0.5em">スタート</p>
       </div>
-      <div id="error-btn" class="error-btn centered loader-text" onclick="retry()">
+    </div>
+    <div id="start-btn-tw" class="start-btn">
+      <img id="sun" src="img/icons/sun.svg" class="start-img">
+      <div id="start-text-tw" class="centered start-text">
+        <p style="margin: 0.5em">Start</p>
+        <p style="margin: 0.5em">スタート</p>
+      </div>
+    </div>
+    <div id="start-btn-au" class="start-btn">
+      <img id="kangaroo" src="img/icons/sun.svg" class="start-img">
+      <!-- National color is #00843D -->
+      <div id="start-text-au" class="centered start-text">
+        <p style="margin: 0.5em">Start</p>
+        <p style="margin: 0.5em">スタート</p>
+      </div>
+    </div>
+    <div id="start-btn-nz" class="start-btn">
+      <img id="kiwi" src="img/icons/sun.svg" class="start-img">
+      <!-- National color is black -->
+      <div id="start-text-nz" class="centered start-text">
+        <p style="margin: 0.5em">Start</p>
+        <p style="margin: 0.5em">スタート</p>
+      </div>
+    </div>
+    <div id="error-btn" class="error-btn centered loader-text" onclick="retry()">
         <p style="margin: 0.5em">Failed to fetch data. Try again?</p>
         <p style="margin: 0.5em">データアクセスに失敗しました。再試行する？</p>
       </div>
     </div>
+  </div>
+  <div id="loader" class="loader centered">
+    <div id="load1" class="loader-dot" style="transform: rotate(270deg) translate(80px)rotate(270deg); animation-delay: 2s;"></div>
+    <div id="load2" class="loader-dot" style="transform: rotate(315deg) translate(80px)rotate(315deg); animation-delay: -1.75s;"></div>
+    <div id="load3" class="loader-dot" style="transform: rotate(0deg) translate(80px)rotate(0deg); animation-delay: -1.5s;"></div>
+    <div id="load4" class="loader-dot" style="transform: rotate(45deg) translate(80px)rotate(45deg); animation-delay: -1.25s;"></div>
+    <div id="load5" class="loader-dot" style="transform: rotate(90deg) translate(80px)rotate(90deg); animation-delay: -1s;"></div>
+    <div id="load6" class="loader-dot" style="transform: rotate(135deg) translate(80px)rotate(135deg); animation-delay: -0.75s;"></div>
+    <div id="load7" class="loader-dot" style="transform: rotate(180deg) translate(80px)rotate(180deg); animation-delay: -0.5s;"></div>
+    <div id="load8" class="loader-dot" style="transform: rotate(225deg) translate(80px)rotate(225deg); animation-delay: -0.25s;"></div>
+    <div id="load9" class="loader-dot" style="transform: rotate(270deg) translate(80px)rotate(270deg); animation-delay: 0s;"></div>
   </div>
 
   <!-- Scripts -->
