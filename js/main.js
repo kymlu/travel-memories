@@ -360,7 +360,7 @@ function colourMap() {
 	const oRgnList = data.unofficial_regions.flatMap(uRgn => uRgn.official_regions);
 
 	oRgnList.forEach(oRgn => {
-		const oRgnImg = svgDoc.getElementById(oRgn.english_name.toLowerCase() + "-img");
+		const oRgnImg = svgDoc.getElementById(oRgn.id + "-img");
 		if (oRgn.visited) {
 			// CSS won't work on document objects
 			oRgnImg.title = getBilingualText("See images from this" + data.official_region_name, "この地域の写真を表示する");
@@ -441,7 +441,7 @@ function filterMiniMap() {
 	const oRgnList = data.unofficial_regions.flatMap(uRgn => uRgn.official_regions);
 
 	oRgnList.forEach(oRgn => {
-		const oRgnImg = svgDoc.getElementById(oRgn.english_name.toLowerCase() + "-img");
+		const oRgnImg = svgDoc.getElementById(oRgn.id + "-img");
 		if (oRgn.english_name != selectedORegion.english_name) {
 			oRgnImg.setAttribute("fill", "none");
 			oRgnImg.setAttribute("stroke", "none");

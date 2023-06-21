@@ -635,7 +635,7 @@
                   "tags": ["food", "event"],
                   "camera_model": "iPhone 12 mini",
                   "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-                  "exposure": 44943,
+                  "exposure": "1/17",
                   "f_stop": 1.6,
                   "iso": 1600,
                   "focal_length": "4.2 mm"
@@ -948,7 +948,7 @@
                   "tags": ["attractions"],
                   "camera_model": "iPhone 12 mini",
                   "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-                  "exposure": 44951,
+                  "exposure": "1/25",
                   "f_stop": 1.6,
                   "iso": 800,
                   "focal_length": "4.2 mm"
@@ -1322,7 +1322,7 @@
                 "tags": ["food"],
                 "camera_model": "iPhone 12 mini",
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-                "exposure": 44951,
+                "exposure": "1/25",
                 "f_stop": 1.6,
                 "iso": "4.2 mm",
                 "focal_length": 640
@@ -12754,7 +12754,7 @@
                   "tags": ["town"],
                   "camera_model": "iPhone 12 mini",
                   "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-                  "exposure": 44956,
+                  "exposure": "1/30",
                   "f_stop": 1.6,
                   "iso": 800,
                   "focal_length": "4.2 mm"
@@ -19863,7 +19863,7 @@
             "description_chinese": "",
             "image_list": [
               {
-                "file_name": "IMG_3277.jpeg",
+                "file_name": "IMG_3277.jpg",
                 "date": "2023-04-02T12:19:47.000Z",
                 "offset": 8,
                 "city": "taipei",
@@ -19878,7 +19878,7 @@
                 "focal_length": 125
               },
               {
-                "file_name": "IMG_3939.jpeg",
+                "file_name": "IMG_3939.jpg",
                 "date": "2023-04-10T00:31:23.000Z",
                 "offset": 8,
                 "city": "taipei",
@@ -19894,7 +19894,7 @@
                 "focal_length": 32
               },
               {
-                "file_name": "IMG_3954.jpeg",
+                "file_name": "IMG_3954.jpg",
                 "date": "2023-04-10T03:55:04.000Z",
                 "offset": 8,
                 "city": "taipei",
@@ -19909,7 +19909,7 @@
                 "focal_length": 40
               },
               {
-                "file_name": "IMG_3959.jpeg",
+                "file_name": "IMG_3959.jpg",
                 "date": "2023-04-10T04:09:54.000Z",
                 "offset": 8,
                 "city": "taipei",
@@ -19924,7 +19924,7 @@
                 "focal_length": 64
               },
               {
-                "file_name": "IMG_3965.jpeg",
+                "file_name": "IMG_3965.jpg",
                 "date": "2023-04-10T05:13:19.000Z",
                 "offset": 8,
                 "city": "taipei",
@@ -19939,7 +19939,7 @@
                 "focal_length": 32
               },
               {
-                "file_name": "IMG_3970.jpeg",
+                "file_name": "IMG_3970.jpg",
                 "date": "2023-04-10T06:36:49.000Z",
                 "offset": 8,
                 "city": "taipei",
@@ -19955,7 +19955,7 @@
                 "focal_length": 32
               },
               {
-                "file_name": "IMG_5025.jpeg",
+                "file_name": "IMG_5025.jpg",
                 "date": "2023-04-10T05:24:37.000Z",
                 "offset": 10,
                 "city": "taipei",
@@ -19969,7 +19969,7 @@
                 "focal_length": 1600
               },
               {
-                "file_name": "IMG_5033.jpeg",
+                "file_name": "IMG_5033.jpg",
                 "date": "2023-04-10T05:25:16.000Z",
                 "offset": 10,
                 "city": "taipei",
@@ -19983,7 +19983,7 @@
                 "focal_length": 200
               },
               {
-                "file_name": "IMG_5039.jpeg",
+                "file_name": "IMG_5039.jpg",
                 "date": "2023-04-10T05:26:26.000Z",
                 "offset": 10,
                 "city": "taipei",
@@ -19997,7 +19997,7 @@
                 "focal_length": 200
               },
               {
-                "file_name": "IMG_5046.jpeg",
+                "file_name": "IMG_5046.jpg",
                 "date": "2023-04-10T05:32:17.000Z",
                 "offset": 10,
                 "city": "taipei",
@@ -20014,7 +20014,7 @@
                 "focal_length": 200
               },
               {
-                "file_name": "IMG_5047.jpeg",
+                "file_name": "IMG_5047.jpg",
                 "date": "2023-04-10T05:33:36.000Z",
                 "offset": 10,
                 "city": "taipei",
@@ -20029,7 +20029,7 @@
                 "focal_length": 200
               },
               {
-                "file_name": "IMG_5063.jpeg",
+                "file_name": "IMG_5063.jpg",
                 "date": "2023-04-10T05:47:37.000Z",
                 "offset": 10,
                 "city": "taipei",
@@ -20044,7 +20044,7 @@
                 "focal_length": 200
               },
               {
-                "file_name": "IMG_5066.jpeg",
+                "file_name": "IMG_5066.jpg",
                 "date": "2023-04-10T05:48:43.000Z",
                 "offset": 10,
                 "city": "taipei",
@@ -20059,7 +20059,7 @@
                 "focal_length": 200
               },
               {
-                "file_name": "IMG_5071.jpeg",
+                "file_name": "IMG_5071.jpg",
                 "date": "2023-04-10T05:53:38.000Z",
                 "offset": 10,
                 "city": "taipei",
@@ -20074,7 +20074,7 @@
                 "focal_length": 200
               },
               {
-                "file_name": "IMG_3978.jpeg",
+                "file_name": "IMG_3978.jpg",
                 "date": "2023-04-10T08:15:34.000Z",
                 "offset": 8,
                 "city": "taipei",
@@ -20089,7 +20089,7 @@
                 "focal_length": 64
               },
               {
-                "file_name": "IMG_5078.jpeg",
+                "file_name": "IMG_5078.jpg",
                 "date": "2023-04-10T06:23:18.000Z",
                 "offset": 10,
                 "city": "taipei",
@@ -20104,7 +20104,7 @@
                 "focal_length": 200
               },
               {
-                "file_name": "IMG_3982.jpeg",
+                "file_name": "IMG_3982.jpg",
                 "date": "2023-04-10T09:18:30.000Z",
                 "offset": 8,
                 "city": "taipei",
@@ -20121,7 +20121,7 @@
                 "focal_length": 50
               },
               {
-                "file_name": "IMG_3984.jpeg",
+                "file_name": "IMG_3984.jpg",
                 "date": "2023-04-10T09:29:57.000Z",
                 "offset": 8,
                 "city": "taipei",
@@ -20138,7 +20138,7 @@
                 "focal_length": 125
               },
               {
-                "file_name": "IMG_3992.jpeg",
+                "file_name": "IMG_3992.jpg",
                 "date": "2023-04-10T11:15:37.000Z",
                 "offset": 8,
                 "city": "taipei",
@@ -20153,7 +20153,7 @@
                 "focal_length": 64
               },
               {
-                "file_name": "IMG_4014.jpeg",
+                "file_name": "IMG_4014.jpg",
                 "date": "2023-04-11T01:21:14.000Z",
                 "offset": 8,
                 "city": "taipei",
@@ -20170,7 +20170,7 @@
                 "focal_length": 125
               },
               {
-                "file_name": "IMG_4017.jpeg",
+                "file_name": "IMG_4017.jpg",
                 "date": "2023-04-11T02:18:09.000Z",
                 "offset": 8,
                 "city": "taipei",
@@ -20187,7 +20187,7 @@
                 "focal_length": 32
               },
               {
-                "file_name": "IMG_4027.jpeg",
+                "file_name": "IMG_4027.jpg",
                 "date": "2023-04-11T03:04:59.000Z",
                 "offset": 8,
                 "city": "taipei",
@@ -20203,7 +20203,7 @@
                 "focal_length": 125
               },
               {
-                "file_name": "IMG_4034.jpeg",
+                "file_name": "IMG_4034.jpg",
                 "date": "2023-04-11T04:20:24.000Z",
                 "offset": 8,
                 "city": "taipei",
@@ -20220,7 +20220,7 @@
                 "focal_length": 160
               },
               {
-                "file_name": "IMG_4037.jpeg",
+                "file_name": "IMG_4037.jpg",
                 "date": "2023-04-11T04:42:46.000Z",
                 "offset": 8,
                 "city": "taipei",
@@ -20237,7 +20237,7 @@
                 "focal_length": 32
               },
               {
-                "file_name": "IMG_4042.jpeg",
+                "file_name": "IMG_4042.jpg",
                 "date": "2023-04-11T07:42:07.000Z",
                 "offset": 8,
                 "city": "taipei",
@@ -20254,7 +20254,7 @@
                 "focal_length": 80
               },
               {
-                "file_name": "IMG_4046.jpeg",
+                "file_name": "IMG_4046.jpg",
                 "date": "2023-04-11T10:19:20.000Z",
                 "offset": 8,
                 "city": "taipei",
@@ -20270,7 +20270,7 @@
                 "focal_length": 64
               },
               {
-                "file_name": "IMG_4047.jpeg",
+                "file_name": "IMG_4047.jpg",
                 "date": "2023-04-11T11:53:11.000Z",
                 "offset": 8,
                 "city": "taipei",
@@ -20285,7 +20285,7 @@
                 "focal_length": 32
               },
               {
-                "file_name": "IMG_4049.jpeg",
+                "file_name": "IMG_4049.jpg",
                 "date": "2023-04-11T11:53:48.000Z",
                 "offset": 8,
                 "city": "taipei",
@@ -20300,7 +20300,7 @@
                 "focal_length": 250
               },
               {
-                "file_name": "IMG_4050.jpeg",
+                "file_name": "IMG_4050.jpg",
                 "date": "2023-04-11T12:19:37.000Z",
                 "offset": 8,
                 "city": "taipei",
@@ -20315,7 +20315,7 @@
                 "focal_length": 100
               },
               {
-                "file_name": "IMG_4056.jpeg",
+                "file_name": "IMG_4056.jpg",
                 "date": "2023-04-12T01:09:22.000Z",
                 "offset": 8,
                 "city": "taipei",
@@ -20332,7 +20332,7 @@
                 "focal_length": 200
               },
               {
-                "file_name": "IMG_4058.jpeg",
+                "file_name": "IMG_4058.jpg",
                 "date": "2023-04-12T02:07:25.000Z",
                 "offset": 8,
                 "city": "taipei",
@@ -20349,7 +20349,7 @@
                 "focal_length": 50
               },
               {
-                "file_name": "IMG_4071.jpeg",
+                "file_name": "IMG_4071.jpg",
                 "date": "2023-04-12T04:02:13.000Z",
                 "offset": 8,
                 "city": "taipei",
@@ -20363,7 +20363,7 @@
                 "focal_length": 32
               },
               {
-                "file_name": "IMG_4078.jpeg",
+                "file_name": "IMG_4078.jpg",
                 "date": "2023-04-12T05:40:11.000Z",
                 "offset": 8,
                 "city": "taipei",
@@ -20380,7 +20380,7 @@
                 "focal_length": 32
               },
               {
-                "file_name": "IMG_4093.jpeg",
+                "file_name": "IMG_4093.jpg",
                 "date": "2023-04-12T07:07:33.000Z",
                 "offset": 8,
                 "city": "taipei",
@@ -20397,7 +20397,7 @@
                 "focal_length": 125
               },
               {
-                "file_name": "IMG_4099.jpeg",
+                "file_name": "IMG_4099.jpg",
                 "date": "2023-04-12T10:32:56.000Z",
                 "offset": 8,
                 "city": "taipei",
@@ -20414,7 +20414,7 @@
                 "focal_length": 500
               },
               {
-                "file_name": "IMG_4100.jpeg",
+                "file_name": "IMG_4100.jpg",
                 "date": "2023-04-12T10:51:46.000Z",
                 "offset": 8,
                 "city": "taipei",
@@ -20430,7 +20430,7 @@
                 "focal_length": 500
               },
               {
-                "file_name": "IMG_4102.jpeg",
+                "file_name": "IMG_4102.jpg",
                 "date": "2023-04-12T11:03:07.000Z",
                 "offset": 8,
                 "city": "taipei",
@@ -20447,7 +20447,7 @@
                 "focal_length": 400
               },
               {
-                "file_name": "IMG_4103.jpeg",
+                "file_name": "IMG_4103.jpg",
                 "date": "2023-04-12T11:15:39.000Z",
                 "offset": 8,
                 "city": "taipei",
@@ -20487,7 +20487,7 @@
             "description_chinese": "",
             "image_list": [
               {
-                "file_name": "IMG_3272.jpeg",
+                "file_name": "IMG_3272.jpg",
                 "date": "2023-04-02T10:11:08.000Z",
                 "offset": 8,
                 "city": "airport",
@@ -20502,7 +20502,7 @@
                 "focal_length": 500
               },
               {
-                "file_name": "IMG_4125.jpeg",
+                "file_name": "IMG_4125.jpg",
                 "date": "2023-04-13T01:35:02.000Z",
                 "offset": 8,
                 "city": "airport",
@@ -20549,7 +20549,7 @@
             "description_chinese": "",
             "image_list": [
               {
-                "file_name": "IMG_3281.jpeg",
+                "file_name": "IMG_3281.jpg",
                 "date": "2023-04-02T14:50:23.000Z",
                 "offset": 8,
                 "city": "tainan",
@@ -20564,7 +20564,7 @@
                 "focal_length": 100
               },
               {
-                "file_name": "IMG_3291.jpeg",
+                "file_name": "IMG_3291.jpg",
                 "date": "2023-04-03T02:01:28.000Z",
                 "offset": 8,
                 "city": "tainan",
@@ -20579,7 +20579,7 @@
                 "focal_length": 160
               },
               {
-                "file_name": "IMG_3295.jpeg",
+                "file_name": "IMG_3295.jpg",
                 "date": "2023-04-03T02:21:10.000Z",
                 "offset": 8,
                 "city": "tainan",
@@ -20594,7 +20594,7 @@
                 "focal_length": 32
               },
               {
-                "file_name": "IMG_3308.jpeg",
+                "file_name": "IMG_3308.jpg",
                 "date": "2023-04-03T02:32:34.000Z",
                 "offset": 8,
                 "city": "tainan",
@@ -20609,24 +20609,7 @@
                 "focal_length": 40
               },
               {
-                "file_name": "IMG_3315.jpeg",
-                "date": "2023-04-03T02:44:03.000Z",
-                "offset": 8,
-                "city": "tainan",
-                "location_english": "Snail Alley",
-                "location_chinese": "\u8778\u725B\u5DF7",
-                "description_english": "Snail time",
-                "description_japanese": "\u30AB\u30BF\u30C4\u30E0\u30EA\u306E\u6642\u9593",
-                "tags": ["town", "art"],
-                "camera_model": "iPhone 12 mini",
-                "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-                "exposure": "1/924",
-                "f_stop": 1.6,
-                "iso": "4.2 mm",
-                "focal_length": 32
-              },
-              {
-                "file_name": "IMG_3321.jpeg",
+                "file_name": "IMG_3321.jpg",
                 "date": "2023-04-03T02:46:51.000Z",
                 "offset": 8,
                 "city": "tainan",
@@ -20642,7 +20625,7 @@
                 "focal_length": 32
               },
               {
-                "file_name": "IMG_3322.jpeg",
+                "file_name": "IMG_3322.jpg",
                 "date": "2023-04-03T02:47:41.000Z",
                 "offset": 8,
                 "city": "tainan",
@@ -20659,7 +20642,7 @@
                 "focal_length": 40
               },
               {
-                "file_name": "IMG_3330.jpeg",
+                "file_name": "IMG_3330.jpg",
                 "date": "2023-04-03T03:01:54.000Z",
                 "offset": 8,
                 "city": "tainan",
@@ -20675,7 +20658,7 @@
                 "focal_length": 200
               },
               {
-                "file_name": "IMG_3336.jpeg",
+                "file_name": "IMG_3336.jpg",
                 "date": "2023-04-03T03:26:44.000Z",
                 "offset": 8,
                 "city": "tainan",
@@ -20690,7 +20673,7 @@
                 "focal_length": 32
               },
               {
-                "file_name": "IMG_3339.jpeg",
+                "file_name": "IMG_3339.jpg",
                 "date": "2023-04-03T03:38:24.000Z",
                 "offset": 8,
                 "city": "tainan",
@@ -20705,7 +20688,7 @@
                 "focal_length": 32
               },
               {
-                "file_name": "IMG_3342.jpeg",
+                "file_name": "IMG_3342.jpg",
                 "date": "2023-04-03T03:44:21.000Z",
                 "offset": 8,
                 "city": "tainan",
@@ -20719,7 +20702,7 @@
                 "focal_length": 32
               },
               {
-                "file_name": "IMG_3349.jpeg",
+                "file_name": "IMG_3349.jpg",
                 "date": "2023-04-03T04:08:40.000Z",
                 "offset": 8,
                 "city": "tainan",
@@ -20736,7 +20719,7 @@
                 "focal_length": 50
               },
               {
-                "file_name": "IMG_3352.jpeg",
+                "file_name": "IMG_3352.jpg",
                 "date": "2023-04-03T04:31:41.000Z",
                 "offset": 8,
                 "city": "tainan",
@@ -20751,7 +20734,7 @@
                 "focal_length": 50
               },
               {
-                "file_name": "IMG_3353.jpeg",
+                "file_name": "IMG_3353.jpg",
                 "date": "2023-04-03T04:47:45.000Z",
                 "offset": 8,
                 "city": "tainan",
@@ -20765,7 +20748,7 @@
                 "focal_length": 160
               },
               {
-                "file_name": "IMG_4478.jpeg",
+                "file_name": "IMG_4478.jpg",
                 "date": "2023-04-03T03:07:52.000Z",
                 "offset": 10,
                 "city": "tainan",
@@ -20779,7 +20762,7 @@
                 "focal_length": 100
               },
               {
-                "file_name": "IMG_4480.jpeg",
+                "file_name": "IMG_4480.jpg",
                 "date": "2023-04-03T03:08:33.000Z",
                 "offset": 10,
                 "city": "tainan",
@@ -20793,7 +20776,7 @@
                 "focal_length": 100
               },
               {
-                "file_name": "IMG_4485.jpeg",
+                "file_name": "IMG_4485.jpg",
                 "date": "2023-04-03T03:11:06.000Z",
                 "offset": 10,
                 "city": "tainan",
@@ -20807,7 +20790,7 @@
                 "focal_length": 100
               },
               {
-                "file_name": "IMG_4502.jpeg",
+                "file_name": "IMG_4502.jpg",
                 "date": "2023-04-03T03:15:44.000Z",
                 "offset": 10,
                 "city": "tainan",
@@ -20823,7 +20806,7 @@
                 "focal_length": 100
               },
               {
-                "file_name": "IMG_4514.jpeg",
+                "file_name": "IMG_4514.jpg",
                 "date": "2023-04-03T03:18:42.000Z",
                 "offset": 10,
                 "city": "tainan",
@@ -20839,7 +20822,7 @@
                 "focal_length": 100
               },
               {
-                "file_name": "IMG_3357.jpeg",
+                "file_name": "IMG_3357.jpg",
                 "date": "2023-04-03T05:20:38.000Z",
                 "offset": 8,
                 "city": "tainan",
@@ -20853,7 +20836,7 @@
                 "focal_length": 32
               },
               {
-                "file_name": "IMG_4520.jpeg",
+                "file_name": "IMG_4520.jpg",
                 "date": "2023-04-03T03:23:31.000Z",
                 "offset": 10,
                 "city": "tainan",
@@ -20867,7 +20850,7 @@
                 "focal_length": 100
               },
               {
-                "file_name": "IMG_4525.jpeg",
+                "file_name": "IMG_4525.jpg",
                 "date": "2023-04-03T03:24:48.000Z",
                 "offset": 10,
                 "city": "tainan",
@@ -20881,7 +20864,7 @@
                 "focal_length": 100
               },
               {
-                "file_name": "IMG_4526.jpeg",
+                "file_name": "IMG_4526.jpg",
                 "date": "2023-04-03T03:25:10.000Z",
                 "offset": 10,
                 "city": "tainan",
@@ -20895,7 +20878,7 @@
                 "focal_length": 100
               },
               {
-                "file_name": "IMG_3371.jpeg",
+                "file_name": "IMG_3371.jpg",
                 "date": "2023-04-03T06:40:24.000Z",
                 "offset": 8,
                 "city": "tainan",
@@ -20911,7 +20894,7 @@
                 "focal_length": 80
               },
               {
-                "file_name": "IMG_4534.jpeg",
+                "file_name": "IMG_4534.jpg",
                 "date": "2023-04-03T05:01:36.000Z",
                 "offset": 10,
                 "city": "tainan",
@@ -20927,7 +20910,7 @@
                 "focal_length": 100
               },
               {
-                "file_name": "IMG_4539.jpeg",
+                "file_name": "IMG_4539.jpg",
                 "date": "2023-04-03T05:03:13.000Z",
                 "offset": 10,
                 "city": "tainan",
@@ -20942,7 +20925,7 @@
                 "focal_length": 100
               },
               {
-                "file_name": "IMG_3379.jpeg",
+                "file_name": "IMG_3379.jpg",
                 "date": "2023-04-03T07:03:19.000Z",
                 "offset": 8,
                 "city": "tainan",
@@ -20958,7 +20941,7 @@
                 "focal_length": 32
               },
               {
-                "file_name": "IMG_3380.jpeg",
+                "file_name": "IMG_3380.jpg",
                 "date": "2023-04-03T07:04:18.000Z",
                 "offset": 8,
                 "city": "tainan",
@@ -20975,7 +20958,7 @@
                 "focal_length": 32
               },
               {
-                "file_name": "IMG_4550.jpeg",
+                "file_name": "IMG_4550.jpg",
                 "date": "2023-04-03T05:32:38.000Z",
                 "offset": 10,
                 "city": "tainan",
@@ -20991,7 +20974,7 @@
                 "focal_length": 100
               },
               {
-                "file_name": "IMG_4551.jpeg",
+                "file_name": "IMG_4551.jpg",
                 "date": "2023-04-03T05:34:15.000Z",
                 "offset": 10,
                 "city": "tainan",
@@ -21007,7 +20990,7 @@
                 "focal_length": 100
               },
               {
-                "file_name": "IMG_4568.jpeg",
+                "file_name": "IMG_4568.jpg",
                 "date": "2023-04-03T05:38:18.000Z",
                 "offset": 10,
                 "city": "tainan",
@@ -21023,7 +21006,7 @@
                 "focal_length": 100
               },
               {
-                "file_name": "IMG_4570.jpeg",
+                "file_name": "IMG_4570.jpg",
                 "date": "2023-04-03T05:39:29.000Z",
                 "offset": 10,
                 "city": "tainan",
@@ -21039,7 +21022,7 @@
                 "focal_length": 100
               },
               {
-                "file_name": "IMG_3398.jpeg",
+                "file_name": "IMG_3398.jpg",
                 "date": "2023-04-03T09:40:29.000Z",
                 "offset": 8,
                 "city": "tainan",
@@ -21054,7 +21037,7 @@
                 "focal_length": 32
               },
               {
-                "file_name": "IMG_3399.jpeg",
+                "file_name": "IMG_3399.jpg",
                 "date": "2023-04-03T10:07:13.000Z",
                 "offset": 8,
                 "city": "tainan",
@@ -21071,7 +21054,7 @@
                 "focal_length": 125
               },
               {
-                "file_name": "IMG_3403.jpeg",
+                "file_name": "IMG_3403.jpg",
                 "date": "2023-04-03T10:41:38.000Z",
                 "offset": 8,
                 "city": "tainan",
@@ -21088,7 +21071,7 @@
                 "focal_length": 50
               },
               {
-                "file_name": "IMG_4579.jpeg",
+                "file_name": "IMG_4579.jpg",
                 "date": "2023-04-03T08:47:33.000Z",
                 "offset": 10,
                 "city": "tainan",
@@ -21104,7 +21087,7 @@
                 "focal_length": 100
               },
               {
-                "file_name": "IMG_4590.jpeg",
+                "file_name": "IMG_4590.jpg",
                 "date": "2023-04-03T08:54:18.000Z",
                 "offset": 10,
                 "city": "tainan",
@@ -21121,7 +21104,7 @@
                 "focal_length": 100
               },
               {
-                "file_name": "IMG_4591.jpeg",
+                "file_name": "IMG_4591.jpg",
                 "date": "2023-04-03T08:55:04.000Z",
                 "offset": 10,
                 "city": "tainan",
@@ -21137,7 +21120,7 @@
                 "focal_length": 100
               },
               {
-                "file_name": "IMG_4594.jpeg",
+                "file_name": "IMG_4594.jpg",
                 "date": "2023-04-03T08:57:23.000Z",
                 "offset": 10,
                 "city": "tainan",
@@ -21154,7 +21137,7 @@
                 "focal_length": 100
               },
               {
-                "file_name": "IMG_4596.jpeg",
+                "file_name": "IMG_4596.jpg",
                 "date": "2023-04-03T09:01:53.000Z",
                 "offset": 10,
                 "city": "tainan",
@@ -21171,7 +21154,7 @@
                 "focal_length": 100
               },
               {
-                "file_name": "IMG_3453.jpeg",
+                "file_name": "IMG_3453.jpg",
                 "date": "2023-04-04T01:49:19.000Z",
                 "offset": 8,
                 "city": "tainan",
@@ -21188,7 +21171,7 @@
                 "focal_length": 100
               },
               {
-                "file_name": "IMG_4600.jpeg",
+                "file_name": "IMG_4600.jpg",
                 "date": "2023-04-04T03:32:17.000Z",
                 "offset": 10,
                 "city": "tainan",
@@ -21204,7 +21187,7 @@
                 "focal_length": 100
               },
               {
-                "file_name": "IMG_4604.jpeg",
+                "file_name": "IMG_4604.jpg",
                 "date": "2023-04-04T05:12:58.000Z",
                 "offset": 10,
                 "city": "tainan",
@@ -21220,7 +21203,7 @@
                 "focal_length": 100
               },
               {
-                "file_name": "IMG_3472.jpeg",
+                "file_name": "IMG_3472.jpg",
                 "date": "2023-04-04T07:20:45.000Z",
                 "offset": 8,
                 "city": "tainan",
@@ -21236,7 +21219,7 @@
                 "focal_length": 50
               },
               {
-                "file_name": "IMG_4629.jpeg",
+                "file_name": "IMG_4629.jpg",
                 "date": "2023-04-04T05:28:21.000Z",
                 "offset": 10,
                 "city": "tainan",
@@ -21252,7 +21235,7 @@
                 "focal_length": 100
               },
               {
-                "file_name": "IMG_4631.jpeg",
+                "file_name": "IMG_4631.jpg",
                 "date": "2023-04-04T05:29:48.000Z",
                 "offset": 10,
                 "city": "tainan",
@@ -21269,7 +21252,7 @@
                 "focal_length": 100
               },
               {
-                "file_name": "IMG_3480.jpeg",
+                "file_name": "IMG_3480.jpg",
                 "date": "2023-04-04T07:42:31.000Z",
                 "offset": 8,
                 "city": "tainan",
@@ -21285,7 +21268,7 @@
                 "focal_length": 64
               },
               {
-                "file_name": "IMG_3484.jpeg",
+                "file_name": "IMG_3484.jpg",
                 "date": "2023-04-04T08:57:40.000Z",
                 "offset": 8,
                 "city": "tainan",
@@ -21300,7 +21283,7 @@
                 "focal_length": 32
               },
               {
-                "file_name": "IMG_3485.jpeg",
+                "file_name": "IMG_3485.jpg",
                 "date": "2023-04-04T09:07:38.000Z",
                 "offset": 8,
                 "city": "tainan",
@@ -21315,7 +21298,7 @@
                 "focal_length": 125
               },
               {
-                "file_name": "IMG_4641.jpeg",
+                "file_name": "IMG_4641.jpg",
                 "date": "2023-04-04T09:50:13.000Z",
                 "offset": 10,
                 "city": "tainan",
@@ -21331,7 +21314,7 @@
                 "focal_length": 500
               },
               {
-                "file_name": "IMG_4645.jpeg",
+                "file_name": "IMG_4645.jpg",
                 "date": "2023-04-04T09:54:28.000Z",
                 "offset": 10,
                 "city": "tainan",
@@ -21347,7 +21330,7 @@
                 "focal_length": 500
               },
               {
-                "file_name": "IMG_4663.jpeg",
+                "file_name": "IMG_4663.jpg",
                 "date": "2023-04-04T10:07:16.000Z",
                 "offset": 10,
                 "city": "tainan",
@@ -21364,7 +21347,7 @@
                 "focal_length": 500
               },
               {
-                "file_name": "IMG_4676.jpeg",
+                "file_name": "IMG_4676.jpg",
                 "date": "2023-04-04T10:27:43.000Z",
                 "offset": 10,
                 "city": "tainan",
@@ -21375,13 +21358,13 @@
                 "tags": ["town"],
                 "camera_model": "Canon EOS 90D",
                 "lens": "EF-S18-135mm f/3.5-5.6 IS USM",
-                "exposure": 44956,
+                "exposure": "1/30",
                 "f_stop": 5,
                 "iso": "50.0 mm",
                 "focal_length": 640
               },
               {
-                "file_name": "IMG_3518.jpeg",
+                "file_name": "IMG_3518.jpg",
                 "date": "2023-04-05T00:38:49.000Z",
                 "offset": 8,
                 "city": "tainan",
@@ -21421,7 +21404,7 @@
             "description_chinese": "",
             "image_list": [
               {
-                "file_name": "IMG_3524.jpeg",
+                "file_name": "IMG_3524.jpg",
                 "date": "2023-04-05T03:21:02.000Z",
                 "offset": 8,
                 "city": "kaohsiung",
@@ -21438,7 +21421,7 @@
                 "focal_length": 32
               },
               {
-                "file_name": "IMG_3527.jpeg",
+                "file_name": "IMG_3527.jpg",
                 "date": "2023-04-05T03:31:54.000Z",
                 "offset": 8,
                 "city": "kaohsiung",
@@ -21455,7 +21438,7 @@
                 "focal_length": 250
               },
               {
-                "file_name": "IMG_3530.jpeg",
+                "file_name": "IMG_3530.jpg",
                 "date": "2023-04-05T04:18:49.000Z",
                 "offset": 8,
                 "city": "kaohsiung",
@@ -21469,7 +21452,7 @@
                 "focal_length": 100
               },
               {
-                "file_name": "IMG_3534.jpeg",
+                "file_name": "IMG_3534.jpg",
                 "date": "2023-04-05T04:41:00.000Z",
                 "offset": 8,
                 "city": "kaohsiung",
@@ -21484,7 +21467,7 @@
                 "focal_length": 32
               },
               {
-                "file_name": "IMG_3541.jpeg",
+                "file_name": "IMG_3541.jpg",
                 "date": "2023-04-05T04:55:17.000Z",
                 "offset": 8,
                 "city": "kaohsiung",
@@ -21500,7 +21483,7 @@
                 "focal_length": 32
               },
               {
-                "file_name": "IMG_3548.jpeg",
+                "file_name": "IMG_3548.jpg",
                 "date": "2023-04-05T05:08:52.000Z",
                 "offset": 8,
                 "city": "kaohsiung",
@@ -21517,7 +21500,7 @@
                 "focal_length": 32
               },
               {
-                "file_name": "IMG_3559.jpeg",
+                "file_name": "IMG_3559.jpg",
                 "date": "2023-04-05T06:39:19.000Z",
                 "offset": 8,
                 "city": "kaohsiung",
@@ -21532,7 +21515,7 @@
                 "focal_length": 32
               },
               {
-                "file_name": "IMG_4690.jpeg",
+                "file_name": "IMG_4690.jpg",
                 "date": "2023-04-05T05:39:45.000Z",
                 "offset": 10,
                 "city": "kaohsiung",
@@ -21548,7 +21531,7 @@
                 "focal_length": 640
               },
               {
-                "file_name": "IMG_4691.jpeg",
+                "file_name": "IMG_4691.jpg",
                 "date": "2023-04-05T05:42:36.000Z",
                 "offset": 10,
                 "city": "kaohsiung",
@@ -21565,7 +21548,7 @@
                 "focal_length": 640
               },
               {
-                "file_name": "IMG_3562.jpeg",
+                "file_name": "IMG_3562.jpg",
                 "date": "2023-04-05T07:58:01.000Z",
                 "offset": 8,
                 "city": "kaohsiung",
@@ -21579,7 +21562,7 @@
                 "focal_length": 50
               },
               {
-                "file_name": "IMG_4698.jpeg",
+                "file_name": "IMG_4698.jpg",
                 "date": "2023-04-05T06:01:31.000Z",
                 "offset": 10,
                 "city": "kaohsiung",
@@ -21596,7 +21579,7 @@
                 "focal_length": 640
               },
               {
-                "file_name": "IMG_4699.jpeg",
+                "file_name": "IMG_4699.jpg",
                 "date": "2023-04-05T06:01:45.000Z",
                 "offset": 10,
                 "city": "kaohsiung",
@@ -21612,7 +21595,7 @@
                 "focal_length": 640
               },
               {
-                "file_name": "IMG_4706.jpeg",
+                "file_name": "IMG_4706.jpg",
                 "date": "2023-04-05T06:08:05.000Z",
                 "offset": 10,
                 "city": "kaohsiung",
@@ -21629,7 +21612,7 @@
                 "focal_length": 640
               },
               {
-                "file_name": "IMG_4708.jpeg",
+                "file_name": "IMG_4708.jpg",
                 "date": "2023-04-05T06:14:01.000Z",
                 "offset": 10,
                 "city": "kaohsiung",
@@ -21646,7 +21629,7 @@
                 "focal_length": 640
               },
               {
-                "file_name": "IMG_4721.jpeg",
+                "file_name": "IMG_4721.jpg",
                 "date": "2023-04-05T08:32:53.000Z",
                 "offset": 10,
                 "city": "kaohsiung",
@@ -21662,7 +21645,7 @@
                 "focal_length": 640
               },
               {
-                "file_name": "IMG_3604.jpeg",
+                "file_name": "IMG_3604.jpg",
                 "date": "2023-04-05T11:58:02.000Z",
                 "offset": 8,
                 "city": "kaohsiung",
@@ -21679,7 +21662,7 @@
                 "focal_length": 100
               },
               {
-                "file_name": "IMG_3611.jpeg",
+                "file_name": "IMG_3611.jpg",
                 "date": "2023-04-05T12:25:26.000Z",
                 "offset": 8,
                 "city": "kaohsiung",
@@ -21695,7 +21678,7 @@
                 "focal_length": 50
               },
               {
-                "file_name": "IMG_3613.jpeg",
+                "file_name": "IMG_3613.jpg",
                 "date": "2023-04-05T12:29:03.000Z",
                 "offset": 8,
                 "city": "kaohsiung",
@@ -21711,7 +21694,7 @@
                 "focal_length": 64
               },
               {
-                "file_name": "IMG_3615.jpeg",
+                "file_name": "IMG_3615.jpg",
                 "date": "2023-04-05T12:30:49.000Z",
                 "offset": 8,
                 "city": "kaohsiung",
@@ -21726,7 +21709,7 @@
                 "focal_length": 80
               },
               {
-                "file_name": "IMG_3617.jpeg",
+                "file_name": "IMG_3617.jpg",
                 "date": "2023-04-05T12:32:15.000Z",
                 "offset": 8,
                 "city": "kaohsiung",
@@ -21741,7 +21724,7 @@
                 "focal_length": 100
               },
               {
-                "file_name": "IMG_4728.jpeg",
+                "file_name": "IMG_4728.jpg",
                 "date": "2023-04-05T11:45:45.000Z",
                 "offset": 10,
                 "city": "kaohsiung",
@@ -21758,7 +21741,7 @@
                 "focal_length": 640
               },
               {
-                "file_name": "IMG_3622.jpeg",
+                "file_name": "IMG_3622.jpg",
                 "date": "2023-04-06T01:22:13.000Z",
                 "offset": 8,
                 "city": "kaohsiung",
@@ -21772,7 +21755,7 @@
                 "focal_length": 125
               },
               {
-                "file_name": "IMG_3632.jpeg",
+                "file_name": "IMG_3632.jpg",
                 "date": "2023-04-06T04:39:33.000Z",
                 "offset": 8,
                 "city": "kaohsiung",
@@ -21788,7 +21771,7 @@
                 "focal_length": 40
               },
               {
-                "file_name": "IMG_4730.jpeg",
+                "file_name": "IMG_4730.jpg",
                 "date": "2023-04-06T02:44:06.000Z",
                 "offset": 10,
                 "city": "kaohsiung",
@@ -21803,7 +21786,7 @@
                 "focal_length": 640
               },
               {
-                "file_name": "IMG_4746.jpeg",
+                "file_name": "IMG_4746.jpg",
                 "date": "2023-04-06T02:47:58.000Z",
                 "offset": 10,
                 "city": "kaohsiung",
@@ -21819,7 +21802,7 @@
                 "focal_length": 100
               },
               {
-                "file_name": "IMG_4758.jpeg",
+                "file_name": "IMG_4758.jpg",
                 "date": "2023-04-06T02:53:46.000Z",
                 "offset": 10,
                 "city": "kaohsiung",
@@ -21835,7 +21818,7 @@
                 "focal_length": 100
               },
               {
-                "file_name": "IMG_4763.jpeg",
+                "file_name": "IMG_4763.jpg",
                 "date": "2023-04-06T02:54:31.000Z",
                 "offset": 10,
                 "city": "kaohsiung",
@@ -21851,7 +21834,7 @@
                 "focal_length": 100
               },
               {
-                "file_name": "IMG_4774.jpeg",
+                "file_name": "IMG_4774.jpg",
                 "date": "2023-04-06T03:02:08.000Z",
                 "offset": 10,
                 "city": "kaohsiung",
@@ -21867,7 +21850,7 @@
                 "focal_length": 100
               },
               {
-                "file_name": "IMG_4781.jpeg",
+                "file_name": "IMG_4781.jpg",
                 "date": "2023-04-06T03:04:38.000Z",
                 "offset": 10,
                 "city": "kaohsiung",
@@ -21882,7 +21865,7 @@
                 "focal_length": 100
               },
               {
-                "file_name": "IMG_3644.jpeg",
+                "file_name": "IMG_3644.jpg",
                 "date": "2023-04-06T05:05:26.000Z",
                 "offset": 8,
                 "city": "kaohsiung",
@@ -21898,7 +21881,7 @@
                 "focal_length": 500
               },
               {
-                "file_name": "IMG_4803.jpeg",
+                "file_name": "IMG_4803.jpg",
                 "date": "2023-04-06T03:10:14.000Z",
                 "offset": 10,
                 "city": "kaohsiung",
@@ -21914,7 +21897,7 @@
                 "focal_length": 100
               },
               {
-                "file_name": "IMG_4808.jpeg",
+                "file_name": "IMG_4808.jpg",
                 "date": "2023-04-06T03:15:43.000Z",
                 "offset": 10,
                 "city": "kaohsiung",
@@ -21930,7 +21913,7 @@
                 "focal_length": 100
               },
               {
-                "file_name": "IMG_4819.jpeg",
+                "file_name": "IMG_4819.jpg",
                 "date": "2023-04-06T03:17:38.000Z",
                 "offset": 10,
                 "city": "kaohsiung",
@@ -21946,7 +21929,7 @@
                 "focal_length": 100
               },
               {
-                "file_name": "IMG_4838.jpeg",
+                "file_name": "IMG_4838.jpg",
                 "date": "2023-04-06T03:29:25.000Z",
                 "offset": 10,
                 "city": "kaohsiung",
@@ -21962,7 +21945,7 @@
                 "focal_length": 100
               },
               {
-                "file_name": "IMG_4845.jpeg",
+                "file_name": "IMG_4845.jpg",
                 "date": "2023-04-06T03:37:51.000Z",
                 "offset": 10,
                 "city": "kaohsiung",
@@ -21977,7 +21960,7 @@
                 "focal_length": 100
               },
               {
-                "file_name": "IMG_3649.jpeg",
+                "file_name": "IMG_3649.jpg",
                 "date": "2023-04-06T05:42:46.000Z",
                 "offset": 8,
                 "city": "kaohsiung",
@@ -21993,7 +21976,7 @@
                 "focal_length": 250
               },
               {
-                "file_name": "IMG_3654.jpeg",
+                "file_name": "IMG_3654.jpg",
                 "date": "2023-04-06T05:59:54.000Z",
                 "offset": 8,
                 "city": "kaohsiung",
@@ -22009,7 +21992,7 @@
                 "focal_length": 320
               },
               {
-                "file_name": "IMG_3658.jpeg",
+                "file_name": "IMG_3658.jpg",
                 "date": "2023-04-06T07:21:34.000Z",
                 "offset": 8,
                 "city": "kaohsiung",
@@ -22024,7 +22007,7 @@
                 "focal_length": 160
               },
               {
-                "file_name": "IMG_3664.jpeg",
+                "file_name": "IMG_3664.jpg",
                 "date": "2023-04-06T10:03:17.000Z",
                 "offset": 8,
                 "city": "kaohsiung",
@@ -22038,7 +22021,7 @@
                 "focal_length": 50
               },
               {
-                "file_name": "IMG_3708.jpeg",
+                "file_name": "IMG_3708.jpg",
                 "date": "2023-04-07T04:03:21.000Z",
                 "offset": 8,
                 "city": "kaohsiung",
@@ -22053,7 +22036,7 @@
                 "focal_length": 32
               },
               {
-                "file_name": "IMG_3715.jpeg",
+                "file_name": "IMG_3715.jpg",
                 "date": "2023-04-07T06:56:51.000Z",
                 "offset": 8,
                 "city": "kaohsiung",
@@ -22069,7 +22052,7 @@
                 "focal_length": 32
               },
               {
-                "file_name": "IMG_3727.jpeg",
+                "file_name": "IMG_3727.jpg",
                 "date": "2023-04-07T10:08:55.000Z",
                 "offset": 8,
                 "city": "kaohsiung",
@@ -22086,7 +22069,7 @@
                 "focal_length": 250
               },
               {
-                "file_name": "IMG_3729.jpeg",
+                "file_name": "IMG_3729.jpg",
                 "date": "2023-04-07T11:26:31.000Z",
                 "offset": 8,
                 "city": "kaohsiung",
@@ -22103,7 +22086,7 @@
                 "focal_length": 160
               },
               {
-                "file_name": "IMG_3733.jpeg",
+                "file_name": "IMG_3733.jpg",
                 "date": "2023-04-07T11:33:51.000Z",
                 "offset": 8,
                 "city": "kaohsiung",
@@ -22120,7 +22103,7 @@
                 "focal_length": 200
               },
               {
-                "file_name": "IMG_3736.jpeg",
+                "file_name": "IMG_3736.jpg",
                 "date": "2023-04-07T11:42:01.000Z",
                 "offset": 8,
                 "city": "kaohsiung",
@@ -22130,13 +22113,13 @@
                 "tags": ["food"],
                 "camera_model": "iPhone 12 mini",
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-                "exposure": 44956,
+                "exposure": "1/30",
                 "f_stop": 1.6,
                 "iso": "4.2 mm",
                 "focal_length": 500
               },
               {
-                "file_name": "IMG_3746.jpeg",
+                "file_name": "IMG_3746.jpg",
                 "date": "2023-04-07T12:47:09.000Z",
                 "offset": 8,
                 "city": "kaohsiung",
@@ -22153,7 +22136,7 @@
                 "focal_length": 64
               },
               {
-                "file_name": "IMG_3754.jpeg",
+                "file_name": "IMG_3754.jpg",
                 "date": "2023-04-07T12:53:22.000Z",
                 "offset": 8,
                 "city": "kaohsiung",
@@ -22169,7 +22152,7 @@
                 "focal_length": 80
               },
               {
-                "file_name": "IMG_3763.jpeg",
+                "file_name": "IMG_3763.jpg",
                 "date": "2023-04-07T13:36:09.000Z",
                 "offset": 8,
                 "city": "kaohsiung",
@@ -22183,7 +22166,7 @@
                 "focal_length": 320
               },
               {
-                "file_name": "IMG_3774.jpeg",
+                "file_name": "IMG_3774.jpg",
                 "date": "2023-04-08T02:20:57.000Z",
                 "offset": 8,
                 "city": "kaohsiung",
@@ -22330,7 +22313,7 @@
             "description_chinese": "",
             "image_list": [
               {
-                "file_name": "IMG_3778.jpeg",
+                "file_name": "IMG_3778.jpg",
                 "date": "2023-04-08T05:35:54.000Z",
                 "offset": 8,
                 "city": "chiayi",
@@ -22346,7 +22329,7 @@
                 "focal_length": 32
               },
               {
-                "file_name": "IMG_3784.jpeg",
+                "file_name": "IMG_3784.jpg",
                 "date": "2023-04-08T06:12:11.000Z",
                 "offset": 8,
                 "city": "chiayi",
@@ -22363,7 +22346,7 @@
                 "focal_length": 32
               },
               {
-                "file_name": "IMG_3790.jpeg",
+                "file_name": "IMG_3790.jpg",
                 "date": "2023-04-08T06:40:52.000Z",
                 "offset": 8,
                 "city": "chiayi",
@@ -22380,7 +22363,7 @@
                 "focal_length": 32
               },
               {
-                "file_name": "IMG_3796.jpeg",
+                "file_name": "IMG_3796.jpg",
                 "date": "2023-04-08T07:04:04.000Z",
                 "offset": 8,
                 "city": "chiayi",
@@ -22396,7 +22379,7 @@
                 "focal_length": 160
               },
               {
-                "file_name": "IMG_3800.jpeg",
+                "file_name": "IMG_3800.jpg",
                 "date": "2023-04-08T07:48:07.000Z",
                 "offset": 8,
                 "city": "chiayi",
@@ -22413,7 +22396,7 @@
                 "focal_length": 32
               },
               {
-                "file_name": "IMG_3803.jpeg",
+                "file_name": "IMG_3803.jpg",
                 "date": "2023-04-08T07:50:50.000Z",
                 "offset": 8,
                 "city": "chiayi",
@@ -22428,7 +22411,7 @@
                 "focal_length": 32
               },
               {
-                "file_name": "IMG_3815.jpeg",
+                "file_name": "IMG_3815.jpg",
                 "date": "2023-04-08T10:58:46.000Z",
                 "offset": 8,
                 "city": "chiayi",
@@ -22444,7 +22427,7 @@
                 "focal_length": 125
               },
               {
-                "file_name": "IMG_3816.jpeg",
+                "file_name": "IMG_3816.jpg",
                 "date": "2023-04-08T11:13:19.000Z",
                 "offset": 8,
                 "city": "chiayi",
@@ -22460,7 +22443,7 @@
                 "focal_length": 400
               },
               {
-                "file_name": "IMG_3817.jpeg",
+                "file_name": "IMG_3817.jpg",
                 "date": "2023-04-08T11:37:36.000Z",
                 "offset": 8,
                 "city": "chiayi",
@@ -22476,7 +22459,7 @@
                 "focal_length": 100
               },
               {
-                "file_name": "IMG_3825.jpeg",
+                "file_name": "IMG_3825.jpg",
                 "date": "2023-04-09T00:12:58.000Z",
                 "offset": 8,
                 "city": "chiayi",
@@ -22492,7 +22475,7 @@
                 "focal_length": 32
               },
               {
-                "file_name": "IMG_3829.jpeg",
+                "file_name": "IMG_3829.jpg",
                 "date": "2023-04-09T01:36:01.000Z",
                 "offset": 8,
                 "city": "zhuqi",
@@ -22507,7 +22490,7 @@
                 "focal_length": 32
               },
               {
-                "file_name": "IMG_3833.jpeg",
+                "file_name": "IMG_3833.jpg",
                 "date": "2023-04-09T02:01:15.000Z",
                 "offset": 8,
                 "city": "zhuqi",
@@ -22522,7 +22505,7 @@
                 "focal_length": 32
               },
               {
-                "file_name": "IMG_3841.jpeg",
+                "file_name": "IMG_3841.jpg",
                 "date": "2023-04-09T03:46:18.000Z",
                 "offset": 8,
                 "city": "zhuqi",
@@ -22536,7 +22519,7 @@
                 "focal_length": 100
               },
               {
-                "file_name": "IMG_4851.jpeg",
+                "file_name": "IMG_4851.jpg",
                 "date": "2023-04-09T02:23:35.000Z",
                 "offset": 10,
                 "city": "zhuqi",
@@ -22551,7 +22534,7 @@
                 "focal_length": 100
               },
               {
-                "file_name": "IMG_4857.jpeg",
+                "file_name": "IMG_4857.jpg",
                 "date": "2023-04-09T02:26:26.000Z",
                 "offset": 10,
                 "city": "zhuqi",
@@ -22568,7 +22551,7 @@
                 "focal_length": 100
               },
               {
-                "file_name": "IMG_4868.jpeg",
+                "file_name": "IMG_4868.jpg",
                 "date": "2023-04-09T02:32:34.000Z",
                 "offset": 10,
                 "city": "zhuqi",
@@ -22582,7 +22565,7 @@
                 "focal_length": 100
               },
               {
-                "file_name": "IMG_4874.jpeg",
+                "file_name": "IMG_4874.jpg",
                 "date": "2023-04-09T02:42:43.000Z",
                 "offset": 10,
                 "city": "zhuqi",
@@ -22597,7 +22580,7 @@
                 "focal_length": 100
               },
               {
-                "file_name": "IMG_4885.jpeg",
+                "file_name": "IMG_4885.jpg",
                 "date": "2023-04-09T02:44:13.000Z",
                 "offset": 10,
                 "city": "zhuqi",
@@ -22611,7 +22594,7 @@
                 "focal_length": 100
               },
               {
-                "file_name": "IMG_4891.jpeg",
+                "file_name": "IMG_4891.jpg",
                 "date": "2023-04-09T02:48:36.000Z",
                 "offset": 10,
                 "city": "zhuqi",
@@ -22626,7 +22609,7 @@
                 "focal_length": 100
               },
               {
-                "file_name": "IMG_4919.jpeg",
+                "file_name": "IMG_4919.jpg",
                 "date": "2023-04-09T02:56:47.000Z",
                 "offset": 10,
                 "city": "zhuqi",
@@ -22642,7 +22625,7 @@
                 "focal_length": 100
               },
               {
-                "file_name": "IMG_4926.jpeg",
+                "file_name": "IMG_4926.jpg",
                 "date": "2023-04-09T03:00:27.000Z",
                 "offset": 10,
                 "city": "zhuqi",
@@ -22657,7 +22640,7 @@
                 "focal_length": 100
               },
               {
-                "file_name": "IMG_4937.jpeg",
+                "file_name": "IMG_4937.jpg",
                 "date": "2023-04-09T03:05:03.000Z",
                 "offset": 10,
                 "city": "zhuqi",
@@ -22672,7 +22655,7 @@
                 "focal_length": 100
               },
               {
-                "file_name": "IMG_4949.jpeg",
+                "file_name": "IMG_4949.jpg",
                 "date": "2023-04-09T03:23:26.000Z",
                 "offset": 10,
                 "city": "zhuqi",
@@ -22687,7 +22670,7 @@
                 "focal_length": 400
               },
               {
-                "file_name": "IMG_3850.jpeg",
+                "file_name": "IMG_3850.jpg",
                 "date": "2023-04-09T05:31:19.000Z",
                 "offset": 8,
                 "city": "zhuqi",
@@ -22702,7 +22685,7 @@
                 "focal_length": 64
               },
               {
-                "file_name": "IMG_3852.jpeg",
+                "file_name": "IMG_3852.jpg",
                 "date": "2023-04-09T05:50:26.000Z",
                 "offset": 8,
                 "city": "chiayi",
@@ -22717,7 +22700,7 @@
                 "focal_length": 500
               },
               {
-                "file_name": "IMG_3853.jpeg",
+                "file_name": "IMG_3853.jpg",
                 "date": "2023-04-09T06:16:22.000Z",
                 "offset": 8,
                 "city": "chiayi",
@@ -22734,7 +22717,7 @@
                 "focal_length": 32
               },
               {
-                "file_name": "IMG_3884.jpeg",
+                "file_name": "IMG_3884.jpg",
                 "date": "2023-04-09T09:03:24.000Z",
                 "offset": 8,
                 "city": "chiayi",
@@ -22747,7 +22730,7 @@
                 "focal_length": 200
               },
               {
-                "file_name": "IMG_4987.jpeg",
+                "file_name": "IMG_4987.jpg",
                 "date": "2023-04-09T07:51:14.000Z",
                 "offset": 10,
                 "city": "chiayi",
@@ -22763,7 +22746,7 @@
                 "focal_length": 1600
               },
               {
-                "file_name": "IMG_5006.jpeg",
+                "file_name": "IMG_5006.jpg",
                 "date": "2023-04-09T07:52:40.000Z",
                 "offset": 10,
                 "city": "chiayi",
@@ -22779,7 +22762,7 @@
                 "focal_length": 1600
               },
               {
-                "file_name": "IMG_3929.jpeg",
+                "file_name": "IMG_3929.jpg",
                 "date": "2023-04-09T11:03:42.000Z",
                 "offset": 8,
                 "city": "chiayi",
@@ -22794,7 +22777,7 @@
                 "focal_length": 80
               },
               {
-                "file_name": "IMG_3936.jpeg",
+                "file_name": "IMG_3936.jpg",
                 "date": "2023-04-09T23:39:50.000Z",
                 "offset": 8,
                 "city": "chiayi",
@@ -22876,7 +22859,7 @@
             "description_chinese": "",
             "image_list": [
               {
-                "file_name": "IMG_4487.jpeg",
+                "file_name": "IMG_4487.jpg",
                 "date": "2023-04-22T05:22:57.000Z",
                 "offset": 10,
                 "city": "melbourne",
@@ -22890,7 +22873,7 @@
                 "iso": 32
               },
               {
-                "file_name": "IMG_4498.jpeg",
+                "file_name": "IMG_4498.jpg",
                 "date": "2023-04-22T06:10:52.000Z",
                 "offset": 10,
                 "city": "melbourne",
@@ -22904,7 +22887,7 @@
                 "iso": 32
               },
               {
-                "file_name": "IMG_4516.jpeg",
+                "file_name": "IMG_4516.jpg",
                 "date": "2023-04-22T07:31:13.000Z",
                 "offset": 10,
                 "city": "melbourne",
@@ -22918,7 +22901,7 @@
                 "iso": 32
               },
               {
-                "file_name": "IMG_4522.jpeg",
+                "file_name": "IMG_4522.jpg",
                 "date": "2023-04-23T00:51:38.000Z",
                 "offset": 10,
                 "city": "melbourne",
@@ -22932,7 +22915,7 @@
                 "iso": 32
               },
               {
-                "file_name": "IMG_4530.jpeg",
+                "file_name": "IMG_4530.jpg",
                 "date": "2023-04-23T01:24:53.000Z",
                 "offset": 10,
                 "city": "melbourne",
@@ -22946,7 +22929,7 @@
                 "iso": 32
               },
               {
-                "file_name": "IMG_4532.jpeg",
+                "file_name": "IMG_4532.jpg",
                 "date": "2023-04-23T01:27:35.000Z",
                 "offset": 10,
                 "city": "melbourne",
@@ -22960,7 +22943,7 @@
                 "iso": 32
               },
               {
-                "file_name": "IMG_4540.jpeg",
+                "file_name": "IMG_4540.jpg",
                 "date": "2023-04-23T01:53:19.000Z",
                 "offset": 10,
                 "city": "melbourne",
@@ -22974,7 +22957,7 @@
                 "iso": 32
               },
               {
-                "file_name": "IMG_4546.jpeg",
+                "file_name": "IMG_4546.jpg",
                 "date": "2023-04-23T02:11:06.000Z",
                 "offset": 10,
                 "city": "melbourne",
@@ -22988,7 +22971,7 @@
                 "iso": 32
               },
               {
-                "file_name": "IMG_4552.jpeg",
+                "file_name": "IMG_4552.jpg",
                 "date": "2023-04-23T03:31:05.000Z",
                 "offset": 10,
                 "city": "melbourne",
@@ -23002,7 +22985,7 @@
                 "iso": 250
               },
               {
-                "file_name": "IMG_4554.jpeg",
+                "file_name": "IMG_4554.jpg",
                 "date": "2023-04-23T03:42:46.000Z",
                 "offset": 10,
                 "city": "melbourne",
@@ -23015,7 +22998,7 @@
                 "iso": 125
               },
               {
-                "file_name": "IMG_4586.jpeg",
+                "file_name": "IMG_4586.jpg",
                 "date": "2023-04-23T06:35:31.000Z",
                 "offset": 10,
                 "city": "melbourne",
@@ -23029,7 +23012,7 @@
                 "iso": 32
               },
               {
-                "file_name": "IMG_4595.jpeg",
+                "file_name": "IMG_4595.jpg",
                 "date": "2023-04-23T10:27:22.000Z",
                 "offset": 10,
                 "city": "melbourne",
@@ -23044,7 +23027,7 @@
                 "iso": 320
               },
               {
-                "file_name": "IMG_4603.jpeg",
+                "file_name": "IMG_4603.jpg",
                 "date": "2023-04-24T02:32:25.000Z",
                 "offset": 10,
                 "city": "melbourne",
@@ -23058,7 +23041,7 @@
                 "iso": 32
               },
               {
-                "file_name": "IMG_4608.jpeg",
+                "file_name": "IMG_4608.jpg",
                 "date": "2023-04-24T03:44:06.000Z",
                 "offset": 10,
                 "city": "melbourne",
@@ -23072,7 +23055,7 @@
                 "iso": 32
               },
               {
-                "file_name": "IMG_4621.jpeg",
+                "file_name": "IMG_4621.jpg",
                 "date": "2023-04-24T04:31:56.000Z",
                 "offset": 10,
                 "city": "melbourne",
@@ -23086,7 +23069,7 @@
                 "iso": 32
               },
               {
-                "file_name": "IMG_4632.jpeg",
+                "file_name": "IMG_4632.jpg",
                 "date": "2023-04-24T04:37:04.000Z",
                 "offset": 10,
                 "city": "melbourne",
@@ -23100,7 +23083,7 @@
                 "iso": 40
               },
               {
-                "file_name": "IMG_4648.jpeg",
+                "file_name": "IMG_4648.jpg",
                 "date": "2023-04-24T04:49:45.000Z",
                 "offset": 10,
                 "city": "melbourne",
@@ -23114,7 +23097,7 @@
                 "iso": 32
               },
               {
-                "file_name": "IMG_4674.jpeg",
+                "file_name": "IMG_4674.jpg",
                 "date": "2023-04-24T07:31:40.000Z",
                 "offset": 10,
                 "city": "phillip",
@@ -23128,7 +23111,7 @@
                 "iso": 32
               },
               {
-                "file_name": "IMG_4678.jpeg",
+                "file_name": "IMG_4678.jpg",
                 "date": "2023-04-24T07:40:54.000Z",
                 "offset": 10,
                 "city": "phillip",
@@ -23142,7 +23125,7 @@
                 "iso": 40
               },
               {
-                "file_name": "IMG_4679.jpeg",
+                "file_name": "IMG_4679.jpg",
                 "date": "2023-04-24T08:47:38.000Z",
                 "offset": 10,
                 "city": "phillip",
@@ -23150,13 +23133,13 @@
                 "tags": ["attractions", "animal"],
                 "camera_model": "iPhone 12 mini",
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-                "exposure": 44951,
+                "exposure": "1/25",
                 "f_stop": 1.6,
                 "focal_length": "4.2 mm",
                 "iso": 640
               },
               {
-                "file_name": "IMG_4687.jpeg",
+                "file_name": "IMG_4687.jpg",
                 "date": "2023-04-24T23:19:32.000Z",
                 "offset": 10,
                 "city": "melbourne",
@@ -23206,7 +23189,7 @@
             "description_chinese": "",
             "image_list": [
               {
-                "file_name": "IMG_4143.jpeg",
+                "file_name": "IMG_4143.jpg",
                 "date": "2023-04-13T11:22:43.000Z",
                 "offset": 10,
                 "city": "brisbane",
@@ -23222,7 +23205,7 @@
                 "iso": 100
               },
               {
-                "file_name": "IMG_4148.jpeg",
+                "file_name": "IMG_4148.jpg",
                 "date": "2023-04-14T02:22:43.000Z",
                 "offset": 10,
                 "city": "brisbane",
@@ -23237,7 +23220,7 @@
                 "iso": 250
               },
               {
-                "file_name": "IMG_4149.jpeg",
+                "file_name": "IMG_4149.jpg",
                 "date": "2023-04-14T02:51:59.000Z",
                 "offset": 10,
                 "city": "brisbane",
@@ -23253,7 +23236,7 @@
                 "iso": 32
               },
               {
-                "file_name": "IMG_4152.jpeg",
+                "file_name": "IMG_4152.jpg",
                 "date": "2023-04-14T03:54:49.000Z",
                 "offset": 10,
                 "city": "brisbane",
@@ -23268,7 +23251,7 @@
                 "iso": 200
               },
               {
-                "file_name": "IMG_4158.jpeg",
+                "file_name": "IMG_4158.jpg",
                 "date": "2023-04-14T05:20:05.000Z",
                 "offset": 10,
                 "city": "brisbane",
@@ -23283,7 +23266,7 @@
                 "iso": 32
               },
               {
-                "file_name": "IMG_4165.jpeg",
+                "file_name": "IMG_4165.jpg",
                 "date": "2023-04-14T09:13:05.000Z",
                 "offset": 10,
                 "city": "brisbane",
@@ -23298,7 +23281,7 @@
                 "iso": 100
               },
               {
-                "file_name": "IMG_4166.jpeg",
+                "file_name": "IMG_4166.jpg",
                 "date": "2023-04-14T23:45:48.000Z",
                 "offset": 10,
                 "city": "brisbane",
@@ -23314,7 +23297,7 @@
                 "iso": 640
               },
               {
-                "file_name": "IMG_4178.jpeg",
+                "file_name": "IMG_4178.jpg",
                 "date": "2023-04-15T04:53:05.000Z",
                 "offset": 10,
                 "city": "noosa",
@@ -23329,7 +23312,7 @@
                 "iso": 32
               },
               {
-                "file_name": "IMG_4208.jpeg",
+                "file_name": "IMG_4208.jpg",
                 "date": "2023-04-15T06:44:42.000Z",
                 "offset": 10,
                 "city": "noosa",
@@ -23343,7 +23326,7 @@
                 "iso": 32
               },
               {
-                "file_name": "IMG_4216.jpeg",
+                "file_name": "IMG_4216.jpg",
                 "date": "2023-04-15T07:22:15.000Z",
                 "offset": 10,
                 "city": "noosa",
@@ -23357,7 +23340,7 @@
                 "iso": 32
               },
               {
-                "file_name": "IMG_4223.jpeg",
+                "file_name": "IMG_4223.jpg",
                 "date": "2023-04-15T07:29:45.000Z",
                 "offset": 10,
                 "city": "noosa",
@@ -23371,7 +23354,7 @@
                 "iso": 40
               },
               {
-                "file_name": "IMG_4229.jpeg",
+                "file_name": "IMG_4229.jpg",
                 "date": "2023-04-15T07:47:06.000Z",
                 "offset": 10,
                 "city": "noosa",
@@ -23385,7 +23368,7 @@
                 "iso": 50
               },
               {
-                "file_name": "IMG_4237.jpeg",
+                "file_name": "IMG_4237.jpg",
                 "date": "2023-04-15T07:52:21.000Z",
                 "offset": 10,
                 "city": "noosa",
@@ -23393,13 +23376,13 @@
                 "tags": ["attractions", "nature"],
                 "camera_model": "iPhone 12 mini",
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-                "exposure": 44941,
+                "exposure": "1/15",
                 "f_stop": 1.6,
                 "focal_length": "4.2 mm",
                 "iso": 1600
               },
               {
-                "file_name": "IMG_4246.jpeg",
+                "file_name": "IMG_4246.jpg",
                 "date": "2023-04-15T08:07:51.000Z",
                 "offset": 10,
                 "city": "noosa",
@@ -23407,13 +23390,13 @@
                 "tags": ["attractions", "nature"],
                 "camera_model": "iPhone 12 mini",
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-                "exposure": 44930,
+                "exposure": "1/4",
                 "f_stop": 1.6,
                 "focal_length": "4.2 mm",
                 "iso": 40
               },
               {
-                "file_name": "IMG_4247.jpeg",
+                "file_name": "IMG_4247.jpg",
                 "date": "2023-04-15T11:18:47.000Z",
                 "offset": 10,
                 "city": "brisbane",
@@ -23428,7 +23411,7 @@
                 "iso": 100
               },
               {
-                "file_name": "IMG_4258.jpeg",
+                "file_name": "IMG_4258.jpg",
                 "date": "2023-04-16T03:19:05.000Z",
                 "offset": 10,
                 "city": "brisbane",
@@ -23443,7 +23426,7 @@
                 "iso": 400
               },
               {
-                "file_name": "IMG_4264.jpeg",
+                "file_name": "IMG_4264.jpg",
                 "date": "2023-04-16T04:37:41.000Z",
                 "offset": 10,
                 "city": "brisbane",
@@ -23459,7 +23442,7 @@
                 "iso": 160
               },
               {
-                "file_name": "IMG_4268.jpeg",
+                "file_name": "IMG_4268.jpg",
                 "date": "2023-04-16T09:02:48.000Z",
                 "offset": 10,
                 "city": "brisbane",
@@ -23474,7 +23457,7 @@
                 "iso": 125
               },
               {
-                "file_name": "IMG_4276.jpeg",
+                "file_name": "IMG_4276.jpg",
                 "date": "2023-04-17T04:38:23.000Z",
                 "offset": 10,
                 "city": "goldcoast",
@@ -23488,7 +23471,7 @@
                 "iso": 32
               },
               {
-                "file_name": "IMG_4281.jpeg",
+                "file_name": "IMG_4281.jpg",
                 "date": "2023-04-17T05:14:11.000Z",
                 "offset": 10,
                 "city": "goldcoast",
@@ -23502,7 +23485,7 @@
                 "iso": 32
               },
               {
-                "file_name": "IMG_4282.jpeg",
+                "file_name": "IMG_4282.jpg",
                 "date": "2023-04-17T05:24:53.000Z",
                 "offset": 10,
                 "city": "goldcoast",
@@ -23516,7 +23499,7 @@
                 "iso": 32
               },
               {
-                "file_name": "IMG_4288.jpeg",
+                "file_name": "IMG_4288.jpg",
                 "date": "2023-04-17T06:14:42.000Z",
                 "offset": 10,
                 "city": "goldcoast",
@@ -23531,7 +23514,7 @@
                 "iso": 50
               },
               {
-                "file_name": "IMG_4289.jpeg",
+                "file_name": "IMG_4289.jpg",
                 "date": "2023-04-17T06:23:07.000Z",
                 "offset": 10,
                 "city": "goldcoast",
@@ -23545,7 +23528,7 @@
                 "iso": 32
               },
               {
-                "file_name": "IMG_4297.jpeg",
+                "file_name": "IMG_4297.jpg",
                 "date": "2023-04-17T07:36:12.000Z",
                 "offset": 10,
                 "city": "goldcoast",
@@ -23559,7 +23542,7 @@
                 "iso": 80
               },
               {
-                "file_name": "IMG_4300.jpeg",
+                "file_name": "IMG_4300.jpg",
                 "date": "2023-04-17T09:10:18.000Z",
                 "offset": 10,
                 "city": "brisbane",
@@ -23575,7 +23558,7 @@
                 "iso": 125
               },
               {
-                "file_name": "IMG_4305.jpeg",
+                "file_name": "IMG_4305.jpg",
                 "date": "2023-04-17T10:21:31.000Z",
                 "offset": 10,
                 "city": "brisbane",
@@ -23590,7 +23573,7 @@
                 "iso": 125
               },
               {
-                "file_name": "IMG_4307.jpeg",
+                "file_name": "IMG_4307.jpg",
                 "date": "2023-04-18T00:03:15.000Z",
                 "offset": 10,
                 "city": "brisbane",
@@ -23606,7 +23589,7 @@
                 "iso": 160
               },
               {
-                "file_name": "IMG_4318.jpeg",
+                "file_name": "IMG_4318.jpg",
                 "date": "2023-04-18T04:30:20.000Z",
                 "offset": 10,
                 "city": "brisbane",
@@ -23622,7 +23605,7 @@
                 "iso": 250
               },
               {
-                "file_name": "IMG_4328.jpeg",
+                "file_name": "IMG_4328.jpg",
                 "date": "2023-04-18T04:44:27.000Z",
                 "offset": 10,
                 "city": "brisbane",
@@ -23637,7 +23620,7 @@
                 "iso": 80
               },
               {
-                "file_name": "IMG_4335.jpeg",
+                "file_name": "IMG_4335.jpg",
                 "date": "2023-04-18T04:52:52.000Z",
                 "offset": 10,
                 "city": "brisbane",
@@ -23652,7 +23635,7 @@
                 "iso": 80
               },
               {
-                "file_name": "IMG_4371.jpeg",
+                "file_name": "IMG_4371.jpg",
                 "date": "2023-04-18T11:01:41.000Z",
                 "offset": 10,
                 "city": "brisbane",
@@ -23661,13 +23644,13 @@
                 "tags": ["town"],
                 "camera_model": "iPhone 12 mini",
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-                "exposure": 44941,
+                "exposure": "1/15",
                 "f_stop": 1.6,
                 "focal_length": "4.2 mm",
                 "iso": 2000
               },
               {
-                "file_name": "IMG_4382.jpeg",
+                "file_name": "IMG_4382.jpg",
                 "date": "2023-04-19T03:39:12.000Z",
                 "offset": 10,
                 "city": "brisbane",
@@ -23683,7 +23666,7 @@
                 "iso": 200
               },
               {
-                "file_name": "IMG_4385.jpeg",
+                "file_name": "IMG_4385.jpg",
                 "date": "2023-04-19T07:09:20.000Z",
                 "offset": 10,
                 "city": "brisbane",
@@ -23692,13 +23675,13 @@
                 "tags": ["animal"],
                 "camera_model": "iPhone 12 mini",
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-                "exposure": 44951,
+                "exposure": "1/25",
                 "f_stop": 1.6,
                 "focal_length": "4.2 mm",
                 "iso": 640
               },
               {
-                "file_name": "IMG_4389.jpeg",
+                "file_name": "IMG_4389.jpg",
                 "date": "2023-04-19T09:12:20.000Z",
                 "offset": 10,
                 "city": "brisbane",
@@ -23714,7 +23697,7 @@
                 "iso": 320
               },
               {
-                "file_name": "IMG_4392.jpeg",
+                "file_name": "IMG_4392.jpg",
                 "date": "2023-04-19T10:17:26.000Z",
                 "offset": 10,
                 "city": "brisbane",
@@ -23730,7 +23713,7 @@
                 "iso": 320
               },
               {
-                "file_name": "IMG_5104.jpeg",
+                "file_name": "IMG_5104.jpg",
                 "date": "2023-04-19T13:59:20.000Z",
                 "offset": 10,
                 "city": "brisbane",
@@ -23746,7 +23729,7 @@
                 "iso": 6400
               },
               {
-                "file_name": "IMG_5109.jpeg",
+                "file_name": "IMG_5109.jpg",
                 "date": "2023-04-19T14:03:16.000Z",
                 "offset": 10,
                 "city": "brisbane",
@@ -23762,7 +23745,7 @@
                 "iso": 6400
               },
               {
-                "file_name": "IMG_5112.jpeg",
+                "file_name": "IMG_5112.jpg",
                 "date": "2023-04-19T14:06:19.000Z",
                 "offset": 10,
                 "city": "brisbane",
@@ -23777,7 +23760,7 @@
                 "iso": 6400
               },
               {
-                "file_name": "IMG_5134.jpeg",
+                "file_name": "IMG_5134.jpg",
                 "date": "2023-04-19T14:33:48.000Z",
                 "offset": 10,
                 "city": "brisbane",
@@ -23792,7 +23775,7 @@
                 "iso": 6400
               },
               {
-                "file_name": "IMG_5137.jpeg",
+                "file_name": "IMG_5137.jpg",
                 "date": "2023-04-19T14:35:40.000Z",
                 "offset": 10,
                 "city": "brisbane",
@@ -23807,7 +23790,7 @@
                 "iso": 6400
               },
               {
-                "file_name": "IMG_5139.jpeg",
+                "file_name": "IMG_5139.jpg",
                 "date": "2023-04-19T14:38:38.000Z",
                 "offset": 10,
                 "city": "brisbane",
@@ -23823,7 +23806,7 @@
                 "iso": 6400
               },
               {
-                "file_name": "IMG_4427.jpeg",
+                "file_name": "IMG_4427.jpg",
                 "date": "2023-04-20T04:32:15.000Z",
                 "offset": 10,
                 "city": "brisbane",
@@ -23839,7 +23822,7 @@
                 "iso": 250
               },
               {
-                "file_name": "IMG_4432.jpeg",
+                "file_name": "IMG_4432.jpg",
                 "date": "2023-04-20T08:47:03.000Z",
                 "offset": 10,
                 "city": "brisbane",
@@ -23847,13 +23830,13 @@
                 "tags": ["food"],
                 "camera_model": "iPhone 12 mini",
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-                "exposure": 44955,
+                "exposure": "1/29",
                 "f_stop": 1.6,
                 "focal_length": "4.2 mm",
                 "iso": 800
               },
               {
-                "file_name": "IMG_4433.jpeg",
+                "file_name": "IMG_4433.jpg",
                 "date": "2023-04-20T09:38:29.000Z",
                 "offset": 10,
                 "city": "brisbane",
@@ -23867,7 +23850,7 @@
                 "iso": 100
               },
               {
-                "file_name": "IMG_4449.jpeg",
+                "file_name": "IMG_4449.jpg",
                 "date": "2023-04-20T23:06:23.000Z",
                 "offset": 10,
                 "city": "brisbane",
@@ -23882,7 +23865,7 @@
                 "iso": 80
               },
               {
-                "file_name": "IMG_4450.jpeg",
+                "file_name": "IMG_4450.jpg",
                 "date": "2023-04-20T23:07:35.000Z",
                 "offset": 10,
                 "city": "brisbane",
@@ -23897,7 +23880,7 @@
                 "iso": 80
               },
               {
-                "file_name": "IMG_4452.jpeg",
+                "file_name": "IMG_4452.jpg",
                 "date": "2023-04-21T00:21:55.000Z",
                 "offset": 10,
                 "city": "brisbane",
@@ -23911,7 +23894,7 @@
                 "iso": 32
               },
               {
-                "file_name": "IMG_4458.jpeg",
+                "file_name": "IMG_4458.jpg",
                 "date": "2023-04-21T02:50:27.000Z",
                 "offset": 10,
                 "city": "brisbane",
@@ -23927,7 +23910,7 @@
                 "iso": 32
               },
               {
-                "file_name": "IMG_4459.jpeg",
+                "file_name": "IMG_4459.jpg",
                 "date": "2023-04-21T03:23:54.000Z",
                 "offset": 10,
                 "city": "brisbane",
@@ -23942,7 +23925,7 @@
                 "iso": 32
               },
               {
-                "file_name": "IMG_4469.jpeg",
+                "file_name": "IMG_4469.jpg",
                 "date": "2023-04-21T05:31:50.000Z",
                 "offset": 10,
                 "city": "brisbane",
@@ -23956,7 +23939,7 @@
                 "iso": 32
               },
               {
-                "file_name": "IMG_4478.jpeg",
+                "file_name": "IMG_4478.jpg",
                 "date": "2023-04-21T09:09:21.000Z",
                 "offset": 10,
                 "city": "brisbane",
@@ -23972,7 +23955,7 @@
                 "iso": 125
               },
               {
-                "file_name": "IMG_4479.jpeg",
+                "file_name": "IMG_4479.jpg",
                 "date": "2023-04-21T10:36:54.000Z",
                 "offset": 10,
                 "city": "brisbane",
@@ -24079,7 +24062,7 @@
             "description_chinese": "",
             "image_list": [
               {
-                "file_name": "IMG_4984.jpeg",
+                "file_name": "IMG_4984.jpg",
                 "date": "2023-05-05T07:07:52.000Z",
                 "offset": 12,
                 "city": "auckland",
@@ -24088,13 +24071,13 @@
                 "tags": ["town"],
                 "camera_model": "iPhone 12 mini",
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-                "exposure": 44951,
+                "exposure": "1/25",
                 "f_stop": 1.6,
                 "focal_length": "4.2 mm",
                 "iso": 640
               },
               {
-                "file_name": "IMG_4985.jpeg",
+                "file_name": "IMG_4985.jpg",
                 "date": "2023-05-05T07:28:34.000Z",
                 "offset": 12,
                 "city": "auckland",
@@ -24107,7 +24090,7 @@
                 "iso": 400
               },
               {
-                "file_name": "IMG_4990.jpeg",
+                "file_name": "IMG_4990.jpg",
                 "date": "2023-05-05T07:35:22.000Z",
                 "offset": 12,
                 "city": "auckland",
@@ -24120,20 +24103,20 @@
                 "iso": 100
               },
               {
-                "file_name": "IMG_4992.jpeg",
+                "file_name": "IMG_4992.jpg",
                 "date": "2023-05-05T07:43:41.000Z",
                 "offset": 12,
                 "city": "auckland",
                 "tags": ["attractions", "town"],
                 "camera_model": "iPhone 12 mini",
                 "lens": "iPhone 12 mini back dual wide camera 1.55mm f/2.4",
-                "exposure": 44951,
+                "exposure": "1/25",
                 "f_stop": 2.4,
                 "focal_length": "1.6 mm",
                 "iso": 1600
               },
               {
-                "file_name": "IMG_5001.jpeg",
+                "file_name": "IMG_5001.jpg",
                 "date": "2023-05-05T08:25:47.000Z",
                 "offset": 12,
                 "city": "auckland",
@@ -24147,7 +24130,7 @@
                 "iso": 250
               },
               {
-                "file_name": "IMG_5004.jpeg",
+                "file_name": "IMG_5004.jpg",
                 "date": "2023-05-05T08:49:16.000Z",
                 "offset": 12,
                 "city": "auckland",
@@ -24161,7 +24144,7 @@
                 "iso": 200
               },
               {
-                "file_name": "IMG_5005.jpeg",
+                "file_name": "IMG_5005.jpg",
                 "date": "2023-05-05T08:50:31.000Z",
                 "offset": 12,
                 "city": "auckland",
@@ -24174,7 +24157,7 @@
                 "iso": 320
               },
               {
-                "file_name": "IMG_5147.jpeg",
+                "file_name": "IMG_5147.jpg",
                 "date": "2023-05-07T02:33:35.000Z",
                 "offset": 12,
                 "city": "auckland",
@@ -24190,7 +24173,7 @@
                 "iso": 80
               },
               {
-                "file_name": "IMG_5150.jpeg",
+                "file_name": "IMG_5150.jpg",
                 "date": "2023-05-07T02:57:00.000Z",
                 "offset": 12,
                 "city": "auckland",
@@ -24206,7 +24189,7 @@
                 "iso": 125
               },
               {
-                "file_name": "IMG_5151.jpeg",
+                "file_name": "IMG_5151.jpg",
                 "date": "2023-05-07T02:58:23.000Z",
                 "offset": 12,
                 "city": "auckland",
@@ -24220,7 +24203,7 @@
                 "iso": 500
               },
               {
-                "file_name": "IMG_5158.jpeg",
+                "file_name": "IMG_5158.jpg",
                 "date": "2023-05-07T03:33:22.000Z",
                 "offset": 12,
                 "city": "auckland",
@@ -24233,7 +24216,7 @@
                 "iso": 32
               },
               {
-                "file_name": "IMG_5159.jpeg",
+                "file_name": "IMG_5159.jpg",
                 "date": "2023-05-07T03:40:37.000Z",
                 "offset": 12,
                 "city": "auckland",
@@ -24246,7 +24229,7 @@
                 "iso": 32
               },
               {
-                "file_name": "IMG_5168.jpeg",
+                "file_name": "IMG_5168.jpg",
                 "date": "2023-05-07T05:05:52.000Z",
                 "offset": 12,
                 "city": "auckland",
@@ -24259,7 +24242,7 @@
                 "iso": 32
               },
               {
-                "file_name": "IMG_5180.jpeg",
+                "file_name": "IMG_5180.jpg",
                 "date": "2023-05-07T06:11:21.000Z",
                 "offset": 12,
                 "city": "auckland",
@@ -24267,13 +24250,13 @@
                 "tags": ["food"],
                 "camera_model": "iPhone 12 mini",
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-                "exposure": 44951,
+                "exposure": "1/25",
                 "f_stop": 1.6,
                 "focal_length": "4.2 mm",
                 "iso": 500
               },
               {
-                "file_name": "IMG_5184.jpeg",
+                "file_name": "IMG_5184.jpg",
                 "date": "2023-05-07T08:12:12.000Z",
                 "offset": 12,
                 "city": "auckland",
@@ -24287,7 +24270,7 @@
                 "iso": 200
               },
               {
-                "file_name": "IMG_5190.jpeg",
+                "file_name": "IMG_5190.jpg",
                 "date": "2023-05-07T23:56:19.000Z",
                 "offset": 12,
                 "city": "auckland",
@@ -24301,7 +24284,7 @@
                 "iso": 32
               },
               {
-                "file_name": "IMG_5192.jpeg",
+                "file_name": "IMG_5192.jpg",
                 "date": "2023-05-08T00:01:07.000Z",
                 "offset": 12,
                 "city": "auckland",
@@ -24315,7 +24298,7 @@
                 "iso": 40
               },
               {
-                "file_name": "IMG_5196.jpeg",
+                "file_name": "IMG_5196.jpg",
                 "date": "2023-05-08T00:53:32.000Z",
                 "offset": 12,
                 "city": "auckland",
@@ -24329,7 +24312,7 @@
                 "iso": 320
               },
               {
-                "file_name": "IMG_5199.jpeg",
+                "file_name": "IMG_5199.jpg",
                 "date": "2023-05-08T00:54:25.000Z",
                 "offset": 12,
                 "city": "auckland",
@@ -24343,7 +24326,7 @@
                 "iso": 64
               },
               {
-                "file_name": "IMG_5208.jpeg",
+                "file_name": "IMG_5208.jpg",
                 "date": "2023-05-08T01:25:23.000Z",
                 "offset": 12,
                 "city": "auckland",
@@ -24351,13 +24334,13 @@
                 "tags": ["attractions"],
                 "camera_model": "iPhone 12 mini",
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-                "exposure": 44941,
+                "exposure": "1/15",
                 "f_stop": 1.6,
                 "focal_length": "4.2 mm",
                 "iso": 6400
               },
               {
-                "file_name": "IMG_5210.jpeg",
+                "file_name": "IMG_5210.jpg",
                 "date": "2023-05-08T01:25:52.000Z",
                 "offset": 12,
                 "city": "auckland",
@@ -24365,13 +24348,13 @@
                 "tags": ["attractions"],
                 "camera_model": "iPhone 12 mini",
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-                "exposure": 44941,
+                "exposure": "1/15",
                 "f_stop": 1.6,
                 "focal_length": "4.2 mm",
                 "iso": 3200
               },
               {
-                "file_name": "IMG_5233.jpeg",
+                "file_name": "IMG_5233.jpg",
                 "date": "2023-05-08T02:11:26.000Z",
                 "offset": 12,
                 "city": "auckland",
@@ -24379,13 +24362,13 @@
                 "tags": ["attractions"],
                 "camera_model": "iPhone 12 mini",
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-                "exposure": 44941,
+                "exposure": "1/15",
                 "f_stop": 1.6,
                 "focal_length": "4.2 mm",
                 "iso": 1600
               },
               {
-                "file_name": "IMG_5252.jpeg",
+                "file_name": "IMG_5252.jpg",
                 "date": "2023-05-08T04:45:14.000Z",
                 "offset": 12,
                 "city": "auckland",
@@ -24426,7 +24409,7 @@
             "description_chinese": "",
             "image_list": [
               {
-                "file_name": "IMG_5015.jpeg",
+                "file_name": "IMG_5015.jpg",
                 "date": "2023-05-05T22:39:13.000Z",
                 "offset": 12,
                 "city": "hamilton",
@@ -24466,7 +24449,7 @@
             "description_chinese": "",
             "image_list": [
               {
-                "file_name": "IMG_5018.jpeg",
+                "file_name": "IMG_5018.jpg",
                 "date": "2023-05-06T00:57:55.000Z",
                 "offset": 12,
                 "city": "rotorua",
@@ -24480,7 +24463,7 @@
                 "iso": 64
               },
               {
-                "file_name": "IMG_5019.jpeg",
+                "file_name": "IMG_5019.jpg",
                 "date": "2023-05-06T01:15:04.000Z",
                 "offset": 12,
                 "city": "rotorua",
@@ -24494,7 +24477,7 @@
                 "iso": 320
               },
               {
-                "file_name": "IMG_5023.jpeg",
+                "file_name": "IMG_5023.jpg",
                 "date": "2023-05-06T01:46:56.000Z",
                 "offset": 12,
                 "city": "rotorua",
@@ -24508,7 +24491,7 @@
                 "iso": 32
               },
               {
-                "file_name": "IMG_5025.jpeg",
+                "file_name": "IMG_5025.jpg",
                 "date": "2023-05-06T01:47:16.000Z",
                 "offset": 12,
                 "city": "rotorua",
@@ -24522,7 +24505,7 @@
                 "iso": 32
               },
               {
-                "file_name": "IMG_5031.jpeg",
+                "file_name": "IMG_5031.jpg",
                 "date": "2023-05-06T01:49:43.000Z",
                 "offset": 12,
                 "city": "rotorua",
@@ -24536,7 +24519,7 @@
                 "iso": 32
               },
               {
-                "file_name": "IMG_5045.jpeg",
+                "file_name": "IMG_5045.jpg",
                 "date": "2023-05-06T02:01:30.000Z",
                 "offset": 12,
                 "city": "rotorua",
@@ -24550,7 +24533,7 @@
                 "iso": 32
               },
               {
-                "file_name": "IMG_5050.jpeg",
+                "file_name": "IMG_5050.jpg",
                 "date": "2023-05-06T02:03:59.000Z",
                 "offset": 12,
                 "city": "rotorua",
@@ -24564,7 +24547,7 @@
                 "iso": 32
               },
               {
-                "file_name": "IMG_5057.jpeg",
+                "file_name": "IMG_5057.jpg",
                 "date": "2023-05-06T02:06:46.000Z",
                 "offset": 12,
                 "city": "rotorua",
@@ -24578,7 +24561,7 @@
                 "iso": 32
               },
               {
-                "file_name": "IMG_5061.jpeg",
+                "file_name": "IMG_5061.jpg",
                 "date": "2023-05-06T02:08:08.000Z",
                 "offset": 12,
                 "city": "rotorua",
@@ -24592,7 +24575,7 @@
                 "iso": 32
               },
               {
-                "file_name": "IMG_5066.jpeg",
+                "file_name": "IMG_5066.jpg",
                 "date": "2023-05-06T02:09:22.000Z",
                 "offset": 12,
                 "city": "rotorua",
@@ -24606,7 +24589,7 @@
                 "iso": 32
               },
               {
-                "file_name": "IMG_5072.jpeg",
+                "file_name": "IMG_5072.jpg",
                 "date": "2023-05-06T02:21:57.000Z",
                 "offset": 12,
                 "city": "rotorua",
@@ -24620,7 +24603,7 @@
                 "iso": 32
               },
               {
-                "file_name": "IMG_5079.jpeg",
+                "file_name": "IMG_5079.jpg",
                 "date": "2023-05-06T02:24:50.000Z",
                 "offset": 12,
                 "city": "rotorua",
@@ -24634,7 +24617,7 @@
                 "iso": 32
               },
               {
-                "file_name": "IMG_5081.jpeg",
+                "file_name": "IMG_5081.jpg",
                 "date": "2023-05-06T02:26:49.000Z",
                 "offset": 12,
                 "city": "rotorua",
@@ -24648,7 +24631,7 @@
                 "iso": 32
               },
               {
-                "file_name": "IMG_5082.jpeg",
+                "file_name": "IMG_5082.jpg",
                 "date": "2023-05-06T02:27:27.000Z",
                 "offset": 12,
                 "city": "rotorua",
@@ -24662,7 +24645,7 @@
                 "iso": 32
               },
               {
-                "file_name": "IMG_5088.jpeg",
+                "file_name": "IMG_5088.jpg",
                 "date": "2023-05-06T02:43:26.000Z",
                 "offset": 12,
                 "city": "rotorua",
@@ -24675,7 +24658,7 @@
                 "iso": 32
               },
               {
-                "file_name": "IMG_5089.jpeg",
+                "file_name": "IMG_5089.jpg",
                 "date": "2023-05-06T02:45:08.000Z",
                 "offset": 12,
                 "city": "rotorua",
@@ -24688,7 +24671,7 @@
                 "iso": 32
               },
               {
-                "file_name": "IMG_5092.jpeg",
+                "file_name": "IMG_5092.jpg",
                 "date": "2023-05-06T05:02:52.000Z",
                 "offset": 12,
                 "city": "rotorua",
@@ -24702,7 +24685,7 @@
                 "iso": 500
               },
               {
-                "file_name": "IMG_5100.jpeg",
+                "file_name": "IMG_5100.jpg",
                 "date": "2023-05-06T06:17:08.000Z",
                 "offset": 12,
                 "city": "rotorua",
@@ -24710,13 +24693,13 @@
                 "tags": ["food", "attractions"],
                 "camera_model": "iPhone 12 mini",
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-                "exposure": 44943,
+                "exposure": "1/17",
                 "f_stop": 1.6,
                 "focal_length": "4.2 mm",
                 "iso": 1600
               },
               {
-                "file_name": "IMG_5104.jpeg",
+                "file_name": "IMG_5104.jpg",
                 "date": "2023-05-06T06:31:33.000Z",
                 "offset": 12,
                 "city": "rotorua",
@@ -24724,13 +24707,13 @@
                 "tags": ["relax", "attractions"],
                 "camera_model": "iPhone 12 mini",
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-                "exposure": 44951,
+                "exposure": "1/25",
                 "f_stop": 1.6,
                 "focal_length": "4.2 mm",
                 "iso": 640
               },
               {
-                "file_name": "IMG_5127.jpeg",
+                "file_name": "IMG_5127.jpg",
                 "date": "2023-05-06T07:45:03.000Z",
                 "offset": 12,
                 "city": "rotorua",
@@ -24738,13 +24721,13 @@
                 "tags": ["food", "attractions"],
                 "camera_model": "iPhone 12 mini",
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-                "exposure": 44951,
+                "exposure": "1/25",
                 "f_stop": 1.6,
                 "focal_length": "4.2 mm",
                 "iso": 500
               },
               {
-                "file_name": "IMG_5128.jpeg",
+                "file_name": "IMG_5128.jpg",
                 "date": "2023-05-06T07:49:15.000Z",
                 "offset": 12,
                 "city": "rotorua",
@@ -24752,13 +24735,13 @@
                 "tags": ["food", "attractions"],
                 "camera_model": "iPhone 12 mini",
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-                "exposure": 44951,
+                "exposure": "1/25",
                 "f_stop": 1.6,
                 "focal_length": "4.2 mm",
                 "iso": 640
               },
               {
-                "file_name": "IMG_5129.jpeg",
+                "file_name": "IMG_5129.jpg",
                 "date": "2023-05-06T07:49:19.000Z",
                 "offset": 12,
                 "city": "rotorua",
@@ -24766,13 +24749,13 @@
                 "tags": ["food", "attractions"],
                 "camera_model": "iPhone 12 mini",
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-                "exposure": 44951,
+                "exposure": "1/25",
                 "f_stop": 1.6,
                 "focal_length": "4.2 mm",
                 "iso": 500
               },
               {
-                "file_name": "IMG_5131.jpeg",
+                "file_name": "IMG_5131.jpg",
                 "date": "2023-05-06T08:14:05.000Z",
                 "offset": 12,
                 "city": "rotorua",
@@ -24786,7 +24769,7 @@
                 "iso": 640
               },
               {
-                "file_name": "IMG_5132.jpeg",
+                "file_name": "IMG_5132.jpg",
                 "date": "2023-05-06T08:14:10.000Z",
                 "offset": 12,
                 "city": "rotorua",
@@ -24794,13 +24777,13 @@
                 "tags": ["food", "attractions"],
                 "camera_model": "iPhone 12 mini",
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-                "exposure": 44951,
+                "exposure": "1/25",
                 "f_stop": 1.6,
                 "focal_length": "4.2 mm",
                 "iso": 640
               },
               {
-                "file_name": "IMG_5134.jpeg",
+                "file_name": "IMG_5134.jpg",
                 "date": "2023-05-06T08:51:57.000Z",
                 "offset": 12,
                 "city": "rotorua",
@@ -24876,7 +24859,7 @@
             "description_chinese": "",
             "image_list": [
               {
-                "file_name": "IMG_4843.jpeg",
+                "file_name": "IMG_4843.jpg",
                 "date": "2023-05-03T01:32:05.000Z",
                 "offset": 12,
                 "city": "wellington",
@@ -24889,7 +24872,7 @@
                 "iso": 32
               },
               {
-                "file_name": "IMG_4844.jpeg",
+                "file_name": "IMG_4844.jpg",
                 "date": "2023-05-03T01:32:32.000Z",
                 "offset": 12,
                 "city": "wellington",
@@ -24902,7 +24885,7 @@
                 "iso": 32
               },
               {
-                "file_name": "IMG_4847.jpeg",
+                "file_name": "IMG_4847.jpg",
                 "date": "2023-05-03T01:51:43.000Z",
                 "offset": 12,
                 "city": "wellington",
@@ -24916,7 +24899,7 @@
                 "iso": 32
               },
               {
-                "file_name": "IMG_4851.jpeg",
+                "file_name": "IMG_4851.jpg",
                 "date": "2023-05-03T03:08:31.000Z",
                 "offset": 12,
                 "city": "wellington",
@@ -24930,7 +24913,7 @@
                 "iso": 50
               },
               {
-                "file_name": "IMG_4852.jpeg",
+                "file_name": "IMG_4852.jpg",
                 "date": "2023-05-03T03:08:58.000Z",
                 "offset": 12,
                 "city": "wellington",
@@ -24944,7 +24927,7 @@
                 "iso": 32
               },
               {
-                "file_name": "IMG_4855.jpeg",
+                "file_name": "IMG_4855.jpg",
                 "date": "2023-05-03T03:19:36.000Z",
                 "offset": 12,
                 "city": "wellington",
@@ -24957,7 +24940,7 @@
                 "iso": 32
               },
               {
-                "file_name": "IMG_4856.jpeg",
+                "file_name": "IMG_4856.jpg",
                 "date": "2023-05-03T03:31:07.000Z",
                 "offset": 12,
                 "city": "wellington",
@@ -24970,7 +24953,7 @@
                 "iso": 32
               },
               {
-                "file_name": "IMG_4858.jpeg",
+                "file_name": "IMG_4858.jpg",
                 "date": "2023-05-03T03:47:25.000Z",
                 "offset": 12,
                 "city": "wellington",
@@ -24984,7 +24967,7 @@
                 "iso": 125
               },
               {
-                "file_name": "IMG_4863.jpeg",
+                "file_name": "IMG_4863.jpg",
                 "date": "2023-05-03T04:00:03.000Z",
                 "offset": 12,
                 "city": "wellington",
@@ -24997,7 +24980,7 @@
                 "iso": 32
               },
               {
-                "file_name": "IMG_4865.jpeg",
+                "file_name": "IMG_4865.jpg",
                 "date": "2023-05-03T04:03:24.000Z",
                 "offset": 12,
                 "city": "wellington",
@@ -25010,7 +24993,7 @@
                 "iso": 80
               },
               {
-                "file_name": "IMG_4872.jpeg",
+                "file_name": "IMG_4872.jpg",
                 "date": "2023-05-03T08:27:05.000Z",
                 "offset": 12,
                 "city": "wellington",
@@ -25024,7 +25007,7 @@
                 "iso": 500
               },
               {
-                "file_name": "IMG_4879.jpeg",
+                "file_name": "IMG_4879.jpg",
                 "date": "2023-05-03T22:26:59.000Z",
                 "offset": 12,
                 "city": "wellington",
@@ -25038,7 +25021,7 @@
                 "iso": 125
               },
               {
-                "file_name": "IMG_4887.jpeg",
+                "file_name": "IMG_4887.jpg",
                 "date": "2023-05-04T00:07:46.000Z",
                 "offset": 12,
                 "city": "wellington",
@@ -25052,7 +25035,7 @@
                 "iso": 125
               },
               {
-                "file_name": "IMG_4893.jpeg",
+                "file_name": "IMG_4893.jpg",
                 "date": "2023-05-04T00:31:28.000Z",
                 "offset": 12,
                 "city": "wellington",
@@ -25066,7 +25049,7 @@
                 "iso": 400
               },
               {
-                "file_name": "IMG_4900.jpeg",
+                "file_name": "IMG_4900.jpg",
                 "date": "2023-05-04T02:16:46.000Z",
                 "offset": 12,
                 "city": "wellington",
@@ -25074,13 +25057,13 @@
                 "tags": ["art", "attractions"],
                 "camera_model": "iPhone 12 mini",
                 "lens": "iPhone 12 mini back dual wide camera 1.55mm f/2.4",
-                "exposure": 44953,
+                "exposure": "1/27",
                 "f_stop": 2.4,
                 "focal_length": "1.6 mm",
                 "iso": 1250
               },
               {
-                "file_name": "IMG_4901.jpeg",
+                "file_name": "IMG_4901.jpg",
                 "date": "2023-05-04T02:22:11.000Z",
                 "offset": 12,
                 "city": "wellington",
@@ -25094,7 +25077,7 @@
                 "iso": 80
               },
               {
-                "file_name": "IMG_4903.jpeg",
+                "file_name": "IMG_4903.jpg",
                 "date": "2023-05-04T06:49:00.000Z",
                 "offset": 12,
                 "city": "wellington",
@@ -25108,7 +25091,7 @@
                 "iso": 500
               },
               {
-                "file_name": "IMG_4904.jpeg",
+                "file_name": "IMG_4904.jpg",
                 "date": "2023-05-04T19:23:39.000Z",
                 "offset": 12,
                 "city": "wellington",
@@ -25122,7 +25105,7 @@
                 "iso": 250
               },
               {
-                "file_name": "IMG_4908.jpeg",
+                "file_name": "IMG_4908.jpg",
                 "date": "2023-05-04T19:32:03.000Z",
                 "offset": 12,
                 "city": "wellington",
@@ -25136,20 +25119,7 @@
                 "iso": 80
               },
               {
-                "file_name": "IMG_4923.jpeg",
-                "date": "2023-05-04T20:16:08.000Z",
-                "offset": 12,
-                "city": "wellington",
-                "tags": ["nature"],
-                "camera_model": "iPhone 12 mini",
-                "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-                "exposure": "1/283",
-                "f_stop": 1.6,
-                "focal_length": "4.2 mm",
-                "iso": 32
-              },
-              {
-                "file_name": "IMG_4927.jpeg",
+                "file_name": "IMG_4927.jpg",
                 "date": "2023-05-04T20:16:19.000Z",
                 "offset": 12,
                 "city": "wellington",
@@ -25162,7 +25132,7 @@
                 "iso": 32
               },
               {
-                "file_name": "IMG_4936.jpeg",
+                "file_name": "IMG_4936.jpg",
                 "date": "2023-05-04T21:49:50.000Z",
                 "offset": 12,
                 "city": "wellington",
@@ -25175,7 +25145,7 @@
                 "iso": 32
               },
               {
-                "file_name": "IMG_4946.jpeg",
+                "file_name": "IMG_4946.jpg",
                 "date": "2023-05-04T23:02:33.000Z",
                 "offset": 12,
                 "city": "wellington",
@@ -25188,7 +25158,7 @@
                 "iso": 32
               },
               {
-                "file_name": "IMG_4951.jpeg",
+                "file_name": "IMG_4951.jpg",
                 "date": "2023-05-04T23:06:32.000Z",
                 "offset": 12,
                 "city": "wellington",
@@ -25201,7 +25171,7 @@
                 "iso": 32
               },
               {
-                "file_name": "IMG_4958.jpeg",
+                "file_name": "IMG_4958.jpg",
                 "date": "2023-05-04T23:09:06.000Z",
                 "offset": 12,
                 "city": "wellington",
@@ -25214,7 +25184,7 @@
                 "iso": 32
               },
               {
-                "file_name": "IMG_4961.jpeg",
+                "file_name": "IMG_4961.jpg",
                 "date": "2023-05-04T23:18:12.000Z",
                 "offset": 12,
                 "city": "wellington",
@@ -25227,7 +25197,7 @@
                 "iso": 32
               },
               {
-                "file_name": "IMG_4970.jpeg",
+                "file_name": "IMG_4970.jpg",
                 "date": "2023-05-05T05:09:08.000Z",
                 "offset": 12,
                 "city": "wellington",
@@ -25319,7 +25289,7 @@
             "description_chinese": "",
             "image_list": [
               {
-                "file_name": "IMG_4688.jpeg",
+                "file_name": "IMG_4688.jpg",
                 "date": "2023-04-25T01:11:13.000Z",
                 "offset": 12,
                 "city": "queenstown",
@@ -25333,7 +25303,7 @@
                 "iso": 32
               },
               {
-                "file_name": "IMG_4691.jpeg",
+                "file_name": "IMG_4691.jpg",
                 "date": "2023-04-25T02:00:13.000Z",
                 "offset": 12,
                 "city": "queenstown",
@@ -25347,7 +25317,7 @@
                 "iso": 80
               },
               {
-                "file_name": "IMG_4692.jpeg",
+                "file_name": "IMG_4692.jpg",
                 "date": "2023-04-25T02:00:28.000Z",
                 "offset": 12,
                 "city": "queenstown",
@@ -25361,7 +25331,7 @@
                 "iso": 32
               },
               {
-                "file_name": "IMG_4694.jpeg",
+                "file_name": "IMG_4694.jpg",
                 "date": "2023-04-25T02:01:35.000Z",
                 "offset": 12,
                 "city": "queenstown",
@@ -25374,7 +25344,7 @@
                 "iso": 32
               },
               {
-                "file_name": "IMG_4697.jpeg",
+                "file_name": "IMG_4697.jpg",
                 "date": "2023-04-25T02:04:21.000Z",
                 "offset": 12,
                 "city": "queenstown",
@@ -25388,7 +25358,7 @@
                 "iso": 32
               },
               {
-                "file_name": "IMG_4701.jpeg",
+                "file_name": "IMG_4701.jpg",
                 "date": "2023-04-25T02:05:39.000Z",
                 "offset": 12,
                 "city": "queenstown",
@@ -25402,7 +25372,7 @@
                 "iso": 32
               },
               {
-                "file_name": "IMG_4703.jpeg",
+                "file_name": "IMG_4703.jpg",
                 "date": "2023-04-25T02:07:22.000Z",
                 "offset": 12,
                 "city": "queenstown",
@@ -25416,7 +25386,7 @@
                 "iso": 32
               },
               {
-                "file_name": "IMG_4705.jpeg",
+                "file_name": "IMG_4705.jpg",
                 "date": "2023-04-25T02:10:55.000Z",
                 "offset": 12,
                 "city": "queenstown",
@@ -25430,7 +25400,7 @@
                 "iso": 32
               },
               {
-                "file_name": "IMG_4706.jpeg",
+                "file_name": "IMG_4706.jpg",
                 "date": "2023-04-25T02:13:08.000Z",
                 "offset": 12,
                 "city": "queenstown",
@@ -25443,7 +25413,7 @@
                 "iso": 32
               },
               {
-                "file_name": "IMG_4710.jpeg",
+                "file_name": "IMG_4710.jpg",
                 "date": "2023-04-25T02:19:42.000Z",
                 "offset": 12,
                 "city": "queenstown",
@@ -25456,7 +25426,7 @@
                 "iso": 64
               },
               {
-                "file_name": "IMG_4712.jpeg",
+                "file_name": "IMG_4712.jpg",
                 "date": "2023-04-25T02:26:47.000Z",
                 "offset": 12,
                 "city": "queenstown",
@@ -25469,7 +25439,7 @@
                 "iso": 50
               },
               {
-                "file_name": "IMG_4715.jpeg",
+                "file_name": "IMG_4715.jpg",
                 "date": "2023-04-25T06:33:54.000Z",
                 "offset": 12,
                 "city": "queenstown",
@@ -25483,7 +25453,7 @@
                 "iso": 500
               },
               {
-                "file_name": "IMG_4716.jpeg",
+                "file_name": "IMG_4716.jpg",
                 "date": "2023-04-25T08:00:19.000Z",
                 "offset": 12,
                 "city": "queenstown",
@@ -25498,7 +25468,7 @@
                 "iso": 500
               },
               {
-                "file_name": "IMG_4756.jpeg",
+                "file_name": "IMG_4756.jpg",
                 "date": "2023-04-27T23:55:19.000Z",
                 "offset": 12,
                 "city": "queenstown",
@@ -25512,7 +25482,7 @@
                 "iso": 32
               },
               {
-                "file_name": "IMG_4758.jpeg",
+                "file_name": "IMG_4758.jpg",
                 "date": "2023-04-27T23:57:00.000Z",
                 "offset": 12,
                 "city": "queenstown",
@@ -25526,7 +25496,7 @@
                 "iso": 32
               },
               {
-                "file_name": "IMG_4776.jpeg",
+                "file_name": "IMG_4776.jpg",
                 "date": "2023-04-28T21:47:12.000Z",
                 "offset": 12,
                 "city": "queenstown",
@@ -25540,7 +25510,7 @@
                 "iso": 32
               },
               {
-                "file_name": "IMG_4779.jpeg",
+                "file_name": "IMG_4779.jpg",
                 "date": "2023-04-28T21:48:53.000Z",
                 "offset": 12,
                 "city": "queenstown",
@@ -25554,7 +25524,7 @@
                 "iso": 32
               },
               {
-                "file_name": "IMG_4780.jpeg",
+                "file_name": "IMG_4780.jpg",
                 "date": "2023-04-28T21:55:06.000Z",
                 "offset": 12,
                 "city": "queenstown",
@@ -25568,7 +25538,7 @@
                 "iso": 32
               },
               {
-                "file_name": "IMG_4827.jpeg",
+                "file_name": "IMG_4827.jpg",
                 "date": "2023-05-02T06:19:01.000Z",
                 "offset": 12,
                 "city": "queenstown",
@@ -25583,7 +25553,7 @@
                 "iso": 500
               },
               {
-                "file_name": "IMG_4828.jpeg",
+                "file_name": "IMG_4828.jpg",
                 "date": "2023-05-02T06:24:04.000Z",
                 "offset": 12,
                 "city": "queenstown",
@@ -25597,7 +25567,7 @@
                 "iso": 320
               },
               {
-                "file_name": "IMG_4831.jpeg",
+                "file_name": "IMG_4831.jpg",
                 "date": "2023-05-02T06:26:50.000Z",
                 "offset": 12,
                 "city": "queenstown",
@@ -25612,7 +25582,7 @@
                 "iso": 200
               },
               {
-                "file_name": "IMG_4834.jpeg",
+                "file_name": "IMG_4834.jpg",
                 "date": "2023-05-02T20:25:07.000Z",
                 "offset": 12,
                 "city": "queenstown",
@@ -25626,7 +25596,7 @@
                 "iso": 80
               },
               {
-                "file_name": "IMG_4835.jpeg",
+                "file_name": "IMG_4835.jpg",
                 "date": "2023-05-02T21:10:09.000Z",
                 "offset": 12,
                 "city": "queenstown",
@@ -25641,7 +25611,7 @@
                 "iso": 40
               },
               {
-                "file_name": "IMG_4839.jpeg",
+                "file_name": "IMG_4839.jpg",
                 "date": "2023-05-02T22:25:00.000Z",
                 "offset": 12,
                 "city": "queenstown",
