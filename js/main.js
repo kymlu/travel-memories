@@ -1499,7 +1499,7 @@ function hideLoader() {
 }
 
 function filterCountryData() {
-	if (allData != null) {
+	if (allData != null && selectedCountry != null) {
 		data = allData.find(country => {return country.id == selectedCountry;})
 		data.unofficial_regions.forEach(uRgn => {
 			uRgn.official_regions.forEach(oRgn => {
@@ -1514,7 +1514,7 @@ function filterCountryData() {
 		document.getElementById("map-instructions").innerHTML = getBilingualText(
 			"Select a " + data.official_region_name_english + " to see pictures from that location.", 
 			data.official_region_name_japanese + "を選択して、その地域の写真を表示する。");
-		document.getElementById("o-rgn-title-btn").title = getBilingualText("Change " + data.official_region_name, data.official_region_name_japanese + "を切り替える");
+		document.getElementById("o-rgn-title-btn").title = getBilingualText("Change " + data.official_region_name_english, data.official_region_name_japanese + "を切り替える");
 		document.getElementById("info-btn").title = getBilingualText("Toggle "  + data.official_region_name + " info", data.official_region_name_japanese + "の情報をトグル");
 		document.getElementById("description-title").innerHTML = getBilingualText("About", data.official_region_name_japanese + "について");
 
