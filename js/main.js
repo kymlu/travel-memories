@@ -287,6 +287,8 @@ function createRgnList() {
 	const oRgnDrop = document.createElement("div");
 	oRgnDrop.classList.add("o-rgn-txt", "regular-text");
 
+	const visitedTitle = getBilingualText("See images from this " + data.official_region_name, "この地域の写真を表示する");
+
 	// Iterate each unofficial and official region, sort by visited/not visited
 	data.unofficial_regions.forEach(uRgn => {
 		const newURgn = uRgnGroup.cloneNode();
@@ -305,10 +307,11 @@ function createRgnList() {
 			var ddORgn = oRgnDrop.cloneNode();
 			ddORgn.innerHTML = getBilingualText(oRgn.english_name, oRgn.japanese_name);
 			ddORgn.id = oRgn.id + "-dropdown";
-			ddORgn.title = getBilingualText("See images from this " + data.official_region_name, "この地域の写真を表示する");
+			ddORgn.title = visitedTitle;
 			if (oRgn.visited) {
 				const oRgnNode = visitedORegion.cloneNode();
 				oRgnNode.innerHTML = getBilingualText(oRgn.english_name, oRgn.japanese_name);
+				oRgnNode.title = visitedTitle;
 				oRgnNode.addEventListener("click", function () {
 					selectPref(oRgn);
 				}, false);
@@ -355,6 +358,8 @@ function showPrefDropdown() {
 
 // Map
 function colourMap() {
+	if(document.getElementById("country-map").data == "") return;
+
 	const svgObj = document.getElementById("country-map");
 	const svgDoc = svgObj.contentDocument;
 	const oRgnList = data.unofficial_regions.flatMap(uRgn => uRgn.official_regions);
@@ -480,7 +485,7 @@ function lazyLoadPolaroid(target) {
 				img.setAttribute("src", src);
 				setTimeout(() => {
 					addRemoveTransparent([thisPolaroid], false);
-				}, 50);
+				}, 100);
 				observer.disconnect();
 			}
 		});
@@ -1256,10 +1261,10 @@ function scrollORegionInfo() {
 
 // Main pages and setup
 function openGallery() {
+	hideLoader();
 	scrollToTop(false);
 	addRemoveTransparent("map-page", false);
 	addRemoveNoDisplay("to-top-btn", false);
-	hideLoader();
 }
 
 function changeGalleryVisibility(isVisible) {
@@ -1294,8 +1299,7 @@ function changeGalleryVisibility(isVisible) {
 
 	isORegionInfoVisible = isGalleryVisible;
 	if (!isGalleryVisible) {
-		addRemoveTransparent("map-page", true);
-		openLoader();
+	openLoader();
 		setTimeout(() => {
 			createMap();
 			setTimeout(() => {
@@ -1314,8 +1318,7 @@ function selectCountry(country, countryColor){
 	var temp = getComputedStyle(r).getPropertyValue("--main-color").split(", ");
 	appColor = "rgb("+ temp [0] +", "+ temp [1] +", "+ temp [2] +")";
 	setTimeout(() => {
-		hideLoader();
-		openGallery(true);
+		openGallery();
 	}, 2000);
 }
 
@@ -1482,8 +1485,8 @@ function openLoader() {
 	addRemoveTransparent("loader", false);
 	for (let i = 1; i <= 8; i++) {
 		document.getElementById("load" + i).style.animationIterationCount = "infinite";
+		addRemoveNoDisplay("load" + i, false);
 	}
-	addRemoveTransparent("map-page", true);
 	
 	setTimeout(() => {
 		addRemoveNoDisplay("start-screen", true);
@@ -1529,13 +1532,20 @@ function stopLoader(){
 	setTimeout(() => {
 		var iterationCount = Math.ceil((new Date() - now) / 1000 / 2);
 		for (let i = 1; i <= 8; i++) {
-			document.getElementById("load" + i).style.animationIterationCount = iterationCount - (i == 1 ? 1 : 0);
+			document.getElementById("load" + i).style.animationIterationCount = iterationCount;
 		}
-		document.getElementById("load8").addEventListener("animationend", showStartScreen);
 	}, 100);
 }
 
+function showFirstStartScreen(){
+	document.getElementById("load8").addEventListener("animationend", showStartScreen);
+	stopLoader();
+}
+
 function showStartScreen(){
+	addRemoveNoDisplay("loader", true);
+	selectedCountry = null;
+	selectedORegion = null;
 	addRemoveTransparent("map-page", true);
 	setTimeout(() => {
 		addRemoveNoDisplay("map-page", true);		
@@ -1561,7 +1571,7 @@ function fetchData() {
 			console.error(error);
 		}).then(() => {
 			if (!hasError && allData != null) {
-				stopLoader();
+				showFirstStartScreen();
 			}
 		});
 }

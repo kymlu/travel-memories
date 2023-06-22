@@ -19878,22 +19878,6 @@
                 "focal_length": 125
               },
               {
-                "file_name": "IMG_3939.jpg",
-                "date": "2023-04-10T00:31:23.000Z",
-                "offset": 8,
-                "city": "taipei",
-                "location_english": "Chiayi Station",
-                "location_chinese": "\u5609\u7FA9\u706B\u8ECA\u7AD9",
-                "description_english": "Sleepy bear conductor",
-                "tags": ["town", "art"],
-                "camera_model": "iPhone 12 mini",
-                "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-                "exposure": "1/1147",
-                "f_stop": 1.6,
-                "iso": "4.2 mm",
-                "focal_length": 32
-              },
-              {
                 "file_name": "IMG_3954.jpg",
                 "date": "2023-04-10T03:55:04.000Z",
                 "offset": 8,
@@ -22446,21 +22430,6 @@
                 "f_stop": 3.5,
                 "iso": "18.0 mm",
                 "focal_length": 400
-              },
-              {
-                "file_name": "IMG_3850.jpg",
-                "date": "2023-04-09T05:31:19.000Z",
-                "offset": 8,
-                "city": "zhuqi",
-                "description_english": "Limited time sculpture exhibition",
-                "description_japanese": "\u9650\u5B9A\u9285\u50CF\u306E\u5C55\u793A\u4F1A",
-                "tags": ["attractions", "art"],
-                "camera_model": "iPhone 12 mini",
-                "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-                "exposure": "1/120",
-                "f_stop": 1.6,
-                "iso": "4.2 mm",
-                "focal_length": 64
               }
             ]
           },
@@ -22534,6 +22503,22 @@
             "description_japanese": "",
             "description_chinese": "",
             "image_list": [
+              {
+                "file_name": "IMG_3939.jpg",
+                "date": "2023-04-10T00:31:23.000Z",
+                "offset": 8,
+                "city": "chiayi",
+                "location_english": "Chiayi Station",
+                "location_chinese": "\u5609\u7FA9\u706B\u8ECA\u7AD9",
+                "description_english": "Sleepy bear conductor",
+                "tags": ["town", "art"],
+                "camera_model": "iPhone 12 mini",
+                "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
+                "exposure": "1/1147",
+                "f_stop": 1.6,
+                "iso": "4.2 mm",
+                "focal_length": 32
+              },
               {
                 "file_name": "IMG_3778.jpg",
                 "date": "2023-04-08T05:35:54.000Z",
@@ -22740,6 +22725,21 @@
                 "f_stop": 1.6,
                 "iso": "4.2 mm",
                 "focal_length": 200
+              },
+              {
+                "file_name": "IMG_3850.jpg",
+                "date": "2023-04-09T05:31:19.000Z",
+                "offset": 8,
+                "city": "chiayi",
+                "description_english": "Limited time sculpture exhibition",
+                "description_japanese": "\u9650\u5B9A\u9285\u50CF\u306E\u5C55\u793A\u4F1A",
+                "tags": ["attractions", "art"],
+                "camera_model": "iPhone 12 mini",
+                "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
+                "exposure": "1/120",
+                "f_stop": 1.6,
+                "iso": "4.2 mm",
+                "focal_length": 64
               },
               {
                 "file_name": "IMG_4987.jpg",

@@ -295,6 +295,10 @@ h1 {
   .u-rgn-group {
     text-align: center;
   }
+
+  .u-rgn-group.none {
+    gap: 10px;
+  }
 }
 
 .u-rgn-text {
@@ -823,7 +827,8 @@ input {
 @media only screen and (orientation: portrait) {
   .start-screen {
     flex-direction: column;
-    padding-top: 30px;
+    padding: 30px 0px;
+    gap: 15px;
   }
 }
 
