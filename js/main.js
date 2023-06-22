@@ -115,7 +115,7 @@ const tags = [
 let polaroid, polaroidImgFrame, polaroidImg, polaroidCaption, polaroidCaptionText, polaroidCaptionContainer, polaroidDate, singleDate;
 let filterTagBtn;
 
-let appColor = "#be0029";
+//let appColor = "#be0029";
 
 // General
 function isPortraitMode(){
@@ -304,7 +304,7 @@ function createRgnList() {
 		uRgn.official_regions.forEach(oRgn => {
 			var ddORgn = oRgnDrop.cloneNode();
 			ddORgn.innerHTML = getBilingualText(oRgn.english_name, oRgn.japanese_name);
-			ddORgn.id = oRgn.english_name + "-dropdown";
+			ddORgn.id = oRgn.id + "-dropdown";
 			ddORgn.title = getBilingualText("See images from this " + data.official_region_name, "この地域の写真を表示する");
 			if (oRgn.visited) {
 				const oRgnNode = visitedORegion.cloneNode();
@@ -337,7 +337,7 @@ function togglePrefDropdown() {
 	spinArrow();
 	if(isNewORegion){
 		isNewORegion = false;
-		document.getElementById(selectedORegion.english_name + "-dropdown").scrollIntoView({ behavior: "smooth", block: "center" });
+		document.getElementById(selectedORegion.id + "-dropdown").scrollIntoView({ behavior: "smooth", block: "center" });
 	}
 }
 
@@ -442,7 +442,7 @@ function filterMiniMap() {
 
 	oRgnList.forEach(oRgn => {
 		const oRgnImg = svgDoc.getElementById(oRgn.id + "-img");
-		if (oRgn.english_name != selectedORegion.english_name) {
+		if (oRgn.id != selectedORegion.id) {
 			oRgnImg.setAttribute("fill", "none");
 			oRgnImg.setAttribute("stroke", "none");
 		} else {
@@ -557,7 +557,7 @@ function createGallery() {
 				}
 			}
 
-			polImg.setAttribute("img-src", img.link ?? "img/" + selectedCountry + "/" + selectedORegion.english_name.toLowerCase() + "/" + img.file_name);
+			polImg.setAttribute("img-src", img.link ?? "img/" + selectedCountry + "/" + selectedORegion.id + "/" + img.file_name);
 			lazyLoadPolaroid(pol);
 
 			// add to screen
@@ -582,9 +582,9 @@ function selectPref(newORegion) {
 	isNewORegion = true;
 
 	if (selectedORegion) {
-		document.getElementById(selectedORegion.english_name + "-dropdown").classList.remove("active");
+		document.getElementById(selectedORegion.id + "-dropdown").classList.remove("active");
 	}
-	document.getElementById(newORegion.english_name + "-dropdown").classList.add("active");
+	document.getElementById(newORegion.id + "-dropdown").classList.add("active");
 
 	selectedORegion = newORegion;
 	document.getElementById("o-rgn-name-arrow").classList.add("arrow-down");
@@ -955,7 +955,7 @@ function setFullscreenPicture(isForward) {
 	document.getElementById("search-jp").removeEventListener("click", searchJapanese);
 	document.getElementById("img-tags").replaceChildren();
 
-	var src = selectedPic.link ?? "img/" + selectedCountry + "/" + selectedORegion.english_name.toLowerCase() + "/" + selectedPic.file_name;
+	var src = selectedPic.link ?? "img/" + selectedCountry + "/" + selectedORegion.id + "/" + selectedPic.file_name;
 
 	if (isNewFullscreenInstance || (new Date() - lastSwipeTime) < 300) {
 		document.getElementById("fullscreen-pic").src = src;
@@ -1307,13 +1307,16 @@ function changeGalleryVisibility(isVisible) {
 
 function selectCountry(country, countryColor){
 	openLoader();
+	addRemoveNoDisplay("map-page", false);
 	selectedCountry = country;
 	filterCountryData();
 	r.style.setProperty('--main-color', getComputedStyle(r).getPropertyValue(countryColor));
-	hideLoader();
+	var temp = getComputedStyle(r).getPropertyValue("--main-color").split(", ");
+	appColor = "rgb("+ temp [0] +", "+ temp [1] +", "+ temp [2] +")";
 	setTimeout(() => {
+		hideLoader();
 		openGallery(true);
-	}, 50);
+	}, 2000);
 }
 
 function setupSite() {
@@ -1361,6 +1364,17 @@ function setupSite() {
 			filterTags.appendChild(tempBtn);
 	});
 
+	Array.from(document.getElementsByClassName("loader-dot")).forEach(dot => {
+		dot.addEventListener("animationend", function() {
+			addRemoveNoDisplay([dot], true);
+		});
+	});
+
+	document.getElementById("load8").addEventListener("animationend", function() {
+		addRemoveNoDisplay(document.getElementById("loader"), true);
+		addRemoveNoDisplay(Array.from(document.getElementsByClassName("loader-dot")).flatMap(dot => dot.id), false);
+	});
+
 	document.getElementById("start-btn-jp").addEventListener("click", function () {
 		selectCountry(japan, '--jp-color');
 	});
@@ -1398,6 +1412,7 @@ function setupSite() {
 	document.getElementById("pic-info-close-btn").addEventListener("click", function () { hidePicInfo(); });
 	document.getElementById("popup-bg").addEventListener("click", function () { closeInfoPopup(true); });
 	document.getElementById("creator-btn").addEventListener("click", openInfoPopup);
+	document.getElementById("globe-btn").addEventListener("click", function () { showStartScreen(); });
 	document.getElementById("map-btn").addEventListener("click", function () { changeGalleryVisibility(false); });
 	document.getElementById("info-btn").addEventListener("click", function () { changeORegionInfoVisibility(undefined, true); });
 	document.getElementById("fullscreen-bg").addEventListener("click", function () { closeFullscreen(true) });
@@ -1465,7 +1480,7 @@ function openLoader() {
 	addRemoveTransparent("start-screen", true);
 	addRemoveNoDisplay("loader", false);
 	addRemoveTransparent("loader", false);
-	for (let i = 1; i <= 9; i++) {
+	for (let i = 1; i <= 8; i++) {
 		document.getElementById("load" + i).style.animationIterationCount = "infinite";
 	}
 	addRemoveTransparent("map-page", true);
@@ -1513,16 +1528,23 @@ function filterCountryData() {
 function stopLoader(){
 	setTimeout(() => {
 		var iterationCount = Math.ceil((new Date() - now) / 1000 / 2);
-		for (let i = 1; i <= 9; i++) {
+		for (let i = 1; i <= 8; i++) {
 			document.getElementById("load" + i).style.animationIterationCount = iterationCount - (i == 1 ? 1 : 0);
 		}
-		document.getElementById("load8").addEventListener("animationend", function () {
-			addRemoveNoDisplay("start-screen", false);
-			setTimeout(() => {
-				addRemoveTransparent("start-screen", false);
-			}, 10);
-		});
+		document.getElementById("load8").addEventListener("animationend", showStartScreen);
 	}, 100);
+}
+
+function showStartScreen(){
+	addRemoveTransparent("map-page", true);
+	setTimeout(() => {
+		addRemoveNoDisplay("map-page", true);		
+	}, defaultTimeout);
+	document.getElementById("load8").removeEventListener("animationend", showStartScreen);
+	addRemoveNoDisplay("start-screen", false);
+	setTimeout(() => {
+		addRemoveTransparent("start-screen", false);
+	}, 10);
 }
 
 function fetchData() {
@@ -1546,7 +1568,7 @@ function fetchData() {
 
 function retry() {
 	addRemoveNoDisplay("error-btn", true);
-	for (let i = 1; i <= 9; i++) {
+	for (let i = 1; i <= 8; i++) {
 		document.getElementById("load" + i).style.animationPlayState = "running";
 	}
 	fetchData();
@@ -1556,7 +1578,7 @@ function showDataLoadError() {
 	setTimeout(() => {
 		addRemoveNoDisplay("error-btn", false);
 		addRemoveTransparent("error-btn", false);
-		for (let i = 1; i <= 9; i++) {
+		for (let i = 1; i <= 8; i++) {
 			document.getElementById("load" + i).style.animationPlayState = "paused";
 		}
 	}, defaultTimeout);

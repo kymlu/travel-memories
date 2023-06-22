@@ -19827,7 +19827,7 @@
     "english_name": "Taiwan",
     "japanese_name": "台湾",
     "show_unofficial_regions": false,
-    "official_region_name": "region",
+    "official_region_name_english": "region",
     "official_region_name_japanese": "地域",
     "unofficial_regions": [
       {
@@ -19838,7 +19838,7 @@
             "japanese_name": "新北市",
             "chinese_name": "新北市",
             "visited": false,
-            "viewbox": "862 1431 92 92"
+            "viewbox": "0 0 3168 3168"
           },
           {
             "id": "taipei",
@@ -19846,7 +19846,7 @@
             "japanese_name": "台北市",
             "chinese_name": "臺北市",
             "visited": true,
-            "viewbox": "862 1431 92 92",
+            "viewbox": "1985 225 180 180",
             "areas": [
               {
                 "id": "taipei",
@@ -20470,7 +20470,7 @@
             "japanese_name": "桃園市",
             "chinese_name": "桃園市",
             "visited": true,
-            "viewbox": "862 1431 92 92",
+            "viewbox": "1560 260 475 475",
             "areas": [
               {
                 "id": "airport",
@@ -20524,7 +20524,7 @@
             "japanese_name": "台中市",
             "chinese_name": "臺中市",
             "visited": false,
-            "viewbox": "862 1431 92 92"
+            "viewbox": "0 0 3168 3168"
           },
           {
             "id": "tainan",
@@ -20532,7 +20532,7 @@
             "japanese_name": "台南市",
             "chinese_name": "臺南市",
             "visited": true,
-            "viewbox": "862 1431 92 92",
+            "viewbox": "850 1735 525 525",
             "areas": [
               {
                 "id": "tainan",
@@ -21387,7 +21387,7 @@
             "japanese_name": "高雄市",
             "chinese_name": "高雄市",
             "visited": true,
-            "viewbox": "862 1431 92 92",
+            "viewbox": "905 1683 920 920",
             "areas": [
               {
                 "id": "kaohsiung",
@@ -22188,7 +22188,7 @@
             "japanese_name": "新竹市",
             "chinese_name": "宜蘭縣",
             "visited": false,
-            "viewbox": "862 1431 92 92"
+            "viewbox": "0 0 3168 3168"
           },
           {
             "id": "hsinchucounty",
@@ -22196,7 +22196,7 @@
             "japanese_name": "新竹県",
             "chinese_name": "新竹縣",
             "visited": false,
-            "viewbox": "862 1431 92 92"
+            "viewbox": "0 0 3168 3168"
           },
           {
             "id": "miaoli",
@@ -22204,7 +22204,7 @@
             "japanese_name": "苗栗県",
             "chinese_name": "苗栗縣",
             "visited": false,
-            "viewbox": "862 1431 92 92"
+            "viewbox": "0 0 3168 3168"
           },
           {
             "id": "changhua",
@@ -22212,7 +22212,7 @@
             "japanese_name": "彰化県",
             "chinese_name": "彰化縣",
             "visited": false,
-            "viewbox": "862 1431 92 92"
+            "viewbox": "0 0 3168 3168"
           },
           {
             "id": "nantou",
@@ -22220,7 +22220,7 @@
             "japanese_name": "南投県",
             "chinese_name": "南投縣",
             "visited": false,
-            "viewbox": "862 1431 92 92"
+            "viewbox": "0 0 3168 3168"
           },
           {
             "id": "yunlin",
@@ -22228,252 +22228,30 @@
             "japanese_name": "雲林県",
             "chinese_name": "雲林縣",
             "visited": false,
-            "viewbox": "862 1431 92 92"
+            "viewbox": "0 0 3168 3168"
           },
           {
             "id": "chiayicounty",
             "english_name": "Chiayi County",
             "japanese_name": "嘉義県",
             "chinese_name": "嘉義縣",
-            "visited": false,
-            "viewbox": "862 1431 92 92"
-          },
-          {
-            "id": "pingtung",
-            "english_name": "Pingtung County",
-            "japanese_name": "屏東県",
-            "chinese_name": "屏東縣",
-            "visited": false,
-            "viewbox": "862 1431 92 92"
-          },
-          {
-            "id": "taitung",
-            "english_name": "Taitung County",
-            "japanese_name": "台東県",
-            "chinese_name": "臺東縣",
-            "visited": false,
-            "viewbox": "862 1431 92 92"
-          },
-          {
-            "id": "hualien",
-            "english_name": "Hualien County",
-            "japanese_name": "花蓮県",
-            "chinese_name": "花蓮縣",
-            "visited": false,
-            "viewbox": "862 1431 92 92"
-          },
-          {
-            "id": "penghu",
-            "english_name": "Penghu County",
-            "japanese_name": "澎湖県",
-            "chinese_name": "澎湖縣",
-            "visited": false,
-            "viewbox": "862 1431 92 92"
-          },
-          {
-            "id": "keelung",
-            "english_name": "Keelung City",
-            "japanese_name": "基隆市",
-            "chinese_name": "基隆市"
-          },
-          {
-            "id": "hsinchu",
-            "english_name": "Hsinchu City",
-            "japanese_name": "新竹市",
-            "chinese_name": "新竹市",
-            "visited": false,
-            "viewbox": "862 1431 92 92"
-          },
-          {
-            "id": "chiayi",
-            "english_name": "Chiayi City",
-            "japanese_name": "嘉義市",
-            "chinese_name": "嘉義市",
             "visited": true,
-            "viewbox": "862 1431 92 92",
+            "viewbox": "880 1390 725 725",
             "areas": [
               {
                 "id": "zhuqi",
                 "english_name": "Zhuqi",
                 "japanese_name": "竹崎郷",
                 "chinese_name": "竹崎鄉"
-              },
-              {
-                "id": "chiayi",
-                "english_name": "Chiayi",
-                "japanese_name": "嘉義市",
-                "chinese_name": "嘉義市"
               }
             ],
-            "dates_english": "April 8-10, 2023",
-            "dates_japanese": "2023年4月8～10日",
-            "dates_chinese": "2023年4月8～10日",
-            "description_english": "The first thing I noticed when arriving was the lack of sidewalks in this town.",
+            "dates_english": "April 9, 2023",
+            "dates_japanese": "2023年4月9日",
+            "dates_chinese": "2023年4月9日",
+            "description_english": "",
             "description_japanese": "",
             "description_chinese": "",
             "image_list": [
-              {
-                "file_name": "IMG_3778.jpg",
-                "date": "2023-04-08T05:35:54.000Z",
-                "offset": 8,
-                "city": "chiayi",
-                "location_english": "Chiayi Station",
-                "location_chinese": "\u5609\u7FA9\u706B\u8ECA\u7AD9",
-                "description_english": "Pineapple land",
-                "tags": ["town"],
-                "camera_model": "iPhone 12 mini",
-                "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-                "exposure": "1/2451",
-                "f_stop": 1.6,
-                "iso": "4.2 mm",
-                "focal_length": 32
-              },
-              {
-                "file_name": "IMG_3784.jpg",
-                "date": "2023-04-08T06:12:11.000Z",
-                "offset": 8,
-                "city": "chiayi",
-                "location_english": "Oinn Hotel & Hostel Chiayi",
-                "location_chinese": "\u6587\u5316\u8F15\u65C5",
-                "description_english": "I think I'm allowed in?",
-                "description_japanese": "\u5165\u308C\u308B\u3068\u601D\u3046\u3002",
-                "tags": ["town"],
-                "camera_model": "iPhone 12 mini",
-                "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-                "exposure": "1/384",
-                "f_stop": 1.6,
-                "iso": "4.2 mm",
-                "focal_length": 32
-              },
-              {
-                "file_name": "IMG_3790.jpg",
-                "date": "2023-04-08T06:40:52.000Z",
-                "offset": 8,
-                "city": "chiayi",
-                "location_english": "Hinoki Village",
-                "location_chinese": "\u6A9C\u610F\u68EE\u6D3B\u6751",
-                "description_english": "Honk",
-                "description_japanese": "\u30AC\u30FC\u30AC\u30FC",
-                "tags": ["town"],
-                "camera_model": "iPhone 12 mini",
-                "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-                "exposure": "1/1715",
-                "f_stop": 1.6,
-                "iso": "4.2 mm",
-                "focal_length": 32
-              },
-              {
-                "file_name": "IMG_3796.jpg",
-                "date": "2023-04-08T07:04:04.000Z",
-                "offset": 8,
-                "city": "chiayi",
-                "location_english": "Hinoki Village",
-                "location_chinese": "\u6A9C\u610F\u68EE\u6D3B\u6751",
-                "description_english": "Small wooden sculpture gallery. Talked at least with the employee in a mix of Mandarin, English, and Japanese. My brain hurt afterwards.",
-                "tags": ["art", "attractions"],
-                "camera_model": "iPhone 12 mini",
-                "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-                "exposure": "1/60",
-                "f_stop": 1.6,
-                "iso": "4.2 mm",
-                "focal_length": 160
-              },
-              {
-                "file_name": "IMG_3800.jpg",
-                "date": "2023-04-08T07:48:07.000Z",
-                "offset": 8,
-                "city": "chiayi",
-                "location_english": "Hinoki Village",
-                "location_chinese": "\u6A9C\u610F\u68EE\u6D3B\u6751",
-                "description_english": "What is this, Kanazawa?",
-                "description_japanese": "\u91D1\u6CA2\uFF1F",
-                "tags": ["attractions"],
-                "camera_model": "iPhone 12 mini",
-                "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-                "exposure": "1/2817",
-                "f_stop": 1.6,
-                "iso": "4.2 mm",
-                "focal_length": 32
-              },
-              {
-                "file_name": "IMG_3803.jpg",
-                "date": "2023-04-08T07:50:50.000Z",
-                "offset": 8,
-                "city": "chiayi",
-                "description_english": "Sleepy penguin",
-                "description_japanese": "\u7720\u305F\u3044",
-                "tags": ["attractions", "art"],
-                "camera_model": "iPhone 12 mini",
-                "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-                "exposure": "1/535",
-                "f_stop": 1.6,
-                "iso": "4.2 mm",
-                "focal_length": 32
-              },
-              {
-                "file_name": "IMG_3815.jpg",
-                "date": "2023-04-08T10:58:46.000Z",
-                "offset": 8,
-                "city": "chiayi",
-                "location_english": "Wenhua Road Night Market",
-                "location_chinese": "\u6587\u5316\u8DEF\u89C0\u5149\u591C\u5E02",
-                "description_english": "Sweet potato balls coloured green and yellow for the Buzz Lightyear aesthetic",
-                "tags": ["food"],
-                "camera_model": "iPhone 12 mini",
-                "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-                "exposure": "1/120",
-                "f_stop": 1.6,
-                "iso": "4.2 mm",
-                "focal_length": 125
-              },
-              {
-                "file_name": "IMG_3816.jpg",
-                "date": "2023-04-08T11:13:19.000Z",
-                "offset": 8,
-                "city": "chiayi",
-                "location_english": "Wenhua Road Night Market",
-                "location_chinese": "\u6587\u5316\u8DEF\u89C0\u5149\u591C\u5E02",
-                "description_english": "Red bean mochi soy milk",
-                "tags": ["food"],
-                "camera_model": "iPhone 12 mini",
-                "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-                "exposure": "1/60",
-                "f_stop": 1.6,
-                "iso": "4.2 mm",
-                "focal_length": 400
-              },
-              {
-                "file_name": "IMG_3817.jpg",
-                "date": "2023-04-08T11:37:36.000Z",
-                "offset": 8,
-                "city": "chiayi",
-                "location_english": "Wenhua Road Night Market",
-                "location_chinese": "\u6587\u5316\u8DEF\u89C0\u5149\u591C\u5E02",
-                "description_english": "Complementary pineapple cake. I wouldn't mind buying some but they only came in packs of 20 or more and I do not have that space in my luggage. The staff learned I could speak Japanese and tried flexing their skills by telling me the only word they knew was oishii (tasty). It was a cute interaction.",
-                "tags": ["food"],
-                "camera_model": "iPhone 12 mini",
-                "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-                "exposure": "1/120",
-                "f_stop": 1.6,
-                "iso": "4.2 mm",
-                "focal_length": 100
-              },
-              {
-                "file_name": "IMG_3825.jpg",
-                "date": "2023-04-09T00:12:58.000Z",
-                "offset": 8,
-                "city": "chiayi",
-                "location_english": "Chiayi Station",
-                "location_chinese": "\u5609\u7FA9\u706B\u8ECA\u7AD9",
-                "description_english": "Sleeping polar bear",
-                "tags": ["town", "art"],
-                "camera_model": "iPhone 12 mini",
-                "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
-                "exposure": "1/3401",
-                "f_stop": 1.6,
-                "iso": "4.2 mm",
-                "focal_length": 32
-              },
               {
                 "file_name": "IMG_3829.jpg",
                 "date": "2023-04-09T01:36:01.000Z",
@@ -22683,6 +22461,240 @@
                 "f_stop": 1.6,
                 "iso": "4.2 mm",
                 "focal_length": 64
+              }
+            ]
+          },
+          {
+            "id": "pingtung",
+            "english_name": "Pingtung County",
+            "japanese_name": "屏東県",
+            "chinese_name": "屏東縣",
+            "visited": false,
+            "viewbox": "0 0 3168 3168"
+          },
+          {
+            "id": "taitung",
+            "english_name": "Taitung County",
+            "japanese_name": "台東県",
+            "chinese_name": "臺東縣",
+            "visited": false,
+            "viewbox": "0 0 3168 3168"
+          },
+          {
+            "id": "hualien",
+            "english_name": "Hualien County",
+            "japanese_name": "花蓮県",
+            "chinese_name": "花蓮縣",
+            "visited": false,
+            "viewbox": "0 0 3168 3168"
+          },
+          {
+            "id": "penghu",
+            "english_name": "Penghu County",
+            "japanese_name": "澎湖県",
+            "chinese_name": "澎湖縣",
+            "visited": false,
+            "viewbox": "0 0 3168 3168"
+          },
+          {
+            "id": "keelung",
+            "english_name": "Keelung City",
+            "japanese_name": "基隆市",
+            "chinese_name": "基隆市",
+            "visited": false,
+            "viewbox": "0 0 3168 3168"
+          },
+          {
+            "id": "hsinchu",
+            "english_name": "Hsinchu City",
+            "japanese_name": "新竹市",
+            "chinese_name": "新竹市",
+            "visited": false,
+            "viewbox": "0 0 3168 3168"
+          },
+          {
+            "id": "chiayi",
+            "english_name": "Chiayi City",
+            "japanese_name": "嘉義市",
+            "chinese_name": "嘉義市",
+            "visited": true,
+            "viewbox": "1076 1658 108 108",
+            "areas": [
+              {
+                "id": "chiayi",
+                "english_name": "Chiayi",
+                "japanese_name": "嘉義市",
+                "chinese_name": "嘉義市"
+              }
+            ],
+            "dates_english": "April 8-10, 2023",
+            "dates_japanese": "2023年4月8～10日",
+            "dates_chinese": "2023年4月8～10日",
+            "description_english": "The first thing I noticed when arriving was the lack of sidewalks in this town.",
+            "description_japanese": "",
+            "description_chinese": "",
+            "image_list": [
+              {
+                "file_name": "IMG_3778.jpg",
+                "date": "2023-04-08T05:35:54.000Z",
+                "offset": 8,
+                "city": "chiayi",
+                "location_english": "Chiayi Station",
+                "location_chinese": "\u5609\u7FA9\u706B\u8ECA\u7AD9",
+                "description_english": "Pineapple land",
+                "tags": ["town"],
+                "camera_model": "iPhone 12 mini",
+                "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
+                "exposure": "1/2451",
+                "f_stop": 1.6,
+                "iso": "4.2 mm",
+                "focal_length": 32
+              },
+              {
+                "file_name": "IMG_3784.jpg",
+                "date": "2023-04-08T06:12:11.000Z",
+                "offset": 8,
+                "city": "chiayi",
+                "location_english": "Oinn Hotel & Hostel Chiayi",
+                "location_chinese": "\u6587\u5316\u8F15\u65C5",
+                "description_english": "I think I'm allowed in?",
+                "description_japanese": "\u5165\u308C\u308B\u3068\u601D\u3046\u3002",
+                "tags": ["town"],
+                "camera_model": "iPhone 12 mini",
+                "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
+                "exposure": "1/384",
+                "f_stop": 1.6,
+                "iso": "4.2 mm",
+                "focal_length": 32
+              },
+              {
+                "file_name": "IMG_3790.jpg",
+                "date": "2023-04-08T06:40:52.000Z",
+                "offset": 8,
+                "city": "chiayi",
+                "location_english": "Hinoki Village",
+                "location_chinese": "\u6A9C\u610F\u68EE\u6D3B\u6751",
+                "description_english": "Honk",
+                "description_japanese": "\u30AC\u30FC\u30AC\u30FC",
+                "tags": ["town"],
+                "camera_model": "iPhone 12 mini",
+                "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
+                "exposure": "1/1715",
+                "f_stop": 1.6,
+                "iso": "4.2 mm",
+                "focal_length": 32
+              },
+              {
+                "file_name": "IMG_3796.jpg",
+                "date": "2023-04-08T07:04:04.000Z",
+                "offset": 8,
+                "city": "chiayi",
+                "location_english": "Hinoki Village",
+                "location_chinese": "\u6A9C\u610F\u68EE\u6D3B\u6751",
+                "description_english": "Small wooden sculpture gallery. Talked at least with the employee in a mix of Mandarin, English, and Japanese. My brain hurt afterwards.",
+                "tags": ["art", "attractions"],
+                "camera_model": "iPhone 12 mini",
+                "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
+                "exposure": "1/60",
+                "f_stop": 1.6,
+                "iso": "4.2 mm",
+                "focal_length": 160
+              },
+              {
+                "file_name": "IMG_3800.jpg",
+                "date": "2023-04-08T07:48:07.000Z",
+                "offset": 8,
+                "city": "chiayi",
+                "location_english": "Hinoki Village",
+                "location_chinese": "\u6A9C\u610F\u68EE\u6D3B\u6751",
+                "description_english": "What is this, Kanazawa?",
+                "description_japanese": "\u91D1\u6CA2\uFF1F",
+                "tags": ["attractions"],
+                "camera_model": "iPhone 12 mini",
+                "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
+                "exposure": "1/2817",
+                "f_stop": 1.6,
+                "iso": "4.2 mm",
+                "focal_length": 32
+              },
+              {
+                "file_name": "IMG_3803.jpg",
+                "date": "2023-04-08T07:50:50.000Z",
+                "offset": 8,
+                "city": "chiayi",
+                "description_english": "Sleepy penguin",
+                "description_japanese": "\u7720\u305F\u3044",
+                "tags": ["attractions", "art"],
+                "camera_model": "iPhone 12 mini",
+                "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
+                "exposure": "1/535",
+                "f_stop": 1.6,
+                "iso": "4.2 mm",
+                "focal_length": 32
+              },
+              {
+                "file_name": "IMG_3815.jpg",
+                "date": "2023-04-08T10:58:46.000Z",
+                "offset": 8,
+                "city": "chiayi",
+                "location_english": "Wenhua Road Night Market",
+                "location_chinese": "\u6587\u5316\u8DEF\u89C0\u5149\u591C\u5E02",
+                "description_english": "Sweet potato balls coloured green and yellow for the Buzz Lightyear aesthetic",
+                "tags": ["food"],
+                "camera_model": "iPhone 12 mini",
+                "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
+                "exposure": "1/120",
+                "f_stop": 1.6,
+                "iso": "4.2 mm",
+                "focal_length": 125
+              },
+              {
+                "file_name": "IMG_3816.jpg",
+                "date": "2023-04-08T11:13:19.000Z",
+                "offset": 8,
+                "city": "chiayi",
+                "location_english": "Wenhua Road Night Market",
+                "location_chinese": "\u6587\u5316\u8DEF\u89C0\u5149\u591C\u5E02",
+                "description_english": "Red bean mochi soy milk",
+                "tags": ["food"],
+                "camera_model": "iPhone 12 mini",
+                "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
+                "exposure": "1/60",
+                "f_stop": 1.6,
+                "iso": "4.2 mm",
+                "focal_length": 400
+              },
+              {
+                "file_name": "IMG_3817.jpg",
+                "date": "2023-04-08T11:37:36.000Z",
+                "offset": 8,
+                "city": "chiayi",
+                "location_english": "Wenhua Road Night Market",
+                "location_chinese": "\u6587\u5316\u8DEF\u89C0\u5149\u591C\u5E02",
+                "description_english": "Complementary pineapple cake. I wouldn't mind buying some but they only came in packs of 20 or more and I do not have that space in my luggage. The staff learned I could speak Japanese and tried flexing their skills by telling me the only word they knew was oishii (tasty). It was a cute interaction.",
+                "tags": ["food"],
+                "camera_model": "iPhone 12 mini",
+                "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
+                "exposure": "1/120",
+                "f_stop": 1.6,
+                "iso": "4.2 mm",
+                "focal_length": 100
+              },
+              {
+                "file_name": "IMG_3825.jpg",
+                "date": "2023-04-09T00:12:58.000Z",
+                "offset": 8,
+                "city": "chiayi",
+                "location_english": "Chiayi Station",
+                "location_chinese": "\u5609\u7FA9\u706B\u8ECA\u7AD9",
+                "description_english": "Sleeping polar bear",
+                "tags": ["town", "art"],
+                "camera_model": "iPhone 12 mini",
+                "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
+                "exposure": "1/3401",
+                "f_stop": 1.6,
+                "iso": "4.2 mm",
+                "focal_length": 32
               },
               {
                 "file_name": "IMG_3852.jpg",
@@ -22798,7 +22810,7 @@
             "japanese_name": "金門県",
             "chinese_name": "金門縣",
             "visited": false,
-            "viewbox": "862 1431 92 92"
+            "viewbox": "0 0 3168 3168"
           },
           {
             "id": "lienchiang",
@@ -22806,7 +22818,7 @@
             "japanese_name": "馬祖島",
             "chinese_name": "連江縣",
             "visited": false,
-            "viewbox": "862 1431 92 92"
+            "viewbox": "0 0 3168 3168"
           }
         ]
       }
@@ -22817,7 +22829,7 @@
     "english_name": "Australia",
     "japanese_name": "オーストラリア",
     "show_unofficial_regions": false,
-    "official_region_name": "state",
+    "official_region_name_english": "state",
     "official_region_name_japanese": "州",
     "unofficial_regions": [
       {
@@ -22828,7 +22840,7 @@
             "japanese_name": "ニューサウスウェールズ州",
             "chinese_name": "北領地",
             "visited": false,
-            "viewbox": "862 1431 92 92"
+            "viewbox": "0 0 3168 3168"
           },
           {
             "id": "vic",
@@ -22836,7 +22848,7 @@
             "japanese_name": "ビクトリア州",
             "chinese_name": "維多利亞",
             "visited": true,
-            "viewbox": "862 1431 92 92",
+            "viewbox": "2105 2070 605 605",
             "areas": [
               {
                 "id": "melbourne",
@@ -23160,7 +23172,7 @@
             "japanese_name": "クイーンズランド州",
             "chinese_name": "昆士蘭",
             "visited": true,
-            "viewbox": "862 1431 92 92",
+            "viewbox": "1630 170 1700 1700",
             "areas": [
               {
                 "id": "brisbane",
@@ -23976,7 +23988,7 @@
             "japanese_name": "西オーストラリア州",
             "chinese_name": "西澳",
             "visited": false,
-            "viewbox": "862 1431 92 92"
+            "viewbox": "0 0 3168 3168"
           },
           {
             "id": "sa",
@@ -23984,7 +23996,7 @@
             "japanese_name": "南オーストラリア州",
             "chinese_name": "南澳",
             "visited": false,
-            "viewbox": "862 1431 92 92"
+            "viewbox": "0 0 3168 3168"
           },
           {
             "id": "tas",
@@ -23992,7 +24004,7 @@
             "japanese_name": "タスマニア州 ",
             "chinese_name": "塔斯馬尼亞",
             "visited": false,
-            "viewbox": "862 1431 92 92"
+            "viewbox": "0 0 3168 3168"
           },
           {
             "id": "act",
@@ -24000,7 +24012,7 @@
             "japanese_name": "首都特別地域",
             "chinese_name": "其他領土",
             "visited": false,
-            "viewbox": "862 1431 92 92"
+            "viewbox": "0 0 3168 3168"
           },
           {
             "id": "nt",
@@ -24008,7 +24020,7 @@
             "japanese_name": "ノーザンテリトリー",
             "chinese_name": "北領地",
             "visited": false,
-            "viewbox": "862 1431 92 92"
+            "viewbox": "0 0 3168 3168"
           }
         ]
       }
@@ -24019,7 +24031,7 @@
     "english_name": "New Zealand",
     "japanese_name": "ニュージーランド",
     "show_unofficial_regions": true,
-    "official_region_name": "region",
+    "official_region_name_english": "region",
     "official_region_name_japanese": "地方",
     "unofficial_regions": [
       {
@@ -24035,7 +24047,7 @@
             "chinese_name": "北地",
             "maori_name": "Te Tai Tokerau",
             "visited": false,
-            "viewbox": "862 1431 92 92"
+            "viewbox": "0 0 3168 3168"
           },
           {
             "id": "auk",
@@ -24044,7 +24056,7 @@
             "chinese_name": "奧克蘭",
             "maori_name": "Tāmaki-makau-rau",
             "visited": true,
-            "viewbox": "862 1431 92 92",
+            "viewbox": "1805 440 315 315",
             "areas": [
               {
                 "id": "auckland",
@@ -24391,7 +24403,7 @@
             "chinese_name": "懷卡托",
             "maori_name": "Waikato",
             "visited": true,
-            "viewbox": "862 1431 92 92",
+            "viewbox": "1730 526 740 740",
             "areas": [
               {
                 "id": "hamilton",
@@ -24431,7 +24443,7 @@
             "chinese_name": "普倫蒂灣",
             "maori_name": "Te Moana-a-Toi",
             "visited": true,
-            "viewbox": "862 1431 92 92",
+            "viewbox": "2158 730 455 455",
             "areas": [
               {
                 "id": "rotorua",
@@ -24805,7 +24817,7 @@
             "chinese_name": "吉斯伯恩",
             "maori_name": "Te Tairāwhiti",
             "visited": false,
-            "viewbox": "862 1431 92 92"
+            "viewbox": "0 0 3168 3168"
           },
           {
             "id": "hkb",
@@ -24814,7 +24826,7 @@
             "chinese_name": "霍克灣",
             "maori_name": "Te Matau-a-Māui",
             "visited": false,
-            "viewbox": "862 1431 92 92"
+            "viewbox": "0 0 3168 3168"
           },
           {
             "id": "tki",
@@ -24823,7 +24835,7 @@
             "chinese_name": "塔拉那基",
             "maori_name": "Taranaki",
             "visited": false,
-            "viewbox": "862 1431 92 92"
+            "viewbox": "0 0 3168 3168"
           },
           {
             "id": "mwt",
@@ -24832,7 +24844,7 @@
             "chinese_name": "馬納瓦圖-旺加努伊",
             "maori_name": "Manawatū-Whanganui",
             "visited": false,
-            "viewbox": "862 1431 92 92"
+            "viewbox": "0 0 3168 3168"
           },
           {
             "id": "wgn",
@@ -24841,7 +24853,7 @@
             "chinese_name": "惠靈頓",
             "maori_name": "Te Whanga-nui-a-Tara",
             "visited": true,
-            "viewbox": "862 1431 92 92",
+            "viewbox": "1936 1510 335 335",
             "areas": [
               {
                 "id": "wellington",
@@ -25226,7 +25238,7 @@
             "chinese_name": "塔斯曼",
             "maori_name": "Te Tai-o-Aorere",
             "visited": false,
-            "viewbox": "862 1431 92 92"
+            "viewbox": "0 0 3168 3168"
           },
           {
             "id": "nsn",
@@ -25235,7 +25247,7 @@
             "chinese_name": "尼爾遜",
             "maori_name": "Whakatū",
             "visited": false,
-            "viewbox": "862 1431 92 92"
+            "viewbox": "0 0 3168 3168"
           },
           {
             "id": "mbh",
@@ -25244,7 +25256,7 @@
             "chinese_name": "馬爾伯勒",
             "maori_name": "Te Tauihu-o-te-waka",
             "visited": false,
-            "viewbox": "862 1431 92 92"
+            "viewbox": "0 0 3168 3168"
           },
           {
             "id": "wtc",
@@ -25253,7 +25265,7 @@
             "chinese_name": "西岸",
             "maori_name": "Te Tai Poutini",
             "visited": false,
-            "viewbox": "862 1431 92 92"
+            "viewbox": "0 0 3168 3168"
           },
           {
             "id": "can",
@@ -25262,7 +25274,7 @@
             "chinese_name": "坎特伯雷",
             "maori_name": "Waitaha",
             "visited": false,
-            "viewbox": "862 1431 92 92"
+            "viewbox": "0 0 3168 3168"
           },
           {
             "id": "ota",
@@ -25271,7 +25283,7 @@
             "chinese_name": "奧塔哥",
             "maori_name": "Ōtākou",
             "visited": true,
-            "viewbox": "862 1431 92 92",
+            "viewbox": "815 2320 623 623",
             "areas": [
               {
                 "id": "queenstown",
@@ -25633,7 +25645,7 @@
             "chinese_name": "南地",
             "maori_name": "Murihiku",
             "visited": false,
-            "viewbox": "862 1431 92 92"
+            "viewbox": "0 0 3168 3168"
           }
         ]
       }
