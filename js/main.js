@@ -32,7 +32,7 @@ let isNewORegion = true;
 let isFullscreen = false;
 let isNewFullscreenInstance = true;
 let isORegionInfoVisible = false;
-let isPicInfoVisible = true;
+let isPicInfoVisible = false;
 
 let initialX = null;
 let initialY = null;
@@ -231,6 +231,8 @@ function scrollDown(){
 }
 
 function showHideFloatingBtn() {
+	const totop = getBilingualText("Go to top", "トップに移動する");
+	const down = getBilingualText("Scroll down", "下に移動する");
 	var btn = document.getElementById("to-top-btn");
 	if (document.body.scrollTop > threshold) {
 		if(isGalleryVisible && !isToTopVisible){
@@ -238,10 +240,12 @@ function showHideFloatingBtn() {
 			btn.classList.add("arrow-up");
 			addRemoveNoDisplay([btn], false);
 			addRemoveTransparent([btn], false);
+			btn.title = totop;
 			isToTopVisible = true;
 		} else if (!isGalleryVisible){
 			btn.classList.remove("arrow-down");
 			btn.classList.add("arrow-up");
+			btn.title = totop;
 		}
 	} else if (document.body.scrollTop <= threshold) {
 		if (isGalleryVisible && isToTopVisible) {
@@ -253,6 +257,7 @@ function showHideFloatingBtn() {
 		} else if (!isGalleryVisible) {
 			btn.classList.remove("arrow-up");
 			btn.classList.add("arrow-down");
+			btn.title = down;
 		}
 	}
 }
@@ -287,7 +292,7 @@ function createRgnList() {
 	const oRgnDrop = document.createElement("div");
 	oRgnDrop.classList.add("o-rgn-txt", "regular-text");
 
-	const visitedTitle = getBilingualText("See images from this " + data.official_region_name, "この地域の写真を表示する");
+	const visitedTitle = getBilingualText("See images from this " + data.official_region_name_english, "この地域の写真を表示する");
 
 	// Iterate each unofficial and official region, sort by visited/not visited
 	data.unofficial_regions.forEach(uRgn => {
@@ -421,6 +426,8 @@ function createTemplates() {
 	polaroidImgFrame = document.createElement("div");
 	polaroidImgFrame.classList.add("polaroid-img");
 	polaroidImg = document.createElement("img");
+	addRemoveTransparent(polaroidImg, true);
+	polaroidImg.classList.add("opacity-transistion");
 
 	// caption
 	polaroidCaption = document.createElement("div");
@@ -485,7 +492,7 @@ function lazyLoadPolaroid(target) {
 				img.setAttribute("src", src);
 				setTimeout(() => {
 					addRemoveTransparent([thisPolaroid], false);
-				}, 100);
+				}, 50);
 				observer.disconnect();
 			}
 		});
@@ -563,6 +570,9 @@ function createGallery() {
 			}
 
 			polImg.setAttribute("img-src", img.link ?? "img/" + selectedCountry + "/" + selectedORegion.id + "/" + img.file_name);
+			polImg.addEventListener("load", event => {
+				addRemoveTransparent(polImg, false);
+			});
 			lazyLoadPolaroid(pol);
 
 			// add to screen
@@ -768,6 +778,7 @@ function includeImage(img) {
 		doesTextIncludeKeyword(img.description_japanese) ||
 		doesTextIncludeKeyword(img.location_english) ||
 		doesTextIncludeKeyword(img.location_japanese) ||
+		doesTextIncludeKeyword(img.location_chinese) ||
 		doesTextIncludeKeyword(area?.english_name) ||
 		doesTextIncludeKeyword(area?.japanese_name) || 
 		tempTags.length > 0) &&
@@ -887,10 +898,16 @@ function setFullscreenInfo(){
 		document.getElementById("fullscreen-jp-date").innerHTML = "不明な日付";
 	}
 	let area = selectedORegion.areas.find(function (area) { return area.id == selectedPic.city });
-	searchTerm[0] = (selectedPic.location_english ? (selectedPic.location_english + ", ") : "") + (area.english_name ?? "");
+	searchTerm[0] = (selectedPic.location_english ? 
+						(selectedPic.location_english + ", ") : 
+						selectedCountry == japan && selectedPic.location_japanese ? selectedPic.location_japanese : 
+						selectedCountry == taiwan && selectedPic.location_chinese ? selectedPic.location_chinese : 
+						"") + (area.english_name ?? "");
 	document.getElementById("fullscreen-eng-city").innerHTML = searchTerm[0];
 	document.getElementById("search-eng").addEventListener("click", searchEnglish);
-	searchTerm[1] = (area.japanese_name ?? "") + (selectedPic.location_japanese ? ("　" + selectedPic.location_japanese + "") : "");
+	searchTerm[1] = (area.japanese_name ?? "") + (selectedPic.location_japanese ? ("　" + selectedPic.location_japanese) : 
+						selectedCountry == taiwan && selectedPic.location_chinese ? ("　" + selectedPic.location_chinese) : 
+						selectedPic.location_english ? ("　" + selectedPic.location_english) : "");
 	document.getElementById("fullscreen-jp-city").innerHTML = searchTerm[1];
 	document.getElementById("search-jp").addEventListener("click", searchJapanese);
 
@@ -1319,7 +1336,7 @@ function selectCountry(country, countryColor){
 	appColor = "rgb("+ temp [0] +", "+ temp [1] +", "+ temp [2] +")";
 	setTimeout(() => {
 		openGallery();
-	}, 2000);
+	}, 1200);
 }
 
 function setupSite() {
@@ -1455,6 +1472,10 @@ function setupSite() {
 				changeFullscreenPicture(true);
 			} else if (event.key == "ArrowLeft") {
 				changeFullscreenPicture(false);
+			} else if (!isPicInfoVisible && event.key == "ArrowUp"){
+				showPicInfo();
+			} else if (isPicInfoVisible && event.key == "ArrowDown"){
+				hidePicInfo();
 			}
 		}
 	});
@@ -1494,10 +1515,12 @@ function openLoader() {
 }
 
 function hideLoader() {
+	addRemoveTransparent("loader", true);
 	addRemoveTransparent("top-bar", false);
 	document.body.style.overflowY = "auto";
 	setTimeout(() => {
 		addRemoveNoDisplay("loader", true);
+		addRemoveTransparent("loader", false);
 	}, defaultTimeout);
 }
 
@@ -1543,7 +1566,8 @@ function showFirstStartScreen(){
 }
 
 function showStartScreen(){
-	addRemoveNoDisplay("loader", true);
+	scrollToTop(false);
+	addRemoveNoDisplay(["loader", "to-top-btn"], true);
 	selectedCountry = null;
 	selectedORegion = null;
 	addRemoveTransparent("map-page", true);
