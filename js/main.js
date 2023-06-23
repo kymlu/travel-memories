@@ -185,7 +185,7 @@ function scrollToTop(isSmooth){
 
 // Text
 function getBilingualText(english, japanese) {
-	return english + " – " + japanese;
+	return english + (japanese ?? (" – " + ""));
 }
 
 function getPictureDate(date, picOffset){
@@ -905,7 +905,7 @@ function setFullscreenInfo(){
 						"") + (area.english_name ?? "");
 	document.getElementById("fullscreen-eng-city").innerHTML = searchTerm[0];
 	document.getElementById("search-eng").addEventListener("click", searchEnglish);
-	searchTerm[1] = (area.japanese_name ?? "") + (selectedPic.location_japanese ? ("　" + selectedPic.location_japanese) : 
+	searchTerm[1] = (area.japanese_name ?? area.english_name ?? "") + (selectedPic.location_japanese ? ("　" + selectedPic.location_japanese) : 
 						selectedCountry == taiwan && selectedPic.location_chinese ? ("　" + selectedPic.location_chinese) : 
 						selectedPic.location_english ? ("　" + selectedPic.location_english) : "");
 	document.getElementById("fullscreen-jp-city").innerHTML = searchTerm[1];
