@@ -427,7 +427,7 @@ function createTemplates() {
 	polaroidImgFrame.classList.add("polaroid-img");
 	polaroidImg = document.createElement("img");
 	addRemoveTransparent(polaroidImg, true);
-	polaroidImg.classList.add("opacity-transistion");
+	polaroidImg.classList.add("opacity-transition");
 
 	// caption
 	polaroidCaption = document.createElement("div");
