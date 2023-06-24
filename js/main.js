@@ -185,7 +185,7 @@ function scrollToTop(isSmooth){
 
 // Text
 function getBilingualText(english, japanese) {
-	return english + (japanese ?? (" – " + ""));
+	return english + (japanese ? (" – " + japanese) : "");
 }
 
 function getPictureDate(date, picOffset){
@@ -614,7 +614,6 @@ function selectPref(newORegion) {
 	document.getElementById("o-rgn-desc-eng").innerHTML = selectedORegion.description_english;
 	document.getElementById("o-rgn-desc-jp").innerHTML = selectedORegion.description_japanese;
 	document.getElementById("o-rgn-name").innerHTML = getBilingualText(selectedORegion.english_name, selectedORegion.japanese_name);
-	document.getElementById("dates-title").scrollIntoView({block: isPortraitMode() ? "end" : "start"});
 
 	var filterLocations = document.getElementById("location-list");
 	filterLocations.replaceChildren();
@@ -900,13 +899,13 @@ function setFullscreenInfo(){
 	let area = selectedORegion.areas.find(function (area) { return area.id == selectedPic.city });
 	searchTerm[0] = (selectedPic.location_english ? 
 						(selectedPic.location_english + ", ") : 
-						selectedCountry == japan && selectedPic.location_japanese ? selectedPic.location_japanese : 
-						selectedCountry == taiwan && selectedPic.location_chinese ? selectedPic.location_chinese : 
+						selectedCountry == japan && selectedPic.location_japanese ? (selectedPic.location_japanese + ", ") : 
+						selectedCountry == taiwan && selectedPic.location_chinese ? (selectedPic.location_chinese + ", ") : 
 						"") + (area.english_name ?? "");
 	document.getElementById("fullscreen-eng-city").innerHTML = searchTerm[0];
 	document.getElementById("search-eng").addEventListener("click", searchEnglish);
 	searchTerm[1] = (area.japanese_name ?? area.english_name ?? "") + (selectedPic.location_japanese ? ("　" + selectedPic.location_japanese) : 
-						selectedCountry == taiwan && selectedPic.location_chinese ? ("　" + selectedPic.location_chinese) : 
+						(selectedCountry == taiwan && selectedPic.location_chinese) ? ("　" + selectedPic.location_chinese) : 
 						selectedPic.location_english ? ("　" + selectedPic.location_english) : "");
 	document.getElementById("fullscreen-jp-city").innerHTML = searchTerm[1];
 	document.getElementById("search-jp").addEventListener("click", searchJapanese);
@@ -1302,6 +1301,7 @@ function changeGalleryVisibility(isVisible) {
 		addRemoveNoDisplay(["gallery", "filter-btn", "map-btn", "info-btn", "o-rgn-title-btn", "o-rgn-info", "o-rgn-info-drawer"], false);
 		document.getElementById("o-rgn-info-bg").style.visibility = "visible";
 		addRemoveTransparent("to-top-btn", true);
+		document.getElementById("dates-title").scrollIntoView({block: isPortraitMode() ? "end" : "start"});
 	} else {
 		document.getElementById("btn-grp-left").classList.remove("btn-grp-left");
 		document.getElementById("btn-grp-right").classList.remove("btn-grp-right");
