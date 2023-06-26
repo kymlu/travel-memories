@@ -494,7 +494,7 @@ function lazyLoadPolaroid(target) {
 				img.setAttribute("src", src);
 				setTimeout(() => {
 					addRemoveTransparent([thisPolaroid], false);
-				}, 50);
+				}, 75);
 				observer.disconnect();
 			}
 		});
@@ -657,10 +657,10 @@ function selectPref(newORegion) {
 	filterCameras.replaceChildren();
 	new Set(selectedORegion.image_list.map(x => {return x.camera_model})
 		.sort()
-		.filter(x => x!= ""))
+		.filter(x => x))
 		.forEach(camera => {
 		var tempBtn = filterTagBtn.cloneNode();
-		tempBtn.id = camera.replace(" ", "") + "-tag";
+		tempBtn.id = camera + "-tag";
 		tempBtn.innerHTML = camera;
 		tempBtn.addEventListener("click", () => {
 			toggleCamera(camera);
