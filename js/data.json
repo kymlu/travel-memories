@@ -6,11 +6,11 @@
     "show_unofficial_regions": true,
     "official_region_name_english": "prefecture",
     "official_region_name_japanese": "都道府県",
-    "unofficial_regions": [
+    "region_groups": [
       {
         "english_name": "Hokkaido",
         "japanese_name": "北海道",
-        "official_regions": [
+        "regions": [
           {
             "id": "hokkaido",
             "english_name": "Hokkaido",
@@ -23,7 +23,7 @@
       {
         "english_name": "Tokai",
         "japanese_name": "東海",
-        "official_regions": [
+        "regions": [
           {
             "id": "aomori",
             "english_name": "Aomori",
@@ -500,7 +500,7 @@
       {
         "english_name": "Kanto",
         "japanese_name": "関東",
-        "official_regions": [
+        "regions": [
           {
             "id": "ibaraki",
             "english_name": "Ibaraki",
@@ -9387,7 +9387,7 @@
       {
         "english_name": "Chubu",
         "japanese_name": "中部",
-        "official_regions": [
+        "regions": [
           {
             "id": "niigata",
             "english_name": "Niigata",
@@ -12076,7 +12076,7 @@
       {
         "english_name": "Kansai",
         "japanese_name": "関西",
-        "official_regions": [
+        "regions": [
           {
             "id": "mie",
             "english_name": "Mie",
@@ -14590,7 +14590,7 @@
       {
         "english_name": "Chugoku",
         "japanese_name": "中国",
-        "official_regions": [
+        "regions": [
           {
             "id": "tottori",
             "english_name": "Tottori",
@@ -15897,7 +15897,7 @@
       {
         "english_name": "Shikoku",
         "japanese_name": "四国",
-        "official_regions": [
+        "regions": [
           {
             "id": "tokushima",
             "english_name": "Tokushima",
@@ -16480,7 +16480,7 @@
       {
         "english_name": "Kyushu",
         "japanese_name": "九州",
-        "official_regions": [
+        "regions": [
           {
             "id": "fukuoka",
             "english_name": "Fukuoka",
@@ -19810,7 +19810,7 @@
       {
         "english_name": "Okinawa",
         "japanese_name": "沖縄",
-        "official_regions": [
+        "regions": [
           {
             "id": "okinawa",
             "english_name": "Okinawa",
@@ -19829,9 +19829,9 @@
     "show_unofficial_regions": false,
     "official_region_name_english": "region",
     "official_region_name_japanese": "地域",
-    "unofficial_regions": [
+    "region_groups": [
       {
-        "official_regions": [
+        "regions": [
           {
             "id": "nwt",
             "english_name": "New Taipei City",
@@ -20359,7 +20359,8 @@
                 "offset": 8,
                 "city": "taipei",
                 "location_chinese": "川業肉圓",
-                "description_english": "A pork bun from a very old restaurant. The sauce was kind of sweet? Too sweet so I couldn't taste anything else.",
+                "description_english": "A pork bun from a very old restaurant. The sauce was kind of sweet? So sweet that I couldn't taste anything else.",
+                "description_japanese": "100年開店された店からの肉まん。ソースの味が甘く、強すぎて嫌だった。肉の味が全然しなかった。",
                 "tags": ["food"],
                 "camera_model": "iPhone 12 mini",
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
@@ -22464,7 +22465,7 @@
                 "offset": 10,
                 "city": "kaohsiung",
                 "description_english": "Discount Kumamon",
-                "description_japanese": "\u5B89\u7269\u306E\u304F\u307E\u30E2\u30F3",
+                "description_japanese": "くまモンのいとこ",
                 "tags": ["town"],
                 "camera_model": "Canon EOS 90D",
                 "lens": "EF-S18-135mm f/3.5-5.6 IS USM",
@@ -22937,9 +22938,9 @@
     "show_unofficial_regions": false,
     "official_region_name_english": "state",
     "official_region_name_japanese": "州",
-    "unofficial_regions": [
+    "region_groups": [
       {
-        "official_regions": [
+        "regions": [
           {
             "id": "nsw",
             "english_name": "New South Wales",
@@ -24213,13 +24214,13 @@
     "show_unofficial_regions": true,
     "official_region_name_english": "region",
     "official_region_name_japanese": "地方",
-    "unofficial_regions": [
+    "region_groups": [
       {
         "english_name": "North Island",
         "japanese_name": "北島",
         "chinese_name": "北島",
         "maori_name": "Te Ika-a-Māui",
-        "official_regions": [
+        "regions": [
           {
             "id": "ntl",
             "english_name": "Northland",
@@ -25133,8 +25134,8 @@
             "dates_english": "May 2-5, 2023",
             "dates_japanese": "2023年5月2～5日",
             "dates_chinese": "2023年5月2～5日",
-            "description_english": "",
-            "description_japanese": "",
+            "description_english": "The capital! There were a few cute art pieces here and there. ",
+            "description_japanese": "首都だ！あっちこっちでかわいい美術品あった。",
             "description_chinese": "",
             "image_list": [
               {
@@ -25142,6 +25143,8 @@
                 "date": "2023-05-03T01:32:05.000Z",
                 "offset": 12,
                 "city": "wellington",
+                "description_english": "Nowhere is safe from deep sea monsters",
+                "description_japanese": "海坊主は都会にもあるか。。。危ない。",
                 "tags": ["town"],
                 "camera_model": "iPhone 12 mini",
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
@@ -25155,6 +25158,8 @@
                 "date": "2023-05-03T01:32:32.000Z",
                 "offset": 12,
                 "city": "wellington",
+                "description_english": "Squat to stop",
+                "description_japanese": "泊まったらスクワットやろう",
                 "tags": ["town"],
                 "camera_model": "iPhone 12 mini",
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
@@ -25169,6 +25174,8 @@
                 "offset": 12,
                 "city": "wellington",
                 "location_english": "Karaka Cafe",
+                "description_english": "Seafood chowder",
+                "description_japanese": "海鮮チャウダー",
                 "tags": ["food"],
                 "camera_model": "iPhone 12 mini",
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
@@ -25183,6 +25190,8 @@
                 "offset": 12,
                 "city": "wellington",
                 "location_english": "City Gallery Wellington",
+                "description_english": "Found a UFO",
+                "description_japanese": "UFO見つけた",
                 "tags": ["art", "attractions"],
                 "camera_model": "iPhone 12 mini",
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
@@ -25197,6 +25206,8 @@
                 "offset": 12,
                 "city": "wellington",
                 "location_english": "City Gallery Wellington",
+                "description_english": "A stoic guardian",
+                "description_japanese": "ストイック",
                 "tags": ["art", "attractions"],
                 "camera_model": "iPhone 12 mini",
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
@@ -25210,6 +25221,8 @@
                 "date": "2023-05-03T03:19:36.000Z",
                 "offset": 12,
                 "city": "wellington",
+                "description_english": "Ready to follow the way to love",
+                "description_japanese": "愛について行こう",
                 "tags": ["town", "art"],
                 "camera_model": "iPhone 12 mini",
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
@@ -25223,6 +25236,8 @@
                 "date": "2023-05-03T03:31:07.000Z",
                 "offset": 12,
                 "city": "wellington",
+                "description_english": "Found the ironing board",
+                "description_japanese": "アイロン台見つけた",
                 "tags": ["town"],
                 "camera_model": "iPhone 12 mini",
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
@@ -25236,6 +25251,8 @@
                 "date": "2023-05-03T03:47:25.000Z",
                 "offset": 12,
                 "city": "wellington",
+                "description_english": "The culprit is you!",
+                "description_japanese": "犯人は君だ！！",
                 "location_english": "The New Zealand Portrait Gallery",
                 "tags": ["art"],
                 "camera_model": "iPhone 12 mini",
@@ -25250,6 +25267,8 @@
                 "date": "2023-05-03T04:00:03.000Z",
                 "offset": 12,
                 "city": "wellington",
+                "description_english": "Interpretive dancing",
+                "description_japanese": "踊っている",
                 "tags": ["town"],
                 "camera_model": "iPhone 12 mini",
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
@@ -25263,6 +25282,8 @@
                 "date": "2023-05-03T04:03:24.000Z",
                 "offset": 12,
                 "city": "wellington",
+                "description_english": "Walk with sass",
+                "description_japanese": "アクが強いように歩け",
                 "tags": ["town"],
                 "camera_model": "iPhone 12 mini",
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
@@ -25277,6 +25298,8 @@
                 "offset": 12,
                 "city": "wellington",
                 "location_english": "Cin Cin",
+                "description_english": "Conchiglione",
+                "description_japanese": "コンキリオーネ.",
                 "tags": ["food"],
                 "camera_model": "iPhone 12 mini",
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
@@ -25291,6 +25314,8 @@
                 "offset": 12,
                 "city": "wellington",
                 "location_english": "W\u0113t\u0101 Workshop",
+                "description_english": "Protecting the building",
+                "description_japanese": "ビルを守っている",
                 "tags": ["art", "attractions"],
                 "camera_model": "iPhone 12 mini",
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
@@ -25305,6 +25330,8 @@
                 "offset": 12,
                 "city": "wellington",
                 "location_english": "W\u0113t\u0101 Workshop",
+                "description_english": "I couldn't take many pictures during the tour, but it was very informative and the pieces they showed were amazing.",
+                "description_japanese": "ツアー中に撮影禁止された所が多かったけど、いろんな勉強できてよかった。",
                 "tags": ["art", "attractions"],
                 "camera_model": "iPhone 12 mini",
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
@@ -25319,6 +25346,8 @@
                 "offset": 12,
                 "city": "wellington",
                 "location_english": "The Larder",
+                "description_english": "Chicken burger - for some reason I rarely order beef burgers...",
+                "description_japanese": "チキンバーガー。なぜかビーフバーガーをあまり頼まない。。。",
                 "tags": ["food"],
                 "camera_model": "iPhone 12 mini",
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
@@ -25333,6 +25362,8 @@
                 "offset": 12,
                 "city": "wellington",
                 "location_english": "Museum of New Zealand Te Papa Tongarewa",
+                "description_english": "Can't tell from the picture but was not human-sized... was actually massive.",
+                "description_japanese": "この写真で見えないけど、この人は人間の身長じゃなくて、超デカかった。",
                 "tags": ["art", "attractions"],
                 "camera_model": "iPhone 12 mini",
                 "lens": "iPhone 12 mini back dual wide camera 1.55mm f/2.4",
@@ -25347,6 +25378,8 @@
                 "offset": 12,
                 "city": "wellington",
                 "location_english": "Museum of New Zealand Te Papa Tongarewa",
+                "description_english": "Hall",
+                "description_japanese": "ホール",
                 "tags": ["art", "attractions"],
                 "camera_model": "iPhone 12 mini",
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
@@ -25361,6 +25394,8 @@
                 "offset": 12,
                 "city": "wellington",
                 "location_english": "PHO MO",
+                "description_english": "Did not feel any fomo not ordering pho. This is just a salad.",
+                "description_japanese": "サラダ",
                 "tags": ["food"],
                 "camera_model": "iPhone 12 mini",
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
@@ -25375,6 +25410,8 @@
                 "offset": 12,
                 "city": "wellington",
                 "location_english": "Wellington Station",
+                "description_english": "Auckland time",
+                "description_japanese": "オークランドに行こう",
                 "tags": ["town"],
                 "camera_model": "iPhone 12 mini",
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
@@ -25389,6 +25426,8 @@
                 "offset": 12,
                 "city": "wellington",
                 "location_english": "Wellington Station",
+                "description_english": "Ready to sit for 11 hours",
+                "description_japanese": "11時間座ろうか",
                 "tags": ["town"],
                 "camera_model": "iPhone 12 mini",
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
@@ -25402,6 +25441,8 @@
                 "date": "2023-05-04T20:16:19.000Z",
                 "offset": 12,
                 "city": "wellington",
+                "description_english": "Speeding along",
+                "description_japanese": "速く走ってる",
                 "tags": ["nature"],
                 "camera_model": "iPhone 12 mini",
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
@@ -25415,6 +25456,8 @@
                 "date": "2023-05-04T21:49:50.000Z",
                 "offset": 12,
                 "city": "wellington",
+                "description_english": "COWS!!",
+                "description_japanese": "牛さんだ！",
                 "tags": ["nature", "animal"],
                 "camera_model": "iPhone 12 mini",
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
@@ -25428,6 +25471,8 @@
                 "date": "2023-05-04T23:02:33.000Z",
                 "offset": 12,
                 "city": "wellington",
+                "description_english": "Nothing but nature for miles",
+                "description_japanese": "自然しかない",
                 "tags": ["nature"],
                 "camera_model": "iPhone 12 mini",
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
@@ -25441,6 +25486,8 @@
                 "date": "2023-05-04T23:06:32.000Z",
                 "offset": 12,
                 "city": "wellington",
+                "description_english": "I'd live here for a bit",
+                "description_japanese": "ここに住みたい",
                 "tags": ["nature"],
                 "camera_model": "iPhone 12 mini",
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
@@ -25454,6 +25501,8 @@
                 "date": "2023-05-04T23:09:06.000Z",
                 "offset": 12,
                 "city": "wellington",
+                "description_english": "Some days I wonder if farm life would be easier...",
+                "description_japanese": "牛になったら、人生が簡単になるかなぁ。。。",
                 "tags": ["nature", "animal"],
                 "camera_model": "iPhone 12 mini",
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
@@ -25467,6 +25516,8 @@
                 "date": "2023-05-04T23:18:12.000Z",
                 "offset": 12,
                 "city": "wellington",
+                "description_english": "iPhone pictures do not do the scenary justice",
+                "description_japanese": "現実の方が美しい。。。",
                 "tags": ["nature"],
                 "camera_model": "iPhone 12 mini",
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
@@ -25480,6 +25531,8 @@
                 "date": "2023-05-05T05:09:08.000Z",
                 "offset": 12,
                 "city": "wellington",
+                "description_english": "Milk source",
+                "description_japanese": "牛乳",
                 "tags": ["nature", "animal"],
                 "camera_model": "iPhone 12 mini",
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
@@ -25497,7 +25550,7 @@
         "japanese_name": "南島",
         "chinese_name": "南島",
         "maori_name": "Te Wai Pounamu",
-        "official_regions": [
+        "regions": [
           {
             "id": "tas",
             "english_name": "Tasman",
@@ -25573,6 +25626,8 @@
                 "offset": 12,
                 "city": "queenstown",
                 "location_english": "Queenstown Airport",
+                "description_english": "Peaceful first impression",
+                "description_japanese": "平和な初印象",
                 "tags": ["town"],
                 "camera_model": "iPhone 12 mini",
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
@@ -25587,6 +25642,8 @@
                 "offset": 12,
                 "city": "queenstown",
                 "location_english": "Cookie Time",
+                "description_english": "Discount Cookie Monster",
+                "description_japanese": "クッキーモンスターのいとこ",
                 "tags": ["food", "town"],
                 "camera_model": "iPhone 12 mini",
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
@@ -25601,6 +25658,8 @@
                 "offset": 12,
                 "city": "queenstown",
                 "location_english": "Cookie Time",
+                "description_english": "Cranberry white chocolate cookie",
+                "description_japanese": "クランベリーホワイトチョコ",
                 "tags": ["food"],
                 "camera_model": "iPhone 12 mini",
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
@@ -25614,6 +25673,8 @@
                 "date": "2023-04-25T02:01:35.000Z",
                 "offset": 12,
                 "city": "queenstown",
+                "description_english": "A rustic shopping area",
+                "description_japanese": "田舎風な商店街",
                 "tags": ["town"],
                 "camera_model": "iPhone 12 mini",
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
@@ -25628,6 +25689,8 @@
                 "offset": 12,
                 "city": "queenstown",
                 "location_english": "Queenstown Bay Beach",
+                "description_english": "Restaurants on the water",
+                "description_japanese": "水上のレストラン",
                 "tags": ["nature", "town"],
                 "camera_model": "iPhone 12 mini",
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
@@ -25642,6 +25705,8 @@
                 "offset": 12,
                 "city": "queenstown",
                 "location_english": "Queenstown Bay Beach",
+                "description_english": "I can sit here all day",
+                "description_japanese": "ずっとここに座っても構わない",
                 "tags": ["nature", "town"],
                 "camera_model": "iPhone 12 mini",
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
@@ -25656,6 +25721,8 @@
                 "offset": 12,
                 "city": "queenstown",
                 "location_english": "Queenstown Bay Beach",
+                "description_english": "Memorial",
+                "description_japanese": "モニュメント",
                 "tags": ["town"],
                 "camera_model": "iPhone 12 mini",
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
@@ -25670,6 +25737,8 @@
                 "offset": 12,
                 "city": "queenstown",
                 "location_english": "Queenstown Bay Beach",
+                "description_english": "I'm back",
+                "description_japanese": "戻って来た",
                 "tags": ["nature", "town"],
                 "camera_model": "iPhone 12 mini",
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
@@ -25683,6 +25752,8 @@
                 "date": "2023-04-25T02:13:08.000Z",
                 "offset": 12,
                 "city": "queenstown",
+                "description_english": "Autumn vibes",
+                "description_japanese": "秋の感じ",
                 "tags": ["town", "nature"],
                 "camera_model": "iPhone 12 mini",
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
@@ -25696,6 +25767,8 @@
                 "date": "2023-04-25T02:19:42.000Z",
                 "offset": 12,
                 "city": "queenstown",
+                "description_english": "I don't drink but the art is cute",
+                "description_japanese": "ビール飲まないけど、これがかわいい",
                 "tags": ["town"],
                 "camera_model": "iPhone 12 mini",
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
@@ -25709,6 +25782,8 @@
                 "date": "2023-04-25T02:26:47.000Z",
                 "offset": 12,
                 "city": "queenstown",
+                "description_english": "Autumn is the best season",
+                "description_japanese": "秋は最高の季節",
                 "tags": ["town", "nature"],
                 "camera_model": "iPhone 12 mini",
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
@@ -25723,6 +25798,8 @@
                 "offset": 12,
                 "city": "queenstown",
                 "location_english": "White & Wong's",
+                "description_english": "Chicken dumpling noodle soup",
+                "description_japanese": "鶏肉餃子タンメン",
                 "tags": ["food"],
                 "camera_model": "iPhone 12 mini",
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
@@ -25752,6 +25829,8 @@
                 "offset": 12,
                 "city": "queenstown",
                 "location_english": "Queenstown Gardens",
+                "description_english": "No frozen vegetables to feed the ducks",
+                "description_japanese": "ごめん、あげれる餌を持っていない",
                 "tags": ["nature"],
                 "camera_model": "iPhone 12 mini",
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
@@ -25766,6 +25845,8 @@
                 "offset": 12,
                 "city": "queenstown",
                 "location_english": "Queenstown Gardens",
+                "description_english": "Diving in",
+                "description_japanese": "ダイビングマスター",
                 "tags": ["nature"],
                 "camera_model": "iPhone 12 mini",
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
@@ -25780,6 +25861,8 @@
                 "offset": 12,
                 "city": "queenstown",
                 "location_english": "Queenstown Gardens",
+                "description_english": "Keeping a distance",
+                "description_japanese": "離れている",
                 "tags": ["nature"],
                 "camera_model": "iPhone 12 mini",
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
@@ -25794,6 +25877,8 @@
                 "offset": 12,
                 "city": "queenstown",
                 "location_english": "Queenstown Gardens",
+                "description_english": "No bounce to this diving board",
+                "description_japanese": "飛び込み台から跳ねられない",
                 "tags": ["town", "nature"],
                 "camera_model": "iPhone 12 mini",
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
@@ -25808,6 +25893,8 @@
                 "offset": 12,
                 "city": "queenstown",
                 "location_english": "Queenstown Gardens",
+                "description_english": "Solitude",
+                "description_japanese": "孤独",
                 "tags": ["town", "nature"],
                 "camera_model": "iPhone 12 mini",
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
@@ -25823,6 +25910,7 @@
                 "city": "queenstown",
                 "location_english": "Hell",
                 "description_english": "A little ominous",
+                "description_japanese": "ちょっと怖い",
                 "tags": ["food", "town"],
                 "camera_model": "iPhone 12 mini",
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
@@ -25837,6 +25925,8 @@
                 "offset": 12,
                 "city": "queenstown",
                 "location_english": "Hell",
+                "description_english": "Dinner from Hell",
+                "description_japanese": "地獄からの晩ご飯",
                 "tags": ["food"],
                 "camera_model": "iPhone 12 mini",
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
@@ -25851,7 +25941,8 @@
                 "offset": 12,
                 "city": "queenstown",
                 "location_english": "Hell",
-                "description_english": "Morning after-pizza: an end-of-isolation celebratory dinner. It was heavy but after a week of suffering it was worth it.",
+                "description_english": "Morning after-pizza: an end-of-isolation celebratory dinner. It was heavy, but worth it after a week of suffering.",
+                "description_japanese": "隔離後のお祝い晩ご飯。重かったけど、前の一週間が苦しかったから大丈夫。",
                 "tags": ["food"],
                 "camera_model": "iPhone 12 mini",
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
@@ -25866,6 +25957,8 @@
                 "offset": 12,
                 "city": "queenstown",
                 "location_english": "Queenstown Airport",
+                "description_english": "Tried a lamington. Too sweet for me...",
+                "description_japanese": "ラミントンを食べてみた。ちょっと甘すぎた。",
                 "tags": ["food"],
                 "camera_model": "iPhone 12 mini",
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
@@ -25881,6 +25974,7 @@
                 "city": "queenstown",
                 "location_english": "Queenstown Airport",
                 "description_english": "The first time I've been instructed to relax at an airport. Very charming.",
+                "description_japanese": "「リラックスしてください」は空港で初めて見た。かわいい。",
                 "tags": ["town"],
                 "camera_model": "iPhone 12 mini",
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
@@ -25895,6 +25989,8 @@
                 "offset": 12,
                 "city": "queenstown",
                 "location_english": "Queenstown Airport",
+                "description_english": "Wellington, here we come!",
+                "description_japanese": "来い！ウェリントン！",
                 "tags": ["town"],
                 "camera_model": "iPhone 12 mini",
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",

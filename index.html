@@ -2,6 +2,22 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1" name="viewport" />
   <title>Trip Memories — 旅行の思い出</title>
+  <link rel="apple-touch-icon" sizes="57x57" href="img/icons/favicon/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="img/icons/favicon/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="img/icons/favicon/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="img/icons/favicon/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="img/icons/favicon/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="img/icons/favicon/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="img/icons/favicon/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="img/icons/favicon/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="img/icons/favicon/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="img/icons/favicon/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="img/icons/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="img/icons/favicon/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="img/icons/favicon/favicon-16x16.png">
+  <link rel="manifest" href="img/icons/favicon/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="img/icons/favicon/ms-icon-144x144.png">
   <link rel="stylesheet" type="text/css" href="css/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
@@ -13,10 +29,10 @@
       <button id="globe-btn" class="text-main-color large-icon" style="z-index: 5001;">&#xf0ac</button>
       <button id="map-btn" class="text-main-color large-icon no-display" style="z-index: 5001;">&#xf279</button>
     </div>
-    <div id="o-rgn-title" style="display: flex; justify-content: center;">
-      <div id="o-rgn-title-btn" class="o-rgn-title no-display">
-        <div id="o-rgn-name" class="regular-text bold-text" style="text-align: center;"></div>
-        <button id="o-rgn-name-arrow" class="text-main-color large-icon transform-transition arrow-down">&#xf0d7</button>
+    <div id="rgn-title" style="display: flex; justify-content: center;">
+      <div id="rgn-title-btn" class="rgn-title no-display">
+        <div id="rgn-name" class="regular-text bold-text" style="text-align: center;"></div>
+        <button id="rgn-name-arrow" class="text-main-color large-icon transform-transition arrow-down">&#xf0d7</button>
       </div>
     </div>
     <div id="btn-grp-right" class="btn-grp">
@@ -27,9 +43,9 @@
   </div>
 
   <!-- Dropdown official region selector -->
-  <div id="o-rgn-drop-down-container" class="flex-column no-display" style="z-index: 5001;">
-    <div id="o-rgn-drop-down-bg" class="popup-bg opacity-transition transparent"></div>
-    <div id="o-rgn-drop-down" class="o-rgn-drop-down regular-text"></div>
+  <div id="rgn-drop-down-container" class="flex-column no-display" style="z-index: 5001;">
+    <div id="rgn-drop-down-bg" class="popup-bg opacity-transition transparent"></div>
+    <div id="rgn-drop-down" class="rgn-drop-down regular-text"></div>
   </div>
 
   <!-- Map Page (Map and Official Region List) -->
@@ -37,34 +53,34 @@
     <object id="country-map" type="image/svg+xml" class="country-map"></object>
     <h1 id="main-title"></h1>
     <p id="map-instructions" class="regular-text" style="text-align: center; margin-top: 0;"></p>
-    <div id="o-rgn-list" class="o-rgn-list"></div>
+    <div id="rgn-list" class="rgn-list"></div>
   </div>
 
   <!-- Official Region Info -->
-  <div id="o-rgn-info" class="no-display" style="z-index: 4999; position: relative;">
-    <div id="o-rgn-info-bg" class="popup-bg opacity-transition portrait-only transparent"></div>
-    <div id="o-rgn-info-drawer" class="o-rgn-info-container no-display">
-      <div class="o-rgn-info">
+  <div id="rgn-info" class="no-display" style="z-index: 4999; position: relative;">
+    <div id="rgn-info-bg" class="popup-bg opacity-transition portrait-only transparent"></div>
+    <div id="rgn-info-drawer" class="rgn-info-container no-display">
+      <div class="rgn-info">
         <object id="country-map-mini" type="image/svg+xml" data="img/japan.svg" class="mini-map opacity-transition transparent"></object>
-        <div id="o-rgn-info-txt" class="flex-column regular-text o-rgn-info-text">
+        <div id="rgn-info-txt" class="flex-column regular-text rgn-info-text">
           <div>
             <div id="dates-title" class="bold-text"></div>
-            <div id="o-rgn-dates"></div>
+            <div id="rgn-dates"></div>
           </div>
           <div>
             <div id="cities-title" class="bold-text"></div>
-            <div id="o-rgn-cities"></div>
+            <div id="rgn-cities"></div>
           </div>
           <div>
             <div id="description-title" class="bold-text"></div>
-            <div id="o-rgn-desc">
-              <div id="o-rgn-desc-eng"></div>
-              <div id="o-rgn-desc-jp"></div>
+            <div id="rgn-desc">
+              <div id="rgn-desc-eng"></div>
+              <div id="rgn-desc-jp"></div>
             </div>
           </div>
         </div>
       </div>
-      <div id="o-rgn-info-handle">
+      <div id="rgn-info-handle">
         <hr class="drawer-handle" />
       </div>
     </div>
@@ -145,7 +161,11 @@
         </div>
         <button id="right-arrow" class="large-icon fullscreen-arrow">&#xf0da</button>
       </div>
-      <button id="pic-info-btn" class="large-icon pic-info-btn" style="z-index: 3;">&#xf05a</button>
+      <div class="fullscreen-ctrl">
+        <button id="zoom-in-btn" class="large-icon pic-info-btn" style="z-index: 3;">&#xf00e</button>
+        <button id="zoom-out-btn" class="large-icon pic-info-btn" style="z-index: 3;">&#xf010</button>
+        <button id="pic-info-btn" class="large-icon pic-info-btn" style="z-index: 3;">&#xf05a</button>
+      </div>
     </div>
     <div id="pic-info" style="z-index: 3;">
       <div id="pic-info-bg" class="portrait-only popup-bg transparent"></div>
@@ -174,35 +194,39 @@
     </div>
   </div>
 
-  <!-- Loading Screen -->
+  <!-- Start Screen -->
   <div id="start-screen" class="start-screen opacity-transition transparent no-display" style="z-index: 6000">
-    <div id="start-btn-jp" class="start-btn">
-      <img id="sakura" src="img/icons/sakura.svg" class="start-img">
-      <div id="start-text-jp" class="centered start-text">
-        <p>Start</p>
-        <p>スタート</p>
+    <div id="start-btn-jp" class="start-btn jp">
+      <div id="start-btn-jp-text" class="country-text">Japan</div>
+      <div id="jp-start-icon" style="width: 30px; height: 25px;">
+        <img id="jp-start-icon-w" src="img/icons/sakura_white.svg" class="start-symbol">
+        <img id="jp-start-icon-c" src="img/icons/sakura.svg" class="start-symbol opacity-transition">
       </div>
+      <div id="start-btn-jp-text" class="country-text">日本</div>
     </div>
-    <div id="start-btn-tw" class="start-btn">
-      <img id="sun" src="img/icons/sun.svg" class="start-img">
-      <div id="start-text-tw" class="centered start-text">
-        <p>Start</p>
-        <p>スタート</p>
+    <div id="start-btn-tw" class="start-btn tw">
+      <div id="start-btn-tw-text" class="country-text">Taiwan</div>
+      <div id="tw-start-icon" style="width: 30px; height: 25px;">
+        <img id="tw-start-icon-w" src="img/icons/sun_white.svg" class="start-symbol">
+        <img id="tw-start-icon-c" src="img/icons/sun.svg" class="start-symbol opacity-transition">
       </div>
+      <div id="start-btn-tw-text" class="country-text">台湾</div>
     </div>
-    <div id="start-btn-au" class="start-btn">
-      <img id="koala" src="img/icons/koala.svg" class="start-img">
-      <div id="start-text-au" class="centered start-text">
-        <p>Start</p>
-        <p>スタート</p>
+    <div id="start-btn-au" class="start-btn au">
+      <div id="start-btn-au-text" class="country-text">Australia</div>
+      <div id="au-start-icon" style="width: 30px; height: 25px;">
+        <img id="au-start-icon-w" src="img/icons/kangaroo_white.svg" class="start-symbol">
+        <img id="au-start-icon-c" src="img/icons/kangaroo.svg" class="start-symbol opacity-transition">
       </div>
-    </div>
-    <div id="start-btn-nz" class="start-btn">
-      <img id="kiwi" src="img/icons/sun.svg" class="start-img">
-      <div id="start-text-nz" class="centered start-text">
-        <p>Start</p>
-        <p>スタート</p>
+      <div id="start-btn-au-text" class="country-text">オーストラリア</div>
+    </div> 
+    <div id="start-btn-nz" class="start-btn nz">
+      <div id="start-btn-nz-text" class="country-text">New Zealand</div>
+      <div id="nz-start-icon" style="width: 30px; height: 25px;">
+        <img id="nz-start-icon-w" src="img/icons/kiwi_white.svg" class="start-symbol">
+        <img id="nz-start-icon-c" src="img/icons/kiwi.svg" class="start-symbol opacity-transition">
       </div>
+      <div id="start-btn-nz-text" class="country-text">ニュージーランド</div>
     </div>
     <div id="error-btn" class="error-btn centered loader-text" onclick="retry()">
         <p>Failed to fetch data. Try again?</p>
@@ -210,6 +234,8 @@
       </div>
     </div>
   </div>
+
+  <!-- Loading circle -->
   <div id="loader" class="loader centered opacity-transition">
     <div id="load1" class="loader-dot" style="transform: rotate(315deg) translate(80px) rotate(315deg); animation-delay: -1.75s;"></div>
     <div id="load2" class="loader-dot" style="transform: rotate(0deg) translate(80px) rotate(0deg); animation-delay: -1.5s;"></div>
@@ -222,9 +248,6 @@
   </div>
 
   <!-- Scripts -->
-  <!-- <script src="https://raw.githubusercontent.com/kymlu/travel-memories/main/js/image.js"></script>
-  <script src="https://raw.githubusercontent.com/kymlu/travel-memories/main/js/prefecture.js"></script>
-  <script src="https://raw.githubusercontent.com/kymlu/travel-memories/main/js/region.js"></script> -->
   <script src="js/main.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/exif-js/2.3.0/exif.js"></script>

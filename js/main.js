@@ -265,83 +265,83 @@ function showHideFloatingBtn() {
 // Official Region List
 function createRgnList() {
 	// Create templates
-	const oRgnList = document.getElementById("o-rgn-list");
-	oRgnList.replaceChildren();
+	const rgnList = document.getElementById("rgn-list");
+	rgnList.replaceChildren();
 
-	const dropDownPrefList = document.getElementById("o-rgn-drop-down");
+	const dropDownPrefList = document.getElementById("rgn-drop-down");
 	dropDownPrefList.replaceChildren();
 
-	const uRgnGroup = document.createElement("div");
-	uRgnGroup.classList.add("u-rgn-group");
+	const rgnGrpGroup = document.createElement("div");
+	rgnGrpGroup.classList.add("rgn-grp");
 	if(!data.show_unofficial_regions){
-		uRgnGroup.classList.add("none");
+		rgnGrpGroup.classList.add("none");
 	}
 
-	const uRgnTitle = document.createElement("div");
-	uRgnTitle.classList.add("u-rgn-text");
+	const rgnGrpTitle = document.createElement("div");
+	rgnGrpTitle.classList.add("rgn-grp-text");
 
 	const visitedORegion = document.createElement("div");
-	visitedORegion.classList.add("o-rgn-txt", "visited-o-rgn-text");
+	visitedORegion.classList.add("rgn-txt", "visited-rgn-text");
 
 	const unvisitedORegion = document.createElement("div");
-	unvisitedORegion.classList.add("o-rgn-txt", "locked-o-rgn-text");
+	unvisitedORegion.classList.add("rgn-txt", "locked-rgn-text");
 
-	const uRgnDrop = document.createElement("div");
-	uRgnDrop.classList.add("u-rgn-text", "regular-text");
+	const rgnGrpDrop = document.createElement("div");
+	rgnGrpDrop.classList.add("rgn-grp-text", "regular-text");
 	
-	const oRgnDrop = document.createElement("div");
-	oRgnDrop.classList.add("o-rgn-txt", "regular-text");
+	const rgnDrop = document.createElement("div");
+	rgnDrop.classList.add("rgn-txt", "regular-text");
 
 	const visitedTitle = getBilingualText("See images from this " + data.official_region_name_english, "この地域の写真を表示する");
 
 	// Iterate each unofficial and official region, sort by visited/not visited
-	data.unofficial_regions.forEach(uRgn => {
-		const newURgn = uRgnGroup.cloneNode();
-		var ddURegion = uRgnDrop.cloneNode();
+	data.region_groups.forEach(rgnGrp => {
+		const newRgnGrp = rgnGrpGroup.cloneNode();
+		var ddURegion = rgnGrpDrop.cloneNode();
 
 		if(data.show_unofficial_regions){
-			const newPrefTitle = uRgnTitle.cloneNode();
-			newPrefTitle.innerHTML = getBilingualText(uRgn.english_name, uRgn.japanese_name);
-			newURgn.appendChild(newPrefTitle);
-			ddURegion.innerHTML = getBilingualText(uRgn.english_name, uRgn.japanese_name);
-			ddURegion.id = uRgn.english_name + "-dropdown";
+			const newPrefTitle = rgnGrpTitle.cloneNode();
+			newPrefTitle.innerHTML = getBilingualText(rgnGrp.english_name, rgnGrp.japanese_name);
+			newRgnGrp.appendChild(newPrefTitle);
+			ddURegion.innerHTML = getBilingualText(rgnGrp.english_name, rgnGrp.japanese_name);
+			ddURegion.id = rgnGrp.english_name + "-dropdown";
 			dropDownPrefList.appendChild(ddURegion);
 		}
 
-		uRgn.official_regions.forEach(oRgn => {
-			var ddORgn = oRgnDrop.cloneNode();
-			ddORgn.innerHTML = getBilingualText(oRgn.english_name, oRgn.japanese_name);
-			ddORgn.id = oRgn.id + "-dropdown";
-			ddORgn.title = visitedTitle;
-			if (oRgn.visited) {
-				const oRgnNode = visitedORegion.cloneNode();
-				oRgnNode.innerHTML = getBilingualText(oRgn.english_name, oRgn.japanese_name);
-				oRgnNode.title = visitedTitle;
-				oRgnNode.addEventListener("click", function () {
-					selectPref(oRgn);
+		rgnGrp.regions.forEach(rgn => {
+			var ddRgn = rgnDrop.cloneNode();
+			ddRgn.innerHTML = getBilingualText(rgn.english_name, rgn.japanese_name);
+			ddRgn.id = rgn.id + "-dropdown";
+			ddRgn.title = visitedTitle;
+			if (rgn.visited) {
+				const rgnNode = visitedORegion.cloneNode();
+				rgnNode.innerHTML = getBilingualText(rgn.english_name, rgn.japanese_name);
+				rgnNode.title = visitedTitle;
+				rgnNode.addEventListener("click", function () {
+					selectPref(rgn);
 				}, false);
-				newURgn.appendChild(oRgnNode);
+				newRgnGrp.appendChild(rgnNode);
 
-				ddORgn.classList.add("visited-o-rgn-text");
-				ddORgn.addEventListener("click", function () {
-					selectPref(oRgn);
+				ddRgn.classList.add("visited-rgn-text");
+				ddRgn.addEventListener("click", function () {
+					selectPref(rgn);
 				}, false);
 			} else {
-				const oRgnNode = unvisitedORegion.cloneNode();
-				oRgnNode.innerHTML = getBilingualText(oRgn.english_name, oRgn.japanese_name);
-				newURgn.appendChild(oRgnNode);
-				ddORgn.classList.add("locked-o-rgn-text");
+				const rgnNode = unvisitedORegion.cloneNode();
+				rgnNode.innerHTML = getBilingualText(rgn.english_name, rgn.japanese_name);
+				newRgnGrp.appendChild(rgnNode);
+				ddRgn.classList.add("locked-rgn-text");
 			}
 			
-			dropDownPrefList.appendChild(ddORgn);
+			dropDownPrefList.appendChild(ddRgn);
 			});
-		oRgnList.appendChild(newURgn);
+		rgnList.appendChild(newRgnGrp);
 	});
 }
 
 // Official region selector dropdown
 function togglePrefDropdown() {
-	document.getElementById("o-rgn-drop-down-container").classList.toggle("no-display");
+	document.getElementById("rgn-drop-down-container").classList.toggle("no-display");
 	spinArrow();
 	if(isNewORegion){
 		isNewORegion = false;
@@ -350,15 +350,15 @@ function togglePrefDropdown() {
 }
 
 function closePrefDropdown() {
-	addRemoveNoDisplay("o-rgn-drop-down-container", true);
-	document.getElementById("o-rgn-name-arrow").classList.add("arrow-down");
-	document.getElementById("o-rgn-name-arrow").classList.remove("arrow-up");
+	addRemoveNoDisplay("rgn-drop-down-container", true);
+	document.getElementById("rgn-name-arrow").classList.add("arrow-down");
+	document.getElementById("rgn-name-arrow").classList.remove("arrow-up");
 }
 
 function showPrefDropdown() {
-	addRemoveNoDisplay("o-rgn-drop-down-container", false);
-	document.getElementById("o-rgn-name-arrow").classList.remove("arrow-down");
-	document.getElementById("o-rgn-name-arrow").classList.add("arrow-up");
+	addRemoveNoDisplay("rgn-drop-down-container", false);
+	document.getElementById("rgn-name-arrow").classList.remove("arrow-down");
+	document.getElementById("rgn-name-arrow").classList.add("arrow-up");
 }
 
 // Map
@@ -367,34 +367,34 @@ function colourMap() {
 
 	const svgObj = document.getElementById("country-map");
 	const svgDoc = svgObj.contentDocument;
-	const oRgnList = data.unofficial_regions.flatMap(uRgn => uRgn.official_regions);
+	const rgnList = data.region_groups.flatMap(rgnGrp => rgnGrp.regions);
 
-	oRgnList.forEach(oRgn => {
-		const oRgnImg = svgDoc.getElementById(oRgn.id + "-img");
-		if (oRgn.visited) {
+	rgnList.forEach(rgn => {
+		const rgnImg = svgDoc.getElementById(rgn.id + "-img");
+		if (rgn.visited) {
 			// CSS won't work on document objects
-			oRgnImg.title = getBilingualText("See images from this" + data.official_region_name, "この地域の写真を表示する");
-			oRgnImg.setAttribute("fill", appColor);
-			oRgnImg.setAttribute("stroke", "none");
-			oRgnImg.setAttribute("cursor", "pointer");
-			oRgnImg.setAttribute("transition", "opacity 0.3 ease-in-out");
-			oRgnImg.addEventListener("click", function () {
-				selectPref(oRgn);
-				document.getElementById("main-title").innerHTML = getBilingualText(oRgn.english_name, oRgn.japanese_name);
+			rgnImg.title = getBilingualText("See images from this" + data.official_region_name, "この地域の写真を表示する");
+			rgnImg.setAttribute("fill", appColor);
+			rgnImg.setAttribute("stroke", "none");
+			rgnImg.setAttribute("cursor", "pointer");
+			rgnImg.setAttribute("transition", "opacity 0.3 ease-in-out");
+			rgnImg.addEventListener("click", function () {
+				selectPref(rgn);
+				document.getElementById("main-title").innerHTML = getBilingualText(rgn.english_name, rgn.japanese_name);
 			});
-			oRgnImg.addEventListener("mouseover", () => {
-				oRgnImg.setAttribute("opacity", "50%");
-				hoveredRegion = oRgn.english_name;
-				document.getElementById("main-title").innerHTML = getBilingualText(oRgn.english_name, oRgn.japanese_name);
+			rgnImg.addEventListener("mouseover", () => {
+				rgnImg.setAttribute("opacity", "50%");
+				hoveredRegion = rgn.english_name;
+				document.getElementById("main-title").innerHTML = getBilingualText(rgn.english_name, rgn.japanese_name);
 			});
 
-			oRgnImg.addEventListener("mouseout", () => {
-				oRgnImg.setAttribute("opacity", "100%");
+			rgnImg.addEventListener("mouseout", () => {
+				rgnImg.setAttribute("opacity", "100%");
 				hoveredRegion = "";
 				document.getElementById("main-title").innerHTML = countryTitle;
 			});
 		} else {
-			oRgnImg.setAttribute("fill", "lightgray");
+			rgnImg.setAttribute("fill", "lightgray");
 		}
 	});
 }
@@ -450,16 +450,16 @@ function filterMiniMap() {
 	// get the selected official region only
 	const svgObj = document.getElementById("country-map-mini");
 	const svgDoc = svgObj.contentDocument;
-	const oRgnList = data.unofficial_regions.flatMap(uRgn => uRgn.official_regions);
+	const rgnList = data.region_groups.flatMap(rgnGrp => rgnGrp.regions);
 
-	oRgnList.forEach(oRgn => {
-		const oRgnImg = svgDoc.getElementById(oRgn.id + "-img");
-		if (oRgn.id != selectedORegion.id) {
-			oRgnImg.setAttribute("fill", "none");
-			oRgnImg.setAttribute("stroke", "none");
+	rgnList.forEach(rgn => {
+		const rgnImg = svgDoc.getElementById(rgn.id + "-img");
+		if (rgn.id != selectedORegion.id) {
+			rgnImg.setAttribute("fill", "none");
+			rgnImg.setAttribute("stroke", "none");
 		} else {
-			oRgnImg.setAttribute("fill", appColor);
-			oRgnImg.setAttribute("stroke", "none");
+			rgnImg.setAttribute("fill", appColor);
+			rgnImg.setAttribute("stroke", "none");
 		}
 	});
 
@@ -602,18 +602,18 @@ function selectPref(newORegion) {
 	document.getElementById(newORegion.id + "-dropdown").classList.add("active");
 
 	selectedORegion = newORegion;
-	document.getElementById("o-rgn-name-arrow").classList.add("arrow-down");
-	document.getElementById("o-rgn-name-arrow").classList.remove("arrow-up");
+	document.getElementById("rgn-name-arrow").classList.add("arrow-down");
+	document.getElementById("rgn-name-arrow").classList.remove("arrow-up");
 	editMiniMap(newORegion);
 	
-	document.getElementById("o-rgn-dates").innerHTML = getBilingualText(selectedORegion.dates_english, selectedORegion.dates_japanese);
-	document.getElementById("o-rgn-cities").innerHTML = selectedORegion.areas.map(area => {
+	document.getElementById("rgn-dates").innerHTML = getBilingualText(selectedORegion.dates_english, selectedORegion.dates_japanese);
+	document.getElementById("rgn-cities").innerHTML = selectedORegion.areas.map(area => {
 		return getBilingualText(area.english_name, area.japanese_name);
 	}
 	).sort().join(" | ");
-	document.getElementById("o-rgn-desc-eng").innerHTML = selectedORegion.description_english;
-	document.getElementById("o-rgn-desc-jp").innerHTML = selectedORegion.description_japanese;
-	document.getElementById("o-rgn-name").innerHTML = getBilingualText(selectedORegion.english_name, selectedORegion.japanese_name);
+	document.getElementById("rgn-desc-eng").innerHTML = selectedORegion.description_english;
+	document.getElementById("rgn-desc-jp").innerHTML = selectedORegion.description_japanese;
+	document.getElementById("rgn-name").innerHTML = getBilingualText(selectedORegion.english_name, selectedORegion.japanese_name);
 
 	var filterLocations = document.getElementById("location-list");
 	filterLocations.replaceChildren();
@@ -1099,7 +1099,7 @@ function endHandleDrag(e) {
 					showORegionInfo(true);
 				}
 			} else if (currentY < initialYHandle) {
-				if(grabbedHandleId == "o-rgn-info-handle"){
+				if(grabbedHandleId == "rgn-info-handle"){
 					hideORegionInfo(true);
 				}
 			}
@@ -1204,21 +1204,21 @@ function closeInfoPopup(forceClose) {
 
 // Official region info
 function spinArrow() {
-	document.getElementById("o-rgn-name-arrow").classList.toggle("arrow-down");
-	document.getElementById("o-rgn-name-arrow").classList.toggle("arrow-up");
+	document.getElementById("rgn-name-arrow").classList.toggle("arrow-down");
+	document.getElementById("rgn-name-arrow").classList.toggle("arrow-up");
 }
 
 function showORegionInfo(isForced) {
 	isORegionInfoVisible = true;
-	addRemoveTransparent("o-rgn-info-bg", true);
-	document.getElementById("o-rgn-info-bg").style.visibility = "visible";
+	addRemoveTransparent("rgn-info-bg", true);
+	document.getElementById("rgn-info-bg").style.visibility = "visible";
 	if (isForced) {
-		if (document.body.scrollTop < document.getElementById("o-rgn-info").getBoundingClientRect().height) {
+		if (document.body.scrollTop < document.getElementById("rgn-info").getBoundingClientRect().height) {
 			scrollToTop(true);
 		} else {
-			document.getElementById("o-rgn-info").style.position = "sticky";
-			document.getElementById("o-rgn-info").style.top = document.getElementById("top-bar").getBoundingClientRect().height;
-			addRemoveTransparent("o-rgn-info-bg", false);
+			document.getElementById("rgn-info").style.position = "sticky";
+			document.getElementById("rgn-info").style.top = document.getElementById("top-bar").getBoundingClientRect().height;
+			addRemoveTransparent("rgn-info-bg", false);
 		}
 	}
 }
@@ -1226,20 +1226,20 @@ function showORegionInfo(isForced) {
 function hideORegionInfo(isForced) {
 	isORegionInfoVisible = false;
 	if (isForced) {
-		var oRgnInfoOffset = document.getElementById("o-rgn-info").getBoundingClientRect().height;
-		if (document.body.scrollTop <= oRgnInfoOffset) {
+		var rgnInfoOffset = document.getElementById("rgn-info").getBoundingClientRect().height;
+		if (document.body.scrollTop <= rgnInfoOffset) {
 			window.scrollTo({
-				top: oRgnInfoOffset,
+				top: rgnInfoOffset,
 				left: 0,
 				behavior: 'smooth'
 			});
 		}
 	}
-	addRemoveTransparent("o-rgn-info-bg", true);
+	addRemoveTransparent("rgn-info-bg", true);
 	setTimeout(() => {
-		document.getElementById("o-rgn-info-bg").style.visibility = "hidden";
-		document.getElementById("o-rgn-info").style.position = "relative";
-		document.getElementById("o-rgn-info").style.top = "0";
+		document.getElementById("rgn-info-bg").style.visibility = "hidden";
+		document.getElementById("rgn-info").style.position = "relative";
+		document.getElementById("rgn-info").style.top = "0";
 	}, defaultTimeout);
 }
 
@@ -1263,11 +1263,11 @@ function scrollORegionInfo() {
 	if (throttleORegionInfo || !isGalleryVisible) return;
 	throttleORegionInfo = true;
 	setTimeout(() => {
-		let oRgnInfoOffset = document.getElementById("o-rgn-info").getBoundingClientRect().height / 2;
-		if (isORegionInfoVisible && document.body.scrollTop > oRgnInfoOffset) {
+		let rgnInfoOffset = document.getElementById("rgn-info").getBoundingClientRect().height / 2;
+		if (isORegionInfoVisible && document.body.scrollTop > rgnInfoOffset) {
 			isORegionInfoVisible = false;
 			hideORegionInfo(false);
-		} else if (!isORegionInfoVisible && document.body.scrollTop < oRgnInfoOffset) {
+		} else if (!isORegionInfoVisible && document.body.scrollTop < rgnInfoOffset) {
 			isORegionInfoVisible = true;
 			showORegionInfo(false);
 		}
@@ -1298,8 +1298,8 @@ function changeGalleryVisibility(isVisible) {
 		document.getElementById("top-bar").style.position = "sticky";
 		document.getElementById("top-bar").style.backgroundColor = "white";
 		addRemoveNoDisplay(["map-page", "to-top-btn", "globe-btn"], true);
-		addRemoveNoDisplay(["gallery", "filter-btn", "map-btn", "info-btn", "o-rgn-title-btn", "o-rgn-info", "o-rgn-info-drawer"], false);
-		document.getElementById("o-rgn-info-bg").style.visibility = "visible";
+		addRemoveNoDisplay(["gallery", "filter-btn", "map-btn", "info-btn", "rgn-title-btn", "rgn-info", "rgn-info-drawer"], false);
+		document.getElementById("rgn-info-bg").style.visibility = "visible";
 		addRemoveTransparent("to-top-btn", true);
 		document.getElementById("dates-title").scrollIntoView({block: isPortraitMode() ? "end" : "start"});
 	} else {
@@ -1308,11 +1308,11 @@ function changeGalleryVisibility(isVisible) {
 		document.getElementById("top-bar").style.position = "fixed";
 		document.getElementById("top-bar").style.backgroundColor = "transparent";
 		addRemoveNoDisplay(["map-page", "to-top-btn", "globe-btn"], false);
-		addRemoveNoDisplay(["gallery", "filter-btn", "map-btn", "info-btn", "o-rgn-title-btn", "o-rgn-info", "o-rgn-info-drawer"], true);
-		document.getElementById("o-rgn-info-bg").style.visibility = "hidden";
+		addRemoveNoDisplay(["gallery", "filter-btn", "map-btn", "info-btn", "rgn-title-btn", "rgn-info", "rgn-info-drawer"], true);
+		document.getElementById("rgn-info-bg").style.visibility = "hidden";
 		addRemoveTransparent("to-top-btn", false);
 	}
-	addRemoveTransparent("o-rgn-info-bg", false);
+	addRemoveTransparent("rgn-info-bg", false);
 
 	isORegionInfoVisible = isGalleryVisible;
 	if (!isGalleryVisible) {
@@ -1390,6 +1390,12 @@ function setupSite() {
 		});
 	});
 
+	document.addEventListener("contextmenu", function(e){
+		if (e.target.nodeName === "IMG") {
+			e.preventDefault();
+		}
+	}, false);
+
 	document.getElementById("load8").addEventListener("animationend", function() {
 		addRemoveNoDisplay(document.getElementById("loader"), true);
 		addRemoveNoDisplay(Array.from(document.getElementsByClassName("loader-dot")).flatMap(dot => dot.id), false);
@@ -1398,17 +1404,57 @@ function setupSite() {
 	document.getElementById("start-btn-jp").addEventListener("click", function () {
 		selectCountry(japan, '--jp-color');
 	});
+	document.getElementById("start-btn-jp").addEventListener("mouseover", function () {
+		addRemoveTransparent("jp-start-icon-c", true);
+		var icons = Array.from(document.getElementById("jp-start-icon").getElementsByTagName("img"));
+		addRemoveClass(icons, "animated", true);
+	});
+	document.getElementById("start-btn-jp").addEventListener("mouseout", function () {
+		addRemoveTransparent("jp-start-icon-c", false);
+		var icons = Array.from(document.getElementById("jp-start-icon").getElementsByTagName("img"));
+		addRemoveClass(icons, "animated", false);
+	});
 	document.getElementById("start-btn-tw").addEventListener("click", function () {
 		selectCountry(taiwan, '--tw-color');
+	});
+	document.getElementById("start-btn-tw").addEventListener("mouseover", function () {
+		addRemoveTransparent("tw-start-icon-c", true);
+		var icons = Array.from(document.getElementById("tw-start-icon").getElementsByTagName("img"));
+		addRemoveClass(icons, "animated", true);
+	});
+	document.getElementById("start-btn-tw").addEventListener("mouseout", function () {
+		addRemoveTransparent("tw-start-icon-c", false);
+		var icons = Array.from(document.getElementById("tw-start-icon").getElementsByTagName("img"));
+		addRemoveClass(icons, "animated", false);
 	});
 	document.getElementById("start-btn-au").addEventListener("click", function () {
 		selectCountry(australia, '--au-color');
 	});
+	document.getElementById("start-btn-au").addEventListener("mouseover", function () {
+		addRemoveTransparent("au-start-icon-c", true);
+		var icons = Array.from(document.getElementById("au-start-icon").getElementsByTagName("img"));
+		addRemoveClass(icons, "animated", true);
+	});
+	document.getElementById("start-btn-au").addEventListener("mouseout", function () {
+		addRemoveTransparent("au-start-icon-c", false);
+		var icons = Array.from(document.getElementById("au-start-icon").getElementsByTagName("img"));
+		addRemoveClass(icons, "animated", false);
+	});
 	document.getElementById("start-btn-nz").addEventListener("click", function () {
 		selectCountry(newZealand, '--nz-color');
 	});
-	document.getElementById("o-rgn-drop-down-bg").addEventListener("click", function () { closePrefDropdown(); });
-	document.getElementById("o-rgn-info-bg").addEventListener("click", function () { changeORegionInfoVisibility(false, true); });
+	document.getElementById("start-btn-nz").addEventListener("mouseover", function () {
+		addRemoveTransparent("nz-start-icon-c", true);
+		var icons = Array.from(document.getElementById("nz-start-icon").getElementsByTagName("img"));
+		addRemoveClass(icons, "animated", true);
+	});
+	document.getElementById("start-btn-nz").addEventListener("mouseout", function () {
+		addRemoveTransparent("nz-start-icon-c", false);
+		var icons = Array.from(document.getElementById("nz-start-icon").getElementsByTagName("img"));
+		addRemoveClass(icons, "animated", false);
+	});
+	document.getElementById("rgn-drop-down-bg").addEventListener("click", function () { closePrefDropdown(); });
+	document.getElementById("rgn-info-bg").addEventListener("click", function () { changeORegionInfoVisibility(false, true); });
 	document.getElementById("info-popup-close-btn").addEventListener("click", function () { closeInfoPopup(false); });
 	document.getElementById("site-info-popup").addEventListener("click", (event) => {
 		event.stopPropagation();
@@ -1420,7 +1466,7 @@ function setupSite() {
 			scrollDown();
 		}
 	});
-	document.getElementById("o-rgn-title-btn").addEventListener("click", function () { togglePrefDropdown() });
+	document.getElementById("rgn-title-btn").addEventListener("click", function () { togglePrefDropdown() });
 	document.getElementById("filter-btn").addEventListener("click", function () { showFilter(); });
 	document.getElementById("filter-popup-bg").addEventListener("click", function () { hideFilter(true); });
 	document.getElementById("filter-popup-close-btn").addEventListener("click", function () { hideFilter(false); });
@@ -1454,7 +1500,7 @@ function setupSite() {
 	});
 	document.getElementById("country-map-mini").addEventListener("load", filterMiniMap);
 	document.getElementById("country-map").addEventListener("load", colourMap);
-	document.getElementById("o-rgn-info-handle").addEventListener("touchstart", e => { startHandleDrag(e,"o-rgn-info-handle") }, false);
+	document.getElementById("rgn-info-handle").addEventListener("touchstart", e => { startHandleDrag(e,"rgn-info-handle") }, false);
 	document.getElementById("pic-info-handle").addEventListener("touchstart", e => { startHandleDrag(e,"pic-info-handle") }, false);
 	document.addEventListener("touchend", endHandleDrag, false);
 
@@ -1527,10 +1573,10 @@ function hideLoader() {
 function filterCountryData() {
 	if (allData != null && selectedCountry != null) {
 		data = allData.find(country => {return country.id == selectedCountry;})
-		data.unofficial_regions.forEach(uRgn => {
-			uRgn.official_regions.forEach(oRgn => {
-				if (oRgn.image_list != null) {
-					oRgn.image_list.sort(function (a, b) { return new Date(a.date) - new Date(b.date); });
+		data.region_groups.forEach(rgnGrp => {
+			rgnGrp.regions.forEach(rgn => {
+				if (rgn.image_list != null) {
+					rgn.image_list.sort(function (a, b) { return new Date(a.date) - new Date(b.date); });
 				}
 			});
 		});
@@ -1540,7 +1586,7 @@ function filterCountryData() {
 		document.getElementById("map-instructions").innerHTML = getBilingualText(
 			"Select a " + data.official_region_name_english + " to see pictures from that location.", 
 			data.official_region_name_japanese + "を選択して、その地域の写真を表示する。");
-		document.getElementById("o-rgn-title-btn").title = getBilingualText("Change " + data.official_region_name_english, data.official_region_name_japanese + "を切り替える");
+		document.getElementById("rgn-title-btn").title = getBilingualText("Change " + data.official_region_name_english, data.official_region_name_japanese + "を切り替える");
 		document.getElementById("info-btn").title = getBilingualText("Toggle "  + data.official_region_name + " info", data.official_region_name_japanese + "の情報をトグル");
 		document.getElementById("description-title").innerHTML = getBilingualText("About", data.official_region_name_japanese + "について");
 
