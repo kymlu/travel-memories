@@ -107,7 +107,6 @@
                 <input type="text" id="keyword-input">
                 <div id="kw-clear-btn" class="clear-icon no-display">&#xf057</div>
               </div>
-              <br>
             </div>
             <div>
               <label id="location-title" class="bold-text"></label><br>
@@ -116,6 +115,10 @@
             <div>
               <label id="tags-title" class="bold-text"></label><br>
               <div id="tags-list" class="tag-list"></div>
+            </div>
+            <div>
+              <label id="camera-title" class="bold-text"></label><br>
+              <div id="camera-list" class="tag-list"></div>
             </div>
           </div>
           <div style="display: flex; width: 100%; justify-content: center; gap: 15px; margin-top: 15px;">
@@ -161,10 +164,12 @@
         </div>
         <button id="right-arrow" class="large-icon fullscreen-arrow">&#xf0da</button>
       </div>
-      <div class="fullscreen-ctrl">
-        <button id="zoom-in-btn" class="large-icon pic-info-btn" style="z-index: 3;">&#xf00e</button>
-        <button id="zoom-out-btn" class="large-icon pic-info-btn" style="z-index: 3;">&#xf010</button>
-        <button id="pic-info-btn" class="large-icon pic-info-btn" style="z-index: 3;">&#xf05a</button>
+      <div class="fullscreen-fns" style="z-index: 3;">
+        <button id="pic-info-btn" class="large-icon fullscreen-fn-btn">&#xf05a</button>
+        <div class="flex-column" style="display: none;">
+          <button id="zoom-in-btn" class="large-icon fullscreen-fn-btn">&#xf00e</button>
+          <button id="zoom-out-btn" class="large-icon fullscreen-fn-btn">&#xf010</button>
+        </div>
       </div>
     </div>
     <div id="pic-info" style="z-index: 3;">
@@ -196,38 +201,38 @@
 
   <!-- Start Screen -->
   <div id="start-screen" class="start-screen opacity-transition transparent no-display" style="z-index: 6000">
-    <div id="start-btn-jp" class="start-btn jp">
+    <button id="start-btn-jp" class="start-btn jp">
       <div id="start-btn-jp-text" class="country-text">Japan</div>
       <div id="jp-start-icon" style="width: 30px; height: 25px;">
         <img id="jp-start-icon-w" src="img/icons/sakura_white.svg" class="start-symbol">
         <img id="jp-start-icon-c" src="img/icons/sakura.svg" class="start-symbol opacity-transition">
       </div>
       <div id="start-btn-jp-text" class="country-text">日本</div>
-    </div>
-    <div id="start-btn-tw" class="start-btn tw">
+    </button>
+    <button id="start-btn-tw" class="start-btn tw">
       <div id="start-btn-tw-text" class="country-text">Taiwan</div>
       <div id="tw-start-icon" style="width: 30px; height: 25px;">
         <img id="tw-start-icon-w" src="img/icons/sun_white.svg" class="start-symbol">
         <img id="tw-start-icon-c" src="img/icons/sun.svg" class="start-symbol opacity-transition">
       </div>
       <div id="start-btn-tw-text" class="country-text">台湾</div>
-    </div>
-    <div id="start-btn-au" class="start-btn au">
+    </button>
+    <button id="start-btn-au" class="start-btn au">
       <div id="start-btn-au-text" class="country-text">Australia</div>
       <div id="au-start-icon" style="width: 30px; height: 25px;">
         <img id="au-start-icon-w" src="img/icons/kangaroo_white.svg" class="start-symbol">
         <img id="au-start-icon-c" src="img/icons/kangaroo.svg" class="start-symbol opacity-transition">
       </div>
       <div id="start-btn-au-text" class="country-text">オーストラリア</div>
-    </div> 
-    <div id="start-btn-nz" class="start-btn nz">
+    </button> 
+    <button id="start-btn-nz" class="start-btn nz">
       <div id="start-btn-nz-text" class="country-text">New Zealand</div>
       <div id="nz-start-icon" style="width: 30px; height: 25px;">
         <img id="nz-start-icon-w" src="img/icons/kiwi_white.svg" class="start-symbol">
         <img id="nz-start-icon-c" src="img/icons/kiwi.svg" class="start-symbol opacity-transition">
       </div>
       <div id="start-btn-nz-text" class="country-text">ニュージーランド</div>
-    </div>
+    </button>
     <div id="error-btn" class="error-btn centered loader-text" onclick="retry()">
         <p>Failed to fetch data. Try again?</p>
         <p>データアクセスに失敗しました。再試行する？</p>

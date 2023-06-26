@@ -270,6 +270,7 @@ h1 {
   margin: 0px 30px;
   box-shadow: inset 0 0 0 0 white;
   transition: color .3s ease-in-out, box-shadow .3s ease-in-out;
+  cursor: pointer;
 }
 
 .start-btn.jp:hover {
@@ -292,6 +293,7 @@ h1 {
   position: absolute;
   height: 30px;
   width: 30px;
+  margin-left: -12px
 }
 
 .start-symbol.animated {
@@ -313,6 +315,7 @@ h1 {
   cursor: pointer;
   vertical-align: middle;
   padding: 10px;
+  font-family: Zen Maru Gothic;
   font-size: var(--xlrg-text-size);
   font-weight: normal;
   text-transform: uppercase;
@@ -433,7 +436,7 @@ h1 {
 
 .rgn-txt {
   vertical-align: bottom;
-  padding: 0px 5px;
+  padding: 5px;
   margin-bottom: 5px;
   font-size: var(--reg-text-size);
   font-weight: normal;
@@ -876,24 +879,34 @@ input {
   overflow-y: auto;
 }
 
-.fullscreen-ctrl {
+.fullscreen-fns {
   position: absolute;
   display: flex;
+  justify-content: space-between;
   flex-direction: column;
   top: 0px;
   right: 0px;
-  margin: 10px;
+  padding: 10px;
+  height: 100%; 
+  box-sizing: border-box;
 }
 
 @media only screen and (orientation: portrait) {
-  .fullscreen-ctrl {
+  .fullscreen-fns {
     top: unset;
     bottom: 0px;
+    justify-content: end;
   }
 }
 
-.pic-info-btn {
+.fullscreen-fn-btn {
   color: white;
+}
+
+@media only screen and (orientation: portrait) {
+  #pic-info-btn {
+    order: 2;
+  }
 }
 
 .search-icon {

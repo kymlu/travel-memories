@@ -47,6 +47,8 @@ let filterLocationsList = [];
 let tempFilterLocations = [];
 let filterTagsList = [];
 let tempFilterTags = [];
+let filterCameraList = [];
+let tempFilterCameras = [];
 let visibleImgs = [];
 
 const defaultTimeout = 500;
@@ -640,21 +642,39 @@ function selectPref(newORegion) {
 	});
 
 	var filterTags = Array.from(document.getElementById("tags-list").getElementsByClassName("filter-opt"));
-	var presentTags = selectedORegion.image_list.flatMap(x => {return x.tags});
+	var presentTags = new Set(selectedORegion.image_list.flatMap(x => {return x.tags}));
 	filterTags.forEach(tag => {
 		var id = tag.id.replace("-tag", "");
-		if(presentTags.includes(id)){
+		if(presentTags.has(id)){
 			addRemoveNoDisplay([tag], false);
 		} else {
 			addRemoveNoDisplay([tag], true);
 		}
 		tag.classList.remove("active");
 	});
+
+	var filterCameras = document.getElementById("camera-list");
+	filterCameras.replaceChildren();
+	new Set(selectedORegion.image_list.map(x => {return x.camera_model})
+		.sort()
+		.filter(x => x!= ""))
+		.forEach(camera => {
+		var tempBtn = filterTagBtn.cloneNode();
+		tempBtn.id = camera.replace(" ", "") + "-tag";
+		tempBtn.innerHTML = camera;
+		tempBtn.addEventListener("click", () => {
+			toggleCamera(camera);
+			tempBtn.classList.toggle("active");
+		});
+		filterCameras.appendChild(tempBtn);
+	});
+
 	clearFilters();
 	filterKeyword = "";
 	visibleImgs = [];
 	filterLocationsList = [];
 	filterTagsList = [];
+	filterCameraList = [];
 	createGallery();
 	changeGalleryVisibility(true);
 	hideLoader();
@@ -677,6 +697,10 @@ function toggleTag(id) {
 	toggleFilter(id, tempFilterTags);
 }
 
+function toggleCamera(id){
+	toggleFilter(id, tempFilterCameras)
+}
+
 function showFilter() {
 	isFilterVisible = true;
 	addRemoveTransparent(["img-filter-popup", "filter-popup-bg"], false);
@@ -691,6 +715,7 @@ function showFilter() {
 	document.getElementById("keyword-input").value = filterKeyword;
 	tempFilterLocations = filterLocationsList.slice();
 	tempFilterTags = filterTagsList.slice();
+	tempFilterCameras = filterCameraList.slice();
 	Array.from(document.getElementById("location-list").getElementsByClassName("filter-opt"))
 		.forEach(tag => {
 			if (tempFilterLocations.includes(tag.id.replace("-tag", ""))) {
@@ -702,6 +727,14 @@ function showFilter() {
 	Array.from(document.getElementById("tags-list").getElementsByClassName("filter-opt"))
 		.forEach(tag => {
 			if (tempFilterTags.includes(tag.id.replace("-tag", ""))) {
+				tag.classList.add("active");
+			} else {
+				tag.classList.remove("active");
+			}
+		});
+	Array.from(document.getElementById("camera-list").getElementsByClassName("filter-opt"))
+		.forEach(tag => {
+			if (tempFilterCameras.includes(tag.innerHTML)) {
 				tag.classList.add("active");
 			} else {
 				tag.classList.remove("active");
@@ -755,11 +788,16 @@ function clearFilters() {
 	clearKeyword();
 	tempFilterLocations = [];
 	tempFilterTags = [];
+	tempFilterCameras = [];
 	Array.from(document.getElementById("location-list").getElementsByClassName("active"))
 	.forEach(tag => {
 		tag.classList.remove("active");
 	});
 	Array.from(document.getElementById("tags-list").getElementsByClassName("active"))
+	.forEach(tag => {
+		tag.classList.remove("active");
+	});
+	Array.from(document.getElementById("camera-list").getElementsByClassName("active"))
 	.forEach(tag => {
 		tag.classList.remove("active");
 	});
@@ -780,9 +818,11 @@ function includeImage(img) {
 		doesTextIncludeKeyword(img.location_chinese) ||
 		doesTextIncludeKeyword(area?.english_name) ||
 		doesTextIncludeKeyword(area?.japanese_name) || 
+		doesTextIncludeKeyword(img.camera_model) || 
 		tempTags.length > 0) &&
 		(filterLocationsList.length == 0 || filterLocationsList.includes(img.city)) &&
-		(filterTagsList.length == 0 || filterTagsList.filter(value => img.tags.includes(value)).length > 0);
+		(filterTagsList.length == 0 || filterTagsList.filter(value => img.tags.includes(value)).length > 0) &&
+		(filterCameraList.length == 0 || filterCameraList.includes(img.camera_model));
 }
 
 function filterImages() {
@@ -834,6 +874,7 @@ function submitFilters() {
 	filterKeyword = document.getElementById("keyword-input").value;
 	filterLocationsList = tempFilterLocations.slice();
 	filterTagsList = tempFilterTags.slice();
+	filterCameraList = tempFilterCameras.slice();
 	filterImages();
 	hideFilter(true);
 }
@@ -1301,7 +1342,9 @@ function changeGalleryVisibility(isVisible) {
 		addRemoveNoDisplay(["gallery", "filter-btn", "map-btn", "info-btn", "rgn-title-btn", "rgn-info", "rgn-info-drawer"], false);
 		document.getElementById("rgn-info-bg").style.visibility = "visible";
 		addRemoveTransparent("to-top-btn", true);
-		document.getElementById("dates-title").scrollIntoView({block: isPortraitMode() ? "end" : "start"});
+		if(isPortraitMode()){
+			document.getElementById("dates-title").scrollIntoView({block: isPortraitMode() ? "end" : "start"});
+		}
 	} else {
 		document.getElementById("btn-grp-left").classList.remove("btn-grp-left");
 		document.getElementById("btn-grp-right").classList.remove("btn-grp-right");
@@ -1345,6 +1388,7 @@ function setupSite() {
 	document.getElementById("filter-title").innerHTML = getBilingualText("Filters", "フィルター");
 	document.getElementById("keyword-title").innerHTML = getBilingualText("Keyword", "キーワード");
 	document.getElementById("tags-title").innerHTML = getBilingualText("Tags", "タグ");
+	document.getElementById("camera-title").innerHTML = getBilingualText("Camera", "カメラ");
 	document.getElementById("location-title").innerHTML = getBilingualText("Areas", "所");
 	document.getElementById("clear-btn").innerHTML = getBilingualText("Clear", "クリアする");
 	document.getElementById("submit-btn").innerHTML = getBilingualText("Save", "保存する");
