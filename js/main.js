@@ -384,6 +384,7 @@ function colourMap() {
 				selectPref(rgn);
 				document.getElementById("main-title").innerHTML = getBilingualText(rgn.english_name, rgn.japanese_name);
 			});
+
 			rgnImg.addEventListener("mouseover", () => {
 				rgnImg.setAttribute("opacity", "50%");
 				hoveredRegion = rgn.english_name;
@@ -1609,6 +1610,12 @@ function stopLoader(){
 	}, 100);
 }
 
+function highlightCountry(abbreviation, isHover){
+	addRemoveTransparent(abbreviation + "-start-icon-c", isHover);
+	var icons = Array.from(document.getElementById(abbreviation + "-start-icon").getElementsByTagName("img"));
+	addRemoveClass(icons, "animated", isHover);
+}
+
 function createStartScreen(){
 	const btn = document.createElement("button");
 	btn.classList.add("start-btn");
@@ -1646,14 +1653,16 @@ function createStartScreen(){
 		imgColor.classList.add("opacity-transition");
 
 		btnn.addEventListener("mouseover", function () {
-			addRemoveTransparent(abb + "-start-icon-c", true);
-			var icons = Array.from(document.getElementById(abb + "-start-icon").getElementsByTagName("img"));
-			addRemoveClass(icons, "animated", true);
+			highlightCountry(abb, true);
+		});
+		btnn.addEventListener("touchstart", function () {
+			highlightCountry(abb, true);
 		});
 		btnn.addEventListener("mouseout", function () {
-			addRemoveTransparent(abb + "-start-icon-c", false);
-			var icons = Array.from(document.getElementById(abb + "-start-icon").getElementsByTagName("img"));
-			addRemoveClass(icons, "animated", false);
+			highlightCountry(abb, false);
+		});
+		btnn.addEventListener("touchend", function () {
+			highlightCountry(abb, false);
 		});
 
 		btnn.appendChild(engTxt);
