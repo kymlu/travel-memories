@@ -1369,16 +1369,24 @@ function changeGalleryVisibility(isVisible) {
 	}
 }
 
-function selectCountry(country, countryColor){
-	openLoader();
-	addRemoveNoDisplay("map-page", false);
-	selectedCountry = country;
-	filterCountryData();
-	r.style.setProperty('--main-color', getComputedStyle(r).getPropertyValue(countryColor));
+function changeMainColor(newColor){
+	r.style.setProperty('--main-color', getComputedStyle(r).getPropertyValue(newColor));
 	var temp = getComputedStyle(r).getPropertyValue("--main-color").split(", ");
 	appColor = "rgb("+ temp [0] +", "+ temp [1] +", "+ temp [2] +")";
+}
+
+function selectCountry(country, countryColor){
+	now = new Date();
+	document.getElementById("load-icon").src = "img/icons/" + allData.filter(x => {return x.id == country})[0].symbol + ".svg";
+	openLoader();
+	addRemoveNoDisplay(["map-page", "btn-grp-left"], false);
+	addRemoveClass("btn-grp-right", "justify-end", false);
+	selectedCountry = country;
+	filterCountryData();
+	changeMainColor(countryColor)
 	setTimeout(() => {
-		openGallery();
+		stopLoader();
+		document.getElementById("load8").addEventListener("animationend", openGallery);
 	}, 1200);
 }
 
@@ -1441,62 +1449,11 @@ function setupSite() {
 	}, false);
 
 	document.getElementById("load8").addEventListener("animationend", function() {
-		addRemoveNoDisplay(document.getElementById("loader"), true);
-		addRemoveNoDisplay(Array.from(document.getElementsByClassName("loader-dot")).flatMap(dot => dot.id), false);
+		addRemoveNoDisplay(document.getElementById("loading-screen"), true);
+		// addRemoveNoDisplay(Array.from(document.getElementsByClassName("loader-dot")).flatMap(dot => dot.id), false);
 	});
 
-	document.getElementById("start-btn-jp").addEventListener("click", function () {
-		selectCountry(japan, '--jp-color');
-	});
-	document.getElementById("start-btn-jp").addEventListener("mouseover", function () {
-		addRemoveTransparent("jp-start-icon-c", true);
-		var icons = Array.from(document.getElementById("jp-start-icon").getElementsByTagName("img"));
-		addRemoveClass(icons, "animated", true);
-	});
-	document.getElementById("start-btn-jp").addEventListener("mouseout", function () {
-		addRemoveTransparent("jp-start-icon-c", false);
-		var icons = Array.from(document.getElementById("jp-start-icon").getElementsByTagName("img"));
-		addRemoveClass(icons, "animated", false);
-	});
-	document.getElementById("start-btn-tw").addEventListener("click", function () {
-		selectCountry(taiwan, '--tw-color');
-	});
-	document.getElementById("start-btn-tw").addEventListener("mouseover", function () {
-		addRemoveTransparent("tw-start-icon-c", true);
-		var icons = Array.from(document.getElementById("tw-start-icon").getElementsByTagName("img"));
-		addRemoveClass(icons, "animated", true);
-	});
-	document.getElementById("start-btn-tw").addEventListener("mouseout", function () {
-		addRemoveTransparent("tw-start-icon-c", false);
-		var icons = Array.from(document.getElementById("tw-start-icon").getElementsByTagName("img"));
-		addRemoveClass(icons, "animated", false);
-	});
-	document.getElementById("start-btn-au").addEventListener("click", function () {
-		selectCountry(australia, '--au-color');
-	});
-	document.getElementById("start-btn-au").addEventListener("mouseover", function () {
-		addRemoveTransparent("au-start-icon-c", true);
-		var icons = Array.from(document.getElementById("au-start-icon").getElementsByTagName("img"));
-		addRemoveClass(icons, "animated", true);
-	});
-	document.getElementById("start-btn-au").addEventListener("mouseout", function () {
-		addRemoveTransparent("au-start-icon-c", false);
-		var icons = Array.from(document.getElementById("au-start-icon").getElementsByTagName("img"));
-		addRemoveClass(icons, "animated", false);
-	});
-	document.getElementById("start-btn-nz").addEventListener("click", function () {
-		selectCountry(newZealand, '--nz-color');
-	});
-	document.getElementById("start-btn-nz").addEventListener("mouseover", function () {
-		addRemoveTransparent("nz-start-icon-c", true);
-		var icons = Array.from(document.getElementById("nz-start-icon").getElementsByTagName("img"));
-		addRemoveClass(icons, "animated", true);
-	});
-	document.getElementById("start-btn-nz").addEventListener("mouseout", function () {
-		addRemoveTransparent("nz-start-icon-c", false);
-		var icons = Array.from(document.getElementById("nz-start-icon").getElementsByTagName("img"));
-		addRemoveClass(icons, "animated", false);
-	});
+	
 	document.getElementById("rgn-drop-down-bg").addEventListener("click", function () { closePrefDropdown(); });
 	document.getElementById("rgn-info-bg").addEventListener("click", function () { changeORegionInfoVisibility(false, true); });
 	document.getElementById("info-popup-close-btn").addEventListener("click", function () { closeInfoPopup(false); });
@@ -1592,9 +1549,9 @@ function setupSite() {
 function openLoader() {
 	addRemoveTransparent(["top-bar", "map-page"], true);
 	addRemoveTransparent("start-screen", true);
-	addRemoveNoDisplay("loader", false);
-	addRemoveTransparent("loader", false);
-	for (let i = 1; i <= 8; i++) {
+	addRemoveNoDisplay("loading-screen", false);
+	addRemoveTransparent("loading-screen", false);
+	for (let i = 0; i <= 8; i++) {
 		document.getElementById("load" + i).style.animationIterationCount = "infinite";
 		addRemoveNoDisplay("load" + i, false);
 	}
@@ -1605,12 +1562,14 @@ function openLoader() {
 }
 
 function hideLoader() {
-	addRemoveTransparent("loader", true);
+	addRemoveTransparent("loading-screen", true);
 	addRemoveTransparent("top-bar", false);
 	document.body.style.overflowY = "auto";
 	setTimeout(() => {
-		addRemoveNoDisplay("loader", true);
-		addRemoveTransparent("loader", false);
+		addRemoveNoDisplay("loading-screen", true);
+		setTimeout(() => {
+			addRemoveTransparent("loading-screen", false);
+		}, defaultTimeout);
 	}, defaultTimeout);
 }
 
@@ -1643,11 +1602,68 @@ function filterCountryData() {
 
 function stopLoader(){
 	setTimeout(() => {
-		var iterationCount = Math.ceil((new Date() - now) / 1000 / 2);
-		for (let i = 1; i <= 8; i++) {
+		var iterationCount = Math.ceil((new Date() - now) / 2000);
+		for (let i = 0; i <= 8; i++) {
 			document.getElementById("load" + i).style.animationIterationCount = iterationCount;
 		}
 	}, 100);
+}
+
+function createStartScreen(){
+	const btn = document.createElement("button");
+	btn.classList.add("start-btn");
+	const text = document.createElement("div");
+	text.classList.add("country-text");
+	const icon = document.createElement("div");
+	icon.classList.add("start-icon");
+	const img = document.createElement("img");
+	img.classList.add("start-icon", "img");
+
+	document.getElementById("start-screen").replaceChildren();
+
+	allData.forEach(country => {
+		const abb = country.abbreviation;
+
+		var btnn = btn.cloneNode();
+		btnn.id = "start-btn-" + abb;
+		btnn.classList.add(abb);
+		btnn.addEventListener("click", function () {
+			selectCountry(country.id, '--'+ abb +'-color');
+		});
+
+		var engTxt = text.cloneNode();
+		engTxt.innerHTML = country.english_name;
+		var jpTxt = text.cloneNode();
+		jpTxt.innerHTML = country.japanese_name;
+		var iconn = icon.cloneNode();
+		iconn.id = abb + "-start-icon";
+		var imgWhite = img.cloneNode();
+		imgWhite.id = abb + "-start-icon-w";
+		imgWhite.src = "img/icons/" + country.symbol + "_white.svg";
+		var imgColor = img.cloneNode();
+		imgColor.id = abb + "-start-icon-c";
+		imgColor.src = "img/icons/" + country.symbol + ".svg";
+		imgColor.classList.add("opacity-transition");
+
+		btnn.addEventListener("mouseover", function () {
+			addRemoveTransparent(abb + "-start-icon-c", true);
+			var icons = Array.from(document.getElementById(abb + "-start-icon").getElementsByTagName("img"));
+			addRemoveClass(icons, "animated", true);
+		});
+		btnn.addEventListener("mouseout", function () {
+			addRemoveTransparent(abb + "-start-icon-c", false);
+			var icons = Array.from(document.getElementById(abb + "-start-icon").getElementsByTagName("img"));
+			addRemoveClass(icons, "animated", false);
+		});
+
+		btnn.appendChild(engTxt);
+		btnn.appendChild(iconn);
+		btnn.appendChild(jpTxt);
+		iconn.appendChild(imgWhite);
+		iconn.appendChild(imgColor);
+
+		document.getElementById("start-screen").appendChild(btnn);
+	});
 }
 
 function showFirstStartScreen(){
@@ -1656,16 +1672,22 @@ function showFirstStartScreen(){
 }
 
 function showStartScreen(){
-	scrollToTop(false);
-	addRemoveNoDisplay(["loader", "to-top-btn"], true);
 	selectedCountry = null;
 	selectedORegion = null;
+	scrollToTop(false);
+	changeMainColor("--default-color");
+	addRemoveNoDisplay(["top-bar", "load-icon"], false);
+	addRemoveTransparent("top-bar", false);
+	addRemoveClass("btn-grp-right", "justify-end", true);
 	addRemoveTransparent("map-page", true);
-	setTimeout(() => {
-		addRemoveNoDisplay("map-page", true);		
-	}, defaultTimeout);
+	addRemoveNoDisplay(["btn-grp-left", "loading-screen", "to-top-btn", "map-page"], true);
 	document.getElementById("load8").removeEventListener("animationend", showStartScreen);
 	addRemoveNoDisplay("start-screen", false);
+	document.getElementById("start-screen").scrollTo({
+		top: 0,
+		left: 0,
+		behavior: "instant"
+	});
 	setTimeout(() => {
 		addRemoveTransparent("start-screen", false);
 	}, 10);
@@ -1685,6 +1707,7 @@ function fetchData() {
 			console.error(error);
 		}).then(() => {
 			if (!hasError && allData != null) {
+				createStartScreen();
 				showFirstStartScreen();
 			}
 		});
@@ -1692,7 +1715,7 @@ function fetchData() {
 
 function retry() {
 	addRemoveNoDisplay("error-btn", true);
-	for (let i = 1; i <= 8; i++) {
+	for (let i = 0; i <= 8; i++) {
 		document.getElementById("load" + i).style.animationPlayState = "running";
 	}
 	fetchData();
@@ -1702,7 +1725,7 @@ function showDataLoadError() {
 	setTimeout(() => {
 		addRemoveNoDisplay("error-btn", false);
 		addRemoveTransparent("error-btn", false);
-		for (let i = 1; i <= 8; i++) {
+		for (let i = 0; i <= 8; i++) {
 			document.getElementById("load" + i).style.animationPlayState = "paused";
 		}
 	}, defaultTimeout);
