@@ -1252,7 +1252,7 @@ function spinArrow() {
 
 function showRegionInfo(isForced) {
 	isRegionInfoVisible = true;
-	addRemoveTransparent("rgn-info-bg", true);
+	addRemoveTransparent("rgn-info-bg", false);
 	document.getElementById("rgn-info-bg").style.visibility = "visible";
 	if (isForced) {
 		if (document.body.scrollTop < document.getElementById("rgn-info").getBoundingClientRect().height) {
@@ -1260,7 +1260,6 @@ function showRegionInfo(isForced) {
 		} else {
 			document.getElementById("rgn-info").style.position = "sticky";
 			document.getElementById("rgn-info").style.top = document.getElementById("top-bar").getBoundingClientRect().height;
-			addRemoveTransparent("rgn-info-bg", false);
 		}
 	}
 }
