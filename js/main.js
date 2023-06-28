@@ -798,7 +798,7 @@ function doesTextIncludeKeyword(text){
 }
 
 function includeImage(img) {
-	let area = selectedRegion.areas.find(x => {return x.id == img.city;});
+	let area = selectedRegion.areas.find(x => {return x.id == img.area;});
 	let tempTags = tags.filter(tag => img.tags.includes(tag.id) && (doesTextIncludeKeyword(tag.english_name) || doesTextIncludeKeyword(tag.japanese_name)));
 	return (filterKeyword == "" ||
 		doesTextIncludeKeyword(img.description_english) ||
@@ -810,7 +810,7 @@ function includeImage(img) {
 		doesTextIncludeKeyword(area?.japanese_name) || 
 		doesTextIncludeKeyword(img.camera_model) || 
 		tempTags.length > 0) &&
-		(filterLocationsList.length == 0 || filterLocationsList.includes(img.city)) &&
+		(filterLocationsList.length == 0 || filterLocationsList.includes(img.area)) &&
 		(filterTagsList.length == 0 || filterTagsList.filter(value => img.tags.includes(value)).length > 0) &&
 		(filterCameraList.length == 0 || filterCameraList.includes(img.camera_model));
 }
@@ -927,7 +927,7 @@ function setFullscreenInfo(){
 		document.getElementById("fullscreen-eng-date").innerHTML = "Unknown date";
 		document.getElementById("fullscreen-jp-date").innerHTML = "不明な日付";
 	}
-	let area = selectedRegion.areas.find(function (area) { return area.id == selectedPic.city });
+	let area = selectedRegion.areas.find(function (area) { return area.id == selectedPic.area });
 	searchTerm[0] = (selectedPic.location_english ? 
 						(selectedPic.location_english + ", ") : 
 						selectedCountry == japan && selectedPic.location_japanese ? (selectedPic.location_japanese + ", ") : 
