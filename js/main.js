@@ -1,14 +1,3 @@
-/* To implement
-	- transition when selecting a prefecture (text) in mobile
-	- transition after selecting a prefecture to view pictures
-	- little icon to represent each prefecture
-*/
-
-// Imports
-//import { Region } from "https://raw.githubusercontent.com/kymlu/travel-memories/main/js/region.js";
-//import { Prefecture } from "https://raw.githubusercontent.com/kymlu/travel-memories/main/js/prefecture.js";
-//import { Image } from "https://raw.githubusercontent.com/kymlu/travel-memories/main/js/image.js";
-
 // Variables
 var r = document.querySelector(':root');
 
@@ -270,8 +259,8 @@ function createRgnList() {
 	const rgnList = document.getElementById("rgn-list");
 	rgnList.replaceChildren();
 
-	const dropDownPrefList = document.getElementById("rgn-drop-down");
-	dropDownPrefList.replaceChildren();
+	const dropDownRgnList = document.getElementById("rgn-drop-down");
+	dropDownRgnList.replaceChildren();
 
 	const rgnGrpGroup = document.createElement("div");
 	rgnGrpGroup.classList.add("rgn-grp");
@@ -302,12 +291,12 @@ function createRgnList() {
 		var ddURegion = rgnGrpDrop.cloneNode();
 
 		if(data.show_unofficial_regions){
-			const newPrefTitle = rgnGrpTitle.cloneNode();
-			newPrefTitle.innerHTML = getBilingualText(rgnGrp.english_name, rgnGrp.japanese_name);
-			newRgnGrp.appendChild(newPrefTitle);
+			const newRgnTitle = rgnGrpTitle.cloneNode();
+			newRgnTitle.innerHTML = getBilingualText(rgnGrp.english_name, rgnGrp.japanese_name);
+			newRgnGrp.appendChild(newRgnTitle);
 			ddURegion.innerHTML = getBilingualText(rgnGrp.english_name, rgnGrp.japanese_name);
 			ddURegion.id = rgnGrp.english_name + "-dropdown";
-			dropDownPrefList.appendChild(ddURegion);
+			dropDownRgnList.appendChild(ddURegion);
 		}
 
 		rgnGrp.regions.forEach(rgn => {
@@ -320,13 +309,13 @@ function createRgnList() {
 				rgnNode.innerHTML = getBilingualText(rgn.english_name, rgn.japanese_name);
 				rgnNode.title = visitedTitle;
 				rgnNode.addEventListener("click", function () {
-					selectPref(rgn);
+					selectRgn(rgn);
 				}, false);
 				newRgnGrp.appendChild(rgnNode);
 
 				ddRgn.classList.add("visited-rgn-text");
 				ddRgn.addEventListener("click", function () {
-					selectPref(rgn);
+					selectRgn(rgn);
 				}, false);
 			} else {
 				const rgnNode = unvisitedRegion.cloneNode();
@@ -335,14 +324,14 @@ function createRgnList() {
 				ddRgn.classList.add("locked-rgn-text");
 			}
 			
-			dropDownPrefList.appendChild(ddRgn);
+			dropDownRgnList.appendChild(ddRgn);
 			});
 		rgnList.appendChild(newRgnGrp);
 	});
 }
 
 // Official region selector dropdown
-function togglePrefDropdown() {
+function toggleRgnDropdown() {
 	document.getElementById("rgn-drop-down-container").classList.toggle("no-display");
 	spinArrow();
 	if(isNewRegion){
@@ -351,13 +340,13 @@ function togglePrefDropdown() {
 	}
 }
 
-function closePrefDropdown() {
+function closeRgnDropdown() {
 	addRemoveNoDisplay("rgn-drop-down-container", true);
 	document.getElementById("rgn-name-arrow").classList.add("arrow-down");
 	document.getElementById("rgn-name-arrow").classList.remove("arrow-up");
 }
 
-function showPrefDropdown() {
+function showRgnDropdown() {
 	addRemoveNoDisplay("rgn-drop-down-container", false);
 	document.getElementById("rgn-name-arrow").classList.remove("arrow-down");
 	document.getElementById("rgn-name-arrow").classList.add("arrow-up");
@@ -381,7 +370,7 @@ function colourMap() {
 			rgnImg.setAttribute("cursor", "pointer");
 			rgnImg.setAttribute("transition", "opacity 0.3 ease-in-out");
 			rgnImg.addEventListener("click", function () {
-				selectPref(rgn);
+				selectRgn(rgn);
 				document.getElementById("main-title").innerHTML = getBilingualText(rgn.english_name, rgn.japanese_name);
 			});
 
@@ -595,7 +584,7 @@ function createGallery() {
 	}
 }
 
-function selectPref(newRegion) {
+function selectRgn(newRegion) {
 	openLoader();
 	isNewRegion = true;
 
@@ -1325,7 +1314,7 @@ function openGallery() {
 }
 
 function changeGalleryVisibility(isVisible) {
-	closePrefDropdown();
+	closeRgnDropdown();
 	scrollToTop(false);
 	if (isVisible == undefined) {
 		isGalleryVisible = !isGalleryVisible;
@@ -1454,7 +1443,7 @@ function setupSite() {
 	});
 
 	
-	document.getElementById("rgn-drop-down-bg").addEventListener("click", function () { closePrefDropdown(); });
+	document.getElementById("rgn-drop-down-bg").addEventListener("click", function () { closeRgnDropdown(); });
 	document.getElementById("rgn-info-bg").addEventListener("click", function () { changeRegionInfoVisibility(false, true); });
 	document.getElementById("info-popup-close-btn").addEventListener("click", function () { closeInfoPopup(false); });
 	document.getElementById("site-info-popup").addEventListener("click", (event) => {
@@ -1467,7 +1456,7 @@ function setupSite() {
 			scrollDown();
 		}
 	});
-	document.getElementById("rgn-title-btn").addEventListener("click", function () { togglePrefDropdown() });
+	document.getElementById("rgn-title-btn").addEventListener("click", function () { toggleRgnDropdown() });
 	document.getElementById("filter-btn").addEventListener("click", function () { showFilter(); });
 	document.getElementById("filter-popup-bg").addEventListener("click", function () { hideFilter(true); });
 	document.getElementById("filter-popup-close-btn").addEventListener("click", function () { hideFilter(false); });
