@@ -738,7 +738,7 @@ input {
 
 @media only screen and (orientation: portrait) {
   .popup {
-    padding: 20px;
+    padding: 30px;
     max-height: 70vh;
   }
 }
@@ -939,7 +939,7 @@ input {
   width: 0px;
   height: 0px;
   background-color: rgba(var(--main-color));
-  animation: loader-grow-shrink 2s ease-in-out infinite alternate-reverse;
+  animation: loader-grow-shrink 1.5s ease-in-out infinite alternate-reverse;
 }
 
 @keyframes loader-grow-shrink {

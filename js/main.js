@@ -19,19 +19,19 @@ let allData = null;
 let data = null;
 let countryTitle = null;
 let selectedCountry = null;
-let selectedORegion = null;
+let selectedRegion = null;
 let selectedPic = null;
 let selectedPicInd = 0;
 
-let throttleORegionInfo = false;
+let throttleRegionInfo = false;
 let isPopupVisible = false;
 let isToTopVisible = false;
 let isFilterVisible = false;
 let isGalleryVisible = false;
-let isNewORegion = true;
+let isNewRegion = true;
 let isFullscreen = false;
 let isNewFullscreenInstance = true;
-let isORegionInfoVisible = false;
+let isRegionInfoVisible = false;
 let isPicInfoVisible = false;
 
 let initialX = null;
@@ -282,11 +282,11 @@ function createRgnList() {
 	const rgnGrpTitle = document.createElement("div");
 	rgnGrpTitle.classList.add("rgn-grp-text");
 
-	const visitedORegion = document.createElement("div");
-	visitedORegion.classList.add("rgn-txt", "visited-rgn-text");
+	const visitedRegion = document.createElement("div");
+	visitedRegion.classList.add("rgn-txt", "visited-rgn-text");
 
-	const unvisitedORegion = document.createElement("div");
-	unvisitedORegion.classList.add("rgn-txt", "locked-rgn-text");
+	const unvisitedRegion = document.createElement("div");
+	unvisitedRegion.classList.add("rgn-txt", "locked-rgn-text");
 
 	const rgnGrpDrop = document.createElement("div");
 	rgnGrpDrop.classList.add("rgn-grp-text", "regular-text");
@@ -316,7 +316,7 @@ function createRgnList() {
 			ddRgn.id = rgn.id + "-dropdown";
 			ddRgn.title = visitedTitle;
 			if (rgn.visited) {
-				const rgnNode = visitedORegion.cloneNode();
+				const rgnNode = visitedRegion.cloneNode();
 				rgnNode.innerHTML = getBilingualText(rgn.english_name, rgn.japanese_name);
 				rgnNode.title = visitedTitle;
 				rgnNode.addEventListener("click", function () {
@@ -329,7 +329,7 @@ function createRgnList() {
 					selectPref(rgn);
 				}, false);
 			} else {
-				const rgnNode = unvisitedORegion.cloneNode();
+				const rgnNode = unvisitedRegion.cloneNode();
 				rgnNode.innerHTML = getBilingualText(rgn.english_name, rgn.japanese_name);
 				newRgnGrp.appendChild(rgnNode);
 				ddRgn.classList.add("locked-rgn-text");
@@ -345,9 +345,9 @@ function createRgnList() {
 function togglePrefDropdown() {
 	document.getElementById("rgn-drop-down-container").classList.toggle("no-display");
 	spinArrow();
-	if(isNewORegion){
-		isNewORegion = false;
-		document.getElementById(selectedORegion.id + "-dropdown").scrollIntoView({ behavior: "smooth", block: "center" });
+	if(isNewRegion){
+		isNewRegion = false;
+		document.getElementById(selectedRegion.id + "-dropdown").scrollIntoView({ behavior: "smooth", block: "center" });
 	}
 }
 
@@ -457,7 +457,7 @@ function filterMiniMap() {
 
 	rgnList.forEach(rgn => {
 		const rgnImg = svgDoc.getElementById(rgn.id + "-img");
-		if (rgn.id != selectedORegion.id) {
+		if (rgn.id != selectedRegion.id) {
 			rgnImg.setAttribute("fill", "none");
 			rgnImg.setAttribute("stroke", "none");
 		} else {
@@ -468,7 +468,7 @@ function filterMiniMap() {
 
 	// show the map
 	const japanImg = svgDoc.getElementById(selectedCountry + "-img");
-	japanImg.setAttribute("viewBox", selectedORegion.viewbox);
+	japanImg.setAttribute("viewBox", selectedRegion.viewbox);
 	setTimeout(() => {
 		addRemoveTransparent([svgObj], false);
 	}, 50);
@@ -510,9 +510,9 @@ function createGallery() {
 	let isLeft = false;
 
 	// add pictures
-	if (selectedORegion.image_list.length > 0) {
+	if (selectedRegion.image_list.length > 0) {
 		let angle = 1; // 1-4 for the rotation class
-		selectedORegion.image_list.forEach(img => {
+		selectedRegion.image_list.forEach(img => {
 			// clone all relevant nodes
 			let pol = polaroid.cloneNode(true);
 			let polImgFrame = polaroidImgFrame.cloneNode();
@@ -558,7 +558,7 @@ function createGallery() {
 			// listeners
 			pol.addEventListener("click", function () {
 				selectedPic = img;
-				selectedPicInd = selectedORegion.image_list.indexOf(selectedPic);
+				selectedPicInd = selectedRegion.image_list.indexOf(selectedPic);
 				isNewFullscreenInstance = true;
 				setFullscreenPicture();
 				lastSwipeTime = new Date();
@@ -572,7 +572,7 @@ function createGallery() {
 				}
 			}
 
-			polImg.setAttribute("img-src", img.link ?? "img/" + selectedCountry + "/" + selectedORegion.id + "/" + img.file_name);
+			polImg.setAttribute("img-src", img.link ?? "img/" + selectedCountry + "/" + selectedRegion.id + "/" + img.file_name);
 			polImg.addEventListener("load", event => {
 				addRemoveTransparent(polImg, false);
 			});
@@ -595,32 +595,32 @@ function createGallery() {
 	}
 }
 
-function selectPref(newORegion) {
+function selectPref(newRegion) {
 	openLoader();
-	isNewORegion = true;
+	isNewRegion = true;
 
-	if (selectedORegion) {
-		document.getElementById(selectedORegion.id + "-dropdown").classList.remove("active");
+	if (selectedRegion) {
+		document.getElementById(selectedRegion.id + "-dropdown").classList.remove("active");
 	}
-	document.getElementById(newORegion.id + "-dropdown").classList.add("active");
+	document.getElementById(newRegion.id + "-dropdown").classList.add("active");
 
-	selectedORegion = newORegion;
+	selectedRegion = newRegion;
 	document.getElementById("rgn-name-arrow").classList.add("arrow-down");
 	document.getElementById("rgn-name-arrow").classList.remove("arrow-up");
-	editMiniMap(newORegion);
+	editMiniMap(newRegion);
 	
-	document.getElementById("rgn-dates").innerHTML = getBilingualText(selectedORegion.dates_english, selectedORegion.dates_japanese);
-	document.getElementById("rgn-cities").innerHTML = selectedORegion.areas.map(area => {
+	document.getElementById("rgn-dates").innerHTML = getBilingualText(selectedRegion.dates_english, selectedRegion.dates_japanese);
+	document.getElementById("rgn-cities").innerHTML = selectedRegion.areas.map(area => {
 		return getBilingualText(area.english_name, area.japanese_name);
 	}
 	).sort().join(" | ");
-	document.getElementById("rgn-desc-eng").innerHTML = selectedORegion.description_english;
-	document.getElementById("rgn-desc-jp").innerHTML = selectedORegion.description_japanese;
-	document.getElementById("rgn-name").innerHTML = getBilingualText(selectedORegion.english_name, selectedORegion.japanese_name);
+	document.getElementById("rgn-desc-eng").innerHTML = selectedRegion.description_english;
+	document.getElementById("rgn-desc-jp").innerHTML = selectedRegion.description_japanese;
+	document.getElementById("rgn-name").innerHTML = getBilingualText(selectedRegion.english_name, selectedRegion.japanese_name);
 
 	var filterLocations = document.getElementById("location-list");
 	filterLocations.replaceChildren();
-	selectedORegion.areas.sort((a, b) => { 
+	selectedRegion.areas.sort((a, b) => { 
 		let a1 = a.english_name.toLowerCase();
 		let b1 = b.english_name.toLowerCase();
 	
@@ -643,7 +643,7 @@ function selectPref(newORegion) {
 	});
 
 	var filterTags = Array.from(document.getElementById("tags-list").getElementsByClassName("filter-opt"));
-	var presentTags = new Set(selectedORegion.image_list.flatMap(x => {return x.tags}));
+	var presentTags = new Set(selectedRegion.image_list.flatMap(x => {return x.tags}));
 	filterTags.forEach(tag => {
 		var id = tag.id.replace("-tag", "");
 		if(presentTags.has(id)){
@@ -656,7 +656,7 @@ function selectPref(newORegion) {
 
 	var filterCameras = document.getElementById("camera-list");
 	filterCameras.replaceChildren();
-	new Set(selectedORegion.image_list.map(x => {return x.camera_model})
+	new Set(selectedRegion.image_list.map(x => {return x.camera_model})
 		.sort()
 		.filter(x => x))
 		.forEach(camera => {
@@ -809,7 +809,7 @@ function doesTextIncludeKeyword(text){
 }
 
 function includeImage(img) {
-	let area = selectedORegion.areas.find(x => {return x.id == img.city;});
+	let area = selectedRegion.areas.find(x => {return x.id == img.city;});
 	let tempTags = tags.filter(tag => img.tags.includes(tag.id) && (doesTextIncludeKeyword(tag.english_name) || doesTextIncludeKeyword(tag.japanese_name)));
 	return (filterKeyword == "" ||
 		doesTextIncludeKeyword(img.description_english) ||
@@ -837,7 +837,7 @@ function filterImages() {
 	}
 	var allPolaroids = Array.from(document.getElementsByClassName("polaroid-frame"));
 
-	selectedORegion.image_list.forEach(img => {
+	selectedRegion.image_list.forEach(img => {
 		if(includeImage(img)){
 			addRemoveNoDisplay([allPolaroids[i]], false);
 			var classList = Array.from(allPolaroids[i].classList).filter(className => {return className.includes("left") || className.includes("right")});
@@ -903,7 +903,7 @@ function changeFullscreenPicture(isForward) {
 				selectedPicInd = visibleImgs[ind + 1];
 			}
 		} else {
-			if (selectedPicInd == (selectedORegion.image_list.length - 1)) {
+			if (selectedPicInd == (selectedRegion.image_list.length - 1)) {
 				selectedPicInd = 0;
 			} else {
 				selectedPicInd++;
@@ -919,13 +919,13 @@ function changeFullscreenPicture(isForward) {
 			}
 		} else {
 			if (selectedPicInd == 0) {
-				selectedPicInd = selectedORegion.image_list.length - 1;
+				selectedPicInd = selectedRegion.image_list.length - 1;
 			} else {
 				selectedPicInd--;
 			}
 		}
 	}
-	selectedPic = selectedORegion.image_list[selectedPicInd];
+	selectedPic = selectedRegion.image_list[selectedPicInd];
 	setFullscreenPicture(isForward);
 }
 
@@ -938,7 +938,7 @@ function setFullscreenInfo(){
 		document.getElementById("fullscreen-eng-date").innerHTML = "Unknown date";
 		document.getElementById("fullscreen-jp-date").innerHTML = "不明な日付";
 	}
-	let area = selectedORegion.areas.find(function (area) { return area.id == selectedPic.city });
+	let area = selectedRegion.areas.find(function (area) { return area.id == selectedPic.city });
 	searchTerm[0] = (selectedPic.location_english ? 
 						(selectedPic.location_english + ", ") : 
 						selectedCountry == japan && selectedPic.location_japanese ? (selectedPic.location_japanese + ", ") : 
@@ -1018,7 +1018,7 @@ function setFullscreenPicture(isForward) {
 	document.getElementById("search-jp").removeEventListener("click", searchJapanese);
 	document.getElementById("img-tags").replaceChildren();
 
-	var src = selectedPic.link ?? "img/" + selectedCountry + "/" + selectedORegion.id + "/" + selectedPic.file_name;
+	var src = selectedPic.link ?? "img/" + selectedCountry + "/" + selectedRegion.id + "/" + selectedPic.file_name;
 
 	if (isNewFullscreenInstance || (new Date() - lastSwipeTime) < 300) {
 		document.getElementById("fullscreen-pic").src = src;
@@ -1138,11 +1138,11 @@ function endHandleDrag(e) {
 				if(grabbedHandleId == "pic-info-handle"){
 					hidePicInfo();
 				} else {
-					showORegionInfo(true);
+					showRegionInfo(true);
 				}
 			} else if (currentY < initialYHandle) {
 				if(grabbedHandleId == "rgn-info-handle"){
-					hideORegionInfo(true);
+					hideRegionInfo(true);
 				}
 			}
 			initialYHandle = null;
@@ -1250,8 +1250,8 @@ function spinArrow() {
 	document.getElementById("rgn-name-arrow").classList.toggle("arrow-up");
 }
 
-function showORegionInfo(isForced) {
-	isORegionInfoVisible = true;
+function showRegionInfo(isForced) {
+	isRegionInfoVisible = true;
 	addRemoveTransparent("rgn-info-bg", true);
 	document.getElementById("rgn-info-bg").style.visibility = "visible";
 	if (isForced) {
@@ -1265,8 +1265,8 @@ function showORegionInfo(isForced) {
 	}
 }
 
-function hideORegionInfo(isForced) {
-	isORegionInfoVisible = false;
+function hideRegionInfo(isForced) {
+	isRegionInfoVisible = false;
 	if (isForced) {
 		var rgnInfoOffset = document.getElementById("rgn-info").getBoundingClientRect().height;
 		if (document.body.scrollTop <= rgnInfoOffset) {
@@ -1285,35 +1285,35 @@ function hideORegionInfo(isForced) {
 	}, defaultTimeout);
 }
 
-function changeORegionInfoVisibility(isVisible, isForced) {
-	if (isORegionInfoVisible == isVisible) {
+function changeRegionInfoVisibility(isVisible, isForced) {
+	if (isRegionInfoVisible == isVisible) {
 		return;
 	}
 
 	if (isVisible == undefined) {
-		isVisible = !isORegionInfoVisible;
+		isVisible = !isRegionInfoVisible;
 	}
 
 	if (isVisible) {
-		showORegionInfo(isForced);
+		showRegionInfo(isForced);
 	} else {
-		hideORegionInfo(isForced);
+		hideRegionInfo(isForced);
 	}
 }
 
-function scrollORegionInfo() {
-	if (throttleORegionInfo || !isGalleryVisible) return;
-	throttleORegionInfo = true;
+function scrollRegionInfo() {
+	if (throttleRegionInfo || !isGalleryVisible) return;
+	throttleRegionInfo = true;
 	setTimeout(() => {
 		let rgnInfoOffset = document.getElementById("rgn-info").getBoundingClientRect().height / 2;
-		if (isORegionInfoVisible && document.body.scrollTop > rgnInfoOffset) {
-			isORegionInfoVisible = false;
-			hideORegionInfo(false);
-		} else if (!isORegionInfoVisible && document.body.scrollTop < rgnInfoOffset) {
-			isORegionInfoVisible = true;
-			showORegionInfo(false);
+		if (isRegionInfoVisible && document.body.scrollTop > rgnInfoOffset) {
+			isRegionInfoVisible = false;
+			hideRegionInfo(false);
+		} else if (!isRegionInfoVisible && document.body.scrollTop < rgnInfoOffset) {
+			isRegionInfoVisible = true;
+			showRegionInfo(false);
 		}
-		throttleORegionInfo = false;
+		throttleRegionInfo = false;
 	}, 250);
 }
 
@@ -1358,7 +1358,7 @@ function changeGalleryVisibility(isVisible) {
 	}
 	addRemoveTransparent("rgn-info-bg", false);
 
-	isORegionInfoVisible = isGalleryVisible;
+	isRegionInfoVisible = isGalleryVisible;
 	if (!isGalleryVisible) {
 	openLoader();
 		setTimeout(() => {
@@ -1456,7 +1456,7 @@ function setupSite() {
 
 	
 	document.getElementById("rgn-drop-down-bg").addEventListener("click", function () { closePrefDropdown(); });
-	document.getElementById("rgn-info-bg").addEventListener("click", function () { changeORegionInfoVisibility(false, true); });
+	document.getElementById("rgn-info-bg").addEventListener("click", function () { changeRegionInfoVisibility(false, true); });
 	document.getElementById("info-popup-close-btn").addEventListener("click", function () { closeInfoPopup(false); });
 	document.getElementById("site-info-popup").addEventListener("click", (event) => {
 		event.stopPropagation();
@@ -1482,7 +1482,7 @@ function setupSite() {
 	document.getElementById("creator-btn").addEventListener("click", openInfoPopup);
 	document.getElementById("globe-btn").addEventListener("click", function () { showStartScreen(); });
 	document.getElementById("map-btn").addEventListener("click", function () { changeGalleryVisibility(false); });
-	document.getElementById("info-btn").addEventListener("click", function () { changeORegionInfoVisibility(undefined, true); });
+	document.getElementById("info-btn").addEventListener("click", function () { changeRegionInfoVisibility(undefined, true); });
 	document.getElementById("fullscreen-bg").addEventListener("click", function () { closeFullscreen(true) });
 	document.getElementById("fullscreen-ctrl").addEventListener("click", function () { closeFullscreen(true) });
 	document.getElementById("left-arrow").addEventListener("click", (event) => {
@@ -1542,7 +1542,7 @@ function setupSite() {
 
 	window.onscroll = function () {
 		showHideFloatingBtn();
-		scrollORegionInfo();
+		scrollRegionInfo();
 	};
 }
 
@@ -1603,7 +1603,7 @@ function filterCountryData() {
 
 function stopLoader(){
 	setTimeout(() => {
-		var iterationCount = Math.ceil((new Date() - now) / 2000);
+		var iterationCount = Math.ceil((new Date() - now) / 1500);
 		for (let i = 0; i <= 8; i++) {
 			document.getElementById("load" + i).style.animationIterationCount = iterationCount;
 		}
@@ -1682,7 +1682,7 @@ function showFirstStartScreen(){
 
 function showStartScreen(){
 	selectedCountry = null;
-	selectedORegion = null;
+	selectedRegion = null;
 	scrollToTop(false);
 	changeMainColor("--default-color");
 	addRemoveNoDisplay(["top-bar", "load-icon"], false);
