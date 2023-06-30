@@ -476,33 +476,39 @@ function filterMiniMap() {
 	const svgDoc = svgObj.contentDocument;
 	const rgnList = data.region_groups.flatMap(rgnGrp => rgnGrp.regions);
 
-	rgnList.forEach(rgn => {
-		const rgnImg = svgDoc.getElementById(rgn.id + "-img");
-		if (!isSingleRgn || rgn.id != rgnsList[0].id) {
-			rgnImg.setAttribute("fill", "none");
-			rgnImg.setAttribute("stroke", "none");
-		} else {
-			rgnImg.setAttribute("fill", appColor);
-			rgnImg.setAttribute("stroke", "none");
-		}
-	});
+	try {
+		rgnList.forEach(rgn => {
+				const rgnImg = svgDoc.getElementById(rgn.id + "-img");
+				if (!isSingleRgn || rgn.id != rgnsList[0].id) {
+					rgnImg.setAttribute("fill", "none");
+					rgnImg.setAttribute("stroke", "none");
+				} else {
+					rgnImg.setAttribute("fill", appColor);
+					rgnImg.setAttribute("stroke", "none");
+				}
+		});
 
-	// show the map
-	const countryImg = svgDoc.getElementById(selectedCountry + "-img");
-	if (isSingleRgn) { 
-		countryImg.setAttribute("viewBox", rgnsList[0].viewbox);
+		// show the map
+		const countryImg = svgDoc.getElementById(selectedCountry + "-img");
+		if (isSingleRgn) { 
+			countryImg.setAttribute("viewBox", rgnsList[0].viewbox);
+		}
+	} catch (error) { 
+		console.error(error); 
+	} finally {
 		setTimeout(() => {
 			addRemoveTransparent([svgObj], false);
-		}, 50);
+			hideLoader();
+		}, defaultTimeout / 2);
 	}
 }
 
 function editMiniMap() {
 	const svgObj = document.getElementById("country-map-mini");
-	if (isSingleRgn) addRemoveTransparent([svgObj], true);
+	addRemoveTransparent([svgObj], true);
 	setTimeout(() => {
 		svgObj.data = "img/country/" + selectedCountry + ".svg";
-	}, 75);
+	}, 1000);
 }
 
 // Polaroid gallery
@@ -1587,7 +1593,6 @@ function selectRgn(rgnId) {
 	createGallery();
 	setTimeout(() => {
 		changeGalleryVisibility(true);
-		hideLoader();
 	}, defaultTimeout);
 }
 
