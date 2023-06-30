@@ -400,7 +400,7 @@ function colourMap() {
 				document.getElementById("main-title").innerHTML = countryTitle;
 			});
 		} else {
-			rgnImg.setAttribute("fill", "lightgray");
+			rgnImg.setAttribute("fill", "lightgrey");
 		}
 	});
 }
@@ -479,7 +479,14 @@ function filterMiniMap() {
 	try {
 		rgnList.forEach(rgn => {
 				const rgnImg = svgDoc.getElementById(rgn.id + "-img");
-				if (!isSingleRgn || rgn.id != rgnsList[0].id) {
+				if (!isSingleRgn){
+					if(rgn.visited){
+						rgnImg.setAttribute("fill", appColor);
+					} else {
+						rgnImg.setAttribute("fill", "lightgrey");
+					}
+					rgnImg.setAttribute("stroke", "none");
+				} else if(rgn.id != rgnsList[0].id) {
 					rgnImg.setAttribute("fill", "none");
 					rgnImg.setAttribute("stroke", "none");
 				} else {
