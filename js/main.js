@@ -970,7 +970,7 @@ function filterImages() {
 			}
 		} else if(includeImage(imgList[imgInd])){
 			addRemoveNoDisplay([pol], false);
-			visibleImgs.push(polInd);
+			visibleImgs.push(imgInd);
 			rgnCt++;
 			imgInd++;
 		} else {
