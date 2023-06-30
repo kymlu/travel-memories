@@ -32,7 +32,7 @@ let isFullscreen = false;
 let isNewFullscreenInstance = true;
 let selectedPic = null;
 let selectedPicInd = 0;
-let isPicInfoVisible = false;
+let isPicInfoVisible = true;
 
 // Gestures
 let initialX = null;
@@ -1195,6 +1195,7 @@ function setFullscreenPicture(isForward) {
 
 function openFullscreen() {
 	if (isPortraitMode()) {
+		isPicInfoVisible = false;
 		addRemoveTransparent("pic-info", true);
 		hidePicInfo();
 		setTimeout(() => {
@@ -1450,7 +1451,7 @@ function scrollRegionInfo() {
 }
 
 // Show and hide pages
-function openGallery() {
+function openMapPage() {
 	hideLoader();
 	scrollToTop(false);
 	addRemoveTransparent("map-page", false);
@@ -1493,11 +1494,11 @@ function changeGalleryVisibility(isVisible) {
 
 	isRegionInfoVisible = isGalleryVisible;
 	if (!isGalleryVisible) {
-	openLoader();
+		showLoader();
 		setTimeout(() => {
 			createMap();
 			setTimeout(() => {
-				openGallery();
+				openMapPage();
 			}, 200);
 		}, 50);
 	}
@@ -1510,7 +1511,7 @@ function changeMainColor(newColor){
 }
 
 function selectRgn(rgnId) {
-	openLoader();
+	showLoader();
 	if (!isNewCountry && isSingleRgn) {
 		document.getElementById(rgnsList[0].id + "-dropdown").classList.remove("active");
 	}
@@ -1588,7 +1589,7 @@ function selectRgn(rgnId) {
 function selectCountry(country, countryColor){
 	now = new Date();
 	document.getElementById("load-icon").src = "img/icons/" + allData.filter(x => {return x.id == country})[0].symbol + ".svg";
-	openLoader();
+	showLoader();
 	
 	addRemoveNoDisplay(["map-page", "btn-grp-left"], false);
 	addRemoveClass("btn-grp-right", "justify-end", false);
@@ -1603,7 +1604,7 @@ function selectCountry(country, countryColor){
 
 	setTimeout(() => {
 		stopLoader();
-		document.getElementById("load8").addEventListener("animationend", openGallery);
+		document.getElementById("load8").addEventListener("animationend", openMapPage);
 	}, 1200);
 }
 
@@ -1665,6 +1666,7 @@ function setupSite() {
 
 	document.getElementById("load8").addEventListener("animationend", function() {
 		addRemoveNoDisplay(document.getElementById("loading-screen"), true);
+		isLoading = false;
 	});
 
 	
@@ -1754,8 +1756,10 @@ function setupSite() {
 	});
 
 	window.onscroll = function () {
-		showHideFloatingBtn();
-		scrollRegionInfo();
+		if(!isLoading){
+			showHideFloatingBtn();
+			scrollRegionInfo();
+		}
 	};
 }
 
@@ -1826,9 +1830,9 @@ function showDataLoadError() {
 }
 
 // Loading data
-function openLoader() {
-	addRemoveTransparent(["top-bar", "map-page"], true);
-	addRemoveTransparent("start-screen", true);
+function showLoader() {
+	isLoading = true;
+	addRemoveTransparent(["top-bar", "map-page", "start-screen"], true);
 	addRemoveNoDisplay("loading-screen", false);
 	addRemoveTransparent("loading-screen", false);
 	for (let i = 0; i <= 8; i++) {
@@ -1849,6 +1853,7 @@ function hideLoader() {
 		addRemoveNoDisplay("loading-screen", true);
 		setTimeout(() => {
 			addRemoveTransparent("loading-screen", false);
+			isLoading = false;
 		}, defaultTimeout);
 	}, defaultTimeout);
 }

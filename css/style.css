@@ -969,7 +969,6 @@ input {
 
 /* loading screen */
 .loader {
-  background-color: white;
   z-index: 9999;
 }
 
