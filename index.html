@@ -45,14 +45,14 @@
   <!-- Dropdown official region selector -->
   <div id="rgn-drop-down-container" class="flex-column no-display" style="z-index: 5001;">
     <div id="rgn-drop-down-bg" class="popup-bg opacity-transition transparent"></div>
-    <div id="rgn-drop-down" class="rgn-drop-down regular-text"></div>
+    <div id="rgn-drop-down" class="rgn-drop-down regular-text flex-column"></div>
   </div>
 
   <!-- Map Page (Map and Official Region List) -->
   <div id="map-page" class="map-page transparent opacity-transition">
     <object id="country-map" type="image/svg+xml" class="country-map"></object>
-    <h1 id="main-title"></h1>
-    <p id="map-instructions" class="regular-text" style="text-align: center; margin-top: 0;"></p>
+    <h1 id="main-title" style="margin: 0px;"></h1>
+    <button id="map-instructions" class="txt-btn highlight-btn" style="text-align: center;"></button>
     <div id="rgn-list" class="rgn-list"></div>
   </div>
 
@@ -64,15 +64,15 @@
         <object id="country-map-mini" type="image/svg+xml" data="img/japan.svg" class="mini-map opacity-transition transparent"></object>
         <div id="rgn-info-txt" class="flex-column regular-text rgn-info-text">
           <div>
-            <div id="dates-title" class="bold-text"></div>
+            <div id="dates-title" class="bold-text capitalize-text"></div>
             <div id="rgn-dates"></div>
           </div>
           <div>
-            <div id="cities-title" class="bold-text"></div>
-            <div id="rgn-cities"></div>
+            <div id="areas-title" class="bold-text capitalize-text"></div>
+            <div id="rgn-areas"></div>
           </div>
           <div>
-            <div id="description-title" class="bold-text"></div>
+            <div id="description-title" class="bold-text capitalize-text"></div>
             <div id="rgn-desc">
               <div id="rgn-desc-eng"></div>
               <div id="rgn-desc-jp"></div>
@@ -97,35 +97,51 @@
     <div id="filter-popup-bg" class="popup-bg opacity-transition transparent"></div>
     <div id="img-filter-popup" class="popup centered transparent">
       <button id="filter-popup-close-btn" class="large-icon close-btn">&#xf00d</button>
-      <div id="filters" class="flex-column popup-content transparent opacity-transition no-display" style="height: 100%">
-        <div class="flex-column" style="justify-content: space-between; height: 100%;">
-          <div class="flex-column" style="gap: 15px;">
-            <p id="filter-title" class="bold-text" style="margin-bottom: 0;"></p>
-            <div>
-              <label id="keyword-title" class="bold-text" for="keyword-input"></label><br>
-              <div style="display: flex; align-items: center;">
-                <input type="text" id="keyword-input">
-                <div id="kw-clear-btn" class="clear-icon no-display">&#xf057</div>
-              </div>
-            </div>
-            <div>
-              <label id="location-title" class="bold-text"></label><br>
-              <div id="location-list" class="tag-list"></div>
-            </div>
-            <div>
-              <label id="tags-title" class="bold-text"></label><br>
-              <div id="tags-list" class="tag-list"></div>
-            </div>
-            <div>
-              <label id="camera-title" class="bold-text"></label><br>
-              <div id="camera-list" class="tag-list"></div>
-            </div>
+      <div id="filters" class="flex-column popup-content transparent opacity-transition no-display" style="height: 100%; gap: 15px;">
+        <p id="filter-title" class="bold-text" style="margin-bottom: 0;"></p>
+        <div id="filter-kw">
+          <label id="filter-kw-title" class="bold-text" for="filter-kw-input"></label><br>
+          <div style="display: flex; align-items: center;">
+            <input type="text" id="filter-kw-input">
+            <div id="kw-filter-clear-btn" class="clear-icon no-display">&#xf057</div>
           </div>
-          <div style="display: flex; width: 100%; justify-content: center; gap: 15px; margin-top: 15px;">
-            <button id="clear-btn" class="action-btn"></button>
-            <button id="submit-btn" class="action-btn"></button>
-          </div>
+          <hr class="divider filter">
         </div>
+        <div id="filter-rgns">
+          <div id="filter-rgns-header" class="filter-header">
+            <label id="filter-rgns-title" class="bold-text capitalize-text" style="cursor: inherit;"></label>
+            <button class="text-main-color large-icon transform-transition arrow-up">&#xf0d7</button>
+          </div>
+          <div id="filter-rgns-list" class="tag-list"></div>
+          <hr class="divider filter">
+        </div>
+        <div id="filter-areas">
+          <div id="filter-areas-header" class="filter-header">
+            <label id="filter-areas-title" class="bold-text capitalize-text" style="cursor: inherit;"></label>
+            <button class="text-main-color large-icon transform-transition arrow-up">&#xf0d7</button>
+          </div>
+          <div id="filter-areas-list" class="tag-list"></div>
+          <hr class="divider filter">
+        </div>
+        <div id="filter-tags">
+          <div id="filter-tags-header" class="filter-header">
+            <label id="filter-tags-title" class="bold-text capitalize-text" style="cursor: inherit;"></label>
+            <button class="text-main-color large-icon transform-transition arrow-up">&#xf0d7</button>
+          </div>
+          <div id="filter-tags-list" class="tag-list"></div>
+          <hr class="divider filter">
+        </div>
+        <div id="filter-camera">
+          <div id="filter-camera-header" class="filter-header">
+            <label id="filter-camera-title" class="bold-text capitalize-text" style="cursor: inherit;"></label>
+            <button class="text-main-color large-icon transform-transition arrow-up">&#xf0d7</button>
+          </div>
+          <div id="filter-camera-list" class="tag-list"></div>
+        </div>
+      </div>
+      <div style="display: flex; width: 100%; justify-content: center; gap: 15px; margin-top: 15px;">
+        <button id="filter-clear-btn" class="action-btn"></button>
+        <button id="filter-submit-btn" class="action-btn"></button>
       </div>
     </div>
   </div>
@@ -159,8 +175,8 @@
       <div id="fullscreen-ctrl" class="fullscreen-ctrl" style="z-index: 1;">
         <button id="left-arrow" class="large-icon fullscreen-arrow">&#xf0d9</button>
         <div>
-          <img id="fullscreen-pic-next" class="fullscreen-pic transparent centered no-display" style="position: absolute;" src="img/BFD9CC0C-53AB-4F00-851A-AAB2D06A37A6.jpeg" />
-          <img id="fullscreen-pic" class="fullscreen-pic centered" style="position: absolute;" src="img/BFD9CC0C-53AB-4F00-851A-AAB2D06A37A6.jpeg" />
+          <img id="fullscreen-pic-next" class="fullscreen-pic transparent centered no-display" style="position: absolute;" />
+          <img id="fullscreen-pic" class="fullscreen-pic centered" style="position: absolute;" />
         </div>
         <button id="right-arrow" class="large-icon fullscreen-arrow">&#xf0da</button>
       </div>

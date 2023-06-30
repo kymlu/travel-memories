@@ -8,8 +8,8 @@
     "show_unofficial_regions": true,
     "official_region_name_english": "prefecture",
     "official_region_name_japanese": "都道府県",
-    "description_english": "",
-    "description_japanese": "",
+    "description_english": "I completed my study abroad here! After my study abroad period, I decided to hang around to travel a bit around the country.",
+    "description_japanese": "日本で留学した！留学後は友達の地元と行きたい都道府県で旅行した。",
     "region_groups": [
       {
         "english_name": "Hokkaido",
@@ -12428,7 +12428,7 @@
             ],
             "dates_english": "November 5, 2022; February 16-17, 2023",
             "dates_japanese": "2022年11月5日、2023年2月16〜17日",
-            "description_english": "Visited Hikone twice, once on my kansai trip to visit a friend, and once with my mom to see bin temari in the nearby town of Aisho. I love the area near Lake Biwa and Hikonyan is objective adorable. +30 pts for being the prefecture where Club Harie and Taneya were started, their desserts are amazing.",
+            "description_english": "Visited Hikone twice, once on my Kansai trip to visit a friend, and once with my mom to see bin temari in the nearby town of Aisho. I love the area near Lake Biwa and Hikonyan is objective adorable. +30 pts for being the prefecture where Club Harie and Taneya were started, their desserts are amazing.",
             "description_japanese": "二回彦根に行って、一回目はアルバータ大学の友達を会いに行くためで、二回目は母と愛知川びんてまりの館を見に行くためだった。彦根は結構気に入った。琵琶湖が綺麗し、ひこにゃんも最高。クラブハリエもたねやも滋賀県のブランドで＋30点。私にとって、あのブランドのお菓子が最高。",
             "image_list": [
               {
@@ -15050,9 +15050,9 @@
                 "japanese_name": "鳥取市"
               },
               {
-                "id": "yonago",
-                "english_name": "Yonago",
-                "japanese_name": "米子市"
+                "id": "hokuei",
+                "english_name": "Hokuei",
+                "japanese_name": "北栄町"
               },
               {
                 "id": "kurayoshi",
@@ -15151,7 +15151,7 @@
                 "file_name": "IMG_1985.jpeg",
                 "date": "2023-03-18T00:48:05.000Z",
                 "offset": 9,
-                "area": "yonago",
+                "area": "hokuei",
                 "location_english": "Yura Station",
                 "location_japanese": "\u7531\u826F\u99C5",
                 "description_english": "Detective Conan fangirl time. The town really hones in on the Detective Conan theming. You feel it immediately upon arriving at the station.",
@@ -15168,7 +15168,7 @@
                 "file_name": "IMG_2008.jpeg",
                 "date": "2023-03-18T01:04:57.000Z",
                 "offset": 9,
-                "area": "yonago",
+                "area": "hokuei",
                 "description_english": "The Kudo household in the flesh. If you rang the doorbell it played some cute soundbites.",
                 "description_japanese": "工藤の家！ドアチャイムをピンポン押したら、真一と蘭の声を聞こえる。",
                 "tags": ["attractions", "town"],
@@ -15183,7 +15183,7 @@
                 "file_name": "IMG_2026.jpeg",
                 "date": "2023-03-18T01:24:17.000Z",
                 "offset": 9,
-                "area": "yonago",
+                "area": "hokuei",
                 "location_english": "Caf\u00E9 Poirot",
                 "location_japanese": "\u55AB\u8336\u30DD\u30A2\u30ED",
                 "description_english": "A little pricy for a few sandwiches, but I got a little Bourbon cutout.",
@@ -15200,7 +15200,7 @@
                 "file_name": "IMG_2031.jpeg",
                 "date": "2023-03-18T01:45:10.000Z",
                 "offset": 9,
-                "area": "yonago",
+                "area": "hokuei",
                 "description_english": "My favourite couple",
                 "description_japanese": "\u4E00\u756A\u597D\u304D\u306A\u30AB\u30C3\u30D7\u30EB",
                 "tags": ["attractions", "town"],
@@ -15215,7 +15215,7 @@
                 "file_name": "IMG_2033.jpeg",
                 "date": "2023-03-18T01:47:35.000Z",
                 "offset": 9,
-                "area": "yonago",
+                "area": "hokuei",
                 "description_english": "The detective makes an appearance.",
                 "description_japanese": "\u63A2\u5075\u304C\u767B\u5834\u3057\u305F\uFF01",
                 "tags": ["attractions", "town"],
@@ -15230,7 +15230,7 @@
                 "file_name": "IMG_2036.jpeg",
                 "date": "2023-03-18T01:55:07.000Z",
                 "offset": 9,
-                "area": "yonago",
+                "area": "hokuei",
                 "location_english": "Gosho Aoyama Manga Factory",
                 "location_japanese": "\u9752\u5C71\u525B\u660C\u3075\u308B\u3055\u3068\u9928",
                 "description_english": "WELCOME",
@@ -15247,7 +15247,7 @@
                 "file_name": "IMG_2037.jpeg",
                 "date": "2023-03-18T01:55:57.000Z",
                 "offset": 9,
-                "area": "yonago",
+                "area": "hokuei",
                 "location_english": "Gosho Aoyama Manga Factory",
                 "location_japanese": "\u9752\u5C71\u525B\u660C\u3075\u308B\u3055\u3068\u9928",
                 "description_english": "Agasa wouldn't let me in.",
@@ -15264,7 +15264,7 @@
                 "file_name": "IMG_2061.jpeg",
                 "date": "2023-03-18T03:17:53.000Z",
                 "offset": 9,
-                "area": "yonago",
+                "area": "hokuei",
                 "description_english": "At a bus stop. Honestly most of the faces of the statues look a little scuffed, this one was an exception. Doesn't change the fact that I love this place as a Detective Conan fan though.",
                 "description_japanese": "\u30D0\u30B9\u505C\u3002\u6B63\u76F4\u3068\u8A00\u3063\u305F\u3089\u3001\u3053\u306E\u9285\u50CF\u4EE5\u5916\u3001\u753A\u306E\u4E2D\u306B\u3042\u308B\u9285\u50CF\u306E\u9854\u304C\u5927\u4F53\u5909\u3068\u898B\u3048\u308B\u3002",
                 "tags": ["attractions", "town"],
@@ -15279,7 +15279,7 @@
                 "file_name": "IMG_2072.jpeg",
                 "date": "2023-03-18T03:30:20.000Z",
                 "offset": 9,
-                "area": "yonago",
+                "area": "hokuei",
                 "location_english": "Conan Gelato",
                 "location_japanese": "\u30B3\u30CA\u30F3\u30B8\u30A7\u30E9\u30FC\u30C8",
                 "description_english": "Ate some APTX-4869, didn't shrink :(",
@@ -15296,7 +15296,7 @@
                 "file_name": "IMG_2091.jpeg",
                 "date": "2023-03-18T04:29:40.000Z",
                 "offset": 9,
-                "area": "yonago",
+                "area": "hokuei",
                 "description_english": "Train tracks",
                 "description_japanese": "\u96FB\u8ECA",
                 "tags": ["town"],
@@ -20334,8 +20334,8 @@
     "show_unofficial_regions": false,
     "official_region_name_english": "region",
     "official_region_name_japanese": "地域",
-    "description_english": "",
-    "description_japanese": "",
+    "description_english": "I came for the food and creative parks.",
+    "description_japanese": "ご飯を食べたり公園を歩きたりしに来た。",
     "region_groups": [
       {
         "regions": [
@@ -23472,8 +23472,8 @@
     "show_unofficial_regions": false,
     "official_region_name_english": "state",
     "official_region_name_japanese": "州",
-    "description_english": "",
-    "description_japanese": "",
+    "description_english": "A close friend of mine is Australian, so I thought I'd pay him a visit!",
+    "description_japanese": "親しい友達がオーストラリア人で、地元で会おうと思った。",
     "region_groups": [
       {
         "regions": [
@@ -24831,7 +24831,7 @@
                 "location_english": "National Gallery of Victoria",
                 "location_japanese": "\u30D3\u30AF\u30C8\u30EA\u30A2\u56FD\u7ACB\u7F8E\u8853\u9928",
                 "description_english": "Good for glass harp sessions",
-                "description_japanese": "\u30B0\u30E9\u30B9\u30FB\u30CF\u30FC\u30D7",
+                "description_japanese": "グラスハープできそう",
                 "tags": ["art", "attractions"],
                 "camera_model": "iPhone 12 mini",
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
@@ -25001,8 +25001,8 @@
     "show_unofficial_regions": true,
     "official_region_name_english": "region",
     "official_region_name_japanese": "地方",
-    "description_english": "",
-    "description_japanese": "",
+    "description_english": "I've wanted to come to New Zealand since high school when a teacher told me about his travels when he was younger. I'm glad I was able to come :)",
+    "description_japanese": "高校時代からずっとニュージーランド行ってみたかった。きっかけは高校の先生が20代の時の旅についてしゃべったことだ。やっと来られてよかった。",
     "region_groups": [
       {
         "english_name": "North Island",
@@ -26102,7 +26102,7 @@
                 "offset": 12,
                 "area": "wellington",
                 "description_english": "The culprit is you!",
-                "description_japanese": "犯人は君だ！！",
+                "description_japanese": "犯人はお前だ！！",
                 "location_english": "The New Zealand Portrait Gallery",
                 "tags": ["art"],
                 "camera_model": "iPhone 12 mini",

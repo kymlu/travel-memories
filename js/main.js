@@ -1,28 +1,40 @@
 // Variables
-var r = document.querySelector(':root');
+var root = document.querySelector(':root');
 
+// Loading
 let isLoading = true;
 let now = null;
 
+// Data
 let allData = null;
 let data = null;
 let countryTitle = null;
 let selectedCountry = null;
-let selectedRegion = null;
-let selectedPic = null;
-let selectedPicInd = 0;
+let imgList = null;
+let rgnsList = null;
+let areaList = null;
 
+// Booleans
 let throttleRegionInfo = false;
+
 let isPopupVisible = false;
 let isToTopVisible = false;
-let isFilterVisible = false;
 let isGalleryVisible = false;
-let isNewRegion = true;
+let isRegionInfoVisible = false;
+let isFilterVisible = false;
+let isSingleRgn = false;
+let isNewCountry = true;
+let isNewRegionDropdown = true;
+let isNewRegionFilter = true;
+
+// Fullscreen
 let isFullscreen = false;
 let isNewFullscreenInstance = true;
-let isRegionInfoVisible = false;
+let selectedPic = null;
+let selectedPicInd = 0;
 let isPicInfoVisible = false;
 
+// Gestures
 let initialX = null;
 let initialY = null;
 let initialYHandle = null;
@@ -30,18 +42,31 @@ let isHandleGrabbed = false;
 let grabbedHandleId = null;
 let lastSwipeTime = null;
 
-let searchTerm = ["", ""];
+// Filters
+let visibleImgs = [];
+let searchTermEng = "";
+let searchTermJp = "";
 let filterKeyword = "";
-let filterLocationsList = [];
-let tempFilterLocations = [];
+let filterRgnsList = [];
+let tempFilterRgns = [];
+let filterAreasList = [];
+let tempFilterAreas = [];
 let filterTagsList = [];
 let tempFilterTags = [];
 let filterCameraList = [];
 let tempFilterCameras = [];
-let visibleImgs = [];
 
+let seeFromRgnTitle = null;
+
+// Template elements
+let polaroid, polaroidImgFrame, polaroidImg, polaroidCaption, polaroidCaptionText, polaroidCaptionContainer, polaroidDate, singleDate;
+let rgnGrpGroup, rgnGrpTitle, visitedRegion, unvisitedRegion, rgnGrpDrop, rgnDrop;
+let filterTagBtn;
+
+// Constants
+const loadAnimationTime = 1500;
 const defaultTimeout = 500;
-const threshold = 500;
+const scrollThreshold = 100;
 const japan = "japan";
 const taiwan = "taiwan";
 const australia = "australia";
@@ -103,31 +128,26 @@ const tags = [
 	}
 ];
 
-let polaroid, polaroidImgFrame, polaroidImg, polaroidCaption, polaroidCaptionText, polaroidCaptionContainer, polaroidDate, singleDate;
-let filterTagBtn;
-
-//let appColor = "#be0029";
-
 // General
 function isPortraitMode(){
 	return window.innerHeight > window.innerWidth;
 }
 
-function shuffle(array) {
-	let currentIndex = array.length, randomIndex;
+function sortImgs(a, b){
+	return new Date(a.date) - new Date(b.date);
+}
 
-	// While there are remain elements to shuffle.
-	while (currentIndex != 0) {
+function sortByEnglishName(a, b){
+	let a1 = a.english_name.toLowerCase();
+	let b1 = b.english_name.toLowerCase();
 
-		// Pick a remaining element.
-		randomIndex = Math.floor(Math.random() * currentIndex);
-		currentIndex--;
-
-		// And swap it with the current element.
-		[array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+	if (a1 < b1) {
+		return -1;
 	}
-
-	return array;
+	if (a1 > b1) {
+		return 1;
+	}
+	return 0;
 }
 
 function addRemoveClass(elements, className, isAdd){
@@ -164,6 +184,16 @@ function addRemoveTransparent(elements, isAdd){
 
 function addRemoveNoDisplay(elements, isAdd){
 	addRemoveClass(elements, "no-display", isAdd);
+}
+
+function flipArrow(arrow, isUp){
+	if (isUp == undefined){
+		arrow.classList.toggle("arrow-up");
+		arrow.classList.toggle("arrow-down");
+	} else {
+		addRemoveClass(arrow, "arrow-up", isUp);
+		addRemoveClass(arrow, "arrow-down", !isUp);
+	}
 }
 
 function scrollToTop(isSmooth){
@@ -225,68 +255,54 @@ function showHideFloatingBtn() {
 	const totop = getBilingualText("Go to top", "トップに移動する");
 	const down = getBilingualText("Scroll down", "下に移動する");
 	var btn = document.getElementById("to-top-btn");
-	if (document.body.scrollTop > threshold) {
+	if (document.body.scrollTop > scrollThreshold) {
 		if(isGalleryVisible && !isToTopVisible){
-			btn.classList.remove("arrow-down");
-			btn.classList.add("arrow-up");
+			flipArrow([btn], true);
 			addRemoveNoDisplay([btn], false);
 			addRemoveTransparent([btn], false);
 			btn.title = totop;
 			isToTopVisible = true;
 		} else if (!isGalleryVisible){
-			btn.classList.remove("arrow-down");
-			btn.classList.add("arrow-up");
+			flipArrow([btn], true);
 			btn.title = totop;
 		}
-	} else if (document.body.scrollTop <= threshold) {
+	} else if (document.body.scrollTop <= scrollThreshold) {
 		if (isGalleryVisible && isToTopVisible) {
-			btn.classList.remove("arrow-down");
-			btn.classList.add("arrow-up");
+			flipArrow([btn], true);
 			addRemoveTransparent([btn], true);
 			setTimeout(() => { addRemoveNoDisplay([btn], true); }, defaultTimeout)
 			isToTopVisible = false;
 		} else if (!isGalleryVisible) {
-			btn.classList.remove("arrow-up");
-			btn.classList.add("arrow-down");
-			btn.title = down;
+			var pageHeight = Math.max( document.body.scrollHeight, document.body.offsetHeight, 
+				document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight );
+
+			if (window.innerHeight + scrollThreshold < pageHeight){
+				addRemoveNoDisplay([btn], false);
+				flipArrow([btn], false);
+				btn.title = down;
+			} else {
+				addRemoveNoDisplay([btn], true);
+			}
 		}
 	}
 }
 
 // Official Region List
 function createRgnList() {
-	// Create templates
 	const rgnList = document.getElementById("rgn-list");
 	rgnList.replaceChildren();
 
 	const dropDownRgnList = document.getElementById("rgn-drop-down");
 	dropDownRgnList.replaceChildren();
 
-	const rgnGrpGroup = document.createElement("div");
-	rgnGrpGroup.classList.add("rgn-grp");
-	if(!data.show_unofficial_regions){
+	if(data.show_unofficial_regions){
+		rgnGrpGroup.classList.remove("none");
+	} else {
 		rgnGrpGroup.classList.add("none");
 	}
 
-	const rgnGrpTitle = document.createElement("div");
-	rgnGrpTitle.classList.add("rgn-grp-text");
-
-	const visitedRegion = document.createElement("div");
-	visitedRegion.classList.add("rgn-txt", "visited-rgn-text");
-
-	const unvisitedRegion = document.createElement("div");
-	unvisitedRegion.classList.add("rgn-txt", "locked-rgn-text");
-
-	const rgnGrpDrop = document.createElement("div");
-	rgnGrpDrop.classList.add("rgn-grp-text", "regular-text");
-	
-	const rgnDrop = document.createElement("div");
-	rgnDrop.classList.add("rgn-txt", "regular-text");
-
-	const visitedTitle = getBilingualText("See images from this " + data.official_region_name_english, "この地域の写真を表示する");
-
 	// Iterate each unofficial and official region, sort by visited/not visited
-	data.region_groups.forEach(rgnGrp => {
+	data.region_groups.filter(grp => grp.regions.filter(rgn => rgn.visited).length > 0).forEach(rgnGrp => {
 		const newRgnGrp = rgnGrpGroup.cloneNode();
 		var ddURegion = rgnGrpDrop.cloneNode();
 
@@ -299,23 +315,23 @@ function createRgnList() {
 			dropDownRgnList.appendChild(ddURegion);
 		}
 
-		rgnGrp.regions.forEach(rgn => {
+		rgnGrp.regions.filter(rgn => rgn.visited).forEach(rgn => {
 			var ddRgn = rgnDrop.cloneNode();
 			ddRgn.innerHTML = getBilingualText(rgn.english_name, rgn.japanese_name);
 			ddRgn.id = rgn.id + "-dropdown";
-			ddRgn.title = visitedTitle;
+			ddRgn.title = seeFromRgnTitle;
 			if (rgn.visited) {
 				const rgnNode = visitedRegion.cloneNode();
 				rgnNode.innerHTML = getBilingualText(rgn.english_name, rgn.japanese_name);
-				rgnNode.title = visitedTitle;
+				rgnNode.title = seeFromRgnTitle;
 				rgnNode.addEventListener("click", function () {
-					selectRgn(rgn);
+					selectRgn(rgn.id);
 				}, false);
 				newRgnGrp.appendChild(rgnNode);
 
 				ddRgn.classList.add("visited-rgn-text");
 				ddRgn.addEventListener("click", function () {
-					selectRgn(rgn);
+					selectRgn(rgn.id);
 				}, false);
 			} else {
 				const rgnNode = unvisitedRegion.cloneNode();
@@ -333,23 +349,21 @@ function createRgnList() {
 // Official region selector dropdown
 function toggleRgnDropdown() {
 	document.getElementById("rgn-drop-down-container").classList.toggle("no-display");
-	spinArrow();
-	if(isNewRegion){
-		isNewRegion = false;
-		document.getElementById(selectedRegion.id + "-dropdown").scrollIntoView({ behavior: "smooth", block: "center" });
+	flipArrow(document.getElementById("rgn-name-arrow"));
+	if(isNewRegionDropdown && isSingleRgn){
+		isNewRegionDropdown = false;
+		document.getElementById(rgnsList[0].id + "-dropdown").scrollIntoView({ behavior: "smooth", block: "center" });
 	}
 }
 
 function closeRgnDropdown() {
 	addRemoveNoDisplay("rgn-drop-down-container", true);
-	document.getElementById("rgn-name-arrow").classList.add("arrow-down");
-	document.getElementById("rgn-name-arrow").classList.remove("arrow-up");
+	flipArrow("rgn-name-arrow", false);
 }
 
 function showRgnDropdown() {
 	addRemoveNoDisplay("rgn-drop-down-container", false);
-	document.getElementById("rgn-name-arrow").classList.remove("arrow-down");
-	document.getElementById("rgn-name-arrow").classList.add("arrow-up");
+	flipArrow("rgn-name-arrow", true);
 }
 
 // Map
@@ -370,7 +384,7 @@ function colourMap() {
 			rgnImg.setAttribute("cursor", "pointer");
 			rgnImg.setAttribute("transition", "opacity 0.3 ease-in-out");
 			rgnImg.addEventListener("click", function () {
-				selectRgn(rgn);
+				selectRgn(rgn.id);
 				document.getElementById("main-title").innerHTML = getBilingualText(rgn.english_name, rgn.japanese_name);
 			});
 
@@ -400,8 +414,7 @@ function createMap() {
 function createTemplates() {
 	// sample polaroid
 	polaroid = document.createElement("div");
-	polaroid.classList.add("polaroid-frame");
-	polaroid.classList.add("opacity-transform-transition");
+	polaroid.classList.add("polaroid-frame", "opacity-transform-transition");
 	addRemoveTransparent([polaroid], true);
 	polaroid.classList.add("pic-rotate")
 	polaroid.title = getBilingualText("Expand image", "画像を拡大する");
@@ -429,13 +442,32 @@ function createTemplates() {
 	singleDate = document.createElement("div");
 	singleDate.classList.add("date-text");
 	polaroidCaptionText = document.createElement("div");
-	polaroidCaptionText.classList.add("caption-text");
-	polaroidCaptionText.classList.add("one-line-text");
+	polaroidCaptionText.classList.add("caption-text", "one-line-text");
 	polaroidCaptionContainer = document.createElement("div");
 	polaroidCaptionContainer.classList.add("polaroid-caption-text-container");
 
+	// filters
 	filterTagBtn = document.createElement("button");
 	filterTagBtn.classList.add("filter-opt");
+
+	// region group text and regions
+	rgnGrpGroup = document.createElement("div");
+	rgnGrpGroup.classList.add("rgn-grp");
+
+	rgnGrpTitle = document.createElement("div");
+	rgnGrpTitle.classList.add("rgn-grp-text");
+
+	visitedRegion = document.createElement("button");
+	visitedRegion.classList.add("rgn-txt", "visited-rgn-text", "highlight-btn", "txt-btn");
+
+	unvisitedRegion = document.createElement("div");
+	unvisitedRegion.classList.add("rgn-txt", "locked-rgn-text");
+
+	rgnGrpDrop = document.createElement("div");
+	rgnGrpDrop.classList.add("rgn-grp-text", "regular-text");
+	
+	rgnDrop = document.createElement("button");
+	rgnDrop.classList.add("rgn-txt", "regular-text", "highlight-btn", "txt-btn");
 }
 
 function filterMiniMap() {
@@ -446,7 +478,7 @@ function filterMiniMap() {
 
 	rgnList.forEach(rgn => {
 		const rgnImg = svgDoc.getElementById(rgn.id + "-img");
-		if (rgn.id != selectedRegion.id) {
+		if (!isSingleRgn || rgn.id != rgnsList[0].id) {
 			rgnImg.setAttribute("fill", "none");
 			rgnImg.setAttribute("stroke", "none");
 		} else {
@@ -456,8 +488,8 @@ function filterMiniMap() {
 	});
 
 	// show the map
-	const japanImg = svgDoc.getElementById(selectedCountry + "-img");
-	japanImg.setAttribute("viewBox", selectedRegion.viewbox);
+	const countryImg = svgDoc.getElementById(selectedCountry + "-img");
+	if (isSingleRgn) countryImg.setAttribute("viewBox", rgnsList[0].viewbox);
 	setTimeout(() => {
 		addRemoveTransparent([svgObj], false);
 	}, 50);
@@ -466,7 +498,7 @@ function filterMiniMap() {
 function editMiniMap() {
 	const svgObj = document.getElementById("country-map-mini");
 	addRemoveTransparent([svgObj], true);
-	setTimeout(() => {	
+	setTimeout(() => {
 		svgObj.data = "img/country/" + selectedCountry + ".svg";
 	}, 50);
 }
@@ -480,8 +512,10 @@ function lazyLoadPolaroid(target) {
 			if (entry.isIntersecting) {
 				const thisPolaroid = entry.target;
 				const img = thisPolaroid.querySelector(".polaroid-img").getElementsByTagName("img")[0];
-				const src = img.getAttribute("img-src");
-				img.setAttribute("src", src);
+				if(img){
+					const src = img.getAttribute("img-src");
+					img.setAttribute("src", src);
+				}
 				setTimeout(() => {
 					addRemoveTransparent([thisPolaroid], false);
 				}, 75);
@@ -492,6 +526,108 @@ function lazyLoadPolaroid(target) {
 	obs.observe(target);
 }
 
+function createPolaroidBase(img){
+	// clone all relevant nodes
+	let pol = polaroid.cloneNode(true);
+
+	lazyLoadPolaroid(pol);
+
+	return pol;
+}
+
+function createPolaroidImg(img) {
+	var pol = createPolaroidBase(img);
+	let polImgFrame = polaroidImgFrame.cloneNode();
+	let polImg = polaroidImg.cloneNode();
+	let polCaption = polaroidCaption.cloneNode();
+	let polDate = polaroidDate.cloneNode();
+	let polDateEn = singleDate.cloneNode();
+	let polDateJp = singleDate.cloneNode();
+	let polCaptionText = polaroidCaptionContainer.cloneNode();
+	let polCaptionTextEn = polaroidCaptionText.cloneNode();
+	let polCaptionTextJp = polaroidCaptionText.cloneNode();
+
+	pol.appendChild(polImgFrame);
+	polImgFrame.appendChild(polImg);
+	pol.appendChild(polCaption);
+	polCaption.appendChild(polDate);
+	polDate.appendChild(polDateEn);
+	polDate.appendChild(polDateJp);
+	polCaption.appendChild(polCaptionText);
+	polCaptionText.appendChild(polCaptionTextEn);
+	polCaptionText.appendChild(polCaptionTextJp);
+
+	// add info
+	if(img.date){
+		let date = getPictureDate(new Date(img.date), img.offset);
+		polDateEn.innerHTML = getEnglishDate(date, false);
+		polDateJp.innerHTML = getJapaneseDate(date, false);
+	} else {
+		polDateEn.innerHTML = "";
+		polDateJp.innerHTML = "";
+	}
+	if(img.description_english){
+		polCaptionTextEn.innerHTML = img.description_english;
+	}
+	if(img.description_japanese){
+		polCaptionTextJp.innerHTML = img.description_japanese;
+	}
+	
+	// listeners
+	pol.addEventListener("click", function () {
+		selectedPic = img;
+		selectedPicInd = imgList.indexOf(selectedPic);
+		isNewFullscreenInstance = true;
+		setFullscreenPicture();
+		lastSwipeTime = new Date();
+		openFullscreen();
+	});
+	polImg.onload = function () {
+		if (this.width > this.height) {
+			polImg.classList.add("landscape-img");
+		} else {
+			polImg.classList.add("portrait-img");
+		}
+	}
+
+	// image
+	polImg.setAttribute("img-src", img.link ?? "img/" + selectedCountry + "/" + (isSingleRgn ? rgnsList[0].id : img.rgn.id) + "/" + img.file_name);
+	polImg.addEventListener("load", () => {
+		addRemoveTransparent(polImg, false);
+	});
+
+	return pol;
+}
+
+function createPolaroidBlank(rgn){
+	var pol = createPolaroidBase();
+	pol.title = seeFromRgnTitle;
+	
+	let polImgFrame = polaroidImgFrame.cloneNode();
+	polImgFrame.classList.add("blank");
+	polImgFrame.innerHTML = getBilingualText(rgn.english_name, rgn.japanese_name);
+	pol.appendChild(polImgFrame);
+	pol.isBlank = true;
+	pol.rgnId = rgn.id;
+
+	pol.addEventListener("click", function () {
+		selectRgn(rgn.id)
+	});
+
+	return pol;
+}
+
+function changePolaroidAngle(isLeft, angle){
+	isLeft = !isLeft;
+	if (isLeft) {
+		angle++;
+		if (angle > 4) {
+			angle = 1;
+		}
+	}
+	return [isLeft, angle];
+}
+
 function createGallery() {
 	// clear existing
 	let gallery = document.getElementById("gallery");
@@ -499,140 +635,89 @@ function createGallery() {
 	let isLeft = false;
 
 	// add pictures
-	if (selectedRegion.image_list.length > 0) {
+	if (imgList.length > 0) {
 		let angle = 1; // 1-4 for the rotation class
-		selectedRegion.image_list.forEach(img => {
-			// clone all relevant nodes
-			let pol = polaroid.cloneNode(true);
-			let polImgFrame = polaroidImgFrame.cloneNode();
-			let polImg = polaroidImg.cloneNode();
-			let polCaption = polaroidCaption.cloneNode();
-			let polDate = polaroidDate.cloneNode();
-			let polDateEn = singleDate.cloneNode();
-			let polDateJp = singleDate.cloneNode();
-			let polCaptionText = polaroidCaptionContainer.cloneNode()
-			let polCaptionTextEn = polaroidCaptionText.cloneNode();
-			let polCaptionTextJp = polaroidCaptionText.cloneNode();
+		let prevRgn = null;
+		imgList.forEach(img => {
+			if(!isSingleRgn && (prevRgn == null || prevRgn != img.rgn.id)){
+				prevRgn = img.rgn.id;
+				var div = createPolaroidBlank(img.rgn);
+				// rotate picture
+				div.classList.add((isLeft ? "left-" : "right-") + angle);
 
-			// append elements in correct order
-			pol.appendChild(polImgFrame);
-			polImgFrame.appendChild(polImg);
-			pol.appendChild(polCaption);
-			polCaption.appendChild(polDate);
-			polDate.appendChild(polDateEn);
-			polDate.appendChild(polDateJp);
-			polCaption.appendChild(polCaptionText);
-			polCaptionText.appendChild(polCaptionTextEn);
-			polCaptionText.appendChild(polCaptionTextJp);
+				// add to screen
+				gallery.appendChild(div);
+
+				// change iterators
+				var tempAngle = changePolaroidAngle(isLeft, angle); 
+				isLeft = tempAngle[0];
+				angle = tempAngle[1];
+			}
+			var pol = createPolaroidImg(img);
 
 			// rotate picture
 			pol.classList.add((isLeft ? "left-" : "right-") + angle);
-
-			// add info
-			if(img.date){
-				let date = getPictureDate(new Date(img.date), img.offset);
-				polDateEn.innerHTML = getEnglishDate(date, false);
-				polDateJp.innerHTML = getJapaneseDate(date, false);
-			} else {
-				polDateEn.innerHTML = "";
-				polDateJp.innerHTML = "";
-			}
-			if(img.description_english){
-				polCaptionTextEn.innerHTML = img.description_english;
-			}
-			if(img.description_japanese){
-				polCaptionTextJp.innerHTML = img.description_japanese;
-			}
-
-			// listeners
-			pol.addEventListener("click", function () {
-				selectedPic = img;
-				selectedPicInd = selectedRegion.image_list.indexOf(selectedPic);
-				isNewFullscreenInstance = true;
-				setFullscreenPicture();
-				lastSwipeTime = new Date();
-				openFullscreen();
-			});
-			polImg.onload = function () {
-				if (this.width > this.height) {
-					polImg.classList.add("landscape-img");
-				} else {
-					polImg.classList.add("portrait-img");
-				}
-			}
-
-			polImg.setAttribute("img-src", img.link ?? "img/" + selectedCountry + "/" + selectedRegion.id + "/" + img.file_name);
-			polImg.addEventListener("load", event => {
-				addRemoveTransparent(polImg, false);
-			});
-			lazyLoadPolaroid(pol);
 
 			// add to screen
 			gallery.appendChild(pol);
 
 			// change iterators
-			isLeft = !isLeft;
-			if (isLeft) {
-				angle++;
-				if (angle > 4) {
-					angle = 1;
-				}
-			}
+			var tempAngle = changePolaroidAngle(isLeft, angle); 
+			isLeft = tempAngle[0];
+			angle = tempAngle[1];
 		});
 	} else {
 		gallery.innerHTML = getBilingualText("No pictures available","写真はありません");
 	}
 }
 
-function selectRgn(newRegion) {
-	openLoader();
-	isNewRegion = true;
-
-	if (selectedRegion) {
-		document.getElementById(selectedRegion.id + "-dropdown").classList.remove("active");
-	}
-	document.getElementById(newRegion.id + "-dropdown").classList.add("active");
-
-	selectedRegion = newRegion;
-	document.getElementById("rgn-name-arrow").classList.add("arrow-down");
-	document.getElementById("rgn-name-arrow").classList.remove("arrow-up");
-	editMiniMap(newRegion);
-	
-	document.getElementById("rgn-dates").innerHTML = getBilingualText(selectedRegion.dates_english, selectedRegion.dates_japanese);
-	document.getElementById("rgn-cities").innerHTML = selectedRegion.areas.map(area => {
-		return getBilingualText(area.english_name, area.japanese_name);
-	}
-	).sort().join(" | ");
-	document.getElementById("rgn-desc-eng").innerHTML = selectedRegion.description_english;
-	document.getElementById("rgn-desc-jp").innerHTML = selectedRegion.description_japanese;
-	document.getElementById("rgn-name").innerHTML = getBilingualText(selectedRegion.english_name, selectedRegion.japanese_name);
-
-	var filterLocations = document.getElementById("location-list");
-	filterLocations.replaceChildren();
-	selectedRegion.areas.sort((a, b) => { 
-		let a1 = a.english_name.toLowerCase();
-		let b1 = b.english_name.toLowerCase();
-	
-		if (a1 < b1) {
-			return -1;
-		}
-		if (a1 > b1) {
-			return 1;
-		}
-		return 0;
-	}).forEach(area => {
-		var tempBtn = filterTagBtn.cloneNode();
-		tempBtn.id = area.id + "-tag";
-		tempBtn.innerHTML = getBilingualText(area.english_name, area.japanese_name);
-		tempBtn.addEventListener("click", () => {
-			toggleLocation(area.id);
-			tempBtn.classList.toggle("active");
+// filtering
+function setupFilters(){
+	if(isSingleRgn){
+		addRemoveNoDisplay("filter-rgns", true);
+		addRemoveNoDisplay("filter-areas", false);
+		var filterAreas = document.getElementById("filter-areas-list");
+		filterAreas.replaceChildren();
+		areaList.sort(sortByEnglishName).forEach(area => {
+			var tempBtn = filterTagBtn.cloneNode();
+			tempBtn.id = area.id + "-tag";
+			tempBtn.innerHTML = getBilingualText(area.english_name, area.japanese_name);
+			tempBtn.addEventListener("click", () => {
+				toggleFilter(area.id, tempFilterAreas);
+				tempBtn.classList.toggle("active");
+			});
+			filterAreas.appendChild(tempBtn);
 		});
-		filterLocations.appendChild(tempBtn);
-	});
-
-	var filterTags = Array.from(document.getElementById("tags-list").getElementsByClassName("filter-opt"));
-	var presentTags = new Set(selectedRegion.image_list.flatMap(x => {return x.tags}));
+		
+		if(areaList.length > 10) {
+			toggleFilterGrp("areas", false);
+		} else {
+			toggleFilterGrp("areas", true);
+		}
+	} else {
+		addRemoveNoDisplay("filter-rgns", false);
+		addRemoveNoDisplay("filter-areas", true);
+		var filterRgns = document.getElementById("filter-rgns-list");
+		filterRgns.replaceChildren();
+		rgnsList.sort(sortByEnglishName).forEach(rgn => {
+			var tempBtn = filterTagBtn.cloneNode();
+			tempBtn.id = rgn.id + "-tag";
+			tempBtn.innerHTML = getBilingualText(rgn.english_name, rgn.japanese_name);
+			tempBtn.addEventListener("click", () => {
+				toggleFilter(rgn.id, tempFilterRgns);
+				tempBtn.classList.toggle("active");
+			});
+			filterRgns.appendChild(tempBtn);
+		});
+	
+		if(rgnsList.length > 10) {
+			toggleFilterGrp("rgns", false);
+		} else {
+			toggleFilterGrp("rgns", true);
+		}
+	}
+	var filterTags = Array.from(document.getElementById("filter-tags-list").getElementsByClassName("filter-opt"));
+	var presentTags = new Set(imgList.flatMap(x => {return x.tags}));
 	filterTags.forEach(tag => {
 		var id = tag.id.replace("-tag", "");
 		if(presentTags.has(id)){
@@ -643,34 +728,35 @@ function selectRgn(newRegion) {
 		tag.classList.remove("active");
 	});
 
-	var filterCameras = document.getElementById("camera-list");
+	if(presentTags.length > 10) {
+		toggleFilterGrp("tags", false);
+	} else {
+		toggleFilterGrp("tags", true);
+	}
+
+	var filterCameras = document.getElementById("filter-camera-list");
 	filterCameras.replaceChildren();
-	new Set(selectedRegion.image_list.map(x => {return x.camera_model})
+	var cameraSet = new Set(imgList.map(x => {return x.camera_model})
 		.sort()
-		.filter(x => x))
-		.forEach(camera => {
+		.filter(x => x));
+	cameraSet.forEach(camera => {
 		var tempBtn = filterTagBtn.cloneNode();
 		tempBtn.id = camera + "-tag";
 		tempBtn.innerHTML = camera;
 		tempBtn.addEventListener("click", () => {
-			toggleCamera(camera);
+			toggleFilter(camera, tempFilterCameras);
 			tempBtn.classList.toggle("active");
 		});
 		filterCameras.appendChild(tempBtn);
 	});
 
-	clearFilters();
-	filterKeyword = "";
-	visibleImgs = [];
-	filterLocationsList = [];
-	filterTagsList = [];
-	filterCameraList = [];
-	createGallery();
-	changeGalleryVisibility(true);
-	hideLoader();
+	if(cameraSet.length > 10) {
+		toggleFilterGrp("camera", false);
+	} else {
+		toggleFilterGrp("camera", true);
+	}
 }
 
-// filtering
 function toggleFilter(id, array) {
 	if(array.includes(id)){
 		array.splice(array.indexOf(id), 2);
@@ -679,19 +765,14 @@ function toggleFilter(id, array) {
 	}
 }
 
-function toggleLocation(id) {
-	toggleFilter(id, tempFilterLocations);
-}
-
-function toggleTag(id) {
-	toggleFilter(id, tempFilterTags);
-}
-
-function toggleCamera(id){
-	toggleFilter(id, tempFilterCameras)
-}
-
 function showFilter() {
+	if(isNewRegionFilter){
+		document.getElementById("filters").scrollTo({
+			top: 0,
+			left: 0,
+		});
+		isNewRegionFilter = false;
+	}
 	isFilterVisible = true;
 	addRemoveTransparent(["img-filter-popup", "filter-popup-bg"], false);
 	document.getElementById("filter-popup").style.visibility = "visible";
@@ -702,19 +783,28 @@ function showFilter() {
 		document.getElementById("img-filter-popup").classList.add("popup-height");
 	}, defaultTimeout);
 
-	document.getElementById("keyword-input").value = filterKeyword;
-	tempFilterLocations = filterLocationsList.slice();
+	document.getElementById("filter-kw-input").value = filterKeyword;
+	tempFilterRgns = filterRgnsList.slice();
+	tempFilterAreas = filterAreasList.slice();
 	tempFilterTags = filterTagsList.slice();
 	tempFilterCameras = filterCameraList.slice();
-	Array.from(document.getElementById("location-list").getElementsByClassName("filter-opt"))
+	Array.from(document.getElementById("filter-rgns-list").getElementsByClassName("filter-opt"))
 		.forEach(tag => {
-			if (tempFilterLocations.includes(tag.id.replace("-tag", ""))) {
+			if (tempFilterRgns.includes(tag.id.replace("-tag", ""))) {
 				tag.classList.add("active");
 			} else {
 				tag.classList.remove("active");
 			}
 		});
-	Array.from(document.getElementById("tags-list").getElementsByClassName("filter-opt"))
+	Array.from(document.getElementById("filter-areas-list").getElementsByClassName("filter-opt"))
+		.forEach(tag => {
+			if (tempFilterAreas.includes(tag.id.replace("-tag", ""))) {
+				tag.classList.add("active");
+			} else {
+				tag.classList.remove("active");
+			}
+		});
+	Array.from(document.getElementById("filter-tags-list").getElementsByClassName("filter-opt"))
 		.forEach(tag => {
 			if (tempFilterTags.includes(tag.id.replace("-tag", ""))) {
 				tag.classList.add("active");
@@ -722,7 +812,7 @@ function showFilter() {
 				tag.classList.remove("active");
 			}
 		});
-	Array.from(document.getElementById("camera-list").getElementsByClassName("filter-opt"))
+	Array.from(document.getElementById("filter-camera-list").getElementsByClassName("filter-opt"))
 		.forEach(tag => {
 			if (tempFilterCameras.includes(tag.innerHTML)) {
 				tag.classList.add("active");
@@ -761,33 +851,52 @@ function hideFilter(forceClose) {
 	}
 }
 
+function toggleFilterGrp(group, showGrp){
+	var headerBtn = document.getElementById("filter-" + group + "-header").querySelector("button");
+	if(showGrp == undefined){
+		flipArrow(headerBtn);
+		document.getElementById("filter-" + group + "-list").classList.toggle("no-display");
+	} else if (showGrp) {
+		flipArrow([headerBtn], true);
+		addRemoveNoDisplay("filter-" + group + "-list", false);
+	} else {
+		flipArrow([headerBtn], false);
+		addRemoveNoDisplay("filter-" + group + "-list", true);
+	}
+}
+
 function checkEmptyKeywordInput(){
-	if (document.getElementById("keyword-input").value == ""){
-		addRemoveNoDisplay("kw-clear-btn", true);
-	} else if (document.getElementById("kw-clear-btn").classList.contains("no-display")) {
-		addRemoveNoDisplay("kw-clear-btn", false);
+	if (document.getElementById("filter-kw-input").value == ""){
+		addRemoveNoDisplay("kw-filter-clear-btn", true);
+	} else if (document.getElementById("kw-filter-clear-btn").classList.contains("no-display")) {
+		addRemoveNoDisplay("kw-filter-clear-btn", false);
 	}
 }
 
 function clearKeyword() {
-	document.getElementById("keyword-input").value = "";
+	document.getElementById("filter-kw-input").value = "";
 	checkEmptyKeywordInput();
 }
 
 function clearFilters() {
 	clearKeyword();
-	tempFilterLocations = [];
+	tempFilterRgns = [];
+	tempFilterAreas = [];
 	tempFilterTags = [];
 	tempFilterCameras = [];
-	Array.from(document.getElementById("location-list").getElementsByClassName("active"))
+	Array.from(document.getElementById("filter-rgns-list").getElementsByClassName("active"))
 	.forEach(tag => {
 		tag.classList.remove("active");
 	});
-	Array.from(document.getElementById("tags-list").getElementsByClassName("active"))
+	Array.from(document.getElementById("filter-areas-list").getElementsByClassName("active"))
 	.forEach(tag => {
 		tag.classList.remove("active");
 	});
-	Array.from(document.getElementById("camera-list").getElementsByClassName("active"))
+	Array.from(document.getElementById("filter-tags-list").getElementsByClassName("active"))
+	.forEach(tag => {
+		tag.classList.remove("active");
+	});
+	Array.from(document.getElementById("filter-camera-list").getElementsByClassName("active"))
 	.forEach(tag => {
 		tag.classList.remove("active");
 	});
@@ -798,7 +907,8 @@ function doesTextIncludeKeyword(text){
 }
 
 function includeImage(img) {
-	let area = selectedRegion.areas.find(x => {return x.id == img.area;});
+	let region = isSingleRgn ? rgnsList[0] : rgnsList.find(x => x.id == img.rgn.id);
+	let area = areaList.find(x => {return x.id == img.area;});
 	let tempTags = tags.filter(tag => img.tags.includes(tag.id) && (doesTextIncludeKeyword(tag.english_name) || doesTextIncludeKeyword(tag.japanese_name)));
 	return (filterKeyword == "" ||
 		doesTextIncludeKeyword(img.description_english) ||
@@ -806,17 +916,19 @@ function includeImage(img) {
 		doesTextIncludeKeyword(img.location_english) ||
 		doesTextIncludeKeyword(img.location_japanese) ||
 		doesTextIncludeKeyword(img.location_chinese) ||
+		doesTextIncludeKeyword(region?.english_name) ||
+		doesTextIncludeKeyword(region?.japanese_name) || 
 		doesTextIncludeKeyword(area?.english_name) ||
 		doesTextIncludeKeyword(area?.japanese_name) || 
 		doesTextIncludeKeyword(img.camera_model) || 
 		tempTags.length > 0) &&
-		(filterLocationsList.length == 0 || filterLocationsList.includes(img.area)) &&
+		(filterRgnsList.length == 0 || filterRgnsList.includes(region.id)) &&
+		(filterAreasList.length == 0 || filterAreasList.includes(area.id)) &&
 		(filterTagsList.length == 0 || filterTagsList.filter(value => img.tags.includes(value)).length > 0) &&
 		(filterCameraList.length == 0 || filterCameraList.includes(img.camera_model));
 }
 
 function filterImages() {
-	var i = 0;	
 	let angle = 1; // 1-4 for the rotation class
 	isLeft = false;
 	visibleImgs = [];
@@ -826,30 +938,66 @@ function filterImages() {
 	}
 	var allPolaroids = Array.from(document.getElementsByClassName("polaroid-frame"));
 
-	selectedRegion.image_list.forEach(img => {
-		if(includeImage(img)){
-			addRemoveNoDisplay([allPolaroids[i]], false);
-			var classList = Array.from(allPolaroids[i].classList).filter(className => {return className.includes("left") || className.includes("right")});
-			
-			if ((classList.filter(className => className.includes("left")).length > 0 && !isLeft) ||
-				(classList.filter(className => className.includes("right")).length > 0 && isLeft)) {
-				allPolaroids[i].classList.remove(classList[0]);
-				allPolaroids[i].classList.add((isLeft ? "left-" : "right-") + angle);
-			}
+	var lastShownRgn = null;
+	var prevRgn = null;
+	var prevRgnCardInd = null;
+	var rgnCt = 0;
 
-			isLeft = !isLeft;
-			if (isLeft) {
-				angle++;
-				if (angle > 4) {
-					angle = 1;
+	var polInd = 0;
+	var imgInd = 0;
+	allPolaroids.forEach(pol => {
+		if (pol.isBlank){
+			if(pol.rgnId != prevRgn){
+				addRemoveNoDisplay([pol], false);
+				if(rgnCt == 0 && prevRgnCardInd != null){
+					// if the previous region has nothing, remove the previous card
+					addRemoveNoDisplay([allPolaroids[prevRgnCardInd]], true);
+
+					// if the one before that has something and is the same, remove the current card. Last shown card remains the same.
+					if (lastShownRgn == pol.rgnId) addRemoveNoDisplay([pol], true);
+
+				} else if(rgnCt > 0 && prevRgnCardInd != null) {
+					// if the previous region has something, that is the last shown card
+					lastShownRgn = prevRgn;
+					rgnCt = 0;
+				} else {
+					rgnCt = 0;
 				}
+				prevRgn = pol.rgnId;
+				prevRgnCardInd = polInd;
+			} else {
+				addRemoveNoDisplay([pol], true);
 			}
-			visibleImgs.push(i);
+		} else if(includeImage(imgList[imgInd])){
+			addRemoveNoDisplay([pol], false);
+			visibleImgs.push(polInd);
+			rgnCt++;
+			imgInd++;
 		} else {
-			addRemoveNoDisplay([allPolaroids[i]], true);
+			addRemoveNoDisplay([pol], true);
+			imgInd++;
 		}
-		i++;
+		
+		polInd++;
+	});
+
+	if(prevRgnCardInd && rgnCt == 0) addRemoveNoDisplay([allPolaroids[prevRgnCardInd]], true);
+
+	allPolaroids.filter(pol => !pol.classList.contains("no-display"))
+		.forEach(pol => {
+		var classList = Array.from(pol.classList).filter(className => {return className.includes("left") || className.includes("right")});
+			
+		if ((classList.filter(className => className.includes("left")).length > 0 && !isLeft) ||
+			(classList.filter(className => className.includes("right")).length > 0 && isLeft)) {
+			pol.classList.remove(classList[0]);
+			pol.classList.add((isLeft ? "left-" : "right-") + angle);
+		}
+		
+		var tempAngle = changePolaroidAngle(isLeft, angle); 
+		isLeft = tempAngle[0];
+		angle = tempAngle[1];
 	})
+
 	if(visibleImgs.length == 0){
 		let temp = document.createElement("div");
 		temp.id = "none";
@@ -861,25 +1009,26 @@ function filterImages() {
 }
 
 function submitFilters() {
-	filterKeyword = document.getElementById("keyword-input").value;
-	filterLocationsList = tempFilterLocations.slice();
+	filterKeyword = document.getElementById("filter-kw-input").value;
+	filterRgnsList = tempFilterRgns.slice();
+	filterAreasList = tempFilterAreas.slice();
 	filterTagsList = tempFilterTags.slice();
 	filterCameraList = tempFilterCameras.slice();
 	filterImages();
 	hideFilter(true);
 }
 
-// fullscreen
+// Fullscreen
 function search(searchTerm) {
 	window.open("https://www.google.com/search?q=" + searchTerm);
 }
 
 function searchEnglish() {
-	search(searchTerm[0]);
+	search(searchTermEng);
 }
 
 function searchJapanese() {
-	search(searchTerm[1])
+	search(searchTermJp)
 }
 
 function changeFullscreenPicture(isForward) {
@@ -892,7 +1041,7 @@ function changeFullscreenPicture(isForward) {
 				selectedPicInd = visibleImgs[ind + 1];
 			}
 		} else {
-			if (selectedPicInd == (selectedRegion.image_list.length - 1)) {
+			if (selectedPicInd == (imgList.length - 1)) {
 				selectedPicInd = 0;
 			} else {
 				selectedPicInd++;
@@ -908,13 +1057,13 @@ function changeFullscreenPicture(isForward) {
 			}
 		} else {
 			if (selectedPicInd == 0) {
-				selectedPicInd = selectedRegion.image_list.length - 1;
+				selectedPicInd = imgList.length - 1;
 			} else {
 				selectedPicInd--;
 			}
 		}
 	}
-	selectedPic = selectedRegion.image_list[selectedPicInd];
+	selectedPic = imgList[selectedPicInd];
 	setFullscreenPicture(isForward);
 }
 
@@ -927,18 +1076,18 @@ function setFullscreenInfo(){
 		document.getElementById("fullscreen-eng-date").innerHTML = "Unknown date";
 		document.getElementById("fullscreen-jp-date").innerHTML = "不明な日付";
 	}
-	let area = selectedRegion.areas.find(function (area) { return area.id == selectedPic.area });
-	searchTerm[0] = (selectedPic.location_english ? 
+	let area = areaList.find(function (area) { return area.id == selectedPic.area });
+	searchTermEng = (selectedPic.location_english ? 
 						(selectedPic.location_english + ", ") : 
 						selectedCountry == japan && selectedPic.location_japanese ? (selectedPic.location_japanese + ", ") : 
 						selectedCountry == taiwan && selectedPic.location_chinese ? (selectedPic.location_chinese + ", ") : 
 						"") + (area.english_name ?? "");
-	document.getElementById("fullscreen-eng-city").innerHTML = searchTerm[0];
+	document.getElementById("fullscreen-eng-city").innerHTML = searchTermEng;
 	document.getElementById("search-eng").addEventListener("click", searchEnglish);
-	searchTerm[1] = (area.japanese_name ?? area.english_name ?? "") + (selectedPic.location_japanese ? ("　" + selectedPic.location_japanese) : 
+	searchTermJp = (area.japanese_name ?? area.english_name ?? "") + (selectedPic.location_japanese ? ("　" + selectedPic.location_japanese) : 
 						(selectedCountry == taiwan && selectedPic.location_chinese) ? ("　" + selectedPic.location_chinese) : 
 						selectedPic.location_english ? ("　" + selectedPic.location_english) : "");
-	document.getElementById("fullscreen-jp-city").innerHTML = searchTerm[1];
+	document.getElementById("fullscreen-jp-city").innerHTML = searchTermJp;
 	document.getElementById("search-jp").addEventListener("click", searchJapanese);
 
 	
@@ -1007,7 +1156,7 @@ function setFullscreenPicture(isForward) {
 	document.getElementById("search-jp").removeEventListener("click", searchJapanese);
 	document.getElementById("img-tags").replaceChildren();
 
-	var src = selectedPic.link ?? "img/" + selectedCountry + "/" + selectedRegion.id + "/" + selectedPic.file_name;
+	var src = selectedPic.link ?? "img/" + selectedCountry + "/" + (isSingleRgn ? rgnsList[0].id : selectedPic.rgn.id) + "/" + selectedPic.file_name;
 
 	if (isNewFullscreenInstance || (new Date() - lastSwipeTime) < 300) {
 		document.getElementById("fullscreen-pic").src = src;
@@ -1195,7 +1344,7 @@ function moveFullscreenSwipe(e) {
 	}
 }
 
-// Popup
+// Site info popup
 function openInfoPopup() {
 	isPopupVisible = true;
 	addRemoveTransparent(["site-info-popup", "popup-bg"], false);
@@ -1234,11 +1383,6 @@ function closeInfoPopup(forceClose) {
 }
 
 // Official region info
-function spinArrow() {
-	document.getElementById("rgn-name-arrow").classList.toggle("arrow-down");
-	document.getElementById("rgn-name-arrow").classList.toggle("arrow-up");
-}
-
 function showRegionInfo(isForced) {
 	isRegionInfoVisible = true;
 	addRemoveTransparent("rgn-info-bg", false);
@@ -1305,12 +1449,13 @@ function scrollRegionInfo() {
 	}, 250);
 }
 
-// Main pages and setup
+// Show and hide pages
 function openGallery() {
 	hideLoader();
 	scrollToTop(false);
 	addRemoveTransparent("map-page", false);
 	addRemoveNoDisplay("to-top-btn", false);
+	showHideFloatingBtn();
 }
 
 function changeGalleryVisibility(isVisible) {
@@ -1359,67 +1504,148 @@ function changeGalleryVisibility(isVisible) {
 }
 
 function changeMainColor(newColor){
-	r.style.setProperty('--main-color', getComputedStyle(r).getPropertyValue(newColor));
-	var temp = getComputedStyle(r).getPropertyValue("--main-color").split(", ");
+	root.style.setProperty('--main-color', getComputedStyle(root).getPropertyValue(newColor));
+	var temp = getComputedStyle(root).getPropertyValue("--main-color").split(", ");
 	appColor = "rgb("+ temp [0] +", "+ temp [1] +", "+ temp [2] +")";
+}
+
+function selectRgn(rgnId) {
+	openLoader();
+	if (!isNewCountry && isSingleRgn) {
+		document.getElementById(rgnsList[0].id + "-dropdown").classList.remove("active");
+	}
+
+	isNewCountry = false;
+	isNewRegionDropdown = true;
+	isNewRegionFilter = true;
+
+	isSingleRgn = rgnId != undefined && rgnId != null;
+	
+	if (isSingleRgn){
+		var newRegion = data.region_groups.flatMap(x => x.regions).filter(rgn => rgn.id == rgnId)[0];
+		document.getElementById(newRegion.id + "-dropdown").classList.add("active");
+		imgList = newRegion.image_list;
+		rgnsList = [newRegion];
+		areaList = newRegion.areas;
+		addRemoveNoDisplay(["dates-title", "rgn-dates"], false);
+		document.getElementById("rgn-dates").innerHTML = getBilingualText(newRegion.dates_english, newRegion.dates_japanese);
+		document.getElementById("rgn-desc-eng").innerHTML = newRegion.description_english;
+		document.getElementById("rgn-desc-jp").innerHTML = newRegion.description_japanese;
+		document.getElementById("rgn-name").innerHTML = getBilingualText(newRegion.english_name, newRegion.japanese_name);
+		document.getElementById("description-title").innerHTML = getBilingualText("About", data.official_region_name_japanese + "について");
+		document.getElementById("rgn-areas").innerHTML = areaList.map(area => {
+			return getBilingualText(area.english_name, area.japanese_name);
+		}).sort().join(" | ");
+	} else {
+		var visitedRgns = data.region_groups.flatMap(grp => grp.regions.filter(rgn => rgn.visited));
+		imgList = visitedRgns.flatMap(rgn => {
+			return rgn.image_list.map(img => ({ ...img, rgn: {
+				"id": rgn.id,
+				"english_name": rgn.english_name,
+				"japanese_name": rgn.japanese_name
+			}}));
+		}).sort(sortImgs);
+	
+		addRemoveNoDisplay(["dates-title", "rgn-dates"], true);
+		document.getElementById("rgn-desc-eng").innerHTML = data.description_english;
+		document.getElementById("rgn-desc-jp").innerHTML = data.description_japanese;
+		document.getElementById("rgn-name").innerHTML = getBilingualText(data.english_name, data.japanese_name);
+		document.getElementById("description-title").innerHTML = getBilingualText("About", "国について");
+	
+		rgnsList = visitedRgns.map(rgn => {
+				return {
+					"id": rgn.id,
+					"english_name": rgn.english_name,
+					"japanese_name": rgn.japanese_name
+				}
+			});
+
+		//areaList = data.region_groups.flatMap(grp => grp.regions.filter(rgn => rgn.visited)).map(rgn => {return {"id": rgn.id, "areas": rgn.areas}});
+		areaList = visitedRgns.flatMap(rgn => rgn.areas);
+		document.getElementById("rgn-areas").innerHTML = rgnsList.map(area => {
+			return getBilingualText(area.english_name, area.japanese_name);
+		}).sort().join(" | ");
+	}
+
+	editMiniMap(newRegion);
+
+	flipArrow("rgn-name-arrow", false);
+	setupFilters();
+	clearFilters();
+	filterKeyword = "";
+	visibleImgs = [];
+	filterRgnsList = [];
+	filterAreasList = [];
+	filterTagsList = [];
+	filterCameraList = [];
+	createGallery();
+	setTimeout(() => {
+		changeGalleryVisibility(true);
+		hideLoader();
+	}, defaultTimeout);
 }
 
 function selectCountry(country, countryColor){
 	now = new Date();
 	document.getElementById("load-icon").src = "img/icons/" + allData.filter(x => {return x.id == country})[0].symbol + ".svg";
 	openLoader();
+	
 	addRemoveNoDisplay(["map-page", "btn-grp-left"], false);
 	addRemoveClass("btn-grp-right", "justify-end", false);
+	imgList = [];
+	rgnsList = [];
+	areaList = [];
 	selectedCountry = country;
+	isNewCountry = true;
+
 	filterCountryData();
-	changeMainColor(countryColor)
+	changeMainColor(countryColor);
+
 	setTimeout(() => {
 		stopLoader();
 		document.getElementById("load8").addEventListener("animationend", openGallery);
 	}, 1200);
 }
 
+// Data loading and setup
 function setupSite() {
-	document.getElementById("dates-title").innerHTML = getBilingualText("Dates visited", "訪れた日付");
-	document.getElementById("cities-title").innerHTML = getBilingualText("Areas visited", "訪れた所");
-	document.getElementById("filter-title").innerHTML = getBilingualText("Filters", "フィルター");
-	document.getElementById("keyword-title").innerHTML = getBilingualText("Keyword", "キーワード");
-	document.getElementById("tags-title").innerHTML = getBilingualText("Tags", "タグ");
-	document.getElementById("camera-title").innerHTML = getBilingualText("Camera", "カメラ");
-	document.getElementById("location-title").innerHTML = getBilingualText("Areas", "所");
-	document.getElementById("clear-btn").innerHTML = getBilingualText("Clear", "クリアする");
-	document.getElementById("submit-btn").innerHTML = getBilingualText("Save", "保存する");
-	document.getElementById("pic-info-btn").title = getBilingualText("See picture information", "写真の情報を見る");
-	document.getElementById("globe-btn").title = getBilingualText("Return to country picker", "国の選択へ戻る");
-	document.getElementById("map-btn").title = getBilingualText("Return to map", "地図に戻る");
-	document.getElementById("creator-btn").title = getBilingualText("About the site", "このサイトについて");
-	document.getElementById("filter-btn").title = getBilingualText("Filter Pictures", "写真をフィルターする");
-	document.getElementById("left-arrow").title = getBilingualText("Previous picture", "前の写真");
-	document.getElementById("right-arrow").title = getBilingualText("Next picture", "次の写真");
-	document.getElementById("search-eng").title = getBilingualText("Google in English", "英語でググる");
-	document.getElementById("search-jp").title = getBilingualText("Google in Japanese", "日本語でググる");
+	[["dates-title", "Dates visited", "訪れた日付"],
+		["areas-title", "Areas", "所"],
+		["filter-title", "Filters", "フィルター"],
+		["filter-kw-title", "Keyword", "キーワード"],
+		["filter-tags-title", "Tags", "タグ"],
+		["filter-camera-title", "Camera", "カメラ"],
+		["filter-areas-title", "Areas", "クリアする"],
+		["filter-clear-btn", "Clear", "所"],
+		["filter-submit-btn", "Save", "保存する"]]
+		.forEach(element => {
+			document.getElementById(element[0]).innerHTML = getBilingualText(element[1], element[2]);
+		});
+
+	[["pic-info-btn", "See picture information", "写真の情報を見る"],
+	["globe-btn", "Return to country picker", "国の選択へ戻る"],
+	["map-btn", "Return to map", "地図に戻る"],
+	["creator-btn", "About the site", "このサイトについて"],
+	["filter-btn", "Filter Pictures", "写真をフィルターする"],
+	["left-arrow", "Previous picture", "前の写真"],
+	["right-arrow", "Next picture", "次の写真"],
+	["search-eng", "Google in English", "英語でググる"],
+	["search-jp", "Google in Japanese", "日本語でググる"]]
+	.forEach(element => {
+			document.getElementById(element[0]).title = getBilingualText(element[1], element[2]);
+		});
+		
 	Array.from(document.getElementsByClassName("close-btn")).forEach(element => {
 		element.title = getBilingualText("Close", "閉じる");
 	})
 
-	var filterTags = document.getElementById("tags-list");
-	tags.sort((a, b) => { 
-			let a1 = a.english_name.toLowerCase();
-			let b1 = b.english_name.toLowerCase();
-		
-			if (a1 < b1) {
-				return -1;
-			}
-			if (a1 > b1) {
-				return 1;
-			}
-			return 0;
-		}).forEach(tag => {
+	var filterTags = document.getElementById("filter-tags-list");
+	tags.sort(sortByEnglishName).forEach(tag => {
 			var tempBtn = filterTagBtn.cloneNode();
 			tempBtn.innerHTML = getBilingualText(tag.english_name, tag.japanese_name);
 			tempBtn.id = tag.id + "-tag"
 			tempBtn.addEventListener("click", () => {
-				toggleTag(tag.id);
+				toggleFilter(tag.id, tempFilterTags);
 				tempBtn.classList.toggle("active");
 			});
 			filterTags.appendChild(tempBtn);
@@ -1439,55 +1665,54 @@ function setupSite() {
 
 	document.getElementById("load8").addEventListener("animationend", function() {
 		addRemoveNoDisplay(document.getElementById("loading-screen"), true);
-		// addRemoveNoDisplay(Array.from(document.getElementsByClassName("loader-dot")).flatMap(dot => dot.id), false);
 	});
 
 	
-	document.getElementById("rgn-drop-down-bg").addEventListener("click", function () { closeRgnDropdown(); });
+	document.getElementById("rgn-drop-down-bg").addEventListener("click", closeRgnDropdown);
 	document.getElementById("rgn-info-bg").addEventListener("click", function () { changeRegionInfoVisibility(false, true); });
 	document.getElementById("info-popup-close-btn").addEventListener("click", function () { closeInfoPopup(false); });
 	document.getElementById("site-info-popup").addEventListener("click", (event) => {
 		event.stopPropagation();
 	});
 	document.getElementById("to-top-btn").addEventListener("click", function () {
-		if (document.body.scrollTop > threshold) {
+		if (document.body.scrollTop > scrollThreshold) {
 			scrollToTop(true);
 		} else {
 			scrollDown();
 		}
 	});
-	document.getElementById("rgn-title-btn").addEventListener("click", function () { toggleRgnDropdown() });
-	document.getElementById("filter-btn").addEventListener("click", function () { showFilter(); });
-	document.getElementById("filter-popup-bg").addEventListener("click", function () { hideFilter(true); });
-	document.getElementById("filter-popup-close-btn").addEventListener("click", function () { hideFilter(false); });
-	document.getElementById("keyword-input").addEventListener("input", function () { checkEmptyKeywordInput(); });
-	document.getElementById("kw-clear-btn").addEventListener("click", function () { clearKeyword(); });
-	document.getElementById("clear-btn").addEventListener("click", function () { clearFilters(); });
-	document.getElementById("submit-btn").addEventListener("click", function () { submitFilters(); });
-	document.getElementById("pic-info-btn").addEventListener("click", function () { changePicInfoVisibility(); });
-	document.getElementById("pic-info-close-btn").addEventListener("click", function () { hidePicInfo(); });
-	document.getElementById("popup-bg").addEventListener("click", function () { closeInfoPopup(true); });
+	document.getElementById("map-instructions").addEventListener("click", function () { selectRgn(); });
+	document.getElementById("rgn-title-btn").addEventListener("click", toggleRgnDropdown);
 	document.getElementById("creator-btn").addEventListener("click", openInfoPopup);
-	document.getElementById("globe-btn").addEventListener("click", function () { showStartScreen(); });
+	document.getElementById("globe-btn").addEventListener("click", showStartScreen);
 	document.getElementById("map-btn").addEventListener("click", function () { changeGalleryVisibility(false); });
 	document.getElementById("info-btn").addEventListener("click", function () { changeRegionInfoVisibility(undefined, true); });
+	
+	document.getElementById("filter-btn").addEventListener("click", showFilter);
+	document.getElementById("filter-popup-bg").addEventListener("click", function () { hideFilter(true); });
+	document.getElementById("filter-popup-close-btn").addEventListener("click", function () { hideFilter(false); });
+	document.getElementById("filter-kw-input").addEventListener("input", checkEmptyKeywordInput());
+	document.getElementById("kw-filter-clear-btn").addEventListener("click", clearKeyword());
+	document.getElementById("filter-rgns-header").addEventListener("click", function () { toggleFilterGrp("rgns", undefined); });
+	document.getElementById("filter-areas-header").addEventListener("click", function () { toggleFilterGrp("areas", undefined); });
+	document.getElementById("filter-tags-header").addEventListener("click", function () { toggleFilterGrp("tags", undefined); });
+	document.getElementById("filter-camera-header").addEventListener("click", function () { toggleFilterGrp("camera", undefined); });
+	document.getElementById("filter-clear-btn").addEventListener("click", clearFilters);
+	document.getElementById("filter-submit-btn").addEventListener("click", submitFilters);
+	
+	document.getElementById("pic-info-btn").addEventListener("click", function () { changePicInfoVisibility(); });
+	document.getElementById("pic-info-close-btn").addEventListener("click", hidePicInfo);
+	document.getElementById("popup-bg").addEventListener("click", function () { closeInfoPopup(true); });
+	
 	document.getElementById("fullscreen-bg").addEventListener("click", function () { closeFullscreen(true) });
 	document.getElementById("fullscreen-ctrl").addEventListener("click", function () { closeFullscreen(true) });
-	document.getElementById("left-arrow").addEventListener("click", (event) => {
-		event.stopPropagation();
-	});
-	document.getElementById("fullscreen-pic").addEventListener("click", (event) => {
-		event.stopPropagation();
-	});
-	document.getElementById("right-arrow").addEventListener("click", (event) => {
-		event.stopPropagation();
-	});
+	document.getElementById("left-arrow").addEventListener("click", (event) => { event.stopPropagation(); });
+	document.getElementById("fullscreen-pic").addEventListener("click", (event) => { event.stopPropagation(); });
+	document.getElementById("right-arrow").addEventListener("click", (event) => { event.stopPropagation(); });
 	document.getElementById("left-arrow").addEventListener("click", function () { changeFullscreenPicture(false); });
 	document.getElementById("right-arrow").addEventListener("click", function () { changeFullscreenPicture(true); });
-	document.getElementById("pic-info-bg").addEventListener("click", function () { hidePicInfo(); });
-	document.getElementById("pic-info-drawer").addEventListener("click", (event) => {
-		event.stopPropagation();
-	});
+	document.getElementById("pic-info-bg").addEventListener("click", hidePicInfo);
+	document.getElementById("pic-info-drawer").addEventListener("click", (event) => { event.stopPropagation(); });
 	document.getElementById("country-map-mini").addEventListener("load", filterMiniMap);
 	document.getElementById("country-map").addEventListener("load", colourMap);
 	document.getElementById("rgn-info-handle").addEventListener("touchstart", e => { startHandleDrag(e,"rgn-info-handle") }, false);
@@ -1534,6 +1759,72 @@ function setupSite() {
 	};
 }
 
+function filterCountryData() {
+	if (allData != null && selectedCountry != null) {
+		data = allData.find(country => {return country.id == selectedCountry;})
+		data.region_groups.forEach(rgnGrp => {
+			rgnGrp.regions.forEach(rgn => {
+				if (rgn.image_list != null) {
+					rgn.image_list.sort(sortImgs);
+				}
+			});
+		});
+
+		countryTitle = getBilingualText(data.english_name, data.japanese_name);
+		document.getElementById("main-title").innerHTML = countryTitle;
+		document.getElementById("map-instructions").innerHTML = getBilingualText(
+			"Select a " + data.official_region_name_english + " to see pictures from that area, or click here to see all pictures.", 
+			data.official_region_name_japanese + "を選択して、その地域の写真を表示する。または、ここをクリックして、すべての写真を表示する。");
+		document.getElementById("rgn-title-btn").title = getBilingualText("Change " + data.official_region_name_english, data.official_region_name_japanese + "を切り替える");
+		document.getElementById("filter-rgns-title").innerHTML = getBilingualText(data.official_region_name_english, data.official_region_name_japanese);
+		document.getElementById("info-btn").title = getBilingualText("Toggle "  + data.official_region_name + " info", data.official_region_name_japanese + "の情報をトグル");
+		seeFromRgnTitle = getBilingualText("See images from this " + data.official_region_name_english, "この地域の写真を表示する");
+
+		createRgnList();
+		setTimeout(() => {
+			createMap();
+		}, 50);
+	}
+}
+
+function fetchData() {
+	var hasError = false;
+
+	fetch("https://raw.githubusercontent.com/kymlu/travel-memories/main/js/data.json")
+		.then(response => {
+			return response.json();
+		}).then(d => {
+			allData = d;
+		}).catch(error => {
+			showDataLoadError();
+			hasError = true;
+			console.error(error);
+		}).then(() => {
+			if (!hasError && allData != null) {
+				createStartScreen();
+				showFirstStartScreen();
+			}
+		});
+}
+
+function retry() {
+	addRemoveNoDisplay("error-btn", true);
+	for (let i = 0; i <= 8; i++) {
+		document.getElementById("load" + i).style.animationPlayState = "running";
+	}
+	fetchData();
+}
+
+function showDataLoadError() {
+	setTimeout(() => {
+		addRemoveNoDisplay("error-btn", false);
+		addRemoveTransparent("error-btn", false);
+		for (let i = 0; i <= 8; i++) {
+			document.getElementById("load" + i).style.animationPlayState = "paused";
+		}
+	}, defaultTimeout);
+}
+
 // Loading data
 function openLoader() {
 	addRemoveTransparent(["top-bar", "map-page"], true);
@@ -1562,42 +1853,16 @@ function hideLoader() {
 	}, defaultTimeout);
 }
 
-function filterCountryData() {
-	if (allData != null && selectedCountry != null) {
-		data = allData.find(country => {return country.id == selectedCountry;})
-		data.region_groups.forEach(rgnGrp => {
-			rgnGrp.regions.forEach(rgn => {
-				if (rgn.image_list != null) {
-					rgn.image_list.sort(function (a, b) { return new Date(a.date) - new Date(b.date); });
-				}
-			});
-		});
-
-		countryTitle = getBilingualText(data.english_name, data.japanese_name);
-		document.getElementById("main-title").innerHTML = countryTitle;
-		document.getElementById("map-instructions").innerHTML = getBilingualText(
-			"Select a " + data.official_region_name_english + " to see pictures from that location.", 
-			data.official_region_name_japanese + "を選択して、その地域の写真を表示する。");
-		document.getElementById("rgn-title-btn").title = getBilingualText("Change " + data.official_region_name_english, data.official_region_name_japanese + "を切り替える");
-		document.getElementById("info-btn").title = getBilingualText("Toggle "  + data.official_region_name + " info", data.official_region_name_japanese + "の情報をトグル");
-		document.getElementById("description-title").innerHTML = getBilingualText("About", data.official_region_name_japanese + "について");
-
-		createRgnList();
-		setTimeout(() => {
-			createMap();
-		}, 50);
-	}
-}
-
 function stopLoader(){
 	setTimeout(() => {
-		var iterationCount = Math.ceil((new Date() - now) / 1500);
+		var iterationCount = Math.ceil((new Date() - now) / loadAnimationTime);
 		for (let i = 0; i <= 8; i++) {
 			document.getElementById("load" + i).style.animationIterationCount = iterationCount;
 		}
 	}, 100);
 }
 
+// Start screen
 function highlightCountry(abbreviation, isHover){
 	addRemoveTransparent(abbreviation + "-start-icon-c", isHover);
 	var icons = Array.from(document.getElementById(abbreviation + "-start-icon").getElementsByTagName("img"));
@@ -1606,7 +1871,7 @@ function highlightCountry(abbreviation, isHover){
 
 function createStartScreen(){
 	const btn = document.createElement("button");
-	btn.classList.add("start-btn");
+	btn.classList.add("start-btn", "highlight-btn", "txt-btn");
 	const text = document.createElement("div");
 	text.classList.add("country-text");
 	const icon = document.createElement("div");
@@ -1670,7 +1935,6 @@ function showFirstStartScreen(){
 
 function showStartScreen(){
 	selectedCountry = null;
-	selectedRegion = null;
 	scrollToTop(false);
 	changeMainColor("--default-color");
 	addRemoveNoDisplay(["top-bar", "load-icon"], false);
@@ -1688,44 +1952,6 @@ function showStartScreen(){
 	setTimeout(() => {
 		addRemoveTransparent("start-screen", false);
 	}, 10);
-}
-
-function fetchData() {
-	var hasError = false;
-
-	fetch("https://raw.githubusercontent.com/kymlu/travel-memories/main/js/data.json")
-		.then(response => {
-			return response.json();
-		}).then(d => {
-			allData = d;
-		}).catch(error => {
-			showDataLoadError();
-			hasError = true;
-			console.error(error);
-		}).then(() => {
-			if (!hasError && allData != null) {
-				createStartScreen();
-				showFirstStartScreen();
-			}
-		});
-}
-
-function retry() {
-	addRemoveNoDisplay("error-btn", true);
-	for (let i = 0; i <= 8; i++) {
-		document.getElementById("load" + i).style.animationPlayState = "running";
-	}
-	fetchData();
-}
-
-function showDataLoadError() {
-	setTimeout(() => {
-		addRemoveNoDisplay("error-btn", false);
-		addRemoveTransparent("error-btn", false);
-		for (let i = 0; i <= 8; i++) {
-			document.getElementById("load" + i).style.animationPlayState = "paused";
-		}
-	}, defaultTimeout);
 }
 
 function main() {
