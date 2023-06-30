@@ -582,19 +582,18 @@ function createPolaroidImg(img) {
 		lastSwipeTime = new Date();
 		openFullscreen();
 	});
+	
 	polImg.onload = function () {
 		if (this.width > this.height) {
 			polImg.classList.add("landscape-img");
 		} else {
 			polImg.classList.add("portrait-img");
 		}
+		addRemoveTransparent(polImg, false);
 	}
 
 	// image
 	polImg.setAttribute("img-src", img.link ?? "img/" + selectedCountry + "/" + (isSingleRgn ? rgnsList[0].id : img.rgn.id) + "/" + img.file_name);
-	polImg.addEventListener("load", () => {
-		addRemoveTransparent(polImg, false);
-	});
 
 	return pol;
 }
