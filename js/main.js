@@ -489,18 +489,20 @@ function filterMiniMap() {
 
 	// show the map
 	const countryImg = svgDoc.getElementById(selectedCountry + "-img");
-	if (isSingleRgn) countryImg.setAttribute("viewBox", rgnsList[0].viewbox);
-	setTimeout(() => {
-		addRemoveTransparent([svgObj], false);
-	}, 50);
+	if (isSingleRgn) { 
+		countryImg.setAttribute("viewBox", rgnsList[0].viewbox);
+		setTimeout(() => {
+			addRemoveTransparent([svgObj], false);
+		}, 50);
+	}
 }
 
 function editMiniMap() {
 	const svgObj = document.getElementById("country-map-mini");
-	addRemoveTransparent([svgObj], true);
+	if (isSingleRgn) addRemoveTransparent([svgObj], true);
 	setTimeout(() => {
 		svgObj.data = "img/country/" + selectedCountry + ".svg";
-	}, 50);
+	}, 75);
 }
 
 // Polaroid gallery
@@ -573,6 +575,9 @@ function createPolaroidImg(img) {
 		polCaptionTextJp.innerHTML = img.description_japanese;
 	}
 	
+	// image
+	polImg.setAttribute("img-src", img.link ?? "img/" + selectedCountry + "/" + (isSingleRgn ? rgnsList[0].id : img.rgn.id) + "/" + img.file_name);
+
 	// listeners
 	pol.addEventListener("click", function () {
 		selectedPic = img;
@@ -589,11 +594,10 @@ function createPolaroidImg(img) {
 		} else {
 			polImg.classList.add("portrait-img");
 		}
-		addRemoveTransparent(polImg, false);
+		setTimeout(() => {
+			addRemoveTransparent(polImg, false);			
+		}, defaultTimeout);
 	}
-
-	// image
-	polImg.setAttribute("img-src", img.link ?? "img/" + selectedCountry + "/" + (isSingleRgn ? rgnsList[0].id : img.rgn.id) + "/" + img.file_name);
 
 	return pol;
 }
@@ -1527,7 +1531,8 @@ function selectRgn(rgnId) {
 		imgList = newRegion.image_list;
 		rgnsList = [newRegion];
 		areaList = newRegion.areas;
-		addRemoveNoDisplay(["dates-title", "rgn-dates"], false);
+		addRemoveNoDisplay("rgn-info-dates", false);
+		document.getElementById("areas-title").innerHTML = getBilingualText("Areas", "所");
 		document.getElementById("rgn-dates").innerHTML = getBilingualText(newRegion.dates_english, newRegion.dates_japanese);
 		document.getElementById("rgn-desc-eng").innerHTML = newRegion.description_english;
 		document.getElementById("rgn-desc-jp").innerHTML = newRegion.description_japanese;
@@ -1546,7 +1551,8 @@ function selectRgn(rgnId) {
 			}}));
 		}).sort(sortImgs);
 	
-		addRemoveNoDisplay(["dates-title", "rgn-dates"], true);
+		addRemoveNoDisplay("rgn-info-dates", true);
+		document.getElementById("areas-title").innerHTML = getBilingualText(data.official_region_name_english + "s", data.official_region_name_japanese);
 		document.getElementById("rgn-desc-eng").innerHTML = data.description_english;
 		document.getElementById("rgn-desc-jp").innerHTML = data.description_japanese;
 		document.getElementById("rgn-name").innerHTML = getBilingualText(data.english_name, data.japanese_name);
@@ -1567,7 +1573,7 @@ function selectRgn(rgnId) {
 		}).sort().join(" | ");
 	}
 
-	editMiniMap(newRegion);
+	editMiniMap();
 
 	flipArrow("rgn-name-arrow", false);
 	setupFilters();
@@ -1610,7 +1616,6 @@ function selectCountry(country, countryColor){
 // Data loading and setup
 function setupSite() {
 	[["dates-title", "Dates visited", "訪れた日付"],
-		["areas-title", "Areas", "所"],
 		["filter-title", "Filters", "フィルター"],
 		["filter-kw-title", "Keyword", "キーワード"],
 		["filter-tags-title", "Tags", "タグ"],
