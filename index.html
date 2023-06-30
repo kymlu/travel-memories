@@ -24,18 +24,18 @@
 
 <body class="page-bg">
   <!-- Top bar -->
-  <div id="top-bar" class="top-bar transparent" style="z-index: 5000;">
-    <div id="btn-grp-left" class="btn-grp">
+  <div id="top-bar" class="top-bar transparent" style="z-index: 5000; pointer-events: none;">
+    <div id="btn-grp-left" class="btn-grp" style="pointer-events: auto;">
       <button id="globe-btn" class="text-main-color large-icon" style="z-index: 5001;">&#xf0ac</button>
       <button id="map-btn" class="text-main-color large-icon no-display" style="z-index: 5001;">&#xf279</button>
     </div>
-    <div id="rgn-title" style="display: flex; justify-content: center;">
+    <div id="rgn-title" style="display: flex; justify-content: center; pointer-events: auto;">
       <div id="rgn-title-btn" class="rgn-title no-display">
         <div id="rgn-name" class="regular-text bold-text" style="text-align: center;"></div>
         <button id="rgn-name-arrow" class="text-main-color large-icon transform-transition arrow-down">&#xf0d7</button>
       </div>
     </div>
-    <div id="btn-grp-right" class="btn-grp">
+    <div id="btn-grp-right" class="btn-grp" style="pointer-events: auto;">
       <button id="filter-btn" class="text-main-color large-icon no-display"> &#xf0b0</button>
       <button id="info-btn" class="text-main-color large-icon no-display">&#xf05a</button>
       <button id="creator-btn" class="text-main-color large-icon">&#xf005</button>
@@ -221,18 +221,19 @@
 
   <!-- Loading circle -->
   <div id="loading-screen" class="loader centered opacity-transition">
-    <div id="load0" class="loader-dot" style="transform: rotate(270deg) translate(80px) rotate(270deg); animation-delay: 0s;"></div>
-    <div id="load1" class="loader-dot" style="transform: rotate(315deg) translate(80px) rotate(315deg); animation-delay: 0.1875s;"></div>
-    <div id="load2" class="loader-dot" style="transform: rotate(0deg) translate(80px) rotate(0deg); animation-delay: 0.375s;"></div>
-    <div id="load3" class="loader-dot" style="transform: rotate(45deg) translate(80px) rotate(45deg); animation-delay: 0.5625s;"></div>
-    <div id="load4" class="loader-dot" style="transform: rotate(90deg) translate(80px) rotate(90deg); animation-delay: 0.75s;"></div>
-    <div id="load5" class="loader-dot" style="transform: rotate(135deg) translate(80px) rotate(135deg); animation-delay: 0.9375s;"></div>
-    <div id="load6" class="loader-dot" style="transform: rotate(180deg) translate(80px) rotate(180deg); animation-delay: 1.125s;"></div>
-    <div id="load7" class="loader-dot" style="transform: rotate(225deg) translate(80px) rotate(225deg); animation-delay: 1.3125s;"></div>
-    <div id="load8" class="loader-dot" style="transform: rotate(270deg) translate(80px) rotate(270deg); animation-delay: 1.5s;"></div>
-    <img id="load-icon" class="start-icon img centered no-display" style="margin-left: 10px; margin-top: 10px;">
+    <div class="centered">
+      <div id="load0" class="loader-dot" style="transform: rotate(270deg) translate(80px) rotate(270deg); animation-delay: 0s;"></div>
+      <div id="load1" class="loader-dot" style="transform: rotate(315deg) translate(80px) rotate(315deg); animation-delay: 0.1875s;"></div>
+      <div id="load2" class="loader-dot" style="transform: rotate(0deg) translate(80px) rotate(0deg); animation-delay: 0.375s;"></div>
+      <div id="load3" class="loader-dot" style="transform: rotate(45deg) translate(80px) rotate(45deg); animation-delay: 0.5625s;"></div>
+      <div id="load4" class="loader-dot" style="transform: rotate(90deg) translate(80px) rotate(90deg); animation-delay: 0.75s;"></div>
+      <div id="load5" class="loader-dot" style="transform: rotate(135deg) translate(80px) rotate(135deg); animation-delay: 0.9375s;"></div>
+      <div id="load6" class="loader-dot" style="transform: rotate(180deg) translate(80px) rotate(180deg); animation-delay: 1.125s;"></div>
+      <div id="load7" class="loader-dot" style="transform: rotate(225deg) translate(80px) rotate(225deg); animation-delay: 1.3125s;"></div>
+      <div id="load8" class="loader-dot" style="transform: rotate(270deg) translate(80px) rotate(270deg); animation-delay: 1.5s;"></div>
+      <img id="load-icon" class="start-icon img centered no-display" style="margin-left: 10px; margin-top: 10px;">
+    </div>
   </div>
-
   <!-- Error button -->
   <div id="error-btn" class="error-btn centered loader-text" onclick="retry()">
     <p>Failed to fetch data. Try again?</p>
