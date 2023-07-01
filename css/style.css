@@ -955,6 +955,7 @@ input {
 
 .divider {
   margin: 0px auto;
+  min-height: 2px;
   height: 2px;
   width: 100%;
   background-color: rgba(var(--main-color));
@@ -963,6 +964,7 @@ input {
 }
 
 .divider.filter {
+  min-height: 1px;
   height: 1px;
   opacity: 50%
 }
