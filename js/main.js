@@ -919,7 +919,7 @@ function clearFilters() {
 }
 
 function doesTextIncludeKeyword(text){
-	return text && text.toLowerCase().includes(filterKeyword);
+	return text && text.toLowerCase().includes(filterKeyword.toLowerCase());
 }
 
 function includeImage(img) {
