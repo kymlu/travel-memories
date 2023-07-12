@@ -1181,24 +1181,25 @@ function setFullscreenPicture(isForward) {
 		var nextPic = document.getElementById("fullscreen-pic-next");
 		var currentPic = document.getElementById("fullscreen-pic");
 		
-		addRemoveNoDisplay(nextPic, true);
+		addRemoveNoDisplay([nextPic], true);
 		nextPic.src = src;
 		nextPic.classList.add(isForward ? "fullscreen-pic-right":"fullscreen-pic-left");
 
 		setTimeout(() => {
-			addRemoveNoDisplay(nextPic, false);
-			addRemoveTransparent([nextPic, currentPic], false);
+			addRemoveNoDisplay([nextPic], false);
+			addRemoveTransparent([nextPic], false);
+			addRemoveTransparent([currentPic], true);
 			nextPic.classList.remove(isForward ? "fullscreen-pic-right" : "fullscreen-pic-left");
 			currentPic.classList.add(isForward ? "fullscreen-pic-left" : "fullscreen-pic-right");
 
 			setTimeout(() => {
-				addRemoveNoDisplay(currentPic, true);
+				addRemoveNoDisplay([currentPic], true);
+				addRemoveTransparent([currentPic], false);
 				currentPic.src = src;
 				currentPic.classList.remove(isForward ? "fullscreen-pic-left" : "fullscreen-pic-right");
-				addRemoveTransparent([currentPic], false);
 				setTimeout(() => {
-					addRemoveNoDisplay(currentPic, false);
-					addRemoveNoDisplay(nextPic, true);
+					addRemoveNoDisplay([currentPic], false);
+					addRemoveNoDisplay([nextPic], true);
 					addRemoveTransparent([nextPic], true);
 					nextPic.classList.remove("fullscreen-pic-in");
 				}, 100);

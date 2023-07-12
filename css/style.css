@@ -715,13 +715,17 @@ input {
   text-align: center;
 }
 
-.filter-opt, .action-btn:hover {
+.filter-opt {
   border-color: rgba(var(--main-color));
   background-color: white;
   color: var(--text-color);
 }
 
-.img-tag, .filter-opt:hover, .filter-opt.active, .action-btn {
+.filter-opt:hover, .action-btn:hover {
+  opacity: 50%;
+}
+
+.img-tag, .filter-opt.active, .action-btn {
   background-color: rgba(var(--main-color));
   color: white;
 }
