@@ -88,6 +88,17 @@ h1 {
   cursor: pointer;
 }
 
+.inline-icon {
+  font-family: FontAwesome;
+  color: rgba(var(--main-color));
+  cursor: pointer;
+}
+
+.in-btn-icon {
+  font-family: FontAwesome;
+  color: white;
+}
+
 .regular-text {
   font-size: var(--reg-text-size);
 }
@@ -580,7 +591,7 @@ h1 {
 }
 
 .pic-rotate.left-1 {
-  transform: rotate(2deg);
+  transform: rotate(4deg);
 }
 
 .pic-rotate.left-2 {
@@ -588,7 +599,7 @@ h1 {
 }
 
 .pic-rotate.left-3 {
-  transform: rotate(4deg);
+  transform: rotate(5deg);
 }
 
 .pic-rotate.left-4 {
@@ -596,7 +607,7 @@ h1 {
 }
 
 .pic-rotate.right-1 {
-  transform: rotate(-2deg);
+  transform: rotate(-4deg);
 }
 
 .pic-rotate.right-2 {
@@ -604,7 +615,7 @@ h1 {
 }
 
 .pic-rotate.right-3 {
-  transform: rotate(-4deg);
+  transform: rotate(-5deg);
 }
 
 .pic-rotate.right-4 {
@@ -613,7 +624,7 @@ h1 {
 
 @media only screen and (orientation: portrait) {
   .pic-rotate.rotate-left-1 {
-    transform: rotate(-2deg);
+    transform: rotate(-4deg);
   }
 
   .pic-rotate.rotate-left-3 {
@@ -621,7 +632,7 @@ h1 {
   }
 
   .pic-rotate.rotate-right-1 {
-    transform: rotate(4deg);
+    transform: rotate(5deg);
   }
 
   .pic-rotate.rotate-right-3 {
@@ -949,12 +960,6 @@ input {
   #pic-info-btn {
     order: 2;
   }
-}
-
-.search-icon {
-  font-family: FontAwesome;
-  color: rgba(var(--main-color));
-  cursor: pointer;
 }
 
 .divider {

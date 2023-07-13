@@ -1034,7 +1034,7 @@ function submitFilters() {
 	hideFilter(true);
 }
 
-// Fullscreen
+// Searching picture location
 function search(searchTerm) {
 	window.open("https://www.google.com/search?q=" + searchTerm);
 }
@@ -1047,6 +1047,7 @@ function searchJapanese() {
 	search(searchTermJp)
 }
 
+// Fullscreen picture
 function changeFullscreenPicture(isForward) {
 	if (isForward) {
 		if (visibleImgs.length > 0){
@@ -1399,6 +1400,11 @@ function closeInfoPopup(forceClose) {
 		}, defaultTimeout);
 	}
 }
+
+function goToGithub(){
+	window.open("https://github.com/kymlu/travel-memories");
+}
+
 
 // Official region info
 function showRegionInfo(isForced) {
