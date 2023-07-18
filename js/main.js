@@ -215,7 +215,7 @@ function getPictureDate(date, picOffset){
 	return new Date(date.getTime() - ((picOffset * -60) - localOffset) * 60000);
 }
 
-function getEnglishDate(date, isFullDate) {
+function getEnglishDate(date, isFullDate, picOffset) {
 	var hours = date.getHours();
 	return (isFullDate ? dayNamesEn[date.getDay()] +", " : "") +
 		monthNames[date.getMonth()] + " " + 
@@ -225,11 +225,14 @@ function getEnglishDate(date, isFullDate) {
 			" " + (hours > 12 ? hours - 12 : hours).toString() + ":" + 
 			date.getMinutes().toString().padStart(2, "0") + ":" + 
 			date.getSeconds().toString().padStart(2, "0")  + 
-			(hours >= 12 ? " PM" : " AM") 
+			(hours >= 12 ? " PM" : " AM") + 
+			(picOffset > 0 ? " +" : " -") + 
+			Math.floor(picOffset) + ":" + 
+			String((picOffset - Math.floor(picOffset)) * 60).padStart(2, "0")
 			: "");
 }
 
-function getJapaneseDate(date, isFullDate) {
+function getJapaneseDate(date, isFullDate, picOffset) {
 	var hours = date.getHours();
 	return date.getFullYear() + "年" + 
 		(date.getMonth() + 1) + "月" + 
@@ -239,7 +242,10 @@ function getJapaneseDate(date, isFullDate) {
 			(hours >= 12 ? "午後" : "午前") + 
 			(hours > 12 ? hours - 12 : hours).toString() + ":" + 
 			date.getMinutes().toString().padStart(2, "0") + ":" + 
-			date.getSeconds().toString().padStart(2, "0") 
+			date.getSeconds().toString().padStart(2, "0")  + 
+			(picOffset >= 0 ? "+" : "") + 
+			Math.floor(picOffset) + ":" + 
+			String((picOffset - Math.floor(picOffset)) * 60).padStart(2, "0")
 			: "");
 }
 
@@ -575,8 +581,8 @@ function createPolaroidImg(img) {
 	// add info
 	if(img.date){
 		let date = getPictureDate(new Date(img.date), img.offset);
-		polDateEn.innerHTML = getEnglishDate(date, false);
-		polDateJp.innerHTML = getJapaneseDate(date, false);
+		polDateEn.innerHTML = getEnglishDate(date, false, img.offset);
+		polDateJp.innerHTML = getJapaneseDate(date, false, img.offset);
 	} else {
 		polDateEn.innerHTML = "";
 		polDateJp.innerHTML = "";
@@ -1087,8 +1093,8 @@ function changeFullscreenPicture(isForward) {
 function setFullscreenInfo(){
 	if(selectedPic.date){
 		let date = getPictureDate(new Date(selectedPic.date), selectedPic.offset);
-		document.getElementById("fullscreen-eng-date").innerHTML = getEnglishDate(date, true);
-		document.getElementById("fullscreen-jp-date").innerHTML = getJapaneseDate(date, true);
+		document.getElementById("fullscreen-eng-date").innerHTML = getEnglishDate(date, true, selectedPic.offset);
+		document.getElementById("fullscreen-jp-date").innerHTML = getJapaneseDate(date, true, selectedPic.offset);
 	} else {
 		document.getElementById("fullscreen-eng-date").innerHTML = "Unknown date";
 		document.getElementById("fullscreen-jp-date").innerHTML = "不明な日付";

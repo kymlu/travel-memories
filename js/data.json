@@ -11559,7 +11559,7 @@
             "image_list": [
               {
                 "file_name": "IMG_4224.jpeg",
-                "date": "2023-03-27T07:35:36.000Z",
+                "date": "2023-03-27T06:35:36.000Z",
                 "offset": 10,
                 "area": "matsuzaki",
                 "location_english": "Naka River",
@@ -11574,7 +11574,7 @@
               },
               {
                 "file_name": "IMG_4227.jpeg",
-                "date": "2023-03-27T07:38:12.000Z",
+                "date": "2023-03-27T06:38:12.000Z",
                 "offset": 10,
                 "area": "matsuzaki",
                 "location_english": "Naka River",
@@ -11591,7 +11591,7 @@
               },
               {
                 "file_name": "IMG_4228.jpeg",
-                "date": "2023-03-27T07:38:23.000Z",
+                "date": "2023-03-27T06:38:23.000Z",
                 "offset": 10,
                 "area": "matsuzaki",
                 "location_english": "Naka River",
@@ -11608,7 +11608,7 @@
               },
               {
                 "file_name": "IMG_4229.jpeg",
-                "date": "2023-03-27T07:38:30.000Z",
+                "date": "2023-03-27T06:38:30.000Z",
                 "offset": 10,
                 "area": "matsuzaki",
                 "location_english": "Naka River",
@@ -11625,7 +11625,7 @@
               },
               {
                 "file_name": "IMG_4232.jpeg",
-                "date": "2023-03-27T07:41:39.000Z",
+                "date": "2023-03-27T06:41:39.000Z",
                 "offset": 10,
                 "area": "matsuzaki",
                 "location_english": "Naka River",
@@ -11640,7 +11640,7 @@
               },
               {
                 "file_name": "IMG_4233.jpeg",
-                "date": "2023-03-27T07:42:27.000Z",
+                "date": "2023-03-27T06:42:27.000Z",
                 "offset": 10,
                 "area": "matsuzaki",
                 "location_english": "Naka River",
@@ -11657,7 +11657,7 @@
               },
               {
                 "file_name": "IMG_4234.jpeg",
-                "date": "2023-03-27T07:44:08.000Z",
+                "date": "2023-03-27T06:44:08.000Z",
                 "offset": 10,
                 "area": "matsuzaki",
                 "location_english": "Naka River",
@@ -11672,7 +11672,7 @@
               },
               {
                 "file_name": "IMG_4240.jpeg",
-                "date": "2023-03-27T07:52:57.000Z",
+                "date": "2023-03-27T06:52:57.000Z",
                 "offset": 10,
                 "area": "matsuzaki",
                 "tags": ["nature"],
@@ -11685,7 +11685,7 @@
               },
               {
                 "file_name": "IMG_4309.jpeg",
-                "date": "2023-03-27T08:36:54.000Z",
+                "date": "2023-03-27T07:36:54.000Z",
                 "offset": 10,
                 "area": "matsuzaki",
                 "description_english": "Ecosystem",
@@ -13807,6 +13807,8 @@
                 "date": "2023-01-02T06:29:57.000Z",
                 "offset": 9,
                 "area": "osaka",
+                "location_english": "Indian tandoori BINDU Grand Front Osaka",
+                "location_japanese": "インディアンタンドリー BINDU グランフロント大阪店",
                 "description_english": "Even though I went all the way to Osaka, my first meal was Biryani.",
                 "description_japanese": "\u308F\u3056\u308F\u3056\u5927\u962A\u307E\u3067\u884C\u3063\u305F\u306E\u306B\u3001\u30D3\u30EA\u30E4\u30FC\u30CB\u98DF\u3079\u3061\u3083\u3063\u305Fw (^_^;)",
                 "tags": ["food"],
@@ -22157,7 +22159,7 @@
               },
               {
                 "file_name": "IMG_4672.jpeg",
-                "date": "2023-04-04T11:12:35.000Z",
+                "date": "2023-04-04T10:12:35.000Z",
                 "offset": 10,
                 "area": "tainan",
                 "location_english": "Yuguang Island",
@@ -23065,7 +23067,7 @@
             "image_list": [
               {
                 "file_name": "IMG_4677.jpeg",
-                "date": "2023-04-05T06:18:44.000Z",
+                "date": "2023-04-05T05:18:44.000Z",
                 "offset": 10,
                 "area": "kaohsiung",
                 "location_english": "The Pier2 Art Center",
@@ -23082,13 +23084,13 @@
               },
               {
                 "file_name": "IMG_4680.jpeg",
-                "date": "2023-04-05T06:22:48.000Z",
+                "date": "2023-04-05T05:22:48.000Z",
                 "offset": 10,
                 "area": "kaohsiung",
                 "location_english": "The Pier2 Art Center",
                 "location_chinese": "\u99C1\u4E8C\u85DD\u8853\u7279\u5340",
                 "description_english": "Hop",
-                "description_japanese": "\u98DB\u3076",
+                "description_japanese": "跳ねる",
                 "tags": ["attractions", "art"],
                 "camera_model": "Canon EOS 90D",
                 "lens": "EF-S18-135mm f/3.5-5.6 IS USM",
@@ -23099,7 +23101,7 @@
               },
               {
                 "file_name": "IMG_4696.jpeg",
-                "date": "2023-04-05T07:00:39.000Z",
+                "date": "2023-04-05T06:00:39.000Z",
                 "offset": 10,
                 "area": "kaohsiung",
                 "location_english": "The Pier2 Art Center",
@@ -23116,7 +23118,7 @@
               },
               {
                 "file_name": "IMG_4704.jpeg",
-                "date": "2023-04-05T07:03:59.000Z",
+                "date": "2023-04-05T06:03:59.000Z",
                 "offset": 10,
                 "area": "kaohsiung",
                 "location_english": "The Pier2 Art Center",
@@ -23133,7 +23135,7 @@
               },
               {
                 "file_name": "IMG_4713.jpeg",
-                "date": "2023-04-05T07:20:12.000Z",
+                "date": "2023-04-05T06:20:12.000Z",
                 "offset": 10,
                 "area": "kaohsiung",
                 "description_english": "Gate",
