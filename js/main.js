@@ -888,11 +888,13 @@ function toggleFilterGrp(group, showGrp){
 }
 
 function checkEmptyKeywordInput(){
-	if (document.getElementById("filter-kw-input").value == ""){
-		addRemoveNoDisplay("kw-filter-clear-btn", true);
-	} else if (document.getElementById("kw-filter-clear-btn").classList.contains("no-display")) {
-		addRemoveNoDisplay("kw-filter-clear-btn", false);
-	}
+	setTimeout(() => {
+		if (document.getElementById("filter-kw-input").value == ""){
+			addRemoveNoDisplay("filter-kw-clear-btn", true);
+		} else if (document.getElementById("filter-kw-clear-btn").classList.contains("no-display")) {
+			addRemoveNoDisplay("filter-kw-clear-btn", false);
+		}
+	}, 10);
 }
 
 function clearKeyword() {
@@ -939,7 +941,7 @@ function includeImage(img) {
 		doesTextIncludeKeyword(img.location_japanese) ||
 		doesTextIncludeKeyword(img.location_chinese) ||
 		doesTextIncludeKeyword(region?.english_name) ||
-		doesTextIncludeKeyword(region?.japanese_name) || 
+		doesTextIncludeKeyword(region?.japanese_name) ||
 		doesTextIncludeKeyword(area?.english_name) ||
 		doesTextIncludeKeyword(area?.japanese_name) || 
 		doesTextIncludeKeyword(img.camera_model) || 
@@ -1722,8 +1724,8 @@ function setupSite() {
 	document.getElementById("filter-btn").addEventListener("click", showFilter);
 	document.getElementById("filter-popup-bg").addEventListener("click", function () { hideFilter(true); });
 	document.getElementById("filter-popup-close-btn").addEventListener("click", function () { hideFilter(false); });
-	document.getElementById("filter-kw-input").addEventListener("input", checkEmptyKeywordInput());
-	document.getElementById("kw-filter-clear-btn").addEventListener("click", clearKeyword());
+	document.getElementById("filter-kw-input").addEventListener("input", checkEmptyKeywordInput);
+	document.getElementById("filter-kw-clear-btn").addEventListener("click", clearKeyword);
 	document.getElementById("filter-rgns-header").addEventListener("click", function () { toggleFilterGrp("rgns", undefined); });
 	document.getElementById("filter-areas-header").addEventListener("click", function () { toggleFilterGrp("areas", undefined); });
 	document.getElementById("filter-tags-header").addEventListener("click", function () { toggleFilterGrp("tags", undefined); });

@@ -703,9 +703,10 @@ input {
 
 .clear-icon {
   margin-left: -30px;
+  margin-top: -8px;
   font-family: FontAwesome;
   color: var(--text-color);
-  cursor: pointer;
+  font-size: var(--reg-text-size);
 }
 
 .filter-header {
