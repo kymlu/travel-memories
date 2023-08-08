@@ -14817,7 +14817,8 @@
                 "exposure": "1/1250",
                 "f_stop": 4,
                 "iso": 100,
-                "focal_length": "4.2mm"
+                "focal_length": "4.2mm",
+                "is_favourite": true
               },
               {
                 "file_name": "IMG_0648.jpeg",

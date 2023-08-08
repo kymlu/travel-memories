@@ -62,7 +62,7 @@ let seeFromRgnTitle = null;
 // Template elements
 let polaroid, polaroidPin, polaroidPinFav, polaroidImgFrame, polaroidImg, polaroidCaption, polaroidCaptionText, polaroidCaptionContainer, polaroidDate, singleDate;
 let rgnGrpGroup, rgnGrpTitle, visitedRegion, unvisitedRegion, rgnGrpDrop, rgnDrop;
-let filterTagBtn;
+let filterTagBtn, favouritedTag;
 
 // Constants
 const loadAnimationTime = 1500;
@@ -463,6 +463,16 @@ function createTemplates() {
 	// filters
 	filterTagBtn = document.createElement("button");
 	filterTagBtn.classList.add("filter-opt");
+
+	// favourited tag in fullscreen
+	favouritedTag = document.createElement("div");
+	favouritedTag.classList.add("img-tag");
+	favouritedTag.innerHTML = getBilingualText("Favourited", "お気に入り");
+	let tempStar = document.createElement("span");
+	tempStar.classList.add("in-btn-icon");
+	tempStar.style.marginRight = "5px";
+	tempStar.innerHTML = "&#xf005";
+	favouritedTag.prepend(tempStar);
 
 	// region group text and regions
 	rgnGrpGroup = document.createElement("div");
@@ -1126,12 +1136,10 @@ function setFullscreenInfo(){
 						selectedCountry == taiwan && selectedPic.location_chinese ? (selectedPic.location_chinese + ", ") : 
 						"") + (area.english_name ?? "");
 	document.getElementById("fullscreen-eng-city").innerHTML = searchTermEng;
-	document.getElementById("search-eng").addEventListener("click", searchEnglish);
 	searchTermJp = (area.japanese_name ?? area.english_name ?? "") + (selectedPic.location_japanese ? ("　" + selectedPic.location_japanese) : 
 						(selectedCountry == taiwan && selectedPic.location_chinese) ? ("　" + selectedPic.location_chinese) : 
 						selectedPic.location_english ? ("　" + selectedPic.location_english) : "");
 	document.getElementById("fullscreen-jp-city").innerHTML = searchTermJp;
-	document.getElementById("search-jp").addEventListener("click", searchJapanese);
 
 	
 	if (selectedPic.description_english) {
@@ -1189,20 +1197,23 @@ function setFullscreenInfo(){
 		addRemoveNoDisplay("technical-info", false);
 	}
 	
-
 	selectedPic.tags.map(x => { return tags.find(function (t) { return t.id == x }) })
-		.sort()
+		.sort(sortByEnglishName)
 		.forEach(tag => {
 			tempElement = document.createElement("div");
 			tempElement.classList.add("img-tag");
 			tempElement.innerHTML = getBilingualText(tag.english_name, tag.japanese_name);
 			document.getElementById("img-tags").appendChild(tempElement);
 		});
+
+	if(selectedPic.is_favourite){
+		document.getElementById("img-tags").appendChild(favouritedTag);
+	}
 }
 
 function setFullscreenPicture(isForward) {
-	document.getElementById("search-eng").removeEventListener("click", searchEnglish);
-	document.getElementById("search-jp").removeEventListener("click", searchJapanese);
+	//document.getElementById("search-eng").removeEventListener("click", searchEnglish);
+	//document.getElementById("search-jp").removeEventListener("click", searchJapanese);
 	document.getElementById("img-tags").replaceChildren();
 
 	var src = selectedPic.link ?? "img/" + selectedCountry + "/" + (isSingleRgn ? rgnsList[0].id : selectedPic.rgn.id) + "/" + selectedPic.file_name;
@@ -1731,7 +1742,8 @@ function setupSite() {
 	
 	document.getElementById("rgn-drop-down-bg").addEventListener("click", closeRgnDropdown);
 	document.getElementById("rgn-info-bg").addEventListener("click", function () { changeRegionInfoVisibility(false, true); });
-	document.getElementById("info-popup-close-btn").addEventListener("click", function () { closeInfoPopup(false); });
+	document.getElementById("popup-bg").addEventListener("click", function () { closeInfoPopup(true); });
+	document.getElementById("site-info-close-btn").addEventListener("click", function () { closeInfoPopup(false); });
 	document.getElementById("site-info-popup").addEventListener("click", (event) => {
 		event.stopPropagation();
 	});
@@ -1761,10 +1773,6 @@ function setupSite() {
 	document.getElementById("filter-clear-btn").addEventListener("click", clearFilters);
 	document.getElementById("filter-submit-btn").addEventListener("click", submitFilters);
 	
-	document.getElementById("pic-info-btn").addEventListener("click", function () { changePicInfoVisibility(); });
-	document.getElementById("pic-info-close-btn").addEventListener("click", hidePicInfo);
-	document.getElementById("popup-bg").addEventListener("click", function () { closeInfoPopup(true); });
-	
 	document.getElementById("fullscreen-bg").addEventListener("click", function () { closeFullscreen(true) });
 	document.getElementById("fullscreen-ctrl").addEventListener("click", function () { closeFullscreen(true) });
 	document.getElementById("left-arrow").addEventListener("click", (event) => { event.stopPropagation(); });
@@ -1774,6 +1782,11 @@ function setupSite() {
 	document.getElementById("right-arrow").addEventListener("click", function () { changeFullscreenPicture(true); });
 	document.getElementById("pic-info-bg").addEventListener("click", hidePicInfo);
 	document.getElementById("pic-info-drawer").addEventListener("click", (event) => { event.stopPropagation(); });
+	document.getElementById("pic-info-btn").addEventListener("click", function () { changePicInfoVisibility(); });
+	document.getElementById("pic-info-close-btn").addEventListener("click", hidePicInfo);
+	document.getElementById("search-eng").addEventListener("click", searchEnglish);
+	document.getElementById("search-jp").addEventListener("click", searchJapanese);
+	
 	document.getElementById("country-map-mini").addEventListener("load", filterMiniMap);
 	document.getElementById("country-map").addEventListener("load", colourMap);
 	document.getElementById("rgn-info-handle").addEventListener("touchstart", e => { startHandleDrag(e,"rgn-info-handle") }, false);
