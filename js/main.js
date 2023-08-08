@@ -59,7 +59,7 @@ let tempFilterCameras = [];
 let seeFromRgnTitle = null;
 
 // Template elements
-let polaroid, polaroidImgFrame, polaroidImg, polaroidCaption, polaroidCaptionText, polaroidCaptionContainer, polaroidDate, singleDate;
+let polaroid, polaroidPin, polaroidPinFav, polaroidImgFrame, polaroidImg, polaroidCaption, polaroidCaptionText, polaroidCaptionContainer, polaroidDate, singleDate;
 let rgnGrpGroup, rgnGrpTitle, visitedRegion, unvisitedRegion, rgnGrpDrop, rgnDrop;
 let filterTagBtn;
 
@@ -426,13 +426,20 @@ function createTemplates() {
 	polaroid.title = getBilingualText("Expand image", "画像を拡大する");
 
 	// polaroid pin
-	var polaroidPin = document.createElement("div");
+	polaroidPin = document.createElement("div");
 	polaroidPin.classList.add("polaroid-pin");
+
 	var polaroidPinShine = document.createElement("div");
 	polaroidPinShine.classList.add("polaroid-pin-shine");
 	polaroidPin.appendChild(polaroidPinShine);
-	polaroid.appendChild(polaroidPin);
 
+	polaroidPinFav = polaroidPin.cloneNode(true);
+
+	var polaroidPinStar = document.createElement("div");
+	polaroidPinStar.classList.add("polaroid-pin-star");
+	polaroidPinStar.innerHTML = "&#xf005";
+	polaroidPinFav.appendChild(polaroidPinStar);
+	
 	// image
 	polaroidImgFrame = document.createElement("div");
 	polaroidImgFrame.classList.add("polaroid-img");
@@ -567,6 +574,12 @@ function createPolaroidImg(img) {
 	let polCaptionText = polaroidCaptionContainer.cloneNode();
 	let polCaptionTextEn = polaroidCaptionText.cloneNode();
 	let polCaptionTextJp = polaroidCaptionText.cloneNode();
+
+	if(img.is_favourite) {
+		pol.appendChild(polaroidPinFav.cloneNode(true));
+	} else {
+		pol.appendChild(polaroidPin.cloneNode(true));
+	}
 
 	pol.appendChild(polImgFrame);
 	polImgFrame.appendChild(polImg);
@@ -1165,6 +1178,12 @@ function setFullscreenInfo(){
 	// 	tempElement.innerHTML = selectedPic.focal_length;
 	// 	document.getElementById("technical-info").appendChild(tempElement);
 	// }
+	if(tempElement == null){
+		addRemoveNoDisplay("technical-info", true);
+	} else {
+		addRemoveNoDisplay("technical-info", false);
+	}
+	
 
 	selectedPic.tags.map(x => { return tags.find(function (t) { return t.id == x }) })
 		.sort()

@@ -590,6 +590,14 @@ h1 {
   z-index: 100;
 }
 
+.polaroid-pin-star {
+  position: fixed;
+  color: white;
+  opacity: 50%;
+  font-size: 15px;
+  font-family: FontAwesome;
+}
+
 .pic-rotate.left-1 {
   transform: rotate(4deg);
 }
@@ -1046,6 +1054,12 @@ input {
 .flex-column {
   display: flex;
   flex-direction: column;
+}
+
+.flex-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
 }
 
 .transparent {
