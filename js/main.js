@@ -33,6 +33,8 @@ let isNewFullscreenInstance = true;
 let selectedPic = null;
 let selectedPicInd = 0;
 let isPicInfoVisible = true;
+let searchTermEng = "";
+let searchTermJp = "";
 
 // Gestures
 let initialX = null;
@@ -44,8 +46,7 @@ let lastSwipeTime = null;
 
 // Filters
 let visibleImgs = [];
-let searchTermEng = "";
-let searchTermJp = "";
+let filterFavs = false;
 let filterKeyword = "";
 let filterRgnsList = [];
 let tempFilterRgns = [];
@@ -818,6 +819,7 @@ function showFilter() {
 		document.getElementById("img-filter-popup").classList.add("popup-height");
 	}, defaultTimeout);
 
+	document.getElementById("filter-fav-input").checked = filterFavs;
 	document.getElementById("filter-kw-input").value = filterKeyword;
 	tempFilterRgns = filterRgnsList.slice();
 	tempFilterAreas = filterAreasList.slice();
@@ -916,6 +918,8 @@ function clearKeyword() {
 }
 
 function clearFilters() {
+	document.getElementById("filter-fav-input").checked = false;
+
 	clearKeyword();
 	tempFilterRgns = [];
 	tempFilterAreas = [];
@@ -947,7 +951,7 @@ function includeImage(img) {
 	let region = isSingleRgn ? rgnsList[0] : rgnsList.find(x => x.id == img.rgn.id);
 	let area = areaList.find(x => {return x.id == img.area;});
 	let tempTags = tags.filter(tag => img.tags.includes(tag.id) && (doesTextIncludeKeyword(tag.english_name) || doesTextIncludeKeyword(tag.japanese_name)));
-	return (filterKeyword == "" ||
+	return (!filterFavs || img.is_favourite) && (filterKeyword == "" ||
 		doesTextIncludeKeyword(img.description_english) ||
 		doesTextIncludeKeyword(img.description_japanese) ||
 		doesTextIncludeKeyword(img.location_english) ||
@@ -1046,6 +1050,7 @@ function filterImages() {
 }
 
 function submitFilters() {
+	filterFavs = document.getElementById("filter-fav-input").checked;
 	filterKeyword = document.getElementById("filter-kw-input").value;
 	filterRgnsList = tempFilterRgns.slice();
 	filterAreasList = tempFilterAreas.slice();
@@ -1625,6 +1630,7 @@ function selectRgn(rgnId) {
 	flipArrow("rgn-name-arrow", false);
 	setupFilters();
 	clearFilters();
+	filterFavs = false;
 	filterKeyword = "";
 	visibleImgs = [];
 	filterRgnsList = [];
@@ -1663,6 +1669,7 @@ function selectCountry(country, countryColor){
 function setupSite() {
 	[["dates-title", "Dates visited", "訪れた日付"],
 		["filter-title", "Filters", "フィルター"],
+		["filter-fav-title", "Favourites", "お気に入り"],
 		["filter-kw-title", "Keyword", "キーワード"],
 		["filter-tags-title", "Tags", "タグ"],
 		["filter-camera-title", "Camera", "カメラ"],
@@ -1672,6 +1679,8 @@ function setupSite() {
 		.forEach(element => {
 			document.getElementById(element[0]).innerHTML = getBilingualText(element[1], element[2]);
 		});
+
+	document.getElementById("filter-fav-label").childNodes[0].textContent = getBilingualText("Filter favourites", "お気に入りだけを表示する");
 
 	[["pic-info-btn", "See picture information", "写真の情報を見る"],
 	["globe-btn", "Return to country picker", "国の選択へ戻る"],
