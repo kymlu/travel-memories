@@ -2,8 +2,9 @@
 This project showcases my travels around different countries, namely Japan, Taiwan, Australia, and New Zealand. In August 2022, I temporarily moved to Japan to participate in a study abroad term. After completing the term, I decided to travel around Japan first and later travel to different countries before returning home. 
 
 Users can:
-- View pictures I took in each country on national and regional levels, and
-- Filter images based on keywords and image information.
+- View pictures I took in each country on national and regional levels,
+- Filter my favourite images, and
+- Filter images based on keywords, location, and tags.
 
 Thank you to mom, dad, Benson, Ricky, Kazu, and other friends for helping me refine the site's design and squash bugs.
 
@@ -33,6 +34,7 @@ Thank you for looking at my project! I hope you enjoyed perusing my photos and g
 
 ユーザーは以下のことができます：
 - 各国と各地域で撮った写真を閲覧すること
+- 私のお気に入りの写真をフィルターすること
 - キーワードや写真の情報でフィルタリングすること
 
 このサイトのデザインと修正に協力してくれた母、父、ベンソン、リッキー、かず、他の友達に深く感謝します。
