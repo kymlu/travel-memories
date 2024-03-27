@@ -1685,7 +1685,7 @@ function setupSite() {
 		["filter-tags-title", "Tags", "タグ"],
 		["filter-camera-title", "Camera", "カメラ"],
 		["filter-areas-title", "Areas", "クリアする"],
-		["filter-clear-btn", "Clear", "所"],
+		["filter-clear-btn", "Clear", "クリア"],
 		["filter-submit-btn", "Save", "保存する"]]
 		.forEach(element => {
 			document.getElementById(element[0]).innerHTML = getBilingualText(element[1], element[2]);
