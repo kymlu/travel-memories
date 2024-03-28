@@ -1684,7 +1684,7 @@ function setupSite() {
 		["filter-kw-title", "Keyword", "キーワード"],
 		["filter-tags-title", "Tags", "タグ"],
 		["filter-camera-title", "Camera", "カメラ"],
-		["filter-areas-title", "Areas", "クリアする"],
+		["filter-areas-title", "Areas", "場所"],
 		["filter-clear-btn", "Clear", "クリア"],
 		["filter-submit-btn", "Save", "保存する"]]
 		.forEach(element => {
