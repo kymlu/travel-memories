@@ -826,7 +826,6 @@ function showFilter() {
 	setTimeout(() => {
 		addRemoveNoDisplay("filters", false);
 		addRemoveTransparent("filters", false);
-		addRemoveNoDisplay("filter-btns", false);
 		addRemoveTransparent("filter-btns", false);
 		document.getElementById("img-filter-popup").classList.add("popup-height");
 	}, defaultTimeout);
@@ -880,7 +879,6 @@ function hideFilter(forceClose) {
 		document.getElementById("img-filter-popup").classList.remove("popup-height");
 		document.getElementById("img-filter-popup").classList.remove("popup-width");
 		addRemoveNoDisplay("filters", false);
-		addRemoveNoDisplay("filter-btns", false);
 		addRemoveTransparent("img-filter-popup", true);
 		addRemoveTransparent("filter-popup-bg", true);
 	} else {
@@ -890,7 +888,6 @@ function hideFilter(forceClose) {
 			document.getElementById("img-filter-popup").classList.remove("popup-height");
 			setTimeout(() => {
 				addRemoveNoDisplay("filters", true);
-				addRemoveNoDisplay("filter-btns", true);
 				document.getElementById("img-filter-popup").classList.remove("popup-width");
 				setTimeout(() => {
 					addRemoveTransparent("img-filter-popup", true);
