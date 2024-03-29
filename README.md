@@ -1,4 +1,4 @@
-# JAPAN TRAVEL MEMORIES
+# TRAVEL MEMORIES
 This project showcases my travels around different countries, namely Japan, Taiwan, Australia, and New Zealand. In August 2022, I temporarily moved to Japan to participate in a study abroad term. After completing the term, I decided to travel around Japan first and later travel to different countries before returning home. 
 
 Users can:
