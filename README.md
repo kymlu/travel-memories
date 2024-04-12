@@ -17,6 +17,8 @@ Since I couldn't use exif-js, I utilized **ExifTool by Phil Harvey** to extract 
 
 The site is optimized for both mobile and web environments. I implemented lazy loading of images using an intersection observer to minimize the data load on the user's device.
 
+If I had the time, I would refactor the site to use components. Couldn't figure out how to do it when I started development and continued rolling with it... but I tried to minimize the amount of redudant code and separate the code into its respective parts so that it would be easier to read. 
+
 Note that there are at least 500 more commits than necessary because the beginning of development was done on Github web on my iPad.
 
 ## Design
@@ -45,6 +47,10 @@ Thank you for looking at my project! I hope you enjoyed perusing my photos and g
 このサイトは**Javascript**、**HTML**と**CSS**で書かれています。データは**JSON**ファイルに保存されていました。ReactJS、Handlebars、exif-jsなどのライブラリを使用したかったのですが、なぜか自分のパソコンにnpmのインストールできませんでした。そのため、バニラJavascriptで挑戦して書きました。
 
 exif-jsを使用できなかったため、**ExifTool by Phil Harvey**を使用して各写真のメタデータを抽出しました。また、**Microsoft Excel**のマクロを使用してそのデータを再フォーマットし、キャプションやその他の情報を追加し、JSON形式に成形しました。写真のリサイズと圧縮は**Pixillion**を使用しました。
+
+このサイトは、最適化のため、遅延読み込みを使います。
+
+時間あれば、もう一度このサイトを開発したら、コンポーネントを使います。このままで、ファイルの長さは長すぎます。しかし、長くても、読みやすくするため、コードをそれぞれの機能に分けました。
 
 このリポジトリのコミットが必要以上に500以上です。これは、開発の始まりがiPadでGithubのウェブインターフェースに行いました。
 
