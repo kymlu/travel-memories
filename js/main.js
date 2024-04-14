@@ -1,68 +1,74 @@
-// Variables
+/*
+	Project Name: Travel Memories
+	Author: Katie Lu
+	Note: currently not implementing components in this project (hence 
+			the length of the file) but I plan to once I have the time.
+*/
+/**** Variables ****/
 var root = document.querySelector(':root');
 
 // Loading
-let isLoading = true;
-let now = null;
+var isLoading = true;
+var now = null;
 
 // Data
-let allData = null;
-let data = null;
-let countryTitle = null;
-let selectedCountry = null;
-let imgList = null;
-let rgnsList = null;
-let areaList = null;
+var allData = null;
+var data = null;
+var countryTitle = null;
+var selectedCountry = null;
+var imgList = null;
+var rgnsList = null;
+var areaList = null;
 
 // Booleans
-let throttleRegionInfo = false;
+var throttleRegionInfo = false;
 
-let isPopupVisible = false;
-let isToTopVisible = false;
-let isGalleryVisible = false;
-let isRegionInfoVisible = false;
-let isFilterVisible = false;
-let isSingleRgn = false;
-let isNewCountry = true;
-let isNewRegionDropdown = true;
-let isNewRegionFilter = true;
+var isPopupVisible = false;
+var isToTopVisible = false;
+var isGalleryVisible = false;
+var isRegionInfoVisible = false;
+var isFilterVisible = false;
+var isSingleRgn = false;
+var isNewCountry = true;
+var isNewRegionDropdown = true;
+var isNewRegionFilter = true;
 
 // Fullscreen
-let isFullscreen = false;
-let isNewFullscreenInstance = true;
-let selectedPic = null;
-let selectedPicInd = 0;
-let isPicInfoVisible = true;
-let searchTermEng = "";
-let searchTermJp = "";
+var isFullscreen = false;
+var isNewFullscreenInstance = true;
+var selectedPic = null;
+var selectedPicInd = 0;
+var isPicInfoVisible = true;
+var searchTermEng = "";
+var searchTermJp = "";
 
 // Gestures
-let initialX = null;
-let initialY = null;
-let initialYHandle = null;
-let isHandleGrabbed = false;
-let grabbedHandleId = null;
-let lastSwipeTime = null;
+var initialX = null;
+var initialY = null;
+var initialYHandle = null;
+var isHandleGrabbed = false;
+var grabbedHandleId = null;
+var lastSwipeTime = null;
 
 // Filters
-let visibleImgs = [];
-let filterFavs = false;
-let filterKeyword = "";
-let filterRgnsList = [];
-let tempFilterRgns = [];
-let filterAreasList = [];
-let tempFilterAreas = [];
-let filterTagsList = [];
-let tempFilterTags = [];
-let filterCameraList = [];
-let tempFilterCameras = [];
+var visibleImgs = [];
+var filterFavs = false;
+var filterKeyword = "";
+var filterRgnsList = [];
+var tempFilterRgns = [];
+var filterAreasList = [];
+var tempFilterAreas = [];
+var filterTagsList = [];
+var tempFilterTags = [];
+var filterCameraList = [];
+var tempFilterCameras = [];
 
-let seeFromRgnTitle = null;
+var seeFromRgnTitle = null;
 
 // Template elements
-let polaroid, polaroidPin, polaroidPinFav, polaroidImgFrame, polaroidImg, polaroidCaption, polaroidCaptionText, polaroidCaptionContainer, polaroidDate, singleDate;
-let rgnGrpGroup, rgnGrpTitle, visitedRegion, unvisitedRegion, rgnGrpDrop, rgnDrop;
-let filterTagBtn, favouritedTag;
+var polaroid, polaroidPin, polaroidPinFav, polaroidImgFrame, polaroidImg, polaroidCaption, polaroidCaptionText, polaroidCaptionContainer, polaroidDate, singleDate;
+var rgnGrpGroup, rgnGrpTitle, visitedRegion, unvisitedRegion, rgnGrpDrop, rgnDrop;
+var filterTagBtn, favouritedTag;
 
 // Constants
 const loadAnimationTime = 1500;
@@ -76,60 +82,51 @@ const newZealand = "newzealand";
 const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 const dayNamesEn = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 const dayNamesJp = ["日", "月", "火", "水", "木", "金", "土"];
-const dayNamesCn = ["日", "一", "二", "三", "四", "五", "六"];
 
 const tags = [
 	{
 		"id": "animal",
 		"english_name": "Animals",
 		"japanese_name": "動物",
-		"chinese_name": "動物"
 	},
 	{
 		"id": "attractions",
 		"english_name": "Attractions",
 		"japanese_name": "観光地",
-		"chinese_name": "旅游地"
 	},
 	{
 		"id": "art",
 		"english_name": "Art",
 		"japanese_name": "美術",
-		"chinese_name": "美術"
 	},
 	{
 		"id": "event",
 		"english_name": "Events",
 		"japanese_name": "イベント",
-		"chinese_name": "活動"
 	},
 	{
 		"id": "food",
 		"english_name": "Food",
 		"japanese_name": "食べ物",
-		"chinese_name": "食物"
 	},
 	{
 		"id": "nature",
 		"english_name": "Nature",
 		"japanese_name": "自然",
-		"chinese_name": "自然"
 	},
 	{
 		"id": "relax",
 		"english_name": "Daily life",
 		"japanese_name": "日常",
-		"chinese_name": "日常"
 	},
 	{
 		"id": "town",
 		"english_name": "Around town",
 		"japanese_name": "街中で",
-		"chinese_name": "城市四周"
 	}
 ];
 
-// General
+/**** General ****/
 function isPortraitMode(){
 	return window.innerHeight > window.innerWidth;
 }
@@ -217,7 +214,7 @@ function getPictureDate(date, picOffset){
 }
 
 function getEnglishDate(date, isFullDate, picOffset) {
-	var hours = date.getHours();
+	let hours = date.getHours();
 	return (isFullDate ? dayNamesEn[date.getDay()] +", " : "") +
 		monthNames[date.getMonth()] + " " + 
 		date.getDate() + ", " + 
@@ -234,7 +231,7 @@ function getEnglishDate(date, isFullDate, picOffset) {
 }
 
 function getJapaneseDate(date, isFullDate, picOffset) {
-	var hours = date.getHours();
+	let hours = date.getHours();
 	return date.getFullYear() + "年" + 
 		(date.getMonth() + 1) + "月" + 
 		date.getDate() + "日" + 
@@ -250,7 +247,7 @@ function getJapaneseDate(date, isFullDate, picOffset) {
 			: "");
 }
 
-// Floating Button
+/**** Floating Button ****/
 function scrollDown(){
 	document.getElementById("main-title").scrollIntoView({
 		behavior: 'smooth',
@@ -261,7 +258,7 @@ function scrollDown(){
 function showHideFloatingBtn() {
 	const totop = getBilingualText("Go to top", "トップに移動する");
 	const down = getBilingualText("Scroll down", "下に移動する");
-	var btn = document.getElementById("to-top-btn");
+	let btn = document.getElementById("to-top-btn");
 	if (document.body.scrollTop > scrollThreshold) {
 		if(isGalleryVisible && !isToTopVisible){
 			flipArrow([btn], true);
@@ -280,7 +277,7 @@ function showHideFloatingBtn() {
 			setTimeout(() => { addRemoveNoDisplay([btn], true); }, defaultTimeout)
 			isToTopVisible = false;
 		} else if (!isGalleryVisible) {
-			var pageHeight = Math.max( document.body.scrollHeight, document.body.offsetHeight, 
+			let pageHeight = Math.max( document.body.scrollHeight, document.body.offsetHeight, 
 				document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight );
 
 			if (window.innerHeight + scrollThreshold < pageHeight){
@@ -294,7 +291,7 @@ function showHideFloatingBtn() {
 	}
 }
 
-// Official Region List
+/**** Official Region List ****/
 function createRgnList() {
 	const rgnList = document.getElementById("rgn-list");
 	rgnList.replaceChildren();
@@ -311,7 +308,7 @@ function createRgnList() {
 	// Iterate each unofficial and official region, sort by visited/not visited
 	data.region_groups.filter(grp => grp.regions.filter(rgn => rgn.visited).length > 0).forEach(rgnGrp => {
 		const newRgnGrp = rgnGrpGroup.cloneNode();
-		var ddURegion = rgnGrpDrop.cloneNode();
+		let ddURegion = rgnGrpDrop.cloneNode();
 
 		if(data.show_unofficial_regions){
 			const newRgnTitle = rgnGrpTitle.cloneNode();
@@ -323,7 +320,7 @@ function createRgnList() {
 		}
 
 		rgnGrp.regions.filter(rgn => rgn.visited).forEach(rgn => {
-			var ddRgn = rgnDrop.cloneNode();
+			let ddRgn = rgnDrop.cloneNode();
 			ddRgn.innerHTML = getBilingualText(rgn.english_name, rgn.japanese_name);
 			ddRgn.id = rgn.id + "-dropdown";
 			ddRgn.title = seeFromRgnTitle;
@@ -353,7 +350,7 @@ function createRgnList() {
 	});
 }
 
-// Official region selector dropdown
+/**** Official region selector dropdown ****/
 function toggleRgnDropdown() {
 	document.getElementById("rgn-drop-down-container").classList.toggle("no-display");
 	flipArrow(document.getElementById("rgn-name-arrow"));
@@ -373,7 +370,7 @@ function showRgnDropdown() {
 	flipArrow("rgn-name-arrow", true);
 }
 
-// Map
+/**** Map ****/
 function colourMap() {
 	if(document.getElementById("country-map").data == "") return;
 
@@ -417,7 +414,7 @@ function createMap() {
 	svgObj.data = "img/country/"+ selectedCountry +".svg";
 }
 
-// Photo gallery
+/**** Photo Gallery  ****/
 function createTemplates() {
 	// sample polaroid
 	polaroid = document.createElement("div");
@@ -430,13 +427,13 @@ function createTemplates() {
 	polaroidPin = document.createElement("div");
 	polaroidPin.classList.add("polaroid-pin");
 
-	var polaroidPinShine = document.createElement("div");
+	let polaroidPinShine = document.createElement("div");
 	polaroidPinShine.classList.add("polaroid-pin-shine");
 	polaroidPin.appendChild(polaroidPinShine);
 
 	polaroidPinFav = polaroidPin.cloneNode(true);
 
-	var polaroidPinStar = document.createElement("div");
+	let polaroidPinStar = document.createElement("div");
 	polaroidPinStar.classList.add("polaroid-pin-star");
 	polaroidPinStar.innerHTML = "&#xf005";
 	polaroidPinFav.appendChild(polaroidPinStar);
@@ -502,21 +499,21 @@ function filterMiniMap() {
 
 	try {
 		rgnList.forEach(rgn => {
-				const rgnImg = svgDoc.getElementById(rgn.id + "-img");
-				if (!isSingleRgn){
-					if(rgn.visited){
-						rgnImg.setAttribute("fill", appColor);
-					} else {
-						rgnImg.setAttribute("fill", "lightgrey");
-					}
-					rgnImg.setAttribute("stroke", "none");
-				} else if(rgn.id != rgnsList[0].id) {
-					rgnImg.setAttribute("fill", "none");
-					rgnImg.setAttribute("stroke", "none");
-				} else {
+			const rgnImg = svgDoc.getElementById(rgn.id + "-img");
+			if (!isSingleRgn){
+				if(rgn.visited){
 					rgnImg.setAttribute("fill", appColor);
-					rgnImg.setAttribute("stroke", "none");
+				} else {
+					rgnImg.setAttribute("fill", "lightgrey");
 				}
+				rgnImg.setAttribute("stroke", "none");
+			} else if(rgn.id != rgnsList[0].id) {
+				rgnImg.setAttribute("fill", "none");
+				rgnImg.setAttribute("stroke", "none");
+			} else {
+				rgnImg.setAttribute("fill", appColor);
+				rgnImg.setAttribute("stroke", "none");
+			}
 		});
 
 		// show the map
@@ -542,7 +539,6 @@ function editMiniMap() {
 	}, 1000);
 }
 
-// Polaroid gallery
 // Based on: https://www.codepel.com/vanilla-javascript/javascript-image-loaded/
 // The lazy loading observer
 function lazyLoadPolaroid(target) {
@@ -565,6 +561,7 @@ function lazyLoadPolaroid(target) {
 	obs.observe(target);
 }
 
+/**** Polaroids ****/
 function createPolaroidBase(img){
 	// clone all relevant nodes
 	let pol = polaroid.cloneNode(true);
@@ -575,7 +572,7 @@ function createPolaroidBase(img){
 }
 
 function createPolaroidImg(img) {
-	var pol = createPolaroidBase(img);
+	let pol = createPolaroidBase(img);
 	let polImgFrame = polaroidImgFrame.cloneNode();
 	let polImg = polaroidImg.cloneNode();
 	let polCaption = polaroidCaption.cloneNode();
@@ -646,7 +643,7 @@ function createPolaroidImg(img) {
 }
 
 function createPolaroidBlank(rgn){
-	var pol = createPolaroidBase();
+	let pol = createPolaroidBase();
 	pol.title = seeFromRgnTitle;
 	
 	let polImgFrame = polaroidImgFrame.cloneNode();
@@ -687,7 +684,7 @@ function createGallery() {
 		imgList.forEach(img => {
 			if(!isSingleRgn && (prevRgn == null || prevRgn != img.rgn.id)){
 				prevRgn = img.rgn.id;
-				var div = createPolaroidBlank(img.rgn);
+				let div = createPolaroidBlank(img.rgn);
 				// rotate picture
 				div.classList.add((isLeft ? "left-" : "right-") + angle);
 
@@ -695,11 +692,11 @@ function createGallery() {
 				gallery.appendChild(div);
 
 				// change iterators
-				var tempAngle = changePolaroidAngle(isLeft, angle); 
+				let tempAngle = changePolaroidAngle(isLeft, angle); 
 				isLeft = tempAngle[0];
 				angle = tempAngle[1];
 			}
-			var pol = createPolaroidImg(img);
+			let pol = createPolaroidImg(img);
 
 			// rotate picture
 			pol.classList.add((isLeft ? "left-" : "right-") + angle);
@@ -708,7 +705,7 @@ function createGallery() {
 			gallery.appendChild(pol);
 
 			// change iterators
-			var tempAngle = changePolaroidAngle(isLeft, angle); 
+			let tempAngle = changePolaroidAngle(isLeft, angle); 
 			isLeft = tempAngle[0];
 			angle = tempAngle[1];
 		});
@@ -717,15 +714,15 @@ function createGallery() {
 	}
 }
 
-// filtering
+/**** Filtering ****/
 function setupFilters(){
 	if(isSingleRgn){
 		addRemoveNoDisplay("filter-rgns", true);
 		addRemoveNoDisplay("filter-areas", false);
-		var filterAreas = document.getElementById("filter-areas-list");
+		let filterAreas = document.getElementById("filter-areas-list");
 		filterAreas.replaceChildren();
 		areaList.sort(sortByEnglishName).forEach(area => {
-			var tempBtn = filterTagBtn.cloneNode();
+			let tempBtn = filterTagBtn.cloneNode();
 			tempBtn.id = area.id + "-tag";
 			tempBtn.innerHTML = getBilingualText(area.english_name, area.japanese_name);
 			tempBtn.addEventListener("click", () => {
@@ -743,10 +740,10 @@ function setupFilters(){
 	} else {
 		addRemoveNoDisplay("filter-rgns", false);
 		addRemoveNoDisplay("filter-areas", true);
-		var filterRgns = document.getElementById("filter-rgns-list");
+		let filterRgns = document.getElementById("filter-rgns-list");
 		filterRgns.replaceChildren();
 		rgnsList.sort(sortByEnglishName).forEach(rgn => {
-			var tempBtn = filterTagBtn.cloneNode();
+			let tempBtn = filterTagBtn.cloneNode();
 			tempBtn.id = rgn.id + "-tag";
 			tempBtn.innerHTML = getBilingualText(rgn.english_name, rgn.japanese_name);
 			tempBtn.addEventListener("click", () => {
@@ -762,10 +759,10 @@ function setupFilters(){
 			toggleFilterGrp("rgns", true);
 		}
 	}
-	var filterTags = Array.from(document.getElementById("filter-tags-list").getElementsByClassName("filter-opt"));
-	var presentTags = new Set(imgList.flatMap(x => {return x.tags}));
+	let filterTags = Array.from(document.getElementById("filter-tags-list").getElementsByClassName("filter-opt"));
+	let presentTags = new Set(imgList.flatMap(x => {return x.tags}));
 	filterTags.forEach(tag => {
-		var id = tag.id.replace("-tag", "");
+		let id = tag.id.replace("-tag", "");
 		if(presentTags.has(id)){
 			addRemoveNoDisplay([tag], false);
 		} else {
@@ -780,13 +777,13 @@ function setupFilters(){
 		toggleFilterGrp("tags", true);
 	}
 
-	var filterCameras = document.getElementById("filter-camera-list");
+	let filterCameras = document.getElementById("filter-camera-list");
 	filterCameras.replaceChildren();
-	var cameraSet = new Set(imgList.map(x => {return x.camera_model})
+	let cameraSet = new Set(imgList.map(x => {return x.camera_model})
 		.sort()
 		.filter(x => x));
 	cameraSet.forEach(camera => {
-		var tempBtn = filterTagBtn.cloneNode();
+		let tempBtn = filterTagBtn.cloneNode();
 		tempBtn.id = camera + "-tag";
 		tempBtn.innerHTML = camera;
 		tempBtn.addEventListener("click", () => {
@@ -902,7 +899,7 @@ function hideFilter(forceClose) {
 }
 
 function toggleFilterGrp(group, showGrp){
-	var headerBtn = document.getElementById("filter-" + group + "-header").querySelector("button");
+	let headerBtn = document.getElementById("filter-" + group + "-header").querySelector("button");
 	if(showGrp == undefined){
 		flipArrow(headerBtn);
 		document.getElementById("filter-" + group + "-list").classList.toggle("no-display");
@@ -963,19 +960,23 @@ function doesTextIncludeKeyword(text){
 function includeImage(img) {
 	let region = isSingleRgn ? rgnsList[0] : rgnsList.find(x => x.id == img.rgn.id);
 	let area = areaList.find(x => {return x.id == img.area;});
-	let tempTags = tags.filter(tag => img.tags.includes(tag.id) && (doesTextIncludeKeyword(tag.english_name) || doesTextIncludeKeyword(tag.japanese_name)));
-	return (!filterFavs || img.is_favourite) && (filterKeyword == "" ||
-		doesTextIncludeKeyword(img.description_english) ||
-		doesTextIncludeKeyword(img.description_japanese) ||
-		doesTextIncludeKeyword(img.location_english) ||
-		doesTextIncludeKeyword(img.location_japanese) ||
-		doesTextIncludeKeyword(img.location_chinese) ||
-		doesTextIncludeKeyword(region?.english_name) ||
-		doesTextIncludeKeyword(region?.japanese_name) ||
-		doesTextIncludeKeyword(area?.english_name) ||
-		doesTextIncludeKeyword(area?.japanese_name) || 
-		doesTextIncludeKeyword(img.camera_model) || 
-		tempTags.length > 0) &&
+	let tagsWithKeyword = tags.filter(tag => img.tags.includes(tag.id) && (doesTextIncludeKeyword(tag.english_name) || doesTextIncludeKeyword(tag.japanese_name)));
+	let keywordsToSearch = [
+		img.description_english,
+		img.description_japanese,
+		img.location_english,
+		img.location_japanese,
+		region?.english_name,
+		region?.japanese_name,
+		area?.english_name,
+		area?.japanese_name,
+		img.camera_model
+	  ].filter(Boolean);
+
+	return (!filterFavs || img.is_favourite) && 
+		(filterKeyword == "" ||
+		keywordsToSearch.some(keyword => doesTextIncludeKeyword(keyword)) || 
+		tagsWithKeyword.length > 0) &&
 		(filterRgnsList.length == 0 || filterRgnsList.includes(region.id)) &&
 		(filterAreasList.length == 0 || filterAreasList.includes(area.id)) &&
 		(filterTagsList.length == 0 || filterTagsList.filter(value => img.tags.includes(value)).length > 0) &&
@@ -990,15 +991,15 @@ function filterImages() {
 	if(document.getElementById("none")){
 		document.getElementById("none").remove();
 	}
-	var allPolaroids = Array.from(document.getElementsByClassName("polaroid-frame"));
+	let allPolaroids = Array.from(document.getElementsByClassName("polaroid-frame"));
 
-	var lastShownRgn = null;
-	var prevRgn = null;
-	var prevRgnCardInd = null;
-	var rgnCt = 0;
+	let lastShownRgn = null;
+	let prevRgn = null;
+	let prevRgnCardInd = null;
+	let rgnCt = 0;
 
-	var polInd = 0;
-	var imgInd = 0;
+	let polInd = 0;
+	let imgInd = 0;
 	allPolaroids.forEach(pol => {
 		if (pol.isBlank){
 			if(pol.rgnId != prevRgn){
@@ -1039,7 +1040,7 @@ function filterImages() {
 
 	allPolaroids.filter(pol => !pol.classList.contains("no-display"))
 		.forEach(pol => {
-		var classList = Array.from(pol.classList).filter(className => {return className.includes("left") || className.includes("right")});
+		let classList = Array.from(pol.classList).filter(className => {return className.includes("left") || className.includes("right")});
 			
 		if ((classList.filter(className => className.includes("left")).length > 0 && !isLeft) ||
 			(classList.filter(className => className.includes("right")).length > 0 && isLeft)) {
@@ -1047,7 +1048,7 @@ function filterImages() {
 			pol.classList.add((isLeft ? "left-" : "right-") + angle);
 		}
 		
-		var tempAngle = changePolaroidAngle(isLeft, angle); 
+		let tempAngle = changePolaroidAngle(isLeft, angle); 
 		isLeft = tempAngle[0];
 		angle = tempAngle[1];
 	})
@@ -1073,7 +1074,7 @@ function submitFilters() {
 	hideFilter(true);
 }
 
-// Searching picture location
+/**** Googling picture info ****/
 function search(searchTerm) {
 	window.open("https://www.google.com/search?q=" + searchTerm);
 }
@@ -1086,11 +1087,11 @@ function searchJapanese() {
 	search(searchTermJp)
 }
 
-// Fullscreen picture
+/**** Fullscreen Picture ****/
 function changeFullscreenPicture(isForward) {
 	if (isForward) {
 		if (visibleImgs.length > 0){
-			var ind = visibleImgs.indexOf(selectedPicInd);
+			let ind = visibleImgs.indexOf(selectedPicInd);
 			if (ind == visibleImgs.length - 1) {
 				selectedPicInd = visibleImgs[0];
 			} else {
@@ -1105,7 +1106,7 @@ function changeFullscreenPicture(isForward) {
 		}
 	} else {
 		if (visibleImgs.length > 0) {
-			var ind = visibleImgs.indexOf(selectedPicInd);
+			let ind = visibleImgs.indexOf(selectedPicInd);
 			if (ind == 0) {
 				selectedPicInd = visibleImgs[visibleImgs.length - 1];
 			} else {
@@ -1173,7 +1174,7 @@ function setFullscreenInfo(){
 	}
 	
 	document.getElementById("technical-info").replaceChildren();
-	var tempElement = null;
+	let tempElement = null;
 	if(selectedPic.f_stop){
 		tempElement = document.createElement("div");
 		tempElement.innerHTML = "\u0192/" + selectedPic.f_stop;
@@ -1189,11 +1190,6 @@ function setFullscreenInfo(){
 		tempElement.innerHTML = "iso " + selectedPic.iso;
 		document.getElementById("technical-info").appendChild(tempElement);
 	}
-	// if(selectedPic.focal_length){
-	// 	tempElement = document.createElement("div");
-	// 	tempElement.innerHTML = selectedPic.focal_length;
-	// 	document.getElementById("technical-info").appendChild(tempElement);
-	// }
 	if(tempElement == null){
 		addRemoveNoDisplay("technical-info", true);
 	} else {
@@ -1215,18 +1211,16 @@ function setFullscreenInfo(){
 }
 
 function setFullscreenPicture(isForward) {
-	//document.getElementById("search-eng").removeEventListener("click", searchEnglish);
-	//document.getElementById("search-jp").removeEventListener("click", searchJapanese);
 	document.getElementById("img-tags").replaceChildren();
 
-	var src = selectedPic.link ?? "img/" + selectedCountry + "/" + (isSingleRgn ? rgnsList[0].id : selectedPic.rgn.id) + "/" + selectedPic.file_name;
+	let src = selectedPic.link ?? "img/" + selectedCountry + "/" + (isSingleRgn ? rgnsList[0].id : selectedPic.rgn.id) + "/" + selectedPic.file_name;
 
 	if (isNewFullscreenInstance || (new Date() - lastSwipeTime) < 300) {
 		document.getElementById("fullscreen-pic").src = src;
 		isNewFullscreenInstance = false;
 	} else {
-		var nextPic = document.getElementById("fullscreen-pic-next");
-		var currentPic = document.getElementById("fullscreen-pic");
+		let nextPic = document.getElementById("fullscreen-pic-next");
+		let currentPic = document.getElementById("fullscreen-pic");
 		
 		addRemoveNoDisplay([nextPic], true);
 		nextPic.src = src;
@@ -1286,11 +1280,11 @@ function closeFullscreen(forceClose) {
 	}
 }
 
-// Fullscreen picture info
+/**** Fullscreen Picture Info ****/
 function showPicInfo() {
 	isPicInfoVisible = true;
 	addRemoveNoDisplay("pic-info", false);
-	var element = document.getElementById("pic-info-drawer");
+	let element = document.getElementById("pic-info-drawer");
 	//TODO: transition on first portrait mode open
 	addRemoveNoDisplay([element], false);
 	setTimeout(() => {
@@ -1301,7 +1295,7 @@ function showPicInfo() {
 
 function hidePicInfo() {
 	isPicInfoVisible = false;
-	var element = document.getElementById("pic-info-drawer");
+	let element = document.getElementById("pic-info-drawer");
 	element.style.bottom = "-" + element.getBoundingClientRect().height + "px";
 	element.style.marginRight = "-" + element.getBoundingClientRect().width + "px";
 	setTimeout(() => {
@@ -1322,7 +1316,7 @@ function changePicInfoVisibility(isVisible) {
 	}
 }
 
-// Gestures
+/**** Gestures ****/
 // Source: https://stackoverflow.com/questions/53192433/how-to-detect-swipe-in-javascript
 function startHandleDrag(e, handleId) {
 	if(isPortraitMode()){
@@ -1336,7 +1330,7 @@ function endHandleDrag(e) {
 	if(isPortraitMode()){
 		if (isHandleGrabbed && grabbedHandleId) {
 			isHandleGrabbed = false;
-			var currentY = e.changedTouches[0].clientY;
+			let currentY = e.changedTouches[0].clientY;
 			if (currentY > initialYHandle) {
 				if(grabbedHandleId == "pic-info-handle"){
 					hidePicInfo();
@@ -1377,11 +1371,11 @@ function moveFullscreenSwipe(e) {
 	}
 
 	if (e.touches.length == 1) {
-		var currentX = e.touches[0].clientX;
-		var currentY = e.touches[0].clientY;
+		let currentX = e.touches[0].clientX;
+		let currentY = e.touches[0].clientY;
 
-		var diffX = initialX - currentX;
-		var diffY = initialY - currentY;
+		let diffX = initialX - currentX;
+		let diffY = initialY - currentY;
 
 		if (Math.abs(diffX) > Math.abs(diffY)) {
 			if (diffX > 0) {
@@ -1409,7 +1403,7 @@ function moveFullscreenSwipe(e) {
 	}
 }
 
-// Site info popup
+/**** Site Info Popup ****/
 function openInfoPopup() {
 	isPopupVisible = true;
 	addRemoveTransparent(["site-info-popup", "popup-bg"], false);
@@ -1452,7 +1446,7 @@ function goToGithub(){
 }
 
 
-// Official region info
+/**** Official Region Info ****/
 function showRegionInfo(isForced) {
 	isRegionInfoVisible = true;
 	addRemoveTransparent("rgn-info-bg", false);
@@ -1470,7 +1464,7 @@ function showRegionInfo(isForced) {
 function hideRegionInfo(isForced) {
 	isRegionInfoVisible = false;
 	if (isForced) {
-		var rgnInfoOffset = document.getElementById("rgn-info").getBoundingClientRect().height;
+		let rgnInfoOffset = document.getElementById("rgn-info").getBoundingClientRect().height;
 		if (document.body.scrollTop <= rgnInfoOffset) {
 			window.scrollTo({
 				top: rgnInfoOffset,
@@ -1519,7 +1513,7 @@ function scrollRegionInfo() {
 	}, 250);
 }
 
-// Show and hide pages
+/**** Show and hide pages ****/
 function openMapPage() {
 	hideLoader();
 	scrollToTop(false);
@@ -1575,7 +1569,7 @@ function changeGalleryVisibility(isVisible) {
 
 function changeMainColor(newColor){
 	root.style.setProperty('--main-color', getComputedStyle(root).getPropertyValue(newColor));
-	var temp = getComputedStyle(root).getPropertyValue("--main-color").split(", ");
+	let temp = getComputedStyle(root).getPropertyValue("--main-color").split(", ");
 	appColor = "rgb("+ temp [0] +", "+ temp [1] +", "+ temp [2] +")";
 }
 
@@ -1592,7 +1586,7 @@ function selectRgn(rgnId) {
 	isSingleRgn = rgnId != undefined && rgnId != null;
 	
 	if (isSingleRgn){
-		var newRegion = data.region_groups.flatMap(x => x.regions).filter(rgn => rgn.id == rgnId)[0];
+		let newRegion = data.region_groups.flatMap(x => x.regions).filter(rgn => rgn.id == rgnId)[0];
 		document.getElementById(newRegion.id + "-dropdown").classList.add("active");
 		imgList = newRegion.image_list;
 		rgnsList = [newRegion];
@@ -1608,7 +1602,7 @@ function selectRgn(rgnId) {
 			return getBilingualText(area.english_name, area.japanese_name);
 		}).sort().join(" | ");
 	} else {
-		var visitedRgns = data.region_groups.flatMap(grp => grp.regions.filter(rgn => rgn.visited));
+		let visitedRgns = data.region_groups.flatMap(grp => grp.regions.filter(rgn => rgn.visited));
 		imgList = visitedRgns.flatMap(rgn => {
 			return rgn.image_list.map(img => ({ ...img, rgn: {
 				"id": rgn.id,
@@ -1679,7 +1673,7 @@ function selectCountry(country, countryColor){
 	}, 1200);
 }
 
-// Data loading and setup
+/**** Data Loading/Setup ****/
 function setupSite() {
 	[["dates-title", "Dates visited", "訪れた日付"],
 		["filter-title", "Filters", "フィルター"],
@@ -1713,9 +1707,9 @@ function setupSite() {
 		element.title = getBilingualText("Close", "閉じる");
 	})
 
-	var filterTags = document.getElementById("filter-tags-list");
+	let filterTags = document.getElementById("filter-tags-list");
 	tags.sort(sortByEnglishName).forEach(tag => {
-			var tempBtn = filterTagBtn.cloneNode();
+			let tempBtn = filterTagBtn.cloneNode();
 			tempBtn.innerHTML = getBilingualText(tag.english_name, tag.japanese_name);
 			tempBtn.id = tag.id + "-tag"
 			tempBtn.addEventListener("click", () => {
@@ -1818,7 +1812,7 @@ function setupSite() {
 		}
 	});
 
-	var swipeContainer = document.getElementById("fullscreen");
+	let swipeContainer = document.getElementById("fullscreen");
 	swipeContainer.addEventListener("touchstart", startFullscreenSwipe, false);
 	swipeContainer.addEventListener("touchmove", moveFullscreenSwipe, false);
 	
@@ -1867,7 +1861,7 @@ function filterCountryData() {
 }
 
 function fetchData() {
-	var hasError = false;
+	let hasError = false;
 
 	fetch("https://raw.githubusercontent.com/kymlu/travel-memories/main/js/data.json")
 		.then(response => {
@@ -1904,7 +1898,7 @@ function showDataLoadError() {
 	}, defaultTimeout);
 }
 
-// Loading data
+/**** Loading Animation ****/
 function showLoader() {
 	isLoading = true;
 	addRemoveTransparent(["top-bar", "map-page", "start-screen"], true);
@@ -1935,17 +1929,17 @@ function hideLoader() {
 
 function stopLoader(){
 	setTimeout(() => {
-		var iterationCount = Math.ceil((new Date() - now) / loadAnimationTime);
+		let iterationCount = Math.ceil((new Date() - now) / loadAnimationTime);
 		for (let i = 0; i <= 8; i++) {
 			document.getElementById("load" + i).style.animationIterationCount = iterationCount;
 		}
 	}, 100);
 }
 
-// Start screen
+/**** Start Screen ****/
 function highlightCountry(abbreviation, isHover){
 	addRemoveTransparent(abbreviation + "-start-icon-c", isHover);
-	var icons = Array.from(document.getElementById(abbreviation + "-start-icon").getElementsByTagName("img"));
+	let icons = Array.from(document.getElementById(abbreviation + "-start-icon").getElementsByTagName("img"));
 	addRemoveClass(icons, "animated", isHover);
 }
 
@@ -1964,47 +1958,47 @@ function createStartScreen(){
 	allData.forEach(country => {
 		const abb = country.abbreviation;
 
-		var btnn = btn.cloneNode();
-		btnn.id = "start-btn-" + abb;
-		btnn.classList.add(abb);
-		btnn.addEventListener("click", function () {
+		let newBtn = btn.cloneNode();
+		newBtn.id = "start-btn-" + abb;
+		newBtn.classList.add(abb);
+		newBtn.addEventListener("click", function () {
 			selectCountry(country.id, '--'+ abb +'-color');
 		});
 
-		var engTxt = text.cloneNode();
+		let engTxt = text.cloneNode();
 		engTxt.innerHTML = country.english_name;
-		var jpTxt = text.cloneNode();
+		let jpTxt = text.cloneNode();
 		jpTxt.innerHTML = country.japanese_name;
-		var iconn = icon.cloneNode();
+		let iconn = icon.cloneNode();
 		iconn.id = abb + "-start-icon";
-		var imgWhite = img.cloneNode();
+		let imgWhite = img.cloneNode();
 		imgWhite.id = abb + "-start-icon-w";
 		imgWhite.src = "img/icons/" + country.symbol + "_white.svg";
-		var imgColor = img.cloneNode();
+		let imgColor = img.cloneNode();
 		imgColor.id = abb + "-start-icon-c";
 		imgColor.src = "img/icons/" + country.symbol + ".svg";
 		imgColor.classList.add("opacity-transition");
 
-		btnn.addEventListener("mouseover", function () {
+		newBtn.addEventListener("mouseover", function () {
 			highlightCountry(abb, true);
 		});
-		btnn.addEventListener("touchstart", function () {
+		newBtn.addEventListener("touchstart", function () {
 			highlightCountry(abb, true);
 		});
-		btnn.addEventListener("mouseout", function () {
+		newBtn.addEventListener("mouseout", function () {
 			highlightCountry(abb, false);
 		});
-		btnn.addEventListener("touchend", function () {
+		newBtn.addEventListener("touchend", function () {
 			highlightCountry(abb, false);
 		});
 
-		btnn.appendChild(engTxt);
-		btnn.appendChild(iconn);
-		btnn.appendChild(jpTxt);
+		newBtn.appendChild(engTxt);
+		newBtn.appendChild(iconn);
+		newBtn.appendChild(jpTxt);
 		iconn.appendChild(imgWhite);
 		iconn.appendChild(imgColor);
 
-		document.getElementById("start-screen").appendChild(btnn);
+		document.getElementById("start-screen").appendChild(newBtn);
 	});
 }
 
@@ -2034,6 +2028,7 @@ function showStartScreen(){
 	}, 10);
 }
 
+/**** Main ****/
 function main() {
 	now = new Date();
 	scrollToTop(false);
