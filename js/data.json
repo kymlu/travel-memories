@@ -19,8 +19,21 @@
             "id": "hokkaido",
             "english_name": "Hokkaido",
             "japanese_name": "北海道",
-            "visited": false,
-            "viewbox": "945 3 445 445"
+            "visited": true,
+            "viewbox": "945 3 445 445",
+            "dates": [
+              {
+                "start_date": "2024-06-05",
+                "end_date": "2022-06-09"
+              }
+            ],
+            "dates_english": "June 5-9, 2024",
+            "dates_japanese": "2024年6月5〜9日",
+            "description_english": "Before coming here, I'd heard from so many people that the food was delicious, so I made an effort to try as many tasty foods as I could. I still haven't tried Lucky Pierrot, hopefully soon.",
+            "description_japanese": "来る前に他人から「北海道のご飯美味しいよ」と何度も聞いたから、来たら美味しいご飯いっぱい食べた。ラッキーピエロはまだ行ってないけど。",
+            "image_list": [
+              
+            ]
           }
         ]
       },
@@ -46,8 +59,21 @@
             "id": "miyagi",
             "english_name": "Miyagi",
             "japanese_name": "宮城県",
-            "visited": false,
-            "viewbox": "1049 693 112 112"
+            "visited": true,
+            "viewbox": "1049 693 112 112",
+            "dates": [
+              {
+                "start_date": "2024-06-09",
+                "end_date": "2022-06-11"
+              }
+            ],
+            "dates_english": "June 9-11, 2024",
+            "dates_japanese": "2024年6月9〜11日",
+            "description_english": "My only motivation for coming here was to eat beef tongue.",
+            "description_japanese": "牛タンを食べに来たんだ。",
+            "image_list": [
+
+            ]
           },
           {
             "id": "akita",
@@ -565,8 +591,21 @@
             "id": "yamagata",
             "english_name": "Yamagata",
             "japanese_name": "山形県",
-            "visited": false,
-            "viewbox": "964 688 133 133"
+            "visited": true,
+            "viewbox": "964 688 133 133",
+            "dates": [
+              {
+                "start_date": "2024-06-11",
+                "end_date": "2022-06-12"
+              }
+            ],
+            "dates_english": "June 11-12, 2024",
+            "dates_japanese": "2024年6月11〜12日",
+            "description_english": "I didn't know that much about Yamagata before coming, but my first impression is that it's very quiet. Maybe too quiet.",
+            "description_japanese": "山形のことはあまり詳しくないけど初印象は「静か」。静かすぎかも。",
+            "image_list": [
+              
+            ]
           },
           {
             "id": "fukushima",
