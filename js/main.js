@@ -710,7 +710,7 @@ function createGallery() {
 			angle = tempAngle[1];
 		});
 	} else {
-		gallery.innerHTML = getBilingualText("No pictures available","写真はありません");
+		gallery.innerHTML = getBilingualText("No pictures available (yet)","写真は（まだ）ありません");
 	}
 }
 
@@ -1057,7 +1057,7 @@ function filterImages() {
 		let temp = document.createElement("div");
 		temp.id = "none";
 		temp.style.margin = "-125px";
-		temp.innerHTML = getBilingualText("No pictures available","写真はありません");
+		temp.innerHTML = getBilingualText("No pictures available (yet)","写真は(まだ)ありません");
 		document.getElementById("gallery").appendChild(temp);
 	}
 	
@@ -1537,7 +1537,10 @@ function changeGalleryVisibility(isVisible) {
 		document.getElementById("top-bar").style.position = "sticky";
 		document.getElementById("top-bar").style.backgroundColor = "white";
 		addRemoveNoDisplay(["map-page", "to-top-btn", "globe-btn"], true);
-		addRemoveNoDisplay(["gallery", "filter-btn", "map-btn", "info-btn", "rgn-title-btn", "rgn-info", "rgn-info-drawer"], false);
+		addRemoveNoDisplay(["gallery", "map-btn", "info-btn", "rgn-title-btn", "rgn-info", "rgn-info-drawer"], false);
+		if (imgList.length > 0) {
+			addRemoveNoDisplay("filter-btn", false);
+		}
 		document.getElementById("rgn-info-bg").style.visibility = "visible";
 		addRemoveTransparent("to-top-btn", true);
 		if(isPortraitMode()){
@@ -1573,7 +1576,11 @@ function changeMainColor(newColor){
 	appColor = "rgb("+ temp [0] +", "+ temp [1] +", "+ temp [2] +")";
 }
 
-function selectRgn(rgnId) {
+function selectRgn(rgnId, isPoppedPage) {
+	if (isPoppedPage == null) {
+		window.history.pushState({rgn: rgnId}, null, null);
+	}
+
 	showLoader();
 	if (!isNewCountry && isSingleRgn) {
 		document.getElementById(rgnsList[0].id + "-dropdown").classList.remove("active");
@@ -1651,7 +1658,11 @@ function selectRgn(rgnId) {
 	}, defaultTimeout);
 }
 
-function selectCountry(country, countryColor){
+function selectCountry(country, countryColor, isPoppedPage){
+	if (isPoppedPage == null){
+		window.history.pushState({country: country, countryColor: countryColor}, null, null);
+	}
+
 	now = new Date();
 	document.getElementById("load-icon").src = "img/icons/" + allData.filter(x => {return x.id == country})[0].symbol + ".svg";
 	showLoader();
@@ -1736,7 +1747,7 @@ function setupSite() {
 		isLoading = false;
 	});
 
-	
+	// Button click detections
 	document.getElementById("rgn-drop-down-bg").addEventListener("click", closeRgnDropdown);
 	document.getElementById("rgn-info-bg").addEventListener("click", function () { changeRegionInfoVisibility(false, true); });
 	document.getElementById("popup-bg").addEventListener("click", function () { closeInfoPopup(true); });
@@ -1790,6 +1801,7 @@ function setupSite() {
 	document.getElementById("pic-info-handle").addEventListener("touchstart", e => { startHandleDrag(e,"pic-info-handle") }, false);
 	document.addEventListener("touchend", endHandleDrag, false);
 
+	// Key input detections
 	document.addEventListener("keydown", function (event) {
 		if (event.key === "Escape") {
 			if (isPopupVisible) {
@@ -1812,6 +1824,7 @@ function setupSite() {
 		}
 	});
 
+	// Swipe detections
 	let swipeContainer = document.getElementById("fullscreen");
 	swipeContainer.addEventListener("touchstart", startFullscreenSwipe, false);
 	swipeContainer.addEventListener("touchmove", moveFullscreenSwipe, false);
@@ -1824,12 +1837,28 @@ function setupSite() {
 		event.stopPropagation();
 	});
 
+	// Scroll detections
 	window.onscroll = function () {
 		if(!isLoading){
 			showHideFloatingBtn();
 			scrollRegionInfo();
 		}
 	};
+
+	// Back button detections
+	window.addEventListener('popstate', (event) => {
+		if (event.state.country) {
+			if (this.isGalleryVisible) {
+				changeGalleryVisibility(false);
+			} else {
+				this.selectCountry(event.state.country, event.state.countryColor, true);
+			}
+		} else if (event.state.rgn && this.selectedCountry != null) {
+			this.selectRgn(event.state.rgn, true);
+		} else {
+			this.showStartScreen(true);
+		}
+	  });
 }
 
 function filterCountryData() {
@@ -2003,11 +2032,16 @@ function createStartScreen(){
 }
 
 function showFirstStartScreen(){
+	window.history.pushState({}, null, null);
 	document.getElementById("load8").addEventListener("animationend", showStartScreen);
 	stopLoader();
 }
 
-function showStartScreen(){
+function showStartScreen(isPoppedPage){
+	if(isPoppedPage == null){
+		window.history.pushState({}, null, null);
+	}
+
 	selectedCountry = null;
 	scrollToTop(false);
 	changeMainColor("--default-color");
