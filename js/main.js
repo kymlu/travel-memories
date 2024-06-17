@@ -67,7 +67,7 @@ var seeFromRgnTitle = null;
 
 // Template elements
 var polaroid, polaroidPin, polaroidPinFav, polaroidImgFrame, polaroidImg, polaroidCaption, polaroidCaptionText, polaroidCaptionContainer, polaroidDate, singleDate;
-var rgnGrpGroup, rgnGrpTitle, visitedRegion, unvisitedRegion, rgnGrpDrop, rgnDrop;
+var rgnGrpGroup, rgnGrpTitle, rgnTxtBtn, rgnGrpDrop, rgnDrop;
 var filterTagBtn, favouritedTag;
 
 // Constants
@@ -292,10 +292,7 @@ function showHideFloatingBtn() {
 }
 
 /**** Official Region List ****/
-function createRgnList() {
-	const rgnList = document.getElementById("rgn-list");
-	rgnList.replaceChildren();
-
+function createRgnDD() {
 	const dropDownRgnList = document.getElementById("rgn-drop-down");
 	dropDownRgnList.replaceChildren();
 
@@ -320,33 +317,18 @@ function createRgnList() {
 		}
 
 		rgnGrp.regions.filter(rgn => rgn.visited).forEach(rgn => {
-			let ddRgn = rgnDrop.cloneNode();
-			ddRgn.innerHTML = getBilingualText(rgn.english_name, rgn.japanese_name);
-			ddRgn.id = rgn.id + "-dropdown";
-			ddRgn.title = seeFromRgnTitle;
 			if (rgn.visited) {
-				const rgnNode = visitedRegion.cloneNode();
-				rgnNode.innerHTML = getBilingualText(rgn.english_name, rgn.japanese_name);
-				rgnNode.title = seeFromRgnTitle;
-				rgnNode.addEventListener("click", function () {
-					selectRgn(rgn.id);
-				}, false);
-				newRgnGrp.appendChild(rgnNode);
-
+				let ddRgn = rgnDrop.cloneNode();
+				ddRgn.innerHTML = getBilingualText(rgn.english_name, rgn.japanese_name);
+				ddRgn.id = rgn.id + "-dropdown";
+				ddRgn.title = seeFromRgnTitle;
 				ddRgn.classList.add("visited-rgn-text");
 				ddRgn.addEventListener("click", function () {
 					selectRgn(rgn.id);
 				}, false);
-			} else {
-				const rgnNode = unvisitedRegion.cloneNode();
-				rgnNode.innerHTML = getBilingualText(rgn.english_name, rgn.japanese_name);
-				newRgnGrp.appendChild(rgnNode);
-				ddRgn.classList.add("locked-rgn-text");
+				dropDownRgnList.appendChild(ddRgn);
 			}
-			
-			dropDownRgnList.appendChild(ddRgn);
 			});
-		rgnList.appendChild(newRgnGrp);
 	});
 }
 
@@ -478,11 +460,8 @@ function createTemplates() {
 	rgnGrpTitle = document.createElement("div");
 	rgnGrpTitle.classList.add("rgn-grp-text");
 
-	visitedRegion = document.createElement("button");
-	visitedRegion.classList.add("rgn-txt", "visited-rgn-text", "highlight-btn", "txt-btn");
-
-	unvisitedRegion = document.createElement("div");
-	unvisitedRegion.classList.add("rgn-txt", "locked-rgn-text");
+	rgnTxtBtn = document.createElement("button");
+	rgnTxtBtn.classList.add("rgn-txt", "visited-rgn-text", "highlight-btn", "txt-btn");
 
 	rgnGrpDrop = document.createElement("div");
 	rgnGrpDrop.classList.add("rgn-grp-text", "regular-text");
@@ -1762,7 +1741,7 @@ function setupSite() {
 			scrollDown();
 		}
 	});
-	document.getElementById("map-instructions").addEventListener("click", function () { selectRgn(); });
+	document.getElementById("main-title").addEventListener("click", function () { selectRgn(); });
 	document.getElementById("rgn-title-btn").addEventListener("click", toggleRgnDropdown);
 	document.getElementById("creator-btn").addEventListener("click", openInfoPopup);
 	document.getElementById("globe-btn").addEventListener("click", showStartScreen);
@@ -1874,15 +1853,13 @@ function filterCountryData() {
 
 		countryTitle = getBilingualText(data.english_name, data.japanese_name);
 		document.getElementById("main-title").innerHTML = countryTitle;
-		document.getElementById("map-instructions").innerHTML = getBilingualText(
-			"Select a " + data.official_region_name_english + " to see pictures from that area, or click here to see all pictures.", 
-			data.official_region_name_japanese + "を選択して、その地域の写真を表示する。または、ここをクリックして、すべての写真を表示する。");
+		document.getElementById("main-title").title = getBilingualText("See all images from " + data.english_name, data.japanese_name + "の写真をすべて表示する");
 		document.getElementById("rgn-title-btn").title = getBilingualText("Change " + data.official_region_name_english, data.official_region_name_japanese + "を切り替える");
 		document.getElementById("filter-rgns-title").innerHTML = getBilingualText(data.official_region_name_english, data.official_region_name_japanese);
 		document.getElementById("info-btn").title = getBilingualText("Toggle "  + data.official_region_name + " info", data.official_region_name_japanese + "の情報をトグル");
 		seeFromRgnTitle = getBilingualText("See images from this " + data.official_region_name_english, "この地域の写真を表示する");
 
-		createRgnList();
+		createRgnDD();
 		setTimeout(() => {
 			createMap();
 		}, 50);
@@ -1989,6 +1966,7 @@ function createStartScreen(){
 
 		let newBtn = btn.cloneNode();
 		newBtn.id = "start-btn-" + abb;
+		newBtn.title = getBilingualText("See " + country.english_name, country.japanese_name + "へ");
 		newBtn.classList.add(abb);
 		newBtn.addEventListener("click", function () {
 			selectCountry(country.id, '--'+ abb +'-color');
