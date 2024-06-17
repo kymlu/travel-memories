@@ -20,6 +20,23 @@
             "english_name": "Hokkaido",
             "japanese_name": "北海道",
             "visited": true,
+            "areas": [
+              {
+                "id": "jozankei",
+                "english_name": "Jozankei Onsen",
+                "japanese_name": "定山渓温泉"
+              },
+              {
+                "id": "otaru",
+                "english_name": "Otaru",
+                "japanese_name": "小樽市"
+              },
+              {
+                "id": "sapporo",
+                "english_name": "Sapporo",
+                "japanese_name": "札幌市"
+              }
+            ],
             "viewbox": "945 3 445 445",
             "dates": [
               {
@@ -60,6 +77,18 @@
             "english_name": "Miyagi",
             "japanese_name": "宮城県",
             "visited": true,
+            "areas": [
+              {
+                "id": "matsushima",
+                "english_name": "Matsushima",
+                "japanese_name": "松島"
+              },
+              {
+                "id": "sendai",
+                "english_name": "Sendai",
+                "japanese_name": "仙台市"
+              }
+            ],
             "viewbox": "1049 693 112 112",
             "dates": [
               {
@@ -592,6 +621,18 @@
             "english_name": "Yamagata",
             "japanese_name": "山形県",
             "visited": true,
+            "areas": [
+              {
+                "id": "yamadera",
+                "english_name": "Yamadera",
+                "japanese_name": "山寺"
+              },
+              {
+                "id": "yamagata",
+                "english_name": "Yamagata",
+                "japanese_name": "山形市"
+              }
+            ],
             "viewbox": "964 688 133 133",
             "dates": [
               {
