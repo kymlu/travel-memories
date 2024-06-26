@@ -24,7 +24,7 @@
 
 <body class="page-bg">
   <!-- Top bar -->
-  <div id="top-bar" class="top-bar transparent" style="z-index: 5000; pointer-events: none;">
+  <header id="top-bar" class="top-bar transparent" style="z-index: 5000; pointer-events: none;">
     <div id="btn-grp-left" class="btn-grp" style="pointer-events: auto;">
       <button id="globe-btn" class="text-main-color large-icon" style="z-index: 5001;">&#xf0ac</button>
       <button id="map-btn" class="text-main-color large-icon no-display" style="z-index: 5001;">&#xf279</button>
@@ -40,7 +40,7 @@
       <button id="info-btn" class="text-main-color large-icon no-display">&#xf05a</button>
       <button id="creator-btn" class="text-main-color large-icon">&#xf005</button>
     </div>
-  </div>
+  </header>
 
   <!-- Dropdown official region selector -->
   <div id="rgn-drop-down-container" class="flex-column no-display" style="z-index: 5001;">
@@ -92,6 +92,7 @@
   <button id="to-top-btn" class="large-icon floating-btn opacity-transform-transition arrow-down no-display">&#xf103</button>
 
   <!-- Filter Popup -->
+  <!-- TODO: add a date filter -->
   <div id="filter-popup" class="hidden-popup" style="z-index: 10000;">
     <div id="filter-popup-bg" class="popup-bg opacity-transition transparent"></div>
     <div id="img-filter-popup" class="popup centered transparent">
@@ -255,6 +256,9 @@
 
   <!-- Scripts -->
   <script src="js/main.js"></script>
+  <script src="components/polaroid/base-polaroid/base-polaroid.js"></script>
+  <script src="components/polaroid/img-polaroid/img-polaroid.js"></script>
+  <script src="components/polaroid/txt-polaroid/txt-polaroid.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/exif-js/2.3.0/exif.js"></script>
 </body>

@@ -66,7 +66,6 @@ var tempFilterCameras = [];
 var seeFromRgnTitle = null;
 
 // Template elements
-var polaroid, polaroidPin, polaroidPinFav, polaroidImgFrame, polaroidImg, polaroidCaption, polaroidCaptionText, polaroidCaptionContainer, polaroidDate, singleDate;
 var rgnGrpGroup, rgnGrpTitle, rgnTxtBtn, rgnGrpDrop, rgnDrop;
 var filterTagBtn, favouritedTag;
 
@@ -398,47 +397,6 @@ function createMap() {
 
 /**** Photo Gallery  ****/
 function createTemplates() {
-	// sample polaroid
-	polaroid = document.createElement("div");
-	polaroid.classList.add("polaroid-frame", "opacity-transform-transition");
-	addRemoveTransparent([polaroid], true);
-	polaroid.classList.add("pic-rotate")
-	polaroid.title = getBilingualText("Expand image", "画像を拡大する");
-
-	// polaroid pin
-	polaroidPin = document.createElement("div");
-	polaroidPin.classList.add("polaroid-pin");
-
-	let polaroidPinShine = document.createElement("div");
-	polaroidPinShine.classList.add("polaroid-pin-shine");
-	polaroidPin.appendChild(polaroidPinShine);
-
-	polaroidPinFav = polaroidPin.cloneNode(true);
-
-	let polaroidPinStar = document.createElement("div");
-	polaroidPinStar.classList.add("polaroid-pin-star");
-	polaroidPinStar.innerHTML = "&#xf005";
-	polaroidPinFav.appendChild(polaroidPinStar);
-	
-	// image
-	polaroidImgFrame = document.createElement("div");
-	polaroidImgFrame.classList.add("polaroid-img");
-	polaroidImg = document.createElement("img");
-	addRemoveTransparent(polaroidImg, true);
-	polaroidImg.classList.add("opacity-transition");
-
-	// caption
-	polaroidCaption = document.createElement("div");
-	polaroidCaption.classList.add("polaroid-caption");
-	polaroidDate = document.createElement("div");
-	polaroidDate.classList.add("polaroid-date");
-	singleDate = document.createElement("div");
-	singleDate.classList.add("date-text");
-	polaroidCaptionText = document.createElement("div");
-	polaroidCaptionText.classList.add("caption-text", "one-line-text");
-	polaroidCaptionContainer = document.createElement("div");
-	polaroidCaptionContainer.classList.add("polaroid-caption-text-container");
-
 	// filters
 	filterTagBtn = document.createElement("button");
 	filterTagBtn.classList.add("filter-opt");
@@ -518,87 +476,24 @@ function editMiniMap() {
 	}, 1000);
 }
 
-// Based on: https://www.codepel.com/vanilla-javascript/javascript-image-loaded/
-// The lazy loading observer
-function lazyLoadPolaroid(target) {
-	const obs = new IntersectionObserver((entries, observer) => {
-		entries.forEach(entry => {
-			if (entry.isIntersecting) {
-				const thisPolaroid = entry.target;
-				const img = thisPolaroid.querySelector(".polaroid-img").getElementsByTagName("img")[0];
-				if(img){
-					const src = img.getAttribute("img-src");
-					img.setAttribute("src", src);
-				}
-				setTimeout(() => {
-					addRemoveTransparent([thisPolaroid], false);
-				}, 75);
-				observer.disconnect();
-			}
-		});
-	});
-	obs.observe(target);
-}
-
 /**** Polaroids ****/
-function createPolaroidBase(img){
-	// clone all relevant nodes
-	let pol = polaroid.cloneNode(true);
-
-	lazyLoadPolaroid(pol);
-
-	return pol;
-}
-
 function createPolaroidImg(img) {
-	let pol = createPolaroidBase(img);
-	let polImgFrame = polaroidImgFrame.cloneNode();
-	let polImg = polaroidImg.cloneNode();
-	let polCaption = polaroidCaption.cloneNode();
-	let polDate = polaroidDate.cloneNode();
-	let polDateEn = singleDate.cloneNode();
-	let polDateJp = singleDate.cloneNode();
-	let polCaptionText = polaroidCaptionContainer.cloneNode();
-	let polCaptionTextEn = polaroidCaptionText.cloneNode();
-	let polCaptionTextJp = polaroidCaptionText.cloneNode();
+	let newPolaroid = document.createElement("img-polaroid");
 
-	if(img.is_favourite) {
-		pol.appendChild(polaroidPinFav.cloneNode(true));
-	} else {
-		pol.appendChild(polaroidPin.cloneNode(true));
+	if (img.description_english){
+		newPolaroid.setAttribute("enCaption", img.description_english ?? "");
 	}
 
-	pol.appendChild(polImgFrame);
-	polImgFrame.appendChild(polImg);
-	pol.appendChild(polCaption);
-	polCaption.appendChild(polDate);
-	polDate.appendChild(polDateEn);
-	polDate.appendChild(polDateJp);
-	polCaption.appendChild(polCaptionText);
-	polCaptionText.appendChild(polCaptionTextEn);
-	polCaptionText.appendChild(polCaptionTextJp);
-
-	// add info
-	if(img.date){
-		let date = getPictureDate(new Date(img.date), img.offset);
-		polDateEn.innerHTML = getEnglishDate(date, false, img.offset);
-		polDateJp.innerHTML = getJapaneseDate(date, false, img.offset);
-	} else {
-		polDateEn.innerHTML = "";
-		polDateJp.innerHTML = "";
-	}
-	if(img.description_english){
-		polCaptionTextEn.innerHTML = img.description_english;
-	}
 	if(img.description_japanese){
-		polCaptionTextJp.innerHTML = img.description_japanese;
+		newPolaroid.setAttribute("jpCaption", img.description_japanese ?? "");
 	}
-	
-	// image
-	polImg.setAttribute("img-src", img.link ?? "img/" + selectedCountry + "/" + (isSingleRgn ? rgnsList[0].id : img.rgn.id) + "/" + img.file_name);
+	newPolaroid.setAttribute("isFavourite", img.is_favourite ?? false);
+	newPolaroid.setAttribute("src", img.link ?? "img/" + selectedCountry + "/" + (isSingleRgn ? rgnsList[0].id : img.rgn.id) + "/" + img.file_name);
+	newPolaroid.setAttribute("date", img.date);
+	newPolaroid.setAttribute("offset", img.offset);
 
 	// listeners
-	pol.addEventListener("click", function () {
+	newPolaroid.addEventListener("click", function () {
 		selectedPic = img;
 		selectedPicInd = imgList.indexOf(selectedPic);
 		isNewFullscreenInstance = true;
@@ -606,48 +501,22 @@ function createPolaroidImg(img) {
 		lastSwipeTime = new Date();
 		openFullscreen();
 	});
-	
-	polImg.onload = function () {
-		if (this.width > this.height) {
-			polImg.classList.add("landscape-img");
-		} else {
-			polImg.classList.add("portrait-img");
-		}
-		setTimeout(() => {
-			addRemoveTransparent(polImg, false);			
-		}, defaultTimeout);
-	}
 
-	return pol;
+	return newPolaroid;
 }
 
 function createPolaroidBlank(rgn){
-	let pol = createPolaroidBase();
-	pol.title = seeFromRgnTitle;
-	
-	let polImgFrame = polaroidImgFrame.cloneNode();
-	polImgFrame.classList.add("blank");
-	polImgFrame.innerHTML = getBilingualText(rgn.english_name, rgn.japanese_name);
-	pol.appendChild(polImgFrame);
-	pol.isBlank = true;
-	pol.rgnId = rgn.id;
+	let newPolaroid = document.createElement("txt-polaroid");
+	newPolaroid.setAttribute("officialRegionName", data.official_region_name_english);
+	newPolaroid.setAttribute("text", getBilingualText(rgn.english_name, rgn.japanese_name));
+	newPolaroid.setAttribute("isBlank", true);
+	newPolaroid.setAttribute("rgnId", rgn.id);
 
-	pol.addEventListener("click", function () {
+	newPolaroid.addEventListener("click", function () {
 		selectRgn(rgn.id)
 	});
 
-	return pol;
-}
-
-function changePolaroidAngle(isLeft, angle){
-	isLeft = !isLeft;
-	if (isLeft) {
-		angle++;
-		if (angle > 4) {
-			angle = 1;
-		}
-	}
-	return [isLeft, angle];
+	return newPolaroid;
 }
 
 function createGallery() {
@@ -657,36 +526,23 @@ function createGallery() {
 	let isLeft = false;
 
 	// add pictures
+	// TODO: only add 25 pics onto screen at once, and once the bottom of the page is reached, add the next 25 -> determine by screen size?
 	if (imgList.length > 0) {
 		let angle = 1; // 1-4 for the rotation class
 		let prevRgn = null;
 		imgList.forEach(img => {
 			if(!isSingleRgn && (prevRgn == null || prevRgn != img.rgn.id)){
 				prevRgn = img.rgn.id;
-				let div = createPolaroidBlank(img.rgn);
-				// rotate picture
-				div.classList.add((isLeft ? "left-" : "right-") + angle);
-
-				// add to screen
-				gallery.appendChild(div);
-
-				// change iterators
-				let tempAngle = changePolaroidAngle(isLeft, angle); 
-				isLeft = tempAngle[0];
-				angle = tempAngle[1];
+				let blankPol = createPolaroidBlank(img.rgn);
+				blankPol.setAttribute("isAngledLeft", isLeft);
+				isLeft = !isLeft;
+				gallery.appendChild(blankPol);
 			}
+
 			let pol = createPolaroidImg(img);
-
-			// rotate picture
-			pol.classList.add((isLeft ? "left-" : "right-") + angle);
-
-			// add to screen
+			pol.setAttribute("isAngledLeft", isLeft);
+			isLeft = !isLeft;
 			gallery.appendChild(pol);
-
-			// change iterators
-			let tempAngle = changePolaroidAngle(isLeft, angle); 
-			isLeft = tempAngle[0];
-			angle = tempAngle[1];
 		});
 	} else {
 		gallery.innerHTML = getBilingualText("No pictures available (yet)","写真は（まだ）ありません");
@@ -963,14 +819,14 @@ function includeImage(img) {
 }
 
 function filterImages() {
-	let angle = 1; // 1-4 for the rotation class
 	isLeft = false;
 	visibleImgs = [];
 
 	if(document.getElementById("none")){
 		document.getElementById("none").remove();
 	}
-	let allPolaroids = Array.from(document.getElementsByClassName("polaroid-frame"));
+
+	let allPolaroids = Array.from(document.querySelectorAll("img-polaroid, txt-polaroid"));
 
 	let lastShownRgn = null;
 	let prevRgn = null;
@@ -980,15 +836,16 @@ function filterImages() {
 	let polInd = 0;
 	let imgInd = 0;
 	allPolaroids.forEach(pol => {
-		if (pol.isBlank){
-			if(pol.rgnId != prevRgn){
+		if (pol.getAttribute("isBlank") === "true"){
+			let currentRgn = pol.getAttribute("rgnId");
+			if(currentRgn != prevRgn){
 				addRemoveNoDisplay([pol], false);
 				if(rgnCt == 0 && prevRgnCardInd != null){
 					// if the previous region has nothing, remove the previous card
 					addRemoveNoDisplay([allPolaroids[prevRgnCardInd]], true);
 
 					// if the one before that has something and is the same, remove the current card. Last shown card remains the same.
-					if (lastShownRgn == pol.rgnId) addRemoveNoDisplay([pol], true);
+					if (lastShownRgn == currentRgn) addRemoveNoDisplay([pol], true);
 
 				} else if(rgnCt > 0 && prevRgnCardInd != null) {
 					// if the previous region has something, that is the last shown card
@@ -997,7 +854,7 @@ function filterImages() {
 				} else {
 					rgnCt = 0;
 				}
-				prevRgn = pol.rgnId;
+				prevRgn = currentRgn;
 				prevRgnCardInd = polInd;
 			} else {
 				addRemoveNoDisplay([pol], true);
@@ -1019,18 +876,9 @@ function filterImages() {
 
 	allPolaroids.filter(pol => !pol.classList.contains("no-display"))
 		.forEach(pol => {
-		let classList = Array.from(pol.classList).filter(className => {return className.includes("left") || className.includes("right")});
-			
-		if ((classList.filter(className => className.includes("left")).length > 0 && !isLeft) ||
-			(classList.filter(className => className.includes("right")).length > 0 && isLeft)) {
-			pol.classList.remove(classList[0]);
-			pol.classList.add((isLeft ? "left-" : "right-") + angle);
-		}
-		
-		let tempAngle = changePolaroidAngle(isLeft, angle); 
-		isLeft = tempAngle[0];
-		angle = tempAngle[1];
-	})
+			pol.setAttribute("isAngledLeft", isLeft);
+			isLeft = !isLeft;
+	});
 
 	if(visibleImgs.length == 0){
 		let temp = document.createElement("div");
@@ -1869,7 +1717,7 @@ function filterCountryData() {
 function fetchData() {
 	let hasError = false;
 
-	fetch("https://raw.githubusercontent.com/kymlu/travel-memories/main/js/data.json")
+	fetch("js/data.json")
 		.then(response => {
 			return response.json();
 		}).then(d => {
