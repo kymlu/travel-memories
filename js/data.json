@@ -54,6 +54,8 @@
                 "date": "2024-06-05T04:01:19.000Z",
                 "offset": 9,
                 "area": "sapporo",
+                "location_english": "Sapporo Station",
+                "location_japanese": "札幌駅",
                 "description_english": "",
                 "description_japanese": "",
                 "tags": [
@@ -63,13 +65,16 @@
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
                 "shutter_speed": "1/100",
                 "f_stop": 1.6,
-                "iso": 64
+                "iso": 64,
+                "is_favourite": true
               },
               {
                 "file_name": "IMG_0808.jpg",
                 "date": "2024-06-05T04:13:15.000Z",
                 "offset": 9,
                 "area": "sapporo",
+                "location_english": "Mr. Donut",
+                "location_japanese": "ミスタードーナツ",
                 "description_english": "The classics",
                 "description_japanese": "",
                 "tags": [
@@ -86,6 +91,8 @@
                 "date": "2024-06-05T04:13:27.000Z",
                 "offset": 9,
                 "area": "sapporo",
+                "location_english": "Mr. Donut",
+                "location_japanese": "ミスタードーナツ",
                 "description_english": "Mr. Donut fried rice is surprisingly ok",
                 "description_japanese": "ミスドのチャーハンは悪くない",
                 "tags": [
@@ -102,6 +109,8 @@
                 "date": "2024-06-05T06:19:48.000Z",
                 "offset": 9,
                 "area": "jozankei",
+                "location_english": "Hana Momiji Sapporo",
+                "location_japanese": "花もみじ",
                 "description_english": "Manju reheating device",
                 "description_japanese": "",
                 "tags": [
@@ -118,6 +127,8 @@
                 "date": "2024-06-05T06:55:48.000Z",
                 "offset": 9,
                 "area": "jozankei",
+                "location_english": "Hana Momiji Sapporo",
+                "location_japanese": "花もみじ",
                 "description_english": "Manju",
                 "description_japanese": "饅頭",
                 "tags": [
@@ -191,13 +202,16 @@
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
                 "shutter_speed": "1/456",
                 "f_stop": 1.6,
-                "iso": 32
+                "iso": 32,
+                "is_favourite": true
               },
               {
                 "file_name": "IMG_0828.jpg",
                 "date": "2024-06-05T07:24:27.000Z",
                 "offset": 9,
                 "area": "jozankei",
+                "location_english": "Jozankei Shrine",
+                "location_japanese": "定山渓神社",
                 "description_english": "",
                 "description_japanese": "",
                 "tags": [
@@ -215,6 +229,8 @@
                 "date": "2024-06-05T08:13:30.000Z",
                 "offset": 9,
                 "area": "jozankei",
+                "location_english": "Hana Momiji Sapporo",
+                "location_japanese": "花もみじ",
                 "description_english": "",
                 "description_japanese": "",
                 "tags": [
@@ -224,13 +240,16 @@
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
                 "shutter_speed": "1/50",
                 "f_stop": 1.6,
-                "iso": 250
+                "iso": 250,
+                "is_favourite": true
               },
               {
                 "file_name": "IMG_0835.jpg",
                 "date": "2024-06-05T10:12:23.000Z",
                 "offset": 9,
                 "area": "jozankei",
+                "location_english": "Hana Momiji Sapporo",
+                "location_japanese": "花もみじ",
                 "description_english": "",
                 "description_japanese": "",
                 "tags": [
@@ -247,6 +266,8 @@
                 "date": "2024-06-05T10:19:02.000Z",
                 "offset": 9,
                 "area": "jozankei",
+                "location_english": "Hana Momiji Sapporo",
+                "location_japanese": "花もみじ",
                 "description_english": "",
                 "description_japanese": "",
                 "tags": [
@@ -263,6 +284,8 @@
                 "date": "2024-06-05T10:24:34.000Z",
                 "offset": 9,
                 "area": "jozankei",
+                "location_english": "Hana Momiji Sapporo",
+                "location_japanese": "花もみじ",
                 "description_english": "",
                 "description_japanese": "",
                 "tags": [
@@ -279,6 +302,8 @@
                 "date": "2024-06-05T10:28:34.000Z",
                 "offset": 9,
                 "area": "jozankei",
+                "location_english": "Hana Momiji Sapporo",
+                "location_japanese": "花もみじ",
                 "description_english": "",
                 "description_japanese": "",
                 "tags": [
@@ -295,6 +320,8 @@
                 "date": "2024-06-05T10:40:42.000Z",
                 "offset": 9,
                 "area": "jozankei",
+                "location_english": "Hana Momiji Sapporo",
+                "location_japanese": "花もみじ",
                 "description_english": "",
                 "description_japanese": "",
                 "tags": [
@@ -311,6 +338,8 @@
                 "date": "2024-06-05T10:43:07.000Z",
                 "offset": 9,
                 "area": "jozankei",
+                "location_english": "Hana Momiji Sapporo",
+                "location_japanese": "花もみじ",
                 "description_english": "",
                 "description_japanese": "",
                 "tags": [
@@ -327,6 +356,8 @@
                 "date": "2024-06-05T10:56:58.000Z",
                 "offset": 9,
                 "area": "jozankei",
+                "location_english": "Hana Momiji Sapporo",
+                "location_japanese": "花もみじ",
                 "description_english": "DIY Monaka",
                 "description_japanese": "モナカ体験",
                 "tags": [
@@ -343,6 +374,8 @@
                 "date": "2024-06-05T10:59:21.000Z",
                 "offset": 9,
                 "area": "jozankei",
+                "location_english": "Hana Momiji Sapporo",
+                "location_japanese": "花もみじ",
                 "description_english": "Probably the most basic monaka ever",
                 "description_japanese": "普通",
                 "tags": [
@@ -359,6 +392,8 @@
                 "date": "2024-06-05T11:24:27.000Z",
                 "offset": 9,
                 "area": "jozankei",
+                "location_english": "JOZANKEI NATURE LUMINARIE 2024",
+                "location_japanese": "定山渓ネイチャールミナリエ",
                 "description_english": "Nightmare fuel",
                 "description_japanese": "悪夢に出る",
                 "tags": [
@@ -408,6 +443,8 @@
                 "date": "2024-06-06T00:36:01.000Z",
                 "offset": 9,
                 "area": "jozankei",
+                "location_english": "Futamitsuri Bridge",
+                "location_japanese": "二見吊橋",
                 "description_english": "",
                 "description_japanese": "",
                 "tags": [
@@ -417,7 +454,8 @@
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
                 "shutter_speed": "1/456",
                 "f_stop": 1.6,
-                "iso": 32
+                "iso": 32,
+                "is_favourite": true
               },
               {
                 "file_name": "IMG_0862.jpg",
@@ -440,6 +478,8 @@
                 "date": "2024-06-06T03:00:01.000Z",
                 "offset": 9,
                 "area": "sapporo",
+                "location_english": "Shiroi Koibito Park",
+                "location_japanese": "白い恋人パーク",
                 "description_english": "",
                 "description_japanese": "",
                 "tags": [
@@ -456,6 +496,8 @@
                 "date": "2024-06-06T03:05:39.000Z",
                 "offset": 9,
                 "area": "sapporo",
+                "location_english": "Shiroi Koibito Park",
+                "location_japanese": "白い恋人パーク",
                 "description_english": "",
                 "description_japanese": "",
                 "tags": [
@@ -472,6 +514,8 @@
                 "date": "2024-06-06T03:05:58.000Z",
                 "offset": 9,
                 "area": "sapporo",
+                "location_english": "Shiroi Koibito Park",
+                "location_japanese": "白い恋人パーク",
                 "description_english": "",
                 "description_japanese": "",
                 "tags": [
@@ -488,6 +532,8 @@
                 "date": "2024-06-06T03:26:53.000Z",
                 "offset": 9,
                 "area": "sapporo",
+                "location_english": "Shiroi Koibito Park",
+                "location_japanese": "白い恋人パーク",
                 "description_english": "",
                 "description_japanese": "",
                 "tags": [
@@ -505,6 +551,8 @@
                 "date": "2024-06-06T04:13:41.000Z",
                 "offset": 9,
                 "area": "sapporo",
+                "location_english": "Shiroi Koibito Park",
+                "location_japanese": "白い恋人パーク",
                 "description_english": "",
                 "description_japanese": "",
                 "tags": [
@@ -522,6 +570,8 @@
                 "date": "2024-06-06T04:26:55.000Z",
                 "offset": 9,
                 "area": "sapporo",
+                "location_english": "Shiroi Koibito Park",
+                "location_japanese": "白い恋人パーク",
                 "description_english": "",
                 "description_japanese": "",
                 "tags": [
@@ -538,6 +588,8 @@
                 "date": "2024-06-06T04:52:18.000Z",
                 "offset": 9,
                 "area": "sapporo",
+                "location_english": "Shiroi Koibito Park",
+                "location_japanese": "白い恋人パーク",
                 "description_english": "",
                 "description_japanese": "",
                 "tags": [
@@ -548,13 +600,16 @@
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
                 "shutter_speed": "1/127",
                 "f_stop": 1.6,
-                "iso": 32
+                "iso": 32,
+                "is_favourite": true
               },
               {
                 "file_name": "IMG_0907.jpg",
                 "date": "2024-06-06T05:18:51.000Z",
                 "offset": 9,
                 "area": "sapporo",
+                "location_english": "Shiroi Koibito Park",
+                "location_japanese": "白い恋人パーク",
                 "description_english": "",
                 "description_japanese": "",
                 "tags": [
@@ -571,6 +626,8 @@
                 "date": "2024-06-06T09:50:35.000Z",
                 "offset": 9,
                 "area": "sapporo",
+                "location_english": "Teshikaga Ramen",
+                "location_japanese": "弟子屈ラーメン横丁店",
                 "description_english": "The famed miso ramen",
                 "description_japanese": "噂の味噌ラーメン",
                 "tags": [
@@ -603,6 +660,8 @@
                 "date": "2024-06-06T12:23:06.000Z",
                 "offset": 9,
                 "area": "sapporo",
+                "location_english": "Sapporo TV Tower",
+                "location_japanese": "さっぽろテレビ塔",
                 "description_english": "The closest I got to the tower",
                 "description_japanese": "",
                 "tags": [
@@ -629,13 +688,16 @@
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
                 "shutter_speed": "1/50",
                 "f_stop": 1.6,
-                "iso": 125
+                "iso": 125,
+                "is_favourite": true
               },
               {
                 "file_name": "IMG_0922.jpg",
                 "date": "2024-06-07T05:35:02.000Z",
                 "offset": 9,
                 "area": "otaru",
+                "location_english": "Otaru Canal",
+                "location_japanese": "小樽運河",
                 "description_english": "Not as cool as the Rideau Canal (despite being from Ottawa I have no biases I swear)",
                 "description_japanese": "リド運河の方がかっこいい（私はオタワ出身だけどそれは関係ない）",
                 "tags": [
@@ -653,6 +715,8 @@
                 "date": "2024-06-07T10:12:01.000Z",
                 "offset": 9,
                 "area": "sapporo",
+                "location_english": "Yosakoi Soran Festival",
+                "location_japanese": "YOSAKOI ソーラン祭り",
                 "description_english": "Watching these made me want to join them on stage…",
                 "description_japanese": "発表を観てすごく感動した。。。いつか私も踊ってみたいなぁ",
                 "tags": [
@@ -670,6 +734,8 @@
                 "date": "2024-06-07T12:06:09.000Z",
                 "offset": 9,
                 "area": "sapporo",
+                "location_english": "",
+                "location_japanese": "恵美須商店 南4西3",
                 "description_english": "",
                 "description_japanese": "",
                 "tags": [
@@ -686,6 +752,8 @@
                 "date": "2024-06-08T03:27:09.000Z",
                 "offset": 9,
                 "area": "sapporo",
+                "location_english": "",
+                "location_japanese": "海さくら 蝦夷海＆ミチマロ",
                 "description_english": "",
                 "description_japanese": "",
                 "tags": [
@@ -702,6 +770,8 @@
                 "date": "2024-06-08T04:18:33.000Z",
                 "offset": 9,
                 "area": "sapporo",
+                "location_english": "",
+                "location_japanese": "海さくら 蝦夷海＆ミチマロ",
                 "description_english": "",
                 "description_japanese": "",
                 "tags": [
@@ -718,6 +788,8 @@
                 "date": "2024-06-08T05:31:23.000Z",
                 "offset": 9,
                 "area": "sapporo",
+                "location_english": "Sapporo Beer Museum",
+                "location_japanese": "サッポロビール博物館",
                 "description_english": "I'm not a beer person but Black Label was tolerable.",
                 "description_japanese": "ビールは好きじゃないけどBlack Labelなら飲める",
                 "tags": [
@@ -735,6 +807,8 @@
                 "date": "2024-06-08T08:01:33.000Z",
                 "offset": 9,
                 "area": "sapporo",
+                "location_english": "Yosakoi Soran Festival",
+                "location_japanese": "YOSAKOI ソーラン祭り",
                 "description_english": "During this trip, if I wasn't eating or drinking, I was watching performances.",
                 "description_japanese": "今回の札幌旅行はご飯・お酒・ソーラン節しかなかったw",
                 "tags": [
@@ -745,13 +819,16 @@
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
                 "shutter_speed": "1/247",
                 "f_stop": 1.6,
-                "iso": 32
+                "iso": 32,
+                "is_favourite": true
               },
               {
                 "file_name": "IMG_0949.jpg",
                 "date": "2024-06-08T10:26:01.000Z",
                 "offset": 9,
                 "area": "sapporo",
+                "location_english": "Extreme Salt Cured Genghis Khan YUHI",
+                "location_japanese": "極み塩熟成ジンギスカン「ゆうひ」すすきの本店",
                 "description_english": "Hokkaido lamb really doesn't have any lamby smells",
                 "description_japanese": "北海道のラム肉は本当に臭くない",
                 "tags": [
@@ -761,7 +838,8 @@
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
                 "shutter_speed": "1/50",
                 "f_stop": 1.6,
-                "iso": 125
+                "iso": 125,
+                "is_favourite": true
               },
               {
                 "file_name": "IMG_0950.jpg",
@@ -800,6 +878,8 @@
                 "date": "2024-06-09T01:10:13.000Z",
                 "offset": 9,
                 "area": "sapporo",
+                "location_english": "New Chitose Airport",
+                "location_japanese": "新千歳空港",
                 "description_english": "",
                 "description_japanese": "",
                 "tags": [
@@ -867,6 +947,8 @@
                 "date": "2024-06-09T02:31:36.000Z",
                 "offset": 9,
                 "area": "sendai",
+                "location_english": "Sendai Airport",
+                "location_japanese": "仙台空港",
                 "description_english": "",
                 "description_japanese": "",
                 "tags": [
@@ -883,6 +965,8 @@
                 "date": "2024-06-09T03:20:29.000Z",
                 "offset": 9,
                 "area": "sendai",
+                "location_english": "Zenjiro",
+                "location_japanese": "たんや善治郎 別館",
                 "description_english": "",
                 "description_japanese": "",
                 "tags": [
@@ -899,6 +983,8 @@
                 "date": "2024-06-09T03:23:52.000Z",
                 "offset": 9,
                 "area": "sendai",
+                "location_english": "Zenjiro",
+                "location_japanese": "たんや善治郎 別館",
                 "description_english": "Beef tongue is truly the best",
                 "description_japanese": "マジで最高",
                 "tags": [
@@ -908,7 +994,8 @@
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
                 "shutter_speed": "1/50",
                 "f_stop": 1.6,
-                "iso": 200
+                "iso": 200,
+                "is_favourite": true
               },
               {
                 "file_name": "IMG_0963.jpg",
@@ -929,6 +1016,8 @@
                 "date": "2024-06-09T05:15:22.000Z",
                 "offset": 9,
                 "area": "sendai",
+                "location_english": "Sendai Dai Kannon",
+                "location_japanese": "仙台大観音",
                 "description_english": "Neck hurts",
                 "description_japanese": "首痛い",
                 "tags": [
@@ -938,13 +1027,16 @@
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
                 "shutter_speed": "1/13333",
                 "f_stop": 1.6,
-                "iso": 32
+                "iso": 32,
+                "is_favourite": true
               },
               {
                 "file_name": "IMG_0969.jpg",
                 "date": "2024-06-09T05:27:19.000Z",
                 "offset": 9,
                 "area": "sendai",
+                "location_english": "Sendai Dai Kannon",
+                "location_japanese": "仙台大観音",
                 "description_english": "Freebie",
                 "description_japanese": "無料",
                 "tags": [
@@ -961,6 +1053,8 @@
                 "date": "2024-06-09T05:30:51.000Z",
                 "offset": 9,
                 "area": "sendai",
+                "location_english": "Sendai Dai Kannon",
+                "location_japanese": "仙台大観音",
                 "description_english": "My dragon warrior ancestor(?) staring down at me",
                 "description_japanese": "辰が見てる",
                 "tags": [
@@ -977,6 +1071,8 @@
                 "date": "2024-06-09T05:34:46.000Z",
                 "offset": 9,
                 "area": "sendai",
+                "location_english": "Sendai Dai Kannon",
+                "location_japanese": "仙台大観音",
                 "description_english": "",
                 "description_japanese": "",
                 "tags": [
@@ -993,6 +1089,8 @@
                 "date": "2024-06-09T05:37:32.000Z",
                 "offset": 9,
                 "area": "sendai",
+                "location_english": "Sendai Dai Kannon",
+                "location_japanese": "仙台大観音",
                 "description_english": "",
                 "description_japanese": "",
                 "tags": [
@@ -1009,6 +1107,8 @@
                 "date": "2024-06-09T05:45:24.000Z",
                 "offset": 9,
                 "area": "sendai",
+                "location_english": "Sendai Dai Kannon",
+                "location_japanese": "仙台大観音",
                 "description_english": "",
                 "description_japanese": "",
                 "tags": [
@@ -1025,6 +1125,8 @@
                 "date": "2024-06-09T05:47:18.000Z",
                 "offset": 9,
                 "area": "sendai",
+                "location_english": "Sendai Dai Kannon",
+                "location_japanese": "仙台大観音",
                 "description_english": "",
                 "description_japanese": "",
                 "tags": [
@@ -1041,6 +1143,8 @@
                 "date": "2024-06-09T06:13:34.000Z",
                 "offset": 9,
                 "area": "sendai",
+                "location_english": "Sendai Dai Kannon",
+                "location_japanese": "仙台大観音",
                 "description_english": "",
                 "description_japanese": "",
                 "tags": [
@@ -1057,6 +1161,8 @@
                 "date": "2024-06-09T06:58:09.000Z",
                 "offset": 9,
                 "area": "sendai",
+                "location_english": "National Treasure Osaki Hachiman Shrine",
+                "location_japanese": "大崎八幡宮",
                 "description_english": "",
                 "description_japanese": "",
                 "tags": [
@@ -1073,6 +1179,8 @@
                 "date": "2024-06-09T10:03:31.000Z",
                 "offset": 9,
                 "area": "sendai",
+                "location_english": "Sendai Habile Vent Wagyu",
+                "location_japanese": "仙臺アビルヴァン和牛",
                 "description_english": "I didn't expect this fancy of a setup but here we are",
                 "description_japanese": "こんなにファンシーなんて",
                 "tags": [
@@ -1089,6 +1197,8 @@
                 "date": "2024-06-09T10:08:50.000Z",
                 "offset": 9,
                 "area": "sendai",
+                "location_english": "Sendai Habile Vent Wagyu",
+                "location_japanese": "仙臺アビルヴァン和牛",
                 "description_english": "Cucumber tadpoles in consume soup",
                 "description_japanese": "千切りのキュきゅうり",
                 "tags": [
@@ -1105,6 +1215,8 @@
                 "date": "2024-06-09T10:18:39.000Z",
                 "offset": 9,
                 "area": "sendai",
+                "location_english": "Sendai Habile Vent Wagyu",
+                "location_japanese": "仙臺アビルヴァン和牛",
                 "description_english": "My least favourite part of the meal",
                 "description_japanese": "普通すぎていらないと思う",
                 "tags": [
@@ -1121,6 +1233,8 @@
                 "date": "2024-06-09T10:26:09.000Z",
                 "offset": 9,
                 "area": "sendai",
+                "location_english": "Sendai Habile Vent Wagyu",
+                "location_japanese": "仙臺アビルヴァン和牛",
                 "description_english": "Italy",
                 "description_japanese": "イタリアじゃん",
                 "tags": [
@@ -1137,6 +1251,8 @@
                 "date": "2024-06-09T10:36:44.000Z",
                 "offset": 9,
                 "area": "sendai",
+                "location_english": "Sendai Habile Vent Wagyu",
+                "location_japanese": "仙臺アビルヴァン和牛",
                 "description_english": "The softest beef I've had in my life",
                 "description_japanese": "人生で1番柔らかくてジューシーな肉",
                 "tags": [
@@ -1146,13 +1262,16 @@
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
                 "shutter_speed": "1/33",
                 "f_stop": 1.6,
-                "iso": 500
+                "iso": 500,
+                "is_favourite": true
               },
               {
                 "file_name": "IMG_1012.jpg",
                 "date": "2024-06-09T10:53:28.000Z",
                 "offset": 9,
                 "area": "sendai",
+                "location_english": "Sendai Habile Vent Wagyu",
+                "location_japanese": "仙臺アビルヴァン和牛",
                 "description_english": "Garlic fried rice slaps",
                 "description_japanese": "ガーリックのチャーハンも美味しかった",
                 "tags": [
@@ -1169,6 +1288,8 @@
                 "date": "2024-06-09T11:12:23.000Z",
                 "offset": 9,
                 "area": "sendai",
+                "location_english": "Sendai Habile Vent Wagyu",
+                "location_japanese": "仙臺アビルヴァン和牛",
                 "description_english": "Matcha milk pudding",
                 "description_japanese": "抹茶ミルクプリン",
                 "tags": [
@@ -1185,6 +1306,8 @@
                 "date": "2024-06-09T11:12:31.000Z",
                 "offset": 9,
                 "area": "sendai",
+                "location_english": "Sendai Habile Vent Wagyu",
+                "location_japanese": "仙臺アビルヴァン和牛",
                 "description_english": "Milk tea",
                 "description_japanese": "ミルクティー",
                 "tags": [
@@ -1201,6 +1324,8 @@
                 "date": "2024-06-09T11:52:32.000Z",
                 "offset": 9,
                 "area": "sendai",
+                "location_english": "Sendai Habile Vent Wagyu",
+                "location_japanese": "仙臺アビルヴァン和牛",
                 "description_english": "I give this a 10/10 god damn",
                 "description_japanese": "5星",
                 "tags": [
@@ -1210,7 +1335,8 @@
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
                 "shutter_speed": "1/100",
                 "f_stop": 1.6,
-                "iso": 125
+                "iso": 125,
+                "is_favourite": true
               },
               {
                 "file_name": "IMG_1018.jpg",
@@ -1266,6 +1392,8 @@
                 "date": "2024-06-10T00:49:57.000Z",
                 "offset": 9,
                 "area": "sendai",
+                "location_english": "",
+                "location_japanese": "そばの神田 東一屋 駅前南町通り店",
                 "description_english": "",
                 "description_japanese": "",
                 "tags": [
@@ -1282,6 +1410,8 @@
                 "date": "2024-06-10T01:11:24.000Z",
                 "offset": 9,
                 "area": "sendai",
+                "location_english": "Sendai Station",
+                "location_japanese": "仙台駅",
                 "description_english": "An Ohtani pop up store",
                 "description_japanese": "大谷グッズのポップアップ",
                 "tags": [
@@ -1330,6 +1460,8 @@
                 "date": "2024-06-10T02:25:28.000Z",
                 "offset": 9,
                 "area": "matsushima",
+                "location_english": "Oshima",
+                "location_japanese": "雄島",
                 "description_english": "",
                 "description_japanese": "",
                 "tags": [
@@ -1346,6 +1478,8 @@
                 "date": "2024-06-10T02:34:53.000Z",
                 "offset": 9,
                 "area": "matsushima",
+                "location_english": "Oshima",
+                "location_japanese": "雄島",
                 "description_english": "",
                 "description_japanese": "",
                 "tags": [
@@ -1362,6 +1496,8 @@
                 "date": "2024-06-10T02:43:26.000Z",
                 "offset": 9,
                 "area": "matsushima",
+                "location_english": "Oshima",
+                "location_japanese": "雄島",
                 "description_english": "",
                 "description_japanese": "",
                 "tags": [
@@ -1378,6 +1514,8 @@
                 "date": "2024-06-10T02:44:06.000Z",
                 "offset": 9,
                 "area": "matsushima",
+                "location_english": "Oshima",
+                "location_japanese": "雄島",
                 "description_english": "",
                 "description_japanese": "",
                 "tags": [
@@ -1394,6 +1532,8 @@
                 "date": "2024-06-10T02:45:05.000Z",
                 "offset": 9,
                 "area": "matsushima",
+                "location_english": "Oshima",
+                "location_japanese": "雄島",
                 "description_english": "",
                 "description_japanese": "",
                 "tags": [
@@ -1410,6 +1550,8 @@
                 "date": "2024-06-10T02:47:54.000Z",
                 "offset": 9,
                 "area": "matsushima",
+                "location_english": "Oshima",
+                "location_japanese": "雄島",
                 "description_english": "",
                 "description_japanese": "",
                 "tags": [
@@ -1442,6 +1584,8 @@
                 "date": "2024-06-10T03:30:19.000Z",
                 "offset": 9,
                 "area": "matsushima",
+                "location_english": "Matsukama Sohonten",
+                "location_japanese": "松島蒲鉾本舗 総本店",
                 "description_english": "Grilled some kamaboko myself",
                 "description_japanese": "かまぼこを焼く体験やってみた",
                 "tags": [
@@ -1458,6 +1602,8 @@
                 "date": "2024-06-10T04:02:48.000Z",
                 "offset": 9,
                 "area": "matsushima",
+                "location_english": "Rikyu",
+                "location_japanese": "牛たん炭焼 利久 松島五大堂店",
                 "description_english": "As much as Sendai hyped up zunda mochi, the taste is not for me…",
                 "description_japanese": "申し訳ないけどずんだ餅の味はあまり好きじゃない。。。",
                 "tags": [
@@ -1474,6 +1620,8 @@
                 "date": "2024-06-10T04:03:25.000Z",
                 "offset": 9,
                 "area": "matsushima",
+                "location_english": "Rikyu",
+                "location_japanese": "牛たん炭焼 利久 松島五大堂店",
                 "description_english": "At least I tried it",
                 "description_japanese": "少なくとも食べてみた。",
                 "tags": [
@@ -1490,6 +1638,8 @@
                 "date": "2024-06-10T04:29:43.000Z",
                 "offset": 9,
                 "area": "matsushima",
+                "location_english": "Fukuurabashi Bridge",
+                "location_japanese": "福浦橋",
                 "description_english": "",
                 "description_japanese": "",
                 "tags": [
@@ -1500,13 +1650,16 @@
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
                 "shutter_speed": "1/4132",
                 "f_stop": 1.6,
-                "iso": 32
+                "iso": 32,
+                "is_favourite": true
               },
               {
                 "file_name": "IMG_1114.jpg",
                 "date": "2024-06-10T04:36:45.000Z",
                 "offset": 9,
                 "area": "matsushima",
+                "location_english": "Fukuurajima",
+                "location_japanese": "福浦島",
                 "description_english": "Fish fossil",
                 "description_japanese": "骨",
                 "tags": [
@@ -1523,6 +1676,8 @@
                 "date": "2024-06-10T04:43:27.000Z",
                 "offset": 9,
                 "area": "matsushima",
+                "location_english": "Fukuurajima",
+                "location_japanese": "福浦島",
                 "description_english": "",
                 "description_japanese": "",
                 "tags": [
@@ -1539,6 +1694,8 @@
                 "date": "2024-06-10T04:49:38.000Z",
                 "offset": 9,
                 "area": "matsushima",
+                "location_english": "Fukuurajima",
+                "location_japanese": "福浦島",
                 "description_english": "",
                 "description_japanese": "",
                 "tags": [
@@ -1555,6 +1712,8 @@
                 "date": "2024-06-10T04:49:43.000Z",
                 "offset": 9,
                 "area": "matsushima",
+                "location_english": "Fukuurajima",
+                "location_japanese": "福浦島",
                 "description_english": "",
                 "description_japanese": "",
                 "tags": [
@@ -1571,6 +1730,8 @@
                 "date": "2024-06-10T04:50:10.000Z",
                 "offset": 9,
                 "area": "matsushima",
+                "location_english": "Fukuurajima",
+                "location_japanese": "福浦島",
                 "description_english": "",
                 "description_japanese": "",
                 "tags": [
@@ -1587,6 +1748,8 @@
                 "date": "2024-06-10T05:00:09.000Z",
                 "offset": 9,
                 "area": "matsushima",
+                "location_english": "Fukuurajima",
+                "location_japanese": "福浦島",
                 "description_english": "",
                 "description_japanese": "",
                 "tags": [
@@ -1603,6 +1766,8 @@
                 "date": "2024-06-10T05:04:02.000Z",
                 "offset": 9,
                 "area": "matsushima",
+                "location_english": "Fukuurajima",
+                "location_japanese": "福浦島",
                 "description_english": "",
                 "description_japanese": "",
                 "tags": [
@@ -1612,13 +1777,16 @@
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
                 "shutter_speed": "1/4132",
                 "f_stop": 1.6,
-                "iso": 32
+                "iso": 32,
+                "is_favourite": true
               },
               {
                 "file_name": "IMG_1143.jpg",
                 "date": "2024-06-10T09:30:40.000Z",
                 "offset": 9,
                 "area": "sendai",
+                "location_english": "Yomenya Goemon",
+                "location_japanese": "洋麺屋五右衛門 仙台名掛丁店",
                 "description_english": "",
                 "description_japanese": "",
                 "tags": [
@@ -2246,6 +2414,8 @@
                 "date": "2024-06-11T04:15:37.000Z",
                 "offset": 9,
                 "area": "yamagata",
+                "location_english": "Suzuki Shouten",
+                "location_japanese": "煮干し中華そば 鈴木商店",
                 "description_english": "I learned what back fat in ramen was and I'm not that big on it.",
                 "description_japanese": "今日背脂の意味習った。。。背脂なしの方が美味しいと思う。",
                 "tags": [
@@ -2262,6 +2432,8 @@
                 "date": "2024-06-11T05:23:21.000Z",
                 "offset": 9,
                 "area": "yamagata",
+                "location_english": "Old Saiseikan Hospital Building",
+                "location_japanese": "山形市立郷土館",
                 "description_english": "",
                 "description_japanese": "",
                 "tags": [
@@ -2303,7 +2475,8 @@
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
                 "shutter_speed": "1/314",
                 "f_stop": 1.6,
-                "iso": 32
+                "iso": 32,
+                "is_favourite": true
               },
               {
                 "file_name": "IMG_1157.jpg",
@@ -2335,7 +2508,8 @@
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
                 "shutter_speed": "1/33",
                 "f_stop": 1.6,
-                "iso": 400
+                "iso": 400,
+                "is_favourite": true
               },
               {
                 "file_name": "IMG_1165.jpg",
@@ -2358,6 +2532,8 @@
                 "date": "2024-06-12T23:41:38.000Z",
                 "offset": 9,
                 "area": "yamagata",
+                "location_english": "VIE DE FRANCE Yamagata",
+                "location_japanese": "",
                 "description_english": "",
                 "description_japanese": "",
                 "tags": [
@@ -2374,6 +2550,8 @@
                 "date": "2024-06-12T01:00:13.000Z",
                 "offset": 9,
                 "area": "yamadera",
+                "location_english": "Godaidō, Rissyakuji",
+                "location_japanese": "立石寺 五大堂",
                 "description_english": "",
                 "description_japanese": "",
                 "tags": [
@@ -2383,13 +2561,16 @@
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
                 "shutter_speed": "1/159",
                 "f_stop": 1.6,
-                "iso": 32
+                "iso": 32,
+                "is_favourite": true
               },
               {
                 "file_name": "IMG_1178.jpg",
                 "date": "2024-06-12T01:22:24.000Z",
                 "offset": 9,
                 "area": "yamadera",
+                "location_english": "Godaidō, Rissyakuji",
+                "location_japanese": "立石寺 五大堂",
                 "description_english": "",
                 "description_japanese": "",
                 "tags": [
@@ -2400,13 +2581,16 @@
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
                 "shutter_speed": "1/6494",
                 "f_stop": 1.6,
-                "iso": 32
+                "iso": 32,
+                "is_favourite": true
               },
               {
                 "file_name": "IMG_1191.jpg",
                 "date": "2024-06-12T01:29:17.000Z",
                 "offset": 9,
                 "area": "yamadera",
+                "location_english": "1,015 stone steps of Yamadera",
+                "location_japanese": "山寺の石段",
                 "description_english": "",
                 "description_japanese": "",
                 "tags": [
@@ -2424,6 +2608,8 @@
                 "date": "2024-06-12T02:59:52.000Z",
                 "offset": 9,
                 "area": "yamadera",
+                "location_english": "Yamadera Station",
+                "location_japanese": "山寺駅",
                 "description_english": "",
                 "description_japanese": "",
                 "tags": [
@@ -11459,6 +11645,8 @@
                 "date": "2024-06-01T11:39:34.000Z",
                 "offset": 9,
                 "area": "marunouchi",
+                "location_english": "",
+                "location_japanese": "",
                 "description_english": "I didn't think Iowa was famous for bbq.",
                 "description_japanese": "アイオワ州はバーベキューが有名なんて知らなかった",
                 "tags": [
@@ -11476,6 +11664,8 @@
                 "date": "2024-06-01T11:53:16.000Z",
                 "offset": 9,
                 "area": "marunouchi",
+                "location_english": "Tokyo Tower",
+                "location_japanese": "東京タワー",
                 "description_english": "Closest I've been to Tokyo Tower",
                 "description_japanese": "今まで東京タワー行ってない",
                 "tags": [
@@ -11492,6 +11682,8 @@
                 "date": "2024-06-02T4:04:52.000Z",
                 "offset": 9,
                 "area": "harajuku",
+                "location_english": "ZETTERIA",
+                "location_japanese": "ZETTERIA",
                 "description_english": "Corn potage fries were way better than the burger",
                 "description_japanese": "コーンポタージュ味のポテト。バーガーより美味しい",
                 "tags": [
@@ -11508,6 +11700,8 @@
                 "date": "2024-06-02T08:39:28.000Z",
                 "offset": 9,
                 "area": "harajuku",
+                "location_english": "Pompompurin Cafe",
+                "location_japanese": "ポムポムプリンカフェ",
                 "description_english": "It ain't my birthday nor Pompompurin's, idk who they're celebrating",
                 "description_japanese": "私の誕生日じゃなく、このプリンくんの誕生日でもない",
                 "tags": [
@@ -11524,6 +11718,8 @@
                 "date": "2024-06-02T08:41:02.000Z",
                 "offset": 9,
                 "area": "harajuku",
+                "location_english": "Pompompurin Cafe",
+                "location_japanese": "ポムポムプリンカフェ",
                 "description_english": "He standing",
                 "description_japanese": "立ってる",
                 "tags": [
@@ -11540,6 +11736,8 @@
                 "date": "2024-06-02T08:43:19.000Z",
                 "offset": 9,
                 "area": "harajuku",
+                "location_english": "Pompompurin Cafe",
+                "location_japanese": "ポムポムプリンカフェ",
                 "description_english": "He's about to sleep forever.",
                 "description_japanese": "もうすぐ永遠に寝る",
                 "tags": [
@@ -11556,6 +11754,8 @@
                 "date": "2024-06-02T09:00:47.000Z",
                 "offset": 9,
                 "area": "harajuku",
+                "location_english": "Pompompurin Cafe",
+                "location_japanese": "ポムポムプリンカフェ",
                 "description_english": "Took some sweets from my sister's tea set, way too sweet",
                 "description_japanese": "甘すぎ",
                 "tags": [
@@ -11572,6 +11772,8 @@
                 "date": "2024-06-02T09:02:49.000Z",
                 "offset": 9,
                 "area": "harajuku",
+                "location_english": "Pompompurin Cafe",
+                "location_japanese": "ポムポムプリンカフェ",
                 "description_english": "He falling",
                 "description_japanese": "落ちてる",
                 "tags": [
@@ -11588,6 +11790,8 @@
                 "date": "2024-06-03T03:37:35.000Z",
                 "offset": 9,
                 "area": "akasaka",
+                "location_english": "Cascade Cafe",
+                "location_japanese": "カスケイドカフェ",
                 "description_english": "My first proper sweets buffet! I appreciated that they had savoury food too.",
                 "description_japanese": "初スイーツビュフェ！塩っぱいものも食べられてよかった",
                 "tags": [
@@ -11597,13 +11801,16 @@
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
                 "shutter_speed": "1/100",
                 "f_stop": 1.6,
-                "iso": 64
+                "iso": 64,
+                "is_favourite": true
               },
               {
                 "file_name": "IMG_0756.jpg",
                 "date": "2024-06-03T07:25:23.000Z",
                 "offset": 9,
                 "area": "shinjuku",
+                "location_english": "Godzilla Store Tokyo",
+                "location_japanese": "ゴジラ・ストア東京",
                 "description_english": "Looks shocked by the price of the sweets buffet",
                 "description_japanese": "スイーツビュフェの値段に驚かせたみたい",
                 "tags": [
@@ -11620,6 +11827,8 @@
                 "date": "2024-06-03T08:35:50.000Z",
                 "offset": 9,
                 "area": "roppongi",
+                "location_english": "TOHO Cinemas Roppongi Hills",
+                "location_japanese": "TOHO シネマズ六本木ヒルズ",
                 "description_english": "Chaotic fun",
                 "description_japanese": "ちょっとごちゃごちゃしてたけど楽しかった",
                 "tags": [
@@ -11629,13 +11838,16 @@
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
                 "shutter_speed": "1/50",
                 "f_stop": 1.6,
-                "iso": 125
+                "iso": 125,
+                "is_favourite": true
               },
               {
                 "file_name": "IMG_0760.jpg",
                 "date": "2024-06-03T011:11:19.000Z",
                 "offset": 9,
                 "area": "roppongi",
+                "location_english": "HOBA",
+                "location_japanese": "HOBA",
                 "description_english": "Baked curry",
                 "description_japanese": "焼きカレー",
                 "tags": [
@@ -11652,6 +11864,8 @@
                 "date": "2024-06-03T011:11:21.000Z",
                 "offset": 9,
                 "area": "roppongi",
+                "location_english": "HOBA",
+                "location_japanese": "HOBA",
                 "description_english": "Mushroom salad",
                 "description_japanese": "きのこサラダ",
                 "tags": [
@@ -11668,6 +11882,8 @@
                 "date": "2024-06-03T011:26:46.000Z",
                 "offset": 9,
                 "area": "roppongi",
+                "location_english": "HOBA",
+                "location_japanese": "HOBA",
                 "description_english": "Vegan ramen was actually pretty good. Fried onions elevated the dish.",
                 "description_japanese": "ビーガンラーメン。焼いたネギなかったら美味しくならないと思う。",
                 "tags": [
@@ -11684,6 +11900,8 @@
                 "date": "2024-06-04T03:05:39.000Z",
                 "offset": 9,
                 "area": "suidobashi",
+                "location_english": "Torichu",
+                "location_japanese": "地鶏と焼酎 とりちゅう",
                 "description_english": "First chicken nanban in a while, was so good",
                 "description_japanese": "久々のチキン南蛮！",
                 "tags": [
@@ -11700,6 +11918,8 @@
                 "date": "2024-06-04T08:03:22.000Z",
                 "offset": 9,
                 "area": "shinjuku",
+                "location_english": "Cinnamoroll Cafe",
+                "location_japanese": "シナモロールカフェ",
                 "description_english": "My stomach was prepared to conquer the radioactivity. Just tasted like normal curry tho.",
                 "description_japanese": "こんな色で放射性かなぁと思ってた。普通のカレーだったけど。",
                 "tags": [
@@ -11709,13 +11929,16 @@
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
                 "shutter_speed": "1/100",
                 "f_stop": 1.6,
-                "iso": 40
+                "iso": 40,
+                "is_favourite": true
               },
               {
                 "file_name": "IMG_0784.jpg",
                 "date": "2024-06-04T08:27:32.000Z",
                 "offset": 9,
                 "area": "shinjuku",
+                "location_english": "Cinnamoroll Cafe",
+                "location_japanese": "シナモロールカフェ",
                 "description_english": "This neutralized the radiation in my stomach.",
                 "description_japanese": "これ食べた後放射能がなくなった",
                 "tags": [
@@ -11732,6 +11955,8 @@
                 "date": "2024-06-12T09:36:06.000Z",
                 "offset": 9,
                 "area": "shibuya",
+                "location_english": "Denny's Shibuya Koen-dori",
+                "location_japanese": "デニーズ渋谷公園通り店",
                 "description_english": "Decided to actually buy pancakes at Denny's.",
                 "description_japanese": "カナダのデニーズはパンケーキが有名だったから日本で注文しようと思ってた。普通のパンケーキだ。",
                 "tags": [
@@ -11748,6 +11973,8 @@
                 "date": "2024-06-12T010:11:51.000Z",
                 "offset": 9,
                 "area": "shibuya",
+                "location_english": "Shibuya PARCO",
+                "location_japanese": "渋谷PARCO",
                 "description_english": "I'm amazed this kind of character got a pop up store…",
                 "description_japanese": "こんなキャラがポップアップストアできるなんて尊敬する。",
                 "tags": [
@@ -11764,6 +11991,8 @@
                 "date": "2024-06-13T01:35:05.000Z",
                 "offset": 9,
                 "area": "shinjuku",
+                "location_english": "Tokyo Metropolitan Government Building",
+                "location_japanese": "東京都庁",
                 "description_english": "Nice view, but only going to one of the observation towers was sufficient.",
                 "description_japanese": "景色が良かったけど、二つの展望室がはいらないと思う。",
                 "tags": [
@@ -11797,6 +12026,8 @@
                 "date": "2024-06-13T10:14:13.000Z",
                 "offset": 9,
                 "area": "yoyogi",
+                "location_english": "Tanbo Yoyogi Main Store",
+                "location_japanese": "おひつ膳 田んぼ 代々木本店",
                 "description_english": "",
                 "description_japanese": "",
                 "tags": [
@@ -11813,6 +12044,8 @@
                 "date": "2024-06-14T09:53:10.000Z",
                 "offset": 9,
                 "area": "kanda",
+                "location_english": "Kagawa Ippuku",
+                "location_japanese": "香川一福 神田本店",
                 "description_english": "Probably the best kakiage I've had in my life",
                 "description_japanese": "人生で一番美味しいかき揚げだと思う",
                 "tags": [
@@ -11822,13 +12055,16 @@
                 "lens": "iPhone 12 mini back dual wide camera 4.2mm f/1.6",
                 "shutter_speed": "1/100",
                 "f_stop": 1.6,
-                "iso": 80
+                "iso": 80,
+                "is_favourite": true
               },
               {
                 "file_name": "IMG_1234.jpg",
                 "date": "2024-06-15T02:04:09.000Z",
                 "offset": 9,
                 "area": "kanda",
+                "location_english": "Kagawa Ippuku",
+                "location_japanese": "香川一福 神田本店",
                 "description_english": "A little watery…",
                 "description_japanese": "水分がちょっと多すぎた。。。",
                 "tags": [
@@ -11845,6 +12081,8 @@
                 "date": "2024-06-15T03:10:51.000Z",
                 "offset": 9,
                 "area": "marunouchi",
+                "location_english": "KIRBY CAFÉ Petit",
+                "location_japanese": "KIRBY CAFÉ Petit 東京駅店",
                 "description_english": "Mango tart",
                 "description_japanese": "マンゴータルト",
                 "tags": [
@@ -13368,6 +13606,8 @@
                 "date": "2024-06-14T05:09:27.000Z",
                 "offset": 9,
                 "area": "yokohama",
+                "location_english": "Cup Noodles Museum Yokohama",
+                "location_japanese": "カップヌードルミュージアム 横浜",
                 "description_english": "Spillage",
                 "description_japanese": "落ちてる",
                 "tags": [
@@ -13385,6 +13625,8 @@
                 "date": "2024-06-14T05:47:07.000Z",
                 "offset": 9,
                 "area": "yokohama",
+                "location_english": "",
+                "location_japanese": "天然かき氷×スイーツ カモメ氷菓店 馬車道",
                 "description_english": "Raspberry-pistachio is actually such a good flavour, what the heck",
                 "description_japanese": "ラズベリーピスタチオは意外とマジで美味しかった",
                 "tags": [
