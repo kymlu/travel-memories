@@ -1159,9 +1159,9 @@ function setFullscreenInfo(){
 		tempElement.innerHTML = "\u0192/" + selectedPic.f_stop;
 		document.getElementById("technical-info").appendChild(tempElement);
 	}
-	if(selectedPic.exposure){
+	if(selectedPic.shutter_speed){
 		tempElement = document.createElement("div");
-		tempElement.innerHTML = selectedPic.exposure;
+		tempElement.innerHTML = selectedPic.shutter_speed;
 		document.getElementById("technical-info").appendChild(tempElement);
 	}
 	if(selectedPic.iso){
