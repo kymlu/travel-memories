@@ -56,7 +56,8 @@ button:active {
   transition: color .3s ease-in-out, box-shadow .5s ease-in-out;
 }
 
-.highlight-btn:hover, .highlight-btn.active {
+.highlight-btn:hover,
+.highlight-btn.active {
   color: white;
   box-shadow: inset 900px 0 0 0 rgba(var(--main-color));
 }
@@ -149,7 +150,7 @@ button:active {
     gap: 0px;
     flex-basis: 50%;
   }
-  
+
   .btn-grp-left {
     flex-basis: 25%;
   }
@@ -511,7 +512,7 @@ button:active {
 
 /* Filter */
 /* The container */
-.container {
+/* .container {
   display: block;
   position: relative;
   padding-left: 40px;
@@ -523,16 +524,16 @@ button:active {
 }
 
 /* Hide the browser's default checkbox */
-.container input {
+/* .container input {
   position: absolute;
   opacity: 0;
   cursor: pointer;
   height: 0;
   width: 0;
-}
+} */
 
 /* Create a custom checkbox */
-.checkmark {
+/* .checkmark {
   position: absolute;
   top: 0;
   left: 0;
@@ -542,27 +543,27 @@ button:active {
   border-style: solid;
   border-width: 1px;
   border-radius: 10px;
-}
+} */
 
-/* When the checkbox is checked, add a blue background */
-.container input:checked ~ .checkmark {
+/* When the checkbox is checked, add a background */
+/* .container input:checked~.checkmark {
   background-color: rgba(var(--main-color));
-}
+} */
 
 /* Create the checkmark/indicator (hidden when not checked) */
-.checkmark:after {
+/* .checkmark:after {
   content: "";
   position: absolute;
   display: none;
-}
+} */
 
 /* Show the checkmark when checked */
-.container input:checked ~ .checkmark:after {
+/* .container input:checked~.checkmark:after {
   display: block;
-}
+} */
 
 /* Style the checkmark/indicator */
-.container .checkmark:after {
+/* .container .checkmark:after {
   left: 10px;
   top: 3px;
   width: 5px;
@@ -586,7 +587,7 @@ button:active {
   margin-bottom: 10px;
 }
 
-.text-input:focus-visible{
+.text-input:focus-visible {
   outline: none;
   border-width: 2px;
 }
@@ -604,9 +605,11 @@ button:active {
   justify-content: space-between;
   margin-bottom: 5px;
   cursor: pointer;
-}
+} */
 
-.img-tag, .filter-opt, .action-btn {
+.img-tag,
+.filter-opt,
+.action-btn {
   padding: 2px 5px;
   border-radius: 6px;
   border-style: solid;
@@ -623,11 +626,14 @@ button:active {
   color: var(--text-color);
 }
 
-.filter-opt:hover, .action-btn:hover {
+.filter-opt:hover,
+.action-btn:hover {
   opacity: 50%;
 }
 
-.img-tag, .filter-opt.active, .action-btn {
+.img-tag,
+.filter-opt.active,
+.action-btn {
   background-color: rgba(var(--main-color));
   color: white;
 }
@@ -645,10 +651,10 @@ button:active {
   flex-wrap: wrap;
   gap: 10px;
   margin-bottom: 10px;
-}
+} 
 
 /* Popup */
-.hidden-popup {
+/* .hidden-popup {
   position: absolute;
   visibility: hidden;
 }
@@ -720,16 +726,7 @@ button:active {
   .popup-height {
     height: 70vh;
   }
-}
-
-.close-btn {
-  position: absolute;
-  top: 15px;
-  left: 15px;
-  border-radius: 5px;
-  background-color: white;
-  color: rgba(var(--main-color));
-}
+}*/ 
 
 /* Fullscreen picture */
 .fullscreen-container {
@@ -788,7 +785,7 @@ button:active {
   color: white;
 }
 
-@media only screen and (orientation: landscape) and (min-width: 768px)  {
+@media only screen and (orientation: landscape) and (min-width: 768px) {
   .fullscreen-arrow {
     font-size: var(--lrg-icn-text-size);
   }
@@ -979,7 +976,7 @@ button:active {
   z-index: 200;
 }
 
-.justify-end{
+.justify-end {
   justify-content: end;
   flex-basis: 100%
 }

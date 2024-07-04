@@ -1,8 +1,9 @@
 class BasePolaroid extends HTMLElement {
-    constructor(){
+    constructor(isAngledLeft, isBlank) {
         super();
+        this.isAngledLeft = isAngledLeft;
+        this.isBlank = isBlank;
 
-        // Get HTML and CSS
         fetch("components/polaroid/base-polaroid/base-polaroid.css")
             .then(response => response.text())
             .then(css => {
@@ -10,7 +11,7 @@ class BasePolaroid extends HTMLElement {
                 style.textContent = css;
                 this.appendChild(style);
             });
-            
+
         fetch("css/style.css")
             .then(response => response.text())
             .then(css => {
@@ -20,18 +21,16 @@ class BasePolaroid extends HTMLElement {
             });
     }
 
-    static getObservedAttributes(){
-        return ["isAngledLeft"];
-    }
-
-    // TODO: make sure this works
-    attributeChangedCallback(attrName, oldVal, newVal) {
-        console.log("changed")
-        if (attrName == "isAngledLeft") {
-            const polaroid = this.querySelector(".polaroid-frame");
-            polaroid.classList.add(newVal === "true" ? "left-" : "right-") + Math.floor(Math.random() * 4 + 1);
+    /**
+     * @param {boolean} newValue
+     */
+    set setNewAngle(newValue) {
+        if (newValue != this.isAngledLeft) {
+            this.isAngledLeft = newValue;
+            this.classList.remove(this.classList.filter(item => {
+                item.startsWith("left-") || item.startsWith("right")
+            }));
+            this.classList.add((this.isAngledLeft ? "left-" : "right-") + Math.floor(Math.random() * 4 + 1))
         }
-      }
+    }
 }
-
-window.customElements.define("base-polaroid", BasePolaroid);

@@ -91,99 +91,8 @@
   <!-- Scroll to top btn -->
   <button id="to-top-btn" class="large-icon floating-btn opacity-transform-transition arrow-down no-display">&#xf103</button>
 
-  <!-- Filter Popup -->
-  <!-- TODO: add a date filter -->
-  <div id="filter-popup" class="hidden-popup" style="z-index: 10000;">
-    <div id="filter-popup-bg" class="popup-bg opacity-transition transparent"></div>
-    <div id="img-filter-popup" class="popup centered transparent">
-      <button id="filter-popup-close-btn" class="large-icon close-btn">&#xf00d</button>
-      <div id="filters" class="flex-column popup-content transparent opacity-transition no-display" style="height: 100%; gap: 15px;">
-        <p id="filter-title" class="bold-text" style="margin-bottom: 0; text-transform: uppercase; text-align: center;"></p>
-        <div id="filter-fav">
-          <label id="filter-fav-title" class="bold-text capitalize-text"></label><br>
-          <div class="tag-list" style="margin-top: 5px;">
-            <label id="filter-fav-label" class="regular-text container">
-              <input type="checkbox" id="filter-fav-input">
-              <span class="checkmark"></span>
-            </label>
-          </div>
-          <hr class="divider filter">
-        </div>
-        <div id="filter-kw">
-          <label id="filter-kw-title" class="bold-text capitalize-text" for="filter-kw-input"></label><br>
-          <div style="display: flex; align-items: center; margin-top: 5px;">
-            <input type="text" class="text-input" id="filter-kw-input">
-            <button id="filter-kw-clear-btn" class="clear-icon no-display">&#xf057</button>
-          </div>
-          <hr class="divider filter">
-        </div>
-        <div id="filter-rgns">
-          <div id="filter-rgns-header" class="filter-header">
-            <label id="filter-rgns-title" class="bold-text capitalize-text" style="cursor: inherit;"></label>
-            <button class="text-main-color large-icon transform-transition arrow-up">&#xf0d7</button>
-          </div>
-          <div id="filter-rgns-list" class="tag-list"></div>
-          <hr class="divider filter">
-        </div>
-        <div id="filter-areas">
-          <div id="filter-areas-header" class="filter-header">
-            <label id="filter-areas-title" class="bold-text capitalize-text" style="cursor: inherit;"></label>
-            <button class="text-main-color large-icon transform-transition arrow-up">&#xf0d7</button>
-          </div>
-          <div id="filter-areas-list" class="tag-list"></div>
-          <hr class="divider filter">
-        </div>
-        <div id="filter-tags">
-          <div id="filter-tags-header" class="filter-header">
-            <label id="filter-tags-title" class="bold-text capitalize-text" style="cursor: inherit;"></label>
-            <button class="text-main-color large-icon transform-transition arrow-up">&#xf0d7</button>
-          </div>
-          <div id="filter-tags-list" class="tag-list"></div>
-          <hr class="divider filter">
-        </div>
-        <div id="filter-camera">
-          <div id="filter-camera-header" class="filter-header">
-            <label id="filter-camera-title" class="bold-text capitalize-text" style="cursor: inherit;"></label>
-            <button class="text-main-color large-icon transform-transition arrow-up">&#xf0d7</button>
-          </div>
-          <div id="filter-camera-list" class="tag-list"></div>
-        </div>
-      </div>
-      <div id="filter-btns" class="transparent opacity-transition" style="display: flex; width: 100%; justify-content: center; gap: 15px; margin-top: 15px;">
-        <button id="filter-clear-btn" class="action-btn"></button>
-        <button id="filter-submit-btn" class="action-btn"></button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Info Popup -->
-  <div id="info-popup" class="hidden-popup" style="z-index: 10000;">
-    <div id="popup-bg" class="popup-bg opacity-transition transparent"></div>
-    <div id="site-info-popup" class="popup centered transparent">
-      <button id="site-info-close-btn" class="large-icon close-btn">&#xf00d</button>
-      <div id="site-info" class="flex-column opacity-transition popup-content transparent no-display">
-        <div class="regular-text">
-          <p class="bold-text">About this site</p>
-          <p>I was in Japan on exchange in September 2022 - April 2023. After Japan, I decided to travel around to Taiwan, Australia, and New Zealand in April and May 2023.
-            This site contains the highlights of all the trips that I made. For privacy reasons, I do not plan to upload close-up pictures of myself or my friends to this page.</p>
-          <p>Design, coding, and photography: Katherine (Katie) Lu</p>
-          <p>Thank you to my mom, dad, Benson, Ricky, Kazu, and other friends who gave me advice and feedback in the development of the site.</p>
-          <button onclick="goToGithub()" class="action-btn"><span class="in-btn-icon">&#xf09b</span> View Github</button>
-        </div>
-        <div class="regular-text">
-          <p class="bold-text">このサイトについて</p>
-          <p>留学のため、2022年9月から2023年4月まで日本に滞在しました。出国した後、台湾、オーストラリアとニュージーランドの旅行もした。
-            このウェブサイトでは、皆さんに私の旅行のハイライトを紹介したいと思います。プライバシーのため、自分と知り合いの写真を掲載しません。</p>
-          <p>デザイン・プログラミング・写真：ルー・キャサリン（ケイティー）</p>
-          <p>このサイトのデザインと修正に協力してくれた母、父、ベンソン、リッキー、かず、他の友達に深く感謝します。</p>
-          <button onclick="goToGithub()" class="action-btn"><span class="in-btn-icon">&#xf09b</span> Githubリポジトリを見る</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <!-- Fullscreen Picture -->
-  <div id="fullscreen" class="centered hidden-popup opacity-transition transparent fullscreen-container" style="z-index: 6000;">
+  <div id="fullscreen" class="centered hidden-popup opacity-transition transparent fullscreen-container" style="z-index: 6000; visibility: hidden;">
     <div id="fullscreen-gallery" class="fullscreen-gallery">
       <div id="fullscreen-bg" class="popup-bg opacity-transition transparent" style="z-index: 0;"></div>
       <div id="fullscreen-ctrl" class="fullscreen-ctrl" style="z-index: 1;">
@@ -196,10 +105,6 @@
       </div>
       <div class="fullscreen-fns" style="z-index: 3;">
         <button id="pic-info-btn" class="large-icon fullscreen-fn-btn">&#xf05a</button>
-        <div class="flex-column" style="display: none;">
-          <button id="zoom-in-btn" class="large-icon fullscreen-fn-btn">&#xf00e</button>
-          <button id="zoom-out-btn" class="large-icon fullscreen-fn-btn">&#xf010</button>
-        </div>
       </div>
     </div>
     <div id="pic-info" style="z-index: 3;">
@@ -248,6 +153,7 @@
       <img id="load-icon" class="start-icon img centered no-display" style="margin-left: 10px; margin-top: 10px;">
     </div>
   </div>
+  
   <!-- Error button -->
   <div id="error-btn" class="error-btn centered loader-text" onclick="retry()">
     <p>Failed to fetch data. Try again?</p>
@@ -255,10 +161,14 @@
   </div>
 
   <!-- Scripts -->
-  <script src="js/main.js"></script>
+  <script src="components/popup/base-popup/base-popup.js"></script>
+  <script src="components/popup/filter-popup/filter-popup.js"></script>
+  <script src="components/popup/info-popup/info-popup.js"></script>
   <script src="components/polaroid/base-polaroid/base-polaroid.js"></script>
   <script src="components/polaroid/img-polaroid/img-polaroid.js"></script>
   <script src="components/polaroid/txt-polaroid/txt-polaroid.js"></script>
+  <script src="js/constants.js" ></script>
+  <script src="js/main.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/exif-js/2.3.0/exif.js"></script>
 </body>

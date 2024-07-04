@@ -1,0 +1,71 @@
+<div class="overlay" style="visibility: hidden;">
+    <div class="popup-bg opacity-transition transparent"></div>
+    <div class="popup centered transparent">
+        <button class="large-icon close-btn">&#xf00d</button>
+        <div class="popup-content opacity-transition" style="overflow-y: hidden; display: flex;
+    flex-direction: column;">
+        <!-- </div> style="overflow-y: hidden;"> -->
+            <div style="display: flex; flex-direction: column; overflow-y: auto;">
+                <p id="filter-title" class="bold-text"
+                        style="margin-bottom: 0; text-transform: uppercase; text-align: center;"></p>
+                <div id="filters" class="flex-column"
+                    style="height: 100%; gap: 15px; overflow-y: auto;">
+                    <div id="filter-fav">
+                        <label id="filter-fav-title" class="bold-text capitalize-text"></label><br>
+                        <div class="tag-list" style="margin-top: 5px;">
+                            <label id="filter-fav-label" class="regular-text container">
+                                <input type="checkbox" id="filter-fav-input">
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+                        <hr class="divider filter">
+                    </div>
+                    <div id="filter-kw">
+                        <label id="filter-kw-title" class="bold-text capitalize-text" for="filter-kw-input"></label><br>
+                        <div style="display: flex; align-items: center; margin-top: 5px;">
+                            <input type="text" class="text-input" id="filter-kw-input">
+                            <button id="filter-kw-clear-btn" class="clear-icon no-display">&#xf057</button>
+                        </div>
+                        <hr class="divider filter">
+                    </div>
+                    <div id="filter-regions">
+                        <div id="filter-regions-header" class="filter-header">
+                            <label id="filter-regions-title" class="bold-text capitalize-text" style="cursor: inherit;"></label>
+                            <button class="text-main-color large-icon transform-transition arrow-up">&#xf0d7</button>
+                        </div>
+                        <div id="filter-regions-list" class="tag-list"></div>
+                        <hr class="divider filter">
+                    </div>
+                    <div id="filter-areas">
+                        <div id="filter-areas-header" class="filter-header">
+                            <label id="filter-areas-title" class="bold-text capitalize-text" style="cursor: inherit;"></label>
+                            <button class="text-main-color large-icon transform-transition arrow-up">&#xf0d7</button>
+                        </div>
+                        <div id="filter-areas-list" class="tag-list"></div>
+                        <hr class="divider filter">
+                    </div>
+                    <div id="filter-tags">
+                        <div id="filter-tags-header" class="filter-header">
+                            <label id="filter-tags-title" class="bold-text capitalize-text" style="cursor: inherit;"></label>
+                            <button class="text-main-color large-icon transform-transition arrow-up">&#xf0d7</button>
+                        </div>
+                        <div id="filter-tags-list" class="tag-list"></div>
+                        <hr class="divider filter">
+                    </div>
+                    <div id="filter-camera">
+                        <div id="filter-camera-header" class="filter-header">
+                            <label id="filter-camera-title" class="bold-text capitalize-text" style="cursor: inherit;"></label>
+                            <button class="text-main-color large-icon transform-transition arrow-up">&#xf0d7</button>
+                        </div>
+                        <div id="filter-camera-list" class="tag-list"></div>
+                    </div>
+                </div>
+            </div>
+            <div id="filter-btns"
+                style="display: flex; width: 100%; justify-content: center; gap: 15px;">
+                <button id="filter-clear-btn" class="action-btn"></button>
+                <button id="filter-submit-btn" class="action-btn"></button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,6 +1,12 @@
 class ImagePolaroid extends BasePolaroid {
-    constructor(){
-        super();
+    constructor(isAngledLeft, src, isFavourite, date, offset, enCaption, jpCaption) {
+        super(isAngledLeft, false);
+
+        this.src = src;
+        this.isFavourite = isFavourite;
+        this.date = this.getPictureDate(new Date(date), offset);
+        this.enCaption = enCaption;
+        this.jpCaption = jpCaption;
 
         // Get HTML and CSS
         fetch("components/polaroid/img-polaroid/img-polaroid.html")
@@ -24,70 +30,20 @@ class ImagePolaroid extends BasePolaroid {
                 style.textContent = css;
                 this.appendChild(style);
             });
-            
-        fetch("css/style.css")
-            .then(response => response.text())
-            .then(css => {
-                const style = document.createElement("style");
-                style.textContent = css;
-                this.appendChild(style);
-            });
-    }
 
-    // TODO: put this in a utility class
-    getPictureDate(date, picOffset){
-        // picOffset is in hours
-        const localOffset = now.getTimezoneOffset();
-        return new Date(date.getTime() - ((picOffset * -60) - localOffset) * 60000);
-    }
-    
-    getEnglishDate(date, isFullDate, picOffset) {
-        let hours = date.getHours();
-        return (isFullDate ? dayNamesEn[date.getDay()] +", " : "") +
-            monthNames[date.getMonth()] + " " + 
-            date.getDate() + ", " + 
-            date.getFullYear() + 
-            (isFullDate ? 
-                " " + (hours > 12 ? hours - 12 : hours).toString() + ":" + 
-                date.getMinutes().toString().padStart(2, "0") + ":" + 
-                date.getSeconds().toString().padStart(2, "0")  + 
-                (hours >= 12 ? " PM" : " AM") + 
-                (picOffset > 0 ? " +" : " -") + 
-                Math.floor(picOffset) + ":" + 
-                String((picOffset - Math.floor(picOffset)) * 60).padStart(2, "0")
-                : "");
-    }
-    
-    getJapaneseDate(date, isFullDate, picOffset) {
-        let hours = date.getHours();
-        return date.getFullYear() + "年" + 
-            (date.getMonth() + 1) + "月" + 
-            date.getDate() + "日" + 
-            (isFullDate ? 
-                "（" + dayNamesJp[date.getDay()] + "）" +
-                (hours >= 12 ? "午後" : "午前") + 
-                (hours > 12 ? hours - 12 : hours).toString() + ":" + 
-                date.getMinutes().toString().padStart(2, "0") + ":" + 
-                date.getSeconds().toString().padStart(2, "0")  + 
-                (picOffset >= 0 ? "+" : "") + 
-                Math.floor(picOffset) + ":" + 
-                String((picOffset - Math.floor(picOffset)) * 60).padStart(2, "0")
-                : "");
-    }
+        this.title = getBilingualText("Expand image", "画像を拡大する");
 
-    connectedCallback(){
         // Based on: https://www.codepel.com/vanilla-javascript/javascript-image-loaded/
         // The lazy loading observer
-        this.title = getBilingualText("Expand image", "画像を拡大する");
         const obs = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     setTimeout(() => {
                         const polaroid = this.querySelector(".polaroid-frame");
-                        polaroid.classList.add((this.getAttribute("isAngledLeft") === "true" ? "left-" : "right-") + Math.floor(Math.random() * 4 + 1))
+                        polaroid.classList.add((this.isAngledLeft ? "left-" : "right-") + Math.floor(Math.random() * 4 + 1))
 
                         const img = polaroid.querySelector("img");
-                        if(img){
+                        if (img) {
                             img.onload = function () {
                                 if (this.width > this.height) {
                                     img.classList.add("landscape-img");
@@ -95,19 +51,18 @@ class ImagePolaroid extends BasePolaroid {
                                     img.classList.add("portrait-img");
                                 }
                                 setTimeout(() => {
-                                    addRemoveTransparent([img], false);			
-                                }, defaultTimeout);
+                                    addRemoveTransparent([img], false);
+                                }, DEFAULT_TIMEOUT);
                             }
-                            img.setAttribute("src", this.getAttribute("src"));
+                            img.setAttribute("src", this.src);
 
-                            
+
                         }
                         const dates = polaroid.querySelector(".polaroid-date").querySelectorAll("span");
-                        if(dates){
-                            if(this.getAttribute("date") && this.getAttribute("offset")){
-                                let date = this.getPictureDate(new Date(this.getAttribute("date")), this.getAttribute("offset"));
-                                dates[0].innerHTML = this.getEnglishDate(date, false, this.getAttribute("offset"));
-                                dates[1].innerHTML = this.getJapaneseDate(date, false, this.getAttribute("offset"));
+                        if (dates) {
+                            if (this.date) {
+                                dates[0].innerHTML = this.getEnglishDate();
+                                dates[1].innerHTML = this.getJapaneseDate();
                             } else {
                                 dates[0].innerHTML = "";
                                 dates[1].innerHTML = "";
@@ -115,17 +70,13 @@ class ImagePolaroid extends BasePolaroid {
                         }
 
                         const captions = polaroid.querySelector(".polaroid-caption-text-container").querySelectorAll("span");
-                        if(captions){
-                            if (this.getAttribute("enCaption")){
-                                captions[0].innerHTML = this.getAttribute("enCaption");
-                            }
-                            if (this.getAttribute("jpCaption")){
-                                captions[1].innerHTML = this.getAttribute("jpCaption");
-                            }
+                        if (captions) {
+                            captions[0].innerHTML = this.enCaption ?? "";
+                            captions[1].innerHTML = this.jpCaption ?? "";
                         }
 
-                        if(this.getAttribute("isFavourite") === "true"){
-                            addRemoveNoDisplay([polaroid.querySelector(".polaroid-pin-star")], false);			
+                        if (this.isFavourite) {
+                            addRemoveNoDisplay([polaroid.querySelector(".polaroid-pin-star")], false);
                         }
 
                         setTimeout(() => {
@@ -139,18 +90,26 @@ class ImagePolaroid extends BasePolaroid {
         obs.observe(this);
     }
 
-    static getObservedAttributes(){
-        return ["src", "isFavourite", "date", "offset", "enCaption", "jpCaption"];
+    connectedCallback() { }
+
+    // TODO: put this in a utility class
+    getPictureDate(date, picOffset) {
+        // picOffset is in hours
+        const localOffset = now.getTimezoneOffset();
+        return new Date(date.getTime() - ((picOffset * -60) - localOffset) * 60000);
     }
 
-    // TODO: make sure this works
-    attributeChangedCallback(attrName, oldVal, newVal) {
-        console.log("changed")
-        if (attrName == "isAngledLeft") {
-            const polaroid = this.querySelector(".polaroid-frame");
-            polaroid.classList.add(newVal === "true" ? "left-" : "right-") + Math.floor(Math.random() * 4 + 1);
-        }
-      }
+    getEnglishDate() {
+        return MONTH_NAMES[this.date.getMonth()] + " " +
+            this.date.getDate() + ", " +
+            this.date.getFullYear();
+    }
+
+    getJapaneseDate() {
+        return this.date.getFullYear() + "年" +
+            (this.date.getMonth() + 1) + "月" +
+            this.date.getDate() + "日";
+    }
 }
 
 window.customElements.define("img-polaroid", ImagePolaroid);
