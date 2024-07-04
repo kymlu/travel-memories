@@ -2,23 +2,30 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1" name="viewport" />
   <title>Travel Memories — 旅行の思い出</title>
-  <link rel="apple-touch-icon" sizes="57x57" href="img/icons/favicon/apple-icon-57x57.png">
-  <link rel="apple-touch-icon" sizes="60x60" href="img/icons/favicon/apple-icon-60x60.png">
-  <link rel="apple-touch-icon" sizes="72x72" href="img/icons/favicon/apple-icon-72x72.png">
-  <link rel="apple-touch-icon" sizes="76x76" href="img/icons/favicon/apple-icon-76x76.png">
-  <link rel="apple-touch-icon" sizes="114x114" href="img/icons/favicon/apple-icon-114x114.png">
-  <link rel="apple-touch-icon" sizes="120x120" href="img/icons/favicon/apple-icon-120x120.png">
-  <link rel="apple-touch-icon" sizes="144x144" href="img/icons/favicon/apple-icon-144x144.png">
-  <link rel="apple-touch-icon" sizes="152x152" href="img/icons/favicon/apple-icon-152x152.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="img/icons/favicon/apple-icon-180x180.png">
-  <link rel="icon" type="image/png" sizes="192x192"  href="img/icons/favicon/android-icon-192x192.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="img/icons/favicon/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="96x96" href="img/icons/favicon/favicon-96x96.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="img/icons/favicon/favicon-16x16.png">
-  <link rel="manifest" href="img/icons/favicon/manifest.json">
+  <link rel="apple-touch-icon" sizes="57x57" href="assets/icons/favicon/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="assets/icons/favicon/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="assets/icons/favicon/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="assets/icons/favicon/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="assets/icons/favicon/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="assets/icons/favicon/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="assets/icons/favicon/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="assets/icons/favicon/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/favicon/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="assets/icons/favicon/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="assets/icons/favicon/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/icons/favicon/favicon-16x16.png">
+  <link rel="manifest" href="assets/icons/favicon/manifest.json">
   <meta name="msapplication-TileColor" content="#ffffff">
-  <meta name="msapplication-TileImage" content="img/icons/favicon/ms-icon-144x144.png">
+  <meta name="msapplication-TileImage" content="assets/icons/favicon/ms-icon-144x144.png">
   <link rel="stylesheet" type="text/css" href="css/style.css">
+  <link rel="stylesheet" type="text/css" href="components/fullscreen/fullscreen.css">
+  <link rel="stylesheet" type="text/css" href="components/gallery/gallery.css">
+  <link rel="stylesheet" type="text/css" href="components/polaroid/base-polaroid/base-polaroid.css">
+  <link rel="stylesheet" type="text/css" href="components/polaroid/img-polaroid/img-polaroid.css">
+  <link rel="stylesheet" type="text/css" href="components/polaroid/txt-polaroid/txt-polaroid.css">
+  <link rel="stylesheet" type="text/css" href="components/popup/base-popup/base-popup.css">
+  <link rel="stylesheet" type="text/css" href="components/popup/filter-popup/filter-popup.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
@@ -60,7 +67,7 @@
     <div id="rgn-info-bg" class="popup-bg opacity-transition portrait-only transparent"></div>
     <div id="rgn-info-drawer" class="rgn-info-container no-display">
       <div class="rgn-info">
-        <object id="country-map-mini" type="image/svg+xml" class="mini-map opacity-transition" data="img/country/japan.svg"></object>
+        <object id="country-map-mini" type="image/svg+xml" class="mini-map opacity-transition" data="assets/img/country/japan.svg"></object>
         <div id="rgn-info-txt" class="flex-column regular-text rgn-info-text">
           <div id="rgn-info-dates">
             <div id="dates-title" class="bold-text capitalize-text"></div>
@@ -92,7 +99,7 @@
   <button id="to-top-btn" class="large-icon floating-btn opacity-transform-transition arrow-down no-display">&#xf103</button>
 
   <!-- Fullscreen Picture -->
-  <div id="fullscreen" class="centered hidden-popup opacity-transition transparent fullscreen-container" style="z-index: 6000; visibility: hidden;">
+  <div id="fullscreen" class="centered overlay opacity-transition transparent fullscreen-container" style="z-index: 6000; visibility: hidden;">
     <div id="fullscreen-gallery" class="fullscreen-gallery">
       <div id="fullscreen-bg" class="popup-bg opacity-transition transparent" style="z-index: 0;"></div>
       <div id="fullscreen-ctrl" class="fullscreen-ctrl" style="z-index: 1;">
@@ -161,6 +168,8 @@
   </div>
 
   <!-- Scripts -->
+  <script src="components/fullscreen/fullscreen.js"></script>
+  <script src="components/gallery/gallery.js"></script>
   <script src="components/popup/base-popup/base-popup.js"></script>
   <script src="components/popup/filter-popup/filter-popup.js"></script>
   <script src="components/popup/info-popup/info-popup.js"></script>

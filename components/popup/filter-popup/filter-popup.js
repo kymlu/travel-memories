@@ -21,13 +21,13 @@ class FilterPopup extends BasePopup {
                 this.innerHTML = html;
             })
 
-        fetch("components/popup/filter-popup/filter-popup.css")
-            .then(response => response.text())
-            .then(css => {
-                const style = document.createElement("style");
-                style.textContent = css;
-                this.appendChild(style);
-            });
+        // fetch("components/popup/filter-popup/filter-popup.css")
+        //     .then(response => response.text())
+        //     .then(css => {
+        //         const style = document.createElement("style");
+        //         style.textContent = css;
+        //         this.appendChild(style);
+        //     });
     }
 
     connectedCallback() {

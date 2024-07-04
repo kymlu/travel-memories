@@ -11,13 +11,13 @@ class TextPolaroid extends BasePolaroid {
                 this.innerHTML = html;
             })
 
-        fetch("components/polaroid/txt-polaroid/txt-polaroid.css")
-            .then(response => response.text())
-            .then(css => {
-                const style = document.createElement("style");
-                style.textContent = css;
-                this.appendChild(style);
-            });
+        // fetch("components/polaroid/txt-polaroid/txt-polaroid.css")
+        //     .then(response => response.text())
+        //     .then(css => {
+        //         const style = document.createElement("style");
+        //         style.textContent = css;
+        //         this.appendChild(style);
+        //     });
     }
 
     connectedCallback() {

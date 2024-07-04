@@ -17,7 +17,7 @@
 /* Fonts */
 @font-face {
   font-family: 'Zen Maru Gothic';
-  src: url('../fonts/Zen_Maru_Gothic/ZenMaruGothic-Regular.ttf') format('truetype');
+  src: url('../assets/fonts/Zen_Maru_Gothic/ZenMaruGothic-Regular.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
@@ -202,11 +202,7 @@ button:active {
 }
 
 /* Official Region info*/
-.transform-transition {
-  transition: transform 0.5s ease-in-out;
-}
-
-.rgn-info-container {
+/* .rgn-info-container {
   display: flex;
   flex-direction: column;
   position: relative;
@@ -267,7 +263,7 @@ button:active {
     color: rgba(var(--main-color));
     cursor: grab;
   }
-}
+} */
 
 /* Country Picker */
 .start-screen {
@@ -490,123 +486,7 @@ button:active {
   background-color: white;
 }
 
-/* Gallery */
-.gallery {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-evenly;
-  gap: 10px;
-  padding: 25px 10px;
-  box-sizing: border-box;
-  width: 100%;
-  text-align: center;
-}
-
-@media only screen and (orientation: portrait) {
-  .gallery {
-    overflow: hidden;
-  }
-}
-
-/* Filter */
-/* The container */
-/* .container {
-  display: block;
-  position: relative;
-  padding-left: 40px;
-  cursor: pointer;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-
-/* Hide the browser's default checkbox */
-/* .container input {
-  position: absolute;
-  opacity: 0;
-  cursor: pointer;
-  height: 0;
-  width: 0;
-} */
-
-/* Create a custom checkbox */
-/* .checkmark {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 30px;
-  width: 30px;
-  border-color: rgba(var(--main-color));
-  border-style: solid;
-  border-width: 1px;
-  border-radius: 10px;
-} */
-
-/* When the checkbox is checked, add a background */
-/* .container input:checked~.checkmark {
-  background-color: rgba(var(--main-color));
-} */
-
-/* Create the checkmark/indicator (hidden when not checked) */
-/* .checkmark:after {
-  content: "";
-  position: absolute;
-  display: none;
-} */
-
-/* Show the checkmark when checked */
-/* .container input:checked~.checkmark:after {
-  display: block;
-} */
-
-/* Style the checkmark/indicator */
-/* .container .checkmark:after {
-  left: 10px;
-  top: 3px;
-  width: 5px;
-  height: 15px;
-  border: solid white;
-  border-width: 0 5px 5px 0;
-  -webkit-transform: rotate(45deg);
-  -ms-transform: rotate(45deg);
-  transform: rotate(45deg);
-}
-
-.text-input {
-  height: 2em;
-  width: 100%;
-  border-color: rgba(var(--main-color));
-  border-style: solid;
-  border-width: 1px;
-  border-radius: 10px;
-  font-family: Zen Maru Gothic;
-  font-size: var(--reg-text-size);
-  margin-bottom: 10px;
-}
-
-.text-input:focus-visible {
-  outline: none;
-  border-width: 2px;
-}
-
-.clear-icon {
-  margin-left: -30px;
-  margin-top: -10px;
-  font-family: FontAwesome;
-  color: var(--text-color);
-  font-size: var(--reg-text-size);
-}
-
-.filter-header {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 5px;
-  cursor: pointer;
-} */
-
+/* Buttons */
 .img-tag,
 .filter-opt,
 .action-btn {
@@ -680,128 +560,6 @@ button:active {
   right: 0;
   background-color: #000000;
   opacity: 40%;
-}
-
-/* Fullscreen picture */
-.fullscreen-container {
-  display: flex;
-  width: 100%;
-  height: 100%;
-  flex-direction: row;
-}
-
-.fullscreen-gallery {
-  display: flex;
-  position: relative;
-  height: 100%;
-  justify-content: center;
-  flex-grow: 1;
-}
-
-@media only screen and (orientation: portrait) {
-  .fullscreen-container {
-    flex-direction: column;
-  }
-}
-
-.fullscreen-ctrl {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-}
-
-.fullscreen-pic-right {
-  translate: 50px;
-}
-
-.fullscreen-pic-left {
-  translate: -50px;
-}
-
-.fullscreen-pic {
-  border-radius: 15px;
-  max-height: 80vh;
-  max-width: 50vw;
-  transition: opacity 0.133s ease-in, translate 0.133s ease-in;
-}
-
-@media only screen and (orientation: portrait) {
-  .fullscreen-pic {
-    border-radius: 15px;
-    max-height: 80vh;
-    max-width: 80vw;
-  }
-}
-
-.fullscreen-arrow {
-  margin: 20px;
-  color: white;
-}
-
-@media only screen and (orientation: landscape) and (min-width: 768px) {
-  .fullscreen-arrow {
-    font-size: var(--lrg-icn-text-size);
-  }
-}
-
-.pic-info-container {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 15px;
-  padding: 50px;
-  width: 30vw;
-  height: 100%;
-  box-sizing: border-box;
-  background-color: white;
-  transition: margin-right 0.5s ease-in-out, bottom 0.5s ease-in-out;
-}
-
-@media only screen and (orientation: portrait) {
-  .pic-info-container {
-    position: fixed;
-    bottom: 0;
-    padding: 10px 20px 20px 20px;
-    width: 100%;
-    height: 80vh;
-    border-radius: 20px 20px 0px 0px;
-  }
-}
-
-.pic-info-details {
-  gap: 15px;
-  width: 100%;
-  overflow-y: auto;
-}
-
-.fullscreen-fns {
-  position: absolute;
-  display: flex;
-  justify-content: space-between;
-  flex-direction: column;
-  top: 0px;
-  right: 0px;
-  padding: 10px;
-  box-sizing: border-box;
-}
-
-@media only screen and (orientation: portrait) {
-  .fullscreen-fns {
-    top: unset;
-    bottom: 0px;
-    justify-content: end;
-  }
-}
-
-.fullscreen-fn-btn {
-  color: white;
-}
-
-@media only screen and (orientation: portrait) {
-  #pic-info-btn {
-    order: 2;
-  }
 }
 
 .divider {
@@ -901,6 +659,10 @@ button:active {
 
 .no-display {
   display: none;
+}
+
+.transform-transition {
+  transition: transform 0.5s ease-in-out;
 }
 
 .opacity-transition {

@@ -1,0 +1,121 @@
+
+.fullscreen-container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    flex-direction: row;
+  }
+  
+  .fullscreen-gallery {
+    display: flex;
+    position: relative;
+    height: 100%;
+    justify-content: center;
+    flex-grow: 1;
+  }
+  
+  @media only screen and (orientation: portrait) {
+    .fullscreen-container {
+      flex-direction: column;
+    }
+  }
+  
+  .fullscreen-ctrl {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .fullscreen-pic-right {
+    translate: 50px;
+  }
+  
+  .fullscreen-pic-left {
+    translate: -50px;
+  }
+  
+  .fullscreen-pic {
+    border-radius: 15px;
+    max-height: 80vh;
+    max-width: 50vw;
+    transition: opacity 0.133s ease-in, translate 0.133s ease-in;
+  }
+  
+  @media only screen and (orientation: portrait) {
+    .fullscreen-pic {
+      border-radius: 15px;
+      max-height: 80vh;
+      max-width: 80vw;
+    }
+  }
+  
+  .fullscreen-arrow {
+    margin: 20px;
+    color: white;
+  }
+  
+  @media only screen and (orientation: landscape) and (min-width: 768px) {
+    .fullscreen-arrow {
+      font-size: var(--lrg-icn-text-size);
+    }
+  }
+  
+  .pic-info-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+    padding: 50px;
+    width: 30vw;
+    height: 100%;
+    box-sizing: border-box;
+    background-color: white;
+    transition: margin-right 0.5s ease-in-out, bottom 0.5s ease-in-out;
+  }
+  
+  @media only screen and (orientation: portrait) {
+    .pic-info-container {
+      position: fixed;
+      bottom: 0;
+      padding: 10px 20px 20px 20px;
+      width: 100%;
+      height: 80vh;
+      border-radius: 20px 20px 0px 0px;
+    }
+  }
+  
+  .pic-info-details {
+    gap: 15px;
+    width: 100%;
+    overflow-y: auto;
+  }
+  
+  .fullscreen-fns {
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    top: 0px;
+    right: 0px;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+  
+  @media only screen and (orientation: portrait) {
+    .fullscreen-fns {
+      top: unset;
+      bottom: 0px;
+      justify-content: end;
+    }
+  }
+  
+  .fullscreen-fn-btn {
+    color: white;
+  }
+  
+  @media only screen and (orientation: portrait) {
+    #pic-info-btn {
+      order: 2;
+    }
+  }

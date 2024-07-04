@@ -8,13 +8,13 @@ class InfoPopup extends BasePopup {
                 this.innerHTML = html;
             });
 
-        fetch("components/popup/base-popup/base-popup.css")
-            .then(response => response.text())
-            .then(css => {
-                const style = document.createElement("style");
-                style.textContent = css;
-                this.appendChild(style);
-            });
+        // fetch("components/popup/base-popup/base-popup.css")
+        //     .then(response => response.text())
+        //     .then(css => {
+        //         const style = document.createElement("style");
+        //         style.textContent = css;
+        //         this.appendChild(style);
+        //     });
     }
 
     connectedCallback(){

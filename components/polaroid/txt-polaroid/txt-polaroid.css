@@ -2,4 +2,6 @@
   background-color: rgb(220 220 220);
   font-size: var(--lrg-text-size);
   text-align: center;
+  padding: 15px;
+  box-sizing: border-box;
 }

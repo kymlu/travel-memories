@@ -15,21 +15,21 @@ class ImagePolaroid extends BasePolaroid {
                 this.innerHTML = html;
             })
 
-        fetch("components/polaroid/img-polaroid/img-polaroid.css")
-            .then(response => response.text())
-            .then(css => {
-                const style = document.createElement("style");
-                style.textContent = css;
-                this.appendChild(style);
-            });
+        // fetch("components/polaroid/img-polaroid/img-polaroid.css")
+        //     .then(response => response.text())
+        //     .then(css => {
+        //         const style = document.createElement("style");
+        //         style.textContent = css;
+        //         this.appendChild(style);
+        //     });
 
-        fetch("components/polaroid/base-polaroid/base-polaroid.css")
-            .then(response => response.text())
-            .then(css => {
-                const style = document.createElement("style");
-                style.textContent = css;
-                this.appendChild(style);
-            });
+        // fetch("components/polaroid/base-polaroid/base-polaroid.css")
+        //     .then(response => response.text())
+        //     .then(css => {
+        //         const style = document.createElement("style");
+        //         style.textContent = css;
+        //         this.appendChild(style);
+        //     });
 
         this.title = getBilingualText("Expand image", "画像を拡大する");
 
