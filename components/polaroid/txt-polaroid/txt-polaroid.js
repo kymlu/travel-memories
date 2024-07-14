@@ -1,4 +1,7 @@
-class TextPolaroid extends BasePolaroid {
+import BasePolaroid from "../base-polaroid/base-polaroid.js"
+import { getBilingualText } from '../../../js/utility.js';
+
+export default class TextPolaroid extends BasePolaroid {
     constructor(isAngledLeft, text, regionId, officialRegionName) {
         super(isAngledLeft, true);
         this.text = text;

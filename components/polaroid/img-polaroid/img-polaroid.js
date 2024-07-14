@@ -1,10 +1,14 @@
-class ImagePolaroid extends BasePolaroid {
+import BasePolaroid from "../base-polaroid/base-polaroid.js"
+import { getBilingualText, getPictureDate, addRemoveNoDisplay, addRemoveTransparent } from '../../../js/utility.js';
+import { MONTH_NAMES, DEFAULT_TIMEOUT } from '../../../js/constants.js'
+
+export default class ImagePolaroid extends BasePolaroid {
     constructor(isAngledLeft, src, isFavourite, date, offset, enCaption, jpCaption) {
         super(isAngledLeft, false);
 
         this.src = src;
         this.isFavourite = isFavourite;
-        this.date = this.getPictureDate(new Date(date), offset);
+        this.date = getPictureDate(new Date(date), offset);
         this.enCaption = enCaption;
         this.jpCaption = jpCaption;
 
@@ -14,22 +18,6 @@ class ImagePolaroid extends BasePolaroid {
             .then(html => {
                 this.innerHTML = html;
             })
-
-        // fetch("components/polaroid/img-polaroid/img-polaroid.css")
-        //     .then(response => response.text())
-        //     .then(css => {
-        //         const style = document.createElement("style");
-        //         style.textContent = css;
-        //         this.appendChild(style);
-        //     });
-
-        // fetch("components/polaroid/base-polaroid/base-polaroid.css")
-        //     .then(response => response.text())
-        //     .then(css => {
-        //         const style = document.createElement("style");
-        //         style.textContent = css;
-        //         this.appendChild(style);
-        //     });
 
         this.title = getBilingualText("Expand image", "画像を拡大する");
 
@@ -83,7 +71,7 @@ class ImagePolaroid extends BasePolaroid {
                             addRemoveTransparent([polaroid], false);
                         }, 75);
                         observer.disconnect();
-                    }, 0);
+                    }, 100);
                 }
             });
         });
@@ -91,13 +79,6 @@ class ImagePolaroid extends BasePolaroid {
     }
 
     connectedCallback() { }
-
-    // TODO: put this in a utility class
-    getPictureDate(date, picOffset) {
-        // picOffset is in hours
-        const localOffset = now.getTimezoneOffset();
-        return new Date(date.getTime() - ((picOffset * -60) - localOffset) * 60000);
-    }
 
     getEnglishDate() {
         return MONTH_NAMES[this.date.getMonth()] + " " +

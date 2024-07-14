@@ -1,18 +1,88 @@
+import { JAPAN, TAIWAN, AUSTRALIA, NEW_ZEALAND, DAY_NAMES_EN, DAY_NAMES_JP, MONTH_NAMES } from '../../js/constants.js'
+import { getBilingualText, getPictureDate,isPortraitMode, sortByEnglishName, addRemoveNoDisplay, addRemoveTransparent } from '../../../js/utility.js';
+import { imgList, visibleImgs } from '../gallery/gallery.js';
+
 var favouritedTag;
+var searchTermEng = "";
+var searchTermJp = "";
+var isNewFullscreenInstance = true;
+
+export var isFullscreen = false;
+var selectedPic = null;
+var selectedPicInd = 0;
+var isPicInfoVisible = true;
+var lastSwipeTime = null;
+var selectedCountry = null;
+
 /**** Googling picture info ****/
 function search(searchTerm) {
 	window.open("https://www.google.com/search?q=" + searchTerm);
 }
 
-function searchEnglish() {
+export function searchEnglish() {
 	search(searchTermEng);
 }
 
-function searchJapanese() {
+export function searchJapanese() {
 	search(searchTermJp)
 }
 
 /**** Fullscreen Picture ****/
+function startFullscreenSwipe(e) {
+	if (isPortraitMode()) {
+		if (e.touches.length == 1) {
+			initialX = e.touches[0].clientX;
+			initialY = e.touches[0].clientY;
+		}
+	}
+}
+
+function moveFullscreenSwipe(e) {
+	if (initialX === null) {
+		return;
+	}
+
+	if (initialY === null) {
+		return;
+	}
+
+	if (!isPortraitMode()) {
+		return;
+	}
+
+	if (e.touches.length == 1) {
+		let currentX = e.touches[0].clientX;
+		let currentY = e.touches[0].clientY;
+
+		let diffX = initialX - currentX;
+		let diffY = initialY - currentY;
+
+		if (Math.abs(diffX) > Math.abs(diffY)) {
+			if (diffX > 0) {
+				changeFullscreenPicture(true);
+			} else {
+				changeFullscreenPicture(false);
+			}
+		} else {
+			if (diffY > 0) {
+				if (!isPicInfoVisible) {
+					showPicInfo();
+				}
+				// removed because will not work with Apple
+			} else {
+				if (isPicInfoVisible) {
+					hidePicInfo();
+				}
+			}
+		}
+
+		initialX = null;
+		initialY = null;
+
+		e.preventDefault();
+	}
+}
+
 function changeFullscreenPicture(isForward) {
 	if (isForward) {
 		if (visibleImgs.length > 0) {
@@ -46,14 +116,14 @@ function changeFullscreenPicture(isForward) {
 		}
 	}
 	selectedPic = imgList[selectedPicInd];
-	setFullscreenPicture(isForward);
+	setNewPicture(isForward);
 }
 
 function setFullscreenInfo() {
 	if (selectedPic.date) {
 		let date = getPictureDate(new Date(selectedPic.date), selectedPic.offset);
-		document.getElementById("fullscreen-eng-date").innerHTML = getEnglishDate(date, true, selectedPic.offset);
-		document.getElementById("fullscreen-jp-date").innerHTML = getJapaneseDate(date, true, selectedPic.offset);
+		document.getElementById("fullscreen-eng-date").innerHTML = getEnglishDate(date, selectedPic.offset);
+		document.getElementById("fullscreen-jp-date").innerHTML = getJapaneseDate(date, selectedPic.offset);
 	} else {
 		document.getElementById("fullscreen-eng-date").innerHTML = "Unknown date";
 		document.getElementById("fullscreen-jp-date").innerHTML = "不明な日付";
@@ -135,10 +205,13 @@ function setFullscreenInfo() {
 	}
 }
 
-function setFullscreenPicture(isForward) {
+// TODO NEXT: fix fullscreen functions
+export function setNewPicture(isForward) {
 	document.getElementById("img-tags").replaceChildren();
 
-	let src = selectedPic.link ?? "assets/img/" + selectedCountry + "/" + (isSingleRegion ? rgnsList[0].id : selectedPic.rgn.id) + "/" + selectedPic.file_name;
+	console.log(selectedPic);
+	let src = selectedPic.link ?? "assets/img/" + selectedCountry + "/" + selectedPic.rgn.id + "/" + selectedPic.file_name;
+	// let src = selectedPic.link ?? "assets/img/" + selectedCountry + "/" + (isSingleRegion ? rgnsList[0].id : selectedPic.rgn.id) + "/" + selectedPic.file_name;
 
 	if (isNewFullscreenInstance || (new Date() - lastSwipeTime) < 300) {
 		document.getElementById("fullscreen-pic").src = src;
@@ -176,7 +249,15 @@ function setFullscreenPicture(isForward) {
 	setFullscreenInfo();
 }
 
-function openFullscreen() {
+export function openFullscreen(imageToDisplay, countryId) {
+	selectedPic = imageToDisplay;
+	selectedPicInd = imgList.indexOf(selectedPic);
+	isNewFullscreenInstance = true;
+	setNewPicture();
+	selectedCountry = countryId;
+
+	lastSwipeTime = new Date();
+
 	if (isPortraitMode()) {
 		isPicInfoVisible = false;
 		addRemoveTransparent("pic-info", true);
@@ -191,7 +272,7 @@ function openFullscreen() {
 	addRemoveTransparent(["fullscreen", "fullscreen-bg"], false);
 }
 
-function closeFullscreen(forceClose) {
+export function closeFullscreen(forceClose) {
 	isFullscreen = false;
 	document.body.style.overflowY = "auto";
 	if (forceClose) {
@@ -206,7 +287,7 @@ function closeFullscreen(forceClose) {
 }
 
 /**** Fullscreen Picture Info ****/
-function showPicInfo() {
+export function showPicInfo() {
 	isPicInfoVisible = true;
 	addRemoveNoDisplay("pic-info", false);
 	let element = document.getElementById("pic-info-drawer");
@@ -218,7 +299,7 @@ function showPicInfo() {
 	}, 20);
 }
 
-function hidePicInfo() {
+export function hidePicInfo() {
 	isPicInfoVisible = false;
 	let element = document.getElementById("pic-info-drawer");
 	element.style.bottom = "-" + element.getBoundingClientRect().height + "px";
@@ -229,7 +310,7 @@ function hidePicInfo() {
 	}, DEFAULT_TIMEOUT);
 }
 
-function changePicInfoVisibility(isVisible) {
+export function changePicInfoVisibility(isVisible) {
 	if (isVisible == undefined) {
 		isVisible = !isPicInfoVisible;
 	}
@@ -239,4 +320,46 @@ function changePicInfoVisibility(isVisible) {
 	} else {
 		hidePicInfo();
 	}
+}
+
+export function initializeFullscreen() {
+	// favourited tag in fullscreen
+	favouritedTag = document.createElement("div");
+	favouritedTag.classList.add("img-tag");
+	favouritedTag.innerHTML = getBilingualText("Favourited", "お気に入り");
+	let tempStar = document.createElement("span");
+	tempStar.classList.add("in-btn-icon");
+	tempStar.style.marginRight = "5px";
+	tempStar.innerHTML = "&#xf005";
+	favouritedTag.prepend(tempStar);
+}
+
+function getEnglishDate(date, picOffset) {
+	let hours = date.getHours();
+	return DAY_NAMES_EN[date.getDay()] + ", " +
+		MONTH_NAMES[date.getMonth()] + " " +
+		date.getDate() + ", " +
+		date.getFullYear() +
+		" " + (hours > 12 ? hours - 12 : hours).toString() + ":" +
+		date.getMinutes().toString().padStart(2, "0") + ":" +
+		date.getSeconds().toString().padStart(2, "0") +
+		(hours >= 12 ? " PM" : " AM") +
+		(picOffset > 0 ? " +" : " -") +
+		Math.floor(picOffset) + ":" +
+		String((picOffset - Math.floor(picOffset)) * 60).padStart(2, "0");
+}
+
+function getJapaneseDate(date, picOffset) {
+	let hours = date.getHours();
+	return date.getFullYear() + "年" +
+		(date.getMonth() + 1) + "月" +
+		date.getDate() + "日" +
+		"（" + DAY_NAMES_JP[date.getDay()] + "）" +
+		(hours >= 12 ? "午後" : "午前") +
+		(hours > 12 ? hours - 12 : hours).toString() + ":" +
+		date.getMinutes().toString().padStart(2, "0") + ":" +
+		date.getSeconds().toString().padStart(2, "0") +
+		(picOffset >= 0 ? "+" : "") +
+		Math.floor(picOffset) + ":" +
+		String((picOffset - Math.floor(picOffset)) * 60).padStart(2, "0");
 }

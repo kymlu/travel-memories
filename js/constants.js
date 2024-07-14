@@ -1,17 +1,17 @@
-const LOAD_ANIMATION_TIME = 1500;
-const DEFAULT_TIMEOUT = 500;
-const SCROLL_THRESHOLD = 100;
+export const LOAD_ANIMATION_TIME = 1500;
+export const DEFAULT_TIMEOUT = 500;
+export const SCROLL_THRESHOLD = 100;
 
-const JAPAN = "japan";
-const TAIWAN = "taiwan";
-const AUSTRALIA = "australia";
-const NEW_ZEALAND = "newzealand";
+export const JAPAN = "japan";
+export const TAIWAN = "taiwan";
+export const AUSTRALIA = "australia";
+export const NEW_ZEALAND = "newzealand";
 
-const MONTH_NAMES = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-const DAY_NAMES_EN = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-const DAY_NAMES_JP = ["日", "月", "火", "水", "木", "金", "土"];
+export const MONTH_NAMES = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+export const DAY_NAMES_EN = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+export const DAY_NAMES_JP = ["日", "月", "火", "水", "木", "金", "土"];
 
-const TAGS = [
+export const TAGS = [
 	{
 		"id": "animal",
 		"english_name": "Animals",

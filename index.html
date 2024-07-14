@@ -96,6 +96,7 @@
   <div id="gallery" class="gallery no-display"></div>
 
   <!-- Scroll to top btn -->
+   <!-- TODO: make sure only visible in the gallery -->
   <button id="to-top-btn" class="large-icon floating-btn opacity-transform-transition arrow-down no-display">&#xf103</button>
 
   <!-- Fullscreen Picture -->
@@ -168,16 +169,17 @@
   </div>
 
   <!-- Scripts -->
-  <script src="components/fullscreen/fullscreen.js"></script>
-  <script src="components/gallery/gallery.js"></script>
-  <script src="components/popup/base-popup/base-popup.js"></script>
-  <script src="components/popup/filter-popup/filter-popup.js"></script>
-  <script src="components/popup/info-popup/info-popup.js"></script>
-  <script src="components/polaroid/base-polaroid/base-polaroid.js"></script>
-  <script src="components/polaroid/img-polaroid/img-polaroid.js"></script>
-  <script src="components/polaroid/txt-polaroid/txt-polaroid.js"></script>
-  <script src="js/constants.js" ></script>
-  <script src="js/main.js"></script>
+  <script type="module" src="components/fullscreen/fullscreen.js"></script>
+  <script type="module" src="components/gallery/gallery.js"></script>
+  <script type="module" src="components/popup/base-popup/base-popup.js"></script>
+  <script type="module" src="components/popup/filter-popup/filter-popup.js"></script>
+  <script type="module" src="components/popup/info-popup/info-popup.js"></script>
+  <script type="module" src="components/polaroid/base-polaroid/base-polaroid.js"></script>
+  <script type="module" src="components/polaroid/img-polaroid/img-polaroid.js"></script>
+  <script type="module" src="components/polaroid/txt-polaroid/txt-polaroid.js"></script>
+  <script type="module" src="js/utility.js" ></script>
+  <script type="module" src="js/constants.js" ></script>
+  <script type="module" src="js/main.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/exif-js/2.3.0/exif.js"></script>
 </body>

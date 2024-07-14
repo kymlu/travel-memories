@@ -1,4 +1,7 @@
-class FilterPopup extends BasePopup {
+import BasePopup from "../base-popup/base-popup.js"
+import { getBilingualText, sortByEnglishName, flipArrow, addRemoveNoDisplay } from '../../../js/utility.js';
+
+export default class FilterPopup extends BasePopup {
     allRegions = [];
     selectedRegions = [];
     allAreas = [];

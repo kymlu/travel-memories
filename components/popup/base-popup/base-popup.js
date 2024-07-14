@@ -1,4 +1,6 @@
-class BasePopup extends HTMLElement {
+import { addRemoveNoDisplay, addRemoveTransparent, addRemoveClass } from '../../../js/utility.js'
+
+export default class BasePopup extends HTMLElement {
     constructor() {
         super();
         this.previouslyOpened = false;

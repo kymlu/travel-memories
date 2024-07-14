@@ -1,4 +1,6 @@
-class InfoPopup extends BasePopup {
+import BasePopup from "../base-popup/base-popup.js"
+
+export default class InfoPopup extends BasePopup {
     constructor(){
         super();
 

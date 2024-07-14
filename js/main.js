@@ -4,6 +4,12 @@
 	Note: currently not implementing components in this project (hence 
 			the length of the file) but I plan to once I have the time.
 */
+import * as Gallery from '../components/gallery/gallery.js';
+import * as Fullscreen from '../components/fullscreen/fullscreen.js';
+import InfoPopup from '../components/popup/info-popup/info-popup.js'
+import { LOAD_ANIMATION_TIME, DEFAULT_TIMEOUT, SCROLL_THRESHOLD } from './constants.js'
+import { getBilingualText, isPortraitMode, scrollToTop, addRemoveClass,sortImgs, addRemoveNoDisplay, addRemoveTransparent } from '../../js/utility.js';
+
 /**** Variables ****/
 var root = document.querySelector(':root');
 
@@ -16,33 +22,12 @@ var allData = null;
 var data = null;
 var countryTitle = null;
 var selectedCountry = null;
-var imgList = null;
-var rgnsList = null;
-var areaList = null;
-var tagList = null;
-var cameraList = null;
+//var imgList = null;
 
 // Booleans
-var throttleRegionInfo = false;
-
 var infoPopup = null;
 var isPopupVisible = false;
-var isToTopVisible = false;
 var isGalleryVisible = false;
-var isRegionInfoVisible = false;
-
-var isLeft = true;
-var imageLoadIndex = 0;
-var previousRegion = null;
-
-// Fullscreen
-var isFullscreen = false;
-var isNewFullscreenInstance = true;
-var selectedPic = null;
-var selectedPicInd = 0;
-var isPicInfoVisible = true;
-var searchTermEng = "";
-var searchTermJp = "";
 
 // Gestures
 var initialX = null;
@@ -50,146 +35,41 @@ var initialY = null;
 var initialYHandle = null;
 var isHandleGrabbed = false;
 var grabbedHandleId = null;
-var lastSwipeTime = null;
-
-// Filters
-var visibleImgs = [];
-
 
 var seeFromRgnTitle = null;
 
 var appColor;
 
 /**** General ****/
-function isPortraitMode() {
-	return window.innerHeight > window.innerWidth;
-}
-
-function sortImgs(a, b) {
-	return new Date(a.date) - new Date(b.date);
-}
-
-function sortByEnglishName(a, b) {
-	let a1 = a.english_name.toLowerCase();
-	let b1 = b.english_name.toLowerCase();
-
-	if (a1 < b1) {
-		return -1;
+// Source: https://stackoverflow.com/questions/53192433/how-to-detect-swipe-in-javascript
+function startHandleDrag(e, handleId) {
+	if (isPortraitMode()) {
+		isHandleGrabbed = true;
+		grabbedHandleId = handleId
+		initialYHandle = e.touches[0].clientY;
 	}
-	if (a1 > b1) {
-		return 1;
-	}
-	return 0;
 }
 
-function addRemoveClass(elements, className, isAdd) {
-	if (elements) {
-		if (typeof (elements) == 'string') {
-			let element = document.getElementById(elements);
-			if (element.classList) {
-				if (isAdd) {
-					element.classList.add(className);
+function endHandleDrag(e) {
+	if (isPortraitMode()) {
+		if (isHandleGrabbed && grabbedHandleId) {
+			isHandleGrabbed = false;
+			let currentY = e.changedTouches[0].clientY;
+			if (currentY > initialYHandle) {
+				if (grabbedHandleId == "pic-info-handle") {
+					Fullscreen.hidePicInfo();
 				} else {
-					element.classList.remove(className);
+					Gallery.showRegionInfo(true);
+				}
+			} else if (currentY < initialYHandle) {
+				if (grabbedHandleId == "rgn-info-handle") {
+					Gallery.hideRegionInfo(true);
 				}
 			}
-		} else {
-			if (elements.length > 0) {
-				if (typeof (elements[0]) == 'string') {
-					if (isAdd) {
-						elements.forEach(element => document.getElementById(element).classList.add(className));
-					} else {
-						elements.forEach(element => document.getElementById(element).classList.remove(className));
-					}
-				} else {
-					if (isAdd) {
-						elements.forEach(element => {
-							if (element.classList) {
-								element.classList.add(className);
-							}
-						});
-					} else {
-						elements.forEach(element => {
-							if (element.classList) {
-								element.classList.remove(className);
-							}
-						});
-					}
-				}
-			}
+			initialYHandle = null;
+			grabbedHandleId = null;
 		}
 	}
-}
-
-function addRemoveTransparent(elements, isAdd) {
-	addRemoveClass(elements, "transparent", isAdd);
-}
-
-function addRemoveNoDisplay(elements, isAdd) {
-	addRemoveClass(elements, "no-display", isAdd);
-}
-
-function flipArrow(arrow, isUp) {
-	if (isUp == undefined) {
-		arrow.classList.toggle("arrow-up");
-		arrow.classList.toggle("arrow-down");
-	} else {
-		addRemoveClass(arrow, "arrow-up", isUp);
-		addRemoveClass(arrow, "arrow-down", !isUp);
-	}
-}
-
-function scrollToTop(isSmooth) {
-	window.scrollTo({
-		top: 0,
-		left: 0,
-		behavior: isSmooth ? 'smooth' : "instant"
-	});
-}
-
-// Text
-function getBilingualText(english, japanese) {
-	return english + (japanese ? (" – " + japanese) : "");
-}
-
-function getPictureDate(date, picOffset) {
-	// picOffset is in hours
-	const localOffset = now.getTimezoneOffset();
-	return new Date(date.getTime() - ((picOffset * -60) - localOffset) * 60000);
-}
-
-function getEnglishDate(date, isFullDate, picOffset) {
-	let hours = date.getHours();
-	return (isFullDate ? DAY_NAMES_EN[date.getDay()] + ", " : "") +
-		MONTH_NAMES[date.getMonth()] + " " +
-		date.getDate() + ", " +
-		date.getFullYear() +
-		(isFullDate ?
-			" " + (hours > 12 ? hours - 12 : hours).toString() + ":" +
-			date.getMinutes().toString().padStart(2, "0") + ":" +
-			date.getSeconds().toString().padStart(2, "0") +
-			(hours >= 12 ? " PM" : " AM") +
-			(picOffset > 0 ? " +" : " -") +
-			Math.floor(picOffset) + ":" +
-			String((picOffset - Math.floor(picOffset)) * 60).padStart(2, "0")
-			: "");
-}
-
-function getJapaneseDate(date, isFullDate, picOffset) {
-	let hours = date.getHours();
-	return date.getFullYear() + "年" +
-		(date.getMonth() + 1) + "月" +
-		date.getDate() + "日" +
-		(isFullDate ?
-			"（" + DAY_NAMES_JP[date.getDay()] + "）" +
-			(hours >= 12 ? "午後" : "午前") +
-			(hours > 12 ? hours - 12 : hours).toString() + ":" +
-			date.getMinutes().toString().padStart(2, "0") + ":" +
-			date.getSeconds().toString().padStart(2, "0") +
-			(picOffset >= 0 ? "+" : "") +
-			Math.floor(picOffset) + ":" +
-			String((picOffset - Math.floor(picOffset)) * 60).padStart(2, "0")
-			: "");
 }
 
 /**** Floating Button ****/
@@ -200,46 +80,26 @@ function scrollDown() {
 	});
 }
 
-function showHideFloatingBtn() {
-	const totop = getBilingualText("Go to top", "トップに移動する");
-	const down = getBilingualText("Scroll down", "下に移動する");
-	let btn = document.getElementById("to-top-btn");
-	if (document.body.scrollTop > SCROLL_THRESHOLD) {
-		if (isGalleryVisible && !isToTopVisible) {
-			flipArrow([btn], true);
-			addRemoveNoDisplay([btn], false);
-			addRemoveTransparent([btn], false);
-			btn.title = totop;
-			isToTopVisible = true;
-		} else if (!isGalleryVisible) {
-			flipArrow([btn], true);
-			btn.title = totop;
-		}
-	} else if (document.body.scrollTop <= SCROLL_THRESHOLD) {
-		if (isGalleryVisible && isToTopVisible) {
-			flipArrow([btn], true);
-			addRemoveTransparent([btn], true);
-			setTimeout(() => { addRemoveNoDisplay([btn], true); }, DEFAULT_TIMEOUT)
-			isToTopVisible = false;
-		} else if (!isGalleryVisible) {
-			let pageHeight = Math.max(document.body.scrollHeight, document.body.offsetHeight,
-				document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight);
-
-			if (window.innerHeight + SCROLL_THRESHOLD < pageHeight) {
-				addRemoveNoDisplay([btn], false);
-				flipArrow([btn], false);
-				btn.title = down;
-			} else {
-				addRemoveNoDisplay([btn], true);
-			}
-		}
-	}
-}
-
 /**** Official Region List ****/
 function createRgnDD() {
 	const dropDownRgnList = document.getElementById("rgn-drop-down");
 	dropDownRgnList.replaceChildren();
+
+	// region group text and regions
+	let rgnGrpGroup = document.createElement("div");
+	rgnGrpGroup.classList.add("rgn-grp");
+
+	let rgnGrpTitle = document.createElement("div");
+	rgnGrpTitle.classList.add("rgn-grp-text");
+
+	let rgnTxtBtn = document.createElement("button");
+	rgnTxtBtn.classList.add("rgn-txt", "visited-rgn-text", "highlight-btn", "txt-btn");
+
+	let rgnGrpDrop = document.createElement("div");
+	rgnGrpDrop.classList.add("rgn-grp-text", "regular-text");
+
+	let rgnDrop = document.createElement("button");
+	rgnDrop.classList.add("rgn-txt", "regular-text", "highlight-btn", "txt-btn");
 
 	if (data.show_unofficial_regions) {
 		rgnGrpGroup.classList.remove("none");
@@ -269,7 +129,7 @@ function createRgnDD() {
 				ddRgn.title = seeFromRgnTitle;
 				ddRgn.classList.add("visited-rgn-text");
 				ddRgn.addEventListener("click", function () {
-					selectRgn(rgn.id);
+					selectRegion(rgn.id);
 				}, false);
 				dropDownRgnList.appendChild(ddRgn);
 			}
@@ -295,19 +155,19 @@ function colourMap() {
 			rgnImg.setAttribute("cursor", "pointer");
 			rgnImg.setAttribute("transition", "opacity 0.3 ease-in-out");
 			rgnImg.addEventListener("click", function () {
-				selectRgn(rgn.id);
+				selectRegion(rgn.id);
 				document.getElementById("main-title").innerHTML = getBilingualText(rgn.english_name, rgn.japanese_name);
 			});
 
 			rgnImg.addEventListener("mouseover", () => {
 				rgnImg.setAttribute("opacity", "50%");
-				hoveredRegion = rgn.english_name;
+				//hoveredRegion = rgn.english_name;
 				document.getElementById("main-title").innerHTML = getBilingualText(rgn.english_name, rgn.japanese_name);
 			});
 
 			rgnImg.addEventListener("mouseout", () => {
 				rgnImg.setAttribute("opacity", "100%");
-				hoveredRegion = "";
+				//hoveredRegion = "";
 				document.getElementById("main-title").innerHTML = countryTitle;
 			});
 		} else {
@@ -321,93 +181,6 @@ function createMap() {
 	svgObj.data = "assets/img/country/" + selectedCountry + ".svg";
 }
 
-/**** Gestures ****/
-// Source: https://stackoverflow.com/questions/53192433/how-to-detect-swipe-in-javascript
-function startHandleDrag(e, handleId) {
-	if (isPortraitMode()) {
-		isHandleGrabbed = true;
-		grabbedHandleId = handleId
-		initialYHandle = e.touches[0].clientY;
-	}
-}
-
-function endHandleDrag(e) {
-	if (isPortraitMode()) {
-		if (isHandleGrabbed && grabbedHandleId) {
-			isHandleGrabbed = false;
-			let currentY = e.changedTouches[0].clientY;
-			if (currentY > initialYHandle) {
-				if (grabbedHandleId == "pic-info-handle") {
-					hidePicInfo();
-				} else {
-					showRegionInfo(true);
-				}
-			} else if (currentY < initialYHandle) {
-				if (grabbedHandleId == "rgn-info-handle") {
-					hideRegionInfo(true);
-				}
-			}
-			initialYHandle = null;
-			grabbedHandleId = null;
-		}
-	}
-}
-
-function startFullscreenSwipe(e) {
-	if (isPortraitMode()) {
-		if (e.touches.length == 1) {
-			initialX = e.touches[0].clientX;
-			initialY = e.touches[0].clientY;
-		}
-	}
-}
-
-function moveFullscreenSwipe(e) {
-	if (initialX === null) {
-		return;
-	}
-
-	if (initialY === null) {
-		return;
-	}
-
-	if (!isPortraitMode()) {
-		return;
-	}
-
-	if (e.touches.length == 1) {
-		let currentX = e.touches[0].clientX;
-		let currentY = e.touches[0].clientY;
-
-		let diffX = initialX - currentX;
-		let diffY = initialY - currentY;
-
-		if (Math.abs(diffX) > Math.abs(diffY)) {
-			if (diffX > 0) {
-				changeFullscreenPicture(true);
-			} else {
-				changeFullscreenPicture(false);
-			}
-		} else {
-			if (diffY > 0) {
-				if (!isPicInfoVisible) {
-					showPicInfo();
-				}
-				// removed because will not work with Apple
-			} else {
-				if (isPicInfoVisible) {
-					hidePicInfo();
-				}
-			}
-		}
-
-		initialX = null;
-		initialY = null;
-
-		e.preventDefault();
-	}
-}
-
 /**** Site Info Popup ****/
 function openInfoPopup() {
 	isPopupVisible = true;
@@ -418,84 +191,17 @@ function closeInfoPopup() {
 	document.querySelector("info-popup").closePopup(true);
 }
 
-/**** Official Region Info ****/
-function showRegionInfo(isForced) {
-	isRegionInfoVisible = true;
-	addRemoveTransparent("rgn-info-bg", false);
-	document.getElementById("rgn-info-bg").style.visibility = "visible";
-	if (isForced) {
-		if (document.body.scrollTop < document.getElementById("rgn-info").getBoundingClientRect().height) {
-			scrollToTop(true);
-		} else {
-			document.getElementById("rgn-info").style.position = "sticky";
-			document.getElementById("rgn-info").style.top = document.getElementById("top-bar").getBoundingClientRect().height;
-		}
-	}
-}
-
-function hideRegionInfo(isForced) {
-	isRegionInfoVisible = false;
-	if (isForced) {
-		let rgnInfoOffset = document.getElementById("rgn-info").getBoundingClientRect().height;
-		if (document.body.scrollTop <= rgnInfoOffset) {
-			window.scrollTo({
-				top: rgnInfoOffset,
-				left: 0,
-				behavior: 'smooth'
-			});
-		}
-	}
-	addRemoveTransparent("rgn-info-bg", true);
-	setTimeout(() => {
-		document.getElementById("rgn-info-bg").style.visibility = "hidden";
-		document.getElementById("rgn-info").style.position = "relative";
-		document.getElementById("rgn-info").style.top = "0";
-	}, DEFAULT_TIMEOUT);
-}
-
-function changeRegionInfoVisibility(isVisible, isForced) {
-	if (isRegionInfoVisible == isVisible) {
-		return;
-	}
-
-	if (isVisible == undefined) {
-		isVisible = !isRegionInfoVisible;
-	}
-
-	if (isVisible) {
-		showRegionInfo(isForced);
-	} else {
-		hideRegionInfo(isForced);
-	}
-}
-
-function scrollRegionInfo() {
-	if (throttleRegionInfo || !isGalleryVisible) return;
-	throttleRegionInfo = true;
-	setTimeout(() => {
-		let rgnInfoOffset = document.getElementById("rgn-info").getBoundingClientRect().height / 2;
-		if (isRegionInfoVisible && document.body.scrollTop > rgnInfoOffset) {
-			isRegionInfoVisible = false;
-			hideRegionInfo(false);
-		} else if (!isRegionInfoVisible && document.body.scrollTop < rgnInfoOffset) {
-			isRegionInfoVisible = true;
-			showRegionInfo(false);
-		}
-		throttleRegionInfo = false;
-	}, 250);
-}
-
 /**** Show and hide pages ****/
 function openMapPage() {
 	hideLoader();
 	scrollToTop(false);
 	addRemoveTransparent("map-page", false);
 	addRemoveNoDisplay("to-top-btn", false);
-	showHideFloatingBtn();
+	Gallery.toggleFloatingButton();
 }
 
 function changeGalleryVisibility(isVisible) {
-	closeRgnDropdown();
+	Gallery.closeRgnDropdown();
 	scrollToTop(false);
 	if (isVisible == undefined) {
 		isGalleryVisible = !isGalleryVisible;
@@ -510,7 +216,7 @@ function changeGalleryVisibility(isVisible) {
 		document.getElementById("top-bar").style.backgroundColor = "white";
 		addRemoveNoDisplay(["map-page", "to-top-btn", "globe-btn"], true);
 		addRemoveNoDisplay(["gallery", "map-btn", "info-btn", "rgn-title-btn", "rgn-info", "rgn-info-drawer"], false);
-		if (imgList.length > 0) {
+		if (Gallery.imgList.length > 0) {
 			addRemoveNoDisplay("filter-btn", false);
 		}
 		document.getElementById("rgn-info-bg").style.visibility = "visible";
@@ -530,7 +236,6 @@ function changeGalleryVisibility(isVisible) {
 	}
 	addRemoveTransparent("rgn-info-bg", false);
 
-	isRegionInfoVisible = isGalleryVisible;
 	if (!isGalleryVisible) {
 		showLoader();
 		setTimeout(() => {
@@ -548,91 +253,20 @@ function changeMainColor(newColor) {
 	appColor = "rgb(" + temp[0] + ", " + temp[1] + ", " + temp[2] + ")";
 }
 
-function selectRgn(rgnId, isPoppedPage) {
+function selectRegion(regionId, isPoppedPage) {
 	if (isPoppedPage == null) {
-		window.history.pushState({ rgn: rgnId }, null, null);
+		window.history.pushState({ rgn: regionId }, null, null);
 	}
 
 	showLoader();
-	if (!isNewCountry && isSingleRegion) {
-		document.getElementById(rgnsList[0].id + "-dropdown").classList.remove("active");
-	}
-
-	isNewCountry = false;
-	isNewRegionDropdown = true;
-	isNewRegionFilter = true;
-
-	isSingleRegion = rgnId != undefined && rgnId != null;
-
-	if (isSingleRegion) {
-		let newRegion = data.region_groups.flatMap(x => x.regions).filter(rgn => rgn.id == rgnId)[0];
-		document.getElementById(newRegion.id + "-dropdown").classList.add("active");
-		imgList = newRegion.image_list;
-		rgnsList = [newRegion];
-		areaList = newRegion.areas;
-		addRemoveNoDisplay("rgn-info-dates", false);
-		document.getElementById("areas-title").innerHTML = getBilingualText("Areas", "所");
-		document.getElementById("rgn-dates").innerHTML = getBilingualText(newRegion.dates_english, newRegion.dates_japanese);
-		document.getElementById("rgn-desc-eng").innerHTML = newRegion.description_english;
-		document.getElementById("rgn-desc-jp").innerHTML = newRegion.description_japanese;
-		document.getElementById("rgn-name").innerHTML = getBilingualText(newRegion.english_name, newRegion.japanese_name);
-		document.getElementById("description-title").innerHTML = getBilingualText("About", data.official_region_name_japanese + "について");
-		document.getElementById("rgn-areas").innerHTML = areaList.map(area => {
-			return getBilingualText(area.english_name, area.japanese_name);
-		}).sort().join(" | ");
+	if(regionId != undefined && regionId != null){
+		let newRegion = data.region_groups.flatMap(x => x.regions).filter(rgn => rgn.id == regionId);
+		Gallery.setNewRegion(newRegion, true);
 	} else {
 		let visitedRgns = data.region_groups.flatMap(grp => grp.regions.filter(rgn => rgn.visited));
-		imgList = visitedRgns.flatMap(rgn => {
-			return rgn.image_list.map(img => ({
-				...img, rgn: {
-					"id": rgn.id,
-					"english_name": rgn.english_name,
-					"japanese_name": rgn.japanese_name
-				}
-			}));
-		}).sort(sortImgs);
-
-		addRemoveNoDisplay("rgn-info-dates", true);
-		document.getElementById("areas-title").innerHTML = getBilingualText(data.official_region_name_english + "s", data.official_region_name_japanese);
-		document.getElementById("rgn-desc-eng").innerHTML = data.description_english;
-		document.getElementById("rgn-desc-jp").innerHTML = data.description_japanese;
-		document.getElementById("rgn-name").innerHTML = getBilingualText(data.english_name, data.japanese_name);
-		document.getElementById("description-title").innerHTML = getBilingualText("About", "国について");
-
-		rgnsList = visitedRgns.map(rgn => {
-			return {
-				"id": rgn.id,
-				"english_name": rgn.english_name,
-				"japanese_name": rgn.japanese_name
-			}
-		});
-
-		//areaList = data.region_groups.flatMap(grp => grp.regions.filter(rgn => rgn.visited)).map(rgn => {return {"id": rgn.id, "areas": rgn.areas}});
-		areaList = visitedRgns.flatMap(rgn => rgn.areas);
-		document.getElementById("rgn-areas").innerHTML = rgnsList.map(area => {
-			return getBilingualText(area.english_name, area.japanese_name);
-		}).sort().join(" | ");
+		Gallery.setNewRegion(visitedRgns, false);
 	}
 
-	let tempTags = new Set(imgList.flatMap(x => { return x.tags }));
-	tagList = TAGS.filter(x => tempTags.has(x.id));
-	cameraList = [...new Set(imgList.map(x => x.camera_model))];
-
-	filterPopup.refreshFilters(
-		isSingleRegion,
-		rgnsList,
-		areaList,
-		tagList,
-		cameraList,
-		data.official_region_name_english,
-		data.official_region_name_japanese
-	);
-
-	editMiniMap();
-
-	flipArrow("rgn-name-arrow", false);
-	visibleImgs = [];
-	createGallery();
 	setTimeout(() => {
 		changeGalleryVisibility(true);
 	}, DEFAULT_TIMEOUT);
@@ -643,20 +277,17 @@ function selectCountry(country, countryColor, isPoppedPage) {
 		window.history.pushState({ country: country, countryColor: countryColor }, null, null);
 	}
 
+	// TODO: modularize loader
 	now = new Date();
 	document.getElementById("load-icon").src = "assets/icons/" + allData.filter(x => { return x.id == country })[0].symbol + ".svg";
 	showLoader();
 
 	addRemoveNoDisplay(["map-page", "btn-grp-left"], false);
 	addRemoveClass("btn-grp-right", "justify-end", false);
-	imgList = [];
-	rgnsList = [];
-	areaList = [];
 	selectedCountry = country;
-	isNewCountry = true;
 
-	filterCountryData();
 	changeMainColor(countryColor);
+	filterCountryData();
 
 	setTimeout(() => {
 		stopLoader();
@@ -702,7 +333,7 @@ function setupSite() {
 	});
 
 	// Button click detections
-	document.getElementById("rgn-drop-down-bg").addEventListener("click", closeRgnDropdown);
+	document.getElementById("rgn-drop-down-bg").addEventListener("click", Gallery.closeRgnDropdown);
 	document.getElementById("rgn-info-bg").addEventListener("click", function () { changeRegionInfoVisibility(false, true); });
 	document.getElementById("to-top-btn").addEventListener("click", function () {
 		if (document.body.scrollTop > SCROLL_THRESHOLD) {
@@ -711,30 +342,33 @@ function setupSite() {
 			scrollDown();
 		}
 	});
-	document.getElementById("main-title").addEventListener("click", function () { selectRgn(); });
-	document.getElementById("rgn-title-btn").addEventListener("click", toggleRgnDropdown);
+	document.getElementById("main-title").addEventListener("click", function () { selectRegion(); });
+	document.getElementById("rgn-title-btn").addEventListener("click", Gallery.toggleRgnDropdown);
 	document.getElementById("creator-btn").addEventListener("click", openInfoPopup);
 	document.getElementById("globe-btn").addEventListener("click", showStartScreen);
 	document.getElementById("map-btn").addEventListener("click", function () { changeGalleryVisibility(false); });
-	document.getElementById("info-btn").addEventListener("click", function () { changeRegionInfoVisibility(undefined, true); });
+	document.getElementById("info-btn").addEventListener("click", function () { Gallery.changeRegionInfoVisibility(undefined, true); });
 
-	document.getElementById("filter-btn").addEventListener("click", showFilter);
+	document.getElementById("filter-btn").addEventListener("click", Gallery.showFilter);
 
-	document.getElementById("fullscreen-bg").addEventListener("click", function () { closeFullscreen(true) });
-	document.getElementById("fullscreen-ctrl").addEventListener("click", function () { closeFullscreen(true) });
+	document.getElementById("fullscreen-bg").addEventListener("click", function () { Fullscreen.closeFullscreen(true) });
+	document.getElementById("fullscreen-ctrl").addEventListener("click", function () { Fullscreen.closeFullscreen(true) });
 	document.getElementById("left-arrow").addEventListener("click", (event) => { event.stopPropagation(); });
 	document.getElementById("fullscreen-pic").addEventListener("click", (event) => { event.stopPropagation(); });
 	document.getElementById("right-arrow").addEventListener("click", (event) => { event.stopPropagation(); });
-	document.getElementById("left-arrow").addEventListener("click", function () { changeFullscreenPicture(false); });
-	document.getElementById("right-arrow").addEventListener("click", function () { changeFullscreenPicture(true); });
-	document.getElementById("pic-info-bg").addEventListener("click", hidePicInfo);
+	document.getElementById("left-arrow").addEventListener("click", function () { Fullscreen.changeFullscreenPicture(false); });
+	document.getElementById("right-arrow").addEventListener("click", function () { Fullscreen.changeFullscreenPicture(true); });
+	document.getElementById("pic-info-bg").addEventListener("click", Fullscreen.hidePicInfo);
 	document.getElementById("pic-info-drawer").addEventListener("click", (event) => { event.stopPropagation(); });
-	document.getElementById("pic-info-btn").addEventListener("click", function () { changePicInfoVisibility(); });
-	document.getElementById("pic-info-close-btn").addEventListener("click", hidePicInfo);
-	document.getElementById("search-eng").addEventListener("click", searchEnglish);
-	document.getElementById("search-jp").addEventListener("click", searchJapanese);
+	document.getElementById("pic-info-btn").addEventListener("click", function () { Fullscreen.changePicInfoVisibility(); });
+	document.getElementById("pic-info-close-btn").addEventListener("click", Fullscreen.hidePicInfo);
+	document.getElementById("search-eng").addEventListener("click", Fullscreen.searchEnglish);
+	document.getElementById("search-jp").addEventListener("click", Fullscreen.searchJapanese);
 
-	document.getElementById("country-map-mini").addEventListener("load", filterMiniMap);
+	document.getElementById("country-map-mini").addEventListener("load", () => {
+		Gallery.filterMiniMap;
+		hideLoader();
+	});
 	document.getElementById("country-map").addEventListener("load", colourMap);
 	document.getElementById("rgn-info-handle").addEventListener("touchstart", e => { startHandleDrag(e, "rgn-info-handle") }, false);
 	document.getElementById("pic-info-handle").addEventListener("touchstart", e => { startHandleDrag(e, "pic-info-handle") }, false);
@@ -745,20 +379,20 @@ function setupSite() {
 		if (event.key === "Escape") {
 			if (isPopupVisible) {
 				closeInfoPopup(true);
-			} else if (isFullscreen) {
-				closeFullscreen(true);
+			} else if (Fullscreen.isFullscreen) {
+				Fullscreen.closeFullscreen(true);
 			}
 		}
 
-		if (isFullscreen) {
+		if (Fullscreen.isFullscreen) {
 			if (event.key === "ArrowRight") {
-				changeFullscreenPicture(true);
+				Fullscreen.changeFullscreenPicture(true);
 			} else if (event.key == "ArrowLeft") {
-				changeFullscreenPicture(false);
+				Fullscreen.changeFullscreenPicture(false);
 			} else if (!isPicInfoVisible && event.key == "ArrowUp") {
-				showPicInfo();
+				Fullscreen.showPicInfo();
 			} else if (isPicInfoVisible && event.key == "ArrowDown") {
-				hidePicInfo();
+				Fullscreen.hidePicInfo();
 			}
 		}
 	});
@@ -769,24 +403,15 @@ function setupSite() {
 	infoPopup.addEventListener("info-popup-closed", () => {
 		isPopupVisible = false;
 	});
-	filterPopup = new FilterPopup();
-	filterPopup.addEventListener("filter-popup-closed", () => {
-		isFilterVisible = false;
+	Gallery.initializeGallery((regionId) => {
+		selectRegion(regionId);
 	});
-	filterPopup.addEventListener("filter-popup-submitted", event => {
-		filterImages(event.detail.isOnlyFavs,
-			event.detail.keyword,
-			event.detail.selectedRegions,
-			event.detail.selectedAreas,
-			event.detail.selectedTags,
-			event.detail.selectedCameras);
-	});
-	document.body.appendChild(filterPopup);
+	Fullscreen.initializeFullscreen();
 
 	// Swipe detections
 	let swipeContainer = document.getElementById("fullscreen");
-	swipeContainer.addEventListener("touchstart", startFullscreenSwipe, false);
-	swipeContainer.addEventListener("touchmove", moveFullscreenSwipe, false);
+	swipeContainer.addEventListener("touchstart", Fullscreen.startFullscreenSwipe, false);
+	swipeContainer.addEventListener("touchmove", Fullscreen.moveFullscreenSwipe, false);
 
 	// currently remove because it will not work on Apple
 	document.getElementById("pic-info-details").addEventListener("touchstart", (event) => {
@@ -795,16 +420,11 @@ function setupSite() {
 	document.getElementById("pic-info-details").addEventListener("touchmove", (event) => {
 		event.stopPropagation();
 	});
-
+	
 	// Scroll detections
 	window.onscroll = function () {
 		if (!isLoading) {
-			showHideFloatingBtn();
-			scrollRegionInfo();
-
-			if (isGalleryVisible && imageLoadIndex < imgList.length && (window.innerHeight + Math.round(window.scrollY)) >= document.body.offsetHeight) {
-				addPics();
-			}
+			Gallery.onScrollFunction();
 		}
 	};
 
@@ -817,7 +437,7 @@ function setupSite() {
 				this.selectCountry(event.state.country, event.state.countryColor, true);
 			}
 		} else if (event.state.rgn && this.selectedCountry != null) {
-			this.selectRgn(event.state.rgn, true);
+			this.selectRegion(event.state.rgn, true);
 		} else {
 			this.showStartScreen(true);
 		}
@@ -834,6 +454,14 @@ function filterCountryData() {
 				}
 			});
 		});
+
+		let tempCountry = JSON.parse(JSON.stringify(data));
+		tempCountry.region_groups.forEach(group => group.regions.forEach(region => {
+			if (region.image_list) {
+				region.image_list = [];
+			}
+		}));
+		Gallery.setNewCountry(tempCountry, appColor);
 
 		countryTitle = getBilingualText(data.english_name, data.japanese_name);
 		document.getElementById("main-title").innerHTML = countryTitle;
@@ -1027,7 +655,7 @@ function showStartScreen(isPoppedPage) {
 function main() {
 	now = new Date();
 	scrollToTop(false);
-	createTemplates();
+	//createTemplates();
 	setupSite();
 	fetchData();
 }

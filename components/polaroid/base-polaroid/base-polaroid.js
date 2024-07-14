@@ -1,4 +1,4 @@
-class BasePolaroid extends HTMLElement {
+export default class BasePolaroid extends HTMLElement {
     constructor(isAngledLeft, isBlank) {
         super();
         this.isAngledLeft = isAngledLeft;
