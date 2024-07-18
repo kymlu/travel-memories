@@ -1,17 +1,10 @@
 import { addRemoveNoDisplay, addRemoveTransparent, addRemoveClass } from '../../../js/utility.js'
+import { DEFAULT_TIMEOUT } from '../../../js/constants.js';
 
 export default class BasePopup extends HTMLElement {
     constructor() {
         super();
         this.previouslyOpened = false;
-
-        // fetch("components/popup/base-popup/base-popup.css")
-        //     .then(response => response.text())
-        //     .then(css => {
-        //         const style = document.createElement("style");
-        //         style.textContent = css;
-        //         this.appendChild(style);
-        //     });
     }
 
     connectedCallback() { }

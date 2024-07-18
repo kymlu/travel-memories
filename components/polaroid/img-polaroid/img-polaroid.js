@@ -12,7 +12,7 @@ export default class ImagePolaroid extends BasePolaroid {
         this.enCaption = enCaption;
         this.jpCaption = jpCaption;
 
-        // Get HTML and CSS
+        // Get HTML
         fetch("components/polaroid/img-polaroid/img-polaroid.html")
             .then(response => response.text())
             .then(html => {
@@ -21,8 +21,8 @@ export default class ImagePolaroid extends BasePolaroid {
 
         this.title = getBilingualText("Expand image", "画像を拡大する");
 
-        // Based on: https://www.codepel.com/vanilla-javascript/javascript-image-loaded/
         // The lazy loading observer
+        // Based on: https://www.codepel.com/vanilla-javascript/javascript-image-loaded/
         const obs = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -78,7 +78,7 @@ export default class ImagePolaroid extends BasePolaroid {
         obs.observe(this);
     }
 
-    connectedCallback() { }
+    //connectedCallback() { }
 
     getEnglishDate() {
         return MONTH_NAMES[this.date.getMonth()] + " " +

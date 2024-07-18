@@ -1,5 +1,5 @@
 import BasePolaroid from "../base-polaroid/base-polaroid.js"
-import { getBilingualText } from '../../../js/utility.js';
+import { getBilingualText, addRemoveTransparent } from '../../../js/utility.js';
 
 export default class TextPolaroid extends BasePolaroid {
     constructor(isAngledLeft, text, regionId, officialRegionName) {
@@ -13,20 +13,9 @@ export default class TextPolaroid extends BasePolaroid {
             .then(html => {
                 this.innerHTML = html;
             })
-
-        // fetch("components/polaroid/txt-polaroid/txt-polaroid.css")
-        //     .then(response => response.text())
-        //     .then(css => {
-        //         const style = document.createElement("style");
-        //         style.textContent = css;
-        //         this.appendChild(style);
-        //     });
-    }
-
-    connectedCallback() {
-        // Based on: https://www.codepel.com/vanilla-javascript/javascript-image-loaded/
         // The lazy loading observer
-        this.title = getBilingualText("See images from this" + this.officialRegionName, "この地域の写真を表示する");
+        // Based on: https://www.codepel.com/vanilla-javascript/javascript-image-loaded/
+        this.title = getBilingualText(`See images from this ${this.officialRegionName}`, "この地域の写真を表示する");
         const obs = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -47,6 +36,10 @@ export default class TextPolaroid extends BasePolaroid {
         });
         obs.observe(this);
     }
+
+    // connectedCallback() {
+        
+    // }
 }
 
 window.customElements.define("txt-polaroid", TextPolaroid);

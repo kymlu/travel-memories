@@ -3334,6 +3334,11 @@
                 "japanese_name": "新宿"
               },
               {
+                "id": "yoyogi",
+                "english_name": "Yoyogi",
+                "japanese_name": "代々木"
+              },
+              {
                 "id": "ginza",
                 "english_name": "Ginza",
                 "japanese_name": "銀座"
@@ -3347,6 +3352,11 @@
                 "id": "akihabara",
                 "english_name": "Akihabara",
                 "japanese_name": "秋葉原"
+              },
+              {
+                "id": "suidobashi",
+                "english_name": "Suidobashi",
+                "japanese_name": "水道橋"
               },
               {
                 "id": "nakano",

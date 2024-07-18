@@ -3,22 +3,6 @@ export default class BasePolaroid extends HTMLElement {
         super();
         this.isAngledLeft = isAngledLeft;
         this.isBlank = isBlank;
-
-        // fetch("components/polaroid/base-polaroid/base-polaroid.css")
-        //     .then(response => response.text())
-        //     .then(css => {
-        //         const style = document.createElement("style");
-        //         style.textContent = css;
-        //         this.appendChild(style);
-        //     });
-
-        // fetch("css/style.css")
-        //     .then(response => response.text())
-        //     .then(css => {
-        //         const style = document.createElement("style");
-        //         style.textContent = css;
-        //         this.appendChild(style);
-        //     });
     }
 
     /**

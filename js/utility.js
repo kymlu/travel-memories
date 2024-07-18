@@ -93,3 +93,7 @@ export function scrollToTop(isSmooth) {
 		behavior: isSmooth ? 'smooth' : "instant"
 	});
 }
+
+export function getImageAddress(countryId, regionId, fileName){
+	return `assets/img/${countryId}/${regionId}/${fileName}`;
+}
