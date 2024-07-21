@@ -1,19 +1,19 @@
 export default class BasePolaroid extends HTMLElement {
-    constructor(isAngledLeft, isBlank) {
+    isAngledLeft: boolean;
+    isBlank: boolean;
+    
+    constructor(isAngledLeft: boolean, isBlank: boolean) {
         super();
         this.isAngledLeft = isAngledLeft;
         this.isBlank = isBlank;
     }
 
-    /**
-     * @param {boolean} newValue
-     */
-    set setNewAngle(newValue) {
+    set setNewAngle(newValue: boolean) {
         if (newValue != this.isAngledLeft) {
             this.isAngledLeft = newValue;
-            this.classList.remove(this.classList.filter(item => {
+            this.classList.remove(Array.from(this.classList).find(item => {
                 item.startsWith("left-") || item.startsWith("right")
-            }));
+            }) ?? "");
             this.classList.add((this.isAngledLeft ? "left-" : "right-") + Math.floor(Math.random() * 4 + 1))
         }
     }

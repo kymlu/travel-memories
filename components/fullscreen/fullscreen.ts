@@ -1,26 +1,29 @@
-import { JAPAN, TAIWAN, DAY_NAMES_EN, DAY_NAMES_JP, MONTH_NAMES, TAGS } from '../../js/constants.js'
 import {
-	getBilingualText, getPictureDate, getImageAddress, isPortraitMode, 
+	JAPAN, TAIWAN, DAY_NAMES_EN, DAY_NAMES_JP,
+	MONTH_NAMES, TAGS, DEFAULT_TIMEOUT
+} from '../../js/constants.ts'
+import {
+	getBilingualText, getPictureDate, getImageAddress, isPortraitMode,
 	sortByEnglishName, addRemoveNoDisplay, addRemoveTransparent
-} from '../../../js/utility.js';
-import { visibleImages } from '../gallery/gallery.js';
+} from '../../js/utility.ts';
+import { visibleImages } from '../gallery/gallery.ts';
 
 //// VARIABLES
 // booleans
-var isNewFullscreenInstance = true;
-export var isFullscreen = false;
+var isNewFullscreenInstance: boolean = true;
+export var isFullscreen: boolean = false;
 
 // selected pic
-var currentPic = null;
-var currentPicIndex = 0;
+var currentPic: Image;
+var currentPicIndex: number = 0;
 
 // pic info
-var isPicInfoVisible = true;
-var favouritedTag;
-var searchTermEng = "";
-var searchTermJp = "";
-var lastSwipeTime = null;
-var selectedCountry = null;
+var isPicInfoVisible: boolean = true;
+var favouritedTag: HTMLElement;
+var searchTermEng: string = "";
+var searchTermJp: string = "";
+var lastSwipeTime: Date;
+var currentCountryId: string;
 
 // gestures
 var initialX = null;
@@ -41,11 +44,11 @@ export function initializeFullscreen() {
 }
 
 // open and close
-export function openFullscreen(imageToDisplay, countryId) {
+export function openFullscreen(imageToDisplay: Image, countryId: string) {
 	currentPic = imageToDisplay;
 	currentPicIndex = visibleImages.indexOf(currentPic);
 	isNewFullscreenInstance = true;
-	selectedCountry = countryId;
+	currentCountryId = countryId;
 	setNewPicture();
 
 	lastSwipeTime = new Date();
@@ -60,20 +63,21 @@ export function openFullscreen(imageToDisplay, countryId) {
 	}
 	isFullscreen = true;
 	document.body.style.overflowY = "hidden";
-	document.getElementById("fullscreen").style.visibility = "visible";
+	document.getElementById("fullscreen")!.style.visibility = "visible";
 	addRemoveTransparent(["fullscreen", "fullscreen-bg"], false);
 }
 
 export function closeFullscreen(forceClose) {
 	isFullscreen = false;
 	document.body.style.overflowY = "auto";
+	let fullscreenElement: HTMLElement = document.getElementById("fullscreen")!;
 	if (forceClose) {
-		document.getElementById("fullscreen").style.visibility = "hidden";
+		fullscreenElement.style.visibility = "hidden";
 		addRemoveTransparent(["fullscreen", "fullscreen-bg"], true);
 	} else {
 		addRemoveTransparent(["fullscreen", "fullscreen-bg"], true);
 		setTimeout(() => {
-			document.getElementById("fullscreen").style.visibility = "hidden";
+			fullscreenElement.style.visibility = "hidden";
 		}, DEFAULT_TIMEOUT);
 	}
 }
@@ -149,7 +153,7 @@ export function moveFullscreenSwipe(e) {
 }
 
 // 
-export function changeFullscreenPicture(isForward) {
+export function changeFullscreenPicture(isForward: boolean) {
 	if (isForward) {
 		if (currentPicIndex == visibleImages.length - 1) {
 			currentPicIndex = 0;
@@ -169,40 +173,40 @@ export function changeFullscreenPicture(isForward) {
 
 function setFullscreenInfo() {
 	// get dates
-	if (currentPic.date) {
+	if (currentPic.date && currentPic.offset) {
 		let date = getPictureDate(new Date(currentPic.date), currentPic.offset);
-		document.getElementById("fullscreen-eng-date").innerHTML = getEnglishDate(date, currentPic.offset);
-		document.getElementById("fullscreen-jp-date").innerHTML = getJapaneseDate(date, currentPic.offset);
+		document.getElementById("fullscreen-eng-date")!.innerHTML = getEnglishDate(date, currentPic.offset);
+		document.getElementById("fullscreen-jp-date")!.innerHTML = getJapaneseDate(date, currentPic.offset);
 	} else {
-		document.getElementById("fullscreen-eng-date").innerHTML = "Unknown date";
-		document.getElementById("fullscreen-jp-date").innerHTML = "不明な日付";
+		document.getElementById("fullscreen-eng-date")!.innerHTML = "Unknown date";
+		document.getElementById("fullscreen-jp-date")!.innerHTML = "不明な日付";
 	}
-	let area = currentPic.area;
+	let area = currentPic.area!;
 
 	// English text for searching
 	searchTermEng = (currentPic.location_english ?
 		(`${currentPic.location_english}, `) :
-		selectedCountry == JAPAN && currentPic.location_japanese ? (`${currentPic.location_japanese}, `) :
-			selectedCountry == TAIWAN && currentPic.location_chinese ? (`${currentPic.location_chinese}, `) :
+		currentCountryId == JAPAN && currentPic.location_japanese ? (`${currentPic.location_japanese}, `) :
+			currentCountryId == TAIWAN && currentPic.location_chinese ? (`${currentPic.location_chinese}, `) :
 				"") + (area.english_name ?? "");
-	document.getElementById("fullscreen-eng-city").innerHTML = searchTermEng;
+	document.getElementById("fullscreen-eng-city")!.innerHTML = searchTermEng;
 
 	// Japanese text for searching
 	searchTermJp = (area.japanese_name ?? area.english_name ?? "") + (currentPic.location_japanese ? (`　${currentPic.location_japanese}`) :
-		(selectedCountry == TAIWAN && currentPic.location_chinese) ? ("　" + currentPic.location_chinese) :
+		(currentCountryId == TAIWAN && currentPic.location_chinese) ? ("　" + currentPic.location_chinese) :
 			currentPic.location_english ? (`　${currentPic.location_english}`) : "");
-	document.getElementById("fullscreen-jp-city").innerHTML = searchTermJp;
+	document.getElementById("fullscreen-jp-city")!.innerHTML = searchTermJp;
 
 	// image description
 	if (currentPic.description_english) {
 		addRemoveNoDisplay("fullscreen-eng-caption", false);
-		document.getElementById("fullscreen-eng-caption").innerHTML = currentPic.description_english;
+		document.getElementById("fullscreen-eng-caption")!.innerHTML = currentPic.description_english;
 	} else {
 		addRemoveNoDisplay("fullscreen-eng-caption", true);
 	}
 	if (currentPic.description_japanese) {
 		addRemoveNoDisplay("fullscreen-jp-caption", false);
-		document.getElementById("fullscreen-jp-caption").innerHTML = currentPic.description_japanese;
+		document.getElementById("fullscreen-jp-caption")!.innerHTML = currentPic.description_japanese;
 	} else {
 		addRemoveNoDisplay("fullscreen-jp-caption", true);
 	}
@@ -210,21 +214,21 @@ function setFullscreenInfo() {
 	// image exif info
 	if (currentPic.camera_model) {
 		addRemoveNoDisplay("camera-info", false);
-		document.getElementById("camera-info").innerHTML = currentPic.camera_model;
+		document.getElementById("camera-info")!.innerHTML = currentPic.camera_model;
 	} else {
 		addRemoveNoDisplay("camera-info", true);
 	}
 
 	if (currentPic.lens) {
 		addRemoveNoDisplay("lens-info", false);
-		document.getElementById("lens-info").innerHTML = currentPic.lens;
+		document.getElementById("lens-info")!.innerHTML = currentPic.lens;
 	} else {
 		addRemoveNoDisplay("lens-info", true);
 	}
 
-	let technicalInfoElement = document.getElementById("technical-info");
+	let technicalInfoElement = document.getElementById("technical-info")!;
 	technicalInfoElement.replaceChildren();
-	let tempElement = null;
+	let tempElement: HTMLElement | null = null;
 	if (currentPic.f_stop) {
 		tempElement = document.createElement("div");
 		tempElement.innerHTML = `\u0192/${currentPic.f_stop}`;
@@ -247,31 +251,31 @@ function setFullscreenInfo() {
 	}
 
 	// add tags
-	currentPic.tags.map(x => { return TAGS.find(function (t) { return t.id == x }) })
+	currentPic.tags?.map(tag => { return TAGS.filter(function (t) { return t.id == tag})[0] })
 		.sort(sortByEnglishName)
 		.forEach(tag => {
 			tempElement = document.createElement("div");
 			tempElement.classList.add("img-tag");
-			tempElement.innerHTML = getBilingualText(tag.english_name, tag.japanese_name);
-			document.getElementById("img-tags").appendChild(tempElement);
+			tempElement.innerHTML = getBilingualText(tag?.english_name, tag?.japanese_name);
+			document.getElementById("img-tags")!.appendChild(tempElement);
 		});
 
 	if (currentPic.is_favourite) {
-		document.getElementById("img-tags").appendChild(favouritedTag);
+		document.getElementById("img-tags")!.appendChild(favouritedTag);
 	}
 }
 
-export function setNewPicture(isForward) {
-	document.getElementById("img-tags").replaceChildren();
+export function setNewPicture(isForward: boolean = false) {
+	document.getElementById("img-tags")!.replaceChildren();
 
-	let src = getImageAddress(selectedCountry, currentPic.region.id, currentPic.file_name);
+	let src = getImageAddress(currentCountryId, currentPic.region.id, currentPic.file_name);
 
-	if (isNewFullscreenInstance || (new Date() - lastSwipeTime) < 300) {
-		document.getElementById("fullscreen-pic").src = src;
+	if (isNewFullscreenInstance || (new Date().getTime() - lastSwipeTime.getTime()) < 300) {
+		(document.getElementById("fullscreen-pic") as HTMLImageElement).src = src;
 		isNewFullscreenInstance = false;
 	} else {
-		let nextPic = document.getElementById("fullscreen-pic-next");
-		let currentPic = document.getElementById("fullscreen-pic");
+		let nextPic = (document.getElementById("fullscreen-pic-next") as HTMLImageElement);
+		let currentPic = (document.getElementById("fullscreen-pic") as HTMLImageElement);
 
 		addRemoveNoDisplay([nextPic], true);
 		nextPic.src = src;
@@ -303,10 +307,14 @@ export function setNewPicture(isForward) {
 }
 
 // picture info
+export function getIsPicInfoVisible(){
+	return isPicInfoVisible;
+}
+
 export function showPicInfo() {
 	isPicInfoVisible = true;
 	addRemoveNoDisplay("pic-info", false);
-	let element = document.getElementById("pic-info-drawer");
+	let element = document.getElementById("pic-info-drawer")!;
 	//TODO: transition on first portrait mode open
 	addRemoveNoDisplay([element], false);
 	setTimeout(() => {
@@ -317,7 +325,7 @@ export function showPicInfo() {
 
 export function hidePicInfo() {
 	isPicInfoVisible = false;
-	let element = document.getElementById("pic-info-drawer");
+	let element = document.getElementById("pic-info-drawer")!;
 	element.style.bottom = `-${element.getBoundingClientRect().height}px`;
 	element.style.marginRight = `-${element.getBoundingClientRect().width}px`;
 	setTimeout(() => {
@@ -326,7 +334,7 @@ export function hidePicInfo() {
 	}, DEFAULT_TIMEOUT);
 }
 
-export function changePicInfoVisibility(isVisible) {
+export function changePicInfoVisibility(isVisible: boolean | undefined) {
 	if (isVisible == undefined) {
 		isVisible = !isPicInfoVisible;
 	}
@@ -339,7 +347,7 @@ export function changePicInfoVisibility(isVisible) {
 }
 
 // format dates according to language
-function getEnglishDate(date, picOffset) {
+function getEnglishDate(date: Date, picOffset: number) {
 	let hours = date.getHours();
 	return DAY_NAMES_EN[date.getDay()] + ", " +
 		MONTH_NAMES[date.getMonth()] + " " +
@@ -354,7 +362,7 @@ function getEnglishDate(date, picOffset) {
 		String((picOffset - Math.floor(picOffset)) * 60).padStart(2, "0");
 }
 
-function getJapaneseDate(date, picOffset) {
+function getJapaneseDate(date: Date, picOffset: number) {
 	let hours = date.getHours();
 	return date.getFullYear() + "年" +
 		(date.getMonth() + 1) + "月" +

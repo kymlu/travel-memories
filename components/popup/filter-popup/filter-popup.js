@@ -1,36 +1,48 @@
-import BasePopup from "../base-popup/base-popup.js"
-import { getBilingualText, sortByEnglishName, flipArrow, addRemoveNoDisplay } from '../../../js/utility.js';
-
-export default class FilterPopup extends BasePopup {
-    allRegions = [];
-    selectedRegions = [];
-    allAreas = [];
-    selectedAreas = [];
-    allTags = [];
-    selectedTags = [];
-    allCameras = [];
-    selectedCameras = [];
-
-    constructor() {
-        super();
-        self = this;
-
-        this.filterOptionButton = document.createElement("button");
-        this.filterOptionButton.classList.add("filter-opt");
-
+"use strict";
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var base_popup_ts_1 = require("../base-popup/base-popup.ts");
+var utility_ts_1 = require("../../../js/utility.ts");
+var FilterPopup = /** @class */ (function (_super) {
+    __extends(FilterPopup, _super);
+    function FilterPopup() {
+        var _this = _super.call(this) || this;
+        _this.allRegions = [];
+        _this.selectedRegions = [];
+        _this.allAreas = [];
+        _this.selectedAreas = [];
+        _this.allTags = [];
+        _this.selectedTags = [];
+        _this.allCameras = [];
+        _this.selectedCameras = [];
+        _this.filterOptionButton = document.createElement("button");
+        _this.filterOptionButton.classList.add("filter-opt");
         fetch("components/popup/filter-popup/filter-popup.html")
-            .then(response => response.text())
-            .then(html => {
-                this.innerHTML = html;
-            })
+            .then(function (response) { return response.text(); })
+            .then(function (html) {
+            _this.innerHTML = html;
+        });
+        return _this;
     }
-
-    connectedCallback() {
-        super.connectedCallback();
-    }
-
-    setupPopup() {
-        super.setupPopup();
+    FilterPopup.prototype.connectedCallback = function () {
+        _super.prototype.connectedCallback.call(this);
+    };
+    FilterPopup.prototype.setupPopup = function () {
+        _super.prototype.setupPopup.call(this);
         [
             ["filter-title", "Filters", "フィルター"],
             ["filter-fav-title", "Favourites", "お気に入り"],
@@ -40,70 +52,63 @@ export default class FilterPopup extends BasePopup {
             ["filter-areas-title", "Areas", "場所"],
             ["filter-clear-btn", "Clear", "クリアする"],
             ["filter-submit-btn", "Save", "保存する"]
-        ].forEach(element => {
-            document.getElementById(element[0]).innerHTML = getBilingualText(element[1], element[2]);
+        ].forEach(function (element) {
+            document.getElementById(element[0]).innerHTML = (0, utility_ts_1.getBilingualText)(element[1], element[2]);
         });
-        document.getElementById("filter-fav-label").childNodes[0].textContent = getBilingualText("Filter favourites", "お気に入りだけを表示する");
-
+        document.getElementById("filter-fav-label").childNodes[0].textContent = (0, utility_ts_1.getBilingualText)("Filter favourites", "お気に入りだけを表示する");
         [
-            ["filter-regions-header", function () { self.toggleFilterGroup("regions", undefined); }],
-            ["filter-areas-header", function () { self.toggleFilterGroup("areas", undefined); }],
-            ["filter-tags-header", function () { self.toggleFilterGroup("tags", undefined); }],
-            ["filter-camera-header", function () { self.toggleFilterGroup("camera", undefined); }],
+            ["filter-regions-header", function () { this.toggleFilterGroup("regions", undefined); }],
+            ["filter-areas-header", function () { this.toggleFilterGroup("areas", undefined); }],
+            ["filter-tags-header", function () { this.toggleFilterGroup("tags", undefined); }],
+            ["filter-camera-header", function () { this.toggleFilterGroup("camera", undefined); }],
             ["filter-clear-btn", this.clearFilters],
             ["filter-submit-btn", this.submitFilters],
-            ["filter-kw-clear-btn", function () { self.clearKeyword(); }]
-        ].forEach(element => {
+            ["filter-kw-clear-btn", function () { this.clearKeyword(); }]
+        ].forEach(function (element) {
             document.getElementById(element[0]).addEventListener("click", element[1]);
         });
-        document.getElementById("filter-kw-input").addEventListener("input", function () { self.checkEmptyKeywordInput(); });
-    }
-
-    closePopup(forceClose) {
-        super.closePopup(forceClose);
-
-        const filterClosedEvent = new CustomEvent('filter-popup-closed');
+        document.getElementById("filter-kw-input").addEventListener("input", this.checkEmptyKeywordInput);
+    };
+    FilterPopup.prototype.closePopup = function (forceClose) {
+        _super.prototype.closePopup.call(this, forceClose);
+        var filterClosedEvent = new CustomEvent('filter-popup-closed');
         this.dispatchEvent(filterClosedEvent);
-    }
-
-    checkEmptyKeywordInput() {
-        setTimeout(() => {
+    };
+    FilterPopup.prototype.checkEmptyKeywordInput = function () {
+        setTimeout(function () {
             if (document.getElementById("filter-kw-input").value == "") {
-                addRemoveNoDisplay("filter-kw-clear-btn", true);
-            } else if (document.getElementById("filter-kw-clear-btn").classList.contains("no-display")) {
-                addRemoveNoDisplay("filter-kw-clear-btn", false);
+                (0, utility_ts_1.addRemoveNoDisplay)("filter-kw-clear-btn", true);
+            }
+            else if (document.getElementById("filter-kw-clear-btn").classList.contains("no-display")) {
+                (0, utility_ts_1.addRemoveNoDisplay)("filter-kw-clear-btn", false);
             }
         }, 10);
-    }
-
-    clearKeyword() {
+    };
+    FilterPopup.prototype.clearKeyword = function () {
         document.getElementById("filter-kw-input").value = "";
-        self.checkEmptyKeywordInput();
-    }
-
-    clearFilters() {
-        document.getElementById("filter-fav-input").checked = false;
-        self.clearKeyword();
-        self.selectedRegions = [];
-        self.selectedAreas = [];
-        self.selectedTags = [];
-        self.selectedCameras = [];
-        document.getElementById("filters").querySelectorAll(".active").forEach(element => {
+        this.checkEmptyKeywordInput();
+    };
+    FilterPopup.prototype.clearFilters = function () {
+        document.getElementById("filter-kw-input").checked = false;
+        this.clearKeyword();
+        this.selectedRegions = [];
+        this.selectedAreas = [];
+        this.selectedTags = [];
+        this.selectedCameras = [];
+        document.getElementById("filters").querySelectorAll(".active").forEach(function (element) {
             element.classList.remove("active");
         });
-    }
-
-    regenerateFilters(isSingleRegion, regions,
-        areas, tags, cameras, regionNameEn, regionNameJp) {
+    };
+    FilterPopup.prototype.regenerateFilters = function (isSingleRegion, regions, areas, tags, cameras, regionNameEn, regionNameJp) {
         this.clearFilters();
-        document.getElementById("filter-regions-title").innerHTML = getBilingualText(regionNameEn, regionNameJp);
-        self.allRegions = regions.sort(sortByEnglishName);
-        self.selectedRegions = [];
-        self.allAreas = areas.sort(sortByEnglishName);
-        self.selectedAreas = [];
-        self.allTags = tags.sort(sortByEnglishName);
-        self.selectedTags = [];
-        self.allCameras = cameras.sort((a, b) => {
+        document.getElementById("filter-regions-title").innerHTML = (0, utility_ts_1.getBilingualText)(regionNameEn, regionNameJp);
+        this.allRegions = regions.sort(utility_ts_1.sortByEnglishName);
+        this.selectedRegions = [];
+        this.allAreas = areas.sort(utility_ts_1.sortByEnglishName);
+        this.selectedAreas = [];
+        this.allTags = tags.sort(utility_ts_1.sortByEnglishName);
+        this.selectedTags = [];
+        this.allCameras = cameras.sort(function (a, b) {
             if (a.toLowerCase() < b.toLowerCase()) {
                 return -1;
             }
@@ -112,109 +117,108 @@ export default class FilterPopup extends BasePopup {
             }
             return 0;
         });
-        self.selectedCameras = [];
-
+        this.selectedCameras = [];
         if (isSingleRegion) {
-            addRemoveNoDisplay("filter-regions", true);
-            addRemoveNoDisplay("filter-areas", false);
-            let filterAreas = document.getElementById("filter-areas-list");
-            this.createFilterSection(filterAreas, self.allAreas, this.toggleArea, "areas");
-        } else {
-            addRemoveNoDisplay("filter-regions", false);
-            addRemoveNoDisplay("filter-areas", true);
-            let filterRegions = document.getElementById("filter-regions-list");
-            this.createFilterSection(filterRegions, self.allRegions, this.toggleRegion, "regions");
+            (0, utility_ts_1.addRemoveNoDisplay)("filter-regions", true);
+            (0, utility_ts_1.addRemoveNoDisplay)("filter-areas", false);
+            var filterAreas = document.getElementById("filter-areas-list");
+            this.createFilterSection(filterAreas, this.allAreas, this.toggleArea, "areas");
         }
-
-        let filterTags = document.getElementById("filter-tags-list");
-        this.createFilterSection(filterTags, self.allTags, this.toggleTag, "tags");
-
-        let filterCameras = document.getElementById("filter-camera-list");
-        this.createFilterSection(filterCameras, self.allCameras, this.toggleCamera, "camera");
-    }
-
-    createFilterSection(htmlList, allList, toggleFunction, sectionName) {
+        else {
+            (0, utility_ts_1.addRemoveNoDisplay)("filter-regions", false);
+            (0, utility_ts_1.addRemoveNoDisplay)("filter-areas", true);
+            var filterRegions = document.getElementById("filter-regions-list");
+            this.createFilterSection(filterRegions, this.allRegions, this.toggleRegion, "regions");
+        }
+        var filterTags = document.getElementById("filter-tags-list");
+        this.createFilterSection(filterTags, this.allTags, this.toggleTag, "tags");
+        var filterCameras = document.getElementById("filter-camera-list");
+        this.createFilterSection(filterCameras, this.allCameras, this.toggleCamera, "camera");
+    };
+    FilterPopup.prototype.createFilterSection = function (htmlList, allList, toggleFunction, sectionName) {
+        var _this = this;
         htmlList.replaceChildren();
-        allList.forEach(item => {
+        allList.forEach(function (item) {
             if (item) {
-                let newButton = this.filterOptionButton.cloneNode();
+                var newButton_1 = _this.filterOptionButton.cloneNode();
                 if (typeof (item) == "string") {
-                    newButton.innerHTML = item;
-                    newButton.addEventListener("click", () => {
+                    newButton_1.innerHTML = item;
+                    newButton_1.addEventListener("click", function () {
                         toggleFunction(item);
-                        newButton.classList.toggle("active");
-                    });
-                } else {
-                    newButton.innerHTML = getBilingualText(item.english_name, item.japanese_name);
-                    newButton.addEventListener("click", () => {
-                        toggleFunction(item.id);
-                        newButton.classList.toggle("active");
+                        newButton_1.classList.toggle("active");
                     });
                 }
-                htmlList.appendChild(newButton);
+                else {
+                    newButton_1.innerHTML = (0, utility_ts_1.getBilingualText)(item.english_name, item.japanese_name);
+                    newButton_1.addEventListener("click", function () {
+                        toggleFunction(item.id);
+                        newButton_1.classList.toggle("active");
+                    });
+                }
+                htmlList.appendChild(newButton_1);
             }
         });
-
         if (allList.length > 10) {
-            self.toggleFilterGroup(sectionName, false);
-        } else {
-            self.toggleFilterGroup(sectionName, true);
+            this.toggleFilterGroup(sectionName, false);
         }
-    }
-
-    toggleFilterGroup(group, showGrp) {
-        let headerBtn = document.getElementById(`filter-${group}-header`).querySelector("button");
+        else {
+            this.toggleFilterGroup(sectionName, true);
+        }
+    };
+    FilterPopup.prototype.toggleFilterGroup = function (group, showGrp) {
+        var headerBtn = document.getElementById("filter-".concat(group, "-header")).querySelector("button");
         if (showGrp == undefined) {
-            flipArrow(headerBtn);
-            document.getElementById(`filter-${group}-list`).classList.toggle("no-display");
-        } else if (showGrp) {
-            flipArrow([headerBtn], true);
-            addRemoveNoDisplay(`filter-${group}-list`, false);
-        } else {
-            flipArrow([headerBtn], false);
-            addRemoveNoDisplay(`filter-${group}-list`, true);
+            (0, utility_ts_1.flipArrow)(headerBtn, undefined);
+            document.getElementById("filter-".concat(group, "-list")).classList.toggle("no-display");
         }
-    }
-
-    toggleFilter(id, array) {
+        else if (showGrp) {
+            (0, utility_ts_1.flipArrow)(headerBtn, true);
+            (0, utility_ts_1.addRemoveNoDisplay)("filter-".concat(group, "-list"), false);
+        }
+        else {
+            (0, utility_ts_1.flipArrow)(headerBtn, false);
+            (0, utility_ts_1.addRemoveNoDisplay)("filter-".concat(group, "-list"), true);
+        }
+    };
+    FilterPopup.prototype.toggleFilter = function (id, array) {
         if (array.includes(id)) {
             array.splice(array.indexOf(id), 1);
-        } else {
+        }
+        else {
             array.push(id);
         }
-    }
-
-    toggleRegion(item) {
-        self.toggleFilter(item, self.selectedRegions);
-    }
-
-    toggleArea(item) {
-        self.toggleFilter(item, self.selectedAreas);
-    }
-
-    toggleTag(item) {
-        self.toggleFilter(item, self.selectedTags);
-    }
-
-    toggleCamera(item) {
-        self.toggleFilter(item, self.selectedCameras);
-    }
-
-    submitFilters() {
-        const filterSubmitEvent = new CustomEvent('filter-popup-submitted', {
+    };
+    FilterPopup.prototype.toggleRegion = function (item) {
+        this.toggleFilter(item, this.selectedRegions);
+    };
+    FilterPopup.prototype.toggleArea = function (item) {
+        this.toggleFilter(item, this.selectedAreas);
+    };
+    FilterPopup.prototype.toggleTag = function (item) {
+        this.toggleFilter(item, this.selectedTags);
+    };
+    FilterPopup.prototype.toggleCamera = function (item) {
+        this.toggleFilter(item, this.selectedCameras);
+    };
+    FilterPopup.prototype.submitFilters = function () {
+        var filterSubmitEvent = new CustomEvent('filter-popup-submitted', {
             detail: {
                 isOnlyFavs: document.getElementById("filter-fav-input").checked,
                 keyword: document.getElementById("filter-kw-input").value,
-                selectedRegions: self.selectedRegions,
-                selectedAreas: self.selectedAreas,
-                selectedTags: self.selectedTags,
-                selectedCameras: self.selectedCameras
+                selectedRegions: this.selectedRegions,
+                selectedAreas: this.selectedAreas,
+                selectedTags: this.selectedTags,
+                selectedCameras: this.selectedCameras
             }
         });
-
         self.dispatchEvent(filterSubmitEvent);
-        self.closePopup(true);
-    }
-}
-
+        this.closePopup(true);
+    };
+    return FilterPopup;
+}(base_popup_ts_1.default));
+exports.default = FilterPopup;
 window.customElements.define("filter-popup", FilterPopup);
+function connectedCallback() {
+    throw new Error("Function not implemented.");
+}
+//# sourceMappingURL=filter-popup.js.map

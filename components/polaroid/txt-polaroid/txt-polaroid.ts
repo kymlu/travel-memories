@@ -1,8 +1,11 @@
-import BasePolaroid from "../base-polaroid/base-polaroid.js"
-import { getBilingualText, addRemoveTransparent } from '../../../js/utility.js';
+import BasePolaroid from "../base-polaroid/base-polaroid.ts"
+import { getBilingualText, addRemoveTransparent } from '../../../js/utility.ts';
 
 export default class TextPolaroid extends BasePolaroid {
-    constructor(isAngledLeft, text, regionId, officialRegionName) {
+    text: string;
+    regionId: string;
+    officialRegionName: string;
+    constructor(isAngledLeft: boolean, text: string, regionId: string, officialRegionName: string) {
         super(isAngledLeft, true);
         this.text = text;
         this.regionId = regionId;
@@ -20,10 +23,10 @@ export default class TextPolaroid extends BasePolaroid {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     setTimeout(() => {
-                        const polaroid = this.querySelector(".polaroid-frame");
+                        const polaroid = (this.querySelector(".polaroid-frame") as HTMLElement);
                         polaroid.classList.add((this.isAngledLeft ? "left-" : "right-") + Math.floor(Math.random() * 4 + 1))
 
-                        const polaroidImg = this.querySelector(".polaroid-img");
+                        const polaroidImg = this.querySelector(".polaroid-img")!;
                         polaroidImg.innerHTML = this.text;
 
                         setTimeout(() => {
@@ -36,10 +39,6 @@ export default class TextPolaroid extends BasePolaroid {
         });
         obs.observe(this);
     }
-
-    // connectedCallback() {
-        
-    // }
 }
 
 window.customElements.define("txt-polaroid", TextPolaroid);

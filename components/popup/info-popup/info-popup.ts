@@ -1,4 +1,4 @@
-import BasePopup from "../base-popup/base-popup.js"
+import BasePopup from "../base-popup/base-popup.ts"
 
 export default class InfoPopup extends BasePopup {
     constructor(){
@@ -26,7 +26,7 @@ export default class InfoPopup extends BasePopup {
         super.openPopup();
     }
 
-    closePopup(forceClose) {
+    closePopup(forceClose: boolean) {
         super.closePopup(forceClose);
         
         const infoClosedEvent = new CustomEvent('info-popup-closed');

@@ -1,9 +1,22 @@
-import BasePolaroid from "../base-polaroid/base-polaroid.js"
-import { getBilingualText, getPictureDate, addRemoveNoDisplay, addRemoveTransparent } from '../../../js/utility.js';
-import { MONTH_NAMES, DEFAULT_TIMEOUT } from '../../../js/constants.js'
+import BasePolaroid from "../base-polaroid/base-polaroid.ts"
+import { getBilingualText, getPictureDate, addRemoveNoDisplay, addRemoveTransparent } from '../../../js/utility.ts';
+import { MONTH_NAMES, DEFAULT_TIMEOUT } from '../../../js/constants.ts'
 
 export default class ImagePolaroid extends BasePolaroid {
-    constructor(isAngledLeft, src, isFavourite, date, offset, enCaption, jpCaption) {
+    src: string;
+    isFavourite: boolean;
+    date: Date;
+    offset: number;
+    enCaption: string;
+    jpCaption: string;
+
+    constructor(isAngledLeft: boolean,
+        src: string,
+        isFavourite: boolean,
+        date: string,
+        offset: number,
+        enCaption: string,
+        jpCaption: string) {
         super(isAngledLeft, false);
 
         this.src = src;
@@ -27,13 +40,13 @@ export default class ImagePolaroid extends BasePolaroid {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     setTimeout(() => {
-                        const polaroid = this.querySelector(".polaroid-frame");
+                        const polaroid = (this.querySelector(".polaroid-frame") as HTMLElement);
                         polaroid.classList.add((this.isAngledLeft ? "left-" : "right-") + Math.floor(Math.random() * 4 + 1))
 
                         const img = polaroid.querySelector("img");
                         if (img) {
                             img.onload = function () {
-                                if (this.width > this.height) {
+                                if (img.width > img.height) {
                                     img.classList.add("landscape-img");
                                 } else {
                                     img.classList.add("portrait-img");
@@ -46,7 +59,7 @@ export default class ImagePolaroid extends BasePolaroid {
 
 
                         }
-                        const dates = polaroid.querySelector(".polaroid-date").querySelectorAll("span");
+                        const dates = polaroid.querySelector(".polaroid-date")!.querySelectorAll("span");
                         if (dates) {
                             if (this.date) {
                                 dates[0].innerHTML = this.getEnglishDate();
@@ -57,14 +70,14 @@ export default class ImagePolaroid extends BasePolaroid {
                             }
                         }
 
-                        const captions = polaroid.querySelector(".polaroid-caption-text-container").querySelectorAll("span");
+                        const captions = polaroid.querySelector(".polaroid-caption-text-container")!.querySelectorAll("span");
                         if (captions) {
                             captions[0].innerHTML = this.enCaption ?? "";
                             captions[1].innerHTML = this.jpCaption ?? "";
                         }
 
                         if (this.isFavourite) {
-                            addRemoveNoDisplay([polaroid.querySelector(".polaroid-pin-star")], false);
+                            addRemoveNoDisplay([polaroid.querySelector(".polaroid-pin-star") as HTMLElement], false);
                         }
 
                         setTimeout(() => {
@@ -77,9 +90,7 @@ export default class ImagePolaroid extends BasePolaroid {
         });
         obs.observe(this);
     }
-
-    //connectedCallback() { }
-
+    
     getEnglishDate() {
         return MONTH_NAMES[this.date.getMonth()] + " " +
             this.date.getDate() + ", " +
