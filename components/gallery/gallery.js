@@ -1,4 +1,4 @@
-/*** Imports */
+/// IMPORTS
 import FilterPopup from '../popup/filter-popup/filter-popup.js'
 import {
 	getBilingualText, scrollToTop, flipArrow, addRemoveNoDisplay,
@@ -10,9 +10,9 @@ import ImagePolaroid from '../polaroid/img-polaroid/img-polaroid.js';
 import { openFullscreen } from '../fullscreen/fullscreen.js';
 import { getAppColor, getCurrentCountry } from '../../js/globals.js';
 
-/*** Variables */
+/// VARIABLES
 // filter
-let filterPopup = null;
+let filterPopup = new FilterPopup();
 let isFilterVisible = false;
 
 // region info
@@ -31,17 +31,16 @@ export var allImages = null;
 export var visibleImages = [];
 let isLoadingImages = false;
 let imageLoadIndex = 0;
+let currentPolaroidCount = 0;
 let isImageAngledLeft = true;
 let blankPolaroidFunction = null;
 let imageLoadLimit = 10;
 
 const noPicturesText = getBilingualText("No pictures available (yet)", "写真は(まだ)ありません");
 
-/*** Functions */
+/// FUNCTIONS
 // initialization
 export function initializeGallery(blankPolaroidFn) {
-	["dates-title", "Dates visited", "訪れた日付"],
-		filterPopup = new FilterPopup();
 	filterPopup.addEventListener("filter-popup-closed", () => {
 		isFilterVisible = false;
 	});
@@ -60,6 +59,7 @@ export function initializeGallery(blankPolaroidFn) {
 			document.getElementById("gallery").innerHTML = noPicturesText;
 		} else {
 			imageLoadIndex = 0;
+			currentPolaroidCount = 0;
 			loadImages();
 		}
 	});
@@ -173,6 +173,7 @@ export function setNewRegion(regionData, isSingleRegionSelected) {
 	gallery.replaceChildren();
 	isImageAngledLeft = false;
 	imageLoadIndex = 0;
+	currentPolaroidCount = 0;
 	previousRegion = null;
 
 	// add pictures
@@ -186,25 +187,28 @@ export function setNewRegion(regionData, isSingleRegionSelected) {
 function loadImages() {
 	isLoadingImages = true;
 	let gallery = document.getElementById("gallery");
-	// TODO: have a loader at the bottom
 	// dynamically load next set of images
-	for (let i = 0; imageLoadIndex < visibleImages.length && i < imageLoadLimit; i++, imageLoadIndex++) {
+	for (let i = 0; imageLoadIndex < visibleImages.length && i < imageLoadLimit; i++, currentPolaroidCount++) {
 		let img = visibleImages[imageLoadIndex];
 		if (currentRegion == null && (previousRegion == null || previousRegion != img.region.id)) {
+			// text separator polaroid
 			previousRegion = img.region.id;
 			let blankPol = createPolaroidBlank(img.region, isImageAngledLeft);
 			isImageAngledLeft = !isImageAngledLeft;
 			gallery.appendChild(blankPol);
+		} else {
+			// image polaroid
+			let pol = createPolaroidImg(img, isImageAngledLeft);
+			isImageAngledLeft = !isImageAngledLeft;
+			gallery.appendChild(pol);
+			imageLoadIndex++;
 		}
-
-		let pol = createPolaroidImg(img, isImageAngledLeft);
-		isImageAngledLeft = !isImageAngledLeft;
-		gallery.appendChild(pol);
 
 		// set the limit to something different if the size of the screen changed
 		if (i == 0) {
-			imageLoadLimit = Math.max(Math.floor(window.innerWidth / 255) *
-				Math.floor(window.innerHeight / 315) * 2, 10);
+			let imgsPerScreen = Math.max(Math.floor(window.innerWidth / 265) * Math.floor(window.innerHeight / 325), 5);
+			// fill the remainder if the number of images does not fill the screen
+			imageLoadLimit = imgsPerScreen * 2 + (imgsPerScreen - (currentPolaroidCount % imgsPerScreen / 2));
 		}
 	}
 	isLoadingImages = false;
@@ -231,9 +235,8 @@ function createPolaroidImg(img, isImageAngledLeft) {
 function createPolaroidBlank(rgn, isImageAngledLeft) {
 	let newPolaroid = new TextPolaroid(
 		isImageAngledLeft,
-		getBilingualText(rgn.englishName, rgn.japaneseName),
-		rgn.Id,
-		currentCountry.officialRegionNameEnglish
+		rgn.englishName,
+		rgn.japaneseName
 	);
 
 	newPolaroid.addEventListener("click", () => { blankPolaroidFunction(rgn.id) });
@@ -390,11 +393,13 @@ function editMiniMap() {
 }
 
 // image filtering
+/** Shows the filter popup. */
 export function showFilter() {
 	isFilterVisible = true;
 	filterPopup.openPopup();
 }
 
+/** Closes the filter popup. */
 export function closeFilter() {
 	filterPopup.closePopup(true);
 }
@@ -407,6 +412,16 @@ function doesTextIncludeKeyword(text, keywordSearchTerm) {
 	return text && text.toLowerCase().includes(keywordSearchTerm.toLowerCase());
 }
 
+/**
+ * @param {any} img 
+ * @param {boolean} isOnlyFavs 
+ * @param {string} keywordSearchTerm 
+ * @param {string[]} selectedRegions 
+ * @param {string[]} selectedAreas 
+ * @param {string[]} selectedTags 
+ * @param {string[]} selectedCameras 
+ * @returns a value indicating whether the image should be visible based on the filters.
+ */
 function includeImage(img,
 	isOnlyFavs,
 	keywordSearchTerm,
@@ -441,6 +456,14 @@ function includeImage(img,
 		(selectedCameras.length == 0 || selectedCameras.includes(img.cameraModel));
 }
 
+/**
+ * @param {boolean} isOnlyFavs 
+ * @param {string} keyword 
+ * @param {string[]} selectedRegions 
+ * @param {string[]} selectedAreas 
+ * @param {string[]} selectedTags 
+ * @param {string[]} selectedCameras 
+ */
 function filterImages(isOnlyFavs,
 	keyword,
 	selectedRegions,
@@ -491,7 +514,7 @@ export function createRegionDropDown(selectRegionFunction) {
 				let regionButton = regionTemplate.cloneNode();
 				regionButton.innerHTML = getBilingualText(rgn.englishName, rgn.japaneseName);
 				regionButton.id = `${rgn.id}-dropdown`;
-				regionButton.title = getBilingualText(`See images from this ${currentCountry.officialRegionNameEnglish}`, "この地域の写真を表示する");
+				regionButton.title = getBilingualText(`See images from ${rgn.englishName}`, `${rgn.japaneseName}の写真を表示する`);
 				regionButton.classList.add("visited-rgn-text");
 				regionButton.addEventListener("click", function () {
 					selectRegionFunction(rgn.id);

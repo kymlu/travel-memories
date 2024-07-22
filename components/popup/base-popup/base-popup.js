@@ -1,4 +1,4 @@
-/*** Imports */
+/// IMPORTS
 import { addRemoveNoDisplay, addRemoveTransparent, addRemoveClass } from '../../../js/utils.js'
 import { DEFAULT_TIMEOUT } from '../../../js/constants.js';
 

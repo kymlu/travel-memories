@@ -1,31 +1,30 @@
 /*
 	Project Name: Travel Memories
 	Author: Katie Lu
+	Note: will try converting to TypeScript later
 */
 
-/*** Imports */
+/// IMPORTS
 import * as Gallery from '../components/gallery/gallery.js';
 import * as Fullscreen from '../components/fullscreen/fullscreen.js';
 import InfoPopup from '../components/popup/info-popup/info-popup.js'
-import { LOAD_ANIMATION_TIME, DEFAULT_TIMEOUT, SCROLL_THRESHOLD } from './constants.js'
+import { DEFAULT_TIMEOUT, SCROLL_THRESHOLD } from './constants.js'
+import { startLoader, hideLoader, stopLoader } from '../components/loader/loader.js';
 import {
 	getBilingualText, isPortraitMode, scrollToTop, addRemoveClass,
 	sortImgs, addRemoveNoDisplay, addRemoveTransparent
 } from '../../js/utils.js';
 import { getAppColor, isCountrySelected, setAppColor, setCurrentCountry } from './globals.js';
 
-/*** Variables */
+/// VARIABLES
 let root = document.querySelector(':root');
 
 // Loading
 let isLoading = true;
-/** @type Date */
-let now = null;
 
 // Data
 let allCountries = null;
 let currentCountry = null;
-let currentCountryId = "";
 let countryTitle = null;
 
 // Booleans
@@ -38,8 +37,7 @@ let initialYHandle = null;
 let isHandleGrabbed = false;
 let grabbedHandleId = null;
 
-/*** Functions */
-/**** General ****/
+/// FUNCTIONS
 /**
  * Initializes the touch event for elements on screen with handles.
  * @param {TouchEvent} e - the touch element.
@@ -92,7 +90,9 @@ function colourMap() {
 		const rgnImg = svgDoc.getElementById(`${rgn.id}-img`);
 		if (rgn.visited) {
 			// CSS won't work on document objects
-			rgnImg.title = getBilingualText(`See images from this ${currentCountry.officialRegionNameEnglish}`, "この地域の写真を表示する");
+			let imgTitle = document.createElementNS("http://www.w3.org/2000/svg", "title");
+			imgTitle.innerHTML = getBilingualText(`See images from ${rgn.englishName}`, `${rgn.japaneseName}の写真を表示する`);
+			rgnImg.appendChild(imgTitle);
 			rgnImg.setAttribute("fill", getAppColor());
 			rgnImg.setAttribute("stroke", "none");
 			rgnImg.setAttribute("cursor", "pointer");
@@ -121,7 +121,7 @@ function colourMap() {
 
 function createMap() {
 	const svgObj = document.getElementById("country-map");
-	svgObj.data = `assets/img/country/${currentCountryId}.svg`;
+	svgObj.data = `assets/img/country/${currentCountry.id}.svg`;
 }
 
 /**** Site Info Popup ****/
@@ -136,7 +136,7 @@ function closeInfoPopup() {
 
 /**** Show and hide pages ****/
 function openMapPage() {
-	hideLoader();
+	stopLoading();
 	scrollToTop(false);
 	addRemoveTransparent("map-page", false);
 	addRemoveNoDisplay("to-top-btn", false);
@@ -180,7 +180,7 @@ function changeGalleryVisibility(isVisible) {
 	addRemoveTransparent("rgn-info-bg", false);
 
 	if (!isGalleryVisible) {
-		showLoader();
+		startLoading();
 		setTimeout(() => {
 			createMap();
 			setTimeout(() => {
@@ -201,7 +201,7 @@ function selectRegion(regionId, isPoppedPage) {
 		window.history.pushState({ rgn: regionId }, null, null);
 	}
 
-	showLoader();
+	startLoading();
 	if (regionId != undefined && regionId != null) {
 		let newRegion = currentCountry.regionGroups.flatMap(x => x.regions).filter(rgn => rgn.id == regionId);
 		Gallery.setNewRegion(newRegion, true);
@@ -219,22 +219,48 @@ function selectCountry(countryId, countryColor, isPoppedPage) {
 	if (isPoppedPage == null) {
 		window.history.pushState({ country: countryId, countryColor: countryColor }, null, null);
 	}
-	currentCountryId = countryId;
+
+	currentCountry = allCountries.find(country => country.id == countryId);
+	currentCountry.regionGroups.forEach(rgnGrp => {
+		rgnGrp.regions.forEach(rgn => {
+			if (rgn.imageList != null) {
+				rgn.imageList.sort(sortImgs);
+			}
+		});
+	});
+
+	// don't need to save all the data
+	// create a copy
+	let tempCountry = JSON.parse(JSON.stringify(currentCountry));
+	// remove images
+	tempCountry.regionGroups.forEach(group => group.regions.forEach(region => {
+		if (region.imageList) {
+			region.imageList = [];
+		}
+	}));
+	setCurrentCountry(tempCountry);
 
 	// TODO: modularize loader
-	now = new Date();
-	document.getElementById("load-icon").src = `assets/icons/${allCountries.filter(x => { return x.id == countryId })[0].symbol}.svg`;
-	showLoader();
+	startLoading();
 
 	addRemoveNoDisplay(["map-page", "btn-grp-left"], false);
 	addRemoveClass("btn-grp-right", "justify-end", false);
 
 	changeMainColor(countryColor);
-	filterCountryData();
 
+	countryTitle = getBilingualText(currentCountry.englishName, currentCountry.japaneseName);
+	document.getElementById("main-title").innerHTML = countryTitle;
+	document.getElementById("main-title").title = getBilingualText(`See all images from ${currentCountry.englishName}`, `${currentCountry.japaneseName}の写真をすべて表示する`);
+	document.getElementById("rgn-title-btn").title = getBilingualText(`Change ${currentCountry.officialRegionNameEnglish}`, `${currentCountry.officialRegionNameJapanese}を切り替える`);
+	document.getElementById("info-btn").title = getBilingualText(`Toggle ${currentCountry.official_region_name} info`, `${currentCountry.officialRegionNameJapanese}の情報をトグル`);
+
+	Gallery.resetGallery();
+	Gallery.createRegionDropDown(selectRegion);
 	setTimeout(() => {
-		stopLoader();
-		document.getElementById("load8").addEventListener("animationend", openMapPage);
+		createMap();
+	}, 50);
+	setTimeout(() => {
+		stopLoader(openMapPage);
 	}, 1200);
 }
 
@@ -313,8 +339,8 @@ function setupSite() {
 	document.getElementById("search-jp").addEventListener("click", Fullscreen.searchJapanese);
 
 	document.getElementById("country-map-mini").addEventListener("load", () => {
-		Gallery.filterMiniMap;
-		hideLoader();
+		Gallery.filterMiniMap();
+		stopLoading();
 	});
 	document.getElementById("country-map").addEventListener("load", colourMap);
 	document.getElementById("rgn-info-handle").addEventListener("touchstart", e => { startHandleDrag(e, "rgn-info-handle") }, false);
@@ -372,7 +398,7 @@ function setupSite() {
 
 	// Scroll detections
 	window.onscroll = function () {
-		if (!isLoading) {
+		if (isGalleryVisible && !isLoading) {
 			Gallery.onScrollFunction();
 		}
 	};
@@ -393,40 +419,9 @@ function setupSite() {
 	});
 }
 
-function filterCountryData() {
-	if (allCountries != null) {
-		currentCountry = allCountries.find(country => country.id == currentCountryId);
-		currentCountry.regionGroups.forEach(rgnGrp => {
-			rgnGrp.regions.forEach(rgn => {
-				if (rgn.imageList != null) {
-					rgn.imageList.sort(sortImgs);
-				}
-			});
-		});
-
-		countryTitle = getBilingualText(currentCountry.englishName, currentCountry.japaneseName);
-		document.getElementById("main-title").innerHTML = countryTitle;
-		document.getElementById("main-title").title = getBilingualText(`See all images from ${currentCountry.englishName}`, `${currentCountry.japaneseName}の写真をすべて表示する`);
-		document.getElementById("rgn-title-btn").title = getBilingualText(`Change ${currentCountry.officialRegionNameEnglish}`, `${currentCountry.officialRegionNameJapanese}を切り替える`);
-		document.getElementById("info-btn").title = getBilingualText(`Toggle ${currentCountry.official_region_name} info`, `${currentCountry.officialRegionNameJapanese}の情報をトグル`);
-
-		let tempCountry = JSON.parse(JSON.stringify(currentCountry));
-		tempCountry.regionGroups.forEach(group => group.regions.forEach(region => {
-			if (region.imageList) {
-				region.imageList = [];
-			}
-		}));
-
-		setCurrentCountry(tempCountry);
-
-		Gallery.resetGallery();
-		Gallery.createRegionDropDown(selectRegion);
-		setTimeout(() => {
-			createMap();
-		}, 50);
-	}
-}
-
+/**
+ * Gets all the data for the site.
+ */
 function fetchData() {
 	let hasError = false;
 
@@ -449,7 +444,7 @@ function fetchData() {
 
 function retry() {
 	addRemoveNoDisplay("error-btn", true);
-	for (let i = 0; i <= 8; i++) {
+	for (let i = 0; i <= LOAD_DOT_COUNT; i++) {
 		document.getElementById(`load${i}`).style.animationPlayState = "running";
 	}
 	fetchData();
@@ -459,48 +454,29 @@ function showDataLoadError() {
 	setTimeout(() => {
 		addRemoveNoDisplay("error-btn", false);
 		addRemoveTransparent("error-btn", false);
-		for (let i = 0; i <= 8; i++) {
+		for (let i = 0; i <= LOAD_DOT_COUNT; i++) {
 			document.getElementById(`load${i}`).style.animationPlayState = "paused";
 		}
 	}, DEFAULT_TIMEOUT);
 }
 
-/**** Loading Animation ****/
-function showLoader() {
+function startLoading() {
 	isLoading = true;
 	addRemoveTransparent(["top-bar", "map-page", "start-screen"], true);
 	addRemoveNoDisplay("loading-screen", false);
 	addRemoveTransparent("loading-screen", false);
-	for (let i = 0; i <= 8; i++) {
-		document.getElementById(`load${i}`).style.animationIterationCount = "infinite";
-		addRemoveNoDisplay(`load${i}`, false);
-	}
+
+	startLoader();
 
 	setTimeout(() => {
 		addRemoveNoDisplay("start-screen", true);
 	}, DEFAULT_TIMEOUT);
 }
 
-function hideLoader() {
-	addRemoveTransparent("loading-screen", true);
+function stopLoading(){
 	addRemoveTransparent("top-bar", false);
 	document.body.style.overflowY = "auto";
-	setTimeout(() => {
-		addRemoveNoDisplay("loading-screen", true);
-		setTimeout(() => {
-			addRemoveTransparent("loading-screen", false);
-			isLoading = false;
-		}, DEFAULT_TIMEOUT);
-	}, DEFAULT_TIMEOUT);
-}
-
-function stopLoader() {
-	setTimeout(() => {
-		let iterationCount = Math.ceil((new Date() - now) / LOAD_ANIMATION_TIME);
-		for (let i = 0; i <= 8; i++) {
-			document.getElementById(`load${i}`).style.animationIterationCount = iterationCount;
-		}
-	}, 100);
+	hideLoader();
 }
 
 /**** Start Screen ****/
@@ -572,8 +548,7 @@ function createStartScreen() {
 
 function showFirstStartScreen() {
 	window.history.pushState({}, null, null);
-	document.getElementById("load8").addEventListener("animationend", showStartScreen);
-	stopLoader();
+	stopLoader(showStartScreen);
 }
 
 function showStartScreen(isPoppedPage) {
@@ -589,7 +564,7 @@ function showStartScreen(isPoppedPage) {
 	addRemoveClass("btn-grp-right", "justify-end", true);
 	addRemoveNoDisplay(["top-bar", "load-icon"], false);
 	addRemoveNoDisplay(["btn-grp-left", "loading-screen", "to-top-btn", "map-page"], true);
-	document.getElementById("load8").removeEventListener("animationend", showStartScreen);
+	document.getElementById(`load${LOAD_DOT_COUNT}`).removeEventListener("animationend", showStartScreen);
 	addRemoveNoDisplay("start-screen", false);
 	document.getElementById("start-screen").scrollTo({
 		top: 0,
@@ -603,7 +578,6 @@ function showStartScreen(isPoppedPage) {
 
 /**** Main ****/
 function main() {
-	now = new Date();
 	scrollToTop(false);
 	setupSite();
 	fetchData();

@@ -1,12 +1,12 @@
-/*** Imports */
-import { JAPAN, TAIWAN, DAY_NAMES_EN, DAY_NAMES_JP, MONTH_NAMES, TAGS } from '../../js/constants.js'
+/// IMPORTS
+import { JAPAN, TAIWAN, DAY_NAMES_EN, DAY_NAMES_JP, MONTH_NAMES, TAGS, DEFAULT_TIMEOUT } from '../../js/constants.js'
 import {
 	getBilingualText, getPictureDate, getImageAddress, isPortraitMode, 
 	sortByEnglishName, addRemoveNoDisplay, addRemoveTransparent
 } from '../../../js/utils.js';
 import { visibleImages } from '../gallery/gallery.js';
 
-/*** Variables */
+/// VARIABLES
 // booleans
 let isNewFullscreenInstance = true;
 let isFullscreen = false;
@@ -65,6 +65,9 @@ export function openFullscreen(imageToDisplay, countryId) {
 	addRemoveTransparent(["fullscreen", "fullscreen-bg"], false);
 }
 
+/** 
+ * Close the fullscreen.
+ * @param {boolean} forceClose - ```True``` if the user has forcefully closed fullscreen mode.*/
 export function closeFullscreen(forceClose) {
 	isFullscreen = false;
 	document.body.style.overflowY = "auto";
@@ -79,46 +82,51 @@ export function closeFullscreen(forceClose) {
 	}
 }
 
+/**
+ * @returns whether the fullscreen image viewer has opened.
+ */
 export function getIsFullscreen(){
 	return isFullscreen;
 }
 
 // seaching functions
-// TODO: potentially get user's default search enging
+// TODO: potentially get user's default search engine
+/** 
+ * Open a new window to Google a search term.
+ * @param {string} searchTerm  */
 function search(searchTerm) {
 	window.open(`https://www.google.com/search?q=${searchTerm}`);
 }
 
+/** Searches the English search term. */
 export function searchEnglish() {
 	search(searchTermEng);
 }
 
+/** Searches the Japanese search term. */
 export function searchJapanese() {
 	search(searchTermJp)
 }
 
 // swiping functions
+/**
+ * Starts procedures for 
+ */
 export function startFullscreenSwipe(e) {
-	if (isPortraitMode()) {
+	//if (isPortraitMode()) {
 		if (e.touches.length == 1) {
 			initialX = e.touches[0].clientX;
 			initialY = e.touches[0].clientY;
 		}
-	}
+	//}
 }
 
 export function moveFullscreenSwipe(e) {
-	if (initialX === null) {
-		return;
-	}
+	if (initialX === null || initialY === null) return;
 
-	if (initialY === null) {
-		return;
-	}
-
-	if (!isPortraitMode()) {
-		return;
-	}
+	// if (!isPortraitMode()) {
+	// 	return;
+	// }
 
 	if (e.touches.length == 1) {
 		let currentX = e.touches[0].clientX;
@@ -127,13 +135,15 @@ export function moveFullscreenSwipe(e) {
 		let diffX = initialX - currentX;
 		let diffY = initialY - currentY;
 
+		// horizontal swipe
 		if (Math.abs(diffX) > Math.abs(diffY)) {
 			if (diffX > 0) {
 				changeFullscreenPicture(true);
 			} else {
 				changeFullscreenPicture(false);
 			}
-		} else {
+		} else if (isPortraitMode()) {
+			//vertical swipe - only for showing/hiding pic info
 			if (diffY > 0) {
 				if (!isPicInfoVisible) {
 					showPicInfo();

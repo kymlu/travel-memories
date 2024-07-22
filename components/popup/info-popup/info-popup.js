@@ -1,4 +1,4 @@
-/*** Imports */
+/// IMPORTS
 import BasePopup from "../base-popup/base-popup.js"
 
 /**

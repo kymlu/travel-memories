@@ -1,6 +1,7 @@
 export const LOAD_ANIMATION_TIME = 1500;
 export const DEFAULT_TIMEOUT = 500;
 export const SCROLL_THRESHOLD = 100;
+export const LOAD_DOT_COUNT = 8;
 
 export const JAPAN = "japan";
 export const TAIWAN = "taiwan";

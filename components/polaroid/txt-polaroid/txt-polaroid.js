@@ -1,4 +1,4 @@
-/*** Imports */
+/// IMPORTS
 import BasePolaroid from "../base-polaroid/base-polaroid.js"
 import { getBilingualText, addRemoveTransparent } from '../../../js/utils.js';
 
@@ -8,21 +8,15 @@ import { getBilingualText, addRemoveTransparent } from '../../../js/utils.js';
  */
 export default class TextPolaroid extends BasePolaroid {
     /**
-     * 
      * @param {boolean} isAngledLeft 
-     * @param {string} text 
-     * @param {string} regionId 
-     * @param {string} officialRegionNameEnglish 
+     * @param {string} englishName 
+     * @param {string} japaneseName 
      */
-    constructor(isAngledLeft, text, regionId, officialRegionNameEnglish) {
+    constructor(isAngledLeft, englishName, japaneseName) {
         super(isAngledLeft, true);
         /** The text to display in the middle of the polaroid. @type string */
-        this.text = text;
+        this.text = getBilingualText(englishName, japaneseName);
         /** The region the polaroid represents. @type string */
-        this.regionId = regionId;
-        /** The official region name for the current country. @type string */
-        // TODO: make some variables shared between all the files (a shared file, currentColour, currentCountry, etc.)
-        this.officialRegionNameEnglish = officialRegionNameEnglish;
 
         // Get component html
         fetch("components/polaroid/txt-polaroid/txt-polaroid.html")
@@ -31,7 +25,7 @@ export default class TextPolaroid extends BasePolaroid {
                 this.innerHTML = html;
             });
 
-        this.title = getBilingualText(`See images from this ${this.officialRegionNameEnglish}`, "この地域の写真を表示する");
+        this.title = getBilingualText(`See images from ${englishName}`, `${japaneseName}の写真を表示する`);
 
         // The lazy loading observer
         // Based on: https://www.codepel.com/vanilla-javascript/javascript-image-loaded/

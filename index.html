@@ -11,7 +11,7 @@
   <link rel="apple-touch-icon" sizes="144x144" href="assets/icons/favicon/apple-icon-144x144.png">
   <link rel="apple-touch-icon" sizes="152x152" href="assets/icons/favicon/apple-icon-152x152.png">
   <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/favicon/apple-icon-180x180.png">
-  <link rel="icon" type="image/png" sizes="192x192"  href="assets/icons/favicon/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/icons/favicon/android-icon-192x192.png">
   <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="96x96" href="assets/icons/favicon/favicon-96x96.png">
   <link rel="icon" type="image/png" sizes="16x16" href="assets/icons/favicon/favicon-16x16.png">
@@ -57,7 +57,6 @@
 
   <!-- Map Page (Map and Official Region List) -->
   <div id="map-page" class="map-page transparent opacity-transition">
-    <!-- TODO: change map size to prevent scroll-->
     <object id="country-map" type="image/svg+xml" class="country-map"></object>
     <button id="main-title"></button>
   </div>
@@ -67,7 +66,8 @@
     <div id="rgn-info-bg" class="popup-bg opacity-transition portrait-only transparent"></div>
     <div id="rgn-info-drawer" class="rgn-info-container no-display">
       <div class="rgn-info">
-        <object id="country-map-mini" type="image/svg+xml" class="mini-map opacity-transition" data="assets/img/country/japan.svg"></object>
+        <object id="country-map-mini" type="image/svg+xml" class="mini-map opacity-transition"
+          data="assets/img/country/japan.svg"></object>
         <div id="rgn-info-txt" class="flex-column regular-text rgn-info-text">
           <div id="rgn-info-dates">
             <div id="dates-title" class="bold-text capitalize-text"></div>
@@ -96,17 +96,19 @@
   <div id="gallery" class="gallery no-display"></div>
 
   <!-- Scroll to top btn -->
-   <!-- TODO: make sure only visible in the gallery -->
-  <button id="to-top-btn" class="large-icon floating-btn opacity-transform-transition arrow-down no-display">&#xf103</button>
+  <button id="to-top-btn"
+    class="large-icon floating-btn opacity-transform-transition arrow-down no-display">&#xf103</button>
 
   <!-- Fullscreen Picture -->
-  <div id="fullscreen" class="centered overlay opacity-transition transparent fullscreen-container" style="z-index: 6000; visibility: hidden;">
+  <div id="fullscreen" class="centered overlay opacity-transition transparent fullscreen-container"
+    style="z-index: 6000; visibility: hidden;">
     <div id="fullscreen-gallery" class="fullscreen-gallery">
       <div id="fullscreen-bg" class="popup-bg opacity-transition transparent" style="z-index: 0;"></div>
       <div id="fullscreen-ctrl" class="fullscreen-ctrl" style="z-index: 1;">
         <button id="left-arrow" class="large-icon fullscreen-arrow">&#xf0d9</button>
         <div>
-          <img id="fullscreen-pic-next" class="fullscreen-pic transparent centered no-display" style="position: absolute;" />
+          <img id="fullscreen-pic-next" class="fullscreen-pic transparent centered no-display"
+            style="position: absolute;" />
           <img id="fullscreen-pic" class="fullscreen-pic centered" style="position: absolute;" />
         </div>
         <button id="right-arrow" class="large-icon fullscreen-arrow">&#xf0da</button>
@@ -124,13 +126,11 @@
         </div>
         <div id="pic-info-details" class="flex-column pic-info-details caption-text">
           <div id="fullscreen-eng-date"></div>
-          <div><span id="fullscreen-eng-city"></span> <span id="search-eng"
-              class="inline-icon">&#xf002</span></div>
+          <div><span id="fullscreen-eng-city"></span> <span id="search-eng" class="inline-icon">&#xf002</span></div>
           <div id="fullscreen-eng-caption"></div>
           <hr class="divider">
           <div id="fullscreen-jp-date"></div>
-          <div><span id="fullscreen-jp-city"></span> <span id="search-jp"
-              class="inline-icon">&#xf002</span></div>
+          <div><span id="fullscreen-jp-city"></span> <span id="search-jp" class="inline-icon">&#xf002</span></div>
           <div id="fullscreen-jp-caption"></div>
           <hr class="divider">
           <div id="camera-info"></div>
@@ -149,19 +149,19 @@
   <!-- Loading circle -->
   <div id="loading-screen" class="loader centered opacity-transition">
     <div class="centered">
-      <div id="load0" class="loader-dot" style="transform: rotate(270deg) translate(80px) rotate(270deg); animation-delay: 0s;"></div>
-      <div id="load1" class="loader-dot" style="transform: rotate(315deg) translate(80px) rotate(315deg); animation-delay: 0.1875s;"></div>
-      <div id="load2" class="loader-dot" style="transform: rotate(0deg) translate(80px) rotate(0deg); animation-delay: 0.375s;"></div>
-      <div id="load3" class="loader-dot" style="transform: rotate(45deg) translate(80px) rotate(45deg); animation-delay: 0.5625s;"></div>
-      <div id="load4" class="loader-dot" style="transform: rotate(90deg) translate(80px) rotate(90deg); animation-delay: 0.75s;"></div>
-      <div id="load5" class="loader-dot" style="transform: rotate(135deg) translate(80px) rotate(135deg); animation-delay: 0.9375s;"></div>
-      <div id="load6" class="loader-dot" style="transform: rotate(180deg) translate(80px) rotate(180deg); animation-delay: 1.125s;"></div>
-      <div id="load7" class="loader-dot" style="transform: rotate(225deg) translate(80px) rotate(225deg); animation-delay: 1.3125s;"></div>
-      <div id="load8" class="loader-dot" style="transform: rotate(270deg) translate(80px) rotate(270deg); animation-delay: 1.5s;"></div>
+      <div id="load0" class="loader-dot dot-0"></div>
+      <div id="load1" class="loader-dot dot-1"></div>
+      <div id="load2" class="loader-dot dot-2"></div>
+      <div id="load3" class="loader-dot dot-3"></div>
+      <div id="load4" class="loader-dot dot-4"></div>
+      <div id="load5" class="loader-dot dot-5"></div>
+      <div id="load6" class="loader-dot dot-6"></div>
+      <div id="load7" class="loader-dot dot-7"></div>
+      <div id="load8" class="loader-dot dot-8"></div>
       <img id="load-icon" class="start-icon img centered no-display" style="margin-left: 10px; margin-top: 10px;">
     </div>
   </div>
-  
+
   <!-- Error button -->
   <div id="error-btn" class="error-btn centered loader-text" onclick="retry()">
     <p>Failed to fetch data. Try again?</p>
@@ -177,8 +177,7 @@
   <script type="module" src="components/polaroid/base-polaroid/base-polaroid.js"></script>
   <script type="module" src="components/polaroid/img-polaroid/img-polaroid.js"></script>
   <script type="module" src="components/polaroid/txt-polaroid/txt-polaroid.js"></script>
-  <script type="module" src="js/utils.js" ></script>
-  <script type="module" src="js/constants.js" ></script>
+  <script type="module" src="js/utils.js"></script>
   <script type="module" src="js/main.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/exif-js/2.3.0/exif.js"></script>

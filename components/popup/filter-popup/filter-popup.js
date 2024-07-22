@@ -1,4 +1,4 @@
-/*** Imports */
+/// IMPORTS
 import BasePopup from "../base-popup/base-popup.js"
 import { getBilingualText, sortByEnglishName, flipArrow, addRemoveNoDisplay } from '../../../js/utils.js';
 
