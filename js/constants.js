@@ -14,42 +14,42 @@ export const DAY_NAMES_JP = ["日", "月", "火", "水", "木", "金", "土"];
 export const TAGS = [
 	{
 		"id": "animal",
-		"english_name": "Animals",
-		"japanese_name": "動物",
+		"englishName": "Animals",
+		"japaneseName": "動物",
 	},
 	{
 		"id": "attractions",
-		"english_name": "Attractions",
-		"japanese_name": "観光地",
+		"englishName": "Attractions",
+		"japaneseName": "観光地",
 	},
 	{
 		"id": "art",
-		"english_name": "Art",
-		"japanese_name": "美術",
+		"englishName": "Art",
+		"japaneseName": "美術",
 	},
 	{
 		"id": "event",
-		"english_name": "Events",
-		"japanese_name": "イベント",
+		"englishName": "Events",
+		"japaneseName": "イベント",
 	},
 	{
 		"id": "food",
-		"english_name": "Food",
-		"japanese_name": "食べ物",
+		"englishName": "Food",
+		"japaneseName": "食べ物",
 	},
 	{
 		"id": "nature",
-		"english_name": "Nature",
-		"japanese_name": "自然",
+		"englishName": "Nature",
+		"japaneseName": "自然",
 	},
 	{
 		"id": "relax",
-		"english_name": "Daily life",
-		"japanese_name": "日常",
+		"englishName": "Daily life",
+		"japaneseName": "日常",
 	},
 	{
 		"id": "town",
-		"english_name": "Around town",
-		"japanese_name": "街中で",
+		"englishName": "Around town",
+		"japaneseName": "街中で",
 	}
 ];

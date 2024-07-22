@@ -1,27 +1,46 @@
+/*** Imports */
 import BasePolaroid from "../base-polaroid/base-polaroid.js"
-import { getBilingualText, addRemoveTransparent } from '../../../js/utility.js';
+import { getBilingualText, addRemoveTransparent } from '../../../js/utils.js';
 
+/**
+ * The Text Polaroid object.
+ * @extends BasePolaroid
+ */
 export default class TextPolaroid extends BasePolaroid {
-    constructor(isAngledLeft, text, regionId, officialRegionName) {
+    /**
+     * 
+     * @param {boolean} isAngledLeft 
+     * @param {string} text 
+     * @param {string} regionId 
+     * @param {string} officialRegionNameEnglish 
+     */
+    constructor(isAngledLeft, text, regionId, officialRegionNameEnglish) {
         super(isAngledLeft, true);
+        /** The text to display in the middle of the polaroid. @type string */
         this.text = text;
+        /** The region the polaroid represents. @type string */
         this.regionId = regionId;
-        this.officialRegionName = officialRegionName;
+        /** The official region name for the current country. @type string */
+        // TODO: make some variables shared between all the files (a shared file, currentColour, currentCountry, etc.)
+        this.officialRegionNameEnglish = officialRegionNameEnglish;
 
+        // Get component html
         fetch("components/polaroid/txt-polaroid/txt-polaroid.html")
             .then(response => response.text())
             .then(html => {
                 this.innerHTML = html;
-            })
+            });
+
+        this.title = getBilingualText(`See images from this ${this.officialRegionNameEnglish}`, "この地域の写真を表示する");
+
         // The lazy loading observer
         // Based on: https://www.codepel.com/vanilla-javascript/javascript-image-loaded/
-        this.title = getBilingualText(`See images from this ${this.officialRegionName}`, "この地域の写真を表示する");
         const obs = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     setTimeout(() => {
                         const polaroid = this.querySelector(".polaroid-frame");
-                        polaroid.classList.add((this.isAngledLeft ? "left-" : "right-") + Math.floor(Math.random() * 4 + 1))
+                        polaroid.classList.add(this.getRandomAngleClass())
 
                         const polaroidImg = this.querySelector(".polaroid-img");
                         polaroidImg.innerHTML = this.text;
@@ -36,10 +55,6 @@ export default class TextPolaroid extends BasePolaroid {
         });
         obs.observe(this);
     }
-
-    // connectedCallback() {
-        
-    // }
 }
 
 window.customElements.define("txt-polaroid", TextPolaroid);

@@ -1,18 +1,37 @@
+/*** Imports */
 import BasePolaroid from "../base-polaroid/base-polaroid.js"
-import { getBilingualText, getPictureDate, addRemoveNoDisplay, addRemoveTransparent } from '../../../js/utility.js';
+import { getBilingualText, getPictureDate, addRemoveNoDisplay, addRemoveTransparent } from '../../../js/utils.js';
 import { MONTH_NAMES, DEFAULT_TIMEOUT } from '../../../js/constants.js'
 
+/**
+ * The Image Polaroid object.
+ * @extends BasePolaroid
+ */
 export default class ImagePolaroid extends BasePolaroid {
+    /**
+     * @param {boolean} isAngledLeft 
+     * @param {string} src 
+     * @param {boolean} isFavourite 
+     * @param {Date} date 
+     * @param {number} offset 
+     * @param {string} enCaption 
+     * @param {string} jpCaption 
+     */
     constructor(isAngledLeft, src, isFavourite, date, offset, enCaption, jpCaption) {
         super(isAngledLeft, false);
 
+        /** The image source. @type string */
         this.src = src;
+        /** ```True``` if the image is one of my favourites. @type boolean */
         this.isFavourite = isFavourite;
+        /** The image date. @type Date */
         this.date = getPictureDate(new Date(date), offset);
+        /** The English image caption. @type string */
         this.enCaption = enCaption;
+        /** The Japanese image caption. @type string */
         this.jpCaption = jpCaption;
 
-        // Get HTML
+        // Get component html
         fetch("components/polaroid/img-polaroid/img-polaroid.html")
             .then(response => response.text())
             .then(html => {
@@ -28,7 +47,7 @@ export default class ImagePolaroid extends BasePolaroid {
                 if (entry.isIntersecting) {
                     setTimeout(() => {
                         const polaroid = this.querySelector(".polaroid-frame");
-                        polaroid.classList.add((this.isAngledLeft ? "left-" : "right-") + Math.floor(Math.random() * 4 + 1))
+                        polaroid.classList.add(this.getRandomAngleClass())
 
                         const img = polaroid.querySelector("img");
                         if (img) {
@@ -78,14 +97,18 @@ export default class ImagePolaroid extends BasePolaroid {
         obs.observe(this);
     }
 
-    //connectedCallback() { }
-
+    /**
+     * @returns the image date formatted for English text.
+     */
     getEnglishDate() {
         return MONTH_NAMES[this.date.getMonth()] + " " +
             this.date.getDate() + ", " +
             this.date.getFullYear();
     }
 
+    /**
+     * @returns the image date formatted for Japanese text.
+     */
     getJapaneseDate() {
         return this.date.getFullYear() + "年" +
             (this.date.getMonth() + 1) + "月" +
