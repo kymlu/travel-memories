@@ -2,13 +2,14 @@
 import FilterPopup from '../popup/filter-popup/filter-popup.js'
 import {
 	getBilingualText, scrollToTop, flipArrow, addRemoveNoDisplay,
-	sortImgs, addRemoveTransparent, getImageAddress
+	sortImgs, addRemoveTransparent, getImageAddress, startHandleDrag, isPortraitMode
 } from '../../js/utils.js';
 import { SCROLL_THRESHOLD, TAGS, DEFAULT_TIMEOUT } from '../../js/constants.js'
 import TextPolaroid from '../polaroid/txt-polaroid/txt-polaroid.js';
 import ImagePolaroid from '../polaroid/img-polaroid/img-polaroid.js';
 import { openFullscreen } from '../fullscreen/fullscreen.js';
 import { getAppColor, getCurrentCountry } from '../../js/globals.js';
+import { hideLoader } from '../loader/loader.js';
 
 /// VARIABLES
 // filter
@@ -27,7 +28,7 @@ let isToTopVisible = false;
 let throttleRegionInfo = false;
 
 // image loading
-export var allImages = null;
+var allImages = null;
 export var visibleImages = [];
 let isLoadingImages = false;
 let imageLoadIndex = 0;
@@ -40,7 +41,31 @@ const noPicturesText = getBilingualText("No pictures available (yet)", "写真�
 
 /// FUNCTIONS
 // initialization
-export function initializeGallery(blankPolaroidFn) {
+export function initializeGallery(blankPolaroidCallback) {
+	[
+		["filter-btn", "Filter Pictures", "写真をフィルターする"]
+	].forEach(([id, englishText, japaneseText]) => {
+		document.getElementById(id).title = getBilingualText(englishText, japaneseText);
+	});
+
+	// TODO: have a symbol to indicate filters were applied
+	[
+		["rgn-drop-down-bg", closeRegionDropdown],
+		["rgn-info-bg", changeRegionInfoVisibility],
+		["to-top-btn", scrollToTop],
+		["filter-btn", showFilter],
+		["info-btn", changeRegionInfoVisibility]
+	].forEach(([id, callback]) => {
+		document.getElementById(id).addEventListener("click", callback);
+	});
+
+	document.getElementById("country-map-mini").addEventListener("load", () => {
+		filterMiniMap();
+		hideLoader();
+	});
+
+	document.getElementById("rgn-info-handle").addEventListener("touchstart", e => { startHandleDrag(e, "rgn-info-handle") }, false);
+
 	filterPopup.addEventListener("filter-popup-closed", () => {
 		isFilterVisible = false;
 	});
@@ -65,7 +90,39 @@ export function initializeGallery(blankPolaroidFn) {
 	});
 
 	document.body.appendChild(filterPopup);
-	blankPolaroidFunction = blankPolaroidFn;
+	blankPolaroidFunction = blankPolaroidCallback;
+
+	document.getElementById("to-top-btn").title = getBilingualText("Go to top", "トップに移動する");
+}
+
+export function openGallery() {
+	document.getElementById("btn-grp-left").classList.add("btn-grp-left");
+	document.getElementById("btn-grp-right").classList.add("btn-grp-right");
+	document.getElementById("top-bar").style.position = "sticky";
+	document.getElementById("top-bar").style.backgroundColor = "white";
+	addRemoveNoDisplay(["map-page", "to-top-btn", "globe-btn"], true);
+	addRemoveNoDisplay(["gallery", "map-btn", "info-btn", "rgn-title-btn", "rgn-info", "rgn-info-drawer"], false);
+	if (allImages.length > 0) {
+		addRemoveNoDisplay("filter-btn", false);
+	}
+	document.getElementById("rgn-info-bg").style.visibility = "visible";
+	addRemoveTransparent("to-top-btn", true);
+	if (isPortraitMode()) {
+		document.getElementById("dates-title").scrollIntoView({ block: isPortraitMode() ? "end" : "start" });
+	}
+	addRemoveTransparent("rgn-info-bg", false);
+}
+
+export function closeGallery() {
+	document.getElementById("btn-grp-left").classList.remove("btn-grp-left");
+	document.getElementById("btn-grp-right").classList.remove("btn-grp-right");
+	document.getElementById("top-bar").style.position = "fixed";
+	document.getElementById("top-bar").style.backgroundColor = "transparent";
+	addRemoveNoDisplay(["map-page", "to-top-btn", "globe-btn"], false);
+	addRemoveNoDisplay(["gallery", "filter-btn", "map-btn", "info-btn", "rgn-title-btn", "rgn-info", "rgn-info-drawer"], true);
+	document.getElementById("rgn-info-bg").style.visibility = "hidden";
+	addRemoveTransparent("to-top-btn", false);
+	addRemoveTransparent("rgn-info-bg", false);
 }
 
 // regenerating data
@@ -104,8 +161,8 @@ export function setNewRegion(regionData, isSingleRegionSelected) {
 			["rgn-areas", areaList.map(area => {
 				return getBilingualText(area.englishName, area.japaneseName);
 			}).sort().join(" | ")]
-		].forEach(element => {
-			document.getElementById(element[0]).innerHTML = element[1];
+		].forEach(([id, callback]) => {
+			document.getElementById(id).innerHTML = callback;
 		});
 	} else {
 		regionsList = regionData.map(rgn => {
@@ -255,24 +312,16 @@ export function onScrollFunction() {
 	}
 }
 
-export function toggleFloatingButton() {
-	const toTop = getBilingualText("Go to top", "トップに移動する");
+function toggleFloatingButton() {
 	let btn = document.getElementById("to-top-btn");
-	if (document.body.scrollTop > SCROLL_THRESHOLD) {
-		if (!isToTopVisible) {
-			flipArrow([btn], true);
-			addRemoveNoDisplay([btn], false);
-			addRemoveTransparent([btn], false);
-			btn.title = toTop;
-			isToTopVisible = true;
-		}
-	} else if (document.body.scrollTop <= SCROLL_THRESHOLD) {
-		if (isToTopVisible) {
-			flipArrow([btn], true);
-			addRemoveTransparent([btn], true);
-			setTimeout(() => { addRemoveNoDisplay([btn], true); }, DEFAULT_TIMEOUT)
-			isToTopVisible = false;
-		}
+	if (document.body.scrollTop > SCROLL_THRESHOLD && !isToTopVisible) {
+		addRemoveNoDisplay([btn], false);
+		addRemoveTransparent([btn], false);
+		isToTopVisible = true;
+	} else if (document.body.scrollTop <= SCROLL_THRESHOLD && isToTopVisible) {
+		addRemoveTransparent([btn], true);
+		setTimeout(() => { addRemoveNoDisplay([btn], true); }, DEFAULT_TIMEOUT)
+		isToTopVisible = false;
 	}
 }
 
@@ -329,7 +378,7 @@ function scrollRegionInfo() {
 	}, 250);
 }
 
-export function changeRegionInfoVisibility(isVisible) {
+function changeRegionInfoVisibility(isVisible) {
 	if (isRegionInfoVisible == isVisible) {
 		return;
 	}
@@ -345,7 +394,7 @@ export function changeRegionInfoVisibility(isVisible) {
 	}
 }
 
-export function filterMiniMap() {
+function filterMiniMap() {
 	// get the selected official region only
 	const svgObj = document.getElementById("country-map-mini");
 	const svgDoc = svgObj.contentDocument;

@@ -57,6 +57,19 @@ export function sortImgs(a, b) {
 }
 
 /**
+ * Initializes the touch event for elements on screen with handles.
+ * @param {TouchEvent} e - the touch event.
+ * @param {string} handleId - the id of the handle element.
+ */
+export function startHandleDrag(e, handleId) {
+	if (isPortraitMode()) {
+		isHandleGrabbed = true;
+		grabbedHandleId = handleId
+		initialYHandle = e.touches[0].clientY;
+	}
+}
+
+/**
  * Adds or removes a specified class from element(s)' class lists.
  * @param {string | string[] | Element[]} elements - an element name, a list of element names, or a list of element objects.
  * @param {string} className - the name of the class to add or remove.

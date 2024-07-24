@@ -19,6 +19,9 @@ The site is optimized for both mobile and web environments. I implemented dynami
 
 Note that there are at least 500 more commits than necessary because the beginning of development was done on Github web on my iPad.
 
+### Code Updates
+July 2024 - Refactored the site to use components.
+
 ## Design
 The website was initially creately only for pictures from the Japan portion of the trip. My design always included the map of Japan with the highlighted regions. The English and Japanese bilingual text is also intentional since the pictures were from Japan. However, I quickly realized that I wanted to show others my pictures from the other countries too, so adding the pictures from the other countries would streamline the presentation.
 
@@ -49,6 +52,9 @@ exif-jsを使用できなかったため、**ExifTool by Phil Harvey**を使用�
 このサイトは、モバイルとウェブの環境の両方に最適化されています。最適化のため、ダイナミックローディング遅延読み込みを使用します。
 
 このリポジトリのコミットが必要以上に500以上です。これは、開発の始まりがiPadでGithubのウェブインターフェースに行いました。
+
+###コードのアップデート
+２０２４年７月　ー　コンポーネントの使用するためのリファクタリング
 
 ## デザイン
 最初はウェブサイトは日本の写真のみを表示するために作成されました。訪れた都道府県をハイライトに表示したかったです。また、私が日本で留学したため、全部が英語と日本語のバイリンガルにしたかったです。他の国の写真も友達に見せたかったので、その写真も追加して、統一しました。

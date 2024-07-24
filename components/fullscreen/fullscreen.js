@@ -1,8 +1,11 @@
 /// IMPORTS
-import { JAPAN, TAIWAN, DAY_NAMES_EN, DAY_NAMES_JP, MONTH_NAMES, TAGS, DEFAULT_TIMEOUT } from '../../js/constants.js'
 import {
-	getBilingualText, getPictureDate, getImageAddress, isPortraitMode, 
-	sortByEnglishName, addRemoveNoDisplay, addRemoveTransparent
+	JAPAN, TAIWAN, DAY_NAMES_EN, DAY_NAMES_JP,
+	MONTH_NAMES, TAGS, DEFAULT_TIMEOUT
+} from '../../js/constants.js'
+import {
+	getBilingualText, getPictureDate, getImageAddress, isPortraitMode,
+	sortByEnglishName, addRemoveNoDisplay, addRemoveTransparent, startHandleDrag
 } from '../../../js/utils.js';
 import { visibleImages } from '../gallery/gallery.js';
 
@@ -39,6 +42,47 @@ export function initializeFullscreen() {
 	tempStar.style.marginRight = "5px";
 	tempStar.innerHTML = "&#xf005";
 	favouritedTag.prepend(tempStar);
+
+	[
+		["left-arrow", "Previous picture", "前の写真"],
+		["right-arrow", "Next picture", "次の写真"],
+		["search-eng", "Google in English", "英語でググる"],
+		["search-jp", "Google in Japanese", "日本語でググる"]
+	].forEach(([id, englishText, japaneseText]) => {
+		document.getElementById(id).innerHTML = getBilingualText(englishText, japaneseText);
+	});
+
+	[
+		["fullscreen-bg", function () { closeFullscreen(true); }],
+		["fullscreen-ctrl", function () { closeFullscreen(true); }],
+		["left-arrow", (event) => { event.stopPropagation(); }],
+		["fullscreen-pic", (event) => { event.stopPropagation(); }],
+		["right-arrow", (event) => { event.stopPropagation(); }],
+		["left-arrow", function () { changeFullscreenPicture(false); }],
+		["right-arrow", function () { changeFullscreenPicture(true); }],
+		["pic-info-bg", hidePicInfo],
+		["pic-info-drawer", (event) => { event.stopPropagation(); }],
+		["pic-info-btn", function () { changePicInfoVisibility(); }],
+		["pic-info-close-btn", hidePicInfo],
+		["search-eng", searchEnglish],
+		["search-jp", searchJapanese]
+	].forEach(([id, callback]) => {
+		document.getElementById(id).addEventListener("click", callback);
+	});
+
+	document.getElementById("pic-info-handle").addEventListener("touchstart", e => { startHandleDrag(e, "pic-info-handle") }, false);
+
+	// currently remove because it will not work on Apple <- what is this lol
+	document.getElementById("pic-info-details").addEventListener("touchstart", (event) => {
+		event.stopPropagation();
+	});
+	document.getElementById("pic-info-details").addEventListener("touchmove", (event) => {
+		event.stopPropagation();
+	});
+
+	let swipeContainer = document.getElementById("fullscreen");
+	swipeContainer.addEventListener("touchstart", startFullscreenSwipe, false);
+	swipeContainer.addEventListener("touchmove", moveFullscreenSwipe, false);
 }
 
 // open and close
@@ -66,7 +110,7 @@ export function openFullscreen(imageToDisplay, countryId) {
 }
 
 /** 
- * Close the fullscreen.
+ * Close the 
  * @param {boolean} forceClose - ```True``` if the user has forcefully closed fullscreen mode.*/
 export function closeFullscreen(forceClose) {
 	isFullscreen = false;
@@ -85,8 +129,24 @@ export function closeFullscreen(forceClose) {
 /**
  * @returns whether the fullscreen image viewer has opened.
  */
-export function getIsFullscreen(){
+export function getIsFullscreen() {
 	return isFullscreen;
+}
+
+/**
+ * Handles events based on the key pressed
+ * @param {KeyboardEvent} event 
+ */
+export function handleKeyEvent(event) {
+	if (event.key === "ArrowRight") {
+		changeFullscreenPicture(true);
+	} else if (event.key == "ArrowLeft") {
+		changeFullscreenPicture(false);
+	} else if (!isPicInfoVisible && event.key == "ArrowUp") {
+		showPicInfo();
+	} else if (isPicInfoVisible && event.key == "ArrowDown") {
+		hidePicInfo();
+	}
 }
 
 // seaching functions
@@ -99,12 +159,12 @@ function search(searchTerm) {
 }
 
 /** Searches the English search term. */
-export function searchEnglish() {
+function searchEnglish() {
 	search(searchTermEng);
 }
 
 /** Searches the Japanese search term. */
-export function searchJapanese() {
+function searchJapanese() {
 	search(searchTermJp)
 }
 
@@ -112,16 +172,16 @@ export function searchJapanese() {
 /**
  * Starts procedures for 
  */
-export function startFullscreenSwipe(e) {
+function startFullscreenSwipe(e) {
 	//if (isPortraitMode()) {
-		if (e.touches.length == 1) {
-			initialX = e.touches[0].clientX;
-			initialY = e.touches[0].clientY;
-		}
+	if (e.touches.length == 1) {
+		initialX = e.touches[0].clientX;
+		initialY = e.touches[0].clientY;
+	}
 	//}
 }
 
-export function moveFullscreenSwipe(e) {
+function moveFullscreenSwipe(e) {
 	if (initialX === null || initialY === null) return;
 
 	// if (!isPortraitMode()) {
@@ -164,7 +224,7 @@ export function moveFullscreenSwipe(e) {
 }
 
 // 
-export function changeFullscreenPicture(isForward) {
+function changeFullscreenPicture(isForward) {
 	if (isForward) {
 		if (currentPicIndex == visibleImages.length - 1) {
 			currentPicIndex = 0;
@@ -276,7 +336,7 @@ function setFullscreenInfo() {
 	}
 }
 
-export function setNewPicture(isForward) {
+function setNewPicture(isForward) {
 	document.getElementById("img-tags").replaceChildren();
 
 	let src = getImageAddress(selectedCountry, currentPic.region.id, currentPic.fileName);
@@ -318,7 +378,7 @@ export function setNewPicture(isForward) {
 }
 
 // picture info
-export function showPicInfo() {
+function showPicInfo() {
 	isPicInfoVisible = true;
 	addRemoveNoDisplay("pic-info", false);
 	let element = document.getElementById("pic-info-drawer");
@@ -341,7 +401,7 @@ export function hidePicInfo() {
 	}, DEFAULT_TIMEOUT);
 }
 
-export function changePicInfoVisibility(isVisible) {
+function changePicInfoVisibility(isVisible) {
 	if (isVisible == undefined) {
 		isVisible = !isPicInfoVisible;
 	}

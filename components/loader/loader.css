@@ -1,0 +1,88 @@
+
+/* loading screen */
+.loader {
+    z-index: 9999;
+    height: 100%;
+    width: 100%;
+    background-color: white;
+  }
+  
+  .loader-dot {
+    position: absolute;
+    border-radius: 50%;
+    width: 0px;
+    height: 0px;
+    background-color: rgba(var(--main-color));
+    animation: loader-grow-shrink 1.5s ease-in-out infinite alternate-reverse;
+  }
+  
+  .dot-0 {
+    transform: rotate(270deg) translate(80px) rotate(270deg);
+    animation-delay: 0s;
+  }
+  
+  .dot-1 {
+    transform: rotate(315deg) translate(80px) rotate(315deg);
+    animation-delay: 0.1875s;
+  }
+  
+  .dot-2 {
+    transform: rotate(0deg) translate(80px) rotate(0deg);
+    animation-delay: 0.375s;
+  }
+  
+  .dot-3 {
+    transform: rotate(45deg) translate(80px) rotate(45deg);
+    animation-delay: 0.5625s;
+  }
+  
+  .dot-4 {
+    transform: rotate(90deg) translate(80px) rotate(90deg);
+    animation-delay: 0.75s;
+  }
+  
+  .dot-5 {
+    transform: rotate(135deg) translate(80px) rotate(135deg);
+    animation-delay: 0.9375s;
+  }
+  
+  .dot-6 {
+    transform: rotate(180deg) translate(80px) rotate(180deg);
+    animation-delay: 1.125s;
+  }
+  
+  .dot-7 {
+    transform: rotate(225deg) translate(80px) rotate(225deg);
+    animation-delay: 1.3125s;
+  }
+  
+  .dot-8 {
+    transform: rotate(270deg) translate(80px) rotate(270deg);
+    animation-delay: 1.5s;
+  }
+  
+  @keyframes loader-grow-shrink {
+    0% {
+      width: 0px;
+      height: 0px;
+    }
+  
+    50% {
+      width: 25px;
+      height: 25px;
+    }
+  
+    100% {
+      width: 0px;
+      height: 0px;
+    }
+  }
+  
+  .error-btn {
+    display: none;
+    cursor: pointer;
+    width: 30vw;
+    border-radius: 5px;
+    background-color: rgba(var(--main-color));
+    text-align: center;
+  }
