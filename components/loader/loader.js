@@ -2,10 +2,10 @@ import { DEFAULT_TIMEOUT, LOAD_ANIMATION_TIME, LOAD_DOT_COUNT } from "../../js/c
 import { addRemoveNoDisplay, addRemoveTransparent } from "../../js/utils.js";
 import { getCurrentCountry, isCountrySelected } from "../../js/globals.js";
 
-// TODO: restrict all loader functions to here!
 let startTime = null;
-let animationEndFunc = null;
+let handleAnimationEnd = null;
 
+/** Set up the required listeners. */
 export function setupLoader() {
     document.getElementById(`load${LOAD_DOT_COUNT}`).addEventListener("animationend", function () {
         addRemoveNoDisplay("loading-screen", true);
@@ -18,7 +18,6 @@ export function setupLoader() {
     });
 }
 
-// TODO: restore filter values if exit suddenly
 /**
  * Start the loader.
  */
@@ -27,12 +26,14 @@ export function startLoader() {
     addRemoveTransparent("loading-screen", false);
 
     startTime = new Date();
+
     if (isCountrySelected()) {
         addRemoveNoDisplay("load-icon", false);
         document.getElementById("load-icon").src = `assets/icons/${getCurrentCountry()?.symbol}.svg`;
     } else {
         addRemoveNoDisplay("load-icon", true);
     }
+
     for (let i = 0; i <= LOAD_DOT_COUNT; i++) {
         document.getElementById(`load${i}`).style.animationIterationCount = "infinite";
         addRemoveNoDisplay(`load${i}`, false);
@@ -56,12 +57,13 @@ export function hideLoader() {
  * @param {Function} animationEndFunction 
  */
 export function stopLoader(animationEndFunction) {
-    animationEndFunc = function () {
+    handleAnimationEnd = function () {
         addRemoveNoDisplay("loading-screen", true);
-        if (animationEndFunction) animationEndFunction();
-        document.getElementById(`load${LOAD_DOT_COUNT}`).removeEventListener("animationend", animationEndFunc);
+        animationEndFunction();
+        document.getElementById(`load${LOAD_DOT_COUNT}`).removeEventListener("animationend", handleAnimationEnd);
     }
-    document.getElementById(`load${LOAD_DOT_COUNT}`).addEventListener("animationend", animationEndFunc);
+
+    document.getElementById(`load${LOAD_DOT_COUNT}`).addEventListener("animationend", handleAnimationEnd);
 
     setTimeout(() => {
         let iterationCount = Math.ceil((new Date() - startTime) / LOAD_ANIMATION_TIME);

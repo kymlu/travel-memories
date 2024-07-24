@@ -145,8 +145,8 @@ export function flipArrow(arrow, isUp) {
 		arrow.classList.toggle("arrow-up");
 		arrow.classList.toggle("arrow-down");
 	} else {
-		addRemoveClass(arrow, "arrow-up", isUp);
-		addRemoveClass(arrow, "arrow-down", !isUp);
+		addRemoveClass([arrow], "arrow-up", isUp);
+		addRemoveClass([arrow], "arrow-down", !isUp);
 	}
 }
 

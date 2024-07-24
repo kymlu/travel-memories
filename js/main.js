@@ -9,7 +9,7 @@ import * as Gallery from '../components/gallery/gallery.js';
 import * as Fullscreen from '../components/fullscreen/fullscreen.js';
 import InfoPopup from '../components/popup/info-popup/info-popup.js'
 import { DEFAULT_TIMEOUT } from './constants.js'
-import { startLoader, hideLoader, stopLoader, showDataLoadError, retryLoader, setupLoader } from '../components/loader/loader.js';
+import * as Loader from '../components/loader/loader.js';
 import {
 	getBilingualText, isPortraitMode, scrollToTop, addRemoveClass,
 	sortImgs, addRemoveNoDisplay, addRemoveTransparent
@@ -17,8 +17,6 @@ import {
 import { getAppColor, isCountrySelected, setAppColor, setCurrentCountry } from './globals.js';
 
 /// VARIABLES
-let root = document.querySelector(':root');
-
 // Loading
 let isLoading = true;
 
@@ -66,6 +64,7 @@ function endHandleDrag(e) {
 }
 
 /**** Map ****/
+/** Colours the map according to which regions have been visited. */
 function colourMap() {
 	if (document.getElementById("country-map").data == "") return;
 
@@ -91,13 +90,11 @@ function colourMap() {
 
 			rgnImg.addEventListener("mouseover", () => {
 				rgnImg.setAttribute("opacity", "50%");
-				//hoveredRegion = rgn.englishName;
 				document.getElementById("main-title").innerHTML = getBilingualText(rgn.englishName, rgn.japaneseName);
 			});
 
 			rgnImg.addEventListener("mouseout", () => {
 				rgnImg.setAttribute("opacity", "100%");
-				//hoveredRegion = "";
 				document.getElementById("main-title").innerHTML = countryTitle;
 			});
 		} else {
@@ -106,57 +103,48 @@ function colourMap() {
 	});
 }
 
+/** Sets the appropriate map on the map screen. */
 function createMap() {
 	const svgObj = document.getElementById("country-map");
 	svgObj.data = `assets/img/country/${currentCountry.id}.svg`;
 }
 
 /**** Site Info Popup ****/
+/** Opens the site info popup. */
 function openInfoPopup() {
 	isPopupVisible = true;
 	infoPopup.openPopup();
 }
 
+/** Closes the site info popup. */
 function closeInfoPopup() {
 	document.querySelector("info-popup").closePopup(true);
 }
 
 /**** Show and hide pages ****/
-function openMapPage() {
+/** Opens the map page. */
+function goToMapPage() {
+	document.getElementById("main-title").innerHTML = countryTitle;
 	stopLoading();
 	scrollToTop(false);
 	addRemoveTransparent("map-page", false);
-	addRemoveNoDisplay("to-top-btn", false);
 }
 
-function changeGalleryVisibility(isVisible) {
-	Gallery.closeRegionDropdown();
-	scrollToTop(false);
-	if (isVisible == undefined) {
-		isGalleryVisible = !isGalleryVisible;
-	} else {
-		isGalleryVisible = isVisible;
-	}
+/** Opens the gallery page. */
+function goToGalleryPage() {
+	isGalleryVisible = true;
+	Gallery.openGallery();
+}
 
-	if (isGalleryVisible) {
-		Gallery.openGallery();
-	} else {
+/** Leaves the gallery page to return to the map. */
+function leaveGalleryPage() {
+	startLoading();
+	isGalleryVisible = false;
 		Gallery.closeGallery();
-		startLoading();
-		setTimeout(() => {
-			createMap();
-			setTimeout(() => {
-				openMapPage();
+	setTimeout(() => {
+			goToMapPage();
 			}, 200);
-		}, 50);
 	}
-}
-
-function changeMainColor(newColor) {
-	root.style.setProperty('--main-color', getComputedStyle(root).getPropertyValue(newColor));
-	let temp = getComputedStyle(root).getPropertyValue("--main-color").split(", ");
-	setAppColor(`rgb(${temp[0]}, ${temp[1]}, ${temp[2]})`);
-}
 
 function selectRegion(regionId, isPoppedPage) {
 	if (isPoppedPage == null) {
@@ -173,7 +161,7 @@ function selectRegion(regionId, isPoppedPage) {
 	}
 
 	setTimeout(() => {
-		changeGalleryVisibility(true);
+		goToGalleryPage();
 	}, DEFAULT_TIMEOUT);
 }
 
@@ -207,10 +195,9 @@ function selectCountry(countryId, countryColor, isPoppedPage) {
 	addRemoveNoDisplay(["map-page", "btn-grp-left"], false);
 	addRemoveClass("btn-grp-right", "justify-end", false);
 
-	changeMainColor(countryColor);
+	setAppColor(countryColor);
 
 	countryTitle = getBilingualText(currentCountry.englishName, currentCountry.japaneseName);
-	document.getElementById("main-title").innerHTML = countryTitle;
 	[
 		["main-title", `See all images from ${currentCountry.englishName}`, `${currentCountry.japaneseName}の写真をすべて表示する`],
 		["rgn-title-btn", `Change ${currentCountry.officialRegionNameEnglish}`, `${currentCountry.officialRegionNameJapanese}を切り替える`],
@@ -219,21 +206,21 @@ function selectCountry(countryId, countryColor, isPoppedPage) {
 		document.getElementById(id).title = getBilingualText(englishText, japaneseText);
 	});
 	
-	Gallery.resetGallery();
+	Gallery.refreshCountry();
 	Gallery.createRegionDropDown(selectRegion);
 	setTimeout(() => {
 		createMap();
 	}, 50);
 	setTimeout(() => {
-		stopLoader(openMapPage);
+		Loader.stopLoader(goToMapPage);
 		isLoading = false;
 	}, 1200);
 }
 
 /**** Data Loading/Setup ****/
 function setupSite() {
-	setupLoader();
-	startLoader();
+	Loader.setupLoader();
+	Loader.startLoader();
 
 	[
 		["pic-info-btn", "See picture information", "写真の情報を見る"],
@@ -257,13 +244,18 @@ function setupSite() {
 	}, false);
 
 	// Button click detections
-	document.getElementById("main-title").addEventListener("click", function () { selectRegion(); });
-	document.getElementById("rgn-title-btn").addEventListener("click", Gallery.toggleRegionDropdown);
-	document.getElementById("creator-btn").addEventListener("click", openInfoPopup);
-	document.getElementById("globe-btn").addEventListener("click", showStartScreen);
-	document.getElementById("map-btn").addEventListener("click", function () { changeGalleryVisibility(false); });
+	[
+		["main-title", function () { selectRegion(null); }],
+		["rgn-title-btn", Gallery.toggleRegionDropdown],
+		["creator-btn", openInfoPopup],
+		["globe-btn", showStartScreen],
+		["map-btn", leaveGalleryPage]
+	].forEach(([id, callback]) => {
+		document.getElementById(id).addEventListener("click", callback);
+	});
 
 	document.getElementById("country-map").addEventListener("load", colourMap);
+
 	document.addEventListener("touchend", endHandleDrag, false);
 
 	// Key input detections
@@ -305,7 +297,7 @@ function setupSite() {
 	window.addEventListener('popstate', (event) => {
 		if (event.state.country) {
 			if (isGalleryVisible) {
-				changeGalleryVisibility(false);
+				leaveGalleryPage();
 			} else {
 				selectCountry(event.state.country, event.state.countryColor, true);
 			}
@@ -340,14 +332,14 @@ function fetchData() {
 }
 
 function retry() {
-	retryLoader(fetchData);
+	Loader.retryLoader(fetchData);
 }
 
 function startLoading() {
 	isLoading = true;
 	addRemoveTransparent(["top-bar", "map-page", "start-screen"], true);
 
-	startLoader();
+	Loader.startLoader();
 
 	setTimeout(() => {
 		addRemoveNoDisplay("start-screen", true);
@@ -355,7 +347,7 @@ function startLoading() {
 }
 
 function stopLoading() {
-	hideLoader();
+	Loader.hideLoader();
 	isLoading = false;
 }
 
@@ -430,7 +422,7 @@ function createStartScreen() {
 	});
 
 	window.history.pushState({}, "", null);
-	stopLoader(showStartScreen);
+	Loader.stopLoader(showStartScreen);
 	isLoading = false;
 }
 
@@ -441,7 +433,7 @@ function showStartScreen(isPoppedPage) {
 
 	setCurrentCountry(null);
 	scrollToTop(false);
-	changeMainColor("--default-color");
+	setAppColor("--default-color");
 	addRemoveTransparent("top-bar", false);
 	addRemoveTransparent("map-page", true);
 	addRemoveClass("btn-grp-right", "justify-end", true);

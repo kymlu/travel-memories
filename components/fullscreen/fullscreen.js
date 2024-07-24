@@ -4,8 +4,8 @@ import {
 	MONTH_NAMES, TAGS, DEFAULT_TIMEOUT
 } from '../../js/constants.js'
 import {
-	getBilingualText, getPictureDate, getImageAddress, isPortraitMode,
-	sortByEnglishName, addRemoveNoDisplay, addRemoveTransparent, startHandleDrag
+	addRemoveNoDisplay, addRemoveTransparent, getBilingualText, getPictureDate,
+	getImageAddress, isPortraitMode, sortByEnglishName, startHandleDrag
 } from '../../../js/utils.js';
 import { visibleImages } from '../gallery/gallery.js';
 
@@ -223,7 +223,6 @@ function moveFullscreenSwipe(e) {
 	}
 }
 
-// 
 function changeFullscreenPicture(isForward) {
 	if (isForward) {
 		if (currentPicIndex == visibleImages.length - 1) {

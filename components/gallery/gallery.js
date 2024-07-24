@@ -1,14 +1,14 @@
 /// IMPORTS
 import FilterPopup from '../popup/filter-popup/filter-popup.js'
 import {
-	getBilingualText, scrollToTop, flipArrow, addRemoveNoDisplay,
-	sortImgs, addRemoveTransparent, getImageAddress, startHandleDrag, isPortraitMode
+	addRemoveNoDisplay, addRemoveTransparent, flipArrow, getBilingualText,
+	getImageAddress, isPortraitMode, scrollToTop, sortImgs, startHandleDrag
 } from '../../js/utils.js';
-import { SCROLL_THRESHOLD, TAGS, DEFAULT_TIMEOUT } from '../../js/constants.js'
+import { DEFAULT_TIMEOUT, SCROLL_THRESHOLD, TAGS } from '../../js/constants.js'
 import TextPolaroid from '../polaroid/txt-polaroid/txt-polaroid.js';
 import ImagePolaroid from '../polaroid/img-polaroid/img-polaroid.js';
 import { openFullscreen } from '../fullscreen/fullscreen.js';
-import { getAppColor, getCurrentCountry } from '../../js/globals.js';
+import { getCurrentCountry, getAppColor } from '../../js/globals.js';
 import { hideLoader } from '../loader/loader.js';
 
 /// VARIABLES
@@ -583,7 +583,7 @@ export function toggleRegionDropdown() {
 	}
 }
 
-export function closeRegionDropdown() {
+function closeRegionDropdown() {
 	addRemoveNoDisplay("rgn-drop-down-container", true);
-	flipArrow("rgn-name-arrow", false);
+	flipArrow(document.getElementById("rgn-name-arrow"), false);
 }

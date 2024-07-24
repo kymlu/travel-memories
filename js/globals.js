@@ -13,10 +13,13 @@ export function getAppColor() {
 
 /**
  * Sets the new app colour.
- * @param {string} newValue - the new colour to set.
+ * @param {string} newColor - the new colour to set.
  */
-export function setAppColor(newValue) {
-    appColor = newValue;
+export function setAppColor(newColor) {
+    let root = document.querySelector(':root');
+    root.style.setProperty('--main-color', getComputedStyle(root).getPropertyValue(newColor));
+    let temp = getComputedStyle(root).getPropertyValue("--main-color").split(", ");
+    appColor = `rgb(${temp[0]}, ${temp[1]}, ${temp[2]})`;
 }
 
 /**
@@ -38,6 +41,6 @@ export function setCurrentCountry(newValue) {
 /**
  * @returns ```True``` if a country is currently selected.
  */
-export function isCountrySelected(){
+export function isCountrySelected() {
     return currentCountry != null;
 }

@@ -1,7 +1,9 @@
 /// IMPORTS
 import BasePolaroid from "../base-polaroid/base-polaroid.js"
-import { getBilingualText, getPictureDate, addRemoveNoDisplay, addRemoveTransparent } from '../../../js/utils.js';
-import { MONTH_NAMES, DEFAULT_TIMEOUT } from '../../../js/constants.js'
+import {
+    addRemoveNoDisplay, addRemoveTransparent, getBilingualText, getPictureDate
+} from '../../../js/utils.js';
+import { DEFAULT_TIMEOUT, MONTH_NAMES } from '../../../js/constants.js'
 
 /**
  * The Image Polaroid object.

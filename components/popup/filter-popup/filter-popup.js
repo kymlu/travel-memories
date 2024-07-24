@@ -1,6 +1,8 @@
 /// IMPORTS
 import BasePopup from "../base-popup/base-popup.js"
-import { getBilingualText, sortByEnglishName, flipArrow, addRemoveNoDisplay } from '../../../js/utils.js';
+import {
+    addRemoveNoDisplay, getBilingualText, flipArrow, sortByEnglishName
+} from '../../../js/utils.js';
 
 /**
  * The Filter Popup object.
@@ -114,7 +116,7 @@ export default class FilterPopup extends BasePopup {
         // if the user changed their mind on the filters,
         // reset the filters to their states before the popup was opened.
         if (!isSubmit) {
-            document.getElementById("filter-fav-input").value = self.currentFavourites;
+            document.getElementById("filter-fav-input").checked = self.currentFavourites;
             document.getElementById("filter-kw-input").value = self.currentKeyword;
             self.checkEmptyKeywordInput();
 
@@ -128,7 +130,7 @@ export default class FilterPopup extends BasePopup {
             this.refreshFilterButtons("filter-tags-list", self.selectedTags);
         } else {
             // save current state
-            self.currentFavourites = document.getElementById("filter-fav-input").value;
+            self.currentFavourites = document.getElementById("filter-fav-input").checked;
             self.currentKeyword = document.getElementById("filter-kw-input").value;
             self.currentRegions = [...self.selectedRegions];
             self.currentAreas = [...self.selectedAreas];
@@ -249,11 +251,11 @@ export default class FilterPopup extends BasePopup {
             document.getElementById(`filter-${groupName}-list`).classList.toggle("no-display");
         } else if (expandGroup) {
             // expand
-            flipArrow([headerButton], true);
+            flipArrow(headerButton, true);
             addRemoveNoDisplay(`filter-${groupName}-list`, false);
         } else {
             // collapse
-            flipArrow([headerButton], false);
+            flipArrow(headerButton, false);
             addRemoveNoDisplay(`filter-${groupName}-list`, true);
         }
     }
