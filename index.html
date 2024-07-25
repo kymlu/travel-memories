@@ -1,185 +1,194 @@
 <head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1" name="viewport" />
-  <title>Travel Memories — 旅行の思い出</title>
-  <link rel="apple-touch-icon" sizes="57x57" href="assets/icons/favicon/apple-icon-57x57.png">
-  <link rel="apple-touch-icon" sizes="60x60" href="assets/icons/favicon/apple-icon-60x60.png">
-  <link rel="apple-touch-icon" sizes="72x72" href="assets/icons/favicon/apple-icon-72x72.png">
-  <link rel="apple-touch-icon" sizes="76x76" href="assets/icons/favicon/apple-icon-76x76.png">
-  <link rel="apple-touch-icon" sizes="114x114" href="assets/icons/favicon/apple-icon-114x114.png">
-  <link rel="apple-touch-icon" sizes="120x120" href="assets/icons/favicon/apple-icon-120x120.png">
-  <link rel="apple-touch-icon" sizes="144x144" href="assets/icons/favicon/apple-icon-144x144.png">
-  <link rel="apple-touch-icon" sizes="152x152" href="assets/icons/favicon/apple-icon-152x152.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/favicon/apple-icon-180x180.png">
-  <link rel="icon" type="image/png" sizes="192x192" href="assets/icons/favicon/android-icon-192x192.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="96x96" href="assets/icons/favicon/favicon-96x96.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="assets/icons/favicon/favicon-16x16.png">
-  <link rel="manifest" href="assets/icons/favicon/manifest.json">
-  <meta name="msapplication-TileColor" content="#ffffff">
-  <meta name="msapplication-TileImage" content="assets/icons/favicon/ms-icon-144x144.png">
-  <link rel="stylesheet" type="text/css" href="components/fullscreen/fullscreen.css">
-  <link rel="stylesheet" type="text/css" href="components/gallery/gallery.css">
-  <link rel="stylesheet" type="text/css" href="components/polaroid/base-polaroid/base-polaroid.css">
-  <link rel="stylesheet" type="text/css" href="components/polaroid/img-polaroid/img-polaroid.css">
-  <link rel="stylesheet" type="text/css" href="components/polaroid/txt-polaroid/txt-polaroid.css">
-  <link rel="stylesheet" type="text/css" href="components/popup/base-popup/base-popup.css">
-  <link rel="stylesheet" type="text/css" href="components/popup/filter-popup/filter-popup.css">
-  <link rel="stylesheet" type="text/css" href="components/loader/loader.css">
-  <link rel="stylesheet" type="text/css" href="css/style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<meta charset="utf-8">
+	<meta content="width=device-width, initial-scale=1" name="viewport" />
+	<title>Travel Memories — 旅行の思い出</title>
+	<link rel="apple-touch-icon" sizes="57x57" href="assets/icons/favicon/apple-icon-57x57.png">
+	<link rel="apple-touch-icon" sizes="60x60" href="assets/icons/favicon/apple-icon-60x60.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="assets/icons/favicon/apple-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="76x76" href="assets/icons/favicon/apple-icon-76x76.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="assets/icons/favicon/apple-icon-114x114.png">
+	<link rel="apple-touch-icon" sizes="120x120" href="assets/icons/favicon/apple-icon-120x120.png">
+	<link rel="apple-touch-icon" sizes="144x144" href="assets/icons/favicon/apple-icon-144x144.png">
+	<link rel="apple-touch-icon" sizes="152x152" href="assets/icons/favicon/apple-icon-152x152.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="assets/icons/favicon/apple-icon-180x180.png">
+	<link rel="icon" type="image/png" sizes="192x192" href="assets/icons/favicon/android-icon-192x192.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="96x96" href="assets/icons/favicon/favicon-96x96.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="assets/icons/favicon/favicon-16x16.png">
+	<link rel="manifest" href="assets/icons/favicon/manifest.json">
+	<meta name="msapplication-TileColor" content="#ffffff">
+	<meta name="msapplication-TileImage" content="assets/icons/favicon/ms-icon-144x144.png">
+	<link rel="stylesheet" type="text/css" href="components/fullscreen/fullscreen.css">
+	<link rel="stylesheet" type="text/css" href="pages/gallery-page/gallery-page.css">
+	<link rel="stylesheet" type="text/css" href="pages/map-page/map-page.css">
+	<link rel="stylesheet" type="text/css" href="pages/start-page/start-page.css">
+	<link rel="stylesheet" type="text/css" href="components/polaroid/base-polaroid/base-polaroid.css">
+	<link rel="stylesheet" type="text/css" href="components/polaroid/img-polaroid/img-polaroid.css">
+	<link rel="stylesheet" type="text/css" href="components/polaroid/txt-polaroid/txt-polaroid.css">
+	<link rel="stylesheet" type="text/css" href="components/popup/base-popup/base-popup.css">
+	<link rel="stylesheet" type="text/css" href="components/popup/filter-popup/filter-popup.css">
+	<link rel="stylesheet" type="text/css" href="components/loader/loader.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body class="page-bg">
-  <!-- Top bar -->
-  <header id="top-bar" class="top-bar transparent" style="z-index: 5000; pointer-events: none;">
-    <div id="btn-grp-left" class="btn-grp" style="pointer-events: auto;">
-      <button id="globe-btn" class="text-main-color large-icon" style="z-index: 5001;">&#xf0ac</button>
-      <button id="map-btn" class="text-main-color large-icon no-display" style="z-index: 5001;">&#xf279</button>
-    </div>
-    <div id="rgn-title" style="display: flex; justify-content: center; pointer-events: auto;">
-      <div id="rgn-title-btn" class="rgn-title no-display">
-        <div id="rgn-name" class="regular-text bold-text" style="text-align: center;"></div>
-        <button id="rgn-name-arrow" class="text-main-color large-icon transform-transition arrow-down">&#xf0d7</button>
-      </div>
-    </div>
-    <div id="btn-grp-right" class="btn-grp" style="pointer-events: auto;">
-      <button id="filter-btn" class="text-main-color large-icon no-display"> &#xf0b0</button>
-      <button id="info-btn" class="text-main-color large-icon no-display">&#xf05a</button>
-      <button id="creator-btn" class="text-main-color large-icon">&#xf005</button>
-    </div>
-  </header>
+	<!-- Top bar -->
+	<header id="top-bar" class="top-bar transparent" style="z-index: 5000; pointer-events: none;">
+		<div id="btn-grp-left" class="btn-grp" style="pointer-events: auto;">
+			<button id="globe-btn" class="text-main-color large-icon" style="z-index: 5001;">&#xf0ac</button>
+			<button id="map-btn" class="text-main-color large-icon no-display" style="z-index: 5001;">&#xf279</button>
+		</div>
+		<div id="rgn-title" style="display: flex; justify-content: center; pointer-events: auto;">
+			<div id="rgn-title-btn" class="rgn-title no-display">
+				<div id="rgn-name" class="regular-text bold-text" style="text-align: center;"></div>
+				<button id="rgn-name-arrow"
+					class="text-main-color large-icon transform-transition arrow-down">&#xf0d7</button>
+			</div>
+		</div>
+		<div id="btn-grp-right" class="btn-grp" style="pointer-events: auto;">
+			<button id="filter-btn" class="text-main-color large-icon no-display"> &#xf0b0
+				<span id="filter-indicator" class="filter-indicator no-display"></span>
+			</button>
+			<button id="info-btn" class="text-main-color large-icon no-display">&#xf05a</button>
+			<button id="creator-btn" class="text-main-color large-icon">&#xf005</button>
+		</div>
+	</header>
 
-  <!-- Dropdown official region selector -->
-  <div id="rgn-drop-down-container" class="flex-column no-display" style="z-index: 5001;">
-    <div id="rgn-drop-down-bg" class="popup-bg opacity-transition transparent"></div>
-    <div id="rgn-drop-down" class="rgn-drop-down regular-text flex-column"></div>
-  </div>
+	<!-- Dropdown official region selector -->
+	<div id="rgn-drop-down-container" class="flex-column no-display" style="z-index: 5001;">
+		<div id="rgn-drop-down-bg" class="popup-bg opacity-transition transparent"></div>
+		<div id="rgn-drop-down" class="rgn-drop-down regular-text flex-column"></div>
+	</div>
 
-  <!-- Map Page (Map and Official Region List) -->
-  <div id="map-page" class="map-page transparent opacity-transition">
-    <object id="country-map" type="image/svg+xml" class="country-map"></object>
-    <button id="main-title"></button>
-  </div>
+	<!-- Map Page (Map and Official Region List) -->
+	<div id="map-page" class="map-page transparent opacity-transition">
+		<object id="country-map" type="image/svg+xml" class="country-map"></object>
+		<button id="main-title"></button>
+	</div>
 
-  <!-- Official Region Info -->
-  <div id="rgn-info" class="no-display" style="z-index: 4999; position: relative;">
-    <div id="rgn-info-bg" class="popup-bg opacity-transition portrait-only transparent"></div>
-    <div id="rgn-info-drawer" class="rgn-info-container no-display">
-      <div class="rgn-info">
-        <object id="country-map-mini" type="image/svg+xml" class="mini-map opacity-transition"
-          data="assets/img/country/japan.svg"></object>
-        <div id="rgn-info-txt" class="flex-column regular-text rgn-info-text">
-          <div id="rgn-info-dates">
-            <div id="dates-title" class="bold-text capitalize-text"></div>
-            <div id="rgn-dates"></div>
-          </div>
-          <div id="rgn-info-areas">
-            <div id="areas-title" class="bold-text capitalize-text"></div>
-            <div id="rgn-areas"></div>
-          </div>
-          <div id="rgn-info-desc">
-            <div id="description-title" class="bold-text capitalize-text"></div>
-            <div id="rgn-desc">
-              <div id="rgn-desc-eng"></div>
-              <div id="rgn-desc-jp"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div id="rgn-info-handle">
-        <hr class="drawer-handle" />
-      </div>
-    </div>
-  </div>
+	<!-- Official Region Info -->
+	<div id="rgn-info" class="no-display" style="z-index: 4999; position: relative;">
+		<div id="rgn-info-bg" class="popup-bg opacity-transition portrait-only transparent"></div>
+		<div id="rgn-info-drawer" class="rgn-info-container no-display">
+			<div class="rgn-info">
+				<object id="country-map-mini" type="image/svg+xml" class="mini-map opacity-transition"
+					data="assets/img/country/japan.svg"></object>
+				<div id="rgn-info-txt" class="flex-column regular-text rgn-info-text">
+					<div id="rgn-info-dates">
+						<div id="dates-title" class="bold-text capitalize-text"></div>
+						<div id="rgn-dates"></div>
+					</div>
+					<div id="rgn-info-areas">
+						<div id="areas-title" class="bold-text capitalize-text"></div>
+						<div id="rgn-areas"></div>
+					</div>
+					<div id="rgn-info-desc">
+						<div id="description-title" class="bold-text capitalize-text"></div>
+						<div id="rgn-desc">
+							<div id="rgn-desc-eng"></div>
+							<div id="rgn-desc-jp"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="rgn-info-handle">
+				<hr class="drawer-handle" />
+			</div>
+		</div>
+	</div>
 
-  <!-- Picture Gallery -->
-  <div id="gallery" class="gallery no-display"></div>
+	<!-- Picture Gallery -->
+	<div id="gallery" class="gallery no-display opacity-transition"></div>
 
-  <!-- Scroll to top btn -->
-  <button id="to-top-btn"
-    class="large-icon floating-btn opacity-transform-transition arrow-up no-display">&#xf103</button>
+	<!-- Scroll to top btn -->
+	<button id="to-top-btn"
+		class="large-icon floating-btn opacity-transform-transition arrow-up no-display">&#xf103</button>
 
-  <!-- Fullscreen Picture -->
-  <div id="fullscreen" class="centered overlay opacity-transition transparent fullscreen-container"
-    style="z-index: 6000; visibility: hidden;">
-    <div id="fullscreen-gallery" class="fullscreen-gallery">
-      <div id="fullscreen-bg" class="popup-bg opacity-transition transparent" style="z-index: 0;"></div>
-      <div id="fullscreen-ctrl" class="fullscreen-ctrl" style="z-index: 1;">
-        <button id="left-arrow" class="large-icon fullscreen-arrow">&#xf0d9</button>
-        <div>
-          <img id="fullscreen-pic-next" class="fullscreen-pic transparent centered no-display"
-            style="position: absolute;" />
-          <img id="fullscreen-pic" class="fullscreen-pic centered" style="position: absolute;" />
-        </div>
-        <button id="right-arrow" class="large-icon fullscreen-arrow">&#xf0da</button>
-      </div>
-      <div class="fullscreen-fns" style="z-index: 3;">
-        <button id="pic-info-btn" class="large-icon fullscreen-fn-btn">&#xf05a</button>
-      </div>
-    </div>
-    <div id="pic-info" style="z-index: 3;">
-      <div id="pic-info-bg" class="portrait-only popup-bg transparent"></div>
-      <div id="pic-info-drawer" class="pic-info-container">
-        <button id="pic-info-close-btn" class="large-icon close-btn portrait-only">&#xf00d</button>
-        <div id="pic-info-handle" style="align-self: center;">
-          <hr class="drawer-handle" />
-        </div>
-        <div id="pic-info-details" class="flex-column pic-info-details caption-text">
-          <div id="fullscreen-eng-date"></div>
-          <div><span id="fullscreen-eng-city"></span> <span id="search-eng" class="inline-icon">&#xf002</span></div>
-          <div id="fullscreen-eng-caption"></div>
-          <hr class="divider">
-          <div id="fullscreen-jp-date"></div>
-          <div><span id="fullscreen-jp-city"></span> <span id="search-jp" class="inline-icon">&#xf002</span></div>
-          <div id="fullscreen-jp-caption"></div>
-          <hr class="divider">
-          <div id="camera-info"></div>
-          <div id="lens-info"></div>
-          <div id="technical-info" class="flex-row"></div>
-          <div id="img-tags" class="tag-list"></div>
-        </div>
-      </div>
-    </div>
-  </div>
+	<!-- Fullscreen Picture -->
+	<div id="fullscreen" class="centered overlay opacity-transition transparent fullscreen-container"
+		style="z-index: 6000; visibility: hidden;">
+		<div id="fullscreen-gallery" class="fullscreen-gallery">
+			<div id="fullscreen-bg" class="popup-bg opacity-transition transparent" style="z-index: 0;"></div>
+			<div id="fullscreen-ctrl" class="fullscreen-ctrl" style="z-index: 1;">
+				<button id="left-arrow" class="large-icon fullscreen-arrow">&#xf0d9</button>
+				<div>
+					<img id="fullscreen-pic-next" class="fullscreen-pic transparent centered no-display"
+						style="position: absolute;" />
+					<img id="fullscreen-pic" class="fullscreen-pic centered" style="position: absolute;" />
+				</div>
+				<button id="right-arrow" class="large-icon fullscreen-arrow">&#xf0da</button>
+			</div>
+			<div class="fullscreen-fns" style="z-index: 3;">
+				<button id="pic-info-btn" class="large-icon fullscreen-fn-btn">&#xf05a</button>
+			</div>
+		</div>
+		<div id="pic-info" style="z-index: 3;">
+			<div id="pic-info-bg" class="portrait-only popup-bg transparent"></div>
+			<div id="pic-info-drawer" class="pic-info-container">
+				<button id="pic-info-close-btn" class="large-icon close-btn portrait-only">&#xf00d</button>
+				<div id="pic-info-handle" style="align-self: center;">
+					<hr class="drawer-handle" />
+				</div>
+				<div id="pic-info-details" class="flex-column pic-info-details caption-text">
+					<div id="fullscreen-eng-date"></div>
+					<div><span id="fullscreen-eng-city"></span> <span id="search-eng" class="inline-icon">&#xf002</span>
+					</div>
+					<div id="fullscreen-eng-caption"></div>
+					<hr class="divider">
+					<div id="fullscreen-jp-date"></div>
+					<div><span id="fullscreen-jp-city"></span> <span id="search-jp" class="inline-icon">&#xf002</span>
+					</div>
+					<div id="fullscreen-jp-caption"></div>
+					<hr class="divider">
+					<div id="camera-info"></div>
+					<div id="lens-info"></div>
+					<div id="technical-info" class="flex-row"></div>
+					<div id="img-tags" class="tag-list"></div>
+				</div>
+			</div>
+		</div>
+	</div>
 
-  <!-- Start Screen -->
-  <div id="start-screen" class="start-screen opacity-transition transparent no-display" style="z-index: 4000">
-  </div>
+	<!-- Start Screen -->
+	<div id="start-screen" class="start-screen opacity-transition transparent no-display" style="z-index: 4000">
+	</div>
 
-  <!-- Loading circle -->
-  <div id="loading-screen" class="loader centered opacity-transition">
-    <div class="centered">
-      <div id="load0" class="loader-dot dot-0"></div>
-      <div id="load1" class="loader-dot dot-1"></div>
-      <div id="load2" class="loader-dot dot-2"></div>
-      <div id="load3" class="loader-dot dot-3"></div>
-      <div id="load4" class="loader-dot dot-4"></div>
-      <div id="load5" class="loader-dot dot-5"></div>
-      <div id="load6" class="loader-dot dot-6"></div>
-      <div id="load7" class="loader-dot dot-7"></div>
-      <div id="load8" class="loader-dot dot-8"></div>
-      <img id="load-icon" class="start-icon img centered no-display" style="margin-left: 10px; margin-top: 10px;">
-    </div>
-  </div>
+	<!-- Loading circle -->
+	<div id="loading-screen" class="loader centered opacity-transition">
+		<div class="centered">
+			<div id="load0" class="loader-dot dot-0"></div>
+			<div id="load1" class="loader-dot dot-1"></div>
+			<div id="load2" class="loader-dot dot-2"></div>
+			<div id="load3" class="loader-dot dot-3"></div>
+			<div id="load4" class="loader-dot dot-4"></div>
+			<div id="load5" class="loader-dot dot-5"></div>
+			<div id="load6" class="loader-dot dot-6"></div>
+			<div id="load7" class="loader-dot dot-7"></div>
+			<div id="load8" class="loader-dot dot-8"></div>
+			<img id="load-icon" class="start-icon img centered no-display" style="margin-left: 10px; margin-top: 10px;">
+		</div>
+	</div>
 
-  <!-- Error button -->
-  <div id="error-btn" class="error-btn centered loader-text" onclick="retry()">
-    <p>Failed to fetch data. Try again?</p>
-    <p>データアクセスに失敗しました。再試行する？</p>
-  </div>
+	<!-- Error button -->
+	<div id="error-btn" class="error-btn centered loader-text">
+		<p>Failed to fetch data. Try again?</p>
+		<p>データアクセスに失敗しました。再試行する？</p>
+	</div>
 
-  <!-- Scripts -->
-  <script type="module" src="components/fullscreen/fullscreen.js"></script>
-  <script type="module" src="components/gallery/gallery.js"></script>
-  <script type="module" src="components/popup/base-popup/base-popup.js"></script>
-  <script type="module" src="components/popup/filter-popup/filter-popup.js"></script>
-  <script type="module" src="components/popup/info-popup/info-popup.js"></script>
-  <script type="module" src="components/polaroid/base-polaroid/base-polaroid.js"></script>
-  <script type="module" src="components/polaroid/img-polaroid/img-polaroid.js"></script>
-  <script type="module" src="components/polaroid/txt-polaroid/txt-polaroid.js"></script>
-  <script type="module" src="js/utils.js"></script>
-  <script type="module" src="js/main.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/exif-js/2.3.0/exif.js"></script>
+	<!-- Scripts -->
+	<script type="module" src="components/fullscreen/fullscreen.js"></script>
+	<script type="module" src="pages/gallery-page/gallery-page.js"></script>
+	<script type="module" src="pages/map-page/map-page.js"></script>
+	<script type="module" src="pages/start-page/start-page.js"></script>
+	<script type="module" src="components/popup/base-popup/base-popup.js"></script>
+	<script type="module" src="components/popup/filter-popup/filter-popup.js"></script>
+	<script type="module" src="components/popup/info-popup/info-popup.js"></script>
+	<script type="module" src="components/polaroid/base-polaroid/base-polaroid.js"></script>
+	<script type="module" src="components/polaroid/img-polaroid/img-polaroid.js"></script>
+	<script type="module" src="components/polaroid/txt-polaroid/txt-polaroid.js"></script>
+	<script type="module" src="js/utils.js"></script>
+	<script type="module" src="js/main.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/exif-js/2.3.0/exif.js"></script>
 </body>

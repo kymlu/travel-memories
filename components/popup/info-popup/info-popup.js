@@ -1,4 +1,5 @@
 /// IMPORTS
+import { CUSTOM_EVENT_TYPES } from "../../../js/constants.js";
 import BasePopup from "../base-popup/base-popup.js"
 
 /**
@@ -18,8 +19,8 @@ export default class InfoPopup extends BasePopup {
     }
 
     /** @inheritdoc */
-    setupPopup(){
-        super.setupPopup();
+    initializePopup(){
+        super.initializePopup();
         this.querySelectorAll(".action-btn").forEach(element => {
             element.addEventListener("click", () => { this.goToGithub(); });
         });
@@ -34,7 +35,7 @@ export default class InfoPopup extends BasePopup {
     closePopup(forceClose) {
         super.closePopup(forceClose);
         
-        const infoClosedEvent = new CustomEvent('info-popup-closed');
+        const infoClosedEvent = new CustomEvent(CUSTOM_EVENT_TYPES.INFO_POPUP_CLOSED);
         this.dispatchEvent(infoClosedEvent);
     }
 

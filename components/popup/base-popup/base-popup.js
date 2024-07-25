@@ -13,7 +13,7 @@ export default class BasePopup extends HTMLElement {
     }
 
     /** Sets up the popup. */
-    setupPopup() {
+    initializePopup() {
         this.querySelector(".popup").addEventListener("click", (event) => {
             event.stopPropagation();
         });
@@ -39,7 +39,7 @@ export default class BasePopup extends HTMLElement {
         }, DEFAULT_TIMEOUT);
 
         if (!this.previouslyOpened) {
-            this.setupPopup();
+            this.initializePopup();
             this.previouslyOpened = true;
         }
     }

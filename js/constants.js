@@ -12,6 +12,12 @@ export const MONTH_NAMES = ["January", "February", "March", "April", "May", "Jun
 export const DAY_NAMES_EN = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 export const DAY_NAMES_JP = ["日", "月", "火", "水", "木", "金", "土"];
 
+export const PAGE_NAMES = {
+	START: "start",
+	MAP: "map",
+	GALLERY: "gallery"
+};
+
 export const TAGS = [
 	{
 		"id": "animal",
@@ -54,3 +60,9 @@ export const TAGS = [
 		"japaneseName": "街中で",
 	}
 ];
+
+export const CUSTOM_EVENT_TYPES = {
+	INFO_POPUP_CLOSED: "info-popup-closed",
+	FILTER_POPUP_SUBMITTED: "filter-popup-submitted",
+	FILTER_POPUP_CLOSED: "filter-popup-closed"
+}

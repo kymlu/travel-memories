@@ -4,9 +4,15 @@ import { getCurrentCountry, isCountrySelected } from "../../js/globals.js";
 
 let startTime = null;
 let handleAnimationEnd = null;
+let isLoading = false;
+let functionToRetry = null;
+
+export function isPageLoading(){
+    return isLoading;
+}
 
 /** Set up the required listeners. */
-export function setupLoader() {
+export function initializeLoader() {
     document.getElementById(`load${LOAD_DOT_COUNT}`).addEventListener("animationend", function () {
         addRemoveNoDisplay("loading-screen", true);
     });
@@ -16,14 +22,19 @@ export function setupLoader() {
             addRemoveNoDisplay([dot], true);
         });
     });
+
+    document.getElementById("error-btn").addEventListener("click", retryLoader);
 }
 
 /**
  * Start the loader.
+ * @param {Function} func 
  */
-export function startLoader() {
+export function startLoader(func) {
+    isLoading = true;
     addRemoveNoDisplay("loading-screen", false);
     addRemoveTransparent("loading-screen", false);
+    functionToRetry = func;
 
     startTime = new Date();
 
@@ -50,6 +61,7 @@ export function hideLoader() {
     setTimeout(() => {
         addRemoveNoDisplay("loading-screen", true);
     }, DEFAULT_TIMEOUT);
+    isLoading = false;
 }
 
 /**
@@ -58,7 +70,11 @@ export function hideLoader() {
  */
 export function stopLoader(animationEndFunction) {
     handleAnimationEnd = function () {
-        addRemoveNoDisplay("loading-screen", true);
+        // TODO: create a function that does both add transparent > timeout > no-display
+        addRemoveTransparent("loading-screen", true);
+        setTimeout(() => {
+            addRemoveNoDisplay("loading-screen", true);            
+        }, DEFAULT_TIMEOUT);
         animationEndFunction();
         document.getElementById(`load${LOAD_DOT_COUNT}`).removeEventListener("animationend", handleAnimationEnd);
     }
@@ -71,16 +87,7 @@ export function stopLoader(animationEndFunction) {
             document.getElementById(`load${i}`).style.animationIterationCount = iterationCount;
         }
     }, 100);
-}
-
-/**
- * Retries the loading function.
- * @param {Function} functionToRetry 
- */
-export function retryLoader(functionToRetry) {
-    addRemoveNoDisplay("error-btn", true);
-    setLoaderState("running");
-    functionToRetry();
+    isLoading = false;
 }
 
 /**
@@ -92,6 +99,15 @@ export function showDataLoadError() {
         addRemoveTransparent("error-btn", false);
         setLoaderState("paused");
     }, DEFAULT_TIMEOUT);
+}
+
+/**
+ * Retries the loading function.
+ */
+function retryLoader() {
+    addRemoveNoDisplay("error-btn", true);
+    setLoaderState("running");
+    functionToRetry();
 }
 
 /**

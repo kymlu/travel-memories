@@ -1,16 +1,19 @@
 /// IMPORTS
-import FilterPopup from '../popup/filter-popup/filter-popup.js'
+import FilterPopup from '../../components/popup/filter-popup/filter-popup.js'
 import {
 	addRemoveNoDisplay, addRemoveTransparent, flipArrow, getBilingualText,
 	getImageAddress, isPortraitMode, scrollToTop, sortImgs, startHandleDrag
 } from '../../js/utils.js';
-import { DEFAULT_TIMEOUT, SCROLL_THRESHOLD, TAGS } from '../../js/constants.js'
-import TextPolaroid from '../polaroid/txt-polaroid/txt-polaroid.js';
-import ImagePolaroid from '../polaroid/img-polaroid/img-polaroid.js';
-import { openFullscreen } from '../fullscreen/fullscreen.js';
-import { getCurrentCountry, getAppColor } from '../../js/globals.js';
-import { hideLoader } from '../loader/loader.js';
+import { CUSTOM_EVENT_TYPES, DEFAULT_TIMEOUT, PAGE_NAMES, SCROLL_THRESHOLD, TAGS } from '../../js/constants.js'
+import TextPolaroid from '../../components/polaroid/txt-polaroid/txt-polaroid.js';
+import ImagePolaroid from '../../components/polaroid/img-polaroid/img-polaroid.js';
+import { openFullscreen } from '../../components/fullscreen/fullscreen.js';
+import { getCurrentCountry, getAppColor, isGalleryPage, setCurrentPage } from '../../js/globals.js';
+import * as Loader from '../../components/loader/loader.js';
+import { selectRegion } from '../map-page/map-page.js';
 
+// TODO: restrict the loader to the gallery area instead of removing the top bar too
+// TODO: ensure the loader stops only after the mini map has no display removed
 /// VARIABLES
 // filter
 let filterPopup = new FilterPopup();
@@ -34,22 +37,26 @@ let isLoadingImages = false;
 let imageLoadIndex = 0;
 let currentPolaroidCount = 0;
 let isImageAngledLeft = true;
-let blankPolaroidFunction = null;
 let imageLoadLimit = 10;
 
 const noPicturesText = getBilingualText("No pictures available (yet)", "写真は(まだ)ありません");
 
 /// FUNCTIONS
-// initialization
-export function initializeGallery(blankPolaroidCallback) {
+/**
+ * Initialize the gallery page.
+ */
+export function initializeGallery() {
 	[
 		["filter-btn", "Filter Pictures", "写真をフィルターする"]
 	].forEach(([id, englishText, japaneseText]) => {
 		document.getElementById(id).title = getBilingualText(englishText, japaneseText);
 	});
 
+	document.getElementById("dates-title").innerHTML = getBilingualText("Dates visited", "訪れた日付");
+
 	// TODO: have a symbol to indicate filters were applied
 	[
+		["rgn-title-btn", toggleRegionDropdown],
 		["rgn-drop-down-bg", closeRegionDropdown],
 		["rgn-info-bg", changeRegionInfoVisibility],
 		["to-top-btn", scrollToTop],
@@ -59,18 +66,19 @@ export function initializeGallery(blankPolaroidCallback) {
 		document.getElementById(id).addEventListener("click", callback);
 	});
 
-	document.getElementById("country-map-mini").addEventListener("load", () => {
-		filterMiniMap();
-		hideLoader();
-	});
+	window.onscroll = function () {
+		if (isGalleryPage() && Loader.isPageLoading()) {
+			onScrollFunction();
+		}
+	};
 
 	document.getElementById("rgn-info-handle").addEventListener("touchstart", e => { startHandleDrag(e, "rgn-info-handle") }, false);
 
-	filterPopup.addEventListener("filter-popup-closed", () => {
+	filterPopup.addEventListener(CUSTOM_EVENT_TYPES.FILTER_POPUP_CLOSED, () => {
 		isFilterVisible = false;
 	});
 
-	filterPopup.addEventListener("filter-popup-submitted", event => {
+	filterPopup.addEventListener(CUSTOM_EVENT_TYPES.FILTER_POPUP_SUBMITTED, event => {
 		filterImages(event.detail.isOnlyFavs,
 			event.detail.keyword,
 			event.detail.selectedRegions,
@@ -90,17 +98,20 @@ export function initializeGallery(blankPolaroidCallback) {
 	});
 
 	document.body.appendChild(filterPopup);
-	blankPolaroidFunction = blankPolaroidCallback;
 
 	document.getElementById("to-top-btn").title = getBilingualText("Go to top", "トップに移動する");
 }
 
+/** Open the gallery page */
 export function openGallery() {
+	closeRegionDropdown();
+	scrollToTop(false);
 	document.getElementById("btn-grp-left").classList.add("btn-grp-left");
 	document.getElementById("btn-grp-right").classList.add("btn-grp-right");
 	document.getElementById("top-bar").style.position = "sticky";
 	document.getElementById("top-bar").style.backgroundColor = "white";
-	addRemoveNoDisplay(["map-page", "to-top-btn", "globe-btn"], true);
+	addRemoveTransparent(["gallery, to-to-btn"]);
+	addRemoveNoDisplay(["map-page", "globe-btn"], true);
 	addRemoveNoDisplay(["gallery", "map-btn", "info-btn", "rgn-title-btn", "rgn-info", "rgn-info-drawer"], false);
 	if (allImages.length > 0) {
 		addRemoveNoDisplay("filter-btn", false);
@@ -111,28 +122,50 @@ export function openGallery() {
 		document.getElementById("dates-title").scrollIntoView({ block: isPortraitMode() ? "end" : "start" });
 	}
 	addRemoveTransparent("rgn-info-bg", false);
+	Loader.hideLoader();
+	setCurrentPage(PAGE_NAMES.GALLERY);
 }
 
+/** Close the gallery page */
 export function closeGallery() {
+	closeRegionDropdown();
+	scrollToTop(false);
 	document.getElementById("btn-grp-left").classList.remove("btn-grp-left");
 	document.getElementById("btn-grp-right").classList.remove("btn-grp-right");
 	document.getElementById("top-bar").style.position = "fixed";
 	document.getElementById("top-bar").style.backgroundColor = "transparent";
-	addRemoveNoDisplay(["map-page", "to-top-btn", "globe-btn"], false);
-	addRemoveNoDisplay(["gallery", "filter-btn", "map-btn", "info-btn", "rgn-title-btn", "rgn-info", "rgn-info-drawer"], true);
+	addRemoveTransparent(["gallery", "to-top-btn"], true);
+	setTimeout(() => {
+		addRemoveNoDisplay(["gallery", "to-top-btn"], true);
+	}, DEFAULT_TIMEOUT);
+	addRemoveNoDisplay(["map-page", "globe-btn"], false);
+	addRemoveNoDisplay(["filter-btn", "map-btn", "info-btn", "rgn-title-btn", "rgn-info", "rgn-info-drawer"], true);
 	document.getElementById("rgn-info-bg").style.visibility = "hidden";
-	addRemoveTransparent("to-top-btn", false);
 	addRemoveTransparent("rgn-info-bg", false);
 }
 
 // regenerating data
-export function resetGallery() {
+/** Reset some country-dependant variables. */
+export function handleNewCountry() {
 	isNewCountry = true;
 	allImages = [];
 	visibleImages = [];
 	currentCountry = getCurrentCountry();
+	const svgObj = document.getElementById("country-map-mini");
+	svgObj.data = `assets/img/country/${currentCountry.id}.svg`;
+
+	[
+		["rgn-title-btn", `Change ${currentCountry.officialRegionNameEnglish}`, `${currentCountry.officialRegionNameJapanese}を切り替える`],
+		["info-btn", `Toggle ${currentCountry.officialRegionNameEnglish} info`, `${currentCountry.officialRegionNameJapanese}の情報をトグル`],
+	].forEach(([id, englishText, japaneseText]) => {
+		document.getElementById(id).title = getBilingualText(englishText, japaneseText);
+	});
 }
 
+/** Set values based on a new user-selected region.
+ * @param {any[]} regionData - the new region's data
+ * @param {boolean} isSingleRegionSelected
+ */
 export function setNewRegion(regionData, isSingleRegionSelected) {
 	if (!isNewCountry && currentRegion != null) {
 		document.getElementById(currentRegion.id + "-dropdown").classList.remove("active");
@@ -161,8 +194,8 @@ export function setNewRegion(regionData, isSingleRegionSelected) {
 			["rgn-areas", areaList.map(area => {
 				return getBilingualText(area.englishName, area.japaneseName);
 			}).sort().join(" | ")]
-		].forEach(([id, callback]) => {
-			document.getElementById(id).innerHTML = callback;
+		].forEach(([id, text]) => {
+			document.getElementById(id).innerHTML = text;
 		});
 	} else {
 		regionsList = regionData.map(rgn => {
@@ -186,6 +219,8 @@ export function setNewRegion(regionData, isSingleRegionSelected) {
 		document.getElementById("rgn-name").innerHTML = getBilingualText(currentCountry.englishName, currentCountry.japaneseName);
 		document.getElementById("description-title").innerHTML = getBilingualText("About", "国について");
 	}
+
+	// get all images
 	allImages = regionData.flatMap(rgn => {
 		return rgn.imageList.map(img => {
 			let area = areaList.find(area => area.id == img.area);
@@ -208,6 +243,7 @@ export function setNewRegion(regionData, isSingleRegionSelected) {
 
 	visibleImages = [...allImages];
 
+	// set filters
 	let tempTags = new Set(allImages.flatMap(x => { return x.tags }));
 	let tagList = TAGS.filter(x => tempTags.has(x.id));
 	let cameraList = [...new Set(allImages.map(x => x.cameraModel))];
@@ -221,9 +257,11 @@ export function setNewRegion(regionData, isSingleRegionSelected) {
 		currentCountry.officialRegionNameJapanese
 	);
 
-	editMiniMap();
+	setTimeout(() => {
+		filterMiniMap();
+	}, 1000);
 
-	flipArrow("rgn-name-arrow", false);
+	flipArrow(document.getElementById("rgn-name-arrow"), false);
 
 	// clear existing gallery
 	let gallery = document.getElementById("gallery");
@@ -239,6 +277,7 @@ export function setNewRegion(regionData, isSingleRegionSelected) {
 	} else {
 		gallery.innerHTML = noPicturesText;
 	}
+	//hideLoader();
 }
 
 function loadImages() {
@@ -296,7 +335,7 @@ function createPolaroidBlank(rgn, isImageAngledLeft) {
 		rgn.japaneseName
 	);
 
-	newPolaroid.addEventListener("click", () => { blankPolaroidFunction(rgn.id) });
+	newPolaroid.addEventListener("click", () => { selectRegion(rgn.id) });
 
 	return newPolaroid;
 }
@@ -395,50 +434,44 @@ function changeRegionInfoVisibility(isVisible) {
 }
 
 function filterMiniMap() {
-	// get the selected official region only
 	const svgObj = document.getElementById("country-map-mini");
+	addRemoveTransparent([svgObj], true);
 	const svgDoc = svgObj.contentDocument;
 	const regionList = currentCountry.regionGroups.flatMap(grp => grp.regions);
-
 	try {
 		regionList.forEach(rgn => {
 			const rgnImg = svgDoc.getElementById(`${rgn.id}-img`);
-			if (currentRegion == null) {
-				if (rgn.visited) {
-					rgnImg.setAttribute("fill", getAppColor());
+			if (rgnImg) {
+				if (currentRegion == null) {
+					if (rgn.visited) {
+						rgnImg.setAttribute("fill", getAppColor());
+					} else {
+						rgnImg.setAttribute("fill", "lightgrey");
+					}
+					rgnImg.setAttribute("stroke", "none");
+				} else if (rgn.id != currentRegion.id) {
+					rgnImg.setAttribute("fill", "none");
+					rgnImg.setAttribute("stroke", "none");
 				} else {
-					rgnImg.setAttribute("fill", "lightgrey");
+					rgnImg.setAttribute("fill", getAppColor());
+					rgnImg.setAttribute("stroke", "none");
 				}
-				rgnImg.setAttribute("stroke", "none");
-			} else if (rgn.id != currentRegion.id) {
-				rgnImg.setAttribute("fill", "none");
-				rgnImg.setAttribute("stroke", "none");
-			} else {
-				rgnImg.setAttribute("fill", getAppColor());
-				rgnImg.setAttribute("stroke", "none");
 			}
 		});
 
-		// show the map
-		const countryImg = svgDoc.getElementById(currentCountry.id + "-img");
+		// zoom into the specific region
 		if (currentRegion) {
+			const countryImg = svgDoc.getElementById(currentCountry.id + "-img");
 			countryImg.setAttribute("viewBox", currentRegion.viewbox);
 		}
 	} catch (error) {
 		console.error(error);
 	} finally {
+		// show map
 		setTimeout(() => {
 			addRemoveTransparent([svgObj], false);
 		}, DEFAULT_TIMEOUT / 2);
 	}
-}
-
-function editMiniMap() {
-	const svgObj = document.getElementById("country-map-mini");
-	addRemoveTransparent([svgObj], true);
-	setTimeout(() => {
-		svgObj.data = `assets/img/country/${currentCountry.id}.svg`;
-	}, 1000);
 }
 
 // image filtering
@@ -529,14 +562,18 @@ function filterImages(isOnlyFavs,
 			selectedCameras);
 	});
 	visibleImages = allImages.filter(img => img.isVisible);
+	if (allImages.length == visibleImages.length) {
+		addRemoveNoDisplay("filter-indicator", true);
+	} else {
+		addRemoveNoDisplay("filter-indicator", false);
+	}
 }
 
 // region selection dropdown
 /** 
  * Creates the region drop down list.
- * @param {Function} selectRegionFunction 
  */
-export function createRegionDropDown(selectRegionFunction) {
+export function createRegionDropDown() {
 	// the dropdown object
 	const dropDownList = document.getElementById("rgn-drop-down");
 	dropDownList.replaceChildren();
@@ -566,7 +603,7 @@ export function createRegionDropDown(selectRegionFunction) {
 				regionButton.title = getBilingualText(`See images from ${rgn.englishName}`, `${rgn.japaneseName}の写真を表示する`);
 				regionButton.classList.add("visited-rgn-text");
 				regionButton.addEventListener("click", function () {
-					selectRegionFunction(rgn.id);
+					selectRegion(rgn.id);
 				}, false);
 				dropDownList.appendChild(regionButton);
 			}
@@ -574,7 +611,7 @@ export function createRegionDropDown(selectRegionFunction) {
 	});
 }
 
-export function toggleRegionDropdown() {
+function toggleRegionDropdown() {
 	document.getElementById("rgn-drop-down-container").classList.toggle("no-display");
 	flipArrow(document.getElementById("rgn-name-arrow"));
 	if (isNewRegionDropdown && currentRegion) {

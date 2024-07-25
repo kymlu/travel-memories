@@ -7,7 +7,7 @@ import {
 	addRemoveNoDisplay, addRemoveTransparent, getBilingualText, getPictureDate,
 	getImageAddress, isPortraitMode, sortByEnglishName, startHandleDrag
 } from '../../../js/utils.js';
-import { visibleImages } from '../gallery/gallery.js';
+import { visibleImages } from '../../pages/gallery-page/gallery-page.js';
 
 /// VARIABLES
 // booleans
@@ -44,12 +44,13 @@ export function initializeFullscreen() {
 	favouritedTag.prepend(tempStar);
 
 	[
+		["pic-info-btn", "See picture information", "写真の情報を見る"],
 		["left-arrow", "Previous picture", "前の写真"],
 		["right-arrow", "Next picture", "次の写真"],
 		["search-eng", "Google in English", "英語でググる"],
 		["search-jp", "Google in Japanese", "日本語でググる"]
 	].forEach(([id, englishText, japaneseText]) => {
-		document.getElementById(id).innerHTML = getBilingualText(englishText, japaneseText);
+		document.getElementById(id).title = getBilingualText(englishText, japaneseText);
 	});
 
 	[

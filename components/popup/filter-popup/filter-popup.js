@@ -3,6 +3,7 @@ import BasePopup from "../base-popup/base-popup.js"
 import {
     addRemoveNoDisplay, getBilingualText, flipArrow, sortByEnglishName
 } from '../../../js/utils.js';
+import { CUSTOM_EVENT_TYPES } from "../../../js/constants.js";
 
 /**
  * The Filter Popup object.
@@ -57,8 +58,8 @@ export default class FilterPopup extends BasePopup {
     /**
      * @inheritdoc
      */
-    setupPopup() {
-        super.setupPopup();
+    initializePopup() {
+        super.initializePopup();
         [
             ["filter-title", "Filters", "フィルター"],
             ["filter-fav-title", "Favourites", "お気に入り"],
@@ -140,7 +141,7 @@ export default class FilterPopup extends BasePopup {
 
         super.closePopup(forceClose);
 
-        const filterClosedEvent = new CustomEvent('filter-popup-closed');
+        const filterClosedEvent = new CustomEvent(CUSTOM_EVENT_TYPES.FILTER_POPUP_CLOSED);
         this.dispatchEvent(filterClosedEvent);
     }
 
@@ -337,7 +338,7 @@ export default class FilterPopup extends BasePopup {
      * Submits the new filter parameters to the gallery.
      */
     submitFilters() {
-        const filterSubmitEvent = new CustomEvent('filter-popup-submitted', {
+        const filterSubmitEvent = new CustomEvent(CUSTOM_EVENT_TYPES.FILTER_POPUP_SUBMITTED, {
             detail: {
                 isOnlyFavs: document.getElementById("filter-fav-input").checked,
                 keyword: document.getElementById("filter-kw-input").value,

@@ -62,30 +62,10 @@ button:active {
   box-shadow: inset 900px 0 0 0 rgba(var(--main-color));
 }
 
-#main-title {
-  vertical-align: bottom;
-  color: var(--text-color);
-  font-family: Zen Maru Gothic;
-  font-size: var(--xlrg-text-size);
-  font-weight: bolder;
-  text-transform: uppercase;
-  text-align: center;
-  opacity: 100%;
-  padding: 10px;
-  border-radius: 10px;
-  box-shadow: inset 0 0 0 0 rgba(var(--main-color));
-  transition: color .3s ease-in-out, box-shadow .5s ease-in-out;
-}
-
-@media only screen and (orientation: portrait) {
-  #main-title {
-    margin: 0px 50px;
-  }
-}
-
-#main-title:hover {
-  color: white;
-  box-shadow: inset 100vw 0 0 0 rgba(var(--main-color));
+#filter-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
 }
 
 /* General Text */
@@ -97,6 +77,19 @@ button:active {
   font-size: var(--icn-text-size);
   font-family: FontAwesome;
   cursor: pointer;
+}
+
+.filter-indicator {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 10px;
+  height: 10px;
+  background-color: rgba(var(--main-color));
+  border-radius: 50%;
+  border-color: white;
+  border-width: 1px;
+  border-style: solid;
 }
 
 .inline-icon {
@@ -208,56 +201,11 @@ button:active {
 }
 
 /* Official Region info*/
-/* .rgn-info-container {
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  width: 100%;
-  max-height: 50vh;
-  box-sizing: border-box;
-  padding: 20px 20px 30px 20px;
-  border-radius: 0px 0px 20px 20px;
-  box-shadow: 0px 8px 15px -10px #00000050;
-  transition: top 0.5s ease-in-out, margin-top 0.5s ease-in-out;
-  background-color: white;
-}
-
-@media only screen and (orientation: portrait) {
-  .rgn-info-container {
-    max-height: 60vh;
-    padding: 20px 20px 10px 20px;
-  }
-}
-
-.rgn-info {
-  display: flex;
-  flex-direction: row;
-  gap: 15px;
-  align-content: stretch;
-  overflow-y: auto;
-}
-
-@media only screen and (orientation: portrait) {
-  .rgn-info {
-    flex-direction: column;
-  }
-}
-
-.rgn-info-text {
-  gap: 15px;
-  overflow-y: auto;
-}
-
 .drawer-handle {
   display: none;
 }
 
 @media only screen and (orientation: portrait) {
-  .rgn-info-text {
-    gap: 15px;
-    overflow-y: visible;
-  }
-
   .drawer-handle {
     display: block;
     height: 6px;
@@ -269,110 +217,6 @@ button:active {
     color: rgba(var(--main-color));
     cursor: grab;
   }
-} */
-
-/* Country Picker */
-.start-screen {
-  display: flex;
-  flex-direction: column;
-  justify-content: stretch;
-  align-items: center;
-  position: absolute;
-  flex-wrap: nowrap;
-  overflow-y: auto;
-  background-color: white;
-  padding: 75px 0px;
-  width: 100%;
-  height: 100%;
-  box-sizing: border-box;
-}
-
-@media only screen and (orientation: portrait) {
-  .start-screen {
-    gap: 15px;
-  }
-}
-
-.start-btn {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin: auto 30px;
-  cursor: pointer;
-}
-
-@media only screen and (orientation: portrait) {
-  .start-btn {
-    flex-direction: column;
-    gap: 0px;
-  }
-}
-
-.start-btn.jp {
-  box-shadow: inset 0 0 0 0 rgba(var(--jp-color));
-}
-
-.start-btn.jp:hover {
-  box-shadow: inset 100vw 0 0 0 rgba(var(--jp-color));
-}
-
-.start-btn.tw {
-  box-shadow: inset 0 0 0 0 rgba(var(--tw-color));
-}
-
-.start-btn.tw:hover {
-  box-shadow: inset 100vw 0 0 0 rgba(var(--tw-color));
-}
-
-.start-btn.au {
-  box-shadow: inset 0 0 0 0 rgba(var(--au-color));
-}
-
-.start-btn.au:hover {
-  box-shadow: inset 100vw 0 0 0 rgba(var(--au-color));
-}
-
-.start-btn.nz {
-  box-shadow: inset 0 0 0 0 rgba(var(--nz-color));
-}
-
-.start-btn.nz:hover {
-  box-shadow: inset 100vw 0 0 0 rgba(var(--nz-color));
-}
-
-.start-icon {
-  height: 30px;
-  width: 30px;
-}
-
-.start-icon.img {
-  position: absolute;
-}
-
-.start-icon.animated {
-  animation: spin-animation 0.5s ease-out 1;
-}
-
-@keyframes spin-animation {
-  from {
-    rotate: 0deg;
-  }
-
-  to {
-    rotate: 360deg;
-  }
-}
-
-.country-text {
-  cursor: pointer;
-  vertical-align: middle;
-  padding: 10px;
-  font-family: Zen Maru Gothic;
-  font-size: var(--xlrg-text-size);
-  font-weight: normal;
-  text-transform: uppercase;
-  text-decoration: none;
-  text-align: center;
 }
 
 /* Maps*/
@@ -390,19 +234,6 @@ button:active {
 @media only screen and (orientation: portrait) {
   .map-page {
     padding: 0px;
-  }
-}
-
-.country-map {
-  margin: auto;
-  width: 70vw;
-  max-height: 80vh;
-}
-
-@media only screen and (orientation: portrait) {
-  .country-map {
-    margin: 0;
-    width: 100%;
   }
 }
 
@@ -471,10 +302,6 @@ button:active {
   font-weight: normal;
   text-transform: capitalize;
   text-decoration: none;
-}
-
-.locked-rgn-text {
-  color: lightgray;
 }
 
 .visited-rgn-text {

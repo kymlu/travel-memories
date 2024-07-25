@@ -1,0 +1,102 @@
+.start-screen {
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+    align-items: center;
+    position: absolute;
+    flex-wrap: nowrap;
+    overflow-y: auto;
+    background-color: white;
+    padding: 75px 0px;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+@media only screen and (orientation: portrait) {
+    .start-screen {
+        gap: 15px;
+    }
+}
+
+.start-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: auto 30px;
+    cursor: pointer;
+}
+
+@media only screen and (orientation: portrait) {
+    .start-btn {
+        flex-direction: column;
+        gap: 0px;
+    }
+}
+
+.start-btn.jp {
+    box-shadow: inset 0 0 0 0 rgba(var(--jp-color));
+}
+
+.start-btn.jp:hover {
+    box-shadow: inset 100vw 0 0 0 rgba(var(--jp-color));
+}
+
+.start-btn.tw {
+    box-shadow: inset 0 0 0 0 rgba(var(--tw-color));
+}
+
+.start-btn.tw:hover {
+    box-shadow: inset 100vw 0 0 0 rgba(var(--tw-color));
+}
+
+.start-btn.au {
+    box-shadow: inset 0 0 0 0 rgba(var(--au-color));
+}
+
+.start-btn.au:hover {
+    box-shadow: inset 100vw 0 0 0 rgba(var(--au-color));
+}
+
+.start-btn.nz {
+    box-shadow: inset 0 0 0 0 rgba(var(--nz-color));
+}
+
+.start-btn.nz:hover {
+    box-shadow: inset 100vw 0 0 0 rgba(var(--nz-color));
+}
+
+.start-icon {
+    height: 30px;
+    width: 30px;
+}
+
+.start-icon.img {
+    position: absolute;
+}
+
+.start-icon.animated {
+    animation: spin-animation 0.5s ease-out 1;
+}
+
+@keyframes spin-animation {
+    from {
+        rotate: 0deg;
+    }
+
+    to {
+        rotate: 360deg;
+    }
+}
+
+.country-text {
+    cursor: pointer;
+    vertical-align: middle;
+    padding: 10px;
+    font-family: Zen Maru Gothic;
+    font-size: var(--xlrg-text-size);
+    font-weight: normal;
+    text-transform: uppercase;
+    text-decoration: none;
+    text-align: center;
+}
