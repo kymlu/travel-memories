@@ -2,10 +2,11 @@ import { DEFAULT_TIMEOUT, LOAD_ANIMATION_TIME, LOAD_DOT_COUNT } from "../../js/c
 import { addRemoveNoDisplay, addRemoveTransparent } from "../../js/utils.js";
 import { getCurrentCountry, isCountrySelected } from "../../js/globals.js";
 
+/** The Loader */
 export default class Loader extends HTMLElement {
-    constructor(func) {
+    constructor() {
         super();
-        this.functionToRetry = func;
+        this.functionToRetry = null;
 
         this.startTime = null;
         this.handleAnimationEnd = null;
@@ -16,19 +17,22 @@ export default class Loader extends HTMLElement {
             .then(response => response.text())
             .then(html => {
                 this.innerHTML = html;
-
-                document.getElementById(`load${LOAD_DOT_COUNT}`).addEventListener("animationend", function () {
-                    addRemoveNoDisplay("loading-screen", true);
-                });
-
-                Array.from(document.getElementsByClassName("loader-dot")).forEach(dot => {
-                    dot.addEventListener("animationend", function () {
-                        addRemoveNoDisplay([dot], true);
-                    });
-                });
-
-                document.getElementById("error-btn").addEventListener("click", retryLoader);
             }).catch(error => console.log(error));
+    }
+
+    connectedCallback() {
+        document.getElementById(`load${LOAD_DOT_COUNT}`).addEventListener("animationend", function () {
+            addRemoveNoDisplay("loading-screen", true);
+        });
+
+        Array.from(document.getElementsByClassName("loader-dot")).forEach(dot => {
+            dot.addEventListener("animationend", function () {
+                addRemoveNoDisplay([dot], true);
+            });
+        });
+
+        document.getElementById("error-btn").addEventListener("click", retryLoader);
+        this.startLoader();
     }
 
     /**
@@ -36,11 +40,11 @@ export default class Loader extends HTMLElement {
      * @param {Function} func 
      */
     startLoader() {
-        isLoading = true;
+        this.isLoading = true;
         addRemoveNoDisplay("loading-screen", false);
         addRemoveTransparent("loading-screen", false);
 
-        startTime = new Date();
+        this.startTime = new Date();
 
         if (isCountrySelected()) {
             addRemoveNoDisplay("load-icon", false);
@@ -65,7 +69,7 @@ export default class Loader extends HTMLElement {
         setTimeout(() => {
             addRemoveNoDisplay("loading-screen", true);
         }, DEFAULT_TIMEOUT);
-        isLoading = false;
+        this.isLoading = false;
         this.remove();
     }
 
@@ -92,14 +96,15 @@ export default class Loader extends HTMLElement {
                 document.getElementById(`load${i}`).style.animationIterationCount = iterationCount;
             }
         }, 100);
-        isLoading = false;
+        this.isLoading = false;
         this.remove();
     }
 
     /**
      * Shows the error button for the data loader.
      */
-    showDataLoadError() {
+    showDataLoadError(func) {
+        this.functionToRetry = func;
         setTimeout(() => {
             addRemoveNoDisplay("error-btn", false);
             addRemoveTransparent("error-btn", false);
@@ -113,7 +118,7 @@ export default class Loader extends HTMLElement {
     retryLoader() {
         addRemoveNoDisplay("error-btn", true);
         this.#setLoaderState("running");
-        functionToRetry();
+        this.functionToRetry();
     }
 
     /**
@@ -126,3 +131,5 @@ export default class Loader extends HTMLElement {
         }
     }
 }
+
+window.customElements.define("loader-component", Loader);

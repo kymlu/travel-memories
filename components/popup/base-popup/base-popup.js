@@ -26,7 +26,7 @@ export default class BasePopup extends HTMLElement {
     }
 
     /** Opens the popup. */
-    openPopup() {
+    open() {
         let popupOverlay = this.querySelector(".overlay");
         let popupContent = this.querySelector(".popup-content");
         let popup = this.querySelector(".popup");
@@ -40,8 +40,8 @@ export default class BasePopup extends HTMLElement {
             addRemoveNoDisplay([popupContent], false);
             addRemoveTransparent([popupContent], false);
             addRemoveClass([popup], "popup-height", true);
-            this.querySelector(".close-btn").addEventListener("click", () => { this.closePopup(false); });
-            this.querySelector(".popup-bg").addEventListener("click", () => { this.closePopup(true); });
+            this.querySelector(".close-btn").addEventListener("click", () => { this.close(false); });
+            this.querySelector(".popup-bg").addEventListener("click", () => { this.close(true); });
         }, DEFAULT_TIMEOUT);
 
         if (!this.previouslyOpened) {
@@ -55,7 +55,7 @@ export default class BasePopup extends HTMLElement {
 
     handleKeydown(event){
         if(event.key == "Escape"){
-            this.closePopup(true);
+            this.close(true);
         }
     }
 
@@ -64,7 +64,7 @@ export default class BasePopup extends HTMLElement {
      * @param {boolean} forceClose - ```True``` if the user has forcefully closed 
      * the popup through the esc key or clicking the background.
      */
-    closePopup(forceClose) {
+    close(forceClose) {
 	    document.removeEventListener("keydown", this.handleKeydown);
 
         this.isOpen = false;

@@ -1,12 +1,9 @@
 /// IMPORTS
+import { DEFAULT_TIMEOUT } from '../../js/constants.js'
 import {
-	JAPAN, TAIWAN, TAGS, DEFAULT_TIMEOUT, LONG_DATETIME_FORMAT_EN, LONG_DATETIME_FORMAT_JP
-} from '../../js/constants.js'
-import {
-	addClickListeners, addRemoveNoDisplay, addRemoveTransparent, getBilingualText, getPictureDate,
-	getImageAddress, isPortraitMode, setBilingualAttribute, sortByEnglishName, startHandleDrag
+	addClickListeners, addRemoveNoDisplay, addRemoveTransparent,
+	getImageAddress, isPortraitMode, setBilingualAttribute,
 } from '../../../js/utils.js';
-import { visibleImages } from '../../views/gallery-view/gallery-view.js';
 
 export default class Fullscreen extends HTMLElement {
 	constructor() {
@@ -18,6 +15,7 @@ export default class Fullscreen extends HTMLElement {
 		// selected pic
 		this.currentPic = null;
 		this.currentPicIndex = 0;
+		this.visibleImages = [];
 
 		// pic info
 		this.isPicInfoVisible = true;
@@ -38,6 +36,10 @@ export default class Fullscreen extends HTMLElement {
 			.catch(error => {
 				console.error("Error loading fullscreen.", error);
 			});
+
+		this.elements = {
+
+		};
 
 		this.initialize();
 	}
@@ -72,9 +74,10 @@ export default class Fullscreen extends HTMLElement {
 	 * @param {any} imageToDisplay 
 	 * @param {string} countryId 
 	 */
-	openFullscreen(imageToDisplay, countryId) {
+	openFullscreen(visibleImageList, imageToDisplay, countryId) {
+		this.visibleImages = visibleImageList;
 		this.currentPic = imageToDisplay;
-		this.currentPicIndex = visibleImages.indexOf(currentPic);
+		this.currentPicIndex = this.visibleImages.indexOf(currentPic);
 		this.isNewFullscreenInstance = true;
 		this.currentCountryId = countryId;
 		this.setNewPicture();
@@ -208,14 +211,14 @@ export default class Fullscreen extends HTMLElement {
 
 	changeFullscreenPicture(isNext) {
 		if (isNext) {
-			if (this.currentPicIndex == visibleImages.length - 1) {
+			if (this.currentPicIndex == this.visibleImages.length - 1) {
 				this.currentPicIndex = 0;
 			} else {
 				this.currentPicIndex++;
 			}
 		} else {
 			if (this.currentPicIndex == 0) {
-				this.currentPicIndex = visibleImages.length - 1;
+				this.currentPicIndex = this.visibleImages.length - 1;
 			} else {
 				this.currentPicIndex--;
 			}
@@ -268,4 +271,4 @@ export default class Fullscreen extends HTMLElement {
 	}
 }
 
-window.customElements.define("fullscreen", Fullscreen);
+window.customElements.define("fullscreen-component", Fullscreen);

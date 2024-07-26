@@ -21,7 +21,7 @@ export default class MapView extends HTMLElement {
 	initialize() {
 		this.elements.map.addEventListener("load", colourMap);
 
-		addClickListeners([[this.elements.mainTitle, function () { selectRegion(null); }]]);
+		addClickListeners([[this.elements.mainTitle, function () { onSelectNewRegion(null); }]]);
 	}
 
 	handleNewCountry() {
@@ -69,7 +69,7 @@ export default class MapView extends HTMLElement {
 				rgnImg.setAttribute("cursor", "pointer");
 				rgnImg.setAttribute("transition", "opacity 0.3 ease-in-out");
 				rgnImg.addEventListener("click", function () {
-					selectRegion(rgn.id);
+					onSelectNewRegion(rgn.id);
 					document.getElementById("main-title").innerHTML = getBilingualText(rgn.englishName, rgn.japaneseName);
 				});
 
@@ -92,12 +92,6 @@ export default class MapView extends HTMLElement {
 	createMap() {
 		this.elements.map.data = `assets/img/country/${currentCountry.id}.svg`;
 	}
-
-	selectRegion(regionId, isPopped) {
-		if (isPopped == null) {
-			window.history.pushState({ rgn: regionId }, "", null);
-		}
-
-		onSelectNewRegion(regionId);
-	}
 }
+
+window.customElements.define("map-view", MapView);

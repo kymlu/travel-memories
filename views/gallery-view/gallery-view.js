@@ -2,17 +2,16 @@
 import FilterPopup from '../../components/popup/filter-popup/filter-popup.js'
 import {
 	addClickListeners, addRemoveNoDisplay, addRemoveTransparent, flipArrow, getBilingualText,
-	getImageAddress, isPortraitMode, scrollToTop, setBilingualAttribute, sortImgs, startHandleDrag
+	getImageAddress, isPortraitMode, scrollToTop, setBilingualAttribute, sortImgs
 } from '../../js/utils.js';
 import {
 	CUSTOM_EVENT_TYPES, DEFAULT_TIMEOUT, SCROLL_THRESHOLD, TAGS
 } from '../../js/constants.js'
 import TextPolaroid from '../../components/polaroid/txt-polaroid/txt-polaroid.js';
 import ImagePolaroid from '../../components/polaroid/img-polaroid/img-polaroid.js';
-import { openFullscreen } from '../../components/fullscreen/fullscreen.js';
-import { getCurrentCountry, isGalleryView } from '../../js/globals.js';
-import { selectRegion } from '../map-view/map-view.js';
-import RegionDropDown from '../../components/region-dropdown/region-dropdown.js';
+import Fullscreen from '../../components/fullscreen/fullscreen.js';
+import { getCurrentCountry, isGalleryView, onSelectNewRegion, startHandleDrag } from '../../js/globals.js';
+import RegionDropdown from '../../components/region-dropdown/region-dropdown.js';
 import RegionInfo from '../../components/region-info/region-info.js';
 
 /** The Gallery View. */
@@ -26,9 +25,11 @@ export default class GalleryView extends HTMLElement {
 		// TODO: make views classes
 		/// VARIABLES
 		// filter
+		/** @type {FilterPopup} */
 		this.filterPopup = new FilterPopup();
-		this.regionDropdown = new RegionDropDown();
+		this.regionDropdown = new RegionDropdown();
 		this.regionInfo = new RegionInfo();
+		this.fullscreen = new Fullscreen();
 		this.loader = null;
 
 		// region info
@@ -102,8 +103,9 @@ export default class GalleryView extends HTMLElement {
 	show() {
 		this.closeRegionDropdown();
 		scrollToTop(false);
+		this.regionInfo.show(false);
 		addRemoveTransparent(["gallery, to-to-btn"], false);
-		addRemoveNoDisplay(["gallery", "rgn-info", "rgn-info-drawer"], false);
+		addRemoveNoDisplay(["gallery"], false);
 		if (allImages.length > 0) {
 			addRemoveNoDisplay("filter-btn", false);
 		}
@@ -123,7 +125,7 @@ export default class GalleryView extends HTMLElement {
 		setTimeout(() => {
 			addRemoveNoDisplay(["gallery", "to-top-btn"], true);
 		}, DEFAULT_TIMEOUT);
-		addRemoveNoDisplay(["rgn-info", "rgn-info-drawer"], true);
+		this.regionInfo.hide(false);
 		document.getElementById("rgn-info-bg").style.visibility = "hidden";
 		addRemoveTransparent("rgn-info-bg", false);
 	}
@@ -135,8 +137,8 @@ export default class GalleryView extends HTMLElement {
 		allImages = [];
 		visibleImages = [];
 		currentCountry = getCurrentCountry();
-		this.regionDropdown.
-			this.createRegionDropDown();
+		this.regionDropdown.handleNewCountry();
+		this.regionInfo.handleNewCountry(this.currentCountry.id);
 		// region info
 	}
 
@@ -275,7 +277,7 @@ export default class GalleryView extends HTMLElement {
 		);
 
 		// listeners
-		newPolaroid.addEventListener("click", () => { openFullscreen(img, currentCountry.id); });
+		newPolaroid.addEventListener("click", () => { this.fullscreen.openFullscreen(visibleImages, img, currentCountry.id); });
 
 		return newPolaroid;
 	}
@@ -287,7 +289,7 @@ export default class GalleryView extends HTMLElement {
 			rgn.japaneseName
 		);
 
-		newPolaroid.addEventListener("click", () => { selectRegion(rgn.id) });
+		newPolaroid.addEventListener("click", () => { onSelectNewRegion(rgn.id) });
 
 		return newPolaroid;
 	}
@@ -316,19 +318,18 @@ export default class GalleryView extends HTMLElement {
 		}
 	}
 
+	toggleRegionDropdown() {
+		this.regionDropdown.toggleVisibility();
+	}
+
+	toggleRegionInfo(isVisible) {
+		this.regionInfo.toggleVisibility(isVisible);
+	}
+
 	// image filtering
 	/** Shows the filter popup. */
 	showFilter() {
-		filterPopup.openPopup();
-	}
-
-	/** Closes the filter popup. */
-	closeFilter() {
-		filterPopup.closePopup(true);
-	}
-
-	isFilterVisible() {
-		return filterPopup.isPopupOpen();
+		filterPopup.open();
 	}
 
 	doesTextIncludeKeyword(text, keywordSearchTerm) {
@@ -409,9 +410,7 @@ export default class GalleryView extends HTMLElement {
 
 
 	handleKeyEvent(event) {
-		if (event.key == "Escape" && this.isFilterVisible()) {
-			this.closeFilter();
-		}
+		if (filterPopup.isOpen()) return;
 		switch (event.key) {
 			case "ArrowRight":
 				this.changeFullscreenPicture(true);
@@ -436,3 +435,5 @@ export default class GalleryView extends HTMLElement {
 		}
 	}
 }
+
+window.customElements.define("gallery-view", GalleryView);

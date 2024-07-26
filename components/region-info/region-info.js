@@ -1,12 +1,16 @@
-import { addRemoveTransparent, getBilingualText, setBilingualAttribute } from "../../js/utils";
+import { addRemoveTransparent, getBilingualText, setBilingualAttribute } from "../../js/utils.js";
 
+/** The Region Info. */
 export default class RegionInfo extends HTMLElement {
     constructor() {
+        super();
         this.isVisible = false;
-		this.isThrottling = false;
+        this.isThrottling = false;
         this.elements = {
             background: document.getElementById("rgn-info-bg"),
+            map: document.getElementById("country-map-mini"),
             areasTitle: document.getElementById("areas-title"),
+            datesSection: document.getElementById("rgn-info-dates"),
             dates: document.getElementById("rgn-dates"),
             descriptionEnglish: document.getElementById("rgn-desc-eng"),
             descriptionJapanese: document.getElementById("rgn-desc-jp"),
@@ -16,16 +20,25 @@ export default class RegionInfo extends HTMLElement {
         }
     }
 
+    /** Makes value changes based on new country.
+     * @param {string} countryId 
+     */
     handleNewCountry(countryId) {
-        const svgObj = document.getElementById("country-map-mini");
+        const svgObj = this.elements.map;
         svgObj.data = `assets/img/country/${countryId}.svg`;
     }
 
+    /** Sets the info for a new region.
+     * @param {any} currentCountry 
+     * @param {any[]} regionList 
+     * @param {any[]} areaList 
+     * @param {boolean} isSingleRegionSelected 
+     */
     setNewRegionInfo(currentCountry, regionList, areaList, isSingleRegionSelected) {
         this.isVisible = true;
 
         if (isSingleRegionSelected) {
-            addRemoveNoDisplay(this.elements.dates, false);
+            addRemoveNoDisplay(this.elements.datesSection, false);
 
             setBilingualAttribute([
                 [this.elements.areasTitle, "Areas", "所"],
@@ -44,7 +57,7 @@ export default class RegionInfo extends HTMLElement {
                 document.getElementById(id).innerHTML = text;
             });
         } else {
-            addRemoveNoDisplay(this.elements.dates, true);
+            addRemoveNoDisplay(this.elements.datesSection, true);
 
             setBilingualAttribute([
                 [this.elements.areasTitle, currentCountry.officialRegionNameEnglish + "s", currentCountry.officialRegionNameJapanese],
@@ -63,9 +76,11 @@ export default class RegionInfo extends HTMLElement {
         }
     }
 
-    // Region info
+    /** Shows the region info section.
+     * @param {true} isForced 
+     */
     show(isForced) {
-        isRegionInfoVisible = true;
+        this.isVisible = true;
         addRemoveTransparent(this.elements.background, false);
         document.getElementById(this.elements.background).style.visibility = "visible";
         if (isForced) {
@@ -78,8 +93,11 @@ export default class RegionInfo extends HTMLElement {
         }
     }
 
+    /** Hides the region info section.
+     * @param {boolean} isForced 
+     */
     hide(isForced) {
-        isRegionInfoVisible = false;
+        this.isVisible = false;
         if (isForced) {
             let rgnInfoOffset = this.getBoundingClientRect().height;
             if (document.body.scrollTop <= rgnInfoOffset) {
@@ -98,31 +116,30 @@ export default class RegionInfo extends HTMLElement {
         }, DEFAULT_TIMEOUT);
     }
 
+    /** Shows/hides the pic info section if user scrolls to a certain point. */
     handleScroll() {
         if (isThrottling) return;
 
         isThrottling = true;
-
         setTimeout(() => {
-            let rgnInfoOffset = [this].getBoundingClientRect().height / 2;
-            if (isRegionInfoVisible && document.body.scrollTop > rgnInfoOffset) {
-                isRegionInfoVisible = false;
+            let rgnInfoOffset = this.getBoundingClientRect().height / 2;
+            if (this.isVisible && document.body.scrollTop > rgnInfoOffset) {
                 hide(false);
-            } else if (!isRegionInfoVisible && document.body.scrollTop < rgnInfoOffset) {
-                isRegionInfoVisible = true;
+            } else if (!this.isVisible && document.body.scrollTop < rgnInfoOffset) {
                 show(false);
             }
             isThrottling = false;
         }, 250);
     }
 
+    /** Toggle the visibility of the region info section. */
     toggleVisibility(isVisible) {
         if (this.isVisible == isVisible) {
             return;
         }
 
         if (isVisible == undefined) {
-            isVisible = !isRegionInfoVisible;
+            isVisible = !this.isVisible;
         }
 
         if (isVisible) {
@@ -132,10 +149,10 @@ export default class RegionInfo extends HTMLElement {
         }
     }
 
+    /** Filter the mini map. */
     filterMiniMap(currentCountry, currentRegion) {
-        const svgObj = document.getElementById("country-map-mini");
-        addRemoveTransparent([svgObj], true);
-        const svgDoc = svgObj.contentDocument;
+        addRemoveTransparent([this.elements.map], true);
+        const svgDoc = this.elements.map.contentDocument;
         const regionList = currentCountry.regionGroups.flatMap(grp => grp.regions);
         try {
             regionList.forEach(rgn => {
@@ -173,3 +190,5 @@ export default class RegionInfo extends HTMLElement {
         }
     }
 }
+
+window.customElements.define("region-info", RegionInfo);

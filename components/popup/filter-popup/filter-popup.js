@@ -109,7 +109,7 @@ export default class FilterPopup extends BasePopup {
      * @inheritdoc
      * @param {boolean} [isSubmit=false] 
      */
-    closePopup(forceClose, isSubmit = false) {
+    close(forceClose, isSubmit = false) {
         // if the user changed their mind on the filters,
         // reset the filters to their states before the popup was opened.
         if (!isSubmit) {
@@ -135,7 +135,7 @@ export default class FilterPopup extends BasePopup {
             self.currentCameras = [...self.selectedCameras];
         }
 
-        super.closePopup(forceClose);
+        super.close(forceClose);
     }
 
     /**
@@ -343,7 +343,7 @@ export default class FilterPopup extends BasePopup {
         });
 
         self.dispatchEvent(filterSubmitEvent);
-        self.closePopup(true, true);
+        self.close(true, true);
     }
 }
 

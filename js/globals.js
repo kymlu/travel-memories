@@ -28,8 +28,8 @@ let infoPopup = null;
 let allCountryData = [];
 
 // TODO: control loader here but move routing functions to router.js
-let loader = new Loader();
-document.appendChild(loader);
+/** @type {Loader} */
+let loader = null;
 
 /** @type Header */
 let header = null;
@@ -41,14 +41,13 @@ let grabbedHandleId = null;
 
 export function setSiteContents(headerElement,
     infoPopupElement,
-    startHtml,
     mapHtml,
     galleryHtml,
     fullscreenHtml) {
 
     infoPopup = infoPopupElement;
     galleryView = new GalleryView(galleryHtml);
-    startView = new StartView(startHtml);
+    startView = new StartView();
     mapView = new MapView(mapHtml);
     fullscreen = new Fullscreen(fullscreenHtml);
 
@@ -62,9 +61,9 @@ export function setSiteContents(headerElement,
         galleryView.toggleRegionDropdown,
         goToStartView,
         goToMapView,
-        galleryView.showRegionInfo,
+        galleryView.toggleRegionInfo,
         galleryView.showFilter,
-        infoPopup.openPopup);
+        infoPopup.open);
 }
 
 export function goToMapView() {
@@ -90,8 +89,15 @@ export function goToGalleryView() {
 }
 
 // todo: put this logic into the galleryview
-export function onSelectNewRegion(regionId) {
-    loader.startLoader();
+export function onSelectNewRegion(regionId, isPopped) {
+    loader = new Loader();
+    document.body.append(loader);
+    //loader.startLoader();
+
+    if (isPopped == null) {
+        window.history.pushState({ rgn: regionId }, "", null);
+    }
+
     if (regionId != undefined && regionId != null) {
         let newRegion = currentCountry.regionGroups.flatMap(x => x.regions).filter(rgn => rgn.id == regionId);
         galleryView.setNewRegion(newRegion, true);
@@ -161,8 +167,9 @@ export function setCurrentCountry(countryId, countryColor) {
     }
 
     setAppColor(countryColor);
-
-    loader.startLoader();
+    loader = new Loader();
+    document.body.append(loader);
+    //loader.startLoader();
 
     mapView.handleNewCountry();
     galleryView.handleNewCountry();

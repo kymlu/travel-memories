@@ -1,11 +1,24 @@
-import { getCurrentCountry } from "../../js/globals";
-import { getBilingualText } from "../../js/utils";
+import { getCurrentCountry, onSelectNewRegion } from "../../js/globals.js";
+import { addClickListeners, getBilingualText } from "../../js/utils.js";
 
-export default class RegionDropDown extends HTMLElement {
+/** The Region Dropdown. */
+export default class RegionDropdown extends HTMLElement {
 	constructor() {
+        super();
 		this.isVisible = false;
-		this.isNewRegionDropdown = false;
+		this.hasOpenedForRegion = false;
 		this.currentRegionId = null;
+		this.elements = {
+			background: document.getElementById("rgn-drop-down-bg"),
+			content: document.getElementById("rgn-drop-down"),
+		}
+		this.initialize();
+	}
+
+	initialize(){
+		addClickListeners([
+			[this.elements.background, this.close]
+		]);
 	}
 
 	/** 
@@ -13,7 +26,7 @@ export default class RegionDropDown extends HTMLElement {
 	 */
 	handleNewCountry() {
 		// the dropdown object
-		const dropDownList = document.getElementById("rgn-drop-down");
+		const dropDownList = this.elements.content;
 		dropDownList.replaceChildren();
 
 		// region group text and regions
@@ -42,7 +55,7 @@ export default class RegionDropDown extends HTMLElement {
 					regionButton.title = getBilingualText(`See images from ${rgn.englishName}`, `${rgn.japaneseName}の写真を表示する`);
 					regionButton.classList.add("visited-rgn-text");
 					regionButton.addEventListener("click", function () {
-						selectRegion(rgn.id);
+						onSelectNewRegion(rgn.id);
 					}, false);
 					dropDownList.appendChild(regionButton);
 				}
@@ -50,27 +63,38 @@ export default class RegionDropDown extends HTMLElement {
 		});
 	}
 
+	/** Changes the highlighted region. 
+	 * @param {string} oldRegionId 
+	 * @param {string} newRegionId 
+	*/
 	changeSelectedRegion(oldRegionId, newRegionId) {
 		if (oldRegionId) {
-			document.getElementById(currentRegion.id + "-dropdown").classList.remove("active");
+			document.getElementById(oldRegionId + "-dropdown")?.classList.remove("active");
 		}
-		
+
 		if (newRegionId) {
-			document.getElementById(currentRegion.id + "-dropdown").classList.add("active");
+			this.hasOpenedForRegion = true;
+			document.getElementById(newRegionId + "-dropdown")?.classList.add("active");
 		}
 	}
 
-	toggleRegionDropdown() {
-		document.getElementById("rgn-drop-down-container").classList.toggle("no-display");
+	/** Toggles the visibility of the dropdown. */
+	toggleVisibility() {
+		this.classList.toggle("no-display"); // TODO: this used to be container, double check how to reference
 		flipArrow(document.getElementById("rgn-name-arrow"));
-		if (this.isNewRegionDropdown && this.currentRegionId) {
-			this.isNewRegionDropdown = false;
-			document.getElementById(`${this.currentRegionId}-dropdown`).scrollIntoView({ behavior: "smooth", block: "center" });
+		if (this.hasOpenedForRegion) {
+			this.hasOpenedForRegion = false;
+			if(this.currentRegionId){
+				document.getElementById(`${this.currentRegionId}-dropdown`).scrollIntoView({ behavior: "smooth", block: "center" });
+			} else {
+				this.elements.content.scrollTo({top: 0, behavior: "instant"});
+			}
 		}
 	}
 
-	closeRegionDropdown() {
-		addRemoveNoDisplay("rgn-drop-down-container", true);
-		flipArrow(document.getElementById("rgn-name-arrow"), false);
+	close() {
+		addRemoveNoDisplay(this, true);
+		flipArrow(document.getElementById("rgn-name-arrow"), false); // TODO: AH
 	}
 }
+window.customElements.define("region-dropdown", RegionDropdown);

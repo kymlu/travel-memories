@@ -7,13 +7,10 @@
 /// IMPORTS
 import InfoPopup from '../components/popup/info-popup/info-popup.js'
 import Loader from '../components/loader/loader.js';
-import * as MapView from '../views/map-view/map-view.js'
-import * as StartView from '../views/start-view/start-view.js'
 import {
 	endHandleDrag,
-	goToMapView,
 	goToStartView,
-	isCountrySelected, isGalleryView, setAllCountryData,
+	setAllCountryData,
 	setSiteContents,
 } from './globals.js';
 import {
@@ -38,9 +35,9 @@ function fetchHtml(fileName, type) {
 
 /**** Data Loading/Setup ****/
 function initializeSite() {
-	loader = new Loader(fetchData);
-	document.appendChild(loader);
-	loader.startLoader();
+	loader = new Loader();
+    document.body.append(loader);
+	//loader.startLoader();
 
 	// Popups
 	let infoPopup = new InfoPopup();
@@ -48,14 +45,13 @@ function initializeSite() {
 
 	Promise.all([
 		fetchHtml("../components/header/header.html", "header"),
-		fetchHtml("../views/start-view/start-view.html", "start view"),
 		fetchHtml("../views/map-view/map-view.html", "map view"),
 		fetchHtml("../views/gallery-view/gallery-view.html", "gallery view"),
 		fetchHtml("../components/fullscreen/fullscreen.html", "fullscreen"),
-	]).then(([headerComponent, startView, mapView, galleryView, fullscreen]) => {
+	]).then(([headerComponent, mapView, galleryView, fullscreen]) => {
 		const headerElement = document.getElementById("header");
 		headerElement.innerHTML = headerComponent;
-		setSiteContents(headerElement, infoPopup, startView, mapView, galleryView, fullscreen);
+		setSiteContents(headerElement, infoPopup, mapView, galleryView, fullscreen, loader);
 	});
 
 	// TODO: put this in each class?
@@ -80,7 +76,7 @@ function initializeSite() {
 	// 			StartView.selectCountry(event.state.country, event.state.countryColor, true);
 	// 		}
 	// 	} else if (event.state.rgn && isCountrySelected()) {
-	// 		MapView.selectRegion(event.state.rgn, true);
+	// 		onSelectNewRegion(event.state.rgn, true);
 	// 	} else {
 	// 		goToStartView(true);
 	// 	}
@@ -103,7 +99,7 @@ function fetchData() {
 				setAllCountryData(d);
 			}
 		}).catch(error => {
-			loader.showDataLoadError();
+			loader.showDataLoadError(fetchData);
 			hasError = true;
 			console.error("Error loading data.", error);
 		}).then(() => {

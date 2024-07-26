@@ -97,4 +97,4 @@ export default class Header {
     }
 }
 
-window.customElements.define("my-header", Header);
+window.customElements.define("header-component", Header);

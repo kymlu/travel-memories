@@ -9,10 +9,10 @@ import { DEFAULT_TIMEOUT } from "../../js/constants.js";
 
 /** The Start View. */
 export default class StartView extends HTMLElement {
-    constructor(element) {
+    constructor() {
         super();
         self = this;
-        this.innerHTML = element;
+        this.innerHTML = "";
     }
 
     /** Initializes the start view contents. */
@@ -125,3 +125,5 @@ export default class StartView extends HTMLElement {
         addRemoveClass(icons, "animated", isHover);
     }
 }
+
+window.customElements.define("start-view", StartView);

@@ -1,12 +1,13 @@
 import { LONG_DATETIME_FORMAT_EN, LONG_DATETIME_FORMAT_JP } from "../../js/constants.js";
 import { startHandleDrag } from "../../js/globals.js";
-import { addRemoveNoDisplay, getBilingualText, getPictureDate } from "../../js/utils.js";
+import { addClickListeners, addRemoveNoDisplay, getBilingualText, getPictureDate, setBilingualAttribute } from "../../js/utils.js";
 
 // TODO: check if self works
 
 /** The Pic Info class. */
 export default class PicInfo extends HTMLElement{
     constructor(){
+        super();
         this.isVisible = false;
 		this.searchTermEng = "";
 		this.searchTermJp = "";
