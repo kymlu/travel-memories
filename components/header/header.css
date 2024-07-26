@@ -1,0 +1,73 @@
+header {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    position: fixed;
+    width: 100%;
+    box-sizing: border-box;
+    top: 0;
+    right: 0px;
+    padding: 70px 75px 20px 75px;
+    background-color: transparent;
+    z-index: 5000; 
+    pointer-events: none;
+}
+
+@media only screen and (max-width: 768px) {
+    header {
+        flex-wrap: wrap;
+        padding: 20px;
+    }
+}
+
+.btn-grp {
+    display: flex;
+    gap: 10px;
+    z-index: 5001;
+    pointer-events: auto;
+}
+
+#left-section {
+    z-index: 5001;
+}
+
+@media only screen and (orientation: portrait) and (max-width: 768px) {
+    .btn-grp {
+        justify-content: space-around;
+        gap: 0px;
+        flex-basis: 50%;
+    }
+
+    .left-section {
+        flex-basis: 25%;
+    }
+
+    .right-section {
+        flex-basis: 75%;
+    }
+}
+
+#rgn-title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 10px;
+    cursor: pointer;
+    pointer-events: auto;
+}
+
+@media only screen and (orientation: landscape) {
+    #map-btn {
+        margin-right: 70px;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    #rgn-title {
+        margin: auto;
+        order: 2;
+    }
+}

@@ -26,19 +26,6 @@ export default class InfoPopup extends BasePopup {
         });
     }
 
-    /** @inheritdoc */
-    openPopup(){
-        super.openPopup();
-    }
-
-    /** @inheritdoc */
-    closePopup(forceClose) {
-        super.closePopup(forceClose);
-        
-        const infoClosedEvent = new CustomEvent(CUSTOM_EVENT_TYPES.INFO_POPUP_CLOSED);
-        this.dispatchEvent(infoClosedEvent);
-    }
-
     /** Opens a new page on this project's Github repo. */
     goToGithub(){
         window.open("https://github.com/kymlu/travel-memories");

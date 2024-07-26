@@ -3,7 +3,7 @@ import BasePolaroid from "../base-polaroid/base-polaroid.js"
 import {
     addRemoveNoDisplay, addRemoveTransparent, getBilingualText, getPictureDate
 } from '../../../js/utils.js';
-import { DEFAULT_TIMEOUT, MONTH_NAMES } from '../../../js/constants.js'
+import { DEFAULT_TIMEOUT, SHORT_DATETIME_FORMAT_EN, SHORT_DATETIME_FORMAT_JP } from '../../../js/constants.js'
 
 /**
  * The Image Polaroid object.
@@ -38,7 +38,7 @@ export default class ImagePolaroid extends BasePolaroid {
             .then(response => response.text())
             .then(html => {
                 this.innerHTML = html;
-            })
+            });
 
         this.title = getBilingualText("Expand image", "画像を拡大する");
 
@@ -70,8 +70,8 @@ export default class ImagePolaroid extends BasePolaroid {
                         const dates = polaroid.querySelector(".polaroid-date").querySelectorAll("span");
                         if (dates) {
                             if (this.date) {
-                                dates[0].innerHTML = this.getEnglishDate();
-                                dates[1].innerHTML = this.getJapaneseDate();
+                                dates[0].innerHTML = SHORT_DATETIME_FORMAT_EN.format(this.date);
+                                dates[1].innerHTML = SHORT_DATETIME_FORMAT_JP.format(this.date);
                             } else {
                                 dates[0].innerHTML = "";
                                 dates[1].innerHTML = "";
@@ -97,24 +97,6 @@ export default class ImagePolaroid extends BasePolaroid {
             });
         });
         obs.observe(this);
-    }
-
-    /**
-     * @returns the image date formatted for English text.
-     */
-    getEnglishDate() {
-        return MONTH_NAMES[this.date.getMonth()] + " " +
-            this.date.getDate() + ", " +
-            this.date.getFullYear();
-    }
-
-    /**
-     * @returns the image date formatted for Japanese text.
-     */
-    getJapaneseDate() {
-        return this.date.getFullYear() + "年" +
-            (this.date.getMonth() + 1) + "月" +
-            this.date.getDate() + "日";
     }
 }
 

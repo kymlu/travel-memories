@@ -8,6 +8,8 @@ import { DEFAULT_TIMEOUT } from '../../../js/constants.js';
 export default class BasePopup extends HTMLElement {
     constructor() {
         super();
+        this.isOpen = false;
+        
         /** ```True``` if the popup has been opened before. @type boolean */
         this.previouslyOpened = false;
     }
@@ -17,6 +19,10 @@ export default class BasePopup extends HTMLElement {
         this.querySelector(".popup").addEventListener("click", (event) => {
             event.stopPropagation();
         });
+    }
+
+    isPopupOpen(){
+        return this.isOpen;
     }
 
     /** Opens the popup. */
@@ -42,6 +48,15 @@ export default class BasePopup extends HTMLElement {
             this.initializePopup();
             this.previouslyOpened = true;
         }
+
+        this.isOpen = true;
+	    document.addEventListener("keydown", this.handleKeydown);
+    }
+
+    handleKeydown(event){
+        if(event.key == "Escape"){
+            this.closePopup(true);
+        }
     }
 
     /** 
@@ -50,6 +65,9 @@ export default class BasePopup extends HTMLElement {
      * the popup through the esc key or clicking the background.
      */
     closePopup(forceClose) {
+	    document.removeEventListener("keydown", this.handleKeydown);
+
+        this.isOpen = false;
         let popupOverlay = this.querySelector(".overlay");
         let popupContent = this.querySelector(".popup-content");
         let popup = this.querySelector(".popup");

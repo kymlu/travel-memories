@@ -33,7 +33,7 @@ export function isPortraitMode() {
  * @param {object} b - The second object
  * @returns The sort order of the two objects.
  */
-export function sortByEnglishName(a, b){
+export function sortByEnglishName(a, b) {
 	let a1 = a.englishName.toLowerCase();
 	let b1 = b.englishName.toLowerCase();
 
@@ -54,20 +54,6 @@ export function sortByEnglishName(a, b){
  */
 export function sortImgs(a, b) {
 	return new Date(a.date) - new Date(b.date);
-}
-
-/**
- * Initializes the touch event for elements on screen with handles.
- * @param {TouchEvent} e - the touch event.
- * @param {string} handleId - the id of the handle element.
- */
-// TODO: move??
-export function startHandleDrag(e, handleId) {
-	if (isPortraitMode()) {
-		isHandleGrabbed = true;
-		grabbedHandleId = handleId
-		initialYHandle = e.touches[0].clientY;
-	}
 }
 
 /**
@@ -170,4 +156,32 @@ export function scrollToTop(isSmooth) {
  */
 export function getImageAddress(countryId, regionId, fileName) {
 	return `assets/img/${countryId}/${regionId}/${fileName}`;
+}
+
+export function setBilingualAttribute(elements, attribute) {
+	elements.forEach(([element, englishText, japaneseText]) => {
+		try {
+			if (typeof element == "string") {
+				document.getElementById(element).setAttribute(attribute, getBilingualText(englishText, japaneseText));
+			} else {
+				element.setAttribute(attribute, getBilingualText(englishText, japaneseText));
+			}
+		} catch (error) {
+			console.error(error);
+		}
+	});
+}
+
+export function addClickListeners(elements) {
+	elements.forEach(([element, callback]) => {
+		try {
+			if (typeof element == "string") {
+				document.getElementById(element).addEventListener("click", callback);
+			} else {
+				element.addEventListener("click", callback);
+			}
+		} catch (error) {
+			console.error(error);
+		}
+	});
 }

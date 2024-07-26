@@ -1,7 +1,9 @@
 /// IMPORTS
 import BasePopup from "../base-popup/base-popup.js"
 import {
-    addRemoveNoDisplay, getBilingualText, flipArrow, sortByEnglishName
+    addRemoveNoDisplay, getBilingualText, flipArrow, sortByEnglishName,
+    addClickListeners,
+    setBilingualAttribute
 } from '../../../js/utils.js';
 import { CUSTOM_EVENT_TYPES } from "../../../js/constants.js";
 
@@ -60,7 +62,7 @@ export default class FilterPopup extends BasePopup {
      */
     initializePopup() {
         super.initializePopup();
-        [
+        setBilingualAttribute([
             ["filter-title", "Filters", "フィルター"],
             ["filter-fav-title", "Favourites", "お気に入り"],
             ["filter-kw-title", "Keyword", "キーワード"],
@@ -69,17 +71,13 @@ export default class FilterPopup extends BasePopup {
             ["filter-areas-title", "Areas", "場所"],
             ["filter-clear-btn", "Clear", "クリアする"],
             ["filter-submit-btn", "Apply", "適用する"]
-        ].forEach(([id, englishText, japaneseText]) => {
-            document.getElementById(id).innerHTML = getBilingualText(englishText, japaneseText);
-        });
+        ], "innerHTML");
         document.getElementById("filter-fav-label").childNodes[0].textContent = getBilingualText("Filter favourites", "お気に入りだけを表示する");
-        [
+        setBilingualAttribute([
             ["filter-kw-clear-btn", "Clear keyword", "キーワードをクリアする"]
-        ].forEach(([id, englishText, japaneseText]) => {
-            document.getElementById(id).title = getBilingualText(englishText, japaneseText);
-        });
+        ], "title");
 
-        [
+        addClickListeners([
             ["filter-regions-header", function () { self.toggleFilterGroup("regions", undefined); }],
             ["filter-areas-header", function () { self.toggleFilterGroup("areas", undefined); }],
             ["filter-tags-header", function () { self.toggleFilterGroup("tags", undefined); }],
@@ -87,9 +85,7 @@ export default class FilterPopup extends BasePopup {
             ["filter-clear-btn", this.clearFilters],
             ["filter-submit-btn", this.submitFilters],
             ["filter-kw-clear-btn", function () { self.clearKeyword(); }]
-        ].forEach(([id, callback]) => {
-            document.getElementById(id).addEventListener("click", callback);
-        });
+        ]);
         document.getElementById("filter-kw-input").addEventListener("input", function () { self.checkEmptyKeywordInput(); });
     }
 
@@ -140,9 +136,6 @@ export default class FilterPopup extends BasePopup {
         }
 
         super.closePopup(forceClose);
-
-        const filterClosedEvent = new CustomEvent(CUSTOM_EVENT_TYPES.FILTER_POPUP_CLOSED);
-        this.dispatchEvent(filterClosedEvent);
     }
 
     /**

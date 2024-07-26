@@ -5,96 +5,63 @@
 */
 
 /// IMPORTS
-import * as GalleryPage from '../pages/gallery-page/gallery-page.js';
-import * as Fullscreen from '../components/fullscreen/fullscreen.js';
 import InfoPopup from '../components/popup/info-popup/info-popup.js'
-import * as Loader from '../components/loader/loader.js';
-import * as MapPage from '../pages/map-page/map-page.js'
-import * as StartPage from '../pages/start-page/start-page.js'
+import Loader from '../components/loader/loader.js';
+import * as MapView from '../views/map-view/map-view.js'
+import * as StartView from '../views/start-view/start-view.js'
 import {
-	getBilingualText, isPortraitMode, scrollToTop,
-} from '../../js/utils.js';
-import {
-	isCountrySelected, isGalleryPage, setAllCountryData, setAppColor, setCurrentCountry
+	endHandleDrag,
+	goToMapView,
+	goToStartView,
+	isCountrySelected, isGalleryView, setAllCountryData,
+	setSiteContents,
 } from './globals.js';
-import { initializeStartScreen, showStartScreen } from '../pages/start-page/start-page.js';
-import { CUSTOM_EVENT_TYPES } from './constants.js';
+import {
+	getBilingualText, scrollToTop,
+} from './utils.js';
 
 /// VARIABLES
 // Booleans
-let infoPopup = null;
-let isInfoPopupVisible = false;
+/** @type {Loader} */
+let loader = null;
 
-// Gestures
-let initialYHandle = null;
-let isHandleGrabbed = false;
-let grabbedHandleId = null;
+function fetchHtml(fileName, type) {
+	let retVal = null;
+	fetch(fileName)
+		.then(response => retVal = response.text())
+		.catch(error => {
+			console.error(`Error loading ${type}.`, error);
+		});
 
-/// FUNCTIONS
-/**
- * Determines appropriate behaviour when user releases a handle on screen.
- * @link https://stackoverflow.com/questions/53192433/how-to-detect-swipe-in-javascript
- * @param {TouchEvent} e - the touch event.
- */
-function endHandleDrag(e) {
-	if (isPortraitMode()) {
-		if (isHandleGrabbed && grabbedHandleId) {
-			isHandleGrabbed = false;
-			let currentY = e.changedTouches[0].clientY;
-			if (currentY > initialYHandle) {
-				if (grabbedHandleId == "pic-info-handle") {
-					Fullscreen.hidePicInfo();
-				} else {
-					GalleryPage.showRegionInfo(true);
-				}
-			} else if (currentY < initialYHandle) {
-				if (grabbedHandleId == "rgn-info-handle") {
-					GalleryPage.hideRegionInfo(true);
-				}
-			}
-			initialYHandle = null;
-			grabbedHandleId = null;
-		}
-	}
-}
-
-/**** Site Info Popup ****/
-/** Opens the site info popup. */
-function openInfoPopup() {
-	isInfoPopupVisible = true;
-	infoPopup.openPopup();
-}
-
-/** Closes the site info popup. */
-function closeInfoPopup() {
-	document.querySelector("info-popup").closePopup(true);
-}
-
-/** Leaves the Gallery page to return to the map. */
-function leaveGalleryPage() {
-	//Loader.startLoader();
-	GalleryPage.closeGallery();
-	setTimeout(() => {
-		MapPage.goToMapPage();
-	}, 200);
+	return retVal;
 }
 
 /**** Data Loading/Setup ****/
 function initializeSite() {
-	Loader.initializeLoader();
-	Loader.startLoader(fetchData);
+	loader = new Loader(fetchData);
+	document.appendChild(loader);
+	loader.startLoader();
 
-	[
-		["globe-btn", "Return to country picker", "国の選択へ戻る"],
-		["map-btn", "Return to map", "地図に戻る"],
-		["creator-btn", "About the site", "このサイトについて"]
-	].forEach(([id, englishText, japaneseText]) => {
-		document.getElementById(id).title = getBilingualText(englishText, japaneseText);
+	// Popups
+	let infoPopup = new InfoPopup();
+	document.body.appendChild(infoPopup);
+
+	Promise.all([
+		fetchHtml("../components/header/header.html", "header"),
+		fetchHtml("../views/start-view/start-view.html", "start view"),
+		fetchHtml("../views/map-view/map-view.html", "map view"),
+		fetchHtml("../views/gallery-view/gallery-view.html", "gallery view"),
+		fetchHtml("../components/fullscreen/fullscreen.html", "fullscreen"),
+	]).then(([headerComponent, startView, mapView, galleryView, fullscreen]) => {
+		const headerElement = document.getElementById("header");
+		headerElement.innerHTML = headerComponent;
+		setSiteContents(headerElement, infoPopup, startView, mapView, galleryView, fullscreen);
 	});
 
+	// TODO: put this in each class?
 	Array.from(document.getElementsByClassName("close-btn")).forEach(element => {
 		element.title = getBilingualText("Close", "閉じる");
-	})
+	});
 
 	document.addEventListener("contextmenu", function (e) {
 		if (e.target.nodeName === "IMG") {
@@ -102,59 +69,22 @@ function initializeSite() {
 		}
 	}, false);
 
-	// Button click detections
-	[
-		["creator-btn", openInfoPopup],
-		["globe-btn", showStartScreen],
-		["map-btn", leaveGalleryPage]
-	].forEach(([id, callback]) => {
-		document.getElementById(id).addEventListener("click", callback);
-	});
-
-	MapPage.initializeMapPage();
-	GalleryPage.initializeGallery();
-	Fullscreen.initializeFullscreen();
-
 	document.addEventListener("touchend", endHandleDrag, false);
 
-	// Key input detections
-	document.addEventListener("keydown", function (event) {
-		if (event.key === "Escape") {
-			if (isInfoPopupVisible) {
-				closeInfoPopup(true);
-			} else if (GalleryPage.getIsFilterVisible()) {
-				GalleryPage.closeFilter();
-			} else if (Fullscreen.getIsFullscreen()) {
-				Fullscreen.closeFullscreen(true);
-			}
-		}
-
-		if (Fullscreen.getIsFullscreen()) {
-			Fullscreen.handleKeyEvent(event);
-		}
-	});
-
-	// Popups
-	infoPopup = new InfoPopup();
-	document.body.appendChild(infoPopup);
-	infoPopup.addEventListener(CUSTOM_EVENT_TYPES.INFO_POPUP_CLOSED, () => {
-		isInfoPopupVisible = false;
-	});
-
-	// Back button detections
-	window.addEventListener('popstate', (event) => {
-		if (event.state.country) {
-			if (isGalleryPage()) {
-				leaveGalleryPage();
-			} else {
-				StartPage.selectCountry(event.state.country, event.state.countryColor, true);
-			}
-		} else if (event.state.rgn && isCountrySelected()) {
-			MapPage.selectRegion(event.state.rgn, true);
-		} else {
-			showStartScreen(true);
-		}
-	});
+	// Back button detections // TODO
+	// window.addEventListener('popstate', (event) => {
+	// 	if (event.state.country) {
+	// 		if (isGalleryView()) {
+	// 			goToMapView();
+	// 		} else {
+	// 			StartView.selectCountry(event.state.country, event.state.countryColor, true);
+	// 		}
+	// 	} else if (event.state.rgn && isCountrySelected()) {
+	// 		MapView.selectRegion(event.state.rgn, true);
+	// 	} else {
+	// 		goToStartView(true);
+	// 	}
+	// });
 }
 
 /**
@@ -168,27 +98,23 @@ function fetchData() {
 			return response.json();
 		}).then(d => {
 			if (d == null) {
-				throw new Error("No data");;
+				throw new Error("No data");
 			} else {
 				setAllCountryData(d);
 			}
 		}).catch(error => {
-			showDataLoadError();
+			loader.showDataLoadError();
 			hasError = true;
-			console.error(error);
+			console.error("Error loading data.", error);
 		}).then(() => {
 			if (!hasError) {
-				initializeStartScreen();
-				Loader.stopLoader(showStartScreen)
+				loader.stopLoader(goToStartView);
 			}
 		});
 }
 
-/**** Main ****/
-function main() {
+document.addEventListener("DOMContentLoaded", () => {
 	scrollToTop(false);
 	initializeSite();
 	fetchData();
-}
-
-main();
+});

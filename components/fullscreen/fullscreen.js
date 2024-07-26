@@ -1,445 +1,271 @@
 /// IMPORTS
 import {
-	JAPAN, TAIWAN, DAY_NAMES_EN, DAY_NAMES_JP,
-	MONTH_NAMES, TAGS, DEFAULT_TIMEOUT
+	JAPAN, TAIWAN, TAGS, DEFAULT_TIMEOUT, LONG_DATETIME_FORMAT_EN, LONG_DATETIME_FORMAT_JP
 } from '../../js/constants.js'
 import {
-	addRemoveNoDisplay, addRemoveTransparent, getBilingualText, getPictureDate,
-	getImageAddress, isPortraitMode, sortByEnglishName, startHandleDrag
+	addClickListeners, addRemoveNoDisplay, addRemoveTransparent, getBilingualText, getPictureDate,
+	getImageAddress, isPortraitMode, setBilingualAttribute, sortByEnglishName, startHandleDrag
 } from '../../../js/utils.js';
-import { visibleImages } from '../../pages/gallery-page/gallery-page.js';
+import { visibleImages } from '../../views/gallery-view/gallery-view.js';
 
-/// VARIABLES
-// booleans
-let isNewFullscreenInstance = true;
-let isFullscreen = false;
+export default class Fullscreen extends HTMLElement {
+	constructor() {
+		/// VARIABLES
+		// booleans
+		this.isNewFullscreenInstance = true;
+		this.isFullscreen = false;
 
-// selected pic
-let currentPic = null;
-let currentPicIndex = 0;
+		// selected pic
+		this.currentPic = null;
+		this.currentPicIndex = 0;
 
-// pic info
-let isPicInfoVisible = true;
-let favouritedTag;
-let searchTermEng = "";
-let searchTermJp = "";
-let lastSwipeTime = null;
-let selectedCountry = null;
+		// pic info
+		this.isPicInfoVisible = true;
+		this.lastSwipeTime = null;
+		this.currentCountryId = null;
 
-// gestures
-let initialX = null;
-let initialY = null;
+		// gestures
+		this.initialX = null;
+		this.initialY = null;
 
-//// FUNCTIONS
-// initialization
-export function initializeFullscreen() {
-	// favourited tag in fullscreen
-	favouritedTag = document.createElement("div");
-	favouritedTag.classList.add("img-tag");
-	favouritedTag.innerHTML = getBilingualText("Favourited", "お気に入り");
-	let tempStar = document.createElement("span");
-	tempStar.classList.add("in-btn-icon");
-	tempStar.style.marginRight = "5px";
-	tempStar.innerHTML = "&#xf005";
-	favouritedTag.prepend(tempStar);
+		this.picInfo = null;
 
-	[
-		["pic-info-btn", "See picture information", "写真の情報を見る"],
-		["left-arrow", "Previous picture", "前の写真"],
-		["right-arrow", "Next picture", "次の写真"],
-		["search-eng", "Google in English", "英語でググる"],
-		["search-jp", "Google in Japanese", "日本語でググる"]
-	].forEach(([id, englishText, japaneseText]) => {
-		document.getElementById(id).title = getBilingualText(englishText, japaneseText);
-	});
+		fetch("components/fullscreen/fullscreen.html")
+			.then(response => response.text())
+			.then(html => {
+				this.innerHTML = html;
+			})
+			.catch(error => {
+				console.error("Error loading fullscreen.", error);
+			});
 
-	[
-		["fullscreen-bg", function () { closeFullscreen(true); }],
-		["fullscreen-ctrl", function () { closeFullscreen(true); }],
-		["left-arrow", (event) => { event.stopPropagation(); }],
-		["fullscreen-pic", (event) => { event.stopPropagation(); }],
-		["right-arrow", (event) => { event.stopPropagation(); }],
-		["left-arrow", function () { changeFullscreenPicture(false); }],
-		["right-arrow", function () { changeFullscreenPicture(true); }],
-		["pic-info-bg", hidePicInfo],
-		["pic-info-drawer", (event) => { event.stopPropagation(); }],
-		["pic-info-btn", function () { changePicInfoVisibility(); }],
-		["pic-info-close-btn", hidePicInfo],
-		["search-eng", searchEnglish],
-		["search-jp", searchJapanese]
-	].forEach(([id, callback]) => {
-		document.getElementById(id).addEventListener("click", callback);
-	});
-
-	document.getElementById("pic-info-handle").addEventListener("touchstart", e => { startHandleDrag(e, "pic-info-handle") }, false);
-
-	// currently remove because it will not work on Apple <- what is this lol
-	document.getElementById("pic-info-details").addEventListener("touchstart", (event) => {
-		event.stopPropagation();
-	});
-	document.getElementById("pic-info-details").addEventListener("touchmove", (event) => {
-		event.stopPropagation();
-	});
-
-	let swipeContainer = document.getElementById("fullscreen");
-	swipeContainer.addEventListener("touchstart", startFullscreenSwipe, false);
-	swipeContainer.addEventListener("touchmove", moveFullscreenSwipe, false);
-}
-
-// open and close
-export function openFullscreen(imageToDisplay, countryId) {
-	currentPic = imageToDisplay;
-	currentPicIndex = visibleImages.indexOf(currentPic);
-	isNewFullscreenInstance = true;
-	selectedCountry = countryId;
-	setNewPicture();
-
-	lastSwipeTime = new Date();
-
-	if (isPortraitMode()) {
-		isPicInfoVisible = false;
-		addRemoveTransparent("pic-info", true);
-		hidePicInfo();
-		setTimeout(() => {
-			addRemoveTransparent("pic-info", false);
-		}, DEFAULT_TIMEOUT);
+		this.initialize();
 	}
-	isFullscreen = true;
-	document.body.style.overflowY = "hidden";
-	document.getElementById("fullscreen").style.visibility = "visible";
-	addRemoveTransparent(["fullscreen", "fullscreen-bg"], false);
-}
 
-/** 
- * Close the 
- * @param {boolean} forceClose - ```True``` if the user has forcefully closed fullscreen mode.*/
-export function closeFullscreen(forceClose) {
-	isFullscreen = false;
-	document.body.style.overflowY = "auto";
-	if (forceClose) {
-		document.getElementById("fullscreen").style.visibility = "hidden";
-		addRemoveTransparent(["fullscreen", "fullscreen-bg"], true);
-	} else {
-		addRemoveTransparent(["fullscreen", "fullscreen-bg"], true);
-		setTimeout(() => {
+	//// FUNCTIONS
+	// initialization
+	initialize() {
+		setBilingualAttribute([
+			["pic-info-btn", "See picture information", "写真の情報を見る"],
+			["left-arrow", "Previous picture", "前の写真"],
+			["right-arrow", "Next picture", "次の写真"],
+		], "title");
+
+		addClickListeners([
+			["fullscreen-bg", function () { this.closeFullscreen(true); }],
+			["fullscreen-ctrl", function () { this.closeFullscreen(true); }],
+			["left-arrow", (event) => { event.stopPropagation(); }],
+			["fullscreen-pic", (event) => { event.stopPropagation(); }],
+			["right-arrow", (event) => { event.stopPropagation(); }],
+			["left-arrow", function () { this.changeFullscreenPicture(false); }],
+			["right-arrow", function () { this.changeFullscreenPicture(true); }]
+		]);
+
+		let swipeContainer = document.getElementById("fullscreen");
+		swipeContainer.addEventListener("touchstart", this.startFullscreenSwipe, false);
+		swipeContainer.addEventListener("touchmove", this.moveFullscreenSwipe, false);
+	}
+
+	// open and close
+	/**
+	 * Displays a given image in fullscreen.
+	 * @param {any} imageToDisplay 
+	 * @param {string} countryId 
+	 */
+	openFullscreen(imageToDisplay, countryId) {
+		this.currentPic = imageToDisplay;
+		this.currentPicIndex = visibleImages.indexOf(currentPic);
+		this.isNewFullscreenInstance = true;
+		this.currentCountryId = countryId;
+		this.setNewPicture();
+
+		this.lastSwipeTime = new Date();
+
+		if (isPortraitMode()) {
+			this.isPicInfoVisible = false;
+			addRemoveTransparent("pic-info", true);
+			this.hidePicInfo();
+			setTimeout(() => {
+				addRemoveTransparent("pic-info", false);
+			}, DEFAULT_TIMEOUT);
+		}
+		this.isFullscreen = true;
+		document.body.style.overflowY = "hidden";
+		document.getElementById("fullscreen").style.visibility = "visible";
+		addRemoveTransparent(["fullscreen", "fullscreen-bg"], false);
+	    document.addEventListener("keydown", this.handleKeydown);
+	}
+
+	/** 
+	 * Close the 
+	 * @param {boolean} forceClose - ```True``` if the user has forcefully closed fullscreen mode.
+	 */
+	closeFullscreen(forceClose) {
+	    document.removeEventListener("keydown", this.handleKeydown);
+		this.isFullscreen = false;
+		document.body.style.overflowY = "auto";
+		if (forceClose) {
 			document.getElementById("fullscreen").style.visibility = "hidden";
-		}, DEFAULT_TIMEOUT);
-	}
-}
-
-/**
- * @returns whether the fullscreen image viewer has opened.
- */
-export function getIsFullscreen() {
-	return isFullscreen;
-}
-
-/**
- * Handles events based on the key pressed
- * @param {KeyboardEvent} event 
- */
-export function handleKeyEvent(event) {
-	if (event.key === "ArrowRight") {
-		changeFullscreenPicture(true);
-	} else if (event.key == "ArrowLeft") {
-		changeFullscreenPicture(false);
-	} else if (!isPicInfoVisible && event.key == "ArrowUp") {
-		showPicInfo();
-	} else if (isPicInfoVisible && event.key == "ArrowDown") {
-		hidePicInfo();
-	}
-}
-
-// seaching functions
-// TODO: potentially get user's default search engine
-/** 
- * Open a new window to Google a search term.
- * @param {string} searchTerm  */
-function search(searchTerm) {
-	window.open(`https://www.google.com/search?q=${searchTerm}`);
-}
-
-/** Searches the English search term. */
-function searchEnglish() {
-	search(searchTermEng);
-}
-
-/** Searches the Japanese search term. */
-function searchJapanese() {
-	search(searchTermJp)
-}
-
-// swiping functions
-/**
- * Starts procedures for 
- */
-function startFullscreenSwipe(e) {
-	//if (isPortraitMode()) {
-	if (e.touches.length == 1) {
-		initialX = e.touches[0].clientX;
-		initialY = e.touches[0].clientY;
-	}
-	//}
-}
-
-function moveFullscreenSwipe(e) {
-	if (initialX === null || initialY === null) return;
-
-	// if (!isPortraitMode()) {
-	// 	return;
-	// }
-
-	if (e.touches.length == 1) {
-		let currentX = e.touches[0].clientX;
-		let currentY = e.touches[0].clientY;
-
-		let diffX = initialX - currentX;
-		let diffY = initialY - currentY;
-
-		// horizontal swipe
-		if (Math.abs(diffX) > Math.abs(diffY)) {
-			if (diffX > 0) {
-				changeFullscreenPicture(true);
-			} else {
-				changeFullscreenPicture(false);
-			}
-		} else if (isPortraitMode()) {
-			//vertical swipe - only for showing/hiding pic info
-			if (diffY > 0) {
-				if (!isPicInfoVisible) {
-					showPicInfo();
-				}
-				// removed because will not work with Apple
-			} else {
-				if (isPicInfoVisible) {
-					hidePicInfo();
-				}
-			}
-		}
-
-		initialX = null;
-		initialY = null;
-
-		e.preventDefault();
-	}
-}
-
-function changeFullscreenPicture(isForward) {
-	if (isForward) {
-		if (currentPicIndex == visibleImages.length - 1) {
-			currentPicIndex = 0;
+			addRemoveTransparent(["fullscreen", "fullscreen-bg"], true);
 		} else {
-			currentPicIndex++;
+			addRemoveTransparent(["fullscreen", "fullscreen-bg"], true);
+			setTimeout(() => {
+				document.getElementById("fullscreen").style.visibility = "hidden";
+			}, DEFAULT_TIMEOUT);
 		}
-	} else {
-		if (currentPicIndex == 0) {
-			currentPicIndex = visibleImages.length - 1;
+	}
+
+	/**
+	 * @returns whether the fullscreen image viewer has opened.
+	 */
+	getIsFullscreen() {
+		return this.isFullscreen;
+	}
+
+	/**
+	 * Handles events based on the key pressed.
+	 * @param {KeyboardEvent} event 
+	 */
+	handleKeydown(event) {
+		switch (event.key) {
+			case "ArrowRight":
+				this.changeFullscreenPicture(true);
+				break;
+			case "ArrowLeft":
+				this.changeFullscreenPicture(false);
+				break;
+			case "ArrowUp":
+				if (!this.isPicInfoVisible) {
+					this.showPicInfo();
+				}
+				break;
+			case "ArrowDown":
+				if (this.isPicInfoVisible) {
+					this.hidePicInfo();
+				}
+			case "Escape":
+				this.closeFullscreen();
+				break;
+			default:
+				break;
+		}
+	}
+
+	// swiping functions
+	/**
+	 * Starts procedures for 
+	 */
+	startFullscreenSwipe(e) {
+		//if (isPortraitMode()) {
+		if (e.touches.length == 1) {
+			this.initialX = e.touches[0].clientX;
+			this.initialY = e.touches[0].clientY;
+		}
+		//}
+	}
+
+	moveFullscreenSwipe(e) {
+		if (this.initialX === null || this.initialY === null) return;
+
+		// if (!isPortraitMode()) {
+		// 	return;
+		// }
+
+		if (e.touches.length == 1) {
+			let currentX = e.touches[0].clientX;
+			let currentY = e.touches[0].clientY;
+
+			let diffX = initialX - currentX;
+			let diffY = initialY - currentY;
+
+			// horizontal swipe
+			if (Math.abs(diffX) > Math.abs(diffY)) {
+				if (diffX > 0) {
+					this.changeFullscreenPicture(true);
+				} else {
+					this.changeFullscreenPicture(false);
+				}
+			} else if (isPortraitMode()) {
+				//vertical swipe - only for showing/hiding pic info
+				if (diffY > 0) {
+					if (!this.isPicInfoVisible) {
+						this.showPicInfo();
+					}
+					// removed because will not work with Apple
+				} else {
+					if (this.isPicInfoVisible) {
+						this.hidePicInfo();
+					}
+				}
+			}
+
+			this.initialX = null;
+			this.initialY = null;
+
+			e.preventDefault();
+		}
+	}
+
+	changeFullscreenPicture(isNext) {
+		if (isNext) {
+			if (this.currentPicIndex == visibleImages.length - 1) {
+				this.currentPicIndex = 0;
+			} else {
+				this.currentPicIndex++;
+			}
 		} else {
-			currentPicIndex--;
+			if (this.currentPicIndex == 0) {
+				this.currentPicIndex = visibleImages.length - 1;
+			} else {
+				this.currentPicIndex--;
+			}
 		}
-	}
-	currentPic = visibleImages[currentPicIndex];
-	setNewPicture(isForward);
-}
-
-function setFullscreenInfo() {
-	// get dates
-	if (currentPic.date) {
-		let date = getPictureDate(new Date(currentPic.date), currentPic.offset);
-		document.getElementById("fullscreen-eng-date").innerHTML = getEnglishDate(date, currentPic.offset);
-		document.getElementById("fullscreen-jp-date").innerHTML = getJapaneseDate(date, currentPic.offset);
-	} else {
-		document.getElementById("fullscreen-eng-date").innerHTML = "Unknown date";
-		document.getElementById("fullscreen-jp-date").innerHTML = "不明な日付";
-	}
-	let area = currentPic.area;
-
-	// English text for searching
-	searchTermEng = (currentPic.location_english ?
-		(`${currentPic.location_english}, `) :
-		selectedCountry == JAPAN && currentPic.locationJapanese ? (`${currentPic.locationJapanese}, `) :
-			selectedCountry == TAIWAN && currentPic.location_chinese ? (`${currentPic.location_chinese}, `) :
-				"") + (area.englishName ?? "");
-	document.getElementById("fullscreen-eng-city").innerHTML = searchTermEng;
-
-	// Japanese text for searching
-	searchTermJp = (area.japaneseName ?? area.englishName ?? "") + (currentPic.locationJapanese ? (`　${currentPic.locationJapanese}`) :
-		(selectedCountry == TAIWAN && currentPic.location_chinese) ? ("　" + currentPic.location_chinese) :
-			currentPic.location_english ? (`　${currentPic.location_english}`) : "");
-	document.getElementById("fullscreen-jp-city").innerHTML = searchTermJp;
-
-	// image description
-	if (currentPic.descriptionEnglish) {
-		addRemoveNoDisplay("fullscreen-eng-caption", false);
-		document.getElementById("fullscreen-eng-caption").innerHTML = currentPic.descriptionEnglish;
-	} else {
-		addRemoveNoDisplay("fullscreen-eng-caption", true);
-	}
-	if (currentPic.descriptionJapanese) {
-		addRemoveNoDisplay("fullscreen-jp-caption", false);
-		document.getElementById("fullscreen-jp-caption").innerHTML = currentPic.descriptionJapanese;
-	} else {
-		addRemoveNoDisplay("fullscreen-jp-caption", true);
+		this.currentPic = this.visibleImages[this.currentPicIndex];
+		this.setNewPicture(isNext);
 	}
 
-	// image exif info
-	if (currentPic.cameraModel) {
-		addRemoveNoDisplay("camera-info", false);
-		document.getElementById("camera-info").innerHTML = currentPic.cameraModel;
-	} else {
-		addRemoveNoDisplay("camera-info", true);
-	}
+	/**
+	 * 
+	 * @param {boolean} isNext - ```True``` if the next picture is after the current one.
+	 */
+	setNewPicture(isNext) {
+		let src = getImageAddress(this.currentCountryId, this.currentPic.region.id, this.currentPic.fileName);
 
-	if (currentPic.lens) {
-		addRemoveNoDisplay("lens-info", false);
-		document.getElementById("lens-info").innerHTML = currentPic.lens;
-	} else {
-		addRemoveNoDisplay("lens-info", true);
-	}
+		if (this.isNewFullscreenInstance || (new Date() - lastSwipeTime) < 300) {
+			document.getElementById("fullscreen-pic").src = src;
+			this.isNewFullscreenInstance = false;
+		} else {
+			let nextPic = document.getElementById("fullscreen-pic-next");
+			let currentPic = document.getElementById("fullscreen-pic");
 
-	let technicalInfoElement = document.getElementById("technical-info");
-	technicalInfoElement.replaceChildren();
-	let tempElement = null;
-	if (currentPic.fStop) {
-		tempElement = document.createElement("div");
-		tempElement.innerHTML = `\u0192/${currentPic.fStop}`;
-		technicalInfoElement.appendChild(tempElement);
-	}
-	if (currentPic.shutterSpeed) {
-		tempElement = document.createElement("div");
-		tempElement.innerHTML = currentPic.shutterSpeed;
-		technicalInfoElement.appendChild(tempElement);
-	}
-	if (currentPic.iso) {
-		tempElement = document.createElement("div");
-		tempElement.innerHTML = `iso ${currentPic.iso}`;
-		technicalInfoElement.appendChild(tempElement);
-	}
-	if (tempElement == null) {
-		addRemoveNoDisplay("technical-info", true);
-	} else {
-		addRemoveNoDisplay("technical-info", false);
-	}
-
-	// add tags
-	currentPic.tags.map(x => { return TAGS.find(function (t) { return t.id == x }) })
-		.sort(sortByEnglishName)
-		.forEach(tag => {
-			tempElement = document.createElement("div");
-			tempElement.classList.add("img-tag");
-			tempElement.innerHTML = getBilingualText(tag.englishName, tag.japaneseName);
-			document.getElementById("img-tags").appendChild(tempElement);
-		});
-
-	if (currentPic.isFavourite) {
-		document.getElementById("img-tags").appendChild(favouritedTag);
-	}
-}
-
-function setNewPicture(isForward) {
-	document.getElementById("img-tags").replaceChildren();
-
-	let src = getImageAddress(selectedCountry, currentPic.region.id, currentPic.fileName);
-
-	if (isNewFullscreenInstance || (new Date() - lastSwipeTime) < 300) {
-		document.getElementById("fullscreen-pic").src = src;
-		isNewFullscreenInstance = false;
-	} else {
-		let nextPic = document.getElementById("fullscreen-pic-next");
-		let currentPic = document.getElementById("fullscreen-pic");
-
-		addRemoveNoDisplay([nextPic], true);
-		nextPic.src = src;
-		nextPic.classList.add(isForward ? "fullscreen-pic-right" : "fullscreen-pic-left");
-
-		setTimeout(() => {
-			addRemoveNoDisplay([nextPic], false);
-			addRemoveTransparent([nextPic], false);
-			addRemoveTransparent([currentPic], true);
-			nextPic.classList.remove(isForward ? "fullscreen-pic-right" : "fullscreen-pic-left");
-			currentPic.classList.add(isForward ? "fullscreen-pic-left" : "fullscreen-pic-right");
+			addRemoveNoDisplay([nextPic], true);
+			nextPic.src = src;
+			nextPic.classList.add(isNext ? "fullscreen-pic-right" : "fullscreen-pic-left");
 
 			setTimeout(() => {
-				addRemoveNoDisplay([currentPic], true);
-				addRemoveTransparent([currentPic], false);
-				currentPic.src = src;
-				currentPic.classList.remove(isForward ? "fullscreen-pic-left" : "fullscreen-pic-right");
+				addRemoveNoDisplay([nextPic], false);
+				addRemoveTransparent([nextPic], false);
+				addRemoveTransparent([currentPic], true);
+				nextPic.classList.remove(isNext ? "fullscreen-pic-right" : "fullscreen-pic-left");
+				currentPic.classList.add(isNext ? "fullscreen-pic-left" : "fullscreen-pic-right");
+
 				setTimeout(() => {
-					addRemoveNoDisplay([currentPic], false);
-					addRemoveNoDisplay([nextPic], true);
-					addRemoveTransparent([nextPic], true);
-					nextPic.classList.remove("fullscreen-pic-in");
+					addRemoveNoDisplay([currentPic], true);
+					addRemoveTransparent([currentPic], false);
+					currentPic.src = src;
+					currentPic.classList.remove(isNext ? "fullscreen-pic-left" : "fullscreen-pic-right");
+					setTimeout(() => {
+						addRemoveNoDisplay([currentPic], false);
+						addRemoveNoDisplay([nextPic], true);
+						addRemoveTransparent([nextPic], true);
+						// nextPic.classList.remove("fullscreen-pic");
+					}, 100);
 				}, 100);
-			}, 100);
-		}, 20);
-	}
-	lastSwipeTime = new Date();
-	setFullscreenInfo();
-}
-
-// picture info
-function showPicInfo() {
-	isPicInfoVisible = true;
-	addRemoveNoDisplay("pic-info", false);
-	let element = document.getElementById("pic-info-drawer");
-	//TODO: transition on first portrait mode open
-	addRemoveNoDisplay([element], false);
-	setTimeout(() => {
-		element.style.bottom = "0";
-		element.style.marginRight = "0px";
-	}, 20);
-}
-
-export function hidePicInfo() {
-	isPicInfoVisible = false;
-	let element = document.getElementById("pic-info-drawer");
-	element.style.bottom = `-${element.getBoundingClientRect().height}px`;
-	element.style.marginRight = `-${element.getBoundingClientRect().width}px`;
-	setTimeout(() => {
-		addRemoveNoDisplay([element], true);
-		addRemoveNoDisplay("pic-info", true);
-	}, DEFAULT_TIMEOUT);
-}
-
-function changePicInfoVisibility(isVisible) {
-	if (isVisible == undefined) {
-		isVisible = !isPicInfoVisible;
-	}
-
-	if (isVisible) {
-		showPicInfo();
-	} else {
-		hidePicInfo();
+			}, 20);
+		}
+		lastSwipeTime = new Date();
+		this.setPicInfo(); //TODO
 	}
 }
 
-// format dates according to language
-function getEnglishDate(date, picOffset) {
-	let hours = date.getHours();
-	return DAY_NAMES_EN[date.getDay()] + ", " +
-		MONTH_NAMES[date.getMonth()] + " " +
-		date.getDate() + ", " +
-		date.getFullYear() +
-		" " + (hours > 12 ? hours - 12 : hours).toString() + ":" +
-		date.getMinutes().toString().padStart(2, "0") + ":" +
-		date.getSeconds().toString().padStart(2, "0") +
-		(hours >= 12 ? " PM" : " AM") +
-		(picOffset > 0 ? " +" : " -") +
-		Math.floor(picOffset) + ":" +
-		String((picOffset - Math.floor(picOffset)) * 60).padStart(2, "0");
-}
-
-function getJapaneseDate(date, picOffset) {
-	let hours = date.getHours();
-	return date.getFullYear() + "年" +
-		(date.getMonth() + 1) + "月" +
-		date.getDate() + "日" +
-		"（" + DAY_NAMES_JP[date.getDay()] + "）" +
-		(hours >= 12 ? "午後" : "午前") +
-		(hours > 12 ? hours - 12 : hours).toString() + ":" +
-		date.getMinutes().toString().padStart(2, "0") + ":" +
-		date.getSeconds().toString().padStart(2, "0") +
-		(picOffset >= 0 ? "+" : "") +
-		Math.floor(picOffset) + ":" +
-		String((picOffset - Math.floor(picOffset)) * 60).padStart(2, "0");
-}
+window.customElements.define("fullscreen", Fullscreen);

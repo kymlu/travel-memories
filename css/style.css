@@ -81,8 +81,8 @@ button:active {
 
 .filter-indicator {
   position: absolute;
-  top: 0;
-  right: 0;
+  top: 2;
+  right: -2;
   width: 10px;
   height: 10px;
   background-color: rgba(var(--main-color));
@@ -91,6 +91,13 @@ button:active {
   border-width: 1px;
   border-style: solid;
 }
+
+/* @media only screen and (orientation: portrait) and (max-width: 768px) {
+  .filter-indicator {
+    top: -1;
+  }
+} */
+
 
 .inline-icon {
   font-family: FontAwesome;
@@ -113,73 +120,6 @@ button:active {
 
 .capitalize-text {
   text-transform: capitalize;
-}
-
-/* Topbar */
-.top-bar {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: space-between;
-  position: fixed;
-  width: 100%;
-  box-sizing: border-box;
-  top: 0;
-  right: 0px;
-  padding: 70px 75px 20px 75px;
-  background-color: transparent;
-}
-
-@media only screen and (max-width: 768px) {
-  .top-bar {
-    flex-wrap: wrap;
-    padding: 20px;
-  }
-}
-
-.btn-grp {
-  display: flex;
-  gap: 10px;
-  z-index: 5001;
-}
-
-@media only screen and (orientation: portrait) and (max-width: 768px) {
-  .btn-grp {
-    justify-content: space-around;
-    gap: 0px;
-    flex-basis: 50%;
-  }
-
-  .btn-grp-left {
-    flex-basis: 25%;
-  }
-
-  .btn-grp-right {
-    flex-basis: 75%;
-  }
-}
-
-.rgn-title {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  gap: 15px;
-  margin-top: 10px;
-  cursor: pointer;
-}
-
-@media only screen and (orientation: landscape) {
-  #map-btn {
-    margin-right: 70px;
-  }
-}
-
-@media only screen and (max-width: 768px) {
-  #rgn-title {
-    margin: auto;
-    order: 2;
-  }
 }
 
 .rgn-drop-down {
@@ -220,7 +160,7 @@ button:active {
 }
 
 /* Maps*/
-.map-page {
+.map-view {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -232,7 +172,7 @@ button:active {
 }
 
 @media only screen and (orientation: portrait) {
-  .map-page {
+  .map-view {
     padding: 0px;
   }
 }
@@ -450,7 +390,7 @@ button:active {
 }
 
 .no-display {
-  display: none;
+  display: none !important;
 }
 
 .transform-transition {

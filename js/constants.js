@@ -8,11 +8,7 @@ export const TAIWAN = "taiwan";
 export const AUSTRALIA = "australia";
 export const NEW_ZEALAND = "newzealand";
 
-export const MONTH_NAMES = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-export const DAY_NAMES_EN = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-export const DAY_NAMES_JP = ["日", "月", "火", "水", "木", "金", "土"];
-
-export const PAGE_NAMES = {
+export const VIEW_NAMES = {
 	START: "start",
 	MAP: "map",
 	GALLERY: "gallery"
@@ -62,7 +58,27 @@ export const TAGS = [
 ];
 
 export const CUSTOM_EVENT_TYPES = {
-	INFO_POPUP_CLOSED: "info-popup-closed",
 	FILTER_POPUP_SUBMITTED: "filter-popup-submitted",
-	FILTER_POPUP_CLOSED: "filter-popup-closed"
 }
+
+const LONG_DATETIME_FORMAT_OPTIONS = {
+	weekday: 'long',
+	month: 'long',
+	year: 'numeric',
+	day: 'numeric',
+	hour: "numeric",
+	minute: "numeric",
+	second: "numeric",
+	hour12: true,
+	timeZoneName: "longOffset"
+};
+export const LONG_DATETIME_FORMAT_EN = new Intl.DateTimeFormat('en-US', LONG_DATETIME_FORMAT_OPTIONS);
+export const LONG_DATETIME_FORMAT_JP = new Intl.DateTimeFormat('ja-JP', LONG_DATETIME_FORMAT_OPTIONS);
+
+const SHORT_DATETIME_FORMAT_OPTIONS = {
+	month: 'long',
+	year: 'numeric',
+	day: 'numeric'
+};
+export const SHORT_DATETIME_FORMAT_EN = new Intl.DateTimeFormat('en-US', SHORT_DATETIME_FORMAT_OPTIONS);
+export const SHORT_DATETIME_FORMAT_JP = new Intl.DateTimeFormat('ja-JP', SHORT_DATETIME_FORMAT_OPTIONS);

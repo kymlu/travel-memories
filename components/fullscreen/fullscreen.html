@@ -1,0 +1,24 @@
+<body>
+    <div id="fullscreen" class="centered overlay opacity-transition transparent fullscreen-container"
+		style="z-index: 6000; visibility: hidden;">
+		<div id="fullscreen-gallery" class="fullscreen-gallery">
+			<div id="fullscreen-bg" class="popup-bg opacity-transition transparent" style="z-index: 0;"></div>
+			<div id="fullscreen-ctrl" class="fullscreen-ctrl" style="z-index: 1;">
+				<button id="left-arrow" class="large-icon fullscreen-arrow">&#xf0d9</button>
+				<div>
+					<img id="fullscreen-pic-next" class="fullscreen-pic transparent centered no-display"
+						style="position: absolute;" />
+					<img id="fullscreen-pic" class="fullscreen-pic centered" style="position: absolute;" />
+				</div>
+				<button id="right-arrow" class="large-icon fullscreen-arrow">&#xf0da</button>
+			</div>
+            <!-- TODO: remove this div for pic info btn on its own -->
+			<div class="fullscreen-fns" style="z-index: 3;">
+				<button id="pic-info-btn" class="large-icon fullscreen-fn-btn">&#xf05a</button>
+			</div>
+		</div>
+        <!--TODO: insert pic info drawer-->
+        <div id="pic-info" style="z-index: 3;">
+	</div>
+	<link rel="stylesheet" type="text/css" href="components/fullscreen/fullscreen.css">
+</body>
