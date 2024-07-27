@@ -78,10 +78,11 @@
 }
 
 .error-btn {
-	display: none;
 	cursor: pointer;
 	width: 30vw;
 	border-radius: 5px;
-	background-color: rgba(var(--main-color));
+	background-color: white;
+	border-style: solid;
+	border-color: rgba(var(--main-color));
 	text-align: center;
 }

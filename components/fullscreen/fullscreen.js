@@ -9,6 +9,7 @@ export default class Fullscreen extends HTMLElement {
 	constructor() {
 		/// VARIABLES
 		// booleans
+		super();
 		this.isNewFullscreenInstance = true;
 		this.isFullscreen = false;
 

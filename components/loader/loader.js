@@ -2,7 +2,7 @@ import { DEFAULT_TIMEOUT, LOAD_ANIMATION_TIME, LOAD_DOT_COUNT } from "../../js/c
 import { addRemoveNoDisplay, addRemoveTransparent } from "../../js/utils.js";
 import { getCurrentCountry, isCountrySelected } from "../../js/globals.js";
 
-/** The Loader */
+/** The Loader. */
 export default class Loader extends HTMLElement {
     constructor() {
         super();
@@ -18,86 +18,79 @@ export default class Loader extends HTMLElement {
             .then(html => {
                 this.innerHTML = html;
             }).catch(error => console.log(error));
+
+        this.elements = null;
     }
 
+
     connectedCallback() {
-        document.getElementById(`load${LOAD_DOT_COUNT}`).addEventListener("animationend", function () {
-            addRemoveNoDisplay("loading-screen", true);
-        });
-
-        Array.from(document.getElementsByClassName("loader-dot")).forEach(dot => {
-            dot.addEventListener("animationend", function () {
-                addRemoveNoDisplay([dot], true);
-            });
-        });
-
-        document.getElementById("error-btn").addEventListener("click", retryLoader);
-        this.startLoader();
+        setTimeout(() => {
+            this.elements = {
+                dots: Array.from(document.getElementsByClassName("loader-dot")),
+                lastDot: document.querySelector(`.dot-${LOAD_DOT_COUNT}`),
+                icon: document.querySelector(".small-icon"),
+                error: document.querySelector(".error-btn")
+            }
+            this.elements.error.addEventListener("click", this.retry.bind(this));
+            this.start();
+        }, 50);
     }
 
     /**
      * Start the loader.
      * @param {Function} func 
      */
-    startLoader() {
+    start() {
         this.isLoading = true;
-        addRemoveNoDisplay("loading-screen", false);
-        addRemoveTransparent("loading-screen", false);
 
         this.startTime = new Date();
 
+        // TODO: ensure this works
         if (isCountrySelected()) {
-            addRemoveNoDisplay("load-icon", false);
-            document.getElementById("load-icon").src = `assets/icons/${getCurrentCountry()?.symbol}.svg`;
-        } else {
-            addRemoveNoDisplay("load-icon", true);
+            addRemoveNoDisplay([this.elements.icon], false);
+            this.elements.icon.src = `assets/icons/${getCurrentCountry()?.symbol}.svg`;
         }
 
-        for (let i = 0; i <= LOAD_DOT_COUNT; i++) {
-            document.getElementById(`load${i}`).style.animationIterationCount = "infinite";
-            addRemoveNoDisplay(`load${i}`, false);
-        }
+        setTimeout(() => {
+            this.elements.dots.forEach(dot => {
+                dot.style.animationIterationCount = "infinite";
+            });
+        }, 100);
     }
 
     /**
      * Stop the loader regardless of where it is.
      */
-    hideLoader() {
-        addRemoveTransparent("loading-screen", true);
-        document.body.style.overflowY = "auto";
-        addRemoveTransparent([document.getElementsByTagName("header")], false); // TODO: ??
-        setTimeout(() => {
-            addRemoveNoDisplay("loading-screen", true);
-        }, DEFAULT_TIMEOUT);
+    quickStop() {
         this.isLoading = false;
-        this.remove();
+        addRemoveTransparent([this], true);
+        setTimeout(() => {
+            this.remove();
+        }, DEFAULT_TIMEOUT);
     }
 
     /**
      * Stop the loader when all dots complete a full cycle.
      * @param {Function} animationEndFunction 
      */
-    stopLoader(animationEndFunction) {
-        handleAnimationEnd = function () {
-            // TODO: create a function that does both add transparent > timeout > no-display
-            addRemoveTransparent("loading-screen", true);
+    stop(animationEndFunction) {
+        this.handleAnimationEnd = function () {
+            addRemoveTransparent([this], true);
+            if (animationEndFunction) {
+                animationEndFunction();
+            }
             setTimeout(() => {
-                addRemoveNoDisplay("loading-screen", true);
+                this.remove();
             }, DEFAULT_TIMEOUT);
-            animationEndFunction();
-            document.getElementById(`load${LOAD_DOT_COUNT}`).removeEventListener("animationend", handleAnimationEnd);
         }
 
-        document.getElementById(`load${LOAD_DOT_COUNT}`).addEventListener("animationend", handleAnimationEnd);
+        this.elements.lastDot.addEventListener("animationend", this.handleAnimationEnd);
 
-        setTimeout(() => {
-            let iterationCount = Math.ceil((new Date() - startTime) / LOAD_ANIMATION_TIME);
-            for (let i = 0; i <= LOAD_DOT_COUNT; i++) {
-                document.getElementById(`load${i}`).style.animationIterationCount = iterationCount;
-            }
-        }, 100);
+        let iterationCount = Math.ceil((new Date() - this.startTime) / LOAD_ANIMATION_TIME);
+        this.elements.dots.forEach(dot => {
+            dot.style.animationIterationCount = iterationCount
+        });
         this.isLoading = false;
-        this.remove();
     }
 
     /**
@@ -106,8 +99,7 @@ export default class Loader extends HTMLElement {
     showDataLoadError(func) {
         this.functionToRetry = func;
         setTimeout(() => {
-            addRemoveNoDisplay("error-btn", false);
-            addRemoveTransparent("error-btn", false);
+            addRemoveTransparent([this.elements.error], false);
             this.#setLoaderState("paused");
         }, DEFAULT_TIMEOUT);
     }
@@ -115,10 +107,12 @@ export default class Loader extends HTMLElement {
     /**
      * Retries the loading function.
      */
-    retryLoader() {
-        addRemoveNoDisplay("error-btn", true);
+    retry() {
+        addRemoveTransparent([this.elements.error], true);
         this.#setLoaderState("running");
-        this.functionToRetry();
+        if (this.functionToRetry) {
+            this.functionToRetry();
+        }
     }
 
     /**
@@ -126,9 +120,9 @@ export default class Loader extends HTMLElement {
      * @param {string} state 
      */
     #setLoaderState(state) {
-        for (let i = 0; i <= LOAD_DOT_COUNT; i++) {
-            document.getElementById(`load${i}`).style.animationPlayState = state;
-        }
+        this.elements.dots.forEach(dot => {
+            dot.style.animationPlayState = state;
+        });
     }
 }
 

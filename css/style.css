@@ -79,6 +79,11 @@ button:active {
   cursor: pointer;
 }
 
+.small-icon {
+  height: 30px;
+  width: 30px;
+}
+
 .filter-indicator {
   position: absolute;
   top: 2;

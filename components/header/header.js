@@ -8,8 +8,9 @@ import {
 } from "../../js/utils.js";
 
 /** The Header class. */
-export default class Header {
+export default class Header extends HTMLElement {
     constructor(header, regionDropdownFunc, globeFunc, mapFunc, infoFunc, filterFunc, creatorFunc) {
+		super();
         this.headerElement = header;
 
         /** Header sections */
