@@ -77,13 +77,17 @@ export function goToMapView() {
 }
 
 export function goToStartView(isPopped) {
+    if (isMapView()) {
     mapView.hide();
+    }
     setCurrentView(VIEW_NAMES.START);
     startView.show(isPopped);
 }
 
 export function goToGalleryView() {
+    if (isMapView()) {
     mapView.hide();
+    }
     setCurrentView(VIEW_NAMES.GALLERY);
     galleryView.show();
 }
@@ -92,7 +96,6 @@ export function goToGalleryView() {
 export function onSelectNewRegion(regionId, isPopped) {
     loader = new Loader();
     document.body.append(loader);
-    //loader.startLoader();
 
     if (isPopped == null) {
         window.history.pushState({ rgn: regionId }, "", null);
@@ -110,7 +113,7 @@ export function onSelectNewRegion(regionId, isPopped) {
         if (!isGalleryView()) {
             goToGalleryView();
         }
-        loader.hideLoader();
+        loader.quickStop();
     }, DEFAULT_TIMEOUT);
 }
 
@@ -169,13 +172,12 @@ export function setCurrentCountry(countryId, countryColor) {
     setAppColor(countryColor);
     loader = new Loader();
     document.body.append(loader);
-    //loader.startLoader();
 
     mapView.handleNewCountry();
     galleryView.handleNewCountry();
 
     setTimeout(() => {
-        loader.stopLoader(mapView.show);
+            loader.stop(mapView.show);
     }, 1200);
 }
 

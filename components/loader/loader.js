@@ -1,16 +1,19 @@
-import { DEFAULT_TIMEOUT, LOAD_ANIMATION_TIME, LOAD_DOT_COUNT } from "../../js/constants.js";
+import {
+    CUSTOM_EVENT_TYPES, DEFAULT_TIMEOUT, LOAD_ANIMATION_TIME, LOAD_DOT_COUNT
+} from "../../js/constants.js";
 import { addRemoveNoDisplay, addRemoveTransparent } from "../../js/utils.js";
 import { getCurrentCountry, isCountrySelected } from "../../js/globals.js";
 
 /** The Loader. */
 export default class Loader extends HTMLElement {
+    #startTime;
+    #elements;
+
     constructor() {
         super();
         this.functionToRetry = null;
-
-        this.startTime = null;
-        this.handleAnimationEnd = null;
-        this.isLoading = false;
+        this.#startTime = null;
+        this.#elements = null;
 
         // Get component html
         fetch("components/loader/loader.html")
@@ -18,20 +21,19 @@ export default class Loader extends HTMLElement {
             .then(html => {
                 this.innerHTML = html;
             }).catch(error => console.log(error));
-
-        this.elements = null;
     }
 
 
     connectedCallback() {
         setTimeout(() => {
-            this.elements = {
-                dots: Array.from(document.getElementsByClassName("loader-dot")),
+            this.#elements = {
+                dots: Array.from(document.querySelectorAll(".loader-dot")),
                 lastDot: document.querySelector(`.dot-${LOAD_DOT_COUNT}`),
                 icon: document.querySelector(".small-icon"),
                 error: document.querySelector(".error-btn")
             }
-            this.elements.error.addEventListener("click", this.retry.bind(this));
+            this.#elements.error.addEventListener("click", this.retry.bind(this));
+            addRemoveNoDisplay([this.#elements.error], true);
             this.start();
         }, 50);
     }
@@ -41,32 +43,25 @@ export default class Loader extends HTMLElement {
      * @param {Function} func 
      */
     start() {
-        this.isLoading = true;
-
-        this.startTime = new Date();
+        this.#startTime = new Date();
 
         // TODO: ensure this works
         if (isCountrySelected()) {
-            addRemoveNoDisplay([this.elements.icon], false);
-            this.elements.icon.src = `assets/icons/${getCurrentCountry()?.symbol}.svg`;
+            addRemoveNoDisplay([this.#elements.icon], false);
+            document.querySelector(".small-icon").src = `assets/icons/${getCurrentCountry()?.symbol}.svg`;
         }
 
-        setTimeout(() => {
-            this.elements.dots.forEach(dot => {
-                dot.style.animationIterationCount = "infinite";
-            });
-        }, 100);
+        Array.from(document.querySelectorAll(".loader-dot")).forEach(dot => {
+            dot.style.animationIterationCount = "infinite";
+        });
     }
 
     /**
      * Stop the loader regardless of where it is.
      */
     quickStop() {
-        this.isLoading = false;
         addRemoveTransparent([this], true);
-        setTimeout(() => {
-            this.remove();
-        }, DEFAULT_TIMEOUT);
+        setTimeout(this.#dispatchLoadingEvent.bind(this), DEFAULT_TIMEOUT);
     }
 
     /**
@@ -74,23 +69,20 @@ export default class Loader extends HTMLElement {
      * @param {Function} animationEndFunction 
      */
     stop(animationEndFunction) {
-        this.handleAnimationEnd = function () {
+        let dispatchFunction = () => { this.#dispatchLoadingEvent.bind(this)(); }
+        let handleAnimationEnd = function () {
             addRemoveTransparent([this], true);
             if (animationEndFunction) {
                 animationEndFunction();
             }
-            setTimeout(() => {
-                this.remove();
-            }, DEFAULT_TIMEOUT);
+            dispatchFunction();
         }
 
-        this.elements.lastDot.addEventListener("animationend", this.handleAnimationEnd);
-
-        let iterationCount = Math.ceil((new Date() - this.startTime) / LOAD_ANIMATION_TIME);
-        this.elements.dots.forEach(dot => {
+        document.querySelector(`.dot-${LOAD_DOT_COUNT}`).addEventListener("animationend", handleAnimationEnd);
+        let iterationCount = Math.ceil((new Date() - this.#startTime) / LOAD_ANIMATION_TIME);
+        Array.from(document.querySelectorAll(".loader-dot")).forEach(dot => {
             dot.style.animationIterationCount = iterationCount
         });
-        this.isLoading = false;
     }
 
     /**
@@ -98,17 +90,19 @@ export default class Loader extends HTMLElement {
      */
     showDataLoadError(func) {
         this.functionToRetry = func;
-        setTimeout(() => {
-            addRemoveTransparent([this.elements.error], false);
-            this.#setLoaderState("paused");
-        }, DEFAULT_TIMEOUT);
+        addRemoveNoDisplay([this.#elements.error], false);
+        addRemoveTransparent([this.#elements.error], false);
+        this.#setLoaderState("paused");
     }
 
     /**
      * Retries the loading function.
-     */
+    */
     retry() {
-        addRemoveTransparent([this.elements.error], true);
+        addRemoveTransparent([this.#elements.error], true);
+        setTimeout(() => {
+            addRemoveNoDisplay([this.#elements.error], true);
+        }, DEFAULT_TIMEOUT);
         this.#setLoaderState("running");
         if (this.functionToRetry) {
             this.functionToRetry();
@@ -120,9 +114,15 @@ export default class Loader extends HTMLElement {
      * @param {string} state 
      */
     #setLoaderState(state) {
-        this.elements.dots.forEach(dot => {
+        this.#elements.dots.forEach(dot => {
             dot.style.animationPlayState = state;
         });
+    }
+
+    /** Dispatches the loading complete event. */
+    #dispatchLoadingEvent() {
+        const loadingCompleteEvent = new CustomEvent(CUSTOM_EVENT_TYPES.LOADING_COMPLETE);
+        this.dispatchEvent(loadingCompleteEvent);
     }
 }
 

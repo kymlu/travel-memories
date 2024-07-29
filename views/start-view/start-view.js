@@ -57,18 +57,10 @@ export default class StartView extends HTMLElement {
             imgColor.src = `assets/icons/${country.symbol}.svg`;
             imgColor.classList.add("opacity-transition");
 
-            newBtn.addEventListener("mouseover", function () {
-                self.highlightCountry(abb, true);
-            });
-            newBtn.addEventListener("touchstart", function () {
-                self.highlightCountry(abb, true);
-            });
-            newBtn.addEventListener("mouseout", function () {
-                self.highlightCountry(abb, false);
-            });
-            newBtn.addEventListener("touchend", function () {
-                self.highlightCountry(abb, false);
-            });
+            newBtn.addEventListener("mouseover", this.highlightCountry.bind(this, abb, true));
+            newBtn.addEventListener("touchstart", this.highlightCountry.bind(this, abb, true));
+            newBtn.addEventListener("mouseout", this.highlightCountry.bind(this, abb, false));
+            newBtn.addEventListener("touchend", this.highlightCountry.bind(this, abb, false));
 
             newBtn.appendChild(engTxt);
             newBtn.appendChild(iconn);
@@ -76,7 +68,7 @@ export default class StartView extends HTMLElement {
             iconn.appendChild(imgWhite);
             iconn.appendChild(imgColor);
 
-            [this].appendChild(newBtn);
+            this.appendChild(newBtn);
         });
 
         window.history.pushState({}, "", null);
@@ -92,7 +84,7 @@ export default class StartView extends HTMLElement {
         scrollToTop(false);
         setAppColor("--default-color");
         addRemoveNoDisplay([this], false);
-        document.getElementById([this]).scrollTo({
+        this.scrollTo({
             top: 0,
             left: 0,
             behavior: "instant"

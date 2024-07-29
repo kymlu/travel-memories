@@ -16,6 +16,7 @@ import {
 import {
 	getBilingualText, scrollToTop,
 } from './utils.js';
+import { CUSTOM_EVENT_TYPES } from './constants.js';
 
 /// VARIABLES
 // Booleans
@@ -37,7 +38,6 @@ function fetchHtml(fileName, type) {
 function initializeSite() {
 	loader = new Loader();
     document.body.append(loader);
-	//loader.startLoader();
 
 	// Popups
 	let infoPopup = new InfoPopup();
@@ -99,12 +99,13 @@ function fetchData() {
 				setAllCountryData(d);
 			}
 		}).catch(error => {
-			loader.showDataLoadError(fetchData);
+			loader.showDataLoadError(fetchData); // TODO - seems to be a new instance
 			hasError = true;
 			console.error("Error loading data.", error);
 		}).then(() => {
 			if (!hasError) {
-				loader.stopLoader(goToStartView);
+				loader.stop(goToStartView);
+				loader.addEventListener(CUSTOM_EVENT_TYPES.LOADING_COMPLETE, loader.remove);
 			}
 		});
 }
@@ -112,5 +113,7 @@ function fetchData() {
 document.addEventListener("DOMContentLoaded", () => {
 	scrollToTop(false);
 	initializeSite();
+	setTimeout(() => {
 	fetchData();
+	}, 100);
 });
