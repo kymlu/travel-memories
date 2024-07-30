@@ -1,5 +1,5 @@
 /// IMPORTS
-import { DEFAULT_TIMEOUT } from '../../js/constants.js'
+import { DEFAULT_TIMEOUT, ATTRIBUTES } from '../../js/constants.js'
 import {
 	addClickListeners, addRemoveNoDisplay, addRemoveTransparent,
 	getImageAddress, isPortraitMode, setBilingualAttribute,
@@ -52,7 +52,7 @@ export default class Fullscreen extends HTMLElement {
 			["pic-info-btn", "See picture information", "写真の情報を見る"],
 			["left-arrow", "Previous picture", "前の写真"],
 			["right-arrow", "Next picture", "次の写真"],
-		], "title");
+		], ATTRIBUTES.TITLE);
 
 		addClickListeners([
 			["fullscreen-bg", function () { this.closeFullscreen(true); }],
@@ -95,7 +95,7 @@ export default class Fullscreen extends HTMLElement {
 		}
 		this.isFullscreen = true;
 		document.body.style.overflowY = "hidden";
-		document.getElementById("fullscreen").style.visibility = "visible";
+		document.getElementById("fullscreen").classList.remove("visibility-hidden");
 		addRemoveTransparent(["fullscreen", "fullscreen-bg"], false);
 	    document.addEventListener("keydown", this.handleKeydown);
 	}
@@ -109,12 +109,12 @@ export default class Fullscreen extends HTMLElement {
 		this.isFullscreen = false;
 		document.body.style.overflowY = "auto";
 		if (forceClose) {
-			document.getElementById("fullscreen").style.visibility = "hidden";
+			document.getElementById("fullscreen").classList.add("visibility-hidden");
 			addRemoveTransparent(["fullscreen", "fullscreen-bg"], true);
 		} else {
 			addRemoveTransparent(["fullscreen", "fullscreen-bg"], true);
 			setTimeout(() => {
-				document.getElementById("fullscreen").style.visibility = "hidden";
+				document.getElementById("fullscreen").classList.add("visibility-hidden");
 			}, DEFAULT_TIMEOUT);
 		}
 	}

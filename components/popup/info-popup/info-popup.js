@@ -19,11 +19,13 @@ export default class InfoPopup extends BasePopup {
     }
 
     /** @inheritdoc */
-    initializePopup(){
-        super.initializePopup();
-        this.querySelectorAll(".action-btn").forEach(element => {
-            element.addEventListener("click", () => { this.goToGithub(); });
-        });
+    connectedCallback(){
+        setTimeout(() => {
+            this.querySelectorAll(".action-btn").forEach(element => {
+                element.addEventListener("click", () => { this.goToGithub(); });
+            });
+            super.connectedCallback();
+        }, 0);
     }
 
     /** Opens a new page on this project's Github repo. */

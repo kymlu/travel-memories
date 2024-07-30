@@ -1,4 +1,4 @@
-import { LONG_DATETIME_FORMAT_EN, LONG_DATETIME_FORMAT_JP } from "../../js/constants.js";
+import { ATTRIBUTES, LONG_DATETIME_FORMAT_EN, LONG_DATETIME_FORMAT_JP } from "../../js/constants.js";
 import { startHandleDrag } from "../../js/globals.js";
 import { addClickListeners, addRemoveNoDisplay, getBilingualText, getPictureDate, setBilingualAttribute } from "../../js/utils.js";
 
@@ -30,7 +30,7 @@ export default class PicInfo extends HTMLElement{
         setBilingualAttribute([
 			["search-eng", "Google in English", "英語でググる"],
 			["search-jp", "Google in Japanese", "日本語でググる"]
-		], "title");
+		], ATTRIBUTES.TITLE);
 
 		addClickListeners([
 			["pic-info-bg", this.hidePicInfo],

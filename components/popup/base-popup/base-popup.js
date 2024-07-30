@@ -1,6 +1,6 @@
 /// IMPORTS
-import { addRemoveClass, addRemoveNoDisplay, addRemoveTransparent } from '../../../js/utils.js'
-import { DEFAULT_TIMEOUT } from '../../../js/constants.js';
+import { addRemoveClass, addRemoveNoDisplay, addRemoveTransparent, setBilingualAttribute } from '../../../js/utils.js'
+import { ATTRIBUTES, DEFAULT_TIMEOUT } from '../../../js/constants.js';
 
 /**
  * The Base Popup object.
@@ -9,52 +9,58 @@ export default class BasePopup extends HTMLElement {
     constructor() {
         super();
         this.isOpen = false;
-        
+
         /** ```True``` if the popup has been opened before. @type boolean */
         this.previouslyOpened = false;
     }
 
     /** Sets up the popup. */
-    initializePopup() {
-        this.querySelector(".popup").addEventListener("click", (event) => {
-            event.stopPropagation();
-        });
+    connectedCallback() {
+        if (!this.previouslyOpened) {
+            setTimeout(() => {
+                setBilingualAttribute([[this.querySelector(".close-btn"), "Close", "閉じる"]], ATTRIBUTES.TITLE);
+                this.querySelector(".popup").addEventListener("click", (event) => {
+                    event.stopPropagation();
+                });
+                addRemoveNoDisplay([this], true);
+            }, 50);
+        }
     }
 
-    isPopupOpen(){
+    isPopupOpen() {
         return this.isOpen;
     }
 
     /** Opens the popup. */
     open() {
-        let popupOverlay = this.querySelector(".overlay");
         let popupContent = this.querySelector(".popup-content");
         let popup = this.querySelector(".popup");
         let popupBg = this.querySelector(".popup-bg");
-        popupOverlay.style.visibility = "visible";
+        addRemoveNoDisplay([this], false);
+        //popupOverlay.classList.remove("visibility-hidden");
 
-        addRemoveTransparent([popup, popupBg], false);
-        // CHECK: probably don't need? -> document.getElementById("info-popup").style.visibility = "visible";
-        addRemoveClass([popup], "popup-width", true);
         setTimeout(() => {
-            addRemoveNoDisplay([popupContent], false);
-            addRemoveTransparent([popupContent], false);
-            addRemoveClass([popup], "popup-height", true);
-            this.querySelector(".close-btn").addEventListener("click", () => { this.close(false); });
-            this.querySelector(".popup-bg").addEventListener("click", () => { this.close(true); });
-        }, DEFAULT_TIMEOUT);
+            addRemoveTransparent([popup, popupBg], false);
+            addRemoveClass([popup], "popup-width", true);
+            setTimeout(() => {
+                addRemoveNoDisplay([popupContent], false);
+                addRemoveTransparent([popupContent], false);
+                addRemoveClass([popup], "popup-height", true);
+                this.querySelector(".close-btn").addEventListener("click", () => { this.close(false); });
+                this.querySelector(".popup-bg").addEventListener("click", () => { this.close(true); });
+            }, DEFAULT_TIMEOUT);
+        }, 50);
 
         if (!this.previouslyOpened) {
-            this.initializePopup();
             this.previouslyOpened = true;
         }
 
         this.isOpen = true;
-	    document.addEventListener("keydown", this.handleKeydown);
+        document.addEventListener("keydown", this.handleKeydown);
     }
 
-    handleKeydown(event){
-        if(event.key == "Escape"){
+    handleKeydown(event) {
+        if (event.key == "Escape") {
             this.close(true);
         }
     }
@@ -65,10 +71,9 @@ export default class BasePopup extends HTMLElement {
      * the popup through the esc key or clicking the background.
      */
     close(forceClose) {
-	    document.removeEventListener("keydown", this.handleKeydown);
+        document.removeEventListener("keydown", this.handleKeydown);
 
         this.isOpen = false;
-        let popupOverlay = this.querySelector(".overlay");
         let popupContent = this.querySelector(".popup-content");
         let popup = this.querySelector(".popup");
         let popupBg = this.querySelector(".popup-bg");
@@ -89,7 +94,8 @@ export default class BasePopup extends HTMLElement {
                     // hide popup and bg
                     addRemoveTransparent([popup, popupBg], true);
                     setTimeout(() => {
-                        popupOverlay.style.visibility = "hidden";
+                        addRemoveNoDisplay([this], true);
+                        //popupOverlay.classList.add("visibility-hidden");
                     }, timeout);
                 }, timeout);
             }, timeout);

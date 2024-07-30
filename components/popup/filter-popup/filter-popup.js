@@ -5,7 +5,7 @@ import {
     addClickListeners,
     setBilingualAttribute
 } from '../../../js/utils.js';
-import { CUSTOM_EVENT_TYPES } from "../../../js/constants.js";
+import { CUSTOM_EVENT_TYPES, ATTRIBUTES } from "../../../js/constants.js";
 
 /**
  * The Filter Popup object.
@@ -14,7 +14,6 @@ import { CUSTOM_EVENT_TYPES } from "../../../js/constants.js";
 export default class FilterPopup extends BasePopup {
     constructor() {
         super();
-        self = this;
 
         /** @type {boolean} */
         this.currentFavourites = false;
@@ -60,33 +59,35 @@ export default class FilterPopup extends BasePopup {
     /**
      * @inheritdoc
      */
-    initializePopup() {
-        super.initializePopup();
-        setBilingualAttribute([
-            ["filter-title", "Filters", "フィルター"],
-            ["filter-fav-title", "Favourites", "お気に入り"],
-            ["filter-kw-title", "Keyword", "キーワード"],
-            ["filter-tags-title", "Tags", "タグ"],
-            ["filter-camera-title", "Camera", "カメラ"],
-            ["filter-areas-title", "Areas", "場所"],
-            ["filter-clear-btn", "Clear", "クリアする"],
-            ["filter-submit-btn", "Apply", "適用する"]
-        ], "innerHTML");
-        document.getElementById("filter-fav-label").childNodes[0].textContent = getBilingualText("Filter favourites", "お気に入りだけを表示する");
-        setBilingualAttribute([
-            ["filter-kw-clear-btn", "Clear keyword", "キーワードをクリアする"]
-        ], "title");
+    connectedCallback() {
+        setTimeout(() => {
+            super.connectedCallback();
+            setBilingualAttribute([
+                ["filter-title", "Filters", "フィルター"],
+                ["filter-fav-title", "Favourites", "お気に入り"],
+                ["filter-kw-title", "Keyword", "キーワード"],
+                ["filter-tags-title", "Tags", "タグ"],
+                ["filter-camera-title", "Camera", "カメラ"],
+                ["filter-areas-title", "Areas", "場所"],
+                ["filter-clear-btn", "Clear", "クリアする"],
+                ["filter-submit-btn", "Apply", "適用する"]
+            ], ATTRIBUTES.INNERHTML);
+            document.getElementById("filter-fav-label").childNodes[0].textContent = getBilingualText("Filter favourites", "お気に入りだけを表示する");
+            setBilingualAttribute([
+                ["filter-kw-clear-btn", "Clear keyword", "キーワードをクリアする"]
+            ], ATTRIBUTES.TITLE);
 
-        addClickListeners([
-            ["filter-regions-header", function () { self.toggleFilterGroup("regions", undefined); }],
-            ["filter-areas-header", function () { self.toggleFilterGroup("areas", undefined); }],
-            ["filter-tags-header", function () { self.toggleFilterGroup("tags", undefined); }],
-            ["filter-camera-header", function () { self.toggleFilterGroup("camera", undefined); }],
-            ["filter-clear-btn", this.clearFilters],
-            ["filter-submit-btn", this.submitFilters],
-            ["filter-kw-clear-btn", function () { self.clearKeyword(); }]
-        ]);
-        document.getElementById("filter-kw-input").addEventListener("input", function () { self.checkEmptyKeywordInput(); });
+            addClickListeners([
+                ["filter-regions-header", this.toggleFilterGroup.bind(this, "regions", undefined)],
+                ["filter-areas-header", this.toggleFilterGroup.bind(this, "areas", undefined)],
+                ["filter-tags-header", this.toggleFilterGroup.bind(this, "tags", undefined)],
+                ["filter-camera-header", this.toggleFilterGroup.bind(this, "camera", undefined)],
+                ["filter-clear-btn", this.clearFilters], // TODO: check if bind required
+                ["filter-submit-btn", this.submitFilters],
+                ["filter-kw-clear-btn", this.clearKeyword]
+            ]);
+            document.getElementById("filter-kw-input").addEventListener("input", this.checkEmptyKeywordInput.bind(this));
+        }, 0);
     }
 
     /**
@@ -113,26 +114,26 @@ export default class FilterPopup extends BasePopup {
         // if the user changed their mind on the filters,
         // reset the filters to their states before the popup was opened.
         if (!isSubmit) {
-            document.getElementById("filter-fav-input").checked = self.currentFavourites;
-            document.getElementById("filter-kw-input").value = self.currentKeyword;
-            self.checkEmptyKeywordInput();
+            document.getElementById("filter-fav-input").checked = this.currentFavourites;
+            document.getElementById("filter-kw-input").value = this.currentKeyword;
+            this.checkEmptyKeywordInput();
 
-            self.selectedRegions = [...self.currentRegions];
-            self.selectedAreas = [...self.currentAreas];
-            self.selectedTags = [...self.currentTags];
-            self.selectedCameras = [...self.currentCameras];
-            this.refreshFilterButtons("filter-regions-list", self.selectedRegions);
-            this.refreshFilterButtons("filter-areas-list", self.selectedAreas);
-            this.refreshFilterButtons("filter-camera-list", self.selectedCameras);
-            this.refreshFilterButtons("filter-tags-list", self.selectedTags);
+            this.selectedRegions = [...this.currentRegions];
+            this.selectedAreas = [...this.currentAreas];
+            this.selectedTags = [...this.currentTags];
+            this.selectedCameras = [...this.currentCameras];
+            this.refreshFilterButtons("filter-regions-list", this.selectedRegions);
+            this.refreshFilterButtons("filter-areas-list", this.selectedAreas);
+            this.refreshFilterButtons("filter-camera-list", this.selectedCameras);
+            this.refreshFilterButtons("filter-tags-list", this.selectedTags);
         } else {
             // save current state
-            self.currentFavourites = document.getElementById("filter-fav-input").checked;
-            self.currentKeyword = document.getElementById("filter-kw-input").value;
-            self.currentRegions = [...self.selectedRegions];
-            self.currentAreas = [...self.selectedAreas];
-            self.currentTags = [...self.selectedTags];
-            self.currentCameras = [...self.selectedCameras];
+            this.currentFavourites = document.getElementById("filter-fav-input").checked;
+            this.currentKeyword = document.getElementById("filter-kw-input").value;
+            this.currentRegions = [...this.selectedRegions];
+            this.currentAreas = [...this.selectedAreas];
+            this.currentTags = [...this.selectedTags];
+            this.currentCameras = [...this.selectedCameras];
         }
 
         super.close(forceClose);
@@ -152,16 +153,16 @@ export default class FilterPopup extends BasePopup {
         areas, tags, cameras, regionNameEn, regionNameJp) {
         this.clearFilters();
         document.getElementById("filter-regions-title").innerHTML = getBilingualText(regionNameEn, regionNameJp);
-        self.allRegions = regions.sort(sortByEnglishName);
-        self.currentRegions = [];
-        self.selectedRegions = [];
-        self.allAreas = areas.sort(sortByEnglishName);
-        self.currentAreas = [];
-        self.selectedAreas = [];
-        self.allTags = tags.sort(sortByEnglishName);
-        self.selectedTags = [];
-        self.currentTags = [];
-        self.allCameras = cameras.sort((a, b) => {
+        this.allRegions = regions.sort(sortByEnglishName);
+        this.currentRegions = [];
+        this.selectedRegions = [];
+        this.allAreas = areas.sort(sortByEnglishName);
+        this.currentAreas = [];
+        this.selectedAreas = [];
+        this.allTags = tags.sort(sortByEnglishName);
+        this.selectedTags = [];
+        this.currentTags = [];
+        this.allCameras = cameras.sort((a, b) => {
             if (a.toLowerCase() < b.toLowerCase()) {
                 return -1;
             }
@@ -170,26 +171,26 @@ export default class FilterPopup extends BasePopup {
             }
             return 0;
         });
-        self.currentCameras = [];
-        self.selectedCameras = [];
+        this.currentCameras = [];
+        this.selectedCameras = [];
 
         if (isSingleRegion) {
             addRemoveNoDisplay("filter-regions", true);
             addRemoveNoDisplay("filter-areas", false);
             let filterAreas = document.getElementById("filter-areas-list");
-            this.createFilterSection(filterAreas, self.allAreas, this.toggleArea, "areas");
+            this.createFilterSection(filterAreas, this.allAreas, this.toggleArea, "areas");
         } else {
             addRemoveNoDisplay("filter-regions", false);
             addRemoveNoDisplay("filter-areas", true);
             let filterRegions = document.getElementById("filter-regions-list");
-            this.createFilterSection(filterRegions, self.allRegions, this.toggleRegion, "regions");
+            this.createFilterSection(filterRegions, this.allRegions, this.toggleRegion, "regions");
         }
 
         let filterTags = document.getElementById("filter-tags-list");
-        this.createFilterSection(filterTags, self.allTags, this.toggleTag, "tags");
+        this.createFilterSection(filterTags, this.allTags, this.toggleTag, "tags");
 
         let filterCameras = document.getElementById("filter-camera-list");
-        this.createFilterSection(filterCameras, self.allCameras, this.toggleCamera, "camera");
+        this.createFilterSection(filterCameras, this.allCameras, this.toggleCamera, "camera");
     }
 
     /**
@@ -225,9 +226,9 @@ export default class FilterPopup extends BasePopup {
 
         // if too many items, collapse the group by default
         if (allList.length > 10) {
-            self.toggleFilterGroup(sectionName, false);
+            this.toggleFilterGroup(sectionName, false);
         } else {
-            self.toggleFilterGroup(sectionName, true);
+            this.toggleFilterGroup(sectionName, true);
         }
     }
 
@@ -272,7 +273,7 @@ export default class FilterPopup extends BasePopup {
      * @param {string} id 
      */
     toggleRegion(id) {
-        self.toggleFilter(id, self.selectedRegions);
+        this.toggleFilter(id, this.selectedRegions);
     }
 
     /**
@@ -280,7 +281,7 @@ export default class FilterPopup extends BasePopup {
      * @param {string} id 
      */
     toggleArea(id) {
-        self.toggleFilter(id, self.selectedAreas);
+        this.toggleFilter(id, this.selectedAreas);
     }
 
     /**
@@ -288,7 +289,7 @@ export default class FilterPopup extends BasePopup {
      * @param {string} id 
      */
     toggleTag(id) {
-        self.toggleFilter(id, self.selectedTags);
+        this.toggleFilter(id, this.selectedTags);
     }
 
     /**
@@ -296,7 +297,7 @@ export default class FilterPopup extends BasePopup {
      * @param {string} item 
      */
     toggleCamera(item) {
-        self.toggleFilter(item, self.selectedCameras);
+        this.toggleFilter(item, this.selectedCameras);
     }
 
     checkEmptyKeywordInput() {
@@ -311,17 +312,17 @@ export default class FilterPopup extends BasePopup {
 
     clearKeyword() {
         document.getElementById("filter-kw-input").value = "";
-        self.checkEmptyKeywordInput();
+        this.checkEmptyKeywordInput();
     }
 
     /** Clears all the currently selected filters. */
     clearFilters() {
         document.getElementById("filter-fav-input").checked = false;
-        self.clearKeyword();
-        self.selectedRegions = [];
-        self.selectedAreas = [];
-        self.selectedTags = [];
-        self.selectedCameras = [];
+        this.clearKeyword();
+        this.selectedRegions = [];
+        this.selectedAreas = [];
+        this.selectedTags = [];
+        this.selectedCameras = [];
         document.getElementById("filters").querySelectorAll(".active").forEach(element => {
             element.classList.remove("active");
         });
@@ -335,15 +336,15 @@ export default class FilterPopup extends BasePopup {
             detail: {
                 isOnlyFavs: document.getElementById("filter-fav-input").checked,
                 keyword: document.getElementById("filter-kw-input").value,
-                selectedRegions: self.selectedRegions,
-                selectedAreas: self.selectedAreas,
-                selectedTags: self.selectedTags,
-                selectedCameras: self.selectedCameras
+                selectedRegions: this.selectedRegions,
+                selectedAreas: this.selectedAreas,
+                selectedTags: this.selectedTags,
+                selectedCameras: this.selectedCameras
             }
         });
 
-        self.dispatchEvent(filterSubmitEvent);
-        self.close(true, true);
+        this.dispatchEvent(filterSubmitEvent);
+        this.close(true, true);
     }
 }
 

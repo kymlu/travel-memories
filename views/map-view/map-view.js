@@ -1,3 +1,4 @@
+import { ATTRIBUTES } from "../../js/constants.js";
 import { getAppColor, getCurrentCountry, onSelectNewRegion } from "../../js/globals.js";
 import {
 	addClickListeners, addRemoveNoDisplay, addRemoveTransparent,
@@ -6,41 +7,45 @@ import {
 
 /** The Map View. */
 export default class MapView extends HTMLElement {
-	constructor(element) {
+	constructor(innerHtml) {
 		super();
-		this.innerHTML = element;
+		this.innerHTML = innerHtml;
 		this.countryTitle = "";
 		this.currentCountry = null;
-		this.elements = {
-			map: document.getElementById("country-map"),
-			mainTitle: document.getElementById("main-title")
-		}
-		this.initialize();
+		this.elements = {}; 
 	}
-
-	initialize() {
-		this.elements.map.addEventListener("load", colourMap);
-
-		addClickListeners([[this.elements.mainTitle, function () { onSelectNewRegion(null); }]]);
+	
+    connectedCallback() {
+		setTimeout(() => {
+			this.elements = {
+				map: document.getElementById("country-map"),
+				mainTitle: document.getElementById("main-title")
+			}
+	
+			setTimeout(() => {
+				this.elements.map.addEventListener("load", this.colourMap.bind(this));
+				addClickListeners([[this.elements.mainTitle, function () { onSelectNewRegion(null); }]]);			
+			}, 50);
+		}, 50);
 	}
 
 	handleNewCountry() {
-		currentCountry = getCurrentCountry();
-		countryTitle = getBilingualText(currentCountry.englishName, currentCountry.japaneseName);
+		this.currentCountry = getCurrentCountry();
+		this.countryTitle = getBilingualText(this.currentCountry.englishName, this.currentCountry.japaneseName);
 		
 		addRemoveNoDisplay([this], false);
 
 		setBilingualAttribute([
-			[this.elements.mainTitle, `See all images from ${currentCountry.englishName}`, `${currentCountry.japaneseName}の写真をすべて表示する`],
-		], "title");
+			[this.elements.mainTitle, `See all images from ${this.currentCountry.englishName}`, `${this.currentCountry.japaneseName}の写真をすべて表示する`],
+		], ATTRIBUTES.TITLE);
 
 		setTimeout(() => {
-			createMap();
+			this.createMap();
 		}, 50);
 	}
 
 	show() {
-		this.elements.mainTitle.innerHTML = countryTitle;
+		this.elements.mainTitle.innerHTML = this.countryTitle;
 		scrollToTop(false);
 		addRemoveTransparent([this], false);
 	}
@@ -55,13 +60,13 @@ export default class MapView extends HTMLElement {
 		if (this.elements.map.data == "") return;
 
 		const svgDoc = this.elements.map.contentDocument;
-		const rgnList = currentCountry.regionGroups.flatMap(rgnGrp => rgnGrp.regions);
+		const rgnList = this.currentCountry.regionGroups.flatMap(rgnGrp => rgnGrp.regions);
 
 		rgnList.forEach(rgn => {
 			const rgnImg = svgDoc.getElementById(`${rgn.id}-img`);
 			if (rgn.visited) {
 				// CSS won't work on document objects
-				let imgTitle = document.createElementNS("http://www.w3.org/2000/svg", "title");
+				let imgTitle = document.createElementNS("http://www.w3.org/2000/svg", ATTRIBUTES.TITLE);
 				imgTitle.innerHTML = getBilingualText(`See images from ${rgn.englishName}`, `${rgn.japaneseName}の写真を表示する`);
 				rgnImg.appendChild(imgTitle);
 				rgnImg.setAttribute("fill", getAppColor());
@@ -80,7 +85,7 @@ export default class MapView extends HTMLElement {
 
 				rgnImg.addEventListener("mouseout", () => {
 					rgnImg.setAttribute("opacity", "100%");
-					document.getElementById("main-title").innerHTML = countryTitle;
+					document.getElementById("main-title").innerHTML = this.countryTitle;
 				});
 			} else {
 				rgnImg.setAttribute("fill", "lightgrey");
@@ -90,7 +95,7 @@ export default class MapView extends HTMLElement {
 
 	/** Sets the appropriate map on the map screen. */
 	createMap() {
-		this.elements.map.data = `assets/img/country/${currentCountry.id}.svg`;
+		this.elements.map.data = `assets/img/country/${this.currentCountry.id}.svg`;
 	}
 }
 

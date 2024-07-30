@@ -18,6 +18,7 @@
 	<link rel="manifest" href="assets/icons/favicon/manifest.json">
 	<meta name="msapplication-TileColor" content="#ffffff">
 	<meta name="msapplication-TileImage" content="assets/icons/favicon/ms-icon-144x144.png">
+	<!-- <link rel="stylesheet" type="text/css" href="components/header/header.css"> -->
 	<link rel="stylesheet" type="text/css" href="components/fullscreen/fullscreen.css">
 	<link rel="stylesheet" type="text/css" href="views/gallery-view/gallery-view.css">
 	<link rel="stylesheet" type="text/css" href="views/map-view/map-view.css">
@@ -33,13 +34,12 @@
 </head>
 
 <body class="page-bg">
-	<!-- Top bar -->
-	<div id="header"></div>
-	<div id="gallery-view"></div>
-	<div id="map-view"></div>
+	<div id="views">
 	<start-view class="start-screen opacity-transition transparent no-display" style="z-index: 4000"></start-view>
+	</div>
 
 	<!-- Scripts -->
+	<script type="module" src="components/header/header.js"></script>
 	<script type="module" src="components/fullscreen/fullscreen.js"></script>
 	<script type="module" src="views/gallery-view/gallery-view.js"></script>
 	<script type="module" src="views/map-view/map-view.js"></script>

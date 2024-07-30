@@ -11,7 +11,6 @@ import { DEFAULT_TIMEOUT } from "../../js/constants.js";
 export default class StartView extends HTMLElement {
     constructor() {
         super();
-        self = this;
         this.innerHTML = "";
     }
 
@@ -35,9 +34,7 @@ export default class StartView extends HTMLElement {
             newBtn.id = `start-btn-${abb}`;
             newBtn.title = getBilingualText(`See ${country.englishName}`, `${country.japaneseName}へ`);
             newBtn.classList.add(abb);
-            newBtn.addEventListener("click", function () {
-                self.selectCountry(country.id, `--${abb}-color`);
-            });
+            newBtn.addEventListener("click", this.selectCountry.bind(this, country.id, `--${abb}-color`));
 
             let engTxt = text.cloneNode();
             engTxt.innerHTML = country.englishName;

@@ -1,3 +1,4 @@
+import { ATTRIBUTES } from "../../js/constants.js";
 import { addRemoveTransparent, getBilingualText, setBilingualAttribute } from "../../js/utils.js";
 
 /** The Region Info. */
@@ -45,7 +46,7 @@ export default class RegionInfo extends HTMLElement {
                 [this.elements.dates, currentRegion.datesEnglish, currentRegion.datesJapanese],
                 [this.elements.name, currentRegion.englishName, currentRegion.japaneseName],
                 [this.elements.descriptionTitle, "About", currentCountry.officialRegionNameJapanese + "について"]
-            ], "innerHTML");
+            ], ATTRIBUTES.INNERHTML);
 
             [
                 [this.elements.descriptionEnglish, currentRegion.descriptionEnglish],
@@ -62,7 +63,7 @@ export default class RegionInfo extends HTMLElement {
             setBilingualAttribute([
                 [this.elements.areasTitle, currentCountry.officialRegionNameEnglish + "s", currentCountry.officialRegionNameJapanese],
                 [this.elements.name, currentCountry.englishName, currentCountry.japaneseName],
-                [this.elements.descriptionTitle, "About", "国について"]], "innerHTML");
+                [this.elements.descriptionTitle, "About", "国について"]], ATTRIBUTES.INNERHTML);
 
             [
                 [this.elements.descriptionEnglish, currentCountry.descriptionEnglish],
@@ -82,7 +83,7 @@ export default class RegionInfo extends HTMLElement {
     show(isForced) {
         this.isVisible = true;
         addRemoveTransparent(this.elements.background, false);
-        document.getElementById(this.elements.background).style.visibility = "visible";
+        this.elements.background.classList.remove("visibility-hidden");
         if (isForced) {
             if (document.body.scrollTop < this.getBoundingClientRect().height) {
                 scrollToTop(true);
@@ -110,7 +111,7 @@ export default class RegionInfo extends HTMLElement {
         }
         addRemoveTransparent(this.elements.background, true);
         setTimeout(() => {
-            document.getElementById(this.elements.background).style.visibility = "hidden";
+            this.elements.background.classList.add("visibility-hidden");
             this.style.position = "relative";
             this.style.top = "0";
         }, DEFAULT_TIMEOUT);

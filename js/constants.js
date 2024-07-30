@@ -83,3 +83,8 @@ const SHORT_DATETIME_FORMAT_OPTIONS = {
 };
 export const SHORT_DATETIME_FORMAT_EN = new Intl.DateTimeFormat('en-US', SHORT_DATETIME_FORMAT_OPTIONS);
 export const SHORT_DATETIME_FORMAT_JP = new Intl.DateTimeFormat('ja-JP', SHORT_DATETIME_FORMAT_OPTIONS);
+
+export const ATTRIBUTES = {
+	INNERHTML: "innerHTML",
+	TITLE: "title"
+}

@@ -1,9 +1,9 @@
-import Header from "../components/header/header.js";
+import CustomHeader from "../components/header/header.js";
 import MapView from "../views/map-view/map-view.js";
 import GalleryView from "../views/gallery-view/gallery-view.js";
 import StartView from "../views/start-view/start-view.js";
 import { VIEW_NAMES } from "./constants.js";
-import { sortImgs } from "./utils.js";
+import { addRemoveTransparent, sortImgs } from "./utils.js";
 import InfoPopup from "../components/popup/info-popup/info-popup.js";
 import Fullscreen from "../components/fullscreen/fullscreen.js";
 import Loader from "../components/loader/loader.js";
@@ -31,7 +31,7 @@ let allCountryData = [];
 /** @type {Loader} */
 let loader = null;
 
-/** @type Header */
+/** @type CustomHeader */
 let header = null;
 
 // Gestures
@@ -39,31 +39,27 @@ let initialYHandle = null;
 let isHandleGrabbed = false;
 let grabbedHandleId = null;
 
-export function setSiteContents(headerElement,
+export function setSiteContents(
     infoPopupElement,
     mapHtml,
     galleryHtml,
     fullscreenHtml) {
 
     infoPopup = infoPopupElement;
-    galleryView = new GalleryView(galleryHtml);
-    startView = new StartView();
+    //galleryView = new GalleryView(galleryHtml);
+    startView = document.querySelector("start-view");
     mapView = new MapView(mapHtml);
-    fullscreen = new Fullscreen(fullscreenHtml);
-
-    let pageContents = document.getElementById("page-contents");
-    pageContents.appendChild(galleryView);
-    pageContents.appendChild(fullscreen);
-    pageContents.appendChild(mapView);
-    pageContents.appendChild(startView);
-
-    header = new Header(headerElement,
-        galleryView.toggleRegionDropdown,
-        goToStartView,
+    header = new CustomHeader(goToStartView,
         goToMapView,
-        galleryView.toggleRegionInfo,
-        galleryView.showFilter,
-        infoPopup.open);
+        null, //galleryView.toggleRegionDropdown.bind(galleryView),
+        null, //galleryView.toggleRegionInfo.bind(galleryView),
+        null, //galleryView.showFilter.bind(galleryView),
+        infoPopup.open.bind(infoPopup));
+    addRemoveTransparent([header], true);
+    let pageContents = document.getElementById("views");
+    document.body.insertBefore(header, pageContents);
+    pageContents.appendChild(mapView);
+    //pageContents.appendChild(galleryView);
 }
 
 export function goToMapView() {
@@ -79,6 +75,8 @@ export function goToMapView() {
 export function goToStartView(isPopped) {
     if (isMapView()) {
     mapView.hide();
+    } else {
+        addRemoveTransparent([header], false); //TODO: technically still clickable
     }
     setCurrentView(VIEW_NAMES.START);
     startView.show(isPopped);
@@ -119,7 +117,7 @@ export function onSelectNewRegion(regionId, isPopped) {
 
 function setCurrentView(pageName) {
     currentView = pageName;
-    header.updateHeader();
+    header.onChangeView();
 }
 
 export function getCurrentView() {
@@ -167,8 +165,6 @@ export function setCurrentCountry(countryId, countryColor) {
                 }
             });
         });
-    }
-
     setAppColor(countryColor);
     loader = new Loader();
     document.body.append(loader);
@@ -177,8 +173,10 @@ export function setCurrentCountry(countryId, countryColor) {
     galleryView.handleNewCountry();
 
     setTimeout(() => {
-            loader.stop(mapView.show);
+            loader.stop(mapView.show.bind(mapView));
     }, 1200);
+    }
+
 }
 
 /**

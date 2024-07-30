@@ -17,21 +17,25 @@ import {
 	getBilingualText, scrollToTop,
 } from './utils.js';
 import { CUSTOM_EVENT_TYPES } from './constants.js';
+import ImagePolaroid from '../components/polaroid/img-polaroid/img-polaroid.js';
+import Fullscreen from '../components/fullscreen/fullscreen.js';
+import GalleryView from '../views/gallery-view/gallery-view.js';
+import MapView from '../views/map-view/map-view.js';
+import TextPolaroid from '../components/polaroid/txt-polaroid/txt-polaroid.js';
 
 /// VARIABLES
 // Booleans
 /** @type {Loader} */
 let loader = null;
 
-function fetchHtml(fileName, type) {
-	let retVal = null;
-	fetch(fileName)
-		.then(response => retVal = response.text())
-		.catch(error => {
+async function fetchHtml(fileName, type) {
+	try {
+		const response = await fetch(fileName);
+		const html = await response.text();
+		return html;
+	} catch (error) {
 			console.error(`Error loading ${type}.`, error);
-		});
-
-	return retVal;
+	}
 }
 
 /**** Data Loading/Setup ****/
@@ -44,14 +48,13 @@ function initializeSite() {
 	document.body.appendChild(infoPopup);
 
 	Promise.all([
-		fetchHtml("../components/header/header.html", "header"),
-		fetchHtml("../views/map-view/map-view.html", "map view"),
-		fetchHtml("../views/gallery-view/gallery-view.html", "gallery view"),
-		fetchHtml("../components/fullscreen/fullscreen.html", "fullscreen"),
-	]).then(([headerComponent, mapView, galleryView, fullscreen]) => {
-		const headerElement = document.getElementById("header");
-		headerElement.innerHTML = headerComponent;
-		setSiteContents(headerElement, infoPopup, mapView, galleryView, fullscreen, loader);
+		fetchHtml("views/map-view/map-view.html", MapView.name),
+		fetchHtml("views/gallery-view/gallery-view.html", GalleryView.name),
+		fetchHtml("components/fullscreen/fullscreen.html", Fullscreen.name),
+		fetchHtml("components/polaroid/img-polaroid/img-polaroid.html", ImagePolaroid.name),
+		fetchHtml("components/polaroid/txt-polaroid/txt-polaroid.html", TextPolaroid.name),
+	]).then(([mapView, galleryView, fullscreen, imgPolaroid, txtPolaroid]) => {
+		setSiteContents(infoPopup, mapView, galleryView, fullscreen);
 	});
 
 	// TODO: put this in each class?

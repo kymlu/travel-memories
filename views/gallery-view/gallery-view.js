@@ -5,7 +5,8 @@ import {
 	getImageAddress, isPortraitMode, scrollToTop, setBilingualAttribute, sortImgs
 } from '../../js/utils.js';
 import {
-	CUSTOM_EVENT_TYPES, DEFAULT_TIMEOUT, SCROLL_THRESHOLD, TAGS
+	CUSTOM_EVENT_TYPES, DEFAULT_TIMEOUT, SCROLL_THRESHOLD, TAGS,
+	ATTRIBUTES
 } from '../../js/constants.js'
 import TextPolaroid from '../../components/polaroid/txt-polaroid/txt-polaroid.js';
 import ImagePolaroid from '../../components/polaroid/img-polaroid/img-polaroid.js';
@@ -52,6 +53,7 @@ export default class GalleryView extends HTMLElement {
 		this.noPicturesText = getBilingualText("No pictures available (yet)", "写真は(まだ)ありません");
 		this.initialize();
 	}
+	
 	/// FUNCTIONS
 	/**
 	 * Initialize the gallery page.
@@ -59,7 +61,7 @@ export default class GalleryView extends HTMLElement {
 	initialize() {
 		setBilingualAttribute([
 			["dates-title", "Dates visited", "訪れた日付"]
-		], "innerHTML");
+		], ATTRIBUTES.INNERHTML);
 
 		addClickListeners([
 			["rgn-drop-down-bg", this.closeRegionDropdown],
@@ -109,7 +111,7 @@ export default class GalleryView extends HTMLElement {
 		if (allImages.length > 0) {
 			addRemoveNoDisplay("filter-btn", false);
 		}
-		document.getElementById("rgn-info-bg").style.visibility = "visible";
+		document.getElementById("rgn-info-bg").classList.remove("visibility-hidden");
 		addRemoveTransparent("to-top-btn", false);
 		if (isPortraitMode()) {
 			document.getElementById("dates-title").scrollIntoView({ block: isPortraitMode() ? "end" : "start" });
@@ -126,7 +128,7 @@ export default class GalleryView extends HTMLElement {
 			addRemoveNoDisplay(["gallery", "to-top-btn"], true);
 		}, DEFAULT_TIMEOUT);
 		this.regionInfo.hide(false);
-		document.getElementById("rgn-info-bg").style.visibility = "hidden";
+		document.getElementById("rgn-info-bg").classList.add("visibility-hidden");
 		addRemoveTransparent("rgn-info-bg", false);
 	}
 

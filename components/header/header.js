@@ -1,3 +1,4 @@
+import { ATTRIBUTES } from "../../js/constants.js";
 import { isGalleryView, isMapView, isStartView } from "../../js/globals.js";
 import {
     addClickListeners,
@@ -7,50 +8,72 @@ import {
     setBilingualAttribute
 } from "../../js/utils.js";
 
-/** The Header class. */
-export default class Header extends HTMLElement {
-    constructor(header, regionDropdownFunc, globeFunc, mapFunc, infoFunc, filterFunc, creatorFunc) {
-		super();
-        this.headerElement = header;
+/** The CustomHeader class. */
+export default class CustomHeader extends HTMLElement {
+    constructor(globeFunc, mapFunc, regionDropdownFunc, infoFunc, filterFunc, creatorFunc) {
+        super();
+        this.globeFunc = globeFunc;
+        this.mapFunc = mapFunc;
+        this.regionDropdownFunc = regionDropdownFunc;
+        this.infoFunc = infoFunc;
+        this.filterFunc = filterFunc;
+        this.creatorFunc = creatorFunc;
+        this.buttons = {};
+        this.sections = {};
 
-        /** Header sections */
-        this.sections = {
-            left: this.headerElement.querySelector("#left-section"),
-            right: this.headerElement.querySelector("#right-section"),
-        };
+        fetch("components/header/header.html")
+            .then(response => response.text())
+            .then(html => {
+                this.innerHTML = html;
+            })
+            .catch(error => {
+                console.error(`Error loading header.`, error);
+            });;
+    }
 
-        /** Header buttons */
-        this.buttons = {
-            globe: this.headerElement.querySelector("#globe-btn"),
-            map: this.headerElement.querySelector("#map-btn"),
-            regionDropdown: this.headerElement.querySelector("#rgn-title-btn"),
-            regionInfo: this.headerElement.querySelector("#region-info-btn"),
-            filter: this.headerElement.querySelector("#filter-btn"),
-            creator: this.headerElement.querySelector("#creator-btn")
-        };
+    connectedCallback() {
+        setTimeout(() => {
+            /** CustomHeader sections */
+            this.sections = {
+                left: this.querySelector("#left-section"),
+                right: this.querySelector("#right-section"),
+            };
 
-        setBilingualAttribute([
-            [this.buttons.globe, "Return to country picker", "国の選択へ戻る"],
-            [this.buttons.map, "Return to map", "地図に戻る"],
-            [this.buttons.creator, "About the site", "このサイトについて"],
-            [this.buttons.filter, "Filter Pictures", "写真をフィルターする"]
-        ], "title");
+            /** CustomHeader buttons */
+            this.buttons = {
+                globe: this.querySelector("#globe-btn"),
+                map: this.querySelector("#map-btn"),
+                regionDropdown: this.querySelector("#rgn-title-btn"),
+                regionInfo: this.querySelector("#region-info-btn"),
+                filter: this.querySelector("#filter-btn"),
+                creator: this.querySelector("#creator-btn")
+            };
 
-        addClickListeners([
-            [this.buttons.regionDropdown, regionDropdownFunc],
-            [this.buttons.creator, creatorFunc],
-            [this.buttons.globe, globeFunc],
-            [this.buttons.map, mapFunc],
-            [this.buttons.filter, filterFunc],
-            [this.buttons.regionInfo, infoFunc]
-        ]);
+            setTimeout(() => {
+                setBilingualAttribute([
+                    [this.buttons.globe, "Return to country picker", "国の選択へ戻る"],
+                    [this.buttons.map, "Return to map", "地図に戻る"],
+                    [this.buttons.creator, "About the site", "このサイトについて"],
+                    [this.buttons.filter, "Filter Pictures", "写真をフィルターする"]
+                ], ATTRIBUTES.TITLE);
+                addClickListeners([
+                    //[this.buttons.globe, this.globeFunc],
+                    //[this.buttons.map, this.mapFunc],
+                    //[this.buttons.regionDropdown, this.regionDropdownFunc],
+                    //[this.buttons.regionInfo, this.infoFunc],
+                    //[this.buttons.filter, this.filterFunc],
+                    [this.buttons.creator, this.creatorFunc]
+                ]);
+            }, 50);
+
+        }, 50);
     }
 
     /** Shows/hides the header.
      * @param {boolean} isVisible 
      */
     toggleVisibility(isVisible) {
-        addRemoveTransparent(this.headerElement, !isVisible);
+        addRemoveTransparent(this, !isVisible);
     }
 
     /** Shows/hides the filter indicator.
@@ -65,7 +88,7 @@ export default class Header extends HTMLElement {
         setBilingualAttribute([
             [this.buttons.regionDropdown, `Change ${englishRegionName}`, `${japaneseRegionName}を切り替える`],
             [this.buttons.info, `Toggle ${englishRegionName} info`, `${japaneseRegionName}の情報をトグル`],
-        ], "title");
+        ], ATTRIBUTES.TITLE);
     }
 
     /** Changes layouts when the view changes. */
@@ -73,23 +96,22 @@ export default class Header extends HTMLElement {
         if (isStartView()) {
             // Only shows the creator button
             addRemoveClass([this.sections.right], "justify-end", true);
-            addRemoveTransparent([this.headerElement], true);
             addRemoveNoDisplay([this.sections.left], true);
         } else if (isMapView()) {
             // Only shows the creator and globe buttons
             addRemoveClass([this.sections.left], "left-section", false);
             addRemoveClass([this.sections.right], "right-section", false);
             addRemoveClass([this.sections.right], "justify-end", false);
-            this.headerElement.style.position = "fixed";
-            this.headerElement.style.backgroundColor = "transparent";
+            this.style.position = "fixed";
+            this.style.backgroundColor = "transparent";
             addRemoveNoDisplay([this.buttons.globe, this.sections.left], false);
             addRemoveNoDisplay([this.buttons.map, this.buttons.regionDropdown, this.buttons.filter, this.buttons.regionInfo], true);
         } else if (isGalleryView()) {
             // Shows all buttons except the globe button
             addRemoveClass(this.sections.left, "left-section", true);
             addRemoveClass(this.sections.right, "right-section", true);
-            this.headerElement.style.position = "sticky";
-            this.headerElement.style.backgroundColor = "white";
+            this.style.position = "sticky";
+            this.style.backgroundColor = "white";
             addRemoveNoDisplay([this.buttons.globe], true);
             addRemoveNoDisplay([this.buttons.map, this.buttons.regionInfo, this.buttons.regionDropdown], false);
         } else {
@@ -98,4 +120,4 @@ export default class Header extends HTMLElement {
     }
 }
 
-window.customElements.define("header-component", Header);
+window.customElements.define("custom-header", CustomHeader);
