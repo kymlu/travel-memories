@@ -34,14 +34,14 @@ async function fetchHtml(fileName, type) {
 		const html = await response.text();
 		return html;
 	} catch (error) {
-			console.error(`Error loading ${type}.`, error);
+		console.error(`Error loading ${type}.`, error);
 	}
 }
 
 /**** Data Loading/Setup ****/
 function initializeSite() {
 	loader = new Loader();
-    document.body.append(loader);
+	document.body.append(loader);
 
 	// Popups
 	let infoPopup = new InfoPopup();
@@ -117,6 +117,6 @@ document.addEventListener("DOMContentLoaded", () => {
 	scrollToTop(false);
 	initializeSite();
 	setTimeout(() => {
-	fetchData();
+		fetchData();
 	}, 100);
 });

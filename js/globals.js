@@ -2,7 +2,7 @@ import CustomHeader from "../components/header/header.js";
 import MapView from "../views/map-view/map-view.js";
 import GalleryView from "../views/gallery-view/gallery-view.js";
 import StartView from "../views/start-view/start-view.js";
-import { VIEW_NAMES } from "./constants.js";
+import { CUSTOM_EVENT_TYPES, DEFAULT_TIMEOUT, VIEW_NAMES } from "./constants.js";
 import { addRemoveTransparent, sortImgs } from "./utils.js";
 import InfoPopup from "../components/popup/info-popup/info-popup.js";
 import Fullscreen from "../components/fullscreen/fullscreen.js";
@@ -55,6 +55,9 @@ export function setSiteContents(
         null, //galleryView.toggleRegionInfo.bind(galleryView),
         null, //galleryView.showFilter.bind(galleryView),
         infoPopup.open.bind(infoPopup));
+        header.style.zIndex = 10;
+        startView.style.zIndex = 1;
+        mapView.style.zIndex = 1;
     addRemoveTransparent([header], true);
     let pageContents = document.getElementById("views");
     document.body.insertBefore(header, pageContents);
@@ -74,17 +77,16 @@ export function goToMapView() {
 
 export function goToStartView(isPopped) {
     if (isMapView()) {
-    mapView.hide();
-    } else {
-        addRemoveTransparent([header], false); //TODO: technically still clickable
+        mapView.hide();
     }
+
     setCurrentView(VIEW_NAMES.START);
     startView.show(isPopped);
 }
 
 export function goToGalleryView() {
     if (isMapView()) {
-    mapView.hide();
+        mapView.hide();
     }
     setCurrentView(VIEW_NAMES.GALLERY);
     galleryView.show();
@@ -154,8 +156,10 @@ export function getAllCountryData() {
 }
 
 export function setCurrentCountry(countryId, countryColor) {
+    header.toggleVisibility(false);
     if (countryId == null) {
         currentCountry = null;
+        header.toggleVisibility(true);
     } else {
         currentCountry = allCountryData.find(country => country.id == countryId);
         currentCountry.regionGroups.forEach(rgnGrp => {
@@ -165,18 +169,22 @@ export function setCurrentCountry(countryId, countryColor) {
                 }
             });
         });
-    setAppColor(countryColor);
-    loader = new Loader();
-    document.body.append(loader);
+        setAppColor(countryColor);
+        loader = new Loader();
+        document.body.append(loader);
 
-    mapView.handleNewCountry();
-    galleryView.handleNewCountry();
+        mapView.handleNewCountry();
+        //galleryView.handleNewCountry();
 
-    setTimeout(() => {
+        setTimeout(() => {
             loader.stop(mapView.show.bind(mapView));
-    }, 1200);
+            loader.addEventListener(CUSTOM_EVENT_TYPES.LOADING_COMPLETE, (function () {
+                loader.remove();
+                header.toggleVisibility(true);
+                setCurrentView(VIEW_NAMES.MAP);
+            }).bind(this));
+        }, 1200);
     }
-
 }
 
 /**

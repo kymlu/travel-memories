@@ -33,9 +33,12 @@ export default class CustomHeader extends HTMLElement {
 
     connectedCallback() {
         setTimeout(() => {
+            this.classList.add("opacity-transition");
+            
             /** CustomHeader sections */
             this.sections = {
                 left: this.querySelector("#left-section"),
+                centre: this.querySelector("#rgn-title"),
                 right: this.querySelector("#right-section"),
             };
 
@@ -56,12 +59,13 @@ export default class CustomHeader extends HTMLElement {
                     [this.buttons.creator, "About the site", "このサイトについて"],
                     [this.buttons.filter, "Filter Pictures", "写真をフィルターする"]
                 ], ATTRIBUTES.TITLE);
+                
                 addClickListeners([
-                    //[this.buttons.globe, this.globeFunc],
-                    //[this.buttons.map, this.mapFunc],
-                    //[this.buttons.regionDropdown, this.regionDropdownFunc],
-                    //[this.buttons.regionInfo, this.infoFunc],
-                    //[this.buttons.filter, this.filterFunc],
+                    [this.buttons.globe, this.globeFunc],
+                    [this.buttons.map, this.mapFunc],
+                    [this.buttons.regionDropdown, this.regionDropdownFunc],
+                    [this.buttons.regionInfo, this.infoFunc],
+                    [this.buttons.filter, this.filterFunc],
                     [this.buttons.creator, this.creatorFunc]
                 ]);
             }, 50);
@@ -73,7 +77,7 @@ export default class CustomHeader extends HTMLElement {
      * @param {boolean} isVisible 
      */
     toggleVisibility(isVisible) {
-        addRemoveTransparent(this, !isVisible);
+        addRemoveTransparent([this], !isVisible);
     }
 
     /** Shows/hides the filter indicator.
@@ -96,7 +100,7 @@ export default class CustomHeader extends HTMLElement {
         if (isStartView()) {
             // Only shows the creator button
             addRemoveClass([this.sections.right], "justify-end", true);
-            addRemoveNoDisplay([this.sections.left], true);
+            addRemoveNoDisplay([this.sections.left, this.sections.centre], true);
         } else if (isMapView()) {
             // Only shows the creator and globe buttons
             addRemoveClass([this.sections.left], "left-section", false);
@@ -105,7 +109,7 @@ export default class CustomHeader extends HTMLElement {
             this.style.position = "fixed";
             this.style.backgroundColor = "transparent";
             addRemoveNoDisplay([this.buttons.globe, this.sections.left], false);
-            addRemoveNoDisplay([this.buttons.map, this.buttons.regionDropdown, this.buttons.filter, this.buttons.regionInfo], true);
+            addRemoveNoDisplay([this.sections.centre, this.buttons.map, this.buttons.filter, this.buttons.regionInfo], true);
         } else if (isGalleryView()) {
             // Shows all buttons except the globe button
             addRemoveClass(this.sections.left, "left-section", true);
@@ -113,7 +117,7 @@ export default class CustomHeader extends HTMLElement {
             this.style.position = "sticky";
             this.style.backgroundColor = "white";
             addRemoveNoDisplay([this.buttons.globe], true);
-            addRemoveNoDisplay([this.buttons.map, this.buttons.regionInfo, this.buttons.regionDropdown], false);
+            addRemoveNoDisplay([this.sections.centre, this.buttons.map, this.buttons.regionInfo], false);
         } else {
             console.error("View does not exist.");
         }

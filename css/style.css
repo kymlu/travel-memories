@@ -396,6 +396,10 @@ button:active {
   transition: opacity 0.5s ease-in-out, transform 0.25s ease-in-out, scale 0.25s ease-in-out;
 }
 
+.color-transition {
+  transition: color 0.5s ease-in-out;
+}
+
 .page-bg {
   display: flex;
   flex-direction: column;

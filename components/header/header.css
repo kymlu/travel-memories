@@ -28,10 +28,6 @@ header {
     pointer-events: auto;
 }
 
-#left-section {
-    z-index: 5001;
-}
-
 @media only screen and (orientation: portrait) and (max-width: 768px) {
     .btn-grp {
         justify-content: space-around;

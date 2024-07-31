@@ -1,7 +1,7 @@
 import {
     CUSTOM_EVENT_TYPES, DEFAULT_TIMEOUT, LOAD_ANIMATION_TIME, LOAD_DOT_COUNT
 } from "../../js/constants.js";
-import { addRemoveNoDisplay, addRemoveTransparent } from "../../js/utils.js";
+import { addRemoveClass, addRemoveNoDisplay, addRemoveTransparent } from "../../js/utils.js";
 import { getCurrentCountry, isCountrySelected } from "../../js/globals.js";
 
 /** The Loader. */
@@ -26,6 +26,7 @@ export default class Loader extends HTMLElement {
 
     connectedCallback() {
         setTimeout(() => {
+            addRemoveClass([this], "opacity-transition", true);
             this.#elements = {
                 dots: Array.from(document.querySelectorAll(".loader-dot")),
                 lastDot: document.querySelector(`.dot-${LOAD_DOT_COUNT}`),
@@ -71,14 +72,14 @@ export default class Loader extends HTMLElement {
     stop(animationEndFunction) {
         let dispatchFunction = () => { this.#dispatchLoadingEvent.bind(this)(); }
         let handleAnimationEnd = function () {
-            addRemoveTransparent([this], true);
+            addRemoveTransparent([this], true); // TODO: make removing the icon quicker
+            dispatchFunction();
             if (animationEndFunction) {
                 animationEndFunction();
             }
-            dispatchFunction();
         }
 
-        document.querySelector(`.dot-${LOAD_DOT_COUNT}`).addEventListener("animationend", handleAnimationEnd);
+        document.querySelector(`.dot-${LOAD_DOT_COUNT}`).addEventListener("animationend", handleAnimationEnd.bind(this));
         let iterationCount = Math.ceil((new Date() - this.#startTime) / LOAD_ANIMATION_TIME);
         Array.from(document.querySelectorAll(".loader-dot")).forEach(dot => {
             dot.style.animationIterationCount = iterationCount
