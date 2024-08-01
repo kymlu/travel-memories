@@ -8,6 +8,12 @@
     box-shadow: 0px 5px 3px 0px #00000050;
     background-color: white;
     overflow-y: auto;
+    z-index: 2;
+  }
+
+  #rgn-drop-down-bg {
+    z-index: 2;
+    pointer-events: all !important;
   }
   
   @media only screen and (max-width: 768px) {

@@ -1,7 +1,7 @@
 import { ATTRIBUTES, DEFAULT_TIMEOUT } from "../../js/constants.js";
 import { getAppColor, getCurrentCountry, onSelectNewRegion } from "../../js/globals.js";
 import {
-	addClickListeners, addRemoveClass, addRemoveNoDisplay, addRemoveTransparent,
+	addClickListeners, addRemoveNoDisplay, addRemoveTransparent,
 	getBilingualText, scrollToTop, setBilingualProperty
 } from "../../js/utils.js";
 
@@ -29,6 +29,7 @@ export default class MapView extends HTMLElement {
 				this.#elements.map.addEventListener("load", this.colourMap.bind(this));
 				addClickListeners([[this.#elements.mainTitle, function () { onSelectNewRegion(null); }]]);
 			}, 50);
+			addRemoveNoDisplay([this]);
 		}, 50);
 	}
 
@@ -51,6 +52,7 @@ export default class MapView extends HTMLElement {
 
 	/** Show the map view. */
 	show() {
+		addRemoveNoDisplay([this], false);
 		this.#elements.mainTitle.innerHTML = this.countryTitle;
 		scrollToTop(false);
 		// Note: for some reason making "this" transparent does not work.

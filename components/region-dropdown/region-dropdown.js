@@ -1,8 +1,12 @@
 import { getCurrentCountry, onSelectNewRegion } from "../../js/globals.js";
-import { addClickListeners, addRemoveNoDisplay, addRemoveTransparent, getBilingualText } from "../../js/utils.js";
+import { 
+	addClickListeners, addRemoveNoDisplay, addRemoveTransparent, getBilingualText 
+} from "../../js/utils.js";
 
 /** The Region Dropdown. */
 export default class RegionDropdown extends HTMLElement {
+	#elements;
+	
 	constructor(headerElement) {
         super();
 		this.header = headerElement;
@@ -17,18 +21,18 @@ export default class RegionDropdown extends HTMLElement {
             .catch(error => {
                 console.error("Error loading fullscreen.", error);
             });
-		this.elements = {}; 
+		this.#elements = {}; 
 	}
 	
 	connectedCallback(){
 		setTimeout(() => {
-			this.elements = {
+			this.#elements = {
 				background: this.querySelector("#rgn-drop-down-bg"),
 				content: this.querySelector("#rgn-drop-down"),
 			}
 			setTimeout(() => {
 				addClickListeners([
-					[this.elements.background, this.close]
+					[this.#elements.background, this.close.bind(this)]
 				]);
 				addRemoveNoDisplay([this], true);
 				addRemoveTransparent([this.querySelector(".transparent")], false);
@@ -41,7 +45,7 @@ export default class RegionDropdown extends HTMLElement {
 	 */
 	handleNewCountry() {
 		// the dropdown object
-		const dropDownList = this.elements.content;
+		const dropDownList = this.#elements.content;
 		dropDownList.replaceChildren();
 
 		// region group text and regions
@@ -88,21 +92,24 @@ export default class RegionDropdown extends HTMLElement {
 		}
 
 		if (newRegionId) {
-			this.hasOpenedForRegion = true;
+			this.hasOpenedForRegion = false;
+			this.currentRegionId = newRegionId;
 			document.getElementById(this.#getDropdownElementId(newRegionId))?.classList.add("active");
 		}
+
+		this.close();
 	}
 
 	/** Toggles the visibility of the dropdown. */
 	toggleVisibility() {
 		this.classList.toggle("no-display"); // TODO: this used to be container, double check how to reference
 		this.header.flipRegionNameArrow();
-		if (this.hasOpenedForRegion) {
-			this.hasOpenedForRegion = false;
+		if (!this.hasOpenedForRegion) {
+			this.hasOpenedForRegion = true;
 			if(this.currentRegionId){
 				document.getElementById(this.#getDropdownElementId(this.currentRegionId)).scrollIntoView({ behavior: "smooth", block: "center" });
 			} else {
-				this.elements.content.scrollTo({top: 0, behavior: "instant"});
+				this.#elements.content.scrollTo({top: 0, behavior: "instant"});
 			}
 		}
 	}

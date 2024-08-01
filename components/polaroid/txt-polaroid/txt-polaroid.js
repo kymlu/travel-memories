@@ -1,7 +1,7 @@
 /// IMPORTS
 import BasePolaroid from "../base-polaroid/base-polaroid.js"
-import { addRemoveTransparent, getBilingualText } from '../../../js/utils.js';
 import { polaroidHtmls } from "../../../js/globals.js";
+import { addRemoveTransparent, getBilingualText } from '../../../js/utils.js';
 
 /**
  * The Text Polaroid object.

@@ -1,12 +1,12 @@
-import CustomHeader from "../components/header/header.js";
-import MapView from "../views/map-view/map-view.js";
-import GalleryView from "../views/gallery-view/gallery-view.js";
-import StartView from "../views/start-view/start-view.js";
 import { CUSTOM_EVENT_TYPES, DEFAULT_TIMEOUT, VIEW_NAMES } from "./constants.js";
 import { addRemoveTransparent, sortImgs } from "./utils.js";
-import InfoPopup from "../components/popup/info-popup/info-popup.js";
 import Fullscreen from "../components/fullscreen/fullscreen.js";
+import CustomHeader from "../components/header/header.js";
 import Loader from "../components/loader/loader.js";
+import InfoPopup from "../components/popup/info-popup/info-popup.js";
+import GalleryView from "../views/gallery-view/gallery-view.js";
+import MapView from "../views/map-view/map-view.js";
+import StartView from "../views/start-view/start-view.js";
 
 /** @type {string} */
 let appColor = null;
@@ -109,10 +109,11 @@ export function onSelectNewRegion(regionId, isPopped) {
     if (isMapView()) {
         mapView.hide();
         header.toggleVisibility(false);
+        loader = new Loader();
+        loader.style.zIndex = 100;
+        document.body.append(loader);
     }
 
-    loader = new Loader();
-    document.body.append(loader);
 
     if (isPopped == null) {
         window.history.pushState({ rgn: regionId }, "", null);
@@ -128,10 +129,15 @@ export function onSelectNewRegion(regionId, isPopped) {
 
     setTimeout(() => {
         if (!isGalleryView()) {
+            setTimeout(() => {
             goToGalleryView();
             header.toggleVisibility(true);
+                loader.quickStop();
+                loader.addEventListener(CUSTOM_EVENT_TYPES.LOADING_COMPLETE, (function () {
+                    loader.remove();
+                }));
+            }, 500);
         }
-        loader.quickStop();
     }, DEFAULT_TIMEOUT);
 }
 
@@ -258,7 +264,7 @@ export function endHandleDrag(e) {
             let currentY = e.changedTouches[0].clientY;
             if (currentY > initialYHandle) {
                 if (grabbedHandleId == "pic-info-handle") {
-                    Fullscreen.hidePicInfo();
+                    Fullscreen.hide();
                 } else if (grabbedHandleId == "rgn-info-handle") {
                     GalleryView.showRegionInfo(true);
                 }

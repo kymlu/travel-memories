@@ -5,7 +5,8 @@
 */
 
 /// IMPORTS
-import InfoPopup from '../components/popup/info-popup/info-popup.js'
+import { CUSTOM_EVENT_TYPES } from './constants.js';
+import Fullscreen from '../components/fullscreen/fullscreen.js';
 import Loader from '../components/loader/loader.js';
 import {
 	endHandleDrag,
@@ -16,12 +17,11 @@ import {
 import {
 	scrollToTop,
 } from './utils.js';
-import { CUSTOM_EVENT_TYPES } from './constants.js';
 import ImagePolaroid from '../components/polaroid/img-polaroid/img-polaroid.js';
-import Fullscreen from '../components/fullscreen/fullscreen.js';
+import TextPolaroid from '../components/polaroid/txt-polaroid/txt-polaroid.js';
+import InfoPopup from '../components/popup/info-popup/info-popup.js'
 import GalleryView from '../views/gallery-view/gallery-view.js';
 import MapView from '../views/map-view/map-view.js';
-import TextPolaroid from '../components/polaroid/txt-polaroid/txt-polaroid.js';
 
 /// VARIABLES
 // Booleans

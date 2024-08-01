@@ -1,11 +1,11 @@
 /// IMPORTS
 import BasePopup from "../base-popup/base-popup.js"
+import { CUSTOM_EVENT_TYPES, ATTRIBUTES } from "../../../js/constants.js";
 import {
     addRemoveNoDisplay, getBilingualText, flipArrow, sortByEnglishName,
     addClickListeners,
     setBilingualProperty
 } from '../../../js/utils.js';
-import { CUSTOM_EVENT_TYPES, ATTRIBUTES } from "../../../js/constants.js";
 
 /**
  * The Filter Popup object.
@@ -82,9 +82,9 @@ export default class FilterPopup extends BasePopup {
                 ["filter-areas-header", this.toggleFilterGroup.bind(this, "areas", undefined)],
                 ["filter-tags-header", this.toggleFilterGroup.bind(this, "tags", undefined)],
                 ["filter-camera-header", this.toggleFilterGroup.bind(this, "camera", undefined)],
-                ["filter-clear-btn", this.clearFilters], // TODO: check if bind required
-                ["filter-submit-btn", this.submitFilters],
-                ["filter-kw-clear-btn", this.clearKeyword]
+                ["filter-clear-btn", this.clearFilters.bind(this)], // TODO: check if bind required
+                ["filter-submit-btn", this.submitFilters.bind(this)],
+                ["filter-kw-clear-btn", this.clearKeyword.bind(this)]
             ]);
             document.getElementById("filter-kw-input").addEventListener("input", this.checkEmptyKeywordInput.bind(this));
         }, 0);
@@ -311,19 +311,19 @@ export default class FilterPopup extends BasePopup {
     }
 
     clearKeyword() {
-        document.getElementById("filter-kw-input").value = "";
+        this.querySelector("#filter-kw-input").value = "";
         this.checkEmptyKeywordInput();
     }
 
     /** Clears all the currently selected filters. */
     clearFilters() {
-        document.getElementById("filter-fav-input").checked = false;
+        this.querySelector("#filter-fav-input").checked = false;
         this.clearKeyword();
         this.selectedRegions = [];
         this.selectedAreas = [];
         this.selectedTags = [];
         this.selectedCameras = [];
-        document.getElementById("filters").querySelectorAll(".active").forEach(element => {
+        this.querySelectorAll(".active").forEach(element => {
             element.classList.remove("active");
         });
     }
@@ -334,8 +334,8 @@ export default class FilterPopup extends BasePopup {
     submitFilters() {
         const filterSubmitEvent = new CustomEvent(CUSTOM_EVENT_TYPES.FILTER_POPUP_SUBMITTED, {
             detail: {
-                isOnlyFavs: document.getElementById("filter-fav-input").checked,
-                keyword: document.getElementById("filter-kw-input").value,
+                isOnlyFavs: this.querySelector("#filter-fav-input").checked,
+                keyword: this.querySelector("#filter-kw-input").value,
                 selectedRegions: this.selectedRegions,
                 selectedAreas: this.selectedAreas,
                 selectedTags: this.selectedTags,

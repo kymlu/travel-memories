@@ -1,3 +1,4 @@
+import { DEFAULT_TIMEOUT } from "../../js/constants.js";
 import {
     getAllCountryData, setAppColor, setCurrentCountry,
 } from "../../js/globals.js";
@@ -5,7 +6,6 @@ import {
     addRemoveClass, addRemoveNoDisplay, addRemoveTransparent,
     getBilingualText, scrollToTop
 } from "../../js/utils.js";
-import { DEFAULT_TIMEOUT } from "../../js/constants.js";
 
 /** The Start View. */
 export default class StartView extends HTMLElement {

@@ -1,21 +1,20 @@
 /// IMPORTS
 import FilterPopup from '../../components/popup/filter-popup/filter-popup.js'
+import { getCurrentCountry, isGalleryView, onSelectNewRegion } from '../../js/globals.js';
 import {
-	addClickListeners, addRemoveNoDisplay, addRemoveTransparent, flipArrow, getBilingualText,
+	addClickListeners, addRemoveNoDisplay, addRemoveTransparent, getBilingualText,
 	getImageAddress, isPortraitMode, scrollToTop, setBilingualProperty, sortImgs
 } from '../../js/utils.js';
-import {
-	CUSTOM_EVENT_TYPES, DEFAULT_TIMEOUT, SCROLL_THRESHOLD, TAGS,
-	ATTRIBUTES
+import { 
+	ATTRIBUTES, CUSTOM_EVENT_TYPES, DEFAULT_TIMEOUT, SCROLL_THRESHOLD, TAGS 
 } from '../../js/constants.js'
-import TextPolaroid from '../../components/polaroid/txt-polaroid/txt-polaroid.js';
-import ImagePolaroid from '../../components/polaroid/img-polaroid/img-polaroid.js';
 import Fullscreen from '../../components/fullscreen/fullscreen.js';
-import { getCurrentCountry, isGalleryView, onSelectNewRegion, startHandleDrag } from '../../js/globals.js';
+import CustomHeader from '../../components/header/header.js';
+import Loader from '../../components/loader/loader.js';
+import ImagePolaroid from '../../components/polaroid/img-polaroid/img-polaroid.js';
+import TextPolaroid from '../../components/polaroid/txt-polaroid/txt-polaroid.js';
 import RegionDropdown from '../../components/region-dropdown/region-dropdown.js';
 import RegionInfo from '../../components/region-info/region-info.js';
-import Loader from '../../components/loader/loader.js';
-import CustomHeader from '../../components/header/header.js';
 
 /** The Gallery View. */
 export default class GalleryView extends HTMLElement {
@@ -100,9 +99,10 @@ export default class GalleryView extends HTMLElement {
 			this.appendChild(this.filterPopup);
 
 			setTimeout(() => {
-				addRemoveTransparent([this.regionInfo, this.regionDropdown], true);
 				this.insertBefore(this.regionInfo, this.#elements.gallery);
 				this.appendChild(this.regionDropdown);
+				// addRemoveTransparent([this.regionInfo], true);
+				addRemoveNoDisplay([this.regionDropdown], true);
 
 				setBilingualProperty([
 					["dates-title", "Dates visited", "訪れた日付"]
@@ -113,6 +113,7 @@ export default class GalleryView extends HTMLElement {
 				]);
 
 				document.getElementById("to-top-btn").title = getBilingualText("Go to top", "トップに移動する");
+				addRemoveNoDisplay([this], true);
 			}, 50);
 
 		}, 50);
@@ -139,11 +140,12 @@ export default class GalleryView extends HTMLElement {
 		scrollToTop(false);
 		addRemoveTransparent([this.#elements.gallery, this.#elements.toTopButton], true);
 		setTimeout(() => {
-			addRemoveNoDisplay([this.#elements.gallery, this.#elements.toTopButton], true);
+			addRemoveNoDisplay([this], true);
 		}, DEFAULT_TIMEOUT);
 		this.regionInfo.hide(false);
 		document.getElementById("rgn-info-bg").classList.add("visibility-hidden");
 		addRemoveTransparent("rgn-info-bg", false);
+		addRemoveNoDisplay([this], true);
 	}
 
 	// regenerating data
@@ -154,7 +156,7 @@ export default class GalleryView extends HTMLElement {
 		this.visibleImages = [];
 		this.currentCountry = getCurrentCountry();
 		this.regionDropdown.handleNewCountry();
-		this.regionInfo.handleNewCountry(this.currentCountry.id);
+		this.regionInfo.handleNewCountry();
 		// region info
 	}
 
@@ -163,92 +165,93 @@ export default class GalleryView extends HTMLElement {
 	 * @param {boolean} isSingleRegionSelected
 	 */
 	setNewRegion(regionData, isSingleRegionSelected) {
-		this.regionDropdown.changeSelectedRegion(
-			!this.isNewCountry ? this.currentRegion : null,
-			isSingleRegionSelected ? regionData[0]?.id : null);
+		scrollToTop(false);
+		addRemoveNoDisplay([this], false);
+		this.#elements.gallery.style.marginTop = this.header.getHeight();
+		setTimeout(() => {
+			this.regionDropdown.changeSelectedRegion(
+				!this.isNewCountry ? this.currentRegion?.id : null,
+				isSingleRegionSelected ? regionData[0]?.id : null);
 
-		this.currentRegion = isSingleRegionSelected ? regionData[0] : null;
+			this.currentRegion = isSingleRegionSelected ? regionData[0] : null;
 
-		this.isNewCountry = false;
+			this.isNewCountry = false;
 
-		let regionsList = [];
-		let areaList = [];
+			let regionsList = [];
+			let areaList = [];
 
-		if (isSingleRegionSelected) {
-			regionsList = [this.currentRegion];
-			areaList = this.currentRegion.areas;
-			this.header.setRegionTitle(this.currentRegion.englishName, this.currentRegion.japaneseName);
-		} else {
-			regionsList = regionData.map(rgn => {
-				return {
-					"id": rgn.id,
-					"englishName": rgn.englishName,
-					"japaneseName": rgn.japaneseName
-				}
-			});
-
-			areaList = regionData.flatMap(rgn => rgn.areas);
-			this.header.setRegionTitle(this.currentCountry.englishName, this.currentCountry.japaneseName);
-		}
-
-		this.regionInfo.setNewRegionInfo(this.currentCountry, regionsList, areaList, isSingleRegionSelected);
-
-		// get all images
-		this.allImages = regionData.flatMap(rgn => {
-			return rgn.imageList.map(img => {
-				let area = areaList.find(area => area.id == img.area);
-				return ({
-					...img,
-					isVisible: true,
-					region: {
+			if (isSingleRegionSelected) {
+				regionsList = [this.currentRegion];
+				areaList = this.currentRegion.areas;
+				this.header.setRegionTitle(this.currentRegion.englishName, this.currentRegion.japaneseName);
+			} else {
+				regionsList = regionData.map(rgn => {
+					return {
 						"id": rgn.id,
 						"englishName": rgn.englishName,
 						"japaneseName": rgn.japaneseName
-					},
-					area: {
-						"id": area.id,
-						"englishName": area.englishName,
-						"japaneseName": area.japaneseName
 					}
-				})
-			});
-		}).sort(sortImgs);
+				});
 
-		this.visibleImages = [...this.allImages];
+				areaList = regionData.flatMap(rgn => rgn.areas);
+				this.header.setRegionTitle(this.currentCountry.englishName, this.currentCountry.japaneseName);
+			}
 
-		// set filters
-		let tempTags = new Set(this.allImages.flatMap(x => { return x.tags }));
-		let tagList = TAGS.filter(x => tempTags.has(x.id));
-		let cameraList = [...new Set(this.allImages.map(x => x.cameraModel))];
-		this.filterPopup.regenerateFilters(
-			this.currentRegion != null,
-			regionsList,
-			areaList,
-			tagList,
-			cameraList,
-			this.currentCountry.officialRegionNameEnglish,
-			this.currentCountry.officialRegionNameJapanese
-		);
+			this.regionInfo.setNewRegionInfo(regionsList, areaList, isSingleRegionSelected);
 
-		setTimeout(() => {
-			this.regionInfo.filterMiniMap(this.currentCountry, this.currentRegion);
-		}, 1000);
+			// get all images
+			this.allImages = regionData.flatMap(rgn => {
+				return rgn.imageList.map(img => {
+					let area = areaList.find(area => area.id == img.area);
+					return ({
+						...img,
+						isVisible: true,
+						region: {
+							"id": rgn.id,
+							"englishName": rgn.englishName,
+							"japaneseName": rgn.japaneseName
+						},
+						area: {
+							"id": area.id,
+							"englishName": area.englishName,
+							"japaneseName": area.japaneseName
+						}
+					})
+				});
+			}).sort(sortImgs);
 
-		this.header.flipRegionNameArrow(false);
+			this.visibleImages = [...this.allImages];
 
-		// clear existing gallery
-		this.#elements.gallery.replaceChildren();
-		this.isImageAngledLeft = false;
-		this.imageLoadIndex = 0;
-		this.currentPolaroidCount = 0;
-		this.previousRegion = null;
+			// set filters
+			let tempTags = new Set(this.allImages.flatMap(x => { return x.tags }));
+			let tagList = TAGS.filter(x => tempTags.has(x.id));
+			let cameraList = [...new Set(this.allImages.map(x => x.cameraModel))];
+			this.filterPopup.regenerateFilters(
+				this.currentRegion != null,
+				regionsList,
+				areaList,
+				tagList,
+				cameraList,
+				this.currentCountry.officialRegionNameEnglish,
+				this.currentCountry.officialRegionNameJapanese
+			);
 
-		// add pictures
-		if (this.allImages.length > 0) {
-			this.loadImages();
-		} else {
-			this.#elements.gallery.innerHTML = this.noPicturesText;
-		}
+			this.header.flipRegionNameArrow(false);
+
+			// clear existing gallery
+			this.#elements.gallery.replaceChildren();
+			this.isImageAngledLeft = false;
+			this.imageLoadIndex = 0;
+			this.currentPolaroidCount = 0;
+			this.previousRegion = null;
+
+			// add pictures
+			if (this.allImages.length > 0) {
+				this.loadImages();
+			} else {
+				this.#elements.gallery.innerHTML = this.noPicturesText;
+			}
+		}, 0);
 	}
 
 	loadImages() {

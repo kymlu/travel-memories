@@ -1,10 +1,10 @@
 /// IMPORTS
 import BasePolaroid from "../base-polaroid/base-polaroid.js"
+import { DEFAULT_TIMEOUT, SHORT_DATETIME_FORMAT_EN, SHORT_DATETIME_FORMAT_JP } from '../../../js/constants.js'
+import { polaroidHtmls } from "../../../js/globals.js";
 import {
     addRemoveNoDisplay, addRemoveTransparent, getBilingualText, getPictureDate
 } from '../../../js/utils.js';
-import { DEFAULT_TIMEOUT, SHORT_DATETIME_FORMAT_EN, SHORT_DATETIME_FORMAT_JP } from '../../../js/constants.js'
-import { polaroidHtmls } from "../../../js/globals.js";
 
 /**
  * The Image Polaroid object.

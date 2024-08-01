@@ -75,6 +75,10 @@ export default class CustomHeader extends HTMLElement {
         }, 50);
     }
 
+    getHeight(){
+        return this.sections.header.getBoundingClientRect().height;
+    }
+
     setButtonFunctions(globeFunc, mapFunc, regionDropdownFunc, infoFunc, filterFunc, creatorFunc){
         this.globeFunc = globeFunc;
         this.mapFunc = mapFunc;

@@ -1,8 +1,8 @@
 import {
     CUSTOM_EVENT_TYPES, DEFAULT_TIMEOUT, LOAD_ANIMATION_TIME, LOAD_DOT_COUNT
 } from "../../js/constants.js";
-import { addRemoveClass, addRemoveNoDisplay, addRemoveTransparent } from "../../js/utils.js";
 import { getCurrentCountry, isCountrySelected } from "../../js/globals.js";
+import { addRemoveClass, addRemoveNoDisplay, addRemoveTransparent } from "../../js/utils.js";
 
 /** The Loader. */
 export default class Loader extends HTMLElement {

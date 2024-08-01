@@ -4,8 +4,11 @@ import {
 	addClickListeners, addRemoveNoDisplay, addRemoveTransparent,
 	getImageAddress, isPortraitMode, setBilingualProperty,
 } from '../../../js/utils.js';
+import PicInfo from '../pic-info/pic-info.js';
 
 export default class Fullscreen extends HTMLElement {
+	#elements;
+
 	constructor() {
 		/// VARIABLES
 		// booleans
@@ -27,7 +30,7 @@ export default class Fullscreen extends HTMLElement {
 		this.initialX = null;
 		this.initialY = null;
 
-		this.picInfo = null;
+		this.picInfo = new PicInfo();
 
 		fetch("components/fullscreen/fullscreen.html")
 			.then(response => response.text())
@@ -38,7 +41,7 @@ export default class Fullscreen extends HTMLElement {
 				console.error("Error loading fullscreen.", error);
 			});
 
-		this.elements = {
+		this.#elements = {
 
 		};
 	}
@@ -52,18 +55,20 @@ export default class Fullscreen extends HTMLElement {
 			], ATTRIBUTES.TITLE);
 
 			addClickListeners([
-				["fullscreen-bg", function () { this.close(true); }],
-				["fullscreen-ctrl", function () { this.close(true); }],
+				["fullscreen-bg", this.close.bind(this, true)],
+				["fullscreen-ctrl", this.close.bind(this, true)],
 				["left-arrow", (event) => { event.stopPropagation(); }],
 				["fullscreen-pic", (event) => { event.stopPropagation(); }],
 				["right-arrow", (event) => { event.stopPropagation(); }],
-				["left-arrow", function () { this.changeFullscreenPicture(false); }],
-				["right-arrow", function () { this.changeFullscreenPicture(true); }]
+				["left-arrow", this.changeFullscreenPicture.bind(this, false)],
+				["right-arrow", this.changeFullscreenPicture.bind(this, true)]
 			]);
 
 			let swipeContainer = document.getElementById("fullscreen");
 			swipeContainer.addEventListener("touchstart", this.startFullscreenSwipe, false);
 			swipeContainer.addEventListener("touchmove", this.moveFullscreenSwipe, false);
+			this.picInfo.style.zIndex = 10;
+			this.querySelector("#fullscreen").appendChild(this.picInfo);
 		}, 50);
 	}
 
@@ -77,7 +82,7 @@ export default class Fullscreen extends HTMLElement {
 	open(visibleImageList, imageToDisplay, countryId) {
 		this.visibleImages = visibleImageList;
 		this.currentPic = imageToDisplay;
-		this.currentPicIndex = this.visibleImages.indexOf(currentPic);
+		this.currentPicIndex = this.visibleImages.indexOf(this.currentPic);
 		this.isNewFullscreenInstance = true;
 		this.currentCountryId = countryId;
 		this.setNewPicture();
@@ -86,17 +91,13 @@ export default class Fullscreen extends HTMLElement {
 
 		if (isPortraitMode()) {
 			this.isPicInfoVisible = false;
-			addRemoveTransparent("pic-info", true);
-			this.hidePicInfo();
-			setTimeout(() => {
-				addRemoveTransparent("pic-info", false);
-			}, DEFAULT_TIMEOUT);
+			this.picInfo.hide();
 		}
 		this.isFullscreen = true;
 		document.body.style.overflowY = "hidden";
 		document.getElementById("fullscreen").classList.remove("visibility-hidden");
 		addRemoveTransparent(["fullscreen", "fullscreen-bg"], false);
-		document.addEventListener("keydown", this.handleKeydown);
+		document.addEventListener("keydown", this.handleKeydown.bind(this));
 	}
 
 	/** 
@@ -104,7 +105,7 @@ export default class Fullscreen extends HTMLElement {
 	 * @param {boolean} forceClose - ```True``` if the user has forcefully closed fullscreen mode.
 	 */
 	close(forceClose) {
-		document.removeEventListener("keydown", this.handleKeydown);
+		document.removeEventListener("keydown", this.handleKeydown.bind(this));
 		this.isFullscreen = false;
 		document.body.style.overflowY = "auto";
 		if (forceClose) {
@@ -138,14 +139,13 @@ export default class Fullscreen extends HTMLElement {
 				this.changeFullscreenPicture(false);
 				break;
 			case "ArrowUp":
-				if (!this.isPicInfoVisible) {
-					this.showPicInfo();
-				}
+				this.isPicInfoVisible = true;
+				this.picInfo.show();
 				break;
 			case "ArrowDown":
-				if (this.isPicInfoVisible) {
-					this.hidePicInfo();
-				}
+				this.isPicInfoVisible = false;
+				this.picInfo.hide();
+				break;
 			case "Escape":
 				this.close();
 				break;
@@ -192,12 +192,12 @@ export default class Fullscreen extends HTMLElement {
 				//vertical swipe - only for showing/hiding pic info
 				if (diffY > 0) {
 					if (!this.isPicInfoVisible) {
-						this.showPicInfo();
+						this.show();
 					}
 					// removed because will not work with Apple
 				} else {
 					if (this.isPicInfoVisible) {
-						this.hidePicInfo();
+						this.hide();
 					}
 				}
 			}
@@ -234,7 +234,7 @@ export default class Fullscreen extends HTMLElement {
 	setNewPicture(isNext) {
 		let src = getImageAddress(this.currentCountryId, this.currentPic.region.id, this.currentPic.fileName);
 
-		if (this.isNewFullscreenInstance || (new Date() - lastSwipeTime) < 300) {
+		if (this.isNewFullscreenInstance || (new Date() - this.lastSwipeTime) < 300) {
 			document.getElementById("fullscreen-pic").src = src;
 			this.isNewFullscreenInstance = false;
 		} else {
@@ -266,8 +266,8 @@ export default class Fullscreen extends HTMLElement {
 				}, 100);
 			}, 20);
 		}
-		lastSwipeTime = new Date();
-		this.setPicInfo(); //TODO
+		this.lastSwipeTime = new Date();
+		this.picInfo.setPicInfo(this.currentPic, this.currentCountryId);
 	}
 }
 

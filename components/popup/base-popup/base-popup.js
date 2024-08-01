@@ -1,6 +1,8 @@
 /// IMPORTS
-import { addRemoveClass, addRemoveNoDisplay, addRemoveTransparent, setBilingualProperty } from '../../../js/utils.js'
 import { ATTRIBUTES, DEFAULT_TIMEOUT } from '../../../js/constants.js';
+import { 
+    addRemoveClass, addRemoveNoDisplay, addRemoveTransparent, setBilingualProperty 
+} from '../../../js/utils.js'
 
 /**
  * The Base Popup object.
@@ -56,7 +58,7 @@ export default class BasePopup extends HTMLElement {
         }
 
         this.isOpen = true;
-        document.addEventListener("keydown", this.handleKeydown);
+        document.addEventListener("keydown", this.handleKeydown.bind(this));
     }
 
     handleKeydown(event) {
@@ -71,7 +73,7 @@ export default class BasePopup extends HTMLElement {
      * the popup through the esc key or clicking the background.
      */
     close(forceClose) {
-        document.removeEventListener("keydown", this.handleKeydown);
+        document.removeEventListener("keydown", this.handleKeydown.bind(this));
 
         this.isOpen = false;
         let popupContent = this.querySelector(".popup-content");

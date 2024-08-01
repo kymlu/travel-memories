@@ -1,17 +1,21 @@
 import { ATTRIBUTES, DEFAULT_TIMEOUT } from "../../js/constants.js";
-import { startHandleDrag } from "../../js/globals.js";
+import { getAppColor, getCurrentCountry, startHandleDrag } from "../../js/globals.js";
 import {
-    addRemoveTransparent, addRemoveNoDisplay, getBilingualText, setBilingualProperty, addClickListeners
+    addRemoveTransparent, addRemoveNoDisplay, getBilingualText, 
+    setBilingualProperty, addClickListeners, scrollToTop
 } from "../../js/utils.js";
 
 /** The Region Info. */
 export default class RegionInfo extends HTMLElement {
+    #elements;
+
     constructor(headerElement) {
         super();
         this.isVisible = false;
         this.isThrottling = false;
         this.header = headerElement;
         this.hasMapLoaded = false;
+        this.currentCountry = null;
 
         fetch("components/region-info/region-info.html")
             .then(response => response.text())
@@ -21,12 +25,12 @@ export default class RegionInfo extends HTMLElement {
             .catch(error => {
                 console.error("Error loading fullscreen.", error);
             });
-        this.elements = {};
+        this.#elements = {};
     }
 
     connectedCallback() {
         setTimeout(() => {
-            this.elements = {
+            this.#elements = {
                 background: this.querySelector("#rgn-info-bg"),
                 map: this.querySelector("#country-map-mini"),
                 areasTitle: this.querySelector("#areas-title"),
@@ -40,87 +44,90 @@ export default class RegionInfo extends HTMLElement {
             };
 
             setTimeout(() => {
-                this.elements.map.addEventListener("load", this.setMapLoaded.bind(this));
-                this.elements.divider.addEventListener("touchstart", e => { startHandleDrag(e, "rgn-info-handle") }, false);
+                //this.#elements.map.addEventListener("load", this.setMapLoaded.bind(this));
+                this.#elements.divider.addEventListener("touchstart", e => { startHandleDrag(e, "rgn-info-handle") }, false);
                 addClickListeners([
-                    ["rgn-info-bg", this.toggleVisibility],
+                    ["rgn-info-bg", this.toggleVisibility.bind(this)],
                 ]);
+                addRemoveNoDisplay([this], true);
             }, 50);
         }, 50);
-    }
-
-    setMapLoaded(){
-        this.hasMapLoaded = true;
-        // TODO: Maybe filter map colours on load and change display and viewbox on region change?
     }
 
     /** Makes value changes based on new country.
      * @param {string} countryId 
      */
-    handleNewCountry(countryId) {
-        this.elements.map.data = `assets/img/country/${countryId}.svg`;
+    handleNewCountry() {
+        addRemoveNoDisplay([this], false);
+        this.currentCountry = getCurrentCountry();
+        this.#elements.map.data = `assets/img/country/${this.currentCountry.id}.svg`;
     }
 
     /** Sets the info for a new region.
-     * @param {any} currentCountry 
      * @param {any[]} regionList 
      * @param {any[]} areaList 
      * @param {boolean} isSingleRegionSelected 
      */
-    setNewRegionInfo(currentCountry, regionList, areaList, isSingleRegionSelected) {
+    setNewRegionInfo(regionList, areaList, isSingleRegionSelected) {
         this.isVisible = true;
+        this.querySelector(".rgn-info").scrollTo({ top: 0, behavior: "instant" }); // TODO: check
 
         if (isSingleRegionSelected) {
-            addRemoveNoDisplay(this.elements.datesSection, false);
+            addRemoveNoDisplay(this.#elements.datesSection, false);
             let currentRegion = regionList[0];
             setBilingualProperty([
-                [this.elements.areasTitle, "Areas", "所"],
-                [this.elements.dates, currentRegion.datesEnglish, currentRegion.datesJapanese],
-                [this.elements.descriptionTitle, "About", currentCountry.officialRegionNameJapanese + "について"]
+                [this.#elements.areasTitle, "Areas", "所"],
+                [this.#elements.dates, currentRegion.datesEnglish, currentRegion.datesJapanese],
+                [this.#elements.descriptionTitle, "About", this.currentCountry.officialRegionNameJapanese + "について"]
             ], ATTRIBUTES.INNERHTML);
 
             [
-                [this.elements.descriptionEnglish, currentRegion.descriptionEnglish],
-                [this.elements.descriptionJapanese, currentRegion.descriptionJapanese],
-                [this.elements.areasList, areaList.map(area => {
+                [this.#elements.descriptionEnglish, currentRegion.descriptionEnglish],
+                [this.#elements.descriptionJapanese, currentRegion.descriptionJapanese],
+                [this.#elements.areasList, areaList.map(area => {
                     return getBilingualText(area.englishName, area.japaneseName);
                 }).sort().join(" | ")]
             ].forEach(([element, text]) => {
                 element.innerHTML = text;
             });
+            this.filterMiniMap(currentRegion);
         } else {
-            addRemoveNoDisplay(this.elements.datesSection, true);
+            addRemoveNoDisplay(this.#elements.datesSection, true);
 
             setBilingualProperty([
-                [this.elements.areasTitle, currentCountry.officialRegionNameEnglish + "s", currentCountry.officialRegionNameJapanese],
-                [this.elements.descriptionTitle, "About", "国について"]], ATTRIBUTES.INNERHTML);
+                [this.#elements.areasTitle, this.currentCountry.officialRegionNameEnglish + "s", this.currentCountry.officialRegionNameJapanese],
+                [this.#elements.descriptionTitle, "About", "国について"]], ATTRIBUTES.INNERHTML);
 
             [
-                [this.elements.descriptionEnglish, currentCountry.descriptionEnglish],
-                [this.elements.descriptionJapanese, currentCountry.descriptionJapanese],
-                [this.elements.areasList, regionList.map(area => {
+                [this.#elements.descriptionEnglish, this.currentCountry.descriptionEnglish],
+                [this.#elements.descriptionJapanese, this.currentCountry.descriptionJapanese],
+                [this.#elements.areasList, regionList.map(area => {
                     return getBilingualText(area.englishName, area.japaneseName);
                 }).sort().join(" | ")]
             ].forEach(([element, text]) => {
                 element.innerHTML = text;
             });
+            this.filterMiniMap(null);
         }
     }
 
+    // TODO: fix position
     /** Shows the region info section.
      * @param {true} isForced 
      */
     show(isForced) {
         this.isVisible = true;
-        addRemoveTransparent(this.elements.background, false);
-        this.elements.background.classList.remove("visibility-hidden");
+        addRemoveTransparent(this.#elements.background, false);
+        this.#elements.background.classList.remove("visibility-hidden");
         if (isForced) {
             if (document.body.scrollTop < this.getBoundingClientRect().height) {
                 scrollToTop(true);
             } else {
-                this.style.position = "sticky";
-                this.style.top = this.header.getBoundingClientRect().height; // TODO: ??
+                this.querySelector("#rgn-info-drawer").style.position = "sticky";
+                this.querySelector("#rgn-info-drawer").style.top = this.header.getHeight();
             }
+        } else {
+            this.querySelector("#rgn-info-drawer").style.top = this.header.getHeight();
         }
     }
 
@@ -130,7 +137,7 @@ export default class RegionInfo extends HTMLElement {
     hide(isForced) {
         this.isVisible = false;
         if (isForced) {
-            let rgnInfoOffset = this.getBoundingClientRect().height;
+            let rgnInfoOffset = this.querySelector("#rgn-info-drawer").getBoundingClientRect().height;
             if (document.body.scrollTop <= rgnInfoOffset) {
                 window.scrollTo({
                     top: rgnInfoOffset,
@@ -139,11 +146,11 @@ export default class RegionInfo extends HTMLElement {
                 });
             }
         }
-        addRemoveTransparent(this.elements.background, true);
+        addRemoveTransparent(this.#elements.background, true);
         setTimeout(() => {
-            this.elements.background.classList.add("visibility-hidden");
-            this.style.position = "relative";
-            this.style.top = "0";
+            this.#elements.background.classList.add("visibility-hidden");
+            this.querySelector("#rgn-info-drawer").style.position = "relative";
+            this.querySelector("#rgn-info-drawer").style.top = "0";
         }, DEFAULT_TIMEOUT);
     }
 
@@ -160,7 +167,7 @@ export default class RegionInfo extends HTMLElement {
                 this.show(false);
             }
             this.isThrottling = false;
-        }, 250);
+        }, 50);
     }
 
     /** Toggle the visibility of the region info section. */
@@ -180,46 +187,42 @@ export default class RegionInfo extends HTMLElement {
         }
     }
 
+    // TODO: ensure map doesn't flash
     /** Filter the mini map. */
-    filterMiniMap(currentCountry, currentRegion) {
+    filterMiniMap(currentRegion) {
+        if (!this.#elements.map.hasAttribute("data") || this.#elements.map.data == "") return;
         setTimeout(() => {
-            addRemoveTransparent([this.elements.map], true);
-            console.log(this.elements.map)
-            const svgDoc = this.elements.map.contentDocument;
-            const regionList = currentCountry.regionGroups.flatMap(grp => grp.regions);
+            const svgDoc = this.#elements.map.contentDocument;
+            const appColour = getAppColor();
+            const regionList = this.currentCountry.regionGroups.flatMap(grp => grp.regions);
             try {
                 regionList.forEach(rgn => {
                     const rgnImg = svgDoc.getElementById(`${rgn.id}-img`);
                     if (rgnImg) {
                         if (currentRegion == null) {
                             if (rgn.visited) {
-                                rgnImg.setAttribute("fill", getAppColor());
+                                rgnImg.setAttribute("fill", appColour);
                             } else {
                                 rgnImg.setAttribute("fill", "lightgrey");
                             }
-                            rgnImg.setAttribute("stroke", "none");
                         } else if (rgn.id != currentRegion.id) {
                             rgnImg.setAttribute("fill", "none");
-                            rgnImg.setAttribute("stroke", "none");
                         } else {
-                            rgnImg.setAttribute("fill", getAppColor());
-                            rgnImg.setAttribute("stroke", "none");
+                            rgnImg.setAttribute("fill", appColour);
                         }
+                        rgnImg.setAttribute("stroke", "none");
                     }
                 });
-    
+
                 // zoom into the specific region
+                const countryImg = svgDoc.getElementById(this.currentCountry.id + "-img");
                 if (currentRegion) {
-                    const countryImg = svgDoc.getElementById(currentCountry.id + "-img");
                     countryImg.setAttribute("viewBox", currentRegion.viewbox);
+                } else {
+                    countryImg.setAttribute("viewBox", `0 0 ${countryImg.width.baseVal.valueInSpecifiedUnits} ${countryImg.height.baseVal.valueInSpecifiedUnits}`);
                 }
             } catch (error) {
                 console.error(error);
-            } finally {
-                // show map
-                setTimeout(() => {
-                    addRemoveTransparent([this.elements.map], false);
-                }, DEFAULT_TIMEOUT / 2);
             }
         }, 50);
     }
