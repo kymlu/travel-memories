@@ -2,7 +2,7 @@ import { ATTRIBUTES, DEFAULT_TIMEOUT } from "../../js/constants.js";
 import { getAppColor, getCurrentCountry, onSelectNewRegion } from "../../js/globals.js";
 import {
 	addClickListeners, addRemoveClass, addRemoveNoDisplay, addRemoveTransparent,
-	getBilingualText, scrollToTop, setBilingualAttribute
+	getBilingualText, scrollToTop, setBilingualProperty
 } from "../../js/utils.js";
 
 /** The Map View. */
@@ -40,7 +40,7 @@ export default class MapView extends HTMLElement {
 		this.countryTitle = getBilingualText(this.currentCountry.englishName, this.currentCountry.japaneseName);
 
 
-		setBilingualAttribute([
+		setBilingualProperty([
 			[this.#elements.mainTitle, `See all images from ${this.currentCountry.englishName}`, `${this.currentCountry.japaneseName}の写真をすべて表示する`],
 		], ATTRIBUTES.TITLE);
 

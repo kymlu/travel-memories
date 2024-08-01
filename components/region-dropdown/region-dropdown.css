@@ -1,4 +1,4 @@
-.rgn-drop-down {
+#rgn-drop-down {
     align-self: center;
     position: fixed;
     top: 110px;
@@ -11,7 +11,7 @@
   }
   
   @media only screen and (max-width: 768px) {
-    .rgn-drop-down {
+    #rgn-drop-down {
       top: 95px;
     }
   }

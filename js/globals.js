@@ -39,30 +39,45 @@ let initialYHandle = null;
 let isHandleGrabbed = false;
 let grabbedHandleId = null;
 
+export let polaroidHtmls = {
+    img: null,
+    txt: null
+}
+
 export function setSiteContents(
     infoPopupElement,
     mapHtml,
     galleryHtml,
-    fullscreenHtml) {
+    fullscreenHtml,
+    imgPolaroidHtml,
+    txtPolaroidHtml) {
 
     infoPopup = infoPopupElement;
-    //galleryView = new GalleryView(galleryHtml);
+    header = new CustomHeader();
     startView = document.querySelector("start-view");
     mapView = new MapView(mapHtml);
-    header = new CustomHeader(goToStartView,
+    fullscreen = new Fullscreen(fullscreenHtml);
+    galleryView = new GalleryView(galleryHtml, fullscreen, header);
+    polaroidHtmls.img = imgPolaroidHtml;
+    polaroidHtmls.txt = txtPolaroidHtml;
+    header.setButtonFunctions(goToStartView,
         goToMapView,
-        null, //galleryView.toggleRegionDropdown.bind(galleryView),
-        null, //galleryView.toggleRegionInfo.bind(galleryView),
-        null, //galleryView.showFilter.bind(galleryView),
+        galleryView.toggleRegionDropdown.bind(galleryView),
+        galleryView.toggleRegionInfo.bind(galleryView),
+        galleryView.showFilter.bind(galleryView),
         infoPopup.open.bind(infoPopup));
-        header.style.zIndex = 10;
-        startView.style.zIndex = 1;
-        mapView.style.zIndex = 1;
+    // todo: might not work with fullscreen mode since fullscreen must be above header
+    header.style.zIndex = 10;
+    startView.style.zIndex = 1;
+    mapView.style.zIndex = 1;
+    galleryView.style.zIndex = 1;
+    fullscreen.style.zIndex = 100;
     addRemoveTransparent([header], true);
     let pageContents = document.getElementById("views");
     document.body.insertBefore(header, pageContents);
     pageContents.appendChild(mapView);
-    //pageContents.appendChild(galleryView);
+    pageContents.appendChild(galleryView);
+    pageContents.appendChild(fullscreen);
 }
 
 export function goToMapView() {
@@ -85,15 +100,17 @@ export function goToStartView(isPopped) {
 }
 
 export function goToGalleryView() {
-    if (isMapView()) {
-        mapView.hide();
-    }
     setCurrentView(VIEW_NAMES.GALLERY);
     galleryView.show();
 }
 
 // todo: put this logic into the galleryview
 export function onSelectNewRegion(regionId, isPopped) {
+    if (isMapView()) {
+        mapView.hide();
+        header.toggleVisibility(false);
+    }
+
     loader = new Loader();
     document.body.append(loader);
 
@@ -112,6 +129,7 @@ export function onSelectNewRegion(regionId, isPopped) {
     setTimeout(() => {
         if (!isGalleryView()) {
             goToGalleryView();
+            header.toggleVisibility(true);
         }
         loader.quickStop();
     }, DEFAULT_TIMEOUT);
@@ -174,7 +192,7 @@ export function setCurrentCountry(countryId, countryColor) {
         document.body.append(loader);
 
         mapView.handleNewCountry();
-        //galleryView.handleNewCountry();
+        galleryView.handleNewCountry();
 
         setTimeout(() => {
             loader.stop(mapView.show.bind(mapView));

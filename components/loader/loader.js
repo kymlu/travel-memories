@@ -20,7 +20,7 @@ export default class Loader extends HTMLElement {
             .then(response => response.text())
             .then(html => {
                 this.innerHTML = html;
-            }).catch(error => console.log(error));
+            }).catch(error => console.error(error));
     }
 
 

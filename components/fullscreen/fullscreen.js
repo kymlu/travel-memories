@@ -2,7 +2,7 @@
 import { DEFAULT_TIMEOUT, ATTRIBUTES } from '../../js/constants.js'
 import {
 	addClickListeners, addRemoveNoDisplay, addRemoveTransparent,
-	getImageAddress, isPortraitMode, setBilingualAttribute,
+	getImageAddress, isPortraitMode, setBilingualProperty,
 } from '../../../js/utils.js';
 
 export default class Fullscreen extends HTMLElement {
@@ -41,41 +41,40 @@ export default class Fullscreen extends HTMLElement {
 		this.elements = {
 
 		};
+	}
 
-		this.initialize();
+	connectedCallback() {
+		setTimeout(() => {
+			setBilingualProperty([
+				["pic-info-btn", "See picture information", "写真の情報を見る"],
+				["left-arrow", "Previous picture", "前の写真"],
+				["right-arrow", "Next picture", "次の写真"],
+			], ATTRIBUTES.TITLE);
+
+			addClickListeners([
+				["fullscreen-bg", function () { this.close(true); }],
+				["fullscreen-ctrl", function () { this.close(true); }],
+				["left-arrow", (event) => { event.stopPropagation(); }],
+				["fullscreen-pic", (event) => { event.stopPropagation(); }],
+				["right-arrow", (event) => { event.stopPropagation(); }],
+				["left-arrow", function () { this.changeFullscreenPicture(false); }],
+				["right-arrow", function () { this.changeFullscreenPicture(true); }]
+			]);
+
+			let swipeContainer = document.getElementById("fullscreen");
+			swipeContainer.addEventListener("touchstart", this.startFullscreenSwipe, false);
+			swipeContainer.addEventListener("touchmove", this.moveFullscreenSwipe, false);
+		}, 50);
 	}
 
 	//// FUNCTIONS
-	// initialization
-	initialize() {
-		setBilingualAttribute([
-			["pic-info-btn", "See picture information", "写真の情報を見る"],
-			["left-arrow", "Previous picture", "前の写真"],
-			["right-arrow", "Next picture", "次の写真"],
-		], ATTRIBUTES.TITLE);
-
-		addClickListeners([
-			["fullscreen-bg", function () { this.closeFullscreen(true); }],
-			["fullscreen-ctrl", function () { this.closeFullscreen(true); }],
-			["left-arrow", (event) => { event.stopPropagation(); }],
-			["fullscreen-pic", (event) => { event.stopPropagation(); }],
-			["right-arrow", (event) => { event.stopPropagation(); }],
-			["left-arrow", function () { this.changeFullscreenPicture(false); }],
-			["right-arrow", function () { this.changeFullscreenPicture(true); }]
-		]);
-
-		let swipeContainer = document.getElementById("fullscreen");
-		swipeContainer.addEventListener("touchstart", this.startFullscreenSwipe, false);
-		swipeContainer.addEventListener("touchmove", this.moveFullscreenSwipe, false);
-	}
-
 	// open and close
 	/**
 	 * Displays a given image in fullscreen.
 	 * @param {any} imageToDisplay 
 	 * @param {string} countryId 
 	 */
-	openFullscreen(visibleImageList, imageToDisplay, countryId) {
+	open(visibleImageList, imageToDisplay, countryId) {
 		this.visibleImages = visibleImageList;
 		this.currentPic = imageToDisplay;
 		this.currentPicIndex = this.visibleImages.indexOf(currentPic);
@@ -97,15 +96,15 @@ export default class Fullscreen extends HTMLElement {
 		document.body.style.overflowY = "hidden";
 		document.getElementById("fullscreen").classList.remove("visibility-hidden");
 		addRemoveTransparent(["fullscreen", "fullscreen-bg"], false);
-	    document.addEventListener("keydown", this.handleKeydown);
+		document.addEventListener("keydown", this.handleKeydown);
 	}
 
 	/** 
 	 * Close the 
 	 * @param {boolean} forceClose - ```True``` if the user has forcefully closed fullscreen mode.
 	 */
-	closeFullscreen(forceClose) {
-	    document.removeEventListener("keydown", this.handleKeydown);
+	close(forceClose) {
+		document.removeEventListener("keydown", this.handleKeydown);
 		this.isFullscreen = false;
 		document.body.style.overflowY = "auto";
 		if (forceClose) {
@@ -148,7 +147,7 @@ export default class Fullscreen extends HTMLElement {
 					this.hidePicInfo();
 				}
 			case "Escape":
-				this.closeFullscreen();
+				this.close();
 				break;
 			default:
 				break;

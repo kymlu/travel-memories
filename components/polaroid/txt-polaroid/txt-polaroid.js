@@ -1,6 +1,7 @@
 /// IMPORTS
 import BasePolaroid from "../base-polaroid/base-polaroid.js"
 import { addRemoveTransparent, getBilingualText } from '../../../js/utils.js';
+import { polaroidHtmls } from "../../../js/globals.js";
 
 /**
  * The Text Polaroid object.
@@ -17,14 +18,7 @@ export default class TextPolaroid extends BasePolaroid {
         /** The text to display in the middle of the polaroid. @type string */
         this.text = getBilingualText(englishName, japaneseName);
         /** The region the polaroid represents. @type string */
-
-        // Get component html
-        fetch("components/polaroid/txt-polaroid/txt-polaroid.html")
-            .then(response => response.text())
-            .then(html => {
-                this.innerHTML = html;
-            });
-
+        this.innerHTML = polaroidHtmls.txt;
         this.title = getBilingualText(`See images from ${englishName}`, `${japaneseName}の写真を表示する`);
 
         // The lazy loading observer

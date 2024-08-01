@@ -1,5 +1,5 @@
 /// IMPORTS
-import { addRemoveClass, addRemoveNoDisplay, addRemoveTransparent, setBilingualAttribute } from '../../../js/utils.js'
+import { addRemoveClass, addRemoveNoDisplay, addRemoveTransparent, setBilingualProperty } from '../../../js/utils.js'
 import { ATTRIBUTES, DEFAULT_TIMEOUT } from '../../../js/constants.js';
 
 /**
@@ -18,7 +18,7 @@ export default class BasePopup extends HTMLElement {
     connectedCallback() {
         if (!this.previouslyOpened) {
             setTimeout(() => {
-                setBilingualAttribute([[this.querySelector(".close-btn"), "Close", "閉じる"]], ATTRIBUTES.TITLE);
+                setBilingualProperty([[this.querySelector(".close-btn"), "Close", "閉じる"]], ATTRIBUTES.TITLE);
                 this.querySelector(".popup").addEventListener("click", (event) => {
                     event.stopPropagation();
                 });

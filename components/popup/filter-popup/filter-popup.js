@@ -3,7 +3,7 @@ import BasePopup from "../base-popup/base-popup.js"
 import {
     addRemoveNoDisplay, getBilingualText, flipArrow, sortByEnglishName,
     addClickListeners,
-    setBilingualAttribute
+    setBilingualProperty
 } from '../../../js/utils.js';
 import { CUSTOM_EVENT_TYPES, ATTRIBUTES } from "../../../js/constants.js";
 
@@ -60,9 +60,9 @@ export default class FilterPopup extends BasePopup {
      * @inheritdoc
      */
     connectedCallback() {
+        super.connectedCallback();
         setTimeout(() => {
-            super.connectedCallback();
-            setBilingualAttribute([
+            setBilingualProperty([
                 ["filter-title", "Filters", "フィルター"],
                 ["filter-fav-title", "Favourites", "お気に入り"],
                 ["filter-kw-title", "Keyword", "キーワード"],
@@ -73,7 +73,7 @@ export default class FilterPopup extends BasePopup {
                 ["filter-submit-btn", "Apply", "適用する"]
             ], ATTRIBUTES.INNERHTML);
             document.getElementById("filter-fav-label").childNodes[0].textContent = getBilingualText("Filter favourites", "お気に入りだけを表示する");
-            setBilingualAttribute([
+            setBilingualProperty([
                 ["filter-kw-clear-btn", "Clear keyword", "キーワードをクリアする"]
             ], ATTRIBUTES.TITLE);
 

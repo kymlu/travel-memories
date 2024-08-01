@@ -1,6 +1,8 @@
 /// IMPORTS
-import { CUSTOM_EVENT_TYPES } from "../../../js/constants.js";
 import BasePopup from "../base-popup/base-popup.js"
+
+// TODO: maybe redesign this to make it more obviously bilingual
+// Tabs? Button to scroll down to Japanese?
 
 /**
  * The Info Popup object.

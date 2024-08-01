@@ -12,7 +12,7 @@
 
 .filter-area {
     gap: 15px;
-    overflow-y: auto;    
+    overflow-y: auto;
 }
 
 /* Hide the browser's default checkbox */
@@ -77,6 +77,7 @@
     font-family: Zen Maru Gothic;
     font-size: var(--reg-text-size);
     margin-bottom: 10px;
+    padding-left: 10px;
 }
 
 .text-input:focus-visible {
@@ -90,6 +91,25 @@
     font-family: FontAwesome;
     color: var(--text-color);
     font-size: var(--reg-text-size);
+}
+
+#filter-title {
+    margin: 0px 0px 10px 0px;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+#filters {
+    height: 100%;
+    gap: 15px;
+    overflow-y: auto;
+}
+
+#filter-btns {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    gap: 15px;
 }
 
 .filter-header {

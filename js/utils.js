@@ -1,3 +1,5 @@
+import { ATTRIBUTES } from "./constants.js";
+
 /**
  * Gets the date to the appropriate timezone
  * @param {Date} date - the date in UTC
@@ -158,13 +160,18 @@ export function getImageAddress(countryId, regionId, fileName) {
 	return `assets/img/${countryId}/${regionId}/${fileName}`;
 }
 
-export function setBilingualAttribute(elements, attribute) {
+export function setBilingualProperty(elements, property) {
 	elements.forEach(([element, englishText, japaneseText]) => {
 		try {
 			if (typeof element == "string") {
-				document.getElementById(element).setAttribute(attribute, getBilingualText(englishText, japaneseText));
+				element = document.getElementById(element);
+			}
+			if (property == ATTRIBUTES.INNERHTML) {
+				element.innerHTML = getBilingualText(englishText, japaneseText);
+			} else if (property == ATTRIBUTES.TITLE) {
+				element.title = getBilingualText(englishText, japaneseText);
 			} else {
-				element.setAttribute(attribute, getBilingualText(englishText, japaneseText));
+				throw new Error(`Invalid property type ${property}.`);
 			}
 		} catch (error) {
 			console.error(error);

@@ -2,7 +2,7 @@
 import FilterPopup from '../../components/popup/filter-popup/filter-popup.js'
 import {
 	addClickListeners, addRemoveNoDisplay, addRemoveTransparent, flipArrow, getBilingualText,
-	getImageAddress, isPortraitMode, scrollToTop, setBilingualAttribute, sortImgs
+	getImageAddress, isPortraitMode, scrollToTop, setBilingualProperty, sortImgs
 } from '../../js/utils.js';
 import {
 	CUSTOM_EVENT_TYPES, DEFAULT_TIMEOUT, SCROLL_THRESHOLD, TAGS,
@@ -14,23 +14,31 @@ import Fullscreen from '../../components/fullscreen/fullscreen.js';
 import { getCurrentCountry, isGalleryView, onSelectNewRegion, startHandleDrag } from '../../js/globals.js';
 import RegionDropdown from '../../components/region-dropdown/region-dropdown.js';
 import RegionInfo from '../../components/region-info/region-info.js';
+import Loader from '../../components/loader/loader.js';
+import CustomHeader from '../../components/header/header.js';
 
 /** The Gallery View. */
 export default class GalleryView extends HTMLElement {
-	constructor(element) {
+	#elements;
+	constructor(innerHTML, fullscreenElement, headerElement) {
 		super();
-		this.innerHTML = element;
+		this.innerHTML = innerHTML;
 
 		// TODO: restrict the loader to the gallery area instead of removing the top bar too
 		// TODO: ensure the loader stops only after the mini map has no display removed
-		// TODO: make views classes
 		/// VARIABLES
 		// filter
 		/** @type {FilterPopup} */
 		this.filterPopup = new FilterPopup();
-		this.regionDropdown = new RegionDropdown();
-		this.regionInfo = new RegionInfo();
-		this.fullscreen = new Fullscreen();
+		/** @type {RegionDropdown} */
+		this.regionDropdown = new RegionDropdown(headerElement);
+		/** @type {RegionInfo} */
+		this.regionInfo = new RegionInfo(headerElement);
+		/** @type {Fullscreen} */
+		this.fullscreen = fullscreenElement; //new Fullscreen();
+		/** @type {CustomHeader} */
+		this.header = headerElement;
+		/** @type {Loader} */
 		this.loader = null;
 
 		// region info
@@ -50,69 +58,75 @@ export default class GalleryView extends HTMLElement {
 		this.isImageAngledLeft = true;
 		this.imageLoadLimit = 10;
 
+		this.#elements = {};
+
 		this.noPicturesText = getBilingualText("No pictures available (yet)", "写真は(まだ)ありません");
-		this.initialize();
 	}
-	
-	/// FUNCTIONS
-	/**
-	 * Initialize the gallery page.
-	 */
-	initialize() {
-		setBilingualAttribute([
-			["dates-title", "Dates visited", "訪れた日付"]
-		], ATTRIBUTES.INNERHTML);
 
-		addClickListeners([
-			["rgn-drop-down-bg", this.closeRegionDropdown],
-			["rgn-info-bg", this.changeRegionInfoVisibility],
-			["to-top-btn", this.scrollToTop]
-		]);
-
-		window.onscroll = function () {
-			if (isGalleryView() && this.loader == null) {
-				this.onScrollFunction();
+	connectedCallback() {
+		setTimeout(() => {
+			this.#elements = {
+				gallery: this.querySelector("#gallery"),
+				toTopButton: this.querySelector("#to-top-btn")
 			}
-		};
 
-		document.getElementById("rgn-info-handle").addEventListener("touchstart", e => { startHandleDrag(e, "rgn-info-handle") }, false);
+			this.classList.add("opacity-transition");
 
-		filterPopup.addEventListener(CUSTOM_EVENT_TYPES.FILTER_POPUP_SUBMITTED, event => {
-			filterImages(event.detail.isOnlyFavs,
-				event.detail.keyword,
-				event.detail.selectedRegions,
-				event.detail.selectedAreas,
-				event.detail.selectedTags,
-				event.detail.selectedCameras);
+			window.onscroll = (function () {
+				if (isGalleryView() && this.loader == null) {
+					this.onScrollFunction();
+				}
+			}).bind(this);
 
-			scrollToTop(true);
-			document.getElementById("gallery").replaceChildren();
-			if (visibleImages.length == 0) {
-				document.getElementById("gallery").innerHTML = noPicturesText;
-			} else {
-				imageLoadIndex = 0;
-				currentPolaroidCount = 0;
-				loadImages();
-			}
-		});
+			this.filterPopup.addEventListener(CUSTOM_EVENT_TYPES.FILTER_POPUP_SUBMITTED, event => {
+				filterImages(event.detail.isOnlyFavs,
+					event.detail.keyword,
+					event.detail.selectedRegions,
+					event.detail.selectedAreas,
+					event.detail.selectedTags,
+					event.detail.selectedCameras);
 
-		document.body.appendChild(filterPopup);
+				scrollToTop(true);
+				document.getElementById("gallery").replaceChildren();
+				if (visibleImages.length == 0) {
+					document.getElementById("gallery").innerHTML = noPicturesText;
+				} else {
+					imageLoadIndex = 0;
+					currentPolaroidCount = 0;
+					loadImages();
+				}
+			});
 
-		document.getElementById("to-top-btn").title = getBilingualText("Go to top", "トップに移動する");
+			this.appendChild(this.filterPopup);
+
+			setTimeout(() => {
+				addRemoveTransparent([this.regionInfo, this.regionDropdown], true);
+				this.insertBefore(this.regionInfo, this.#elements.gallery);
+				this.appendChild(this.regionDropdown);
+
+				setBilingualProperty([
+					["dates-title", "Dates visited", "訪れた日付"]
+				], ATTRIBUTES.INNERHTML);
+
+				addClickListeners([
+					[this.#elements.toTopButton, this.scrollToTop]
+				]);
+
+				document.getElementById("to-top-btn").title = getBilingualText("Go to top", "トップに移動する");
+			}, 50);
+
+		}, 50);
 	}
 
 	/** Open the gallery page */
 	show() {
-		this.closeRegionDropdown();
+		this.regionDropdown.close();
 		scrollToTop(false);
 		this.regionInfo.show(false);
-		addRemoveTransparent(["gallery, to-to-btn"], false);
-		addRemoveNoDisplay(["gallery"], false);
-		if (allImages.length > 0) {
-			addRemoveNoDisplay("filter-btn", false);
-		}
+		addRemoveTransparent([this.#elements.gallery, this.#elements.toTopButton], false);
+		addRemoveNoDisplay([this.#elements.gallery], false);
 		document.getElementById("rgn-info-bg").classList.remove("visibility-hidden");
-		addRemoveTransparent("to-top-btn", false);
+		addRemoveTransparent([this.#elements.toTopButton], false);
 		if (isPortraitMode()) {
 			document.getElementById("dates-title").scrollIntoView({ block: isPortraitMode() ? "end" : "start" });
 		}
@@ -121,11 +135,11 @@ export default class GalleryView extends HTMLElement {
 
 	/** Close the gallery page */
 	hide() {
-		this.closeRegionDropdown();
+		this.regionDropdown.close();
 		scrollToTop(false);
-		addRemoveTransparent(["gallery", "to-top-btn"], true);
+		addRemoveTransparent([this.#elements.gallery, this.#elements.toTopButton], true);
 		setTimeout(() => {
-			addRemoveNoDisplay(["gallery", "to-top-btn"], true);
+			addRemoveNoDisplay([this.#elements.gallery, this.#elements.toTopButton], true);
 		}, DEFAULT_TIMEOUT);
 		this.regionInfo.hide(false);
 		document.getElementById("rgn-info-bg").classList.add("visibility-hidden");
@@ -135,10 +149,10 @@ export default class GalleryView extends HTMLElement {
 	// regenerating data
 	/** Reset some country-dependant variables. */
 	handleNewCountry() {
-		isNewCountry = true;
-		allImages = [];
-		visibleImages = [];
-		currentCountry = getCurrentCountry();
+		this.isNewCountry = true;
+		this.allImages = [];
+		this.visibleImages = [];
+		this.currentCountry = getCurrentCountry();
 		this.regionDropdown.handleNewCountry();
 		this.regionInfo.handleNewCountry(this.currentCountry.id);
 		// region info
@@ -150,19 +164,20 @@ export default class GalleryView extends HTMLElement {
 	 */
 	setNewRegion(regionData, isSingleRegionSelected) {
 		this.regionDropdown.changeSelectedRegion(
-			!isNewCountry ? currentRegion : null,
+			!this.isNewCountry ? this.currentRegion : null,
 			isSingleRegionSelected ? regionData[0]?.id : null);
 
-		currentRegion = isSingleRegionSelected ? regionData[0] : null;
+		this.currentRegion = isSingleRegionSelected ? regionData[0] : null;
 
-		isNewCountry = false;
+		this.isNewCountry = false;
 
 		let regionsList = [];
 		let areaList = [];
 
 		if (isSingleRegionSelected) {
-			regionsList = [currentRegion];
-			areaList = currentRegion.areas;
+			regionsList = [this.currentRegion];
+			areaList = this.currentRegion.areas;
+			this.header.setRegionTitle(this.currentRegion.englishName, this.currentRegion.japaneseName);
 		} else {
 			regionsList = regionData.map(rgn => {
 				return {
@@ -173,12 +188,13 @@ export default class GalleryView extends HTMLElement {
 			});
 
 			areaList = regionData.flatMap(rgn => rgn.areas);
+			this.header.setRegionTitle(this.currentCountry.englishName, this.currentCountry.japaneseName);
 		}
 
 		this.regionInfo.setNewRegionInfo(this.currentCountry, regionsList, areaList, isSingleRegionSelected);
 
 		// get all images
-		allImages = regionData.flatMap(rgn => {
+		this.allImages = regionData.flatMap(rgn => {
 			return rgn.imageList.map(img => {
 				let area = areaList.find(area => area.id == img.area);
 				return ({
@@ -198,79 +214,77 @@ export default class GalleryView extends HTMLElement {
 			});
 		}).sort(sortImgs);
 
-		visibleImages = [...allImages];
+		this.visibleImages = [...this.allImages];
 
 		// set filters
-		let tempTags = new Set(allImages.flatMap(x => { return x.tags }));
+		let tempTags = new Set(this.allImages.flatMap(x => { return x.tags }));
 		let tagList = TAGS.filter(x => tempTags.has(x.id));
-		let cameraList = [...new Set(allImages.map(x => x.cameraModel))];
-		filterPopup.regenerateFilters(
-			currentRegion != null,
+		let cameraList = [...new Set(this.allImages.map(x => x.cameraModel))];
+		this.filterPopup.regenerateFilters(
+			this.currentRegion != null,
 			regionsList,
 			areaList,
 			tagList,
 			cameraList,
-			currentCountry.officialRegionNameEnglish,
-			currentCountry.officialRegionNameJapanese
+			this.currentCountry.officialRegionNameEnglish,
+			this.currentCountry.officialRegionNameJapanese
 		);
 
 		setTimeout(() => {
-			filterMiniMap();
+			this.regionInfo.filterMiniMap(this.currentCountry, this.currentRegion);
 		}, 1000);
 
-		flipArrow(document.getElementById("rgn-name-arrow"), false);
+		this.header.flipRegionNameArrow(false);
 
 		// clear existing gallery
-		let gallery = document.getElementById("gallery");
-		gallery.replaceChildren();
-		isImageAngledLeft = false;
-		imageLoadIndex = 0;
-		currentPolaroidCount = 0;
-		previousRegion = null;
+		this.#elements.gallery.replaceChildren();
+		this.isImageAngledLeft = false;
+		this.imageLoadIndex = 0;
+		this.currentPolaroidCount = 0;
+		this.previousRegion = null;
 
 		// add pictures
-		if (allImages.length > 0) {
-			loadImages();
+		if (this.allImages.length > 0) {
+			this.loadImages();
 		} else {
-			gallery.innerHTML = noPicturesText;
+			this.#elements.gallery.innerHTML = this.noPicturesText;
 		}
 	}
 
 	loadImages() {
-		isLoadingImages = true;
-		let gallery = document.getElementById("gallery");
+		this.isLoadingImages = true;
 		// dynamically load next set of images
-		for (let i = 0; imageLoadIndex < visibleImages.length && i < imageLoadLimit; i++, currentPolaroidCount++) {
-			let img = visibleImages[imageLoadIndex];
-			if (currentRegion == null && (previousRegion == null || previousRegion != img.region.id)) {
+		for (let i = 0; this.imageLoadIndex < this.visibleImages.length && i < this.imageLoadLimit; i++, this.currentPolaroidCount++) {
+			let img = this.visibleImages[this.imageLoadIndex];
+			if (this.currentRegion == null && (this.previousRegion == null || this.previousRegion != img.region.id)) {
 				// text separator polaroid
-				previousRegion = img.region.id;
-				let blankPol = createPolaroidBlank(img.region, isImageAngledLeft);
-				isImageAngledLeft = !isImageAngledLeft;
-				gallery.appendChild(blankPol);
+				this.previousRegion = img.region.id;
+				let blankPol = this.createPolaroidBlank(img.region, this.isImageAngledLeft);
+				this.isImageAngledLeft = !this.isImageAngledLeft;
+				this.#elements.gallery.appendChild(blankPol);
 			} else {
 				// image polaroid
-				let pol = createPolaroidImg(img, isImageAngledLeft);
-				isImageAngledLeft = !isImageAngledLeft;
-				gallery.appendChild(pol);
-				imageLoadIndex++;
+				let pol = this.createPolaroidImg(img, this.isImageAngledLeft);
+				this.isImageAngledLeft = !this.isImageAngledLeft;
+				this.#elements.gallery.appendChild(pol);
+				this.imageLoadIndex++;
 			}
 
 			// set the limit to something different if the size of the screen changed
 			if (i == 0) {
 				let imgsPerScreen = Math.max(Math.floor(window.innerWidth / 265) * Math.floor(window.innerHeight / 325), 5);
 				// fill the remainder if the number of images does not fill the screen
-				imageLoadLimit = imgsPerScreen * 2 + (imgsPerScreen - (currentPolaroidCount % imgsPerScreen / 2));
+				this.imageLoadLimit = imgsPerScreen * 2 + (imgsPerScreen - (this.currentPolaroidCount % imgsPerScreen / 2));
 			}
 		}
-		isLoadingImages = false;
+		this.isLoadingImages = false;
 	}
 
 	// polaroids
 	createPolaroidImg(img, isImageAngledLeft) {
 		let newPolaroid = new ImagePolaroid(
 			isImageAngledLeft,
-			getImageAddress(currentCountry.id, img.region.id, img.fileName),
+			getImageAddress(this.currentCountry.id, img.region.id, img.fileName),
 			img.isFavourite ?? false,
 			img.date,
 			img.offset,
@@ -279,7 +293,7 @@ export default class GalleryView extends HTMLElement {
 		);
 
 		// listeners
-		newPolaroid.addEventListener("click", () => { this.fullscreen.openFullscreen(visibleImages, img, currentCountry.id); });
+		newPolaroid.addEventListener("click", () => { this.fullscreen.open(this.visibleImages, img, this.currentCountry.id); });
 
 		return newPolaroid;
 	}
@@ -298,25 +312,24 @@ export default class GalleryView extends HTMLElement {
 
 	// scrolling behaviours
 	onScrollFunction() {
-		toggleFloatingButton();
-		this.scrollRegionInfo();
+		this.toggleFloatingButton();
+		this.regionInfo.handleScroll();
 
-		if (!isLoadingImages && imageLoadIndex < visibleImages.length &&
+		if (!this.isLoadingImages && this.imageLoadIndex < this.visibleImages.length &&
 			(window.innerHeight + Math.round(window.scrollY)) >= document.body.offsetHeight - 100) {
-			loadImages();
+			this.loadImages();
 		}
 	}
 
 	toggleFloatingButton() {
-		let btn = document.getElementById("to-top-btn");
-		if (document.body.scrollTop > SCROLL_THRESHOLD && !isToTopVisible) {
-			addRemoveNoDisplay([btn], false);
-			addRemoveTransparent([btn], false);
-			isToTopVisible = true;
-		} else if (document.body.scrollTop <= SCROLL_THRESHOLD && isToTopVisible) {
-			addRemoveTransparent([btn], true);
-			setTimeout(() => { addRemoveNoDisplay([btn], true); }, DEFAULT_TIMEOUT)
-			isToTopVisible = false;
+		if (document.body.scrollTop > SCROLL_THRESHOLD && !this.isToTopVisible) {
+			addRemoveNoDisplay([this.#elements.toTopButton], false);
+			addRemoveTransparent([this.#elements.toTopButton], false);
+			this.isToTopVisible = true;
+		} else if (document.body.scrollTop <= SCROLL_THRESHOLD && this.isToTopVisible) {
+			addRemoveTransparent([this.#elements.toTopButton], true);
+			setTimeout(() => { addRemoveNoDisplay([this.#elements.toTopButton], true); }, DEFAULT_TIMEOUT)
+			this.isToTopVisible = false;
 		}
 	}
 
@@ -331,7 +344,7 @@ export default class GalleryView extends HTMLElement {
 	// image filtering
 	/** Shows the filter popup. */
 	showFilter() {
-		filterPopup.open();
+		this.filterPopup.open();
 	}
 
 	doesTextIncludeKeyword(text, keywordSearchTerm) {
@@ -396,45 +409,14 @@ export default class GalleryView extends HTMLElement {
 		selectedAreas,
 		selectedTags,
 		selectedCameras) {
-		allImages.forEach(img => {
-			img.isVisible = includeImage(img,
-				isOnlyFavs,
-				keyword,
-				selectedRegions,
-				selectedAreas,
-				selectedTags,
-				selectedCameras);
-		});
-		visibleImages = allImages.filter(img => img.isVisible);
-		toggleFilterIndicator(allImages.length != visibleImages.length);
-	}
-
-
-
-	handleKeyEvent(event) {
-		if (filterPopup.isOpen()) return;
-		switch (event.key) {
-			case "ArrowRight":
-				this.changeFullscreenPicture(true);
-				break;
-			case "ArrowLeft":
-				this.changeFullscreenPicture(false);
-				break;
-			case "ArrowUp":
-				if (!this.isPicInfoVisible) {
-					this.showPicInfo();
-				}
-				break;
-			case "ArrowDown":
-				if (this.isPicInfoVisible) {
-					this.hidePicInfo();
-				}
-			case "Escape":
-				this.closeFullscreen();
-				break;
-			default:
-				break;
-		}
+		this.visibleImages = this.allImages.filter(img => this.includeImage(img,
+			isOnlyFavs,
+			keyword,
+			selectedRegions,
+			selectedAreas,
+			selectedTags,
+			selectedCameras));
+		toggleFilterIndicator(this.allImages.length != this.visibleImages.length);
 	}
 }
 

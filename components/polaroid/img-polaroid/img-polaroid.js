@@ -4,6 +4,7 @@ import {
     addRemoveNoDisplay, addRemoveTransparent, getBilingualText, getPictureDate
 } from '../../../js/utils.js';
 import { DEFAULT_TIMEOUT, SHORT_DATETIME_FORMAT_EN, SHORT_DATETIME_FORMAT_JP } from '../../../js/constants.js'
+import { polaroidHtmls } from "../../../js/globals.js";
 
 /**
  * The Image Polaroid object.
@@ -33,6 +34,7 @@ export default class ImagePolaroid extends BasePolaroid {
         /** The Japanese image caption. @type string */
         this.jpCaption = jpCaption;
         this.title = getBilingualText("Expand image", "画像を拡大する");
+        this.innerHTML = polaroidHtmls.img;
 
 
         // The lazy loading observer
@@ -40,7 +42,7 @@ export default class ImagePolaroid extends BasePolaroid {
         const obs = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    addRemoveTransparent([polaroid], false);
+                    addRemoveTransparent([this.querySelector(".polaroid-frame")], false);
                     observer.disconnect();
                 }
             });
@@ -49,13 +51,6 @@ export default class ImagePolaroid extends BasePolaroid {
     }
 
     connectedCallback() {
-        // Get component html
-        fetch("components/polaroid/img-polaroid/img-polaroid.html")
-            .then(response => response.text())
-            .then(html => {
-                this.innerHTML = html;
-            });
-
         const polaroid = this.querySelector(".polaroid-frame");
         polaroid.classList.add(this.getRandomAngleClass())
 

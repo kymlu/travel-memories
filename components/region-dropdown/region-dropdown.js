@@ -1,24 +1,39 @@
 import { getCurrentCountry, onSelectNewRegion } from "../../js/globals.js";
-import { addClickListeners, getBilingualText } from "../../js/utils.js";
+import { addClickListeners, addRemoveNoDisplay, addRemoveTransparent, getBilingualText } from "../../js/utils.js";
 
 /** The Region Dropdown. */
 export default class RegionDropdown extends HTMLElement {
-	constructor() {
+	constructor(headerElement) {
         super();
+		this.header = headerElement;
 		this.isVisible = false;
 		this.hasOpenedForRegion = false;
 		this.currentRegionId = null;
-		this.elements = {
-			background: document.getElementById("rgn-drop-down-bg"),
-			content: document.getElementById("rgn-drop-down"),
-		}
-		this.initialize();
+		fetch("components/region-dropdown/region-dropdown.html")
+            .then(response => response.text())
+            .then(html => {
+                this.innerHTML = html;
+            })
+            .catch(error => {
+                console.error("Error loading fullscreen.", error);
+            });
+		this.elements = {}; 
 	}
-
-	initialize(){
-		addClickListeners([
-			[this.elements.background, this.close]
-		]);
+	
+	connectedCallback(){
+		setTimeout(() => {
+			this.elements = {
+				background: this.querySelector("#rgn-drop-down-bg"),
+				content: this.querySelector("#rgn-drop-down"),
+			}
+			setTimeout(() => {
+				addClickListeners([
+					[this.elements.background, this.close]
+				]);
+				addRemoveNoDisplay([this], true);
+				addRemoveTransparent([this.querySelector(".transparent")], false);
+			}, 50);
+		}, 50);
 	}
 
 	/** 
@@ -43,7 +58,7 @@ export default class RegionDropdown extends HTMLElement {
 
 			if (currentCountry.showUnofficialRegions) {
 				regionGroupElement.innerHTML = getBilingualText(grp.englishName, grp.japaneseName);
-				regionGroupElement.id = `${grp.englishName}-dropdown`;
+				//regionGroupElement.id = this.#getDropdownElementId(grp.englishName);
 				dropDownList.appendChild(regionGroupElement);
 			}
 
@@ -51,7 +66,7 @@ export default class RegionDropdown extends HTMLElement {
 				if (rgn.visited) {
 					let regionButton = regionTemplate.cloneNode();
 					regionButton.innerHTML = getBilingualText(rgn.englishName, rgn.japaneseName);
-					regionButton.id = `${rgn.id}-dropdown`;
+					regionButton.id = this.#getDropdownElementId(rgn.id);
 					regionButton.title = getBilingualText(`See images from ${rgn.englishName}`, `${rgn.japaneseName}の写真を表示する`);
 					regionButton.classList.add("visited-rgn-text");
 					regionButton.addEventListener("click", function () {
@@ -69,23 +84,23 @@ export default class RegionDropdown extends HTMLElement {
 	*/
 	changeSelectedRegion(oldRegionId, newRegionId) {
 		if (oldRegionId) {
-			document.getElementById(oldRegionId + "-dropdown")?.classList.remove("active");
+			document.getElementById(this.#getDropdownElementId(oldRegionId))?.classList.remove("active");
 		}
 
 		if (newRegionId) {
 			this.hasOpenedForRegion = true;
-			document.getElementById(newRegionId + "-dropdown")?.classList.add("active");
+			document.getElementById(this.#getDropdownElementId(newRegionId))?.classList.add("active");
 		}
 	}
 
 	/** Toggles the visibility of the dropdown. */
 	toggleVisibility() {
 		this.classList.toggle("no-display"); // TODO: this used to be container, double check how to reference
-		flipArrow(document.getElementById("rgn-name-arrow"));
+		this.header.flipRegionNameArrow();
 		if (this.hasOpenedForRegion) {
 			this.hasOpenedForRegion = false;
 			if(this.currentRegionId){
-				document.getElementById(`${this.currentRegionId}-dropdown`).scrollIntoView({ behavior: "smooth", block: "center" });
+				document.getElementById(this.#getDropdownElementId(this.currentRegionId)).scrollIntoView({ behavior: "smooth", block: "center" });
 			} else {
 				this.elements.content.scrollTo({top: 0, behavior: "instant"});
 			}
@@ -93,8 +108,13 @@ export default class RegionDropdown extends HTMLElement {
 	}
 
 	close() {
-		addRemoveNoDisplay(this, true);
-		flipArrow(document.getElementById("rgn-name-arrow"), false); // TODO: AH
+		addRemoveNoDisplay([this], true);
+		this.header.flipRegionNameArrow(false);
+	}
+
+	#getDropdownElementId(name){
+		return `${name}-dropdown`;
 	}
 }
+
 window.customElements.define("region-dropdown", RegionDropdown);

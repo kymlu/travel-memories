@@ -5,19 +5,20 @@ import {
     addRemoveClass,
     addRemoveNoDisplay,
     addRemoveTransparent,
-    setBilingualAttribute
+    flipArrow,
+    setBilingualProperty
 } from "../../js/utils.js";
 
 /** The CustomHeader class. */
 export default class CustomHeader extends HTMLElement {
-    constructor(globeFunc, mapFunc, regionDropdownFunc, infoFunc, filterFunc, creatorFunc) {
+    constructor() {
         super();
-        this.globeFunc = globeFunc;
-        this.mapFunc = mapFunc;
-        this.regionDropdownFunc = regionDropdownFunc;
-        this.infoFunc = infoFunc;
-        this.filterFunc = filterFunc;
-        this.creatorFunc = creatorFunc;
+        this.globeFunc = null;
+        this.mapFunc = null;
+        this.regionDropdownFunc = null;
+        this.infoFunc = null;
+        this.filterFunc = null;
+        this.creatorFunc = null;
         this.buttons = {};
         this.sections = {};
 
@@ -37,8 +38,9 @@ export default class CustomHeader extends HTMLElement {
             
             /** CustomHeader sections */
             this.sections = {
+                header: this.querySelector("header"),
                 left: this.querySelector("#left-section"),
-                centre: this.querySelector("#rgn-title"),
+                centre: this.querySelector("#center-section"),
                 right: this.querySelector("#right-section"),
             };
 
@@ -53,7 +55,7 @@ export default class CustomHeader extends HTMLElement {
             };
 
             setTimeout(() => {
-                setBilingualAttribute([
+                setBilingualProperty([
                     [this.buttons.globe, "Return to country picker", "国の選択へ戻る"],
                     [this.buttons.map, "Return to map", "地図に戻る"],
                     [this.buttons.creator, "About the site", "このサイトについて"],
@@ -73,6 +75,15 @@ export default class CustomHeader extends HTMLElement {
         }, 50);
     }
 
+    setButtonFunctions(globeFunc, mapFunc, regionDropdownFunc, infoFunc, filterFunc, creatorFunc){
+        this.globeFunc = globeFunc;
+        this.mapFunc = mapFunc;
+        this.regionDropdownFunc = regionDropdownFunc;
+        this.infoFunc = infoFunc;
+        this.filterFunc = filterFunc;
+        this.creatorFunc = creatorFunc;
+    }
+
     /** Shows/hides the header.
      * @param {boolean} isVisible 
      */
@@ -87,9 +98,17 @@ export default class CustomHeader extends HTMLElement {
         addRemoveNoDisplay("filter-indicator", !isVisible);
     }
 
+    setRegionTitle(newContent){
+        this.querySelector("#rgn-name").innerHTML = newContent;   
+    }
+
+    flipRegionNameArrow(isUp){
+        flipArrow(this.querySelector("#rgn-name-arrow"), isUp);
+    }
+
     /** Changes values when the selected country changes. */
     onChangeCountry(englishRegionName, japaneseRegionName) {
-        setBilingualAttribute([
+        setBilingualProperty([
             [this.buttons.regionDropdown, `Change ${englishRegionName}`, `${japaneseRegionName}を切り替える`],
             [this.buttons.info, `Toggle ${englishRegionName} info`, `${japaneseRegionName}の情報をトグル`],
         ], ATTRIBUTES.TITLE);
@@ -107,7 +126,7 @@ export default class CustomHeader extends HTMLElement {
             addRemoveClass([this.sections.right], "right-section", false);
             addRemoveClass([this.sections.right], "justify-end", false);
             this.style.position = "fixed";
-            this.style.backgroundColor = "transparent";
+            this.sections.header.style.backgroundColor = "transparent";
             addRemoveNoDisplay([this.buttons.globe, this.sections.left], false);
             addRemoveNoDisplay([this.sections.centre, this.buttons.map, this.buttons.filter, this.buttons.regionInfo], true);
         } else if (isGalleryView()) {
@@ -115,9 +134,9 @@ export default class CustomHeader extends HTMLElement {
             addRemoveClass(this.sections.left, "left-section", true);
             addRemoveClass(this.sections.right, "right-section", true);
             this.style.position = "sticky";
-            this.style.backgroundColor = "white";
+            this.sections.header.style.backgroundColor = "white";
             addRemoveNoDisplay([this.buttons.globe], true);
-            addRemoveNoDisplay([this.sections.centre, this.buttons.map, this.buttons.regionInfo], false);
+            addRemoveNoDisplay([this.sections.centre, this.buttons.filter, this.buttons.map, this.buttons.regionInfo], false);
         } else {
             console.error("View does not exist.");
         }

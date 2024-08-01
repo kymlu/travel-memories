@@ -44,7 +44,7 @@ header {
     }
 }
 
-#rgn-title {
+#rgn-title-btn {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -53,6 +53,7 @@ header {
     margin-top: 10px;
     cursor: pointer;
     pointer-events: auto;
+    font-family: Zen Maru Gothic;
 }
 
 @media only screen and (orientation: landscape) {
@@ -62,7 +63,7 @@ header {
 }
 
 @media only screen and (max-width: 768px) {
-    #rgn-title {
+    #rgn-title-btn {
         margin: auto;
         order: 2;
     }

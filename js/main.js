@@ -14,7 +14,7 @@ import {
 	setSiteContents,
 } from './globals.js';
 import {
-	getBilingualText, scrollToTop,
+	scrollToTop,
 } from './utils.js';
 import { CUSTOM_EVENT_TYPES } from './constants.js';
 import ImagePolaroid from '../components/polaroid/img-polaroid/img-polaroid.js';
@@ -54,19 +54,19 @@ function initializeSite() {
 		fetchHtml("components/polaroid/img-polaroid/img-polaroid.html", ImagePolaroid.name),
 		fetchHtml("components/polaroid/txt-polaroid/txt-polaroid.html", TextPolaroid.name),
 	]).then(([mapView, galleryView, fullscreen, imgPolaroid, txtPolaroid]) => {
-		setSiteContents(infoPopup, mapView, galleryView, fullscreen);
+		setSiteContents(infoPopup, mapView, galleryView, fullscreen, imgPolaroid, txtPolaroid);
 	});
 
-	// TODO: put this in each class?
-	Array.from(document.getElementsByClassName("close-btn")).forEach(element => {
-		element.title = getBilingualText("Close", "閉じる");
-	});
+	// // TODO: put this in each class?
+	// Array.from(document.getElementsByClassName("close-btn")).forEach(element => {
+	// 	element.title = getBilingualText("Close", "閉じる");
+	// });
 
-	document.addEventListener("contextmenu", function (e) {
-		if (e.target.nodeName === "IMG") {
-			e.preventDefault();
-		}
-	}, false);
+	// document.addEventListener("contextmenu", function (e) {
+	// 	if (e.target.nodeName === "IMG") {
+	// 		e.preventDefault();
+	// 	}
+	// }, false);
 
 	document.addEventListener("touchend", endHandleDrag, false);
 
