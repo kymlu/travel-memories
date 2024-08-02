@@ -1,0 +1,15 @@
+.mini-map {
+    margin: 0px;
+    width: 250px;
+    height: 250px;
+    min-width: 250px;
+    min-height: 250px;
+}
+
+@media only screen and (orientation: portrait) {
+    .mini-map {
+        margin: 0px auto;
+        width: 80vw;
+        height: 80vw;
+    }
+}

@@ -21,6 +21,8 @@ export default class Loader extends HTMLElement {
             .then(html => {
                 this.innerHTML = html;
             }).catch(error => console.error(error));
+
+        this.style.zIndex = 100;
     }
 
 

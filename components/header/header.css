@@ -10,7 +10,7 @@ header {
     right: 0px;
     padding: 70px 75px 20px 75px;
     background-color: transparent;
-    z-index: 5000; 
+    z-index: 5000;
     pointer-events: none;
 }
 
@@ -63,8 +63,28 @@ header {
 }
 
 @media only screen and (max-width: 768px) {
-    #rgn-title-btn {
+    #center-section {
         margin: auto;
         order: 2;
     }
+}
+
+#filter-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+}
+
+
+#filter-indicator {
+    position: absolute;
+    top: 2;
+    right: -2;
+    width: 10px;
+    height: 10px;
+    background-color: rgba(var(--main-color));
+    border-radius: 50%;
+    border-color: white;
+    border-width: 1px;
+    border-style: solid;
 }

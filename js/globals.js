@@ -110,7 +110,6 @@ export function onSelectNewRegion(regionId, isPopped) {
         mapView.hide();
         header.toggleVisibility(false);
         loader = new Loader();
-        loader.style.zIndex = 100;
         document.body.append(loader);
     }
 
@@ -129,14 +128,12 @@ export function onSelectNewRegion(regionId, isPopped) {
 
     setTimeout(() => {
         if (!isGalleryView()) {
-            setTimeout(() => {
-            goToGalleryView();
             header.toggleVisibility(true);
-                loader.quickStop();
-                loader.addEventListener(CUSTOM_EVENT_TYPES.LOADING_COMPLETE, (function () {
-                    loader.remove();
-                }));
-            }, 500);
+            goToGalleryView();
+            loader.quickStop();
+            loader.addEventListener(CUSTOM_EVENT_TYPES.LOADING_COMPLETE, (function () {
+                loader.remove();
+            }));
         }
     }, DEFAULT_TIMEOUT);
 }

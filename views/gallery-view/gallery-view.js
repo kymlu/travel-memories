@@ -5,8 +5,8 @@ import {
 	addClickListeners, addRemoveNoDisplay, addRemoveTransparent, getBilingualText,
 	getImageAddress, isPortraitMode, scrollToTop, setBilingualProperty, sortImgs
 } from '../../js/utils.js';
-import { 
-	ATTRIBUTES, CUSTOM_EVENT_TYPES, DEFAULT_TIMEOUT, SCROLL_THRESHOLD, TAGS 
+import {
+	ATTRIBUTES, CUSTOM_EVENT_TYPES, DEFAULT_TIMEOUT, SCROLL_THRESHOLD, TAGS
 } from '../../js/constants.js'
 import Fullscreen from '../../components/fullscreen/fullscreen.js';
 import CustomHeader from '../../components/header/header.js';
@@ -65,6 +65,7 @@ export default class GalleryView extends HTMLElement {
 	connectedCallback() {
 		setTimeout(() => {
 			this.#elements = {
+				view: this.querySelector("#gallery-view"),
 				gallery: this.querySelector("#gallery"),
 				toTopButton: this.querySelector("#to-top-btn")
 			}
@@ -75,6 +76,10 @@ export default class GalleryView extends HTMLElement {
 				if (isGalleryView() && this.loader == null) {
 					this.onScrollFunction();
 				}
+			}).bind(this);
+
+			window.onresize = (function () {
+				this.#elements.view.style.marginTop = this.header.getHeight(); // TODO: FIX
 			}).bind(this);
 
 			this.filterPopup.addEventListener(CUSTOM_EVENT_TYPES.FILTER_POPUP_SUBMITTED, event => {
@@ -99,9 +104,8 @@ export default class GalleryView extends HTMLElement {
 			this.appendChild(this.filterPopup);
 
 			setTimeout(() => {
-				this.insertBefore(this.regionInfo, this.#elements.gallery);
-				this.appendChild(this.regionDropdown);
-				// addRemoveTransparent([this.regionInfo], true);
+				this.#elements.view.insertBefore(this.regionInfo, this.#elements.gallery);
+				this.#elements.view.appendChild(this.regionDropdown);
 				addRemoveNoDisplay([this.regionDropdown], true);
 
 				setBilingualProperty([
@@ -109,10 +113,10 @@ export default class GalleryView extends HTMLElement {
 				], ATTRIBUTES.INNERHTML);
 
 				addClickListeners([
-					[this.#elements.toTopButton, this.scrollToTop]
+					[this.#elements.toTopButton, scrollToTop]
 				]);
 
-				document.getElementById("to-top-btn").title = getBilingualText("Go to top", "トップに移動する");
+				this.#elements.toTopButton.title = getBilingualText("Go to top", "トップに移動する");
 				addRemoveNoDisplay([this], true);
 			}, 50);
 
@@ -123,29 +127,23 @@ export default class GalleryView extends HTMLElement {
 	show() {
 		this.regionDropdown.close();
 		scrollToTop(false);
+		//addRemoveNoDisplay([this], false);
+		addRemoveTransparent([this.#elements.view], false);
 		this.regionInfo.show(false);
-		addRemoveTransparent([this.#elements.gallery, this.#elements.toTopButton], false);
-		addRemoveNoDisplay([this.#elements.gallery], false);
-		document.getElementById("rgn-info-bg").classList.remove("visibility-hidden");
-		addRemoveTransparent([this.#elements.toTopButton], false);
 		if (isPortraitMode()) {
 			document.getElementById("dates-title").scrollIntoView({ block: isPortraitMode() ? "end" : "start" });
 		}
-		addRemoveTransparent("rgn-info-bg", false);
 	}
 
 	/** Close the gallery page */
 	hide() {
 		this.regionDropdown.close();
+		this.regionInfo.hide(false);
 		scrollToTop(false);
-		addRemoveTransparent([this.#elements.gallery, this.#elements.toTopButton], true);
+		addRemoveTransparent([this.#elements.view], true);
 		setTimeout(() => {
 			addRemoveNoDisplay([this], true);
 		}, DEFAULT_TIMEOUT);
-		this.regionInfo.hide(false);
-		document.getElementById("rgn-info-bg").classList.add("visibility-hidden");
-		addRemoveTransparent("rgn-info-bg", false);
-		addRemoveNoDisplay([this], true);
 	}
 
 	// regenerating data
@@ -167,7 +165,6 @@ export default class GalleryView extends HTMLElement {
 	setNewRegion(regionData, isSingleRegionSelected) {
 		scrollToTop(false);
 		addRemoveNoDisplay([this], false);
-		this.#elements.gallery.style.marginTop = this.header.getHeight();
 		setTimeout(() => {
 			this.regionDropdown.changeSelectedRegion(
 				!this.isNewCountry ? this.currentRegion?.id : null,

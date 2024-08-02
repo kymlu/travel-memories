@@ -32,7 +32,7 @@ export default class RegionDropdown extends HTMLElement {
 			}
 			setTimeout(() => {
 				addClickListeners([
-					[this.#elements.background, this.close.bind(this)]
+					[this.#elements.background, this.close.bind(this, null)]
 				]);
 				addRemoveNoDisplay([this], true);
 				addRemoveTransparent([this.querySelector(".transparent")], false);

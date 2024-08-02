@@ -1,8 +1,9 @@
 import { ATTRIBUTES, DEFAULT_TIMEOUT } from "../../js/constants.js";
 import { getAppColor, getCurrentCountry, startHandleDrag } from "../../js/globals.js";
 import {
-    addRemoveTransparent, addRemoveNoDisplay, getBilingualText, 
-    setBilingualProperty, addClickListeners, scrollToTop
+    addRemoveTransparent, addRemoveNoDisplay, getBilingualText,
+    setBilingualProperty, addClickListeners, scrollToTop,
+    addRemoveClass
 } from "../../js/utils.js";
 
 /** The Region Info. */
@@ -31,7 +32,9 @@ export default class RegionInfo extends HTMLElement {
     connectedCallback() {
         setTimeout(() => {
             this.#elements = {
+                regionInfo: this.querySelector("#rgn-info"),
                 background: this.querySelector("#rgn-info-bg"),
+                drawer: this.querySelector("#rgn-info-drawer"),
                 map: this.querySelector("#country-map-mini"),
                 areasTitle: this.querySelector("#areas-title"),
                 datesSection: this.querySelector("#rgn-info-dates"),
@@ -47,8 +50,9 @@ export default class RegionInfo extends HTMLElement {
                 //this.#elements.map.addEventListener("load", this.setMapLoaded.bind(this));
                 this.#elements.divider.addEventListener("touchstart", e => { startHandleDrag(e, "rgn-info-handle") }, false);
                 addClickListeners([
-                    ["rgn-info-bg", this.toggleVisibility.bind(this)],
+                    [this.#elements.background, this.toggleVisibility.bind(this, null)],
                 ]);
+                addRemoveTransparent([this.#elements.drawer]);
                 addRemoveNoDisplay([this], true);
             }, 50);
         }, 50);
@@ -70,7 +74,7 @@ export default class RegionInfo extends HTMLElement {
      */
     setNewRegionInfo(regionList, areaList, isSingleRegionSelected) {
         this.isVisible = true;
-        this.querySelector(".rgn-info").scrollTo({ top: 0, behavior: "instant" }); // TODO: check
+        this.#elements.regionInfo.scrollTo({ top: 0, behavior: "instant" });
 
         if (isSingleRegionSelected) {
             addRemoveNoDisplay(this.#elements.datesSection, false);
@@ -117,17 +121,16 @@ export default class RegionInfo extends HTMLElement {
      */
     show(isForced) {
         this.isVisible = true;
-        addRemoveTransparent(this.#elements.background, false);
-        this.#elements.background.classList.remove("visibility-hidden");
+        addRemoveTransparent([this.#elements.background], false);
+        addRemoveClass([this.#elements.background], "visibility-hidden", false);
         if (isForced) {
             if (document.body.scrollTop < this.getBoundingClientRect().height) {
                 scrollToTop(true);
             } else {
-                this.querySelector("#rgn-info-drawer").style.position = "sticky";
-                this.querySelector("#rgn-info-drawer").style.top = this.header.getHeight();
+                this.#elements.drawer.style.position = "sticky";
+                this.#elements.drawer.style.top = this.header.getHeight();
             }
         } else {
-            this.querySelector("#rgn-info-drawer").style.top = this.header.getHeight();
         }
     }
 
@@ -137,7 +140,7 @@ export default class RegionInfo extends HTMLElement {
     hide(isForced) {
         this.isVisible = false;
         if (isForced) {
-            let rgnInfoOffset = this.querySelector("#rgn-info-drawer").getBoundingClientRect().height;
+            let rgnInfoOffset = this.#elements.drawer.getBoundingClientRect().height;
             if (document.body.scrollTop <= rgnInfoOffset) {
                 window.scrollTo({
                     top: rgnInfoOffset,
@@ -146,11 +149,11 @@ export default class RegionInfo extends HTMLElement {
                 });
             }
         }
-        addRemoveTransparent(this.#elements.background, true);
+        addRemoveTransparent([this.#elements.background], true);
         setTimeout(() => {
-            this.#elements.background.classList.add("visibility-hidden");
-            this.querySelector("#rgn-info-drawer").style.position = "relative";
-            this.querySelector("#rgn-info-drawer").style.top = "0";
+            addRemoveClass([this.#elements.background], "visibility-hidden", true);
+            this.#elements.drawer.style.position = "relative";
+            this.#elements.drawer.style.top = "0";
         }, DEFAULT_TIMEOUT);
     }
 
@@ -176,7 +179,7 @@ export default class RegionInfo extends HTMLElement {
             return;
         }
 
-        if (isVisible == undefined) {
+        if (isVisible == undefined || isVisible == null) {
             isVisible = !this.isVisible;
         }
 

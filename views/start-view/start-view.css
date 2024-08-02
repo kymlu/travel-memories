@@ -16,6 +16,7 @@
 @media only screen and (orientation: portrait) {
     .start-screen {
         gap: 15px;
+        padding: 50px 0px;
     }
 }
 

@@ -129,15 +129,17 @@ export default class CustomHeader extends HTMLElement {
             addRemoveClass([this.sections.left], "left-section", false);
             addRemoveClass([this.sections.right], "right-section", false);
             addRemoveClass([this.sections.right], "justify-end", false);
-            this.style.position = "fixed";
+            addRemoveClass([this], "fixed-top", true);
+            addRemoveClass([this], "sticky-top", false);
             this.sections.header.style.backgroundColor = "transparent";
             addRemoveNoDisplay([this.buttons.globe, this.sections.left], false);
             addRemoveNoDisplay([this.sections.centre, this.buttons.map, this.buttons.filter, this.buttons.regionInfo], true);
         } else if (isGalleryView()) {
             // Shows all buttons except the globe button
-            addRemoveClass(this.sections.left, "left-section", true);
-            addRemoveClass(this.sections.right, "right-section", true);
-            this.style.position = "sticky";
+            addRemoveClass([this.sections.left], "left-section", true);
+            addRemoveClass([this.sections.right], "right-section", true);
+            addRemoveClass([this], "sticky-top", true);
+            addRemoveClass([this], "fixed-top", false);
             this.sections.header.style.backgroundColor = "white";
             addRemoveNoDisplay([this.buttons.globe], true);
             addRemoveNoDisplay([this.sections.centre, this.buttons.filter, this.buttons.map, this.buttons.regionInfo], false);

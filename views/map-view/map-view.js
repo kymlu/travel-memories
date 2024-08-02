@@ -56,7 +56,9 @@ export default class MapView extends HTMLElement {
 		this.#elements.mainTitle.innerHTML = this.countryTitle;
 		scrollToTop(false);
 		// Note: for some reason making "this" transparent does not work.
-		addRemoveTransparent([this.#elements.view], false);
+		setTimeout(() => {
+			addRemoveTransparent([this.#elements.view], false);
+		}, 0);
 	}
 
 	/** Hide the map view. */

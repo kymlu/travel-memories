@@ -1,3 +1,20 @@
+
+.map-view {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 50px 75px;
+    gap: 20px;
+    height: 100vh;
+    box-sizing: border-box;
+  }
+  
+  @media only screen and (orientation: portrait) {
+    .map-view {
+      padding: 0px;
+    }
+  }
+
 .country-map {
     margin: auto;
     width: 70vw;
