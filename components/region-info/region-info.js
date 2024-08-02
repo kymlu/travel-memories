@@ -115,7 +115,6 @@ export default class RegionInfo extends HTMLElement {
         }
     }
 
-    // TODO: fix position
     /** Shows the region info section.
      * @param {true} isForced 
      */
@@ -190,7 +189,6 @@ export default class RegionInfo extends HTMLElement {
         }
     }
 
-    // TODO: ensure map doesn't flash
     /** Filter the mini map. */
     filterMiniMap(currentRegion) {
         if (!this.#elements.map.hasAttribute("data") || this.#elements.map.data == "") return;

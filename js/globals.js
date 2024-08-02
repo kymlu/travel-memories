@@ -239,7 +239,6 @@ export function isCountrySelected() {
  * @param {TouchEvent} e - the touch event.
  * @param {string} handleId - the id of the handle element.
  */
-// TODO: move??
 export function startHandleDrag(e, handleId) {
     if (isPortraitMode()) {
         isHandleGrabbed = true;

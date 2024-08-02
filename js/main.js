@@ -102,7 +102,7 @@ function fetchData() {
 				setAllCountryData(d);
 			}
 		}).catch(error => {
-			loader.showDataLoadError(fetchData); // TODO - seems to be a new instance
+			loader.showDataLoadError(fetchData);
 			hasError = true;
 			console.error("Error loading data.", error);
 		}).then(() => {

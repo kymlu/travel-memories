@@ -34,7 +34,7 @@ export default class BasePopup extends HTMLElement {
     }
 
     /** Opens the popup. */
-    open() {
+    open(openFunction) {
         let popupContent = this.querySelector(".popup-content");
         let popup = this.querySelector(".popup");
         let popupBg = this.querySelector(".popup-bg");
@@ -50,6 +50,9 @@ export default class BasePopup extends HTMLElement {
                 addRemoveClass([popup], "popup-height", true);
                 this.querySelector(".close-btn").addEventListener("click", () => { this.close(false); });
                 this.querySelector(".popup-bg").addEventListener("click", () => { this.close(true); });
+                if(openFunction){
+                    openFunction();
+                }
             }, DEFAULT_TIMEOUT);
         }, 50);
 

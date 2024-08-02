@@ -48,7 +48,6 @@ export default class Loader extends HTMLElement {
     start() {
         this.#startTime = new Date();
 
-        // TODO: ensure this works
         if (isCountrySelected()) {
             addRemoveNoDisplay([this.#elements.icon], false);
             document.querySelector(".small-icon").src = `assets/icons/${getCurrentCountry()?.symbol}.svg`;
@@ -74,7 +73,7 @@ export default class Loader extends HTMLElement {
     stop(animationEndFunction) {
         let dispatchFunction = () => { this.#dispatchLoadingEvent.bind(this)(); }
         let handleAnimationEnd = function () {
-            addRemoveTransparent([this], true); // TODO: make removing the icon quicker
+            addRemoveTransparent([this], true);
             dispatchFunction();
             if (animationEndFunction) {
                 animationEndFunction();

@@ -78,29 +78,14 @@ export function addRemoveClass(elements, className, isAdd) {
 			}
 		} else {
 			if (elements.length > 0) {
-				if (typeof (elements[0]) == 'string') {
-					// edit elements by name
-					if (isAdd) {
-						elements.forEach(element => document.getElementById(element)?.classList.add(className));
+				elements.forEach(element => {
+					var e = typeof element == "string" ? document.getElementById(element) : element;
+					if(isAdd){
+						e?.classList?.add(className);
 					} else {
-						elements.forEach(element => document.getElementById(element)?.classList.remove(className));
+						e?.classList?.remove(className);
 					}
-				} else {
-					// edit element objects directly
-					if (isAdd) {
-						elements.forEach(element => {
-							if (element.classList) {
-								element.classList.add(className);
-							}
-						});
-					} else {
-						elements.forEach(element => {
-							if (element.classList) {
-								element.classList.remove(className);
-							}
-						});
-					}
-				}
+				});
 			}
 		}
 	}

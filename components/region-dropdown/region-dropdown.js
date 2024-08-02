@@ -102,7 +102,7 @@ export default class RegionDropdown extends HTMLElement {
 
 	/** Toggles the visibility of the dropdown. */
 	toggleVisibility() {
-		this.classList.toggle("no-display"); // TODO: this used to be container, double check how to reference
+		this.classList.toggle("no-display");
 		this.header.flipRegionNameArrow();
 		if (!this.hasOpenedForRegion) {
 			this.hasOpenedForRegion = true;

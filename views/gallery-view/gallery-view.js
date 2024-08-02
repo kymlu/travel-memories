@@ -23,8 +23,6 @@ export default class GalleryView extends HTMLElement {
 		super();
 		this.innerHTML = innerHTML;
 
-		// TODO: restrict the loader to the gallery area instead of removing the top bar too
-		// TODO: ensure the loader stops only after the mini map has no display removed
 		/// VARIABLES
 		// filter
 		/** @type {FilterPopup} */
@@ -60,6 +58,11 @@ export default class GalleryView extends HTMLElement {
 		this.#elements = {};
 
 		this.noPicturesText = getBilingualText("No pictures available (yet)", "写真は(まだ)ありません");
+
+		// TODO: figure out UI
+		this.changeFilterQueryButton = document.createElement("button");
+		this.changeFilterQueryButton.classList.add("filter-opt");
+		this.changeFilterQueryButton.innerHTML = getBilingualText("Change filter requirements", "JAPANESE");
 	}
 
 	connectedCallback() {
@@ -79,11 +82,13 @@ export default class GalleryView extends HTMLElement {
 			}).bind(this);
 
 			window.onresize = (function () {
-				this.#elements.view.style.marginTop = this.header.getHeight(); // TODO: FIX
+				if (isGalleryView()) {
+					this.#elements.view.style.marginTop = this.header.getHeight();
+				}
 			}).bind(this);
 
 			this.filterPopup.addEventListener(CUSTOM_EVENT_TYPES.FILTER_POPUP_SUBMITTED, event => {
-				filterImages(event.detail.isOnlyFavs,
+				this.filterImages(event.detail.isOnlyFavs,
 					event.detail.keyword,
 					event.detail.selectedRegions,
 					event.detail.selectedAreas,
@@ -91,13 +96,14 @@ export default class GalleryView extends HTMLElement {
 					event.detail.selectedCameras);
 
 				scrollToTop(true);
-				document.getElementById("gallery").replaceChildren();
-				if (visibleImages.length == 0) {
-					document.getElementById("gallery").innerHTML = noPicturesText;
+				this.#elements.gallery.replaceChildren();
+				if (this.visibleImages.length == 0) {
+					this.#elements.gallery.innerHTML = this.noPicturesText;
+					this.#elements.gallery.appendChild(this.changeFilterQueryButton);
 				} else {
-					imageLoadIndex = 0;
-					currentPolaroidCount = 0;
-					loadImages();
+					this.imageLoadIndex = 0;
+					this.currentPolaroidCount = 0;
+					this.loadImages();
 				}
 			});
 
@@ -107,13 +113,14 @@ export default class GalleryView extends HTMLElement {
 				this.#elements.view.insertBefore(this.regionInfo, this.#elements.gallery);
 				this.#elements.view.appendChild(this.regionDropdown);
 				addRemoveNoDisplay([this.regionDropdown], true);
-
+				
 				setBilingualProperty([
 					["dates-title", "Dates visited", "訪れた日付"]
 				], ATTRIBUTES.INNERHTML);
-
+				
 				addClickListeners([
-					[this.#elements.toTopButton, scrollToTop]
+					[this.#elements.toTopButton, scrollToTop],
+					[this.changeFilterQueryButton, this.filterPopup.open.bind(this.filterPopup)]
 				]);
 
 				this.#elements.toTopButton.title = getBilingualText("Go to top", "トップに移動する");
@@ -125,6 +132,7 @@ export default class GalleryView extends HTMLElement {
 
 	/** Open the gallery page */
 	show() {
+		this.#elements.view.style.marginTop = this.header.getHeight();
 		this.regionDropdown.close();
 		scrollToTop(false);
 		//addRemoveNoDisplay([this], false);
@@ -232,6 +240,7 @@ export default class GalleryView extends HTMLElement {
 				this.currentCountry.officialRegionNameEnglish,
 				this.currentCountry.officialRegionNameJapanese
 			);
+			this.header.toggleFilterIndicator(false);
 
 			this.header.flipRegionNameArrow(false);
 
@@ -371,8 +380,8 @@ export default class GalleryView extends HTMLElement {
 		let region = img.region;
 		let area = img.area;
 		let tagsWithKeyword = TAGS.filter(tag => img.tags.includes(tag.id) &&
-			(doesTextIncludeKeyword(tag.englishName, keywordSearchTerm) ||
-				doesTextIncludeKeyword(tag.japaneseName, keywordSearchTerm)));
+			(this.doesTextIncludeKeyword(tag.englishName, keywordSearchTerm) ||
+			this.doesTextIncludeKeyword(tag.japaneseName, keywordSearchTerm)));
 		let keywordsToSearch = [
 			img.descriptionEnglish,
 			img.descriptionJapanese,
@@ -388,7 +397,7 @@ export default class GalleryView extends HTMLElement {
 		return (!isOnlyFavs || img.isFavourite) &&
 			(keywordSearchTerm == "" ||
 				tagsWithKeyword.length > 0 ||
-				keywordsToSearch.some(keyword => doesTextIncludeKeyword(keyword, keywordSearchTerm))) &&
+				keywordsToSearch.some(keyword => this.doesTextIncludeKeyword(keyword, keywordSearchTerm))) &&
 			(selectedRegions.length == 0 || selectedRegions.includes(region.id)) &&
 			(selectedAreas.length == 0 || selectedAreas.includes(area.id)) &&
 			(selectedTags.length == 0 || selectedTags.filter(value => img.tags.includes(value)).length > 0) &&
@@ -416,7 +425,7 @@ export default class GalleryView extends HTMLElement {
 			selectedAreas,
 			selectedTags,
 			selectedCameras));
-		toggleFilterIndicator(this.allImages.length != this.visibleImages.length);
+		this.header.toggleFilterIndicator(this.allImages.length != this.visibleImages.length);
 	}
 }
 
