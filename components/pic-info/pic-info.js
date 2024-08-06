@@ -8,6 +8,7 @@ import {
 } from "../../js/utils.js";
 
 /** The Pic Info class. */
+// TODO: background click doesn't work
 export default class PicInfo extends HTMLElement {
 	#elements;
 
@@ -47,7 +48,8 @@ export default class PicInfo extends HTMLElement {
 			setTimeout(() => {
 				setBilingualProperty([
 					["search-eng", "Google in English", "英語でググる"],
-					["search-jp", "Google in Japanese", "日本語でググる"]
+					["search-jp", "Google in Japanese", "日本語でググる"],
+                    [this.querySelector(".close-btn"), "Close", "閉じる"]
 				], ATTRIBUTES.TITLE);
 
 				addClickListeners([

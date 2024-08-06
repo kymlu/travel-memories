@@ -7,6 +7,7 @@ import {
 } from "../../js/utils.js";
 
 /** The Region Info. */
+// TODO: background fade issues on open/close
 export default class RegionInfo extends HTMLElement {
     #elements;
 
@@ -17,6 +18,7 @@ export default class RegionInfo extends HTMLElement {
         this.header = headerElement;
         this.hasMapLoaded = false;
         this.currentCountry = null;
+        this.isNewGallery = true;
 
         fetch("components/region-info/region-info.html")
             .then(response => response.text())
@@ -50,12 +52,16 @@ export default class RegionInfo extends HTMLElement {
                 //this.#elements.map.addEventListener("load", this.setMapLoaded.bind(this));
                 this.#elements.divider.addEventListener("touchstart", e => { startHandleDrag(e, "rgn-info-handle") }, false);
                 addClickListeners([
-                    [this.#elements.background, this.toggleVisibility.bind(this, null)],
+                    [this.#elements.background, this.toggleVisibility.bind(this, false)],
                 ]);
                 addRemoveTransparent([this.#elements.drawer]);
                 addRemoveNoDisplay([this], true);
             }, 50);
         }, 50);
+    }
+
+    repositionBackground() {
+        this.#elements.background.style.top = this.header.getHeight();
     }
 
     /** Makes value changes based on new country.
@@ -72,9 +78,15 @@ export default class RegionInfo extends HTMLElement {
      * @param {any[]} areaList 
      * @param {boolean} isSingleRegionSelected 
      */
-    setNewRegionInfo(regionList, areaList, isSingleRegionSelected) {
+    setNewRegionInfo(regionList, areaList, isSingleRegionSelected, isNewGallery) {
         this.isVisible = true;
         this.#elements.regionInfo.scrollTo({ top: 0, behavior: "instant" });
+        //addRemoveTransparent([this.#elements.background], false);
+
+        if (isNewGallery) {
+            this.isNewGallery = true;
+            addRemoveTransparent([this.#elements.regionInfo], true);
+        }
 
         if (isSingleRegionSelected) {
             addRemoveNoDisplay(this.#elements.datesSection, false);
@@ -126,10 +138,13 @@ export default class RegionInfo extends HTMLElement {
             if (document.body.scrollTop < this.getBoundingClientRect().height) {
                 scrollToTop(true);
             } else {
-                this.#elements.drawer.style.position = "sticky";
-                this.#elements.drawer.style.top = this.header.getHeight();
+                this.#elements.regionInfo.style.position = "sticky";
+                this.#elements.regionInfo.style.top = this.header.getHeight();
             }
-        } else {
+        }
+        if (this.isNewGallery) {
+            addRemoveTransparent([this.#elements.regionInfo], false);
+            this.isNewGallery = false;
         }
     }
 
@@ -151,8 +166,8 @@ export default class RegionInfo extends HTMLElement {
         addRemoveTransparent([this.#elements.background], true);
         setTimeout(() => {
             addRemoveClass([this.#elements.background], "visibility-hidden", true);
-            this.#elements.drawer.style.position = "relative";
-            this.#elements.drawer.style.top = "0";
+            this.#elements.regionInfo.style.position = "relative";
+            this.#elements.regionInfo.style.top = "0";
         }, DEFAULT_TIMEOUT);
     }
 
@@ -218,9 +233,9 @@ export default class RegionInfo extends HTMLElement {
                 // zoom into the specific region
                 const countryImg = svgDoc.getElementById(this.currentCountry.id + "-img");
                 if (currentRegion) {
-                    countryImg.setAttribute("viewBox", currentRegion.viewbox);
+                    countryImg?.setAttribute("viewBox", currentRegion.viewbox);
                 } else {
-                    countryImg.setAttribute("viewBox", `0 0 ${countryImg.width.baseVal.valueInSpecifiedUnits} ${countryImg.height.baseVal.valueInSpecifiedUnits}`);
+                    countryImg?.setAttribute("viewBox", `0 0 ${countryImg.width.baseVal.valueInSpecifiedUnits} ${countryImg.height.baseVal.valueInSpecifiedUnits}`);
                 }
             } catch (error) {
                 console.error(error);

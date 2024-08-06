@@ -63,7 +63,7 @@ export function setSiteContents(
     header.setButtonFunctions(goToStartView,
         goToMapView,
         galleryView.toggleRegionDropdown.bind(galleryView),
-        galleryView.toggleRegionInfo.bind(galleryView),
+        galleryView.toggleRegionInfo.bind(galleryView, null),
         galleryView.showFilter.bind(galleryView),
         infoPopup.open.bind(infoPopup));
     // todo: might not work with fullscreen mode since fullscreen must be above header
@@ -101,11 +101,12 @@ export function goToStartView(isPopped) {
 
 export function goToGalleryView() {
     setCurrentView(VIEW_NAMES.GALLERY);
+    header.toggleVisibility(true);
     galleryView.show();
 }
 
 // todo: put this logic into the galleryview
-export function onSelectNewRegion(regionId, isPopped) {
+export function onSelectNewRegion(regionId, isPopped, isNewGallery) {
     if (isMapView()) {
         mapView.hide();
         header.toggleVisibility(false);
@@ -113,22 +114,20 @@ export function onSelectNewRegion(regionId, isPopped) {
         document.body.append(loader);
     }
 
-
     if (isPopped == null) {
         window.history.pushState({ rgn: regionId }, "", null);
     }
 
     if (regionId != undefined && regionId != null) {
         let newRegion = currentCountry.regionGroups.flatMap(x => x.regions).filter(rgn => rgn.id == regionId);
-        galleryView.setNewRegion(newRegion, true);
+        galleryView.setNewRegion(newRegion, true, isNewGallery);
     } else {
         let visitedRgns = currentCountry.regionGroups.flatMap(grp => grp.regions.filter(rgn => rgn.visited));
-        galleryView.setNewRegion(visitedRgns, false);
+        galleryView.setNewRegion(visitedRgns, false, isNewGallery);
     }
 
     setTimeout(() => {
         if (!isGalleryView()) {
-            header.toggleVisibility(true);
             goToGalleryView();
             loader.quickStop();
             loader.addEventListener(CUSTOM_EVENT_TYPES.LOADING_COMPLETE, (function () {
@@ -177,11 +176,11 @@ export function getAllCountryData() {
 }
 
 export function setCurrentCountry(countryId, countryColor) {
-    header.toggleVisibility(false);
     if (countryId == null) {
         currentCountry = null;
         header.toggleVisibility(true);
     } else {
+        header.toggleVisibility(false);
         currentCountry = allCountryData.find(country => country.id == countryId);
         currentCountry.regionGroups.forEach(rgnGrp => {
             rgnGrp.regions.forEach(rgn => {

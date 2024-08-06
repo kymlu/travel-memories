@@ -57,11 +57,6 @@ function initializeSite() {
 		setSiteContents(infoPopup, mapView, galleryView, fullscreen, imgPolaroid, txtPolaroid);
 	});
 
-	// // TODO: put this in each class?
-	// Array.from(document.getElementsByClassName("close-btn")).forEach(element => {
-	// 	element.title = getBilingualText("Close", "閉じる");
-	// });
-
 	// document.addEventListener("contextmenu", function (e) {
 	// 	if (e.target.nodeName === "IMG") {
 	// 		e.preventDefault();

@@ -84,6 +84,7 @@ export default class GalleryView extends HTMLElement {
 			window.onresize = (function () {
 				if (isGalleryView()) {
 					this.#elements.view.style.marginTop = this.header.getHeight();
+					this.regionInfo.repositionBackground();
 				}
 			}).bind(this);
 
@@ -137,6 +138,7 @@ export default class GalleryView extends HTMLElement {
 		scrollToTop(false);
 		//addRemoveNoDisplay([this], false);
 		addRemoveTransparent([this.#elements.view], false);
+		this.regionInfo.repositionBackground();
 		this.regionInfo.show(false);
 		if (isPortraitMode()) {
 			document.getElementById("dates-title").scrollIntoView({ block: isPortraitMode() ? "end" : "start" });
@@ -163,16 +165,16 @@ export default class GalleryView extends HTMLElement {
 		this.currentCountry = getCurrentCountry();
 		this.regionDropdown.handleNewCountry();
 		this.regionInfo.handleNewCountry();
-		// region info
 	}
 
 	/** Set values based on a new user-selected region.
 	 * @param {any[]} regionData - the new region's data
 	 * @param {boolean} isSingleRegionSelected
 	 */
-	setNewRegion(regionData, isSingleRegionSelected) {
+	setNewRegion(regionData, isSingleRegionSelected, isNewGallery) {
 		scrollToTop(false);
 		addRemoveNoDisplay([this], false);
+		this.isNewGallery = isNewGallery;
 		setTimeout(() => {
 			this.regionDropdown.changeSelectedRegion(
 				!this.isNewCountry ? this.currentRegion?.id : null,
@@ -202,7 +204,7 @@ export default class GalleryView extends HTMLElement {
 				this.header.setRegionTitle(this.currentCountry.englishName, this.currentCountry.japaneseName);
 			}
 
-			this.regionInfo.setNewRegionInfo(regionsList, areaList, isSingleRegionSelected);
+			this.regionInfo.setNewRegionInfo(regionsList, areaList, isSingleRegionSelected, isNewGallery);
 
 			// get all images
 			this.allImages = regionData.flatMap(rgn => {
@@ -240,8 +242,8 @@ export default class GalleryView extends HTMLElement {
 				this.currentCountry.officialRegionNameEnglish,
 				this.currentCountry.officialRegionNameJapanese
 			);
+			
 			this.header.toggleFilterIndicator(false);
-
 			this.header.flipRegionNameArrow(false);
 
 			// clear existing gallery
@@ -314,7 +316,7 @@ export default class GalleryView extends HTMLElement {
 			rgn.japaneseName
 		);
 
-		newPolaroid.addEventListener("click", () => { onSelectNewRegion(rgn.id) });
+		newPolaroid.addEventListener("click", () => { onSelectNewRegion(rgn.id, null, false) });
 
 		return newPolaroid;
 	}

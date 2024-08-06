@@ -27,7 +27,7 @@ export default class MapView extends HTMLElement {
 
 			setTimeout(() => {
 				this.#elements.map.addEventListener("load", this.colourMap.bind(this));
-				addClickListeners([[this.#elements.mainTitle, function () { onSelectNewRegion(null); }]]);
+				addClickListeners([[this.#elements.mainTitle, function () { onSelectNewRegion(null, null, true); }]]);
 			}, 50);
 			addRemoveNoDisplay([this]);
 		}, 50);
@@ -94,7 +94,7 @@ export default class MapView extends HTMLElement {
 					rgnImg.setAttribute("cursor", "pointer");
 					rgnImg.setAttribute("transition", "opacity 0.3 ease-in-out");
 					rgnImg.addEventListener("click", function () {
-						onSelectNewRegion(rgn.id);
+						onSelectNewRegion(rgn.id, null, true);
 						document.getElementById("main-title").innerHTML = getBilingualText(rgn.englishName, rgn.japaneseName);
 					});
 

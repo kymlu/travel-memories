@@ -6,6 +6,7 @@ import {
 } from '../../../js/utils.js';
 import PicInfo from '../pic-info/pic-info.js';
 
+/** The Fullscreen View. */
 export default class Fullscreen extends HTMLElement {
 	#elements;
 
@@ -24,6 +25,7 @@ export default class Fullscreen extends HTMLElement {
 		// pic info
 		this.isPicInfoVisible = true;
 		this.lastSwipeTime = null;
+		this.isChangingPicture = false;
 		this.currentCountryId = null;
 
 		// gestures
@@ -40,35 +42,40 @@ export default class Fullscreen extends HTMLElement {
 			.catch(error => {
 				console.error("Error loading fullscreen.", error);
 			});
-
-		this.#elements = {
-
-		};
 	}
 
 	connectedCallback() {
 		setTimeout(() => {
-			setBilingualProperty([
-				["pic-info-btn", "See picture information", "写真の情報を見る"],
-				["left-arrow", "Previous picture", "前の写真"],
-				["right-arrow", "Next picture", "次の写真"],
-			], ATTRIBUTES.TITLE);
+			this.#elements = {
+				view: this.querySelector("#fullscreen"),
+				background: this.querySelector(".popup-bg"),
+				picture: this.querySelector("#fullscreen-pic"),
+				nextPicture: this.querySelector("#fullscreen-pic-next"),
+				leftArrow: this.querySelector("#left-arrow"),
+				rightArrow: this.querySelector("#right-arrow"),
+			};
+			setTimeout(() => {
+				setBilingualProperty([
+					["pic-info-btn", "See picture information", "写真の情報を見る"],
+					[this.#elements.leftArrow, "Previous picture", "前の写真"],
+					[this.#elements.rightArrow, "Next picture", "次の写真"],
+				], ATTRIBUTES.TITLE);
 
-			addClickListeners([
-				["fullscreen-bg", this.close.bind(this, true)],
-				["fullscreen-ctrl", this.close.bind(this, true)],
-				["left-arrow", (event) => { event.stopPropagation(); }],
-				["fullscreen-pic", (event) => { event.stopPropagation(); }],
-				["right-arrow", (event) => { event.stopPropagation(); }],
-				["left-arrow", this.changeFullscreenPicture.bind(this, false)],
-				["right-arrow", this.changeFullscreenPicture.bind(this, true)]
-			]);
+				addClickListeners([
+					[this.#elements.background, this.close.bind(this, true)],
+					["fullscreen-ctrl", this.close.bind(this, true)],
+					[this.#elements.leftArrow, (event) => { event.stopPropagation(); }],
+					[this.#elements.picture, (event) => { event.stopPropagation(); }],
+					[this.#elements.rightArrow, (event) => { event.stopPropagation(); }],
+					[this.#elements.leftArrow, this.changePicture.bind(this, false)],
+					[this.#elements.rightArrow, this.changePicture.bind(this, true)]
+				]);
 
-			let swipeContainer = document.getElementById("fullscreen");
-			swipeContainer.addEventListener("touchstart", this.startFullscreenSwipe, false);
-			swipeContainer.addEventListener("touchmove", this.moveFullscreenSwipe, false);
-			this.picInfo.style.zIndex = 10;
-			this.querySelector("#fullscreen").appendChild(this.picInfo);
+				this.#elements.view.addEventListener("touchstart", this.startFullscreenSwipe, false);
+				this.#elements.view.addEventListener("touchmove", this.moveFullscreenSwipe, false);
+				this.picInfo.style.zIndex = 10;
+				this.#elements.view.appendChild(this.picInfo);
+			}, 50);
 		}, 50);
 	}
 
@@ -95,8 +102,8 @@ export default class Fullscreen extends HTMLElement {
 		}
 		this.isFullscreen = true;
 		document.body.style.overflowY = "hidden";
-		document.getElementById("fullscreen").classList.remove("visibility-hidden");
-		addRemoveTransparent(["fullscreen", "fullscreen-bg"], false);
+		this.#elements.view.classList.remove("visibility-hidden");
+		addRemoveTransparent([this.#elements.view, this.#elements.background], false);
 		document.addEventListener("keydown", this.handleKeydown.bind(this));
 	}
 
@@ -109,12 +116,12 @@ export default class Fullscreen extends HTMLElement {
 		this.isFullscreen = false;
 		document.body.style.overflowY = "auto";
 		if (forceClose) {
-			document.getElementById("fullscreen").classList.add("visibility-hidden");
-			addRemoveTransparent(["fullscreen", "fullscreen-bg"], true);
+			this.#elements.view.classList.add("visibility-hidden");
+			addRemoveTransparent([this.#elements.view, this.#elements.background], true);
 		} else {
-			addRemoveTransparent(["fullscreen", "fullscreen-bg"], true);
+			addRemoveTransparent([this.#elements.view, this.#elements.background], true);
 			setTimeout(() => {
-				document.getElementById("fullscreen").classList.add("visibility-hidden");
+				this.#elements.view.classList.add("visibility-hidden");
 			}, DEFAULT_TIMEOUT);
 		}
 	}
@@ -133,10 +140,14 @@ export default class Fullscreen extends HTMLElement {
 	handleKeydown(event) {
 		switch (event.key) {
 			case "ArrowRight":
-				this.changeFullscreenPicture(true);
+				if (!this.isChangingPicture) {
+					this.changePicture(true);
+				}
 				break;
 			case "ArrowLeft":
-				this.changeFullscreenPicture(false);
+				if (!this.isChangingPicture) {
+					this.changePicture(false);
+				}
 				break;
 			case "ArrowUp":
 				this.isPicInfoVisible = true;
@@ -156,23 +167,17 @@ export default class Fullscreen extends HTMLElement {
 
 	// swiping functions
 	/**
-	 * Starts procedures for 
+	 * Starts procedures for swiping in fullscreen
 	 */
 	startFullscreenSwipe(e) {
-		//if (isPortraitMode()) {
 		if (e.touches.length == 1) {
 			this.initialX = e.touches[0].clientX;
 			this.initialY = e.touches[0].clientY;
 		}
-		//}
 	}
 
 	moveFullscreenSwipe(e) {
 		if (this.initialX === null || this.initialY === null) return;
-
-		// if (!isPortraitMode()) {
-		// 	return;
-		// }
 
 		if (e.touches.length == 1) {
 			let currentX = e.touches[0].clientX;
@@ -184,9 +189,9 @@ export default class Fullscreen extends HTMLElement {
 			// horizontal swipe
 			if (Math.abs(diffX) > Math.abs(diffY)) {
 				if (diffX > 0) {
-					this.changeFullscreenPicture(true);
+					this.changePicture(true);
 				} else {
-					this.changeFullscreenPicture(false);
+					this.changePicture(false);
 				}
 			} else if (isPortraitMode()) {
 				//vertical swipe - only for showing/hiding pic info
@@ -209,7 +214,8 @@ export default class Fullscreen extends HTMLElement {
 		}
 	}
 
-	changeFullscreenPicture(isNext) {
+	changePicture(isNext) {
+		this.isChangingPicture = true;
 		if (isNext) {
 			if (this.currentPicIndex == this.visibleImages.length - 1) {
 				this.currentPicIndex = 0;
@@ -223,8 +229,10 @@ export default class Fullscreen extends HTMLElement {
 				this.currentPicIndex--;
 			}
 		}
+		console.log(this.currentPicIndex);
 		this.currentPic = this.visibleImages[this.currentPicIndex];
 		this.setNewPicture(isNext);
+		this.isChangingPicture = false;
 	}
 
 	/**
@@ -235,11 +243,11 @@ export default class Fullscreen extends HTMLElement {
 		let src = getImageAddress(this.currentCountryId, this.currentPic.region.id, this.currentPic.fileName);
 
 		if (this.isNewFullscreenInstance || (new Date() - this.lastSwipeTime) < 300) {
-			document.getElementById("fullscreen-pic").src = src;
+			this.#elements.picture.src = src;
 			this.isNewFullscreenInstance = false;
 		} else {
-			let nextPic = document.getElementById("fullscreen-pic-next");
-			let currentPic = document.getElementById("fullscreen-pic");
+			let nextPic = this.#elements.nextPicture;
+			let currentPic = this.#elements.picture;
 
 			addRemoveNoDisplay([nextPic], true);
 			nextPic.src = src;
@@ -261,7 +269,6 @@ export default class Fullscreen extends HTMLElement {
 						addRemoveNoDisplay([currentPic], false);
 						addRemoveNoDisplay([nextPic], true);
 						addRemoveTransparent([nextPic], true);
-						// nextPic.classList.remove("fullscreen-pic");
 					}, 100);
 				}, 100);
 			}, 20);

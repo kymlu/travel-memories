@@ -27,3 +27,7 @@
     width: 100%;
     overflow-y: auto;
 }
+
+#pic-info-bg {
+    opacity: 0%;
+}

@@ -12,6 +12,8 @@
   @media only screen and (orientation: portrait) {
     .map-view {
       padding: 0px;
+      justify-content: start;
+      padding-top: 10vh;
     }
   }
 
@@ -25,6 +27,7 @@
     .country-map {
         margin: 0;
         width: 100%;
+        max-height: 65vh;
     }
 }
 

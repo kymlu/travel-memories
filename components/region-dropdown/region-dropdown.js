@@ -74,7 +74,7 @@ export default class RegionDropdown extends HTMLElement {
 					regionButton.title = getBilingualText(`See images from ${rgn.englishName}`, `${rgn.japaneseName}の写真を表示する`);
 					regionButton.classList.add("visited-rgn-text");
 					regionButton.addEventListener("click", function () {
-						onSelectNewRegion(rgn.id);
+						onSelectNewRegion(rgn.id, null, false);
 					}, false);
 					dropDownList.appendChild(regionButton);
 				}

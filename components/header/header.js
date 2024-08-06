@@ -35,7 +35,7 @@ export default class CustomHeader extends HTMLElement {
     connectedCallback() {
         setTimeout(() => {
             this.classList.add("opacity-transition");
-            
+
             /** CustomHeader sections */
             this.sections = {
                 header: this.querySelector("header"),
@@ -61,7 +61,7 @@ export default class CustomHeader extends HTMLElement {
                     [this.buttons.creator, "About the site", "このサイトについて"],
                     [this.buttons.filter, "Filter Pictures", "写真をフィルターする"]
                 ], ATTRIBUTES.TITLE);
-                
+
                 addClickListeners([
                     [this.buttons.globe, this.globeFunc],
                     [this.buttons.map, this.mapFunc],
@@ -75,11 +75,11 @@ export default class CustomHeader extends HTMLElement {
         }, 50);
     }
 
-    getHeight(){
+    getHeight() {
         return this.sections.header.getBoundingClientRect().height;
     }
 
-    setButtonFunctions(globeFunc, mapFunc, regionDropdownFunc, infoFunc, filterFunc, creatorFunc){
+    setButtonFunctions(globeFunc, mapFunc, regionDropdownFunc, infoFunc, filterFunc, creatorFunc) {
         this.globeFunc = globeFunc;
         this.mapFunc = mapFunc;
         this.regionDropdownFunc = regionDropdownFunc;
@@ -102,11 +102,11 @@ export default class CustomHeader extends HTMLElement {
         addRemoveNoDisplay("filter-indicator", !isVisible);
     }
 
-    setRegionTitle(newContent){
-        this.querySelector("#rgn-name").innerHTML = newContent;   
+    setRegionTitle(newContent) {
+        this.querySelector("#rgn-name").innerHTML = newContent;
     }
 
-    flipRegionNameArrow(isUp){
+    flipRegionNameArrow(isUp) {
         flipArrow(this.querySelector("#rgn-name-arrow"), isUp);
     }
 
