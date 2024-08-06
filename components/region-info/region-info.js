@@ -7,7 +7,6 @@ import {
 } from "../../js/utils.js";
 
 /** The Region Info. */
-// TODO: background fade issues on open/close
 export default class RegionInfo extends HTMLElement {
     #elements;
 
@@ -49,7 +48,6 @@ export default class RegionInfo extends HTMLElement {
             };
 
             setTimeout(() => {
-                //this.#elements.map.addEventListener("load", this.setMapLoaded.bind(this));
                 this.#elements.divider.addEventListener("touchstart", e => { startHandleDrag(e, "rgn-info-handle") }, false);
                 addClickListeners([
                     [this.#elements.background, this.toggleVisibility.bind(this, false)],
@@ -79,14 +77,15 @@ export default class RegionInfo extends HTMLElement {
      * @param {boolean} isSingleRegionSelected 
      */
     setNewRegionInfo(regionList, areaList, isSingleRegionSelected, isNewGallery) {
-        this.isVisible = true;
-        this.#elements.regionInfo.scrollTo({ top: 0, behavior: "instant" });
-        //addRemoveTransparent([this.#elements.background], false);
-
         if (isNewGallery) {
             this.isNewGallery = true;
             addRemoveTransparent([this.#elements.regionInfo], true);
+        } else {
+            addRemoveTransparent([this.#elements.background], false);
+            addRemoveClass([this.#elements.background], "visibility-hidden", false);
         }
+
+        this.isVisible = true;
 
         if (isSingleRegionSelected) {
             addRemoveNoDisplay(this.#elements.datesSection, false);
@@ -125,12 +124,17 @@ export default class RegionInfo extends HTMLElement {
             });
             this.filterMiniMap(null);
         }
+        this.querySelector(".rgn-info").scrollTo({ top: 0, behavior: "smooth" });
     }
 
     /** Shows the region info section.
      * @param {true} isForced 
      */
     show(isForced) {
+        if (this.isNewGallery) {
+            this.repositionBackground();
+        }
+
         this.isVisible = true;
         addRemoveTransparent([this.#elements.background], false);
         addRemoveClass([this.#elements.background], "visibility-hidden", false);

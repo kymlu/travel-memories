@@ -92,13 +92,14 @@ export default class Fullscreen extends HTMLElement {
 		this.currentPicIndex = this.visibleImages.indexOf(this.currentPic);
 		this.isNewFullscreenInstance = true;
 		this.currentCountryId = countryId;
+		this.isChangingPicture = false;
 		this.setNewPicture();
 
 		this.lastSwipeTime = new Date();
 
 		if (isPortraitMode()) {
 			this.isPicInfoVisible = false;
-			this.picInfo.hide();
+			this.picInfo.hide(true);
 		}
 		this.isFullscreen = true;
 		document.body.style.overflowY = "hidden";
@@ -214,9 +215,9 @@ export default class Fullscreen extends HTMLElement {
 		}
 	}
 
-	changePicture(isNext) {
+	changePicture(isMovingRight) {
 		this.isChangingPicture = true;
-		if (isNext) {
+		if (isMovingRight) {
 			if (this.currentPicIndex == this.visibleImages.length - 1) {
 				this.currentPicIndex = 0;
 			} else {
@@ -229,49 +230,49 @@ export default class Fullscreen extends HTMLElement {
 				this.currentPicIndex--;
 			}
 		}
-		console.log(this.currentPicIndex);
 		this.currentPic = this.visibleImages[this.currentPicIndex];
-		this.setNewPicture(isNext);
-		this.isChangingPicture = false;
+		this.setNewPicture(isMovingRight);
 	}
 
 	/**
 	 * 
-	 * @param {boolean} isNext - ```True``` if the next picture is after the current one.
+	 * @param {boolean} isMovingRight - ```True``` if the next picture is after the current one.
 	 */
-	setNewPicture(isNext) {
+	setNewPicture(isMovingRight) {
 		let src = getImageAddress(this.currentCountryId, this.currentPic.region.id, this.currentPic.fileName);
 
 		if (this.isNewFullscreenInstance || (new Date() - this.lastSwipeTime) < 300) {
 			this.#elements.picture.src = src;
 			this.isNewFullscreenInstance = false;
+			this.isChangingPicture = false;
 		} else {
 			let nextPic = this.#elements.nextPicture;
 			let currentPic = this.#elements.picture;
 
 			addRemoveNoDisplay([nextPic], true);
 			nextPic.src = src;
-			nextPic.classList.add(isNext ? "fullscreen-pic-right" : "fullscreen-pic-left");
+			nextPic.classList.add(isMovingRight ? "fullscreen-pic-right" : "fullscreen-pic-left");
 
 			setTimeout(() => {
 				addRemoveNoDisplay([nextPic], false);
 				addRemoveTransparent([nextPic], false);
 				addRemoveTransparent([currentPic], true);
-				nextPic.classList.remove(isNext ? "fullscreen-pic-right" : "fullscreen-pic-left");
-				currentPic.classList.add(isNext ? "fullscreen-pic-left" : "fullscreen-pic-right");
+				nextPic.classList.remove(isMovingRight ? "fullscreen-pic-right" : "fullscreen-pic-left");
+				currentPic.classList.add(isMovingRight ? "fullscreen-pic-left" : "fullscreen-pic-right");
 
 				setTimeout(() => {
 					addRemoveNoDisplay([currentPic], true);
 					addRemoveTransparent([currentPic], false);
 					currentPic.src = src;
-					currentPic.classList.remove(isNext ? "fullscreen-pic-left" : "fullscreen-pic-right");
+					currentPic.classList.remove(isMovingRight ? "fullscreen-pic-left" : "fullscreen-pic-right");
 					setTimeout(() => {
 						addRemoveNoDisplay([currentPic], false);
 						addRemoveNoDisplay([nextPic], true);
 						addRemoveTransparent([nextPic], true);
+						this.isChangingPicture = false;
 					}, 100);
 				}, 100);
-			}, 20);
+			}, 0);
 		}
 		this.lastSwipeTime = new Date();
 		this.picInfo.setPicInfo(this.currentPic, this.currentCountryId);

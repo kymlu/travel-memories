@@ -138,7 +138,6 @@ export default class GalleryView extends HTMLElement {
 		scrollToTop(false);
 		//addRemoveNoDisplay([this], false);
 		addRemoveTransparent([this.#elements.view], false);
-		this.regionInfo.repositionBackground();
 		this.regionInfo.show(false);
 		if (isPortraitMode()) {
 			document.getElementById("dates-title").scrollIntoView({ block: isPortraitMode() ? "end" : "start" });

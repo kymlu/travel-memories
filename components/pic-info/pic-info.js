@@ -8,7 +8,6 @@ import {
 } from "../../js/utils.js";
 
 /** The Pic Info class. */
-// TODO: background click doesn't work
 export default class PicInfo extends HTMLElement {
 	#elements;
 
@@ -84,7 +83,6 @@ export default class PicInfo extends HTMLElement {
 		this.isVisible = true;
 		addRemoveNoDisplay([this], false);
 		let drawer = this.#elements.drawer;
-		//TODO: transition on first portrait mode open
 		addRemoveNoDisplay([drawer], false);
 		setTimeout(() => {
 			drawer.style.bottom = "0";
@@ -96,7 +94,7 @@ export default class PicInfo extends HTMLElement {
 	}
 
 	/** Hide the pic info section. */
-	hide() {
+	hide(isNewFullscreenInstance) {
 		if (this.isMoving || !this.isVisible) return;
 
 		this.isMoving = true;
@@ -108,7 +106,7 @@ export default class PicInfo extends HTMLElement {
 			addRemoveNoDisplay([drawer], true);
 			addRemoveNoDisplay([this], true);
 			this.isMoving = false;
-		}, DEFAULT_TIMEOUT);
+		}, isNewFullscreenInstance ? 0 : DEFAULT_TIMEOUT);
 	}
 
 	/** Show or hide pic info. */
