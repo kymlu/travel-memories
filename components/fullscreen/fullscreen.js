@@ -16,6 +16,7 @@ export default class Fullscreen extends HTMLElement {
 		super();
 		this.isNewFullscreenInstance = true;
 		this.isFullscreen = false;
+		this.isChangingPicture = false;
 
 		// selected pic
 		this.currentPic = null;
@@ -25,7 +26,6 @@ export default class Fullscreen extends HTMLElement {
 		// pic info
 		this.isPicInfoVisible = true;
 		this.lastSwipeTime = null;
-		this.isChangingPicture = false;
 		this.currentCountryId = null;
 
 		// gestures
@@ -53,10 +53,11 @@ export default class Fullscreen extends HTMLElement {
 				nextPicture: this.querySelector("#fullscreen-pic-next"),
 				leftArrow: this.querySelector("#left-arrow"),
 				rightArrow: this.querySelector("#right-arrow"),
+				picInfoButton: this.querySelector("#pic-info-btn")
 			};
 			setTimeout(() => {
 				setBilingualProperty([
-					["pic-info-btn", "See picture information", "写真の情報を見る"],
+					[this.#elements.picInfoButton, "See picture information", "写真の情報を見る"],
 					[this.#elements.leftArrow, "Previous picture", "前の写真"],
 					[this.#elements.rightArrow, "Next picture", "次の写真"],
 				], ATTRIBUTES.TITLE);
@@ -64,6 +65,7 @@ export default class Fullscreen extends HTMLElement {
 				addClickListeners([
 					[this.#elements.background, this.close.bind(this, true)],
 					["fullscreen-ctrl", this.close.bind(this, true)],
+					[this.#elements.picInfoButton, this.picInfo.toggleVisibility.bind(this.picInfo, null)],
 					[this.#elements.leftArrow, (event) => { event.stopPropagation(); }],
 					[this.#elements.picture, (event) => { event.stopPropagation(); }],
 					[this.#elements.rightArrow, (event) => { event.stopPropagation(); }],
@@ -75,6 +77,7 @@ export default class Fullscreen extends HTMLElement {
 				this.#elements.view.addEventListener("touchmove", this.moveFullscreenSwipe, false);
 				this.picInfo.style.zIndex = 10;
 				this.#elements.view.appendChild(this.picInfo);
+				this.close(true);
 			}, 50);
 		}, 50);
 	}
@@ -87,6 +90,7 @@ export default class Fullscreen extends HTMLElement {
 	 * @param {string} countryId 
 	 */
 	open(visibleImageList, imageToDisplay, countryId) {
+		addRemoveNoDisplay([this], false);
 		this.visibleImages = visibleImageList;
 		this.currentPic = imageToDisplay;
 		this.currentPicIndex = this.visibleImages.indexOf(this.currentPic);
@@ -94,9 +98,9 @@ export default class Fullscreen extends HTMLElement {
 		this.currentCountryId = countryId;
 		this.isChangingPicture = false;
 		this.setNewPicture();
-
+		
 		this.lastSwipeTime = new Date();
-
+		
 		if (isPortraitMode()) {
 			this.isPicInfoVisible = false;
 			this.picInfo.hide(true);
@@ -107,11 +111,11 @@ export default class Fullscreen extends HTMLElement {
 		addRemoveTransparent([this.#elements.view, this.#elements.background], false);
 		document.addEventListener("keydown", this.handleKeydown.bind(this));
 	}
-
+	
 	/** 
 	 * Close the 
 	 * @param {boolean} forceClose - ```True``` if the user has forcefully closed fullscreen mode.
-	 */
+	*/
 	close(forceClose) {
 		document.removeEventListener("keydown", this.handleKeydown.bind(this));
 		this.isFullscreen = false;
@@ -119,10 +123,12 @@ export default class Fullscreen extends HTMLElement {
 		if (forceClose) {
 			this.#elements.view.classList.add("visibility-hidden");
 			addRemoveTransparent([this.#elements.view, this.#elements.background], true);
+			addRemoveNoDisplay([this], true);
 		} else {
 			addRemoveTransparent([this.#elements.view, this.#elements.background], true);
 			setTimeout(() => {
 				this.#elements.view.classList.add("visibility-hidden");
+				addRemoveNoDisplay([this], true);
 			}, DEFAULT_TIMEOUT);
 		}
 	}

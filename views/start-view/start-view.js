@@ -67,17 +67,15 @@ export default class StartView extends HTMLElement {
 
             this.appendChild(newBtn);
         });
-
-        window.history.pushState({}, "", null);
     }
 
     /** Shows the start view. */
     show(isPopped) {
         if (isPopped == null) {
-            window.history.pushState({}, "", null);
+            window.history.pushState({ type: VIEW_NAMES.StartView }, "", null);
         }
 
-        setCurrentCountry(null);
+        setCurrentCountry(null, null, false);
         scrollToTop(false);
         setAppColor("--default-color");
         addRemoveNoDisplay([this], false);
@@ -98,12 +96,8 @@ export default class StartView extends HTMLElement {
         }, DEFAULT_TIMEOUT);
     }
 
-    selectCountry(countryId, countryColor, isPopped) {
-        if (isPopped == null) {
-            window.history.pushState({ country: countryId, countryColor: countryColor }, "", null);
-        }
-
-        setCurrentCountry(countryId, countryColor);
+    selectCountry(countryId, countryColor) {
+        setCurrentCountry(countryId, countryColor, false);
 
         this.hide();
     }

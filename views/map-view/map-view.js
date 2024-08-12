@@ -93,6 +93,8 @@ export default class MapView extends HTMLElement {
 					rgnImg.setAttribute("stroke", "none");
 					rgnImg.setAttribute("cursor", "pointer");
 					rgnImg.setAttribute("transition", "opacity 0.3 ease-in-out");
+					// TODO: provide alternative to hover for mobile
+					// tap?
 					rgnImg.addEventListener("click", function () {
 						onSelectNewRegion(rgn.id, null, true);
 						document.getElementById("main-title").innerHTML = getBilingualText(rgn.englishName, rgn.japaneseName);

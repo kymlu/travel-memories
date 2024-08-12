@@ -54,7 +54,6 @@ export default class PicInfo extends HTMLElement {
 				addClickListeners([
 					["pic-info-bg", this.hide.bind(this)],
 					["pic-info-drawer", (event) => { event.stopPropagation(); }],
-					["pic-info-btn", this.toggleVisibility.bind(this, null)],
 					["pic-info-close-btn", this.hide.bind(this)],
 					["search-eng", this.searchEnglish.bind(this)],
 					["search-jp", this.searchJapanese.bind(this)]

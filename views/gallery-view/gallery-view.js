@@ -2,7 +2,7 @@
 import FilterPopup from '../../components/popup/filter-popup/filter-popup.js'
 import { getCurrentCountry, isGalleryView, onSelectNewRegion } from '../../js/globals.js';
 import {
-	addClickListeners, addRemoveNoDisplay, addRemoveTransparent, getBilingualText,
+	addClickListeners, addRemoveClass, addRemoveNoDisplay, addRemoveTransparent, getBilingualText,
 	getImageAddress, isPortraitMode, scrollToTop, setBilingualProperty, sortImgs
 } from '../../js/utils.js';
 import {
@@ -32,7 +32,7 @@ export default class GalleryView extends HTMLElement {
 		/** @type {RegionInfo} */
 		this.regionInfo = new RegionInfo(headerElement);
 		/** @type {Fullscreen} */
-		this.fullscreen = fullscreenElement; //new Fullscreen();
+		this.fullscreen = fullscreenElement;
 		/** @type {CustomHeader} */
 		this.header = headerElement;
 		/** @type {Loader} */
@@ -59,10 +59,9 @@ export default class GalleryView extends HTMLElement {
 
 		this.noPicturesText = getBilingualText("No pictures available (yet)", "写真は(まだ)ありません");
 
-		// TODO: figure out UI
 		this.changeFilterQueryButton = document.createElement("button");
-		this.changeFilterQueryButton.classList.add("filter-opt");
-		this.changeFilterQueryButton.innerHTML = getBilingualText("Change filter requirements", "JAPANESE");
+		this.changeFilterQueryButton.classList.add("action-btn");
+		this.changeFilterQueryButton.innerHTML = getBilingualText("Change filters", "フィルターを変更する");
 	}
 
 	connectedCallback() {
@@ -101,7 +100,9 @@ export default class GalleryView extends HTMLElement {
 				if (this.visibleImages.length == 0) {
 					this.#elements.gallery.innerHTML = this.noPicturesText;
 					this.#elements.gallery.appendChild(this.changeFilterQueryButton);
+					addRemoveClass([this.#elements.gallery], "flex-column", true);
 				} else {
+					addRemoveClass([this.#elements.gallery], "flex-column", false);
 					this.imageLoadIndex = 0;
 					this.currentPolaroidCount = 0;
 					this.loadImages();

@@ -1,65 +1,65 @@
 .gallery {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-evenly;
-    gap: 10px;
-    padding: 25px 10px;
-    box-sizing: border-box;
-    width: 100%;
-    text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  gap: 10px;
+  padding: 25px 10px;
+  box-sizing: border-box;
+  width: 100%;
+  text-align: center;
 }
 
 @media only screen and (orientation: portrait) {
-    .gallery {
-        overflow: hidden;
-    }
+  .gallery {
+    overflow: hidden;
+  }
 }
 
 .rgn-info-container {
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    width: 100%;
-    max-height: 50vh;
-    box-sizing: border-box;
-    padding: 20px 20px 30px 20px;
-    border-radius: 0px 0px 20px 20px;
-    box-shadow: 0px 8px 15px -10px #00000050;
-    transition: top 0.5s ease-in-out, margin-top 0.5s ease-in-out;
-    background-color: white;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 100%;
+  max-height: 50vh;
+  box-sizing: border-box;
+  padding: 20px 20px 30px 20px;
+  border-radius: 0px 0px 20px 20px;
+  box-shadow: 0px 8px 15px -10px #00000050;
+  transition: top 0.5s ease-in-out, margin-top 0.5s ease-in-out;
+  background-color: white;
+}
+
+@media only screen and (orientation: portrait) {
+  .rgn-info-container {
+    max-height: 60vh;
+    padding: 20px 20px 10px 20px;
   }
-  
-  @media only screen and (orientation: portrait) {
-    .rgn-info-container {
-      max-height: 60vh;
-      padding: 20px 20px 10px 20px;
-    }
-  }
-  
+}
+
+.rgn-info {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+  align-content: stretch;
+  overflow-y: auto;
+}
+
+@media only screen and (orientation: portrait) {
   .rgn-info {
-    display: flex;
-    flex-direction: row;
-    gap: 15px;
-    align-content: stretch;
-    overflow-y: auto;
+    flex-direction: column;
   }
-  
-  @media only screen and (orientation: portrait) {
-    .rgn-info {
-      flex-direction: column;
-    }
-  }
-  
+}
+
+.rgn-info-text {
+  gap: 15px;
+  overflow-y: auto;
+}
+
+@media only screen and (orientation: portrait) {
   .rgn-info-text {
     gap: 15px;
-    overflow-y: auto;
+    overflow-y: visible;
   }
-  
-  @media only screen and (orientation: portrait) {
-    .rgn-info-text {
-      gap: 15px;
-      overflow-y: visible;
-    }
-  } 
+}

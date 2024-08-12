@@ -243,6 +243,7 @@ export default class RegionInfo extends HTMLElement {
                 }
             } catch (error) {
                 console.error(error);
+                this.filterMiniMap(currentRegion);
             }
         }, 50);
     }

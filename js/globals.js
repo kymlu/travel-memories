@@ -60,7 +60,7 @@ export function setSiteContents(
     galleryView = new GalleryView(galleryHtml, fullscreen, header);
     polaroidHtmls.img = imgPolaroidHtml;
     polaroidHtmls.txt = txtPolaroidHtml;
-    header.setButtonFunctions(goToStartView,
+    header.setButtonFunctions(goToStartView.bind(this, false),
         goToMapView,
         galleryView.toggleRegionDropdown.bind(galleryView),
         galleryView.toggleRegionInfo.bind(galleryView, null),
@@ -115,7 +115,7 @@ export function onSelectNewRegion(regionId, isPopped, isNewGallery) {
     }
 
     if (isPopped == null) {
-        window.history.pushState({ rgn: regionId }, "", null);
+        window.history.pushState({ type: VIEW_NAMES.GALLERY, regionId: regionId }, "", null);
     }
 
     if (regionId != undefined && regionId != null) {
@@ -175,11 +175,15 @@ export function getAllCountryData() {
     return allCountryData;
 }
 
-export function setCurrentCountry(countryId, countryColor) {
+export function setCurrentCountry(countryId, countryColor, isPopped) {
     if (countryId == null) {
         currentCountry = null;
         header.toggleVisibility(true);
     } else {
+        if (!isPopped) {
+            window.history.pushState({ type: VIEW_NAMES.MAP, country: countryId, countryColor: countryColor }, "", null);
+        }
+
         header.toggleVisibility(false);
         currentCountry = allCountryData.find(country => country.id == countryId);
         currentCountry.regionGroups.forEach(rgnGrp => {

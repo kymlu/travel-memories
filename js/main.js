@@ -1,17 +1,20 @@
 /*
 	Project Name: Travel Memories
 	Author: Katie Lu
-	Note: will try converting to TypeScript later
 */
 
 /// IMPORTS
-import { CUSTOM_EVENT_TYPES } from './constants.js';
+import { CUSTOM_EVENT_TYPES, VIEW_NAMES } from './constants.js';
 import Fullscreen from '../components/fullscreen/fullscreen.js';
 import Loader from '../components/loader/loader.js';
 import {
 	endHandleDrag,
+	goToMapView,
 	goToStartView,
+	isStartView,
+	onSelectNewRegion,
 	setAllCountryData,
+	setCurrentCountry,
 	setSiteContents,
 } from './globals.js';
 import {
@@ -65,20 +68,19 @@ function initializeSite() {
 
 	document.addEventListener("touchend", endHandleDrag, false);
 
-	// Back button detections // TODO
-	// window.addEventListener('popstate', (event) => {
-	// 	if (event.state.country) {
-	// 		if (isGalleryView()) {
-	// 			goToMapView();
-	// 		} else {
-	// 			StartView.selectCountry(event.state.country, event.state.countryColor, true);
-	// 		}
-	// 	} else if (event.state.rgn && isCountrySelected()) {
-	// 		onSelectNewRegion(event.state.rgn, true);
-	// 	} else {
-	// 		goToStartView(true);
-	// 	}
-	// });
+	// Back button detections // TODO NEXT and the loader
+	window.addEventListener('popstate', (event) => {
+		if (event.state.type == VIEW_NAMES.MAP) {
+			if (isStartView()) {
+				setCurrentCountry(event.state.country, event.state.countryColor, true);
+			}
+			goToMapView();
+		} else if (event.state.type == VIEW_NAMES.GALLERY) {
+			onSelectNewRegion(event.state.regionId, true, false);
+		} else {
+			goToStartView(true);
+		}
+	});
 }
 
 /**
@@ -102,7 +104,7 @@ function fetchData() {
 			console.error("Error loading data.", error);
 		}).then(() => {
 			if (!hasError) {
-				loader.stop(goToStartView);
+				loader.stop(goToStartView.bind(this, false));
 				loader.addEventListener(CUSTOM_EVENT_TYPES.LOADING_COMPLETE, loader.remove);
 			}
 		});
