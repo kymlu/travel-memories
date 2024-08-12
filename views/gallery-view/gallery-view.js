@@ -74,18 +74,18 @@ export default class GalleryView extends HTMLElement {
 
 			this.classList.add("opacity-transition");
 
-			window.onscroll = (function () {
+			window.onscroll = () => {
 				if (isGalleryView() && this.loader == null) {
 					this.onScrollFunction();
 				}
-			}).bind(this);
+			};
 
-			window.onresize = (function () {
+			window.onresize = () => {
 				if (isGalleryView()) {
 					this.#elements.view.style.marginTop = this.header.getHeight();
 					this.regionInfo.repositionBackground();
 				}
-			}).bind(this);
+			};
 
 			this.filterPopup.addEventListener(CUSTOM_EVENT_TYPES.FILTER_POPUP_SUBMITTED, event => {
 				this.filterImages(event.detail.isOnlyFavs,

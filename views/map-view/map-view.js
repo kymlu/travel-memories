@@ -22,12 +22,15 @@ export default class MapView extends HTMLElement {
 			this.#elements = {
 				view: this.querySelector(".map-view"),
 				map: this.querySelector("#country-map"),
-				mainTitle: this.querySelector("#main-title")
+				mainTitle: this.querySelector("#main-title"),
+				mainTitleText: this.querySelector("#main-title-text"),
 			}
 
 			setTimeout(() => {
 				this.#elements.map.addEventListener("load", this.colourMap.bind(this));
-				addClickListeners([[this.#elements.mainTitle, function () { onSelectNewRegion(null, null, true); }]]);
+				addClickListeners([[this.#elements.mainTitle, onSelectNewRegion.bind(null, null, null, true)]]);
+				this.#elements.mainTitle.addEventListener("mouseover", () =>{this.querySelector(".inline-icon").classList.add("white")})
+				this.#elements.mainTitle.addEventListener("mouseout", () =>{this.querySelector(".inline-icon").classList.remove("white")})
 			}, 50);
 			addRemoveNoDisplay([this]);
 		}, 50);
@@ -53,7 +56,7 @@ export default class MapView extends HTMLElement {
 	/** Show the map view. */
 	show() {
 		addRemoveNoDisplay([this], false);
-		this.#elements.mainTitle.innerHTML = this.countryTitle;
+		this.#elements.mainTitleText.innerHTML = this.countryTitle;
 		scrollToTop(false);
 		// Note: for some reason making "this" transparent does not work.
 		setTimeout(() => {
@@ -95,19 +98,19 @@ export default class MapView extends HTMLElement {
 					rgnImg.setAttribute("transition", "opacity 0.3 ease-in-out");
 					// TODO: provide alternative to hover for mobile
 					// tap?
-					rgnImg.addEventListener("click", function () {
+					rgnImg.addEventListener("click", () => {
 						onSelectNewRegion(rgn.id, null, true);
-						document.getElementById("main-title").innerHTML = getBilingualText(rgn.englishName, rgn.japaneseName);
+						this.#elements.mainTitleText.innerHTML = getBilingualText(rgn.englishName, rgn.japaneseName);
 					});
 
 					rgnImg.addEventListener("mouseover", () => {
 						rgnImg.setAttribute("opacity", "50%");
-						document.getElementById("main-title").innerHTML = getBilingualText(rgn.englishName, rgn.japaneseName);
+						this.#elements.mainTitleText.innerHTML = getBilingualText(rgn.englishName, rgn.japaneseName);
 					});
 
 					rgnImg.addEventListener("mouseout", () => {
 						rgnImg.setAttribute("opacity", "100%");
-						document.getElementById("main-title").innerHTML = this.countryTitle;
+						this.#elements.mainTitleText.innerHTML = this.countryTitle;
 					});
 				} else {
 					rgnImg.setAttribute("fill", "lightgrey");

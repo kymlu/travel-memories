@@ -312,3 +312,7 @@ button:active {
   position: fixed;
   top: 0;
 }
+
+.white {
+  color: white !important;
+}
