@@ -10,7 +10,6 @@ import {
 } from '../../js/constants.js'
 import Fullscreen from '../../components/fullscreen/fullscreen.js';
 import CustomHeader from '../../components/header/header.js';
-import Loader from '../../components/loader/loader.js';
 import ImagePolaroid from '../../components/polaroid/img-polaroid/img-polaroid.js';
 import TextPolaroid from '../../components/polaroid/txt-polaroid/txt-polaroid.js';
 import RegionDropdown from '../../components/region-dropdown/region-dropdown.js';
@@ -35,8 +34,6 @@ export default class GalleryView extends HTMLElement {
 		this.fullscreen = fullscreenElement;
 		/** @type {CustomHeader} */
 		this.header = headerElement;
-		/** @type {Loader} */
-		this.loader = null;
 
 		// region info
 		this.currentRegion = null;
@@ -75,7 +72,7 @@ export default class GalleryView extends HTMLElement {
 			this.classList.add("opacity-transition");
 
 			window.onscroll = () => {
-				if (isGalleryView() && this.loader == null) {
+				if (isGalleryView()) {
 					this.onScrollFunction();
 				}
 			};

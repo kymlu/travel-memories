@@ -19,15 +19,9 @@
 #map-control {
     position: relative;
     display: flex;
-    border-style: solid;
-    border-color: rgba(var(--main-color));
     max-height: 70vh;
     width: 70vh;
     align-self: center;
-}
-
-.no-border {
-    border-style: none !important;
 }
 
 @media only screen and (orientation: portrait) {

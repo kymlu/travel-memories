@@ -1,8 +1,10 @@
 import { ATTRIBUTES, DEFAULT_TIMEOUT } from "../../js/constants.js";
-import { getAppColor, getCurrentCountry, onSelectNewRegion } from "../../js/globals.js";
 import {
-	addClickListeners, addRemoveClass, addRemoveNoDisplay, addRemoveTransparent,
-	getBilingualText, scrollToTop, setBilingualProperty
+	getAppColor, getCurrentCountry, getTranslucentAppColor, onSelectNewRegion
+} from "../../js/globals.js";
+import {
+	addClickListeners, addRemoveClass, addRemoveNoDisplay,
+	addRemoveTransparent, getBilingualText, scrollToTop
 } from "../../js/utils.js";
 
 /** The Map View. */
@@ -12,8 +14,12 @@ export default class MapView extends HTMLElement {
 	constructor(innerHtml) {
 		super();
 		this.innerHTML = innerHtml;
-		this.countryTitle = "";
+		this.defaultMainTitleText = "";
+		this.defaultMainTitleTitle = "";
 		this.currentCountry = null;
+		this.selectedRegion = null;
+		this.isSelectingRegion = false;
+		this.outlineThickness = 0;
 		this.scaleLevel = 1;
 		this.isScaling = false;
 		this.#elements = {};
@@ -35,7 +41,7 @@ export default class MapView extends HTMLElement {
 			setTimeout(() => {
 				this.#elements.map.addEventListener("load", this.colourMap.bind(this));
 				addClickListeners([
-					[this.#elements.mainTitle, onSelectNewRegion.bind(null, null, null, true)],
+					[this.#elements.mainTitle, onSelectNewRegion.bind(null, this.selectedRegion, null, true)],
 					[this.#elements.zoomIn, this.scaleMap.bind(this, undefined, true)],
 					[this.#elements.zoomOut, this.scaleMap.bind(this, undefined, false)]
 				]);
@@ -46,6 +52,7 @@ export default class MapView extends HTMLElement {
 					this.querySelector(".inline-icon").classList.remove("white");
 				});
 			}, 50);
+
 			addRemoveNoDisplay([this]);
 		}, 50);
 	}
@@ -55,11 +62,8 @@ export default class MapView extends HTMLElement {
 	handleNewCountry() {
 		addRemoveNoDisplay([this], false);
 		this.currentCountry = getCurrentCountry();
-		this.countryTitle = getBilingualText(this.currentCountry.englishName, this.currentCountry.japaneseName);
-
-		setBilingualProperty([
-			[this.#elements.mainTitle, `See all images from ${this.currentCountry.englishName}`, `${this.currentCountry.japaneseName}の写真をすべて表示する`],
-		], ATTRIBUTES.TITLE);
+		this.defaultMainTitleText = getBilingualText(this.currentCountry.englishName, this.currentCountry.japaneseName);
+		this.defaultMainTitleTitle = getBilingualText(`See all images from ${this.currentCountry.englishName}`, `${this.currentCountry.japaneseName}の写真をすべて表示する`);
 
 		setTimeout(() => {
 			this.createMap();
@@ -70,7 +74,9 @@ export default class MapView extends HTMLElement {
 	show() {
 		addRemoveNoDisplay([this], false);
 		this.scaleMap(1);
-		this.#elements.mainTitleText.innerHTML = this.countryTitle;
+		this.selectedRegion = null;
+		this.#elements.mainTitleText.innerHTML = this.defaultMainTitleText;
+		this.#elements.mainTitle.title = this.defaultMainTitleTitle;
 		scrollToTop(false);
 		// Note: for some reason making "this" transparent does not work.
 		setTimeout(() => {
@@ -97,6 +103,7 @@ export default class MapView extends HTMLElement {
 			if (!this.#elements.map.hasAttribute("data") || this.#elements.map.data == "") return;
 
 			const svgDoc = this.#elements.map.contentDocument;
+			this.outlineThickness = parseInt(svgDoc.querySelector("svg").getAttribute("width")) * 0.02;
 			const rgnList = this.currentCountry.regionGroups.flatMap(rgnGrp => rgnGrp.regions);
 
 			rgnList.forEach(rgn => {
@@ -104,28 +111,23 @@ export default class MapView extends HTMLElement {
 				if (rgn.visited) {
 					// CSS won't work on document objects
 					let imgTitle = document.createElementNS("http://www.w3.org/2000/svg", ATTRIBUTES.TITLE);
-					imgTitle.innerHTML = getBilingualText(`See images from ${rgn.englishName}`, `${rgn.japaneseName}の写真を表示する`);
+					imgTitle.innerHTML = getBilingualText(`Toggle ${rgn.englishName}`, `${rgn.japaneseName}をトグルする`);
 					rgnImg.appendChild(imgTitle);
 					rgnImg.setAttribute("fill", getAppColor());
 					rgnImg.setAttribute("stroke", "none");
 					rgnImg.setAttribute("cursor", "pointer");
 					rgnImg.setAttribute("transition", "opacity 0.3 ease-in-out");
-					// TODO: provide alternative to hover for mobile
-					// tap?
-					rgnImg.addEventListener("click", () => {
-						onSelectNewRegion(rgn.id, null, true);
-						this.#elements.mainTitleText.innerHTML = getBilingualText(rgn.englishName, rgn.japaneseName);
-					});
 
 					rgnImg.addEventListener("mouseover", () => {
 						rgnImg.setAttribute("opacity", "50%");
-						this.#elements.mainTitleText.innerHTML = getBilingualText(rgn.englishName, rgn.japaneseName);
 					});
+
+					rgnImg.addEventListener("mouseup", selectRegion.bind(this, rgn));
 
 					rgnImg.addEventListener("mouseout", () => {
 						rgnImg.setAttribute("opacity", "100%");
-						this.#elements.mainTitleText.innerHTML = this.countryTitle;
 					});
+
 				} else {
 					rgnImg.setAttribute("fill", "lightgrey");
 				}
@@ -133,6 +135,37 @@ export default class MapView extends HTMLElement {
 		}, 50);
 	}
 
+	/** Highlights the appropriate region. */
+	selectRegion(region) {
+		if (this.isSelectingRegion) return;
+		this.isSelectingRegion = true;
+
+		if (this.selectedRegion) {
+			const oldRegionSvg = this.#elements.map.contentDocument.getElementById(`${this.selectedRegion}-img`);
+			oldRegionSvg.setAttribute("fill", getAppColor());
+			oldRegionSvg.setAttribute("stroke", "none");
+		}
+
+		if (this.selectedRegion == region.id) {
+			this.selectedRegion = null;
+			this.#elements.mainTitleText.innerHTML = this.defaultMainTitleText;
+			this.#elements.mainTitle.title = this.defaultMainTitleTitle;
+		} else {
+			this.selectedRegion = region.id;
+			const newRegionSvg = this.#elements.map.contentDocument.getElementById(`${this.selectedRegion}-img`);
+			newRegionSvg.setAttribute("fill", getTranslucentAppColor());
+			newRegionSvg.setAttribute("stroke", getAppColor());
+			newRegionSvg.setAttribute("stroke-width", this.outlineThickness);
+			this.#elements.mainTitleText.innerHTML = getBilingualText(region.englishName, region.japaneseName);
+			this.#elements.mainTitle.title = this.defaultMainTitleTitle = getBilingualText(`See all images from ${region.englishName}`, `${region.japaneseName}の写真をすべて表示する`);
+		}
+
+		setTimeout(() => {
+			this.isSelectingRegion = false;
+		}, 50);
+	}
+
+	/** Change the scale of the map. */
 	scaleMap(newScaleValue, isIncrease) {
 		if (this.isScaling) return;
 
@@ -157,17 +190,15 @@ export default class MapView extends HTMLElement {
 		}
 
 		addRemoveClass([this.#elements.zoomIn], "disabled", this.scaleLevel == maxScale);
-		addRemoveClass([this.#elements.mapControl], "no-border", this.scaleLevel == minScale);
 		addRemoveClass([this.#elements.zoomOut], "disabled", this.scaleLevel == minScale);
 
 		this.#elements.map.classList.remove(`scale-${oldScale}`);
 		this.#elements.map.classList.add(`scale-${this.scaleLevel}`);
 
-		// TODO: test UI to see if this is acceptable
 		const mapSize = this.#elements.map.getBoundingClientRect();
 		this.#elements.mapContainer.scrollTo({
-			top: mapSize.height / this.scaleLevel * 0.5 * (this.scaleLevel - 1),
-			left: mapSize.height / this.scaleLevel * 0.5 * (this.scaleLevel - 1)
+			top: 0.5 * (this.scaleLevel - 1) * mapSize.height / this.scaleLevel,
+			left: 0.5 * (this.scaleLevel - 1) * mapSize.width / this.scaleLevel
 		});
 
 		setTimeout(() => {

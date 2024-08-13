@@ -10,6 +10,7 @@ import StartView from "../views/start-view/start-view.js";
 
 /** @type {string} */
 let appColor = null;
+let translucentAppColor = null;
 /** @type {any} */
 let currentCountry = null;
 /** @type {string} */
@@ -130,7 +131,7 @@ export function onSelectNewRegion(regionId, isPopped, isNewGallery) {
     setTimeout(() => {
         if (!isGalleryView()) {
             goToGalleryView();
-            if(loader){
+            if (loader) {
                 loader.quickStop();
                 loader.addEventListener(CUSTOM_EVENT_TYPES.LOADING_COMPLETE, () => {
                     setTimeout(() => {
@@ -169,6 +170,10 @@ export function isGalleryView() {
  */
 export function getAppColor() {
     return appColor;
+}
+
+export function getTranslucentAppColor() {
+    return translucentAppColor;
 }
 
 export function setAllCountryData(data) {
@@ -225,6 +230,7 @@ export function setAppColor(newColor) {
     root.style.setProperty('--main-color', getComputedStyle(root).getPropertyValue(newColor));
     let temp = getComputedStyle(root).getPropertyValue("--main-color").split(", ");
     appColor = `rgb(${temp[0]}, ${temp[1]}, ${temp[2]})`;
+    translucentAppColor = `rgba(${temp[0]}, ${temp[1]}, ${temp[2]}, 0.4)`;
 }
 
 /**
