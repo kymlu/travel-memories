@@ -48,7 +48,7 @@ export default class FilterPopup extends BasePopup {
 
         /** @type {HTMLButtonElement} */
         this.filterOptionButton = document.createElement("button");
-        this.filterOptionButton.classList.add("filter-opt");
+        this.filterOptionButton.classList.add("base-tag", "filter-option");
 
         // Get component html
         fetch("views/gallery-view/components/filter-popup/filter-popup.html")

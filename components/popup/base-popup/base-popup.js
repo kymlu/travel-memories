@@ -4,9 +4,7 @@ import {
     addRemoveClass, addRemoveNoDisplay, addRemoveTransparent, setBilingualProperty 
 } from '../../../js/utils.js'
 
-/**
- * The Base Popup object.
- */
+/** * The Base Popup object. */
 export default class BasePopup extends HTMLElement {
     constructor() {
         super();
@@ -39,7 +37,6 @@ export default class BasePopup extends HTMLElement {
         let popup = this.querySelector(".popup");
         let popupBg = this.querySelector(".popup-bg");
         addRemoveNoDisplay([this], false);
-        //popupOverlay.classList.remove("visibility-hidden");
 
         setTimeout(() => {
             addRemoveTransparent([popup, popupBg], false);
@@ -100,7 +97,6 @@ export default class BasePopup extends HTMLElement {
                     addRemoveTransparent([popup, popupBg], true);
                     setTimeout(() => {
                         addRemoveNoDisplay([this], true);
-                        //popupOverlay.classList.add("visibility-hidden");
                     }, timeout);
                 }, timeout);
             }, timeout);

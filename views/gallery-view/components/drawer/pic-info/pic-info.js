@@ -1,14 +1,14 @@
 import {
 	ATTRIBUTES, DEFAULT_TIMEOUT, JAPAN, LONG_DATETIME_FORMAT_EN, LONG_DATETIME_FORMAT_JP, TAIWAN, TAGS
-} from "../../../../js/constants.js";
-import { startHandleDrag } from "../../../../js/globals.js";
+} from "../../../../../../js/constants.js";
 import {
 	addClickListeners, addRemoveNoDisplay, getBilingualText,
 	getPictureDate, setBilingualProperty, sortByEnglishName
-} from "../../../../js/utils.js";
+} from "../../../../../../js/utils.js";
+import BaseDrawer from "../base-drawer/base-drawer.js";
 
 /** The Pic Info class. */
-export default class PicInfo extends HTMLElement {
+export default class PicInfo extends BaseDrawer {
 	#elements;
 
 	constructor() {
@@ -19,7 +19,7 @@ export default class PicInfo extends HTMLElement {
 		this.favouriteTag = this.#createfavouriteTag();
 		this.isMoving = false;
 
-		fetch("views/gallery-view/components/pic-info/pic-info.html")
+		fetch("views/gallery-view/components/drawer/pic-info/pic-info.html")
 			.then(response => response.text())
 			.then(html => {
 				this.innerHTML = html;
@@ -30,6 +30,8 @@ export default class PicInfo extends HTMLElement {
 	}
 
 	connectedCallback() {
+		super.connectedCallback();
+
 		setTimeout(() => {
 			this.#elements = {
 				drawer: this.querySelector("#pic-info-drawer"),
@@ -48,7 +50,7 @@ export default class PicInfo extends HTMLElement {
 				setBilingualProperty([
 					["search-eng", "Google in English", "英語でググる"],
 					["search-jp", "Google in Japanese", "日本語でググる"],
-                    [this.querySelector(".close-btn"), "Close", "閉じる"]
+					[this.querySelector(".close-btn"), "Close", "閉じる"]
 				], ATTRIBUTES.TITLE);
 
 				addClickListeners([
@@ -58,10 +60,6 @@ export default class PicInfo extends HTMLElement {
 					["search-eng", this.searchEnglish.bind(this)],
 					["search-jp", this.searchJapanese.bind(this)]
 				]);
-
-				this.querySelector("#pic-info-handle").addEventListener("touchstart", e => {
-					startHandleDrag(e, "pic-info-handle");
-				}, false);
 
 				// currently remove because it will not work on Apple <- what is this lol
 				this.querySelector("#pic-info-details").addEventListener("touchstart", (event) => {
@@ -73,6 +71,11 @@ export default class PicInfo extends HTMLElement {
 				});
 			}, 50);
 		}, 50);
+	}
+
+	dragDownFunction(){
+		super.dragDownFunction();
+		this.hide();
 	}
 
 	/** Show the pic info section. */
@@ -187,7 +190,7 @@ export default class PicInfo extends HTMLElement {
 			.sort(sortByEnglishName)
 			.forEach(tag => {
 				let tempElement = document.createElement("div");
-				tempElement.classList.add("img-tag");
+				tempElement.classList.add("base-tag", "img-tag");
 				tempElement.innerHTML = getBilingualText(tag.englishName, tag.japaneseName);
 				this.#elements.tags.appendChild(tempElement);
 			});
@@ -224,7 +227,7 @@ export default class PicInfo extends HTMLElement {
 	/** Creates the favourite tag. */
 	#createfavouriteTag() {
 		let tempElement = document.createElement("div");
-		tempElement.classList.add("img-tag");
+		tempElement.classList.add("base-tag", "img-tag");
 		tempElement.innerHTML = getBilingualText("Favourited", "お気に入り");
 		let tempStar = document.createElement("span");
 		tempStar.classList.add("in-btn-icon");

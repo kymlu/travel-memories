@@ -17,7 +17,7 @@ export default class StartView extends HTMLElement {
     /** Initializes the start view contents. */
     initialize() {
         const btn = document.createElement("button");
-        btn.classList.add("start-btn", "highlight-btn", "txt-btn");
+        btn.classList.add("start-btn", "highlight-btn", "text-btn");
         const text = document.createElement("div");
         text.classList.add("country-text");
         const icon = document.createElement("div");

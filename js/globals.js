@@ -13,32 +13,24 @@ let appColor = null;
 let translucentAppColor = null;
 /** @type {any} */
 let currentCountry = null;
+
 /** @type {string} */
 let currentView = VIEW_NAMES.START;
 
-/** @type {StartView} */
+/** @type CustomHeader */
+let header = null;
+/** @type StartView */
 let startView = null;
-/** @type {MapView} */
+/** @type MapView */
 let mapView = null;
-/** @type {GalleryView} */
+/** @type GalleryView */
 let galleryView = null;
+/** @type Fullscreen */
 let fullscreen = null;
-/** @type {InfoPopup} */
+/** @type InfoPopup */
 let infoPopup = null;
 
 let allCountryData = [];
-
-// TODO: control loader here but move routing functions to router.js
-/** @type {Loader} */
-// let loader = null;
-
-/** @type CustomHeader */
-let header = null;
-
-// Gestures
-let initialYHandle = null;
-let isHandleGrabbed = false;
-let grabbedHandleId = null;
 
 export let polaroidHtmls = {
     img: null,
@@ -54,26 +46,29 @@ export function setSiteContents(
     txtPolaroidHtml) {
 
     infoPopup = infoPopupElement;
+
     header = new CustomHeader();
+    header.style.zIndex = 10;
     startView = document.querySelector("start-view");
+    startView.style.zIndex = 1;
     mapView = new MapView(mapHtml);
+    mapView.style.zIndex = 1;
     fullscreen = new Fullscreen(fullscreenHtml);
+    fullscreen.style.zIndex = 100;
     galleryView = new GalleryView(galleryHtml, fullscreen, header);
+    galleryView.style.zIndex = 1;
+
     polaroidHtmls.img = imgPolaroidHtml;
     polaroidHtmls.txt = txtPolaroidHtml;
+
     header.setButtonFunctions(goToStartView.bind(this, false),
         goToMapView,
         galleryView.toggleRegionDropdown.bind(galleryView),
         galleryView.toggleRegionInfo.bind(galleryView, null),
         galleryView.showFilter.bind(galleryView),
-        infoPopup.open.bind(infoPopup));
-    // todo: might not work with fullscreen mode since fullscreen must be above header
-    header.style.zIndex = 10;
-    startView.style.zIndex = 1;
-    mapView.style.zIndex = 1;
-    galleryView.style.zIndex = 1;
-    fullscreen.style.zIndex = 100;
+        infoPopup.open.bind(infoPopup, null));
     addRemoveTransparent([header], true);
+
     let pageContents = document.getElementById("views");
     document.body.insertBefore(header, pageContents);
     pageContents.appendChild(mapView);
@@ -81,14 +76,21 @@ export function setSiteContents(
     pageContents.appendChild(fullscreen);
 }
 
-export function goToMapView() {
-    if (isStartView()) {
-        startView.hide();
-    } else if (isGalleryView()) {
-        galleryView.hide();
-    }
-    setCurrentView(VIEW_NAMES.MAP);
-    mapView.show();
+function setCurrentView(pageName) {
+    currentView = pageName;
+    header.onChangeView();
+}
+
+export function isStartView() {
+    return currentView == VIEW_NAMES.START;
+}
+
+export function isMapView() {
+    return currentView == VIEW_NAMES.MAP;
+}
+
+export function isGalleryView() {
+    return currentView == VIEW_NAMES.GALLERY;
 }
 
 export function goToStartView(isPopped) {
@@ -100,13 +102,18 @@ export function goToStartView(isPopped) {
     startView.show(isPopped);
 }
 
-export function goToGalleryView() {
-    setCurrentView(VIEW_NAMES.GALLERY);
-    header.toggleVisibility(true);
-    galleryView.show();
+export function goToMapView() {
+    if (isStartView()) {
+        startView.hide();
+    } else if (isGalleryView()) {
+        galleryView.hide();
+    }
+
+    setCurrentView(VIEW_NAMES.MAP);
+    mapView.show();
 }
 
-// todo: put this logic into the galleryview
+// todo: put this logic into the galleryview?
 export function onSelectNewRegion(regionId, isPopped, isNewGallery) {
     let loader = null;
     if (isMapView()) {
@@ -130,7 +137,10 @@ export function onSelectNewRegion(regionId, isPopped, isNewGallery) {
 
     setTimeout(() => {
         if (!isGalleryView()) {
-            goToGalleryView();
+            header.toggleVisibility(true);
+            setCurrentView(VIEW_NAMES.GALLERY);
+            galleryView.show();
+
             if (loader) {
                 loader.quickStop();
                 loader.addEventListener(CUSTOM_EVENT_TYPES.LOADING_COMPLETE, () => {
@@ -143,31 +153,18 @@ export function onSelectNewRegion(regionId, isPopped, isNewGallery) {
     }, DEFAULT_TIMEOUT);
 }
 
-function setCurrentView(pageName) {
-    currentView = pageName;
-    header.onChangeView();
-}
-
-export function getCurrentView() {
-    return currentView;
-}
-
-export function isStartView() {
-    return currentView == VIEW_NAMES.START;
-}
-
-export function isMapView() {
-    return currentView == VIEW_NAMES.MAP;
-}
-
-export function isGalleryView() {
-    return currentView == VIEW_NAMES.GALLERY;
-}
-
 /**
- * Gets the current app colour.
- * @returns the current app colour.
+ * Sets the new app colour.
+ * @param {string} newColor - the new colour to set.
  */
+export function setAppColor(newColor) {
+    let root = document.querySelector(':root');
+    root.style.setProperty('--main-color', getComputedStyle(root).getPropertyValue(newColor));
+    let parsedRGB = getComputedStyle(root).getPropertyValue("--main-color").split(", ");
+    appColor = `rgb(${parsedRGB[0]}, ${parsedRGB[1]}, ${parsedRGB[2]})`;
+    translucentAppColor = `rgba(${parsedRGB[0]}, ${parsedRGB[1]}, ${parsedRGB[2]}, 0.5)`;
+}
+
 export function getAppColor() {
     return appColor;
 }
@@ -222,18 +219,6 @@ export function setCurrentCountry(countryId, countryColor, isPopped) {
 }
 
 /**
- * Sets the new app colour.
- * @param {string} newColor - the new colour to set.
- */
-export function setAppColor(newColor) {
-    let root = document.querySelector(':root');
-    root.style.setProperty('--main-color', getComputedStyle(root).getPropertyValue(newColor));
-    let temp = getComputedStyle(root).getPropertyValue("--main-color").split(", ");
-    appColor = `rgb(${temp[0]}, ${temp[1]}, ${temp[2]})`;
-    translucentAppColor = `rgba(${temp[0]}, ${temp[1]}, ${temp[2]}, 0.4)`;
-}
-
-/**
  * Gets the current country.
  * @returns the current country.
  */
@@ -246,45 +231,4 @@ export function getCurrentCountry() {
  */
 export function isCountrySelected() {
     return currentCountry != null;
-}
-
-/**
- * Initializes the touch event for elements on screen with handles.
- * @param {TouchEvent} e - the touch event.
- * @param {string} handleId - the id of the handle element.
- */
-export function startHandleDrag(e, handleId) {
-    if (isPortraitMode()) {
-        isHandleGrabbed = true;
-        grabbedHandleId = handleId
-        initialYHandle = e.touches[0].clientY;
-    }
-}
-
-/// FUNCTIONS
-/**
- * Determines appropriate behaviour when user releases a handle on screen.
- * @link https://stackoverflow.com/questions/53192433/how-to-detect-swipe-in-javascript
- * @param {TouchEvent} e - the touch event.
- */
-export function endHandleDrag(e) {
-    if (isPortraitMode()) {
-        if (isHandleGrabbed && grabbedHandleId) {
-            isHandleGrabbed = false;
-            let currentY = e.changedTouches[0].clientY;
-            if (currentY > initialYHandle) {
-                if (grabbedHandleId == "pic-info-handle") {
-                    Fullscreen.hide();
-                } else if (grabbedHandleId == "rgn-info-handle") {
-                    GalleryView.showRegionInfo(true);
-                }
-            } else if (currentY < initialYHandle) {
-                if (grabbedHandleId == "rgn-info-handle") {
-                    GalleryView.hideRegionInfo(true);
-                }
-            }
-            initialYHandle = null;
-            grabbedHandleId = null;
-        }
-    }
 }

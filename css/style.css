@@ -27,6 +27,15 @@ body {
   overflow-x: hidden;
 }
 
+img {
+  /* Safari */
+  -webkit-user-select: none;
+  /* IE 10 and IE 11 */
+  -ms-user-select: none;
+  /* Standard syntax */
+  user-select: none;
+}
+
 /* General Buttons */
 button {
   color: var(--text-color);
@@ -37,16 +46,21 @@ button {
   margin: 0px;
   background-color: transparent;
   cursor: pointer;
-  -webkit-user-select: none; /* Safari */
-  -ms-user-select: none; /* IE 10 and IE 11 */
-  user-select: none; /* Standard syntax */
+  /* Safari */
+  -webkit-user-select: none;
+  /* IE 10 and IE 11 */
+  -ms-user-select: none;
+  /* Standard syntax */
+  user-select: none;
 }
 
-button:active {
+button:active,
+.filter-option:hover,
+.action-btn:hover {
   opacity: 50%;
 }
 
-.txt-btn {
+.text-btn {
   font-family: Zen Maru Gothic;
   font-size: var(--reg-text-size);
   padding: 10px;
@@ -81,13 +95,6 @@ button:active {
   width: 30px;
 }
 
-/* @media only screen and (orientation: portrait) and (max-width: 768px) {
-  .filter-indicator {
-    top: -1;
-  }
-} */
-
-
 .inline-icon {
   font-family: FontAwesome;
   color: rgba(var(--main-color));
@@ -111,28 +118,7 @@ button:active {
   text-transform: capitalize;
 }
 
-/* Official Region info*/
-.drawer-handle {
-  display: none;
-}
-
-@media only screen and (orientation: portrait) {
-  .drawer-handle {
-    display: block;
-    height: 6px;
-    width: 30vw;
-    margin: 15px auto;
-    border-width: 0px;
-    border-radius: 3px;
-    background-color: rgba(var(--main-color));
-    color: rgba(var(--main-color));
-    cursor: grab;
-  }
-}
-
-/* Buttons */
-.img-tag,
-.filter-opt,
+.base-tag,
 .action-btn {
   padding: 2px 5px;
   border-radius: 6px;
@@ -141,32 +127,11 @@ button:active {
   border-radius: 10px;
   font-size: var(--reg-text-size);
   font-family: Zen Maru Gothic;
-  text-align: center;
 }
 
-.filter-opt {
-  border-color: rgba(var(--main-color));
-  background-color: white;
-  color: var(--text-color);
-}
-
-.filter-opt:hover,
-.action-btn:hover {
-  opacity: 50%;
-}
-
-.img-tag,
-.filter-opt.active,
 .action-btn {
   background-color: rgba(var(--main-color));
   color: white;
-}
-
-.img-tag {
-  cursor: default;
-}
-
-.action-btn {
   padding: 5px 7px;
 }
 
@@ -252,7 +217,8 @@ button:active {
 }
 
 .flex-row {
-  display: flex;
+  display: flex !important;
+  flex-direction: row !important;
   flex-wrap: wrap;
   gap: 20px;
 }

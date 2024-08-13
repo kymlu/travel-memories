@@ -118,3 +118,14 @@
     margin-bottom: 5px;
     cursor: pointer;
 }
+
+.filter-option {
+    border-color: rgba(var(--main-color));
+    background-color: white;
+    color: var(--text-color);
+}
+
+.filter-option.active {
+    background-color: rgba(var(--main-color));
+    color: white;
+}

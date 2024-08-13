@@ -53,7 +53,7 @@ export default class RegionDropdown extends HTMLElement {
 		regionGroupTemplate.classList.add("rgn-grp-text", "regular-text");
 
 		let regionTemplate = document.createElement("button");
-		regionTemplate.classList.add("rgn-txt", "regular-text", "highlight-btn", "txt-btn");
+		regionTemplate.classList.add("rgn-txt", "regular-text", "highlight-btn", "text-btn");
 
 		// Iterate each unofficial and official region, sort by visited/not visited
 		const currentCountry = getCurrentCountry();

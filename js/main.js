@@ -8,7 +8,6 @@ import { CUSTOM_EVENT_TYPES, VIEW_NAMES } from './constants.js';
 import Fullscreen from '../views/gallery-view/components/fullscreen/fullscreen.js';
 import Loader from '../components/loader/loader.js';
 import {
-	endHandleDrag,
 	goToMapView,
 	goToStartView,
 	isStartView,
@@ -65,8 +64,6 @@ function initializeSite() {
 	// 		e.preventDefault();
 	// 	}
 	// }, false);
-
-	document.addEventListener("touchend", endHandleDrag, false);
 
 	// Back button detections
 	window.addEventListener('popstate', (event) => {

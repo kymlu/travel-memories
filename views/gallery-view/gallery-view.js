@@ -13,7 +13,7 @@ import CustomHeader from '../../components/header/header.js';
 import ImagePolaroid from './components/polaroid/img-polaroid/img-polaroid.js';
 import TextPolaroid from './components/polaroid/txt-polaroid/txt-polaroid.js';
 import RegionDropdown from './components/region-dropdown/region-dropdown.js';
-import RegionInfo from './components/region-info/region-info.js';
+import RegionInfo from './components/drawer/region-info/region-info.js';
 
 /** The Gallery View. */
 export default class GalleryView extends HTMLElement {
@@ -119,7 +119,7 @@ export default class GalleryView extends HTMLElement {
 				
 				addClickListeners([
 					[this.#elements.toTopButton, scrollToTop],
-					[this.changeFilterQueryButton, this.filterPopup.open.bind(this.filterPopup)]
+					[this.changeFilterQueryButton, this.filterPopup.open.bind(this.filterPopup, null)]
 				]);
 
 				this.#elements.toTopButton.title = getBilingualText("Go to top", "トップに移動する");

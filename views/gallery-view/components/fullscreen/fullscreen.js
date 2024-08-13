@@ -4,7 +4,7 @@ import {
 	addClickListeners, addRemoveNoDisplay, addRemoveTransparent,
 	getImageAddress, isPortraitMode, setBilingualProperty,
 } from '../../../../js/utils.js';
-import PicInfo from '../pic-info/pic-info.js';
+import PicInfo from '../drawer/pic-info/pic-info.js';
 
 /** The Fullscreen View. */
 export default class Fullscreen extends HTMLElement {

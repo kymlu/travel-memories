@@ -1,13 +1,14 @@
-import { ATTRIBUTES, DEFAULT_TIMEOUT } from "../../../../js/constants.js";
-import { getAppColor, getCurrentCountry, startHandleDrag } from "../../../../js/globals.js";
+import { ATTRIBUTES, DEFAULT_TIMEOUT } from "../../../../../js/constants.js";
+import { getAppColor, getCurrentCountry } from "../../../../../js/globals.js";
 import {
     addRemoveTransparent, addRemoveNoDisplay, getBilingualText,
     setBilingualProperty, addClickListeners, scrollToTop,
     addRemoveClass
-} from "../../../../js/utils.js";
+} from "../../../../../js/utils.js";
+import BaseDrawer from "../base-drawer/base-drawer.js";
 
 /** The Region Info. */
-export default class RegionInfo extends HTMLElement {
+export default class RegionInfo extends BaseDrawer {
     #elements;
 
     constructor(headerElement) {
@@ -19,7 +20,7 @@ export default class RegionInfo extends HTMLElement {
         this.currentCountry = null;
         this.isNewGallery = true;
 
-        fetch("views/gallery-view/components/region-info/region-info.html")
+        fetch("views/gallery-view/components/drawer/region-info/region-info.html")
             .then(response => response.text())
             .then(html => {
                 this.innerHTML = html;
@@ -31,6 +32,8 @@ export default class RegionInfo extends HTMLElement {
     }
 
     connectedCallback() {
+        super.connectedCallback();
+
         setTimeout(() => {
             this.#elements = {
                 regionInfo: this.querySelector("#rgn-info"),
@@ -44,11 +47,9 @@ export default class RegionInfo extends HTMLElement {
                 descriptionJapanese: this.querySelector("#rgn-desc-jp"),
                 descriptionTitle: this.querySelector("#description-title"),
                 areasList: this.querySelector("#rgn-areas"),
-                divider: this.querySelector("#rgn-info-handle")
             };
 
             setTimeout(() => {
-                this.#elements.divider.addEventListener("touchstart", e => { startHandleDrag(e, "rgn-info-handle") }, false);
                 addClickListeners([
                     [this.#elements.background, this.toggleVisibility.bind(this, false)],
                 ]);
@@ -56,6 +57,16 @@ export default class RegionInfo extends HTMLElement {
                 addRemoveNoDisplay([this], true);
             }, 50);
         }, 50);
+    }
+
+    dragDownFunction() {
+        super.dragDownFunction();
+        this.show(true);
+    }
+
+    dragUpFunction() {
+        super.dragUpFunction();
+        this.hide(true);
     }
 
     repositionBackground() {
