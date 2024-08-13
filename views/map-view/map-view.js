@@ -1,7 +1,7 @@
 import { ATTRIBUTES, DEFAULT_TIMEOUT } from "../../js/constants.js";
 import { getAppColor, getCurrentCountry, onSelectNewRegion } from "../../js/globals.js";
 import {
-	addClickListeners, addRemoveNoDisplay, addRemoveTransparent,
+	addClickListeners, addRemoveClass, addRemoveNoDisplay, addRemoveTransparent,
 	getBilingualText, scrollToTop, setBilingualProperty
 } from "../../js/utils.js";
 
@@ -14,6 +14,8 @@ export default class MapView extends HTMLElement {
 		this.innerHTML = innerHtml;
 		this.countryTitle = "";
 		this.currentCountry = null;
+		this.scaleLevel = 1;
+		this.isScaling = false;
 		this.#elements = {};
 	}
 
@@ -21,16 +23,28 @@ export default class MapView extends HTMLElement {
 		setTimeout(() => {
 			this.#elements = {
 				view: this.querySelector(".map-view"),
+				mapControl: this.querySelector("#map-control"),
+				mapContainer: this.querySelector("#map-container"),
 				map: this.querySelector("#country-map"),
 				mainTitle: this.querySelector("#main-title"),
 				mainTitleText: this.querySelector("#main-title-text"),
+				zoomIn: this.querySelector("#zoom-in"),
+				zoomOut: this.querySelector("#zoom-out"),
 			}
 
 			setTimeout(() => {
 				this.#elements.map.addEventListener("load", this.colourMap.bind(this));
-				addClickListeners([[this.#elements.mainTitle, onSelectNewRegion.bind(null, null, null, true)]]);
-				this.#elements.mainTitle.addEventListener("mouseover", () =>{this.querySelector(".inline-icon").classList.add("white")})
-				this.#elements.mainTitle.addEventListener("mouseout", () =>{this.querySelector(".inline-icon").classList.remove("white")})
+				addClickListeners([
+					[this.#elements.mainTitle, onSelectNewRegion.bind(null, null, null, true)],
+					[this.#elements.zoomIn, this.scaleMap.bind(this, undefined, true)],
+					[this.#elements.zoomOut, this.scaleMap.bind(this, undefined, false)]
+				]);
+				this.#elements.mainTitle.addEventListener("mouseover", () => {
+					this.querySelector(".inline-icon").classList.add("white");
+				});
+				this.#elements.mainTitle.addEventListener("mouseout", () => {
+					this.querySelector(".inline-icon").classList.remove("white");
+				});
 			}, 50);
 			addRemoveNoDisplay([this]);
 		}, 50);
@@ -42,7 +56,6 @@ export default class MapView extends HTMLElement {
 		addRemoveNoDisplay([this], false);
 		this.currentCountry = getCurrentCountry();
 		this.countryTitle = getBilingualText(this.currentCountry.englishName, this.currentCountry.japaneseName);
-
 
 		setBilingualProperty([
 			[this.#elements.mainTitle, `See all images from ${this.currentCountry.englishName}`, `${this.currentCountry.japaneseName}の写真をすべて表示する`],
@@ -56,6 +69,7 @@ export default class MapView extends HTMLElement {
 	/** Show the map view. */
 	show() {
 		addRemoveNoDisplay([this], false);
+		this.scaleMap(1);
 		this.#elements.mainTitleText.innerHTML = this.countryTitle;
 		scrollToTop(false);
 		// Note: for some reason making "this" transparent does not work.
@@ -116,6 +130,48 @@ export default class MapView extends HTMLElement {
 					rgnImg.setAttribute("fill", "lightgrey");
 				}
 			});
+		}, 50);
+	}
+
+	scaleMap(newScaleValue, isIncrease) {
+		if (this.isScaling) return;
+
+		const minScale = 1;
+		const maxScale = 4;
+		if ((newScaleValue != undefined && (newScaleValue > maxScale || newScaleValue < minScale)) ||
+			(isIncrease && this.scaleLevel >= maxScale) ||
+			(!isIncrease && this.scaleLevel <= minScale)) return;
+
+		this.isScaling = true;
+
+		const oldScale = this.scaleLevel;
+
+		if (newScaleValue == undefined) {
+			if (isIncrease) {
+				this.scaleLevel++;
+			} else {
+				this.scaleLevel--;
+			}
+		} else {
+			this.scaleLevel = newScaleValue;
+		}
+
+		addRemoveClass([this.#elements.zoomIn], "disabled", this.scaleLevel == maxScale);
+		addRemoveClass([this.#elements.mapControl], "no-border", this.scaleLevel == minScale);
+		addRemoveClass([this.#elements.zoomOut], "disabled", this.scaleLevel == minScale);
+
+		this.#elements.map.classList.remove(`scale-${oldScale}`);
+		this.#elements.map.classList.add(`scale-${this.scaleLevel}`);
+
+		// TODO: test UI to see if this is acceptable
+		const mapSize = this.#elements.map.getBoundingClientRect();
+		this.#elements.mapContainer.scrollTo({
+			top: mapSize.height / this.scaleLevel * 0.5 * (this.scaleLevel - 1),
+			left: mapSize.height / this.scaleLevel * 0.5 * (this.scaleLevel - 1)
+		});
+
+		setTimeout(() => {
+			this.isScaling = false;
 		}, 50);
 	}
 }

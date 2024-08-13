@@ -29,7 +29,7 @@ let allCountryData = [];
 
 // TODO: control loader here but move routing functions to router.js
 /** @type {Loader} */
-let loader = null;
+// let loader = null;
 
 /** @type CustomHeader */
 let header = null;
@@ -107,6 +107,7 @@ export function goToGalleryView() {
 
 // todo: put this logic into the galleryview
 export function onSelectNewRegion(regionId, isPopped, isNewGallery) {
+    let loader = null;
     if (isMapView()) {
         mapView.hide();
         header.toggleVisibility(false);
@@ -129,10 +130,14 @@ export function onSelectNewRegion(regionId, isPopped, isNewGallery) {
     setTimeout(() => {
         if (!isGalleryView()) {
             goToGalleryView();
-            loader.quickStop();
-            loader.addEventListener(CUSTOM_EVENT_TYPES.LOADING_COMPLETE, (function () {
-                loader.remove();
-            }));
+            if(loader){
+                loader.quickStop();
+                loader.addEventListener(CUSTOM_EVENT_TYPES.LOADING_COMPLETE, () => {
+                    setTimeout(() => {
+                        loader.remove();
+                    }, 0);
+                });
+            }
         }
     }, DEFAULT_TIMEOUT);
 }
@@ -194,7 +199,7 @@ export function setCurrentCountry(countryId, countryColor, isPopped) {
             });
         });
         setAppColor(countryColor);
-        loader = new Loader();
+        const loader = new Loader();
         document.body.append(loader);
 
         mapView.handleNewCountry();
@@ -202,11 +207,11 @@ export function setCurrentCountry(countryId, countryColor, isPopped) {
 
         setTimeout(() => {
             loader.stop(mapView.show.bind(mapView));
-            loader.addEventListener(CUSTOM_EVENT_TYPES.LOADING_COMPLETE, (function () {
+            loader.addEventListener(CUSTOM_EVENT_TYPES.LOADING_COMPLETE, () => {
                 loader.remove();
                 header.toggleVisibility(true);
                 setCurrentView(VIEW_NAMES.MAP);
-            }).bind(this));
+            });
         }, 1200);
     }
 }

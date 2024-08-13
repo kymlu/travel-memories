@@ -1,5 +1,14 @@
 <div class="map-view opacity-transition transparent">
-    <object id="country-map" type="image/svg+xml" class="country-map"></object>
-    <button id="main-title"><span id="main-title-text"></span> <span class="inline-icon color-transition">&#xf061</span></button>
+    <div id="map-control" class="no-border">
+        <div id="map-container">
+            <object id="country-map" type="image/svg+xml" class="scale-1"></object>
+        </div>
+        <div id="zoom-buttons">
+            <button id="zoom-in" class="large-icon text-main-color">&#xf00e</button>
+            <button id="zoom-out" class="large-icon text-main-color disabled">&#xf010</button>
+        </div>
+    </div>
+    <button id="main-title"><span id="main-title-text"></span> <span
+            class="inline-icon color-transition">&#xf061</span></button>
     <link rel="stylesheet" type="text/css" href="views/map-view/map-view.css">
 </div>
