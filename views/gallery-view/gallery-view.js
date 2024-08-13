@@ -1,5 +1,5 @@
 /// IMPORTS
-import FilterPopup from '../../components/popup/filter-popup/filter-popup.js'
+import FilterPopup from './components/filter-popup/filter-popup.js'
 import { getCurrentCountry, isGalleryView, onSelectNewRegion } from '../../js/globals.js';
 import {
 	addClickListeners, addRemoveClass, addRemoveNoDisplay, addRemoveTransparent, getBilingualText,
@@ -8,12 +8,12 @@ import {
 import {
 	ATTRIBUTES, CUSTOM_EVENT_TYPES, DEFAULT_TIMEOUT, SCROLL_THRESHOLD, TAGS
 } from '../../js/constants.js'
-import Fullscreen from '../../components/fullscreen/fullscreen.js';
+import Fullscreen from './components/fullscreen/fullscreen.js';
 import CustomHeader from '../../components/header/header.js';
-import ImagePolaroid from '../../components/polaroid/img-polaroid/img-polaroid.js';
-import TextPolaroid from '../../components/polaroid/txt-polaroid/txt-polaroid.js';
-import RegionDropdown from '../../components/region-dropdown/region-dropdown.js';
-import RegionInfo from '../../components/region-info/region-info.js';
+import ImagePolaroid from './components/polaroid/img-polaroid/img-polaroid.js';
+import TextPolaroid from './components/polaroid/txt-polaroid/txt-polaroid.js';
+import RegionDropdown from './components/region-dropdown/region-dropdown.js';
+import RegionInfo from './components/region-info/region-info.js';
 
 /** The Gallery View. */
 export default class GalleryView extends HTMLElement {

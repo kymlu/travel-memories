@@ -1,7 +1,7 @@
-import { getCurrentCountry, onSelectNewRegion } from "../../js/globals.js";
+import { getCurrentCountry, onSelectNewRegion } from "../../../../js/globals.js";
 import { 
 	addClickListeners, addRemoveNoDisplay, addRemoveTransparent, getBilingualText 
-} from "../../js/utils.js";
+} from "../../../../js/utils.js";
 
 /** The Region Dropdown. */
 export default class RegionDropdown extends HTMLElement {
@@ -13,7 +13,7 @@ export default class RegionDropdown extends HTMLElement {
 		this.isVisible = false;
 		this.hasOpenedForRegion = false;
 		this.currentRegionId = null;
-		fetch("components/region-dropdown/region-dropdown.html")
+		fetch("views/gallery-view/components/region-dropdown/region-dropdown.html")
             .then(response => response.text())
             .then(html => {
                 this.innerHTML = html;

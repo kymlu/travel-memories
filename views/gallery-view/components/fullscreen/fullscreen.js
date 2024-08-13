@@ -1,9 +1,9 @@
 /// IMPORTS
-import { DEFAULT_TIMEOUT, ATTRIBUTES } from '../../js/constants.js'
+import { DEFAULT_TIMEOUT, ATTRIBUTES } from '../../../../js/constants.js'
 import {
 	addClickListeners, addRemoveNoDisplay, addRemoveTransparent,
 	getImageAddress, isPortraitMode, setBilingualProperty,
-} from '../../../js/utils.js';
+} from '../../../../js/utils.js';
 import PicInfo from '../pic-info/pic-info.js';
 
 /** The Fullscreen View. */
@@ -34,7 +34,7 @@ export default class Fullscreen extends HTMLElement {
 
 		this.picInfo = new PicInfo();
 
-		fetch("components/fullscreen/fullscreen.html")
+		fetch("views/gallery-view/components/fullscreen/fullscreen.html")
 			.then(response => response.text())
 			.then(html => {
 				this.innerHTML = html;

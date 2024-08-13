@@ -1,11 +1,11 @@
 /// IMPORTS
-import BasePopup from "../base-popup/base-popup.js"
-import { CUSTOM_EVENT_TYPES, ATTRIBUTES } from "../../../js/constants.js";
+import BasePopup from "../../../../components/popup/base-popup/base-popup.js"
+import { CUSTOM_EVENT_TYPES, ATTRIBUTES } from "../../../../js/constants.js";
 import {
     addRemoveNoDisplay, getBilingualText, flipArrow, sortByEnglishName,
     addClickListeners,
     setBilingualProperty
-} from '../../../js/utils.js';
+} from '../../../../js/utils.js';
 
 /**
  * The Filter Popup object.
@@ -51,7 +51,7 @@ export default class FilterPopup extends BasePopup {
         this.filterOptionButton.classList.add("filter-opt");
 
         // Get component html
-        fetch("components/popup/filter-popup/filter-popup.html")
+        fetch("views/gallery-view/components/filter-popup/filter-popup.html")
             .then(response => response.text())
             .then(html => {
                 this.innerHTML = html;

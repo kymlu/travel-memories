@@ -37,6 +37,9 @@ button {
   margin: 0px;
   background-color: transparent;
   cursor: pointer;
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
 }
 
 button:active {

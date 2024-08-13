@@ -5,7 +5,7 @@
 
 /// IMPORTS
 import { CUSTOM_EVENT_TYPES, VIEW_NAMES } from './constants.js';
-import Fullscreen from '../components/fullscreen/fullscreen.js';
+import Fullscreen from '../views/gallery-view/components/fullscreen/fullscreen.js';
 import Loader from '../components/loader/loader.js';
 import {
 	endHandleDrag,
@@ -20,8 +20,8 @@ import {
 import {
 	scrollToTop,
 } from './utils.js';
-import ImagePolaroid from '../components/polaroid/img-polaroid/img-polaroid.js';
-import TextPolaroid from '../components/polaroid/txt-polaroid/txt-polaroid.js';
+import ImagePolaroid from '../views/gallery-view/components/polaroid/img-polaroid/img-polaroid.js';
+import TextPolaroid from '../views/gallery-view/components/polaroid/txt-polaroid/txt-polaroid.js';
 import InfoPopup from '../components/popup/info-popup/info-popup.js'
 import GalleryView from '../views/gallery-view/gallery-view.js';
 import MapView from '../views/map-view/map-view.js';
@@ -53,9 +53,9 @@ function initializeSite() {
 	Promise.all([
 		fetchHtml("views/map-view/map-view.html", MapView.name),
 		fetchHtml("views/gallery-view/gallery-view.html", GalleryView.name),
-		fetchHtml("components/fullscreen/fullscreen.html", Fullscreen.name),
-		fetchHtml("components/polaroid/img-polaroid/img-polaroid.html", ImagePolaroid.name),
-		fetchHtml("components/polaroid/txt-polaroid/txt-polaroid.html", TextPolaroid.name),
+		fetchHtml("views/gallery-view/components/fullscreen/fullscreen.html", Fullscreen.name),
+		fetchHtml("views/gallery-view/components/polaroid/img-polaroid/img-polaroid.html", ImagePolaroid.name),
+		fetchHtml("views/gallery-view/components/polaroid/txt-polaroid/txt-polaroid.html", TextPolaroid.name),
 	]).then(([mapView, galleryView, fullscreen, imgPolaroid, txtPolaroid]) => {
 		setSiteContents(infoPopup, mapView, galleryView, fullscreen, imgPolaroid, txtPolaroid);
 	});
@@ -68,7 +68,7 @@ function initializeSite() {
 
 	document.addEventListener("touchend", endHandleDrag, false);
 
-	// Back button detections // TODO NEXT and the loader
+	// Back button detections
 	window.addEventListener('popstate', (event) => {
 		if (event.state.type == VIEW_NAMES.MAP) {
 			if (isStartView()) {

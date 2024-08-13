@@ -1,10 +1,10 @@
-import { ATTRIBUTES, DEFAULT_TIMEOUT } from "../../js/constants.js";
-import { getAppColor, getCurrentCountry, startHandleDrag } from "../../js/globals.js";
+import { ATTRIBUTES, DEFAULT_TIMEOUT } from "../../../../js/constants.js";
+import { getAppColor, getCurrentCountry, startHandleDrag } from "../../../../js/globals.js";
 import {
     addRemoveTransparent, addRemoveNoDisplay, getBilingualText,
     setBilingualProperty, addClickListeners, scrollToTop,
     addRemoveClass
-} from "../../js/utils.js";
+} from "../../../../js/utils.js";
 
 /** The Region Info. */
 export default class RegionInfo extends HTMLElement {
@@ -19,7 +19,7 @@ export default class RegionInfo extends HTMLElement {
         this.currentCountry = null;
         this.isNewGallery = true;
 
-        fetch("components/region-info/region-info.html")
+        fetch("views/gallery-view/components/region-info/region-info.html")
             .then(response => response.text())
             .then(html => {
                 this.innerHTML = html;
@@ -154,6 +154,7 @@ export default class RegionInfo extends HTMLElement {
 
     /** Hides the region info section.
      * @param {boolean} isForced 
+     * TODO: better transition
      */
     hide(isForced) {
         this.isVisible = false;
@@ -209,8 +210,14 @@ export default class RegionInfo extends HTMLElement {
     }
 
     /** Filter the mini map. */
+    // TODO: first time map loads, sometimes does not color properly
     filterMiniMap(currentRegion) {
-        if (!this.#elements.map.hasAttribute("data") || this.#elements.map.data == "") return;
+        if (!this.#elements.map.hasAttribute("data") || this.#elements.map.data == "") {
+            setTimeout(() => {
+                this.filterMiniMap(currentRegion);
+                return;
+            }, 0);
+        };
         setTimeout(() => {
             const svgDoc = this.#elements.map.contentDocument;
             const appColour = getAppColor();

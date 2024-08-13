@@ -1,6 +1,6 @@
 import { CUSTOM_EVENT_TYPES, DEFAULT_TIMEOUT, VIEW_NAMES } from "./constants.js";
 import { addRemoveTransparent, sortImgs } from "./utils.js";
-import Fullscreen from "../components/fullscreen/fullscreen.js";
+import Fullscreen from "../views/gallery-view/components/fullscreen/fullscreen.js";
 import CustomHeader from "../components/header/header.js";
 import Loader from "../components/loader/loader.js";
 import InfoPopup from "../components/popup/info-popup/info-popup.js";

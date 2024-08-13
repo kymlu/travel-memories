@@ -1,10 +1,10 @@
 /// IMPORTS
 import BasePolaroid from "../base-polaroid/base-polaroid.js"
-import { DEFAULT_TIMEOUT, SHORT_DATETIME_FORMAT_EN, SHORT_DATETIME_FORMAT_JP } from '../../../js/constants.js'
-import { polaroidHtmls } from "../../../js/globals.js";
+import { DEFAULT_TIMEOUT, SHORT_DATETIME_FORMAT_EN, SHORT_DATETIME_FORMAT_JP } from '../../../../../js/constants.js'
+import { polaroidHtmls } from "../../../../../js/globals.js";
 import {
     addRemoveNoDisplay, addRemoveTransparent, getBilingualText, getPictureDate
-} from '../../../js/utils.js';
+} from '../../../../../js/utils.js';
 
 /**
  * The Image Polaroid object.
@@ -35,25 +35,12 @@ export default class ImagePolaroid extends BasePolaroid {
         this.jpCaption = jpCaption;
         this.title = getBilingualText("Expand image", "画像を拡大する");
         this.innerHTML = polaroidHtmls.img;
-
-
-        // The lazy loading observer
-        // Based on: https://www.codepel.com/vanilla-javascript/javascript-image-loaded/
-        const obs = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    addRemoveTransparent([this.querySelector(".polaroid-frame")], false);
-                    observer.disconnect();
-                }
-            });
-        });
-        obs.observe(this);
     }
 
     connectedCallback() {
+        super.connectedCallback();
+        
         const polaroid = this.querySelector(".polaroid-frame");
-        polaroid.classList.add(this.getRandomAngleClass())
-
         const img = polaroid.querySelector("img");
         if (img) {
             img.onload = function () {

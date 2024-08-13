@@ -1,3 +1,5 @@
+import { addRemoveTransparent } from "../../../../../js/utils.js";
+
 /**
  * The Base Polaroid object.
  */
@@ -18,6 +20,23 @@ export default class BasePolaroid extends HTMLElement {
          * @type Boolean
          */
         this.isBlank = isBlank;
+
+        // The lazy loading observer
+        // Based on: https://www.codepel.com/vanilla-javascript/javascript-image-loaded/
+        const obs = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    addRemoveTransparent([this.querySelector(".polaroid-frame")], false);
+                    observer.disconnect();
+                }
+            });
+        });
+        obs.observe(this);
+    }
+
+    connectedCallback() {
+        const polaroid = this.querySelector(".polaroid-frame");
+        polaroid.classList.add(this.getRandomAngleClass());
     }
 
     /**
@@ -37,7 +56,7 @@ export default class BasePolaroid extends HTMLElement {
     /**
      * @returns a class name to angle the polaroid.
      */
-    getRandomAngleClass(){
+    getRandomAngleClass() {
         return (this.isAngledLeft ? "left-" : "right-") + Math.floor(Math.random() * 4 + 1);
     }
 }

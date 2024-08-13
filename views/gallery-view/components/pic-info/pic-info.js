@@ -1,11 +1,11 @@
 import {
 	ATTRIBUTES, DEFAULT_TIMEOUT, JAPAN, LONG_DATETIME_FORMAT_EN, LONG_DATETIME_FORMAT_JP, TAIWAN, TAGS
-} from "../../js/constants.js";
-import { startHandleDrag } from "../../js/globals.js";
+} from "../../../../js/constants.js";
+import { startHandleDrag } from "../../../../js/globals.js";
 import {
 	addClickListeners, addRemoveNoDisplay, getBilingualText,
 	getPictureDate, setBilingualProperty, sortByEnglishName
-} from "../../js/utils.js";
+} from "../../../../js/utils.js";
 
 /** The Pic Info class. */
 export default class PicInfo extends HTMLElement {
@@ -19,7 +19,7 @@ export default class PicInfo extends HTMLElement {
 		this.favouriteTag = this.#createfavouriteTag();
 		this.isMoving = false;
 
-		fetch("components/pic-info/pic-info.html")
+		fetch("views/gallery-view/components/pic-info/pic-info.html")
 			.then(response => response.text())
 			.then(html => {
 				this.innerHTML = html;

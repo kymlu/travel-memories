@@ -1,7 +1,7 @@
 .map-view {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: start;
     padding: 50px 75px;
     gap: 20px;
     height: 100vh;
@@ -11,7 +11,7 @@
 @media only screen and (orientation: portrait) {
     .map-view {
         padding: 0px;
-        justify-content: start;
+        /* justify-content: start; */
         padding-top: 10vh;
     }
 }

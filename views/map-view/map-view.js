@@ -41,7 +41,7 @@ export default class MapView extends HTMLElement {
 			setTimeout(() => {
 				this.#elements.map.addEventListener("load", this.colourMap.bind(this));
 				addClickListeners([
-					[this.#elements.mainTitle, onSelectNewRegion.bind(null, this.selectedRegion, null, true)],
+					[this.#elements.mainTitle, () => { onSelectNewRegion(this.selectedRegion, null, true); }],
 					[this.#elements.zoomIn, this.scaleMap.bind(this, undefined, true)],
 					[this.#elements.zoomOut, this.scaleMap.bind(this, undefined, false)]
 				]);
@@ -122,7 +122,7 @@ export default class MapView extends HTMLElement {
 						rgnImg.setAttribute("opacity", "50%");
 					});
 
-					rgnImg.addEventListener("mouseup", selectRegion.bind(this, rgn));
+					rgnImg.addEventListener("mouseup", this.selectRegion.bind(this, rgn));
 
 					rgnImg.addEventListener("mouseout", () => {
 						rgnImg.setAttribute("opacity", "100%");
