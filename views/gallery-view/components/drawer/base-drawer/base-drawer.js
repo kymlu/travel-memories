@@ -11,8 +11,8 @@ export default class BaseDrawer extends HTMLElement {
     connectedCallback() { 
         // TODO: test (not sure if touchend is ok)
         setTimeout(() => {
-            this.querySelector(".drawer-handle")?.addEventListener("touchstart", this.onStartHandleDrag, false);
-            this.querySelector(".drawer-handle")?.addEventListener("touchend", this.onEndHandleDrag, false);
+            this.querySelector(".drawer-handle-container")?.addEventListener("touchstart", this.onStartHandleDrag, false);
+            this.querySelector(".drawer-handle-container")?.addEventListener("touchend", this.onEndHandleDrag, false);
         }, 50);
     }
 

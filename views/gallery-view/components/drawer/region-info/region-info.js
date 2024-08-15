@@ -147,7 +147,7 @@ export default class RegionInfo extends BaseDrawer {
         }
 
         this.isVisible = true;
-        addRemoveTransparent([this.#elements.background], false);
+        addRemoveTransparent([this.#elements.background, this.#elements.drawer], false);
         addRemoveClass([this.#elements.background], "visibility-hidden", false);
         if (isForced) {
             if (document.body.scrollTop < this.getBoundingClientRect().height) {
@@ -165,7 +165,6 @@ export default class RegionInfo extends BaseDrawer {
 
     /** Hides the region info section.
      * @param {boolean} isForced 
-     * TODO: better transition
      */
     hide(isForced) {
         this.isVisible = false;
@@ -179,11 +178,12 @@ export default class RegionInfo extends BaseDrawer {
                 });
             }
         }
-        addRemoveTransparent([this.#elements.background], true);
+        addRemoveTransparent([this.#elements.background, this.#elements.drawer], true);
         setTimeout(() => {
             addRemoveClass([this.#elements.background], "visibility-hidden", true);
             this.#elements.regionInfo.style.position = "relative";
             this.#elements.regionInfo.style.top = "0";
+            addRemoveTransparent([this.#elements.drawer], false);
         }, DEFAULT_TIMEOUT);
     }
 
