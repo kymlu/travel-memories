@@ -6,6 +6,7 @@ export default class BaseDrawer extends HTMLElement {
         super();
         this.startYValue;
         this.isHandleGrabbed = false;
+        this.isVisible;
     }
 
     connectedCallback() { 

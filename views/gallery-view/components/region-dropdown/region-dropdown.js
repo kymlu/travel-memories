@@ -10,7 +10,6 @@ export default class RegionDropdown extends HTMLElement {
 	constructor(headerElement) {
         super();
 		this.header = headerElement;
-		this.isVisible = false;
 		this.hasOpenedForRegion = false;
 		this.currentRegionId = null;
 		fetch("views/gallery-view/components/region-dropdown/region-dropdown.html")
@@ -19,7 +18,7 @@ export default class RegionDropdown extends HTMLElement {
                 this.innerHTML = html;
             })
             .catch(error => {
-                console.error("Error loading fullscreen.", error);
+                console.error("Error loading region dropdown.", error);
             });
 		this.#elements = {}; 
 	}
