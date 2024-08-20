@@ -85,9 +85,7 @@ button:active,
 }
 
 .large-icon {
-  font-size: var(--icn-text-size);
-  font-family: FontAwesome;
-  cursor: pointer;
+  font-size: var(--icn-text-size) !important;
 }
 
 .small-icon {
@@ -96,13 +94,11 @@ button:active,
 }
 
 .inline-icon {
-  font-family: FontAwesome;
   color: rgba(var(--main-color));
   cursor: pointer;
 }
 
 .in-btn-icon {
-  font-family: FontAwesome;
   color: white;
 }
 

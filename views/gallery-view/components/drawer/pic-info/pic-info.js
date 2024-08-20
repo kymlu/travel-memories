@@ -230,9 +230,8 @@ export default class PicInfo extends BaseDrawer {
 		tempElement.classList.add("base-tag", "img-tag");
 		tempElement.innerHTML = getBilingualText("Favourited", "お気に入り");
 		let tempStar = document.createElement("span");
-		tempStar.classList.add("in-btn-icon");
+		tempStar.classList.add("in-btn-icon", "fa", "fa-star");
 		tempStar.style.marginRight = "5px";
-		tempStar.innerHTML = "&#xf005";
 		tempElement.prepend(tempStar);
 		return tempElement;
 	}
