@@ -237,6 +237,11 @@ export default class FilterPopup extends BasePopup {
                         newButton.classList.toggle("active");
                     });
                 }
+                if(item.faClass != undefined){
+                    let tagIcon = document.createElement("i");
+					tagIcon.classList.add("fa", item.faClass);
+                    newButton.prepend(tagIcon);
+                }
                 htmlList.appendChild(newButton);
             }
         });

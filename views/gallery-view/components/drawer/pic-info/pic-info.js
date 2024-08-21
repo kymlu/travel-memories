@@ -69,11 +69,25 @@ export default class PicInfo extends BaseDrawer {
 				this.querySelector("#pic-info-details").addEventListener("touchmove", (event) => {
 					event.stopPropagation();
 				});
+
+				TAGS.sort(sortByEnglishName).forEach(tag => {
+					let tagElement = document.createElement("div");
+					tagElement.classList.add("base-tag", "img-tag");
+					let tagIcon = document.createElement("i");
+					tagIcon.classList.add("fa", tag.faClass);
+					let tagText = document.createElement("span");
+					tagText.innerHTML = getBilingualText(tag.englishName, tag.japaneseName);
+					tagElement.appendChild(tagIcon);
+					tagElement.appendChild(tagText);
+					tagElement.dataset.tagId = tag.id;
+					this.#elements.tags.appendChild(tagElement);
+				});
+				this.#elements.tags.appendChild(this.#createfavouriteTag());
 			}, 50);
 		}, 50);
 	}
 
-	dragDownFunction(){
+	dragDownFunction() {
 		super.dragDownFunction();
 		this.hide();
 	}
@@ -184,20 +198,15 @@ export default class PicInfo extends BaseDrawer {
 			addRemoveNoDisplay([this.#elements.technical], false);
 		}
 
-		// add tags
-		this.#elements.tags.replaceChildren();
-		this.currentPic.tags.map(x => { return TAGS.find(function (t) { return t.id == x }) })
-			.sort(sortByEnglishName)
-			.forEach(tag => {
-				let tempElement = document.createElement("div");
-				tempElement.classList.add("base-tag", "img-tag");
-				tempElement.innerHTML = getBilingualText(tag.englishName, tag.japaneseName);
-				this.#elements.tags.appendChild(tempElement);
-			});
-
-		if (this.currentPic.isFavourite) {
-			this.#elements.tags.appendChild(this.favouriteTag);
-		}
+		// show/hide appropriate tags
+		let allTags = Array.from(this.#elements.tags.children);
+		allTags.forEach(tag => {
+			if (tag.dataset.tagId == undefined) {
+				addRemoveNoDisplay([tag], !this.currentPic.isFavourite);
+			} else {
+				addRemoveNoDisplay([tag], !this.currentPic.tags.includes(tag.dataset.tagId));
+			}
+		});
 	}
 
 	/**
@@ -230,7 +239,7 @@ export default class PicInfo extends BaseDrawer {
 		tempElement.classList.add("base-tag", "img-tag");
 		tempElement.innerHTML = getBilingualText("Favourited", "お気に入り");
 		let tempStar = document.createElement("span");
-		tempStar.classList.add("in-btn-icon", "fa", "fa-star");
+		tempStar.classList.add("fa", "fa-star");
 		tempStar.style.marginRight = "5px";
 		tempElement.prepend(tempStar);
 		return tempElement;

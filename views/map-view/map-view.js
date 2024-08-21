@@ -46,10 +46,10 @@ export default class MapView extends HTMLElement {
 					[this.#elements.zoomOut, this.scaleMap.bind(this, undefined, false)]
 				]);
 				this.#elements.mainTitle.addEventListener("mouseover", () => {
-					this.querySelector(".inline-icon").classList.add("white");
+					this.#elements.mainTitle.querySelector("i").classList.add("white");
 				});
 				this.#elements.mainTitle.addEventListener("mouseout", () => {
-					this.querySelector(".inline-icon").classList.remove("white");
+					this.#elements.mainTitle.querySelector("i").classList.remove("white");
 				});
 			}, 50);
 
@@ -103,7 +103,7 @@ export default class MapView extends HTMLElement {
 			if (!this.#elements.map.hasAttribute("data") || this.#elements.map.data == "") return;
 
 			const svgDoc = this.#elements.map.contentDocument;
-			this.outlineThickness = parseInt(svgDoc.querySelector("svg").getAttribute("width")) * 0.02;
+			this.outlineThickness = parseInt(svgDoc.querySelector("svg").getAttribute("width")) * 0.025;
 			const rgnList = this.currentCountry.regionGroups.flatMap(rgnGrp => rgnGrp.regions);
 
 			rgnList.forEach(rgn => {

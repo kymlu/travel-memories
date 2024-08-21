@@ -25,9 +25,14 @@
 body {
   font-family: Zen Maru Gothic;
   overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  margin: 0px;
+  padding: 0px;
 }
 
 img {
+  /* Prevent user select*/
   /* Safari */
   -webkit-user-select: none;
   /* IE 10 and IE 11 */
@@ -46,6 +51,8 @@ button {
   margin: 0px;
   background-color: transparent;
   cursor: pointer;
+
+  /* Prevent user select*/
   /* Safari */
   -webkit-user-select: none;
   /* IE 10 and IE 11 */
@@ -88,20 +95,6 @@ button:active,
   font-size: var(--icn-text-size) !important;
 }
 
-.small-icon {
-  height: 30px;
-  width: 30px;
-}
-
-.inline-icon {
-  color: rgba(var(--main-color));
-  cursor: pointer;
-}
-
-.in-btn-icon {
-  color: white;
-}
-
 .regular-text {
   font-size: var(--reg-text-size);
 }
@@ -123,6 +116,10 @@ button:active,
   border-radius: 10px;
   font-size: var(--reg-text-size);
   font-family: Zen Maru Gothic;
+
+  i {
+    margin-right: 5px;
+  }
 }
 
 .action-btn {
@@ -242,25 +239,6 @@ button:active,
 
 .color-transition {
   transition: color 0.5s ease-in-out;
-}
-
-.page-bg {
-  display: flex;
-  flex-direction: column;
-  margin: 0px;
-  padding: 0px;
-}
-
-.floating-btn {
-  position: fixed;
-  bottom: 15px;
-  right: 15px;
-  width: 35px;
-  height: 35px;
-  border-radius: 50%;
-  color: white;
-  background-color: rgba(var(--main-color));
-  z-index: 200;
 }
 
 .justify-end {

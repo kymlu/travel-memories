@@ -19,41 +19,49 @@ export const TAGS = [
 		"id": "animal",
 		"englishName": "Animals",
 		"japaneseName": "動物",
+		"faClass": "fa-paw"
 	},
 	{
 		"id": "attractions",
 		"englishName": "Attractions",
 		"japaneseName": "観光地",
+		"faClass": "fa-map-pin"
 	},
 	{
 		"id": "art",
 		"englishName": "Art",
 		"japaneseName": "美術",
+		"faClass": "fa-paint-brush"
 	},
 	{
 		"id": "event",
 		"englishName": "Events",
 		"japaneseName": "イベント",
+		"faClass": "fa-calendar"
 	},
 	{
 		"id": "food",
 		"englishName": "Food",
 		"japaneseName": "食べ物",
+		"faClass": "fa-cutlery"
 	},
 	{
 		"id": "nature",
 		"englishName": "Nature",
 		"japaneseName": "自然",
+		"faClass": "fa-leaf"
 	},
 	{
 		"id": "relax",
 		"englishName": "Daily life",
 		"japaneseName": "日常",
+		"faClass": "fa-home"
 	},
 	{
 		"id": "town",
 		"englishName": "Around town",
 		"japaneseName": "街中で",
+		"faClass": "fa-building"
 	}
 ];
 

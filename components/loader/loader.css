@@ -79,6 +79,11 @@
 	}
 }
 
+.loader-icon {
+  height: 30px;
+  width: 30px;
+}
+
 .error-btn {
 	cursor: pointer;
 	width: 30vw;

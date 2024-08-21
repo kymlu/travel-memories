@@ -17,6 +17,18 @@
   }
 }
 
+.floating-btn {
+  position: fixed;
+  bottom: 15px;
+  right: 15px;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  color: white;
+  background-color: rgba(var(--main-color));
+  z-index: 200;
+}
+
 .rgn-info {
   display: flex;
   flex-direction: row;

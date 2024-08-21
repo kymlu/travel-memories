@@ -31,7 +31,7 @@ export default class Loader extends HTMLElement {
             addRemoveClass([this], "opacity-transition", true);
             this.#elements = {
                 dots: Array.from(document.querySelectorAll(".loader-dot")),
-                icon: document.querySelector(".small-icon"),
+                icon: document.querySelector(".loader-icon"),
                 error: document.querySelector(".error-btn")
             }
             this.#elements.error.addEventListener("click", this.retry.bind(this));
@@ -49,7 +49,7 @@ export default class Loader extends HTMLElement {
 
         if (isCountrySelected()) {
             addRemoveNoDisplay([this.#elements.icon], false);
-            document.querySelector(".small-icon").src = `assets/icons/${getCurrentCountry()?.symbol}.svg`;
+            document.querySelector(".loader-icon").src = `assets/icons/${getCurrentCountry()?.symbol}.svg`;
         }
 
         this.#elements.dots.forEach(dot => {
