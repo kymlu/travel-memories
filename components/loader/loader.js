@@ -31,7 +31,6 @@ export default class Loader extends HTMLElement {
             addRemoveClass([this], "opacity-transition", true);
             this.#elements = {
                 dots: Array.from(document.querySelectorAll(".loader-dot")),
-                lastDot: document.querySelector(`.dot-${LOAD_DOT_COUNT}`),
                 icon: document.querySelector(".small-icon"),
                 error: document.querySelector(".error-btn")
             }
@@ -53,7 +52,7 @@ export default class Loader extends HTMLElement {
             document.querySelector(".small-icon").src = `assets/icons/${getCurrentCountry()?.symbol}.svg`;
         }
 
-        Array.from(document.querySelectorAll(".loader-dot")).forEach(dot => {
+        this.#elements.dots.forEach(dot => {
             dot.style.animationIterationCount = "infinite";
         });
     }
@@ -80,9 +79,9 @@ export default class Loader extends HTMLElement {
             }
         }
 
-        document.querySelector(`.dot-${LOAD_DOT_COUNT}`).addEventListener("animationend", handleAnimationEnd.bind(this));
+        this.#elements.dots[LOAD_DOT_COUNT].addEventListener("animationend", handleAnimationEnd.bind(this));
         let iterationCount = Math.ceil((new Date() - this.#startTime) / LOAD_ANIMATION_TIME);
-        Array.from(document.querySelectorAll(".loader-dot")).forEach(dot => {
+        this.#elements.dots.forEach(dot => {
             dot.style.animationIterationCount = iterationCount
         });
     }
