@@ -49,7 +49,7 @@ export default class Loader extends HTMLElement {
 
         if (isCountrySelected()) {
             addRemoveNoDisplay([this.#elements.icon], false);
-            document.querySelector(".loader-icon").src = `assets/icons/${getCurrentCountry()?.symbol}.svg`;
+            this.#elements.icon.src = `assets/icons/${getCurrentCountry()?.symbol}.svg`;
         }
 
         this.#elements.dots.forEach(dot => {
@@ -70,7 +70,7 @@ export default class Loader extends HTMLElement {
      * @param {Function} animationEndFunction 
      */
     stop(animationEndFunction) {
-        let dispatchFunction = () => { this.#dispatchLoadingEvent.bind(this)(); }
+        let dispatchFunction = this.#dispatchLoadingEvent.bind(this);
         let handleAnimationEnd = function () {
             addRemoveTransparent([this], true);
             dispatchFunction();

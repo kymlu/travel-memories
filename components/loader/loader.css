@@ -14,56 +14,56 @@
 }
 
 .loader div:nth-child(1) {
-	top: 12.5px;
-	left: 100px;
+	top: 0px;
+	left: 87.5px;
 	animation-delay: 0s;
 }
 
 .loader div:nth-child(2) {
-	top: 38.12816;
-	left: 161.87184px;
+	top: 25.62816px;
+	left: 149.37184px;
 	animation-delay: 0.1875s;
 }
 
 .loader div:nth-child(3) {
-	top: 100px;
-	left: 187.5px;
+	top: 87.5px;
+	left: 175px;
 	animation-delay: 0.375s;
 }
 
 .loader div:nth-child(4) {
-	top: 161.87184px;
-	left: 161.87184px;
+	top: 149.37184px;
+	left: 149.37184px;
 	animation-delay: 0.5625s;
 }
 
 .loader div:nth-child(5) {
-	top: 187.5px;
-	left: 100px;
+	top: 175px;
+	left: 87.5px;
 	animation-delay: 0.75s;
 }
 
 .loader div:nth-child(6) {
-	top: 161.87184px;
-	left: 38.12816;
+	top: 149.37184px;
+	left: 25.62816px;
 	animation-delay: 0.9375s;
 }
 
 .loader div:nth-child(7) {
-	top: 100px;
-	left: 12.5px;
+	top: 87.5px;
+	left: 0px;
 	animation-delay: 1.125s;
 }
 
 .loader div:nth-child(8) {
-	top: 38.12816;
-	left: 38.12816;
+	top: 25.62816px;
+	left: 25.62816px;
 	animation-delay: 1.3125s;
 }
 
 .loader div:nth-child(9) {
-	top: 12.5px;
-	left: 100px;
+	top: 0px;
+	left: 87.5px;
 	animation-delay: 1.5s;
 }
 

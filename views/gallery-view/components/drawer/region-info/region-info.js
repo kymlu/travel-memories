@@ -263,7 +263,7 @@ export default class RegionInfo extends BaseDrawer {
                 console.error(error);
                 this.filterMiniMap(currentRegion);
             }
-        }, 50);
+        }, 100);
     }
 }
 

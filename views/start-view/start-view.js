@@ -20,10 +20,10 @@ export default class StartView extends HTMLElement {
         btn.classList.add("start-btn", "highlight-btn", "text-btn");
         const text = document.createElement("div");
         text.classList.add("country-text");
-        const icon = document.createElement("div");
-        icon.classList.add("start-icon");
+        const iconSection = document.createElement("div");
+        iconSection.classList.add("start-icon");
         const img = document.createElement("img");
-        img.classList.add("start-icon", "img");
+        img.classList.add("start-icon");
 
         this.replaceChildren();
 
@@ -42,8 +42,8 @@ export default class StartView extends HTMLElement {
             let jpTxt = text.cloneNode();
             jpTxt.innerHTML = country.japaneseName;
 
-            let iconn = icon.cloneNode();
-            iconn.id = `${abb}-start-icon`;
+            let newIconSection = iconSection.cloneNode();
+            newIconSection.id = `${abb}-start-icon`;
 
             let imgWhite = img.cloneNode();
             imgWhite.id = `${abb}-start-icon-w`;
@@ -54,16 +54,18 @@ export default class StartView extends HTMLElement {
             imgColor.src = `assets/icons/${country.symbol}.svg`;
             imgColor.classList.add("opacity-transition");
 
+            newIconSection.appendChild(imgWhite);
+            newIconSection.appendChild(imgColor);
+
+            newBtn.appendChild(engTxt);
+            newBtn.appendChild(newIconSection);
+            newBtn.appendChild(jpTxt);
+
+            // TODO: check if this is ok
             newBtn.addEventListener("mouseover", this.highlightCountry.bind(this, abb, true));
             newBtn.addEventListener("touchstart", this.highlightCountry.bind(this, abb, true));
             newBtn.addEventListener("mouseout", this.highlightCountry.bind(this, abb, false));
             newBtn.addEventListener("touchend", this.highlightCountry.bind(this, abb, false));
-
-            newBtn.appendChild(engTxt);
-            newBtn.appendChild(iconn);
-            newBtn.appendChild(jpTxt);
-            iconn.appendChild(imgWhite);
-            iconn.appendChild(imgColor);
 
             this.appendChild(newBtn);
         });
@@ -98,14 +100,12 @@ export default class StartView extends HTMLElement {
 
     selectCountry(countryId, countryColor) {
         setCurrentCountry(countryId, countryColor, false);
-
         this.hide();
     }
 
     highlightCountry(abbreviation, isHover) {
         addRemoveTransparent(`${abbreviation}-start-icon-c`, isHover);
-        let icons = Array.from(document.getElementById(`${abbreviation}-start-icon`).getElementsByTagName("img"));
-        addRemoveClass(icons, "animated", isHover);
+        addRemoveClass([this.querySelector(`#${abbreviation}-start-icon`)], "animated", isHover);
     }
 }
 
