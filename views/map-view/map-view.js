@@ -58,7 +58,6 @@ export default class MapView extends HTMLElement {
 	}
 
 	/** Function to run when a new country is selected. */
-	// TODO: put a listener in here? 
 	handleNewCountry() {
 		addRemoveNoDisplay([this], false);
 		this.currentCountry = getCurrentCountry();

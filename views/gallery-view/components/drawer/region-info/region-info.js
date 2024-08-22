@@ -3,7 +3,8 @@ import { getAppColor, getCurrentCountry } from "../../../../../js/globals.js";
 import {
     addRemoveTransparent, addRemoveNoDisplay, getBilingualText,
     setBilingualProperty, addClickListeners, scrollToTop,
-    addRemoveClass
+    addRemoveClass,
+    fetchInnerHtml
 } from "../../../../../js/utils.js";
 import BaseDrawer from "../base-drawer/base-drawer.js";
 
@@ -19,16 +20,9 @@ export default class RegionInfo extends BaseDrawer {
         this.hasMapLoaded = false;
         this.currentCountry = null;
         this.isNewGallery = true;
-
-        fetch("views/gallery-view/components/drawer/region-info/region-info.html")
-            .then(response => response.text())
-            .then(html => {
-                this.innerHTML = html;
-            })
-            .catch(error => {
-                console.error("Error loading fullscreen.", error);
-            });
         this.#elements = {};
+
+		fetchInnerHtml("views/gallery-view/components/drawer/region-info/region-info.html", this);
     }
 
     connectedCallback() {
@@ -221,7 +215,6 @@ export default class RegionInfo extends BaseDrawer {
     }
 
     /** Filter the mini map. */
-    // TODO: first time map loads, sometimes does not color properly
     filterMiniMap(currentRegion) {
         if (!this.#elements.map.hasAttribute("data") || this.#elements.map.data == "") {
             setTimeout(() => {

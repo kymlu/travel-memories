@@ -1,6 +1,22 @@
 import { ATTRIBUTES } from "./constants.js";
 
 /**
+ * Fetches the html from a given address and inserts it into the element.
+ * @param {string} address 
+ * @param {HTMLElement} element 
+ */
+export function fetchInnerHtml(address, element) {
+	fetch(address)
+		.then(response => response.text())
+		.then(html => {
+			element.innerHTML = html;
+		})
+		.catch(error => {
+			console.error(`Error loading ${element.tagName}.`, error);
+		});;
+}
+
+/**
  * Gets the date to the appropriate timezone
  * @param {Date} date - the date in UTC
  * @param {number} timezoneOffset - the offset of the image date in hours
@@ -80,7 +96,7 @@ export function addRemoveClass(elements, className, isAdd) {
 			if (elements.length > 0) {
 				elements.forEach(element => {
 					var e = typeof element == "string" ? document.getElementById(element) : element;
-					if(isAdd){
+					if (isAdd) {
 						e?.classList?.add(className);
 					} else {
 						e?.classList?.remove(className);

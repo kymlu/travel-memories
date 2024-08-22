@@ -112,11 +112,11 @@ export default class GalleryView extends HTMLElement {
 				this.#elements.view.insertBefore(this.regionInfo, this.#elements.gallery);
 				this.#elements.view.appendChild(this.regionDropdown);
 				addRemoveNoDisplay([this.regionDropdown], true);
-				
+
 				setBilingualProperty([
 					["dates-title", "Dates visited", "訪れた日付"]
 				], ATTRIBUTES.INNERHTML);
-				
+
 				addClickListeners([
 					[this.#elements.toTopButton, scrollToTop],
 					[this.changeFilterQueryButton, this.filterPopup.open.bind(this.filterPopup, null)]
@@ -239,7 +239,7 @@ export default class GalleryView extends HTMLElement {
 				this.currentCountry.officialRegionNameEnglish,
 				this.currentCountry.officialRegionNameJapanese
 			);
-			
+
 			this.header.toggleFilterIndicator(false);
 			this.header.flipRegionNameArrow(false);
 
@@ -318,43 +318,13 @@ export default class GalleryView extends HTMLElement {
 		return newPolaroid;
 	}
 
-	// scrolling behaviours
-	onScrollFunction() {
-		this.toggleFloatingButton();
-		this.regionInfo.handleScroll();
-
-		if (!this.isLoadingImages && this.imageLoadIndex < this.visibleImages.length &&
-			(window.innerHeight + Math.round(window.scrollY)) >= document.body.offsetHeight - 100) {
-			this.loadImages();
-		}
-	}
-
-	toggleFloatingButton() {
-		if (document.body.scrollTop > SCROLL_THRESHOLD && !this.isToTopVisible) {
-			addRemoveNoDisplay([this.#elements.toTopButton], false);
-			addRemoveTransparent([this.#elements.toTopButton], false);
-			this.isToTopVisible = true;
-		} else if (document.body.scrollTop <= SCROLL_THRESHOLD && this.isToTopVisible) {
-			addRemoveTransparent([this.#elements.toTopButton], true);
-			setTimeout(() => { addRemoveNoDisplay([this.#elements.toTopButton], true); }, DEFAULT_TIMEOUT)
-			this.isToTopVisible = false;
-		}
-	}
-
-	toggleRegionDropdown() {
-		this.regionDropdown.toggleVisibility();
-	}
-
-	toggleRegionInfo(isVisible) {
-		this.regionInfo.toggleVisibility(isVisible);
-	}
-
 	// image filtering
 	/** Shows the filter popup. */
 	showFilter() {
 		this.filterPopup.open();
 	}
 
+	/** Check whether the text contains the keyword. */
 	doesTextIncludeKeyword(text, keywordSearchTerm) {
 		return text && text.toLowerCase().includes(keywordSearchTerm.toLowerCase());
 	}
@@ -380,7 +350,7 @@ export default class GalleryView extends HTMLElement {
 		let area = img.area;
 		let tagsWithKeyword = TAGS.filter(tag => img.tags.includes(tag.id) &&
 			(this.doesTextIncludeKeyword(tag.englishName, keywordSearchTerm) ||
-			this.doesTextIncludeKeyword(tag.japaneseName, keywordSearchTerm)));
+				this.doesTextIncludeKeyword(tag.japaneseName, keywordSearchTerm)));
 		let keywordsToSearch = [
 			img.descriptionEnglish,
 			img.descriptionJapanese,
@@ -425,6 +395,38 @@ export default class GalleryView extends HTMLElement {
 			selectedTags,
 			selectedCameras));
 		this.header.toggleFilterIndicator(this.allImages.length != this.visibleImages.length);
+	}
+
+	// scrolling behaviours
+	onScrollFunction() {
+		this.toggleFloatingButton();
+		this.regionInfo.handleScroll();
+
+		if (!this.isLoadingImages && this.imageLoadIndex < this.visibleImages.length &&
+			(window.innerHeight + Math.round(window.scrollY)) >= document.body.offsetHeight - 200) {
+			this.loadImages();
+		}
+	}
+
+	toggleFloatingButton() {
+		if (document.body.scrollTop > SCROLL_THRESHOLD && !this.isToTopVisible) {
+			addRemoveNoDisplay([this.#elements.toTopButton], false);
+			addRemoveTransparent([this.#elements.toTopButton], false);
+			this.isToTopVisible = true;
+		} else if (document.body.scrollTop <= SCROLL_THRESHOLD && this.isToTopVisible) {
+			addRemoveTransparent([this.#elements.toTopButton], true);
+			setTimeout(() => { addRemoveNoDisplay([this.#elements.toTopButton], true); }, DEFAULT_TIMEOUT)
+			this.isToTopVisible = false;
+		}
+	}
+
+	// other elements
+	toggleRegionDropdown() {
+		this.regionDropdown.toggleVisibility();
+	}
+
+	toggleRegionInfo(isVisible) {
+		this.regionInfo.toggleVisibility(isVisible);
 	}
 }
 

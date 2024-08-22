@@ -1,29 +1,23 @@
 import { getCurrentCountry, onSelectNewRegion } from "../../../../js/globals.js";
-import { 
-	addClickListeners, addRemoveNoDisplay, addRemoveTransparent, getBilingualText 
+import {
+	addClickListeners, addRemoveNoDisplay, addRemoveTransparent, fetchInnerHtml, getBilingualText
 } from "../../../../js/utils.js";
 
 /** The Region Dropdown. */
 export default class RegionDropdown extends HTMLElement {
 	#elements;
-	
+
 	constructor(headerElement) {
-        super();
+		super();
 		this.header = headerElement;
 		this.hasOpenedForRegion = false;
 		this.currentRegionId = null;
-		fetch("views/gallery-view/components/region-dropdown/region-dropdown.html")
-            .then(response => response.text())
-            .then(html => {
-                this.innerHTML = html;
-            })
-            .catch(error => {
-                console.error("Error loading region dropdown.", error);
-            });
-		this.#elements = {}; 
+		this.#elements = {};
+		
+		fetchInnerHtml("views/gallery-view/components/region-dropdown/region-dropdown.html", this);
 	}
-	
-	connectedCallback(){
+
+	connectedCallback() {
 		setTimeout(() => {
 			this.#elements = {
 				background: this.querySelector("#rgn-drop-down-bg"),
@@ -56,12 +50,11 @@ export default class RegionDropdown extends HTMLElement {
 
 		// Iterate each unofficial and official region, sort by visited/not visited
 		const currentCountry = getCurrentCountry();
-		currentCountry.regionGroups.filter(grp => grp.regions.filter(rgn => rgn.visited).length > 0).forEach(grp => {
+		currentCountry.regionGroups.filter(grp => grp.regions.some(rgn => rgn.visited)).forEach(grp => {
 			let regionGroupElement = regionGroupTemplate.cloneNode();
 
 			if (currentCountry.showUnofficialRegions) {
 				regionGroupElement.innerHTML = getBilingualText(grp.englishName, grp.japaneseName);
-				//regionGroupElement.id = this.#getDropdownElementId(grp.englishName);
 				dropDownList.appendChild(regionGroupElement);
 			}
 
@@ -72,7 +65,7 @@ export default class RegionDropdown extends HTMLElement {
 					regionButton.id = this.#getDropdownElementId(rgn.id);
 					regionButton.title = getBilingualText(`See images from ${rgn.englishName}`, `${rgn.japaneseName}の写真を表示する`);
 					regionButton.classList.add("visited-rgn-text");
-					regionButton.addEventListener("click", onSelectNewRegion.bind(null ,rgn.id, null, false), false);
+					regionButton.addEventListener("click", () => { onSelectNewRegion(rgn.id, null, false) }, false);
 					dropDownList.appendChild(regionButton);
 				}
 			});
@@ -103,10 +96,10 @@ export default class RegionDropdown extends HTMLElement {
 		this.header.flipRegionNameArrow();
 		if (!this.hasOpenedForRegion) {
 			this.hasOpenedForRegion = true;
-			if(this.currentRegionId){
+			if (this.currentRegionId) {
 				document.getElementById(this.#getDropdownElementId(this.currentRegionId)).scrollIntoView({ behavior: "smooth", block: "center" });
 			} else {
-				this.#elements.content.scrollTo({top: 0, behavior: "instant"});
+				this.#elements.content.scrollTo({ top: 0, behavior: "instant" });
 			}
 		}
 	}
@@ -116,7 +109,7 @@ export default class RegionDropdown extends HTMLElement {
 		this.header.flipRegionNameArrow(false);
 	}
 
-	#getDropdownElementId(name){
+	#getDropdownElementId(name) {
 		return `${name}-dropdown`;
 	}
 }

@@ -5,6 +5,7 @@ import {
 	addClickListeners, addRemoveNoDisplay, getBilingualText,
 	getPictureDate, setBilingualProperty, sortByEnglishName
 } from "../../../../../../js/utils.js";
+import { fetchInnerHtml } from "../../../../../js/utils.js";
 import BaseDrawer from "../base-drawer/base-drawer.js";
 
 /** The Pic Info class. */
@@ -19,14 +20,7 @@ export default class PicInfo extends BaseDrawer {
 		this.favouriteTag = this.#createfavouriteTag();
 		this.isMoving = false;
 
-		fetch("views/gallery-view/components/drawer/pic-info/pic-info.html")
-			.then(response => response.text())
-			.then(html => {
-				this.innerHTML = html;
-			})
-			.catch(error => {
-				console.error("Error loading fullscreen.", error);
-			});
+		fetchInnerHtml("views/gallery-view/components/drawer/pic-info/pic-info.html", this);
 	}
 
 	connectedCallback() {
@@ -237,7 +231,7 @@ export default class PicInfo extends BaseDrawer {
 	#createfavouriteTag() {
 		let tempElement = document.createElement("div");
 		tempElement.classList.add("base-tag", "img-tag");
-		tempElement.innerHTML = getBilingualText("Favourited", "お気に入り");
+		tempElement.innerHTML = getBilingualText("Favourite", "お気に入り");
 		let tempStar = document.createElement("i");
 		tempStar.classList.add("fa", "fa-star");
 		tempElement.prepend(tempStar);

@@ -2,6 +2,7 @@
 import { DEFAULT_TIMEOUT, ATTRIBUTES } from '../../../../js/constants.js'
 import {
 	addClickListeners, addRemoveNoDisplay, addRemoveTransparent,
+	fetchInnerHtml,
 	getImageAddress, isPortraitMode, setBilingualProperty,
 } from '../../../../js/utils.js';
 import PicInfo from '../drawer/pic-info/pic-info.js';
@@ -34,14 +35,7 @@ export default class Fullscreen extends HTMLElement {
 
 		this.picInfo = new PicInfo();
 
-		fetch("views/gallery-view/components/fullscreen/fullscreen.html")
-			.then(response => response.text())
-			.then(html => {
-				this.innerHTML = html;
-			})
-			.catch(error => {
-				console.error("Error loading fullscreen.", error);
-			});
+		fetchInnerHtml("views/gallery-view/components/fullscreen/fullscreen.html", this);
 	}
 
 	connectedCallback() {

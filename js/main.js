@@ -94,16 +94,13 @@ function fetchData() {
 				throw new Error("No data");
 			} else {
 				setAllCountryData(d);
+				loader.stop(goToStartView.bind(this, false));
+				loader.addEventListener(CUSTOM_EVENT_TYPES.LOADING_COMPLETE, loader.remove);
 			}
 		}).catch(error => {
 			loader.showDataLoadError(fetchData);
 			hasError = true;
 			console.error("Error loading data.", error);
-		}).then(() => {
-			if (!hasError) {
-				loader.stop(goToStartView.bind(this, false));
-				loader.addEventListener(CUSTOM_EVENT_TYPES.LOADING_COMPLETE, loader.remove);
-			}
 		});
 }
 

@@ -1,4 +1,5 @@
 /// IMPORTS
+import { fetchInnerHtml } from "../../../js/utils.js";
 import BasePopup from "../base-popup/base-popup.js"
 
 /**
@@ -9,12 +10,7 @@ export default class InfoPopup extends BasePopup {
     constructor(){
         super();
 
-        // Get component html
-        fetch("components/popup/info-popup/info-popup.html")
-            .then(response => response.text())
-            .then(html => {
-                this.innerHTML = html;
-            });
+        fetchInnerHtml("components/popup/info-popup/info-popup.html", this);
     }
 
     /** @inheritdoc */

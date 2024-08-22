@@ -113,7 +113,6 @@ export function goToMapView() {
     mapView.show();
 }
 
-// todo: put this logic into the galleryview?
 export function onSelectNewRegion(regionId, isPopped, isNewGallery) {
     let loader = null;
     if (isMapView()) {
@@ -135,8 +134,8 @@ export function onSelectNewRegion(regionId, isPopped, isNewGallery) {
         galleryView.setNewRegion(visitedRgns, false, isNewGallery);
     }
 
-    setTimeout(() => {
-        if (!isGalleryView()) {
+    if (!isGalleryView()) {
+        setTimeout(() => {
             header.toggleVisibility(true);
             setCurrentView(VIEW_NAMES.GALLERY);
             galleryView.show();
@@ -149,8 +148,8 @@ export function onSelectNewRegion(regionId, isPopped, isNewGallery) {
                     }, 0);
                 });
             }
-        }
-    }, DEFAULT_TIMEOUT);
+        }, DEFAULT_TIMEOUT);
+    }
 }
 
 /**

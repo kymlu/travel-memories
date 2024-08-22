@@ -4,7 +4,8 @@ import { CUSTOM_EVENT_TYPES, ATTRIBUTES } from "../../../../js/constants.js";
 import {
     addRemoveNoDisplay, getBilingualText, flipArrow, sortByEnglishName,
     addClickListeners,
-    setBilingualProperty
+    setBilingualProperty,
+    fetchInnerHtml
 } from '../../../../js/utils.js';
 
 /**
@@ -50,12 +51,7 @@ export default class FilterPopup extends BasePopup {
         this.filterOptionButton = document.createElement("button");
         this.filterOptionButton.classList.add("base-tag", "filter-option");
 
-        // Get component html
-        fetch("views/gallery-view/components/filter-popup/filter-popup.html")
-            .then(response => response.text())
-            .then(html => {
-                this.innerHTML = html;
-            })
+		fetchInnerHtml("views/gallery-view/components/filter-popup/filter-popup.html", this);
     }
 
     /**
