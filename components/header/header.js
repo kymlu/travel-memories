@@ -22,14 +22,7 @@ export default class CustomHeader extends HTMLElement {
         this.buttons = {};
         this.sections = {};
 
-        fetch("components/header/header.html")
-            .then(response => response.text())
-            .then(html => {
-                this.innerHTML = html;
-            })
-            .catch(error => {
-                console.error(`Error loading header.`, error);
-            });;
+        fetchInnerHtml("components/header/header.html", this);
     }
 
     connectedCallback() {
