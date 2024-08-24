@@ -1,4 +1,6 @@
-import { getCurrentCountry, getHeader, onSelectNewRegion } from "../../../../js/globals.js";
+import CustomHeader from "../../../../components/header/header.js";
+import { CUSTOM_EVENT_TYPES } from "../../../../js/constants.js";
+import { getCurrentCountry, onSelectNewRegion } from "../../../../js/globals.js";
 import {
 	addClickListeners, addRemoveNoDisplay, addRemoveTransparent, fetchInnerHtml, getBilingualText
 } from "../../../../js/utils.js";
@@ -9,28 +11,32 @@ export default class RegionDropdown extends HTMLElement {
 
 	constructor() {
 		super();
-		this.header = getHeader();
+		/** @type {CustomHeader} */
+		this.header = null;
+		document.addEventListener(CUSTOM_EVENT_TYPES.HEADER_CHANGED, (event) => this.header = event.detail.header);
+		
 		this.hasOpenedForRegion = false;
 		this.currentRegionId = null;
-		this.#elements = {};
 		
-		fetchInnerHtml("views/gallery-view/components/region-dropdown/region-dropdown.html", this);
+		this.#elements = {};
+
 	}
 
 	connectedCallback() {
-		setTimeout(() => {
-			this.#elements = {
-				background: this.querySelector("#rgn-drop-down-bg"),
-				content: this.querySelector("#rgn-drop-down"),
-			}
-			setTimeout(() => {
-				addClickListeners([
-					[this.#elements.background, this.close.bind(this, null)]
-				]);
-				addRemoveNoDisplay([this], true);
-				addRemoveTransparent([this.querySelector(".transparent")], false);
-			}, 50);
-		}, 50);
+		fetchInnerHtml("views/gallery-view/components/region-dropdown/region-dropdown.html", this)
+			.then(() => {
+				this.#elements = {
+					background: this.querySelector("#rgn-drop-down-bg"),
+					content: this.querySelector("#rgn-drop-down"),
+				}
+				setTimeout(() => {
+					addClickListeners([
+						[this.#elements.background, this.close.bind(this, null)]
+					]);
+					addRemoveNoDisplay([this], true);
+					addRemoveTransparent([this.querySelector(".transparent")], false);
+				}, 50);
+			});
 	}
 
 	/** 

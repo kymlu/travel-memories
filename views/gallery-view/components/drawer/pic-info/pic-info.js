@@ -19,66 +19,64 @@ export default class PicInfo extends BaseDrawer {
 		this.searchTermJp = "";
 		this.favouriteTag = this.#createfavouriteTag();
 		this.isMoving = false;
-
-		fetchInnerHtml("views/gallery-view/components/drawer/pic-info/pic-info.html", this);
 	}
 
 	connectedCallback() {
-		super.connectedCallback();
+		fetchInnerHtml("views/gallery-view/components/drawer/pic-info/pic-info.html", this)
+			.then(() => {
+				super.connectedCallback();
+				this.#elements = {
+					drawer: this.querySelector("#pic-info-drawer"),
+					dateEn: this.querySelector("#fullscreen-eng-date"),
+					dateJp: this.querySelector("#fullscreen-jp-date"),
+					cityEn: this.querySelector("#fullscreen-eng-city"),
+					cityJp: this.querySelector("#fullscreen-jp-city"),
+					captionEn: this.querySelector("#fullscreen-eng-caption"),
+					captionJp: this.querySelector("#fullscreen-jp-caption"),
+					camera: this.querySelector("#camera-info"),
+					lens: this.querySelector("#lens-info"),
+					technical: this.querySelector("#technical-info"),
+					tags: this.querySelector("#img-tags")
+				};
+				setTimeout(() => {
+					setBilingualProperty([
+						["search-eng", "Google in English", "英語でググる"],
+						["search-jp", "Google in Japanese", "日本語でググる"],
+						[this.querySelector(".close-btn"), "Close", "閉じる"]
+					], ATTRIBUTES.TITLE);
 
-		setTimeout(() => {
-			this.#elements = {
-				drawer: this.querySelector("#pic-info-drawer"),
-				dateEn: this.querySelector("#fullscreen-eng-date"),
-				dateJp: this.querySelector("#fullscreen-jp-date"),
-				cityEn: this.querySelector("#fullscreen-eng-city"),
-				cityJp: this.querySelector("#fullscreen-jp-city"),
-				captionEn: this.querySelector("#fullscreen-eng-caption"),
-				captionJp: this.querySelector("#fullscreen-jp-caption"),
-				camera: this.querySelector("#camera-info"),
-				lens: this.querySelector("#lens-info"),
-				technical: this.querySelector("#technical-info"),
-				tags: this.querySelector("#img-tags")
-			};
-			setTimeout(() => {
-				setBilingualProperty([
-					["search-eng", "Google in English", "英語でググる"],
-					["search-jp", "Google in Japanese", "日本語でググる"],
-					[this.querySelector(".close-btn"), "Close", "閉じる"]
-				], ATTRIBUTES.TITLE);
+					addClickListeners([
+						["pic-info-bg", this.hide.bind(this)],
+						["pic-info-drawer", (event) => { event.stopPropagation(); }],
+						["pic-info-close-btn", this.hide.bind(this)],
+						["search-eng", this.searchEnglish.bind(this)],
+						["search-jp", this.searchJapanese.bind(this)]
+					]);
 
-				addClickListeners([
-					["pic-info-bg", this.hide.bind(this)],
-					["pic-info-drawer", (event) => { event.stopPropagation(); }],
-					["pic-info-close-btn", this.hide.bind(this)],
-					["search-eng", this.searchEnglish.bind(this)],
-					["search-jp", this.searchJapanese.bind(this)]
-				]);
+					// currently remove because it will not work on Apple <- what is this lol
+					this.querySelector("#pic-info-details").addEventListener("touchstart", (event) => {
+						event.stopPropagation();
+					});
 
-				// currently remove because it will not work on Apple <- what is this lol
-				this.querySelector("#pic-info-details").addEventListener("touchstart", (event) => {
-					event.stopPropagation();
-				});
+					this.querySelector("#pic-info-details").addEventListener("touchmove", (event) => {
+						event.stopPropagation();
+					});
 
-				this.querySelector("#pic-info-details").addEventListener("touchmove", (event) => {
-					event.stopPropagation();
-				});
-
-				TAGS.sort(sortByEnglishName).forEach(tag => {
-					let tagElement = document.createElement("div");
-					tagElement.classList.add("base-tag", "img-tag");
-					let tagIcon = document.createElement("i");
-					tagIcon.classList.add("fa", tag.faClass);
-					let tagText = document.createElement("span");
-					tagText.innerHTML = getBilingualText(tag.englishName, tag.japaneseName);
-					tagElement.appendChild(tagIcon);
-					tagElement.appendChild(tagText);
-					tagElement.dataset.tagId = tag.id;
-					this.#elements.tags.appendChild(tagElement);
-				});
-				this.#elements.tags.appendChild(this.#createfavouriteTag());
-			}, 50);
-		}, 50);
+					TAGS.sort(sortByEnglishName).forEach(tag => {
+						let tagElement = document.createElement("div");
+						tagElement.classList.add("base-tag", "img-tag");
+						let tagIcon = document.createElement("i");
+						tagIcon.classList.add("fa", tag.faClass);
+						let tagText = document.createElement("span");
+						tagText.innerHTML = getBilingualText(tag.englishName, tag.japaneseName);
+						tagElement.appendChild(tagIcon);
+						tagElement.appendChild(tagText);
+						tagElement.dataset.tagId = tag.id;
+						this.#elements.tags.appendChild(tagElement);
+					});
+					this.#elements.tags.appendChild(this.#createfavouriteTag());
+				}, 50);
+			});
 	}
 
 	dragDownFunction() {

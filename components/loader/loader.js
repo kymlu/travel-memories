@@ -20,7 +20,6 @@ export default class Loader extends HTMLElement {
         this.style.zIndex = 100;
     }
 
-
     connectedCallback() {
         fetchInnerHtml("components/loader/loader.html", this)
             .then(() => {

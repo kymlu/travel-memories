@@ -23,50 +23,49 @@ export default class CustomHeader extends HTMLElement {
         this.buttons = {};
         this.sections = {};
 
-        fetchInnerHtml("components/header/header.html", this);
     }
 
     connectedCallback() {
-        setTimeout(() => {
-            this.classList.add("opacity-transition");
+        fetchInnerHtml("components/header/header.html", this)
+            .then(() => {
+                this.classList.add("opacity-transition");
 
-            /** CustomHeader sections */
-            this.sections = {
-                header: this.querySelector("header"),
-                left: this.querySelector("#left-section"),
-                centre: this.querySelector("#center-section"),
-                right: this.querySelector("#right-section"),
-            };
+                /** CustomHeader sections */
+                this.sections = {
+                    header: this.querySelector("header"),
+                    left: this.querySelector("#left-section"),
+                    centre: this.querySelector("#center-section"),
+                    right: this.querySelector("#right-section"),
+                };
 
-            /** CustomHeader buttons */
-            this.buttons = {
-                globe: this.querySelector("#globe-btn"),
-                map: this.querySelector("#map-btn"),
-                regionDropdown: this.querySelector("#rgn-title-btn"),
-                regionInfo: this.querySelector("#region-info-btn"),
-                filter: this.querySelector("#filter-btn"),
-                creator: this.querySelector("#creator-btn")
-            };
+                /** CustomHeader buttons */
+                this.buttons = {
+                    globe: this.querySelector("#globe-btn"),
+                    map: this.querySelector("#map-btn"),
+                    regionDropdown: this.querySelector("#rgn-title-btn"),
+                    regionInfo: this.querySelector("#region-info-btn"),
+                    filter: this.querySelector("#filter-btn"),
+                    creator: this.querySelector("#creator-btn")
+                };
 
-            setTimeout(() => {
-                setBilingualProperty([
-                    [this.buttons.globe, "Return to country picker", "国の選択へ戻る"],
-                    [this.buttons.map, "Return to map", "地図に戻る"],
-                    [this.buttons.creator, "About the site", "このサイトについて"],
-                    [this.buttons.filter, "Filter Pictures", "写真をフィルターする"]
-                ], ATTRIBUTES.TITLE);
+                setTimeout(() => {
+                    setBilingualProperty([
+                        [this.buttons.globe, "Return to country picker", "国の選択へ戻る"],
+                        [this.buttons.map, "Return to map", "地図に戻る"],
+                        [this.buttons.creator, "About the site", "このサイトについて"],
+                        [this.buttons.filter, "Filter Pictures", "写真をフィルターする"]
+                    ], ATTRIBUTES.TITLE);
 
-                addClickListeners([
-                    [this.buttons.globe, this.globeFunc],
-                    [this.buttons.map, this.mapFunc],
-                    [this.buttons.regionDropdown, this.regionDropdownFunc],
-                    [this.buttons.regionInfo, this.infoFunc],
-                    [this.buttons.filter, this.filterFunc],
-                    [this.buttons.creator, this.creatorFunc]
-                ]);
-            }, 50);
-
-        }, 50);
+                    addClickListeners([
+                        [this.buttons.globe, this.globeFunc],
+                        [this.buttons.map, this.mapFunc],
+                        [this.buttons.regionDropdown, this.regionDropdownFunc],
+                        [this.buttons.regionInfo, this.infoFunc],
+                        [this.buttons.filter, this.filterFunc],
+                        [this.buttons.creator, this.creatorFunc]
+                    ]);
+                }, 50);
+            });
     }
 
     getHeight() {

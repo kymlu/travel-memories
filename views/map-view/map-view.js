@@ -4,16 +4,15 @@ import {
 } from "../../js/globals.js";
 import {
 	addClickListeners, addRemoveClass, addRemoveNoDisplay,
-	addRemoveTransparent, getBilingualText, scrollToTop
+	addRemoveTransparent, fetchInnerHtml, getBilingualText, scrollToTop
 } from "../../js/utils.js";
 
 /** The Map View. */
 export default class MapView extends HTMLElement {
 	#elements;
 
-	constructor(innerHtml) {
+	constructor() {
 		super();
-		this.innerHTML = innerHtml;
 		this.defaultMainTitleText = "";
 		this.defaultMainTitleTitle = "";
 		this.currentCountry = null;
@@ -26,35 +25,38 @@ export default class MapView extends HTMLElement {
 	}
 
 	connectedCallback() {
-		setTimeout(() => {
-			this.#elements = {
-				view: this.querySelector(".map-view"),
-				mapControl: this.querySelector("#map-control"),
-				mapContainer: this.querySelector("#map-container"),
-				map: this.querySelector("#country-map"),
-				mainTitle: this.querySelector("#main-title"),
-				mainTitleText: this.querySelector("#main-title-text"),
-				zoomIn: this.querySelector("#zoom-in"),
-				zoomOut: this.querySelector("#zoom-out"),
-			}
+		fetchInnerHtml("views/map-view/map-view.html", this)
+			.then(() => {
+				setTimeout(() => {
+					this.#elements = {
+						view: this.querySelector(".map-view"),
+						mapControl: this.querySelector("#map-control"),
+						mapContainer: this.querySelector("#map-container"),
+						map: this.querySelector("#country-map"),
+						mainTitle: this.querySelector("#main-title"),
+						mainTitleText: this.querySelector("#main-title-text"),
+						zoomIn: this.querySelector("#zoom-in"),
+						zoomOut: this.querySelector("#zoom-out"),
+					}
 
-			setTimeout(() => {
-				this.#elements.map.addEventListener("load", this.colourMap.bind(this));
-				addClickListeners([
-					[this.#elements.mainTitle, () => { onSelectNewRegion(this.selectedRegion, null, true); }],
-					[this.#elements.zoomIn, this.scaleMap.bind(this, undefined, true)],
-					[this.#elements.zoomOut, this.scaleMap.bind(this, undefined, false)]
-				]);
-				this.#elements.mainTitle.addEventListener("mouseover", () => {
-					this.#elements.mainTitle.querySelector("i").classList.add("white");
-				});
-				this.#elements.mainTitle.addEventListener("mouseout", () => {
-					this.#elements.mainTitle.querySelector("i").classList.remove("white");
-				});
-			}, 50);
+					setTimeout(() => {
+						this.#elements.map.addEventListener("load", this.colourMap.bind(this));
+						addClickListeners([
+							[this.#elements.mainTitle, () => { onSelectNewRegion(this.selectedRegion, null, true); }],
+							[this.#elements.zoomIn, this.scaleMap.bind(this, undefined, true)],
+							[this.#elements.zoomOut, this.scaleMap.bind(this, undefined, false)]
+						]);
+						this.#elements.mainTitle.addEventListener("mouseover", () => {
+							this.#elements.mainTitle.querySelector("i").classList.add("white");
+						});
+						this.#elements.mainTitle.addEventListener("mouseout", () => {
+							this.#elements.mainTitle.querySelector("i").classList.remove("white");
+						});
+					}, 50);
 
-			addRemoveNoDisplay([this]);
-		}, 50);
+					addRemoveNoDisplay([this]);
+				}, 50);
+			});
 	}
 
 	/** Function to run when a new country is selected. */

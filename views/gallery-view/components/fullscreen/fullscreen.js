@@ -33,47 +33,45 @@ export default class Fullscreen extends HTMLElement {
 		this.initialX = null;
 		this.initialY = null;
 
-		this.picInfo = new PicInfo();
-
-		fetchInnerHtml("views/gallery-view/components/fullscreen/fullscreen.html", this);
+		this.picInfo = null;
 	}
 
 	connectedCallback() {
-		setTimeout(() => {
-			this.#elements = {
-				view: this.querySelector("#fullscreen"),
-				background: this.querySelector(".popup-bg"),
-				picture: this.querySelector("#fullscreen-pic"),
-				nextPicture: this.querySelector("#fullscreen-pic-next"),
-				leftArrow: this.querySelector("#left-arrow"),
-				rightArrow: this.querySelector("#right-arrow"),
-				picInfoButton: this.querySelector("#pic-info-btn")
-			};
-			setTimeout(() => {
-				setBilingualProperty([
-					[this.#elements.picInfoButton, "See picture information", "写真の情報を見る"],
-					[this.#elements.leftArrow, "Previous picture", "前の写真"],
-					[this.#elements.rightArrow, "Next picture", "次の写真"],
-				], ATTRIBUTES.TITLE);
+		fetchInnerHtml("views/gallery-view/components/fullscreen/fullscreen.html", this)
+			.then(() => {
+				this.#elements = {
+					view: this.querySelector("#fullscreen"),
+					background: this.querySelector(".popup-bg"),
+					picture: this.querySelector("#fullscreen-pic"),
+					nextPicture: this.querySelector("#fullscreen-pic-next"),
+					leftArrow: this.querySelector("#left-arrow"),
+					rightArrow: this.querySelector("#right-arrow"),
+					picInfoButton: this.querySelector("#pic-info-btn")
+				};
+				this.picInfo = this.querySelector("pic-info");
+				setTimeout(() => {
+					setBilingualProperty([
+						[this.#elements.picInfoButton, "See picture information", "写真の情報を見る"],
+						[this.#elements.leftArrow, "Previous picture", "前の写真"],
+						[this.#elements.rightArrow, "Next picture", "次の写真"],
+					], ATTRIBUTES.TITLE);
 
-				addClickListeners([
-					[this.#elements.background, this.close.bind(this, true)],
-					["fullscreen-ctrl", this.close.bind(this, true)],
-					[this.#elements.picInfoButton, this.picInfo.toggleVisibility.bind(this.picInfo, null)],
-					[this.#elements.leftArrow, (event) => { event.stopPropagation(); }],
-					[this.#elements.picture, (event) => { event.stopPropagation(); }],
-					[this.#elements.rightArrow, (event) => { event.stopPropagation(); }],
-					[this.#elements.leftArrow, this.changePicture.bind(this, false)],
-					[this.#elements.rightArrow, this.changePicture.bind(this, true)]
-				]);
+					addClickListeners([
+						[this.#elements.background, this.close.bind(this, true)],
+						["fullscreen-ctrl", this.close.bind(this, true)],
+						[this.#elements.picInfoButton, this.picInfo.toggleVisibility.bind(this.picInfo, null)],
+						[this.#elements.leftArrow, (event) => { event.stopPropagation(); }],
+						[this.#elements.picture, (event) => { event.stopPropagation(); }],
+						[this.#elements.rightArrow, (event) => { event.stopPropagation(); }],
+						[this.#elements.leftArrow, this.changePicture.bind(this, false)],
+						[this.#elements.rightArrow, this.changePicture.bind(this, true)]
+					]);
 
-				this.#elements.view.addEventListener("touchstart", this.startFullscreenSwipe, false);
-				this.#elements.view.addEventListener("touchmove", this.moveFullscreenSwipe, false);
-				this.picInfo.style.zIndex = 10;
-				this.#elements.view.appendChild(this.picInfo);
-				this.close(true);
-			}, 50);
-		}, 50);
+					this.#elements.view.addEventListener("touchstart", this.startFullscreenSwipe, false);
+					this.#elements.view.addEventListener("touchmove", this.moveFullscreenSwipe, false);
+					this.close(true);
+				}, 50);
+			});
 	}
 
 	//// FUNCTIONS
@@ -92,9 +90,9 @@ export default class Fullscreen extends HTMLElement {
 		this.currentCountryId = countryId;
 		this.isChangingPicture = false;
 		this.setNewPicture();
-		
+
 		this.lastSwipeTime = new Date();
-		
+
 		if (isPortraitMode()) {
 			this.isPicInfoVisible = false;
 			this.picInfo.hide(true);
@@ -105,7 +103,7 @@ export default class Fullscreen extends HTMLElement {
 		addRemoveTransparent([this.#elements.view, this.#elements.background], false);
 		document.addEventListener("keydown", this.handleKeydown.bind(this));
 	}
-	
+
 	/** 
 	 * Close the 
 	 * @param {boolean} forceClose - ```True``` if the user has forcefully closed fullscreen mode.

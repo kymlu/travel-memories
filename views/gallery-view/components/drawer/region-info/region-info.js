@@ -1,5 +1,6 @@
-import { ATTRIBUTES, DEFAULT_TIMEOUT } from "../../../../../js/constants.js";
-import { getAppColor, getCurrentCountry, getHeader } from "../../../../../js/globals.js";
+import CustomHeader from "../../../../../components/header/header.js";
+import { ATTRIBUTES, CUSTOM_EVENT_TYPES, DEFAULT_TIMEOUT } from "../../../../../js/constants.js";
+import { getAppColor, getCurrentCountry } from "../../../../../js/globals.js";
 import {
     addRemoveTransparent, addRemoveNoDisplay, getBilingualText,
     setBilingualProperty, addClickListeners, scrollToTop,
@@ -16,41 +17,41 @@ export default class RegionInfo extends BaseDrawer {
         super();
         this.isVisible = false;
         this.isThrottling = false;
-        this.header = getHeader();
+        /** @type {CustomHeader} */
+        this.header = null;
+        document.addEventListener(CUSTOM_EVENT_TYPES.HEADER_CHANGED, (event) => this.header = event.detail.header);
         this.hasMapLoaded = false;
         this.currentCountry = null;
         this.isNewGallery = true;
         this.#elements = {};
-
-		fetchInnerHtml("views/gallery-view/components/drawer/region-info/region-info.html", this);
     }
 
     connectedCallback() {
-        super.connectedCallback();
+        fetchInnerHtml("views/gallery-view/components/drawer/region-info/region-info.html", this)
+            .then(() => {
+                super.connectedCallback();
+                this.#elements = {
+                    regionInfo: this.querySelector("#rgn-info"),
+                    background: this.querySelector("#rgn-info-bg"),
+                    drawer: this.querySelector("#rgn-info-drawer"),
+                    map: this.querySelector("#country-map-mini"),
+                    areasTitle: this.querySelector("#areas-title"),
+                    datesSection: this.querySelector("#rgn-info-dates"),
+                    dates: this.querySelector("#rgn-dates"),
+                    descriptionEnglish: this.querySelector("#rgn-desc-eng"),
+                    descriptionJapanese: this.querySelector("#rgn-desc-jp"),
+                    descriptionTitle: this.querySelector("#description-title"),
+                    areasList: this.querySelector("#rgn-areas"),
+                };
 
-        setTimeout(() => {
-            this.#elements = {
-                regionInfo: this.querySelector("#rgn-info"),
-                background: this.querySelector("#rgn-info-bg"),
-                drawer: this.querySelector("#rgn-info-drawer"),
-                map: this.querySelector("#country-map-mini"),
-                areasTitle: this.querySelector("#areas-title"),
-                datesSection: this.querySelector("#rgn-info-dates"),
-                dates: this.querySelector("#rgn-dates"),
-                descriptionEnglish: this.querySelector("#rgn-desc-eng"),
-                descriptionJapanese: this.querySelector("#rgn-desc-jp"),
-                descriptionTitle: this.querySelector("#description-title"),
-                areasList: this.querySelector("#rgn-areas"),
-            };
-
-            setTimeout(() => {
-                addClickListeners([
-                    [this.#elements.background, this.toggleVisibility.bind(this, false)],
-                ]);
-                addRemoveTransparent([this.#elements.drawer]);
-                addRemoveNoDisplay([this], true);
-            }, 50);
-        }, 50);
+                setTimeout(() => {
+                    addClickListeners([
+                        [this.#elements.background, this.toggleVisibility.bind(this, false)],
+                    ]);
+                    addRemoveTransparent([this.#elements.drawer]);
+                    addRemoveNoDisplay([this], true);
+                }, 50);
+            });
     }
 
     dragDownFunction() {

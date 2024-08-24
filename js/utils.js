@@ -6,14 +6,14 @@ import { ATTRIBUTES } from "./constants.js";
  * @param {HTMLElement} element 
  */
 export async function fetchInnerHtml(address, element) {
-	fetch(address)
+	await fetch(address)
 		.then(response => response.text())
 		.then(html => {
 			element.innerHTML = html;
 		})
 		.catch(error => {
 			console.error(`Error loading ${element.tagName}.`, error);
-		});;
+		});
 }
 
 /**

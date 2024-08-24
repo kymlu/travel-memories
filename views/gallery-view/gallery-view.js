@@ -1,9 +1,10 @@
 /// IMPORTS
 import FilterPopup from './components/filter-popup/filter-popup.js'
-import { getCurrentCountry, getHeader, isGalleryView, onSelectNewRegion } from '../../js/globals.js';
+import { getCurrentCountry, isGalleryView, onSelectNewRegion } from '../../js/globals.js';
 import {
-	addClickListeners, addRemoveClass, addRemoveNoDisplay, addRemoveTransparent, getBilingualText,
-	getImageAddress, isPortraitMode, scrollToTop, setBilingualProperty, sortImgs
+	addClickListeners, addRemoveClass, addRemoveNoDisplay, addRemoveTransparent,
+	fetchInnerHtml, getBilingualText, getImageAddress, isPortraitMode, scrollToTop,
+	setBilingualProperty, sortImgs
 } from '../../js/utils.js';
 import {
 	ATTRIBUTES, CUSTOM_EVENT_TYPES, DEFAULT_TIMEOUT, SCROLL_THRESHOLD, TAGS
@@ -18,22 +19,21 @@ import RegionInfo from './components/drawer/region-info/region-info.js';
 /** The Gallery View. */
 export default class GalleryView extends HTMLElement {
 	#elements;
-	constructor(innerHTML, fullscreenElement) {
+	constructor() {
 		super();
-		this.innerHTML = innerHTML;
-
 		/// VARIABLES
 		// filter
 		/** @type {FilterPopup} */
 		this.filterPopup = new FilterPopup();
 		/** @type {CustomHeader} */
-		this.header = getHeader();
+		this.header = null;
+		document.addEventListener(CUSTOM_EVENT_TYPES.HEADER_CHANGED, (event) => this.header = event.detail.header);
 		/** @type {RegionDropdown} */
-		this.regionDropdown = new RegionDropdown();
+		this.regionDropdown = null;
 		/** @type {RegionInfo} */
-		this.regionInfo = new RegionInfo();
+		this.regionInfo = null;
 		/** @type {Fullscreen} */
-		this.fullscreen = fullscreenElement;
+		this.fullscreen = null;
 
 		// region info
 		this.currentRegion = null;
@@ -62,71 +62,73 @@ export default class GalleryView extends HTMLElement {
 	}
 
 	connectedCallback() {
-		setTimeout(() => {
-			this.#elements = {
-				view: this.querySelector("#gallery-view"),
-				gallery: this.querySelector("#gallery"),
-				toTopButton: this.querySelector("#to-top-btn")
-			}
+		fetchInnerHtml("views/gallery-view/gallery-view.html", this)
+			.then(() => {
+				setTimeout(() => {
+					this.#elements = {
+						view: this.querySelector("#gallery-view"),
+						gallery: this.querySelector("#gallery"),
+						toTopButton: this.querySelector("#to-top-btn")
+					}
+					this.fullscreen = this.querySelector("fullscreen-component");
+					this.regionDropdown = this.querySelector("region-dropdown");
+					this.regionInfo = this.querySelector("region-info");
 
-			this.classList.add("opacity-transition");
+					this.classList.add("opacity-transition");
 
-			window.onscroll = () => {
-				if (isGalleryView()) {
-					this.onScrollFunction();
-				}
-			};
+					window.onscroll = () => {
+						if (isGalleryView()) {
+							this.onScrollFunction();
+						}
+					};
 
-			window.onresize = () => {
-				if (isGalleryView()) {
-					this.#elements.view.style.marginTop = this.header.getHeight();
-					this.regionInfo.repositionBackground();
-				}
-			};
+					window.onresize = () => {
+						if (isGalleryView()) {
+							this.#elements.view.style.marginTop = this.header.getHeight();
+							this.regionInfo.repositionBackground();
+						}
+					};
 
-			this.filterPopup.addEventListener(CUSTOM_EVENT_TYPES.FILTER_POPUP_SUBMITTED, event => {
-				this.filterImages(event.detail.isOnlyFavs,
-					event.detail.keyword,
-					event.detail.selectedRegions,
-					event.detail.selectedAreas,
-					event.detail.selectedTags,
-					event.detail.selectedCameras);
+					this.filterPopup.addEventListener(CUSTOM_EVENT_TYPES.FILTER_POPUP_SUBMITTED, event => {
+						this.filterImages(event.detail.isOnlyFavs,
+							event.detail.keyword,
+							event.detail.selectedRegions,
+							event.detail.selectedAreas,
+							event.detail.selectedTags,
+							event.detail.selectedCameras);
 
-				scrollToTop(true);
-				this.#elements.gallery.replaceChildren();
-				if (this.visibleImages.length == 0) {
-					this.#elements.gallery.innerHTML = this.noPicturesText;
-					this.#elements.gallery.appendChild(this.changeFilterQueryButton);
-					addRemoveClass([this.#elements.gallery], "flex-column", true);
-				} else {
-					addRemoveClass([this.#elements.gallery], "flex-column", false);
-					this.imageLoadIndex = 0;
-					this.currentPolaroidCount = 0;
-					this.loadImages();
-				}
+						scrollToTop(true);
+						this.#elements.gallery.replaceChildren();
+						if (this.visibleImages.length == 0) {
+							this.#elements.gallery.innerHTML = this.noPicturesText;
+							this.#elements.gallery.appendChild(this.changeFilterQueryButton);
+							addRemoveClass([this.#elements.gallery], "flex-column", true);
+						} else {
+							addRemoveClass([this.#elements.gallery], "flex-column", false);
+							this.imageLoadIndex = 0;
+							this.currentPolaroidCount = 0;
+							this.loadImages();
+						}
+					});
+
+					this.appendChild(this.filterPopup);
+
+					setTimeout(() => {
+						setBilingualProperty([
+							["dates-title", "Dates visited", "訪れた日付"]
+						], ATTRIBUTES.INNERHTML);
+
+						addClickListeners([
+							[this.#elements.toTopButton, scrollToTop],
+							[this.changeFilterQueryButton, this.filterPopup.open.bind(this.filterPopup, null)]
+						]);
+
+						this.#elements.toTopButton.title = getBilingualText("Go to top", "トップに移動する");
+						addRemoveNoDisplay([this], true);
+					}, 50);
+
+				}, 50);
 			});
-
-			this.appendChild(this.filterPopup);
-
-			setTimeout(() => {
-				this.#elements.view.insertBefore(this.regionInfo, this.#elements.gallery);
-				this.#elements.view.appendChild(this.regionDropdown);
-				addRemoveNoDisplay([this.regionDropdown], true);
-
-				setBilingualProperty([
-					["dates-title", "Dates visited", "訪れた日付"]
-				], ATTRIBUTES.INNERHTML);
-
-				addClickListeners([
-					[this.#elements.toTopButton, scrollToTop],
-					[this.changeFilterQueryButton, this.filterPopup.open.bind(this.filterPopup, null)]
-				]);
-
-				this.#elements.toTopButton.title = getBilingualText("Go to top", "トップに移動する");
-				addRemoveNoDisplay([this], true);
-			}, 50);
-
-		}, 50);
 	}
 
 	/** Open the gallery page */

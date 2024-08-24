@@ -5,7 +5,6 @@
 
 /// IMPORTS
 import { CUSTOM_EVENT_TYPES, VIEW_NAMES } from './constants.js';
-import Fullscreen from '../views/gallery-view/components/fullscreen/fullscreen.js';
 import Loader from '../components/loader/loader.js';
 import {
 	goToMapView,
@@ -21,9 +20,6 @@ import {
 } from './utils.js';
 import ImagePolaroid from '../views/gallery-view/components/polaroid/img-polaroid/img-polaroid.js';
 import TextPolaroid from '../views/gallery-view/components/polaroid/txt-polaroid/txt-polaroid.js';
-import InfoPopup from '../components/popup/info-popup/info-popup.js'
-import GalleryView from '../views/gallery-view/gallery-view.js';
-import MapView from '../views/map-view/map-view.js';
 
 /// VARIABLES
 // Booleans
@@ -45,18 +41,11 @@ function initializeSite() {
 	loader = new Loader();
 	document.body.append(loader);
 
-	// Popups
-	let infoPopup = new InfoPopup();
-	document.body.appendChild(infoPopup);
-
 	Promise.all([
-		fetchHtml("views/map-view/map-view.html", MapView.name),
-		fetchHtml("views/gallery-view/gallery-view.html", GalleryView.name),
-		fetchHtml("views/gallery-view/components/fullscreen/fullscreen.html", Fullscreen.name),
 		fetchHtml("views/gallery-view/components/polaroid/img-polaroid/img-polaroid.html", ImagePolaroid.name),
 		fetchHtml("views/gallery-view/components/polaroid/txt-polaroid/txt-polaroid.html", TextPolaroid.name),
-	]).then(([mapView, galleryView, fullscreen, imgPolaroid, txtPolaroid]) => {
-		setSiteContents(infoPopup, mapView, galleryView, fullscreen, imgPolaroid, txtPolaroid);
+	]).then(([imgPolaroid, txtPolaroid]) => {
+		setSiteContents(imgPolaroid, txtPolaroid);
 	});
 
 	// document.addEventListener("contextmenu", function (e) {

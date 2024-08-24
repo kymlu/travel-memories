@@ -1,6 +1,5 @@
 import { CUSTOM_EVENT_TYPES, DEFAULT_TIMEOUT, VIEW_NAMES } from "./constants.js";
 import { addRemoveTransparent, sortImgs } from "./utils.js";
-import Fullscreen from "../views/gallery-view/components/fullscreen/fullscreen.js";
 import CustomHeader from "../components/header/header.js";
 import Loader from "../components/loader/loader.js";
 import InfoPopup from "../components/popup/info-popup/info-popup.js";
@@ -25,10 +24,6 @@ let startView = null;
 let mapView = null;
 /** @type GalleryView */
 let galleryView = null;
-/** @type Fullscreen */
-let fullscreen = null;
-/** @type InfoPopup */
-let infoPopup = null;
 
 let allCountryData = [];
 
@@ -38,25 +33,19 @@ export let polaroidHtmls = {
 }
 
 export function setSiteContents(
-    infoPopupElement,
-    mapHtml,
-    galleryHtml,
-    fullscreenHtml,
     imgPolaroidHtml,
     txtPolaroidHtml) {
 
-    infoPopup = infoPopupElement;
+    /** @type InfoPopup */
+    let infoPopup = document.querySelector("info-popup");
 
-    header = new CustomHeader();
-    header.style.zIndex = 10;
+    header = document.querySelector("custom-header");
+    const headerSetEvent = new CustomEvent(CUSTOM_EVENT_TYPES.HEADER_CHANGED, { detail: { header: header } });
+    document.dispatchEvent(headerSetEvent);
+
     startView = document.querySelector("start-view");
-    startView.style.zIndex = 1;
-    mapView = new MapView(mapHtml);
-    mapView.style.zIndex = 1;
-    fullscreen = new Fullscreen(fullscreenHtml);
-    fullscreen.style.zIndex = 100;
-    galleryView = new GalleryView(galleryHtml, fullscreen);
-    galleryView.style.zIndex = 1;
+    mapView = document.querySelector("map-view");
+    galleryView = document.querySelector("gallery-view");
 
     polaroidHtmls.img = imgPolaroidHtml;
     polaroidHtmls.txt = txtPolaroidHtml;
@@ -68,12 +57,6 @@ export function setSiteContents(
         galleryView.showFilter.bind(galleryView),
         infoPopup.open.bind(infoPopup, null));
     addRemoveTransparent([header], true);
-
-    let pageContents = document.getElementById("views");
-    document.body.insertBefore(header, pageContents);
-    pageContents.appendChild(mapView);
-    pageContents.appendChild(galleryView);
-    pageContents.appendChild(fullscreen);
 }
 
 function setCurrentView(pageName) {
@@ -150,10 +133,6 @@ export function onSelectNewRegion(regionId, isPopped, isNewGallery) {
             }
         }, DEFAULT_TIMEOUT);
     }
-}
-
-export function getHeader(){
-    return header;
 }
 
 /**

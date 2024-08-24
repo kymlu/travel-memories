@@ -9,18 +9,17 @@ import BasePopup from "../base-popup/base-popup.js"
 export default class InfoPopup extends BasePopup {
     constructor(){
         super();
-
-        fetchInnerHtml("components/popup/info-popup/info-popup.html", this);
     }
-
+    
     /** @inheritdoc */
     connectedCallback(){
-        setTimeout(() => {
+        fetchInnerHtml("components/popup/info-popup/info-popup.html", this)
+        .then(() => {
             this.querySelectorAll(".action-btn").forEach(element => {
                 element.addEventListener("click", () => { this.goToGithub(); });
             });
             super.connectedCallback();
-        }, 0);
+        });
     }
 
     /** Opens a new page on this project's Github repo. */

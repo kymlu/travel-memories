@@ -28,9 +28,13 @@
 </head>
 
 <body>
+	<custom-header style="z-index: 10;"></custom-header>
 	<div id="views">
-		<start-view class="start-screen opacity-transition transparent no-display" style="z-index: 4000"></start-view>
+		<start-view class="start-screen opacity-transition transparent no-display" style="z-index: 1"></start-view>
+		<map-view style="z-index: 1"></map-view>
+		<gallery-view style="z-index: 1"></gallery-view>
 	</div>
+	<info-popup></info-popup>
 
 	<script type="module" src="js/main.js"></script>
 </body>

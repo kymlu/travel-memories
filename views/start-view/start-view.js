@@ -11,7 +11,6 @@ import {
 export default class StartView extends HTMLElement {
     constructor() {
         super();
-        this.innerHTML = "";
     }
 
     /** Initializes the start view contents. */

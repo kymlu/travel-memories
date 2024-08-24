@@ -50,48 +50,47 @@ export default class FilterPopup extends BasePopup {
         /** @type {HTMLButtonElement} */
         this.filterOptionButton = document.createElement("button");
         this.filterOptionButton.classList.add("base-tag", "filter-option");
-
-		fetchInnerHtml("views/gallery-view/components/filter-popup/filter-popup.html", this);
     }
 
     /**
      * @inheritdoc
-     */
+    */
     connectedCallback() {
-        super.connectedCallback();
-        setTimeout(() => {
-            this.#elements = {
-                favourite: this.querySelector("#filter-fav-input"),
-                keyword: this.querySelector("#filter-kw-input")
-            }
-            setTimeout(() => {
-                setBilingualProperty([
-                    ["filter-title", "Filters", "フィルター"],
-                    ["filter-fav-title", "Favourites", "お気に入り"],
-                    ["filter-kw-title", "Keyword", "キーワード"],
-                    ["filter-tags-title", "Tags", "タグ"],
-                    ["filter-camera-title", "Camera", "カメラ"],
-                    ["filter-areas-title", "Areas", "場所"],
-                    ["filter-clear-btn", "Clear", "クリアする"],
-                    ["filter-submit-btn", "Apply", "適用する"]
-                ], ATTRIBUTES.INNERHTML);
-                this.querySelector("#filter-fav-label").childNodes[0].textContent = getBilingualText("Filter favourites", "お気に入りだけを表示する");
-                setBilingualProperty([
-                    ["filter-kw-clear-btn", "Clear keyword", "キーワードをクリアする"],
-                ], ATTRIBUTES.TITLE);
-    
-                addClickListeners([
-                    ["filter-regions-header", this.toggleFilterGroup.bind(this, "regions", undefined)],
-                    ["filter-areas-header", this.toggleFilterGroup.bind(this, "areas", undefined)],
-                    ["filter-tags-header", this.toggleFilterGroup.bind(this, "tags", undefined)],
-                    ["filter-camera-header", this.toggleFilterGroup.bind(this, "camera", undefined)],
-                    ["filter-clear-btn", this.clearFilters.bind(this)],
-                    ["filter-submit-btn", this.submitFilters.bind(this)],
-                    ["filter-kw-clear-btn", this.clearKeyword.bind(this)]
-                ]);
-                this.#elements.keyword.addEventListener("input", this.checkEmptyKeywordInput.bind(this));
-            }, 0);
-        }, 50);
+        fetchInnerHtml("views/gallery-view/components/filter-popup/filter-popup.html", this)
+            .then(() => {
+                super.connectedCallback();
+                this.#elements = {
+                    favourite: this.querySelector("#filter-fav-input"),
+                    keyword: this.querySelector("#filter-kw-input")
+                }
+                setTimeout(() => {
+                    setBilingualProperty([
+                        ["filter-title", "Filters", "フィルター"],
+                        ["filter-fav-title", "Favourites", "お気に入り"],
+                        ["filter-kw-title", "Keyword", "キーワード"],
+                        ["filter-tags-title", "Tags", "タグ"],
+                        ["filter-camera-title", "Camera", "カメラ"],
+                        ["filter-areas-title", "Areas", "場所"],
+                        ["filter-clear-btn", "Clear", "クリアする"],
+                        ["filter-submit-btn", "Apply", "適用する"]
+                    ], ATTRIBUTES.INNERHTML);
+                    this.querySelector("#filter-fav-label").childNodes[0].textContent = getBilingualText("Filter favourites", "お気に入りだけを表示する");
+                    setBilingualProperty([
+                        ["filter-kw-clear-btn", "Clear keyword", "キーワードをクリアする"],
+                    ], ATTRIBUTES.TITLE);
+
+                    addClickListeners([
+                        ["filter-regions-header", this.toggleFilterGroup.bind(this, "regions", undefined)],
+                        ["filter-areas-header", this.toggleFilterGroup.bind(this, "areas", undefined)],
+                        ["filter-tags-header", this.toggleFilterGroup.bind(this, "tags", undefined)],
+                        ["filter-camera-header", this.toggleFilterGroup.bind(this, "camera", undefined)],
+                        ["filter-clear-btn", this.clearFilters.bind(this)],
+                        ["filter-submit-btn", this.submitFilters.bind(this)],
+                        ["filter-kw-clear-btn", this.clearKeyword.bind(this)]
+                    ]);
+                    this.#elements.keyword.addEventListener("input", this.checkEmptyKeywordInput.bind(this));
+                }, 0);
+            });
     }
 
     /**
@@ -118,7 +117,7 @@ export default class FilterPopup extends BasePopup {
     }
 
     /** Scrolls the filter list to top. */
-    scrollToTop(){
+    scrollToTop() {
         this.querySelector("#filters").scrollTo({ top: 0, behavior: "instant" });
     }
 
@@ -233,9 +232,9 @@ export default class FilterPopup extends BasePopup {
                         newButton.classList.toggle("active");
                     });
                 }
-                if(item.faClass != undefined){
+                if (item.faClass != undefined) {
                     let tagIcon = document.createElement("i");
-					tagIcon.classList.add("fa", item.faClass);
+                    tagIcon.classList.add("fa", item.faClass);
                     newButton.prepend(tagIcon);
                 }
                 htmlList.appendChild(newButton);
