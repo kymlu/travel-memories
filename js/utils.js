@@ -5,11 +5,17 @@ import { ATTRIBUTES } from "./constants.js";
  * @param {string} address 
  * @param {HTMLElement} element 
  */
-export async function fetchInnerHtml(address, element) {
+export async function fetchInnerHtml(address, element, hasShadowRoot) {
 	await fetch(address)
 		.then(response => response.text())
 		.then(html => {
-			element.innerHTML = html;
+			if (hasShadowRoot) {
+				let template = document.createElement("template");
+				template.innerHTML = html;
+				element.shadowRoot.appendChild(template.content.cloneNode(true));
+			} else {
+				element.innerHTML = html;
+			}
 		})
 		.catch(error => {
 			console.error(`Error loading ${element.tagName}.`, error);
@@ -76,40 +82,28 @@ export function sortImgs(a, b) {
 
 /**
  * Adds or removes a specified class from element(s)' class lists.
- * @param {string | string[] | Element[]} elements - an element name, a list of element names, or a list of element objects.
+ * @param {Element[]} elements - an element name, a list of element names, or a list of element objects.
  * @param {string} className - the name of the class to add or remove.
  * @param {boolean} isAdd -  ```True``` if adding, ```False``` if removing.
  */
 export function addRemoveClass(elements, className, isAdd) {
 	if (elements) {
-		// edit single element by name
-		if (typeof (elements) == 'string') {
-			let element = document.getElementById(elements);
-			if (element?.classList) {
+		if (elements.length > 0) {
+			elements.forEach(element => {
+				var e = typeof element == "string" ? document.getElementById(element) : element;
 				if (isAdd) {
-					element.classList.add(className);
+					e?.classList?.add(className);
 				} else {
-					element.classList.remove(className);
+					e?.classList?.remove(className);
 				}
-			}
-		} else {
-			if (elements.length > 0) {
-				elements.forEach(element => {
-					var e = typeof element == "string" ? document.getElementById(element) : element;
-					if (isAdd) {
-						e?.classList?.add(className);
-					} else {
-						e?.classList?.remove(className);
-					}
-				});
-			}
+			});
 		}
 	}
 }
 
 /**
  * Adds or removes the "transparent" class.
- * @param {string | string[] | Element[]} elements - an element name, a list of element names, or a list of element objects.
+ * @param {Element[]} elements - an element name, a list of element names, or a list of element objects.
  * @param {boolean} isAdd -  ```True``` if adding, ```False``` if removing.
  */
 export function addRemoveTransparent(elements, isAdd) {
@@ -118,7 +112,7 @@ export function addRemoveTransparent(elements, isAdd) {
 
 /**
  * Adds or removes the "no-display" class.
- * @param {string | string[] | Element[]} elements - an element name, a list of element names, or a list of element objects.
+ * @param {Element[]} elements - an element name, a list of element names, or a list of element objects.
  * @param {boolean} isAdd -  ```True``` if adding, ```False``` if removing.
  */
 export function addRemoveNoDisplay(elements, isAdd) {

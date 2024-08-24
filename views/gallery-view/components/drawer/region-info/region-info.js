@@ -1,11 +1,12 @@
 import CustomHeader from "../../../../../components/header/header.js";
 import { ATTRIBUTES, CUSTOM_EVENT_TYPES, DEFAULT_TIMEOUT } from "../../../../../js/constants.js";
-import { getAppColor, getCurrentCountry } from "../../../../../js/globals.js";
+import { getAppColor, getCurrentCountry, getHeader } from "../../../../../js/globals.js";
 import {
     addRemoveTransparent, addRemoveNoDisplay, getBilingualText,
     setBilingualProperty, addClickListeners, scrollToTop,
     addRemoveClass,
-    fetchInnerHtml
+    fetchInnerHtml,
+    isPortraitMode
 } from "../../../../../js/utils.js";
 import BaseDrawer from "../base-drawer/base-drawer.js";
 
@@ -18,8 +19,8 @@ export default class RegionInfo extends BaseDrawer {
         this.isVisible = false;
         this.isThrottling = false;
         /** @type {CustomHeader} */
-        this.header = null;
-        document.addEventListener(CUSTOM_EVENT_TYPES.HEADER_CHANGED, (event) => this.header = event.detail.header);
+        this.header = getHeader();
+        document.addEventListener(CUSTOM_EVENT_TYPES.HEADER_CHANGED, (event) => { this.header = event.detail.header });
         this.hasMapLoaded = false;
         this.currentCountry = null;
         this.isNewGallery = true;
@@ -27,21 +28,21 @@ export default class RegionInfo extends BaseDrawer {
     }
 
     connectedCallback() {
-        fetchInnerHtml("views/gallery-view/components/drawer/region-info/region-info.html", this)
+        fetchInnerHtml("views/gallery-view/components/drawer/region-info/region-info.html", this, true)
             .then(() => {
                 super.connectedCallback();
                 this.#elements = {
-                    regionInfo: this.querySelector("#rgn-info"),
-                    background: this.querySelector("#rgn-info-bg"),
-                    drawer: this.querySelector("#rgn-info-drawer"),
-                    map: this.querySelector("#country-map-mini"),
-                    areasTitle: this.querySelector("#areas-title"),
-                    datesSection: this.querySelector("#rgn-info-dates"),
-                    dates: this.querySelector("#rgn-dates"),
-                    descriptionEnglish: this.querySelector("#rgn-desc-eng"),
-                    descriptionJapanese: this.querySelector("#rgn-desc-jp"),
-                    descriptionTitle: this.querySelector("#description-title"),
-                    areasList: this.querySelector("#rgn-areas"),
+                    regionInfo: this.shadowRoot.querySelector("#rgn-info"),
+                    background: this.shadowRoot.querySelector("#rgn-info-bg"),
+                    drawer: this.shadowRoot.querySelector("#rgn-info-drawer"),
+                    map: this.shadowRoot.querySelector("#country-map-mini"),
+                    areasTitle: this.shadowRoot.querySelector("#areas-title"),
+                    datesSection: this.shadowRoot.querySelector("#rgn-info-dates"),
+                    dates: this.shadowRoot.querySelector("#rgn-dates"),
+                    descriptionEnglish: this.shadowRoot.querySelector("#rgn-desc-eng"),
+                    descriptionJapanese: this.shadowRoot.querySelector("#rgn-desc-jp"),
+                    descriptionTitle: this.shadowRoot.querySelector("#description-title"),
+                    areasList: this.shadowRoot.querySelector("#rgn-areas"),
                 };
 
                 setTimeout(() => {
@@ -117,7 +118,9 @@ export default class RegionInfo extends BaseDrawer {
 
             setBilingualProperty([
                 [this.#elements.areasTitle, this.currentCountry.officialRegionNameEnglish + "s", this.currentCountry.officialRegionNameJapanese],
-                [this.#elements.descriptionTitle, "About", "国について"]], ATTRIBUTES.INNERHTML);
+                [this.#elements.descriptionTitle, "About", "国について"],
+                [this.shadowRoot.querySelector("#dates-title"), "Dates visited", "訪れた日付"]]
+                , ATTRIBUTES.INNERHTML);
 
             [
                 [this.#elements.descriptionEnglish, this.currentCountry.descriptionEnglish],
@@ -130,7 +133,7 @@ export default class RegionInfo extends BaseDrawer {
             });
             this.filterMiniMap(null);
         }
-        this.querySelector(".rgn-info").scrollTo({ top: 0, behavior: "smooth" });
+        this.shadowRoot.querySelector(".rgn-info").scrollTo({ top: 0, behavior: "smooth" });
     }
 
     /** Shows the region info section.
@@ -139,6 +142,10 @@ export default class RegionInfo extends BaseDrawer {
     show(isForced) {
         if (this.isNewGallery) {
             this.repositionBackground();
+        }
+
+        if (isPortraitMode()) {
+            this.shadowRoot.querySelector("#dates-title").scrollIntoView({ block: isPortraitMode() ? "end" : "start" });
         }
 
         this.isVisible = true;

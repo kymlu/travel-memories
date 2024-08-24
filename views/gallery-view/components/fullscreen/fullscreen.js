@@ -1,4 +1,5 @@
 /// IMPORTS
+import BaseElement from '../../../../js/base-element.js';
 import { DEFAULT_TIMEOUT, ATTRIBUTES } from '../../../../js/constants.js'
 import {
 	addClickListeners, addRemoveNoDisplay, addRemoveTransparent,
@@ -8,7 +9,7 @@ import {
 import PicInfo from '../drawer/pic-info/pic-info.js';
 
 /** The Fullscreen View. */
-export default class Fullscreen extends HTMLElement {
+export default class Fullscreen extends BaseElement {
 	#elements;
 
 	constructor() {
@@ -37,18 +38,19 @@ export default class Fullscreen extends HTMLElement {
 	}
 
 	connectedCallback() {
-		fetchInnerHtml("views/gallery-view/components/fullscreen/fullscreen.html", this)
+		fetchInnerHtml("views/gallery-view/components/fullscreen/fullscreen.html", this, true)
 			.then(() => {
 				this.#elements = {
-					view: this.querySelector("#fullscreen"),
-					background: this.querySelector(".popup-bg"),
-					picture: this.querySelector("#fullscreen-pic"),
-					nextPicture: this.querySelector("#fullscreen-pic-next"),
-					leftArrow: this.querySelector("#left-arrow"),
-					rightArrow: this.querySelector("#right-arrow"),
-					picInfoButton: this.querySelector("#pic-info-btn")
+					view: this.shadowRoot.querySelector("#fullscreen"),
+					control: this.shadowRoot.querySelector("#fullscreen-ctrl"),
+					background: this.shadowRoot.querySelector(".popup-bg"),
+					picture: this.shadowRoot.querySelector("#fullscreen-pic"),
+					nextPicture: this.shadowRoot.querySelector("#fullscreen-pic-next"),
+					leftArrow: this.shadowRoot.querySelector("#left-arrow"),
+					rightArrow: this.shadowRoot.querySelector("#right-arrow"),
+					picInfoButton: this.shadowRoot.querySelector("#pic-info-btn")
 				};
-				this.picInfo = this.querySelector("pic-info");
+				this.picInfo = this.shadowRoot.querySelector("pic-info");
 				setTimeout(() => {
 					setBilingualProperty([
 						[this.#elements.picInfoButton, "See picture information", "写真の情報を見る"],
@@ -58,7 +60,7 @@ export default class Fullscreen extends HTMLElement {
 
 					addClickListeners([
 						[this.#elements.background, this.close.bind(this, true)],
-						["fullscreen-ctrl", this.close.bind(this, true)],
+						[this.#elements.control, this.close.bind(this, true)],
 						[this.#elements.picInfoButton, this.picInfo.toggleVisibility.bind(this.picInfo, null)],
 						[this.#elements.leftArrow, (event) => { event.stopPropagation(); }],
 						[this.#elements.picture, (event) => { event.stopPropagation(); }],

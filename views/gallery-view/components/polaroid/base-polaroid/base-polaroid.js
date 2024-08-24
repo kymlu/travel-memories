@@ -1,9 +1,10 @@
+import BaseElement from "../../../../../js/base-element.js";
 import { addRemoveTransparent } from "../../../../../js/utils.js";
 
 /**
  * The Base Polaroid object.
  */
-export default class BasePolaroid extends HTMLElement {
+export default class BasePolaroid extends BaseElement {
     /**
      * @param {boolean} isAngledLeft 
      * @param {boolean} isBlank 
@@ -26,7 +27,7 @@ export default class BasePolaroid extends HTMLElement {
         const obs = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    addRemoveTransparent([this.querySelector(".polaroid-frame")], false);
+                    addRemoveTransparent([this.shadowRoot.querySelector(".polaroid-frame")], false);
                     observer.disconnect();
                 }
             });
@@ -35,7 +36,7 @@ export default class BasePolaroid extends HTMLElement {
     }
 
     connectedCallback() {
-        const polaroid = this.querySelector(".polaroid-frame");
+        const polaroid = this.shadowRoot.querySelector(".polaroid-frame");
         polaroid.classList.add(this.getRandomAngleClass());
     }
 

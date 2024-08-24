@@ -15,9 +15,10 @@ import ImagePolaroid from './components/polaroid/img-polaroid/img-polaroid.js';
 import TextPolaroid from './components/polaroid/txt-polaroid/txt-polaroid.js';
 import RegionDropdown from './components/region-dropdown/region-dropdown.js';
 import RegionInfo from './components/drawer/region-info/region-info.js';
+import BaseElement from '../../js/base-element.js';
 
 /** The Gallery View. */
-export default class GalleryView extends HTMLElement {
+export default class GalleryView extends BaseElement {
 	#elements;
 	constructor() {
 		super();
@@ -27,13 +28,7 @@ export default class GalleryView extends HTMLElement {
 		this.filterPopup = new FilterPopup();
 		/** @type {CustomHeader} */
 		this.header = null;
-		document.addEventListener(CUSTOM_EVENT_TYPES.HEADER_CHANGED, (event) => this.header = event.detail.header);
-		/** @type {RegionDropdown} */
-		this.regionDropdown = null;
-		/** @type {RegionInfo} */
-		this.regionInfo = null;
-		/** @type {Fullscreen} */
-		this.fullscreen = null;
+		document.addEventListener(CUSTOM_EVENT_TYPES.HEADER_CHANGED, (event) => { this.header = event.detail.header });
 
 		// region info
 		this.currentRegion = null;
@@ -62,17 +57,17 @@ export default class GalleryView extends HTMLElement {
 	}
 
 	connectedCallback() {
-		fetchInnerHtml("views/gallery-view/gallery-view.html", this)
+		fetchInnerHtml("views/gallery-view/gallery-view.html", this, true)
 			.then(() => {
 				setTimeout(() => {
 					this.#elements = {
-						view: this.querySelector("#gallery-view"),
-						gallery: this.querySelector("#gallery"),
-						toTopButton: this.querySelector("#to-top-btn")
+						view: this.shadowRoot.querySelector("#gallery-view"),
+						gallery: this.shadowRoot.querySelector("#gallery"),
+						toTopButton: this.shadowRoot.querySelector("#to-top-btn"),
+						regionDropdown: this.shadowRoot.querySelector("region-dropdown"),
+						regionInfo: this.shadowRoot.querySelector("region-info"),
+						fullscreen: this.shadowRoot.querySelector("fullscreen-component")
 					}
-					this.fullscreen = this.querySelector("fullscreen-component");
-					this.regionDropdown = this.querySelector("region-dropdown");
-					this.regionInfo = this.querySelector("region-info");
 
 					this.classList.add("opacity-transition");
 
@@ -85,7 +80,7 @@ export default class GalleryView extends HTMLElement {
 					window.onresize = () => {
 						if (isGalleryView()) {
 							this.#elements.view.style.marginTop = this.header.getHeight();
-							this.regionInfo.repositionBackground();
+							this.#elements.regionInfo.repositionBackground();
 						}
 					};
 
@@ -114,10 +109,6 @@ export default class GalleryView extends HTMLElement {
 					this.appendChild(this.filterPopup);
 
 					setTimeout(() => {
-						setBilingualProperty([
-							["dates-title", "Dates visited", "訪れた日付"]
-						], ATTRIBUTES.INNERHTML);
-
 						addClickListeners([
 							[this.#elements.toTopButton, scrollToTop],
 							[this.changeFilterQueryButton, this.filterPopup.open.bind(this.filterPopup, null)]
@@ -134,20 +125,17 @@ export default class GalleryView extends HTMLElement {
 	/** Open the gallery page */
 	show() {
 		this.#elements.view.style.marginTop = this.header.getHeight();
-		this.regionDropdown.close();
+		this.#elements.regionDropdown.close();
 		scrollToTop(false);
 		//addRemoveNoDisplay([this], false);
 		addRemoveTransparent([this.#elements.view], false);
-		this.regionInfo.show(false);
-		if (isPortraitMode()) {
-			document.getElementById("dates-title").scrollIntoView({ block: isPortraitMode() ? "end" : "start" });
-		}
+		this.#elements.regionInfo.show(false);
 	}
 
 	/** Close the gallery page */
 	hide() {
-		this.regionDropdown.close();
-		this.regionInfo.hide(false);
+		this.#elements.regionDropdown.close();
+		this.#elements.regionInfo.hide(false);
 		scrollToTop(false);
 		addRemoveTransparent([this.#elements.view], true);
 		setTimeout(() => {
@@ -162,8 +150,8 @@ export default class GalleryView extends HTMLElement {
 		this.allImages = [];
 		this.visibleImages = [];
 		this.currentCountry = getCurrentCountry();
-		this.regionDropdown.handleNewCountry();
-		this.regionInfo.handleNewCountry();
+		this.#elements.regionDropdown.handleNewCountry();
+		this.#elements.regionInfo.handleNewCountry();
 	}
 
 	/** Set values based on a new user-selected region.
@@ -175,7 +163,7 @@ export default class GalleryView extends HTMLElement {
 		addRemoveNoDisplay([this], false);
 		this.isNewGallery = isNewGallery;
 		setTimeout(() => {
-			this.regionDropdown.changeSelectedRegion(
+			this.#elements.regionDropdown.changeSelectedRegion(
 				!this.isNewCountry ? this.currentRegion?.id : null,
 				isSingleRegionSelected ? regionData[0]?.id : null);
 
@@ -203,7 +191,7 @@ export default class GalleryView extends HTMLElement {
 				this.header.setRegionTitle(this.currentCountry.englishName, this.currentCountry.japaneseName);
 			}
 
-			this.regionInfo.setNewRegionInfo(regionsList, areaList, isSingleRegionSelected, isNewGallery);
+			this.#elements.regionInfo.setNewRegionInfo(regionsList, areaList, isSingleRegionSelected, isNewGallery);
 
 			// get all images
 			this.allImages = regionData.flatMap(rgn => {
@@ -303,7 +291,7 @@ export default class GalleryView extends HTMLElement {
 		);
 
 		// listeners
-		newPolaroid.addEventListener("click", () => { this.fullscreen.open(this.visibleImages, img, this.currentCountry.id); });
+		newPolaroid.addEventListener("click", () => { this.#elements.fullscreen.open(this.visibleImages, img, this.currentCountry.id); });
 
 		return newPolaroid;
 	}
@@ -402,7 +390,7 @@ export default class GalleryView extends HTMLElement {
 	// scrolling behaviours
 	onScrollFunction() {
 		this.toggleFloatingButton();
-		this.regionInfo.handleScroll();
+		this.#elements.regionInfo.handleScroll();
 
 		if (!this.isLoadingImages && this.imageLoadIndex < this.visibleImages.length &&
 			(window.innerHeight + Math.round(window.scrollY)) >= document.body.offsetHeight - 200) {
@@ -424,11 +412,11 @@ export default class GalleryView extends HTMLElement {
 
 	// other elements
 	toggleRegionDropdown() {
-		this.regionDropdown.toggleVisibility();
+		this.#elements.regionDropdown.toggleVisibility();
 	}
 
 	toggleRegionInfo(isVisible) {
-		this.regionInfo.toggleVisibility(isVisible);
+		this.#elements.regionInfo.toggleVisibility(isVisible);
 	}
 }
 

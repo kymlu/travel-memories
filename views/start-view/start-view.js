@@ -1,3 +1,4 @@
+import BaseElement from "../../js/base-element.js";
 import { DEFAULT_TIMEOUT } from "../../js/constants.js";
 import {
     getAllCountryData, setAppColor, setCurrentCountry,
@@ -8,9 +9,14 @@ import {
 } from "../../js/utils.js";
 
 /** The Start View. */
-export default class StartView extends HTMLElement {
+export default class StartView extends BaseElement {
     constructor() {
         super();
+
+        const linkElem = document.createElement('link');
+        linkElem.setAttribute('rel', 'stylesheet');
+        linkElem.setAttribute('href', 'views/start-view/start-view.css');
+        this.shadowRoot.appendChild(linkElem);
     }
 
     /** Initializes the start view contents. */
@@ -25,6 +31,9 @@ export default class StartView extends HTMLElement {
         img.classList.add("start-icon");
 
         this.replaceChildren();
+
+        let startViewWrapper = document.createElement("div");
+        startViewWrapper.classList.add("start-screen");
 
         getAllCountryData().forEach(country => {
             const abb = country.abbreviation;
@@ -66,8 +75,9 @@ export default class StartView extends HTMLElement {
             newBtn.addEventListener("mouseout", this.highlightCountry.bind(this, abb, false));
             newBtn.addEventListener("touchend", this.highlightCountry.bind(this, abb, false));
 
-            this.appendChild(newBtn);
+            startViewWrapper.appendChild(newBtn)
         });
+        this.shadowRoot.appendChild(startViewWrapper);
     }
 
     /** Shows the start view. */
@@ -103,8 +113,8 @@ export default class StartView extends HTMLElement {
     }
 
     highlightCountry(abbreviation, isHover) {
-        addRemoveTransparent(`${abbreviation}-start-icon-c`, isHover);
-        addRemoveClass([this.querySelector(`#${abbreviation}-start-icon`)], "animated", isHover);
+        addRemoveTransparent([this.shadowRoot.querySelector(`#${abbreviation}-start-icon-c`)], isHover);
+        addRemoveClass([this.shadowRoot.querySelector(`#${abbreviation}-start-icon`)], "animated", isHover);
     }
 }
 

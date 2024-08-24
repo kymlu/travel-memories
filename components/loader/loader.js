@@ -1,3 +1,4 @@
+import BaseElement from "../../js/base-element.js";
 import {
     CUSTOM_EVENT_TYPES, DEFAULT_TIMEOUT, LOAD_ANIMATION_TIME, LOAD_DOT_COUNT
 } from "../../js/constants.js";
@@ -7,7 +8,7 @@ import {
 } from "../../js/utils.js";
 
 /** The Loader. */
-export default class Loader extends HTMLElement {
+export default class Loader extends BaseElement {
     #startTime;
     #elements;
 
@@ -21,14 +22,14 @@ export default class Loader extends HTMLElement {
     }
 
     connectedCallback() {
-        fetchInnerHtml("components/loader/loader.html", this)
+        fetchInnerHtml("components/loader/loader.html", this, true)
             .then(() => {
                 setTimeout(() => {
                     addRemoveClass([this], "opacity-transition", true);
                     this.#elements = {
-                        dots: Array.from(document.querySelectorAll(".loader-dot")),
-                        icon: document.querySelector(".loader-icon"),
-                        error: document.querySelector(".error-btn")
+                        dots: Array.from(this.shadowRoot.querySelectorAll(".loader-dot")),
+                        icon: this.shadowRoot.querySelector(".loader-icon"),
+                        error: this.shadowRoot.querySelector(".error-btn")
                     }
                     this.#elements.error.addEventListener("click", this.retry.bind(this));
                     addRemoveNoDisplay([this.#elements.error], true);

@@ -22,43 +22,43 @@ export default class PicInfo extends BaseDrawer {
 	}
 
 	connectedCallback() {
-		fetchInnerHtml("views/gallery-view/components/drawer/pic-info/pic-info.html", this)
+		fetchInnerHtml("views/gallery-view/components/drawer/pic-info/pic-info.html", this, true)
 			.then(() => {
 				super.connectedCallback();
 				this.#elements = {
-					drawer: this.querySelector("#pic-info-drawer"),
-					dateEn: this.querySelector("#fullscreen-eng-date"),
-					dateJp: this.querySelector("#fullscreen-jp-date"),
-					cityEn: this.querySelector("#fullscreen-eng-city"),
-					cityJp: this.querySelector("#fullscreen-jp-city"),
-					captionEn: this.querySelector("#fullscreen-eng-caption"),
-					captionJp: this.querySelector("#fullscreen-jp-caption"),
-					camera: this.querySelector("#camera-info"),
-					lens: this.querySelector("#lens-info"),
-					technical: this.querySelector("#technical-info"),
-					tags: this.querySelector("#img-tags")
+					drawer: this.shadowRoot.querySelector("#pic-info-drawer"),
+					dateEn: this.shadowRoot.querySelector("#fullscreen-eng-date"),
+					dateJp: this.shadowRoot.querySelector("#fullscreen-jp-date"),
+					cityEn: this.shadowRoot.querySelector("#fullscreen-eng-city"),
+					cityJp: this.shadowRoot.querySelector("#fullscreen-jp-city"),
+					captionEn: this.shadowRoot.querySelector("#fullscreen-eng-caption"),
+					captionJp: this.shadowRoot.querySelector("#fullscreen-jp-caption"),
+					camera: this.shadowRoot.querySelector("#camera-info"),
+					lens: this.shadowRoot.querySelector("#lens-info"),
+					technical: this.shadowRoot.querySelector("#technical-info"),
+					tags: this.shadowRoot.querySelector("#img-tags")
 				};
 				setTimeout(() => {
 					setBilingualProperty([
-						["search-eng", "Google in English", "英語でググる"],
-						["search-jp", "Google in Japanese", "日本語でググる"],
-						[this.querySelector(".close-btn"), "Close", "閉じる"]
+						[this.shadowRoot.querySelector("#search-eng"), "Google in English", "英語でググる"],
+						[this.shadowRoot.querySelector("#search-jp"), "Google in Japanese", "日本語でググる"],
+						[this.shadowRoot.querySelector(".close-btn"), "Close", "閉じる"]
 					], ATTRIBUTES.TITLE);
 
 					addClickListeners([
-						["pic-info-bg", this.hide.bind(this)],
-						["pic-info-drawer", (event) => { event.stopPropagation(); }],
-						["pic-info-close-btn", this.hide.bind(this)],
-						["search-eng", this.searchEnglish.bind(this)],
-						["search-jp", this.searchJapanese.bind(this)]
+						[this.shadowRoot.querySelector("#pic-info-bg"), this.hide.bind(this)],
+						[this.shadowRoot.querySelector("#pic-info-drawer"), (event) => { event.stopPropagation(); }],
+						[this.shadowRoot.querySelector("#pic-info-close-btn"), this.hide.bind(this)],
+						[this.shadowRoot.querySelector("#search-eng"), this.searchEnglish.bind(this)],
+						[this.shadowRoot.querySelector("#search-jp"), this.searchJapanese.bind(this)]
 					]);
 
 					// currently remove because it will not work on Apple <- what is this lol
-					this.querySelector("#pic-info-details").addEventListener("touchstart", (event) => {
+					this.shadowRoot.querySelector("#pic-info-details").addEventListener("touchstart", (event) => {
 						event.stopPropagation();
 					});
 
-					this.querySelector("#pic-info-details").addEventListener("touchmove", (event) => {
+					this.shadowRoot.querySelector("#pic-info-details").addEventListener("touchmove", (event) => {
 						event.stopPropagation();
 					});
 
@@ -133,7 +133,7 @@ export default class PicInfo extends BaseDrawer {
 	/** Sets the picture information. */
 	setPicInfo(newPicture, countryId) {
 		this.currentPic = newPicture;
-		this.querySelector("#pic-info-details").scrollTo({ top: 0, behaviour: "instant" });
+		this.shadowRoot.querySelector("#pic-info-details").scrollTo({ top: 0, behaviour: "instant" });
 		// get dates
 		if (this.currentPic.date) {
 			let date = getPictureDate(new Date(this.currentPic.date), this.currentPic.offset);

@@ -1,5 +1,5 @@
 import { CUSTOM_EVENT_TYPES, DEFAULT_TIMEOUT, VIEW_NAMES } from "./constants.js";
-import { addRemoveTransparent, sortImgs } from "./utils.js";
+import { sortImgs } from "./utils.js";
 import CustomHeader from "../components/header/header.js";
 import Loader from "../components/loader/loader.js";
 import InfoPopup from "../components/popup/info-popup/info-popup.js";
@@ -27,15 +27,7 @@ let galleryView = null;
 
 let allCountryData = [];
 
-export let polaroidHtmls = {
-    img: null,
-    txt: null
-}
-
-export function setSiteContents(
-    imgPolaroidHtml,
-    txtPolaroidHtml) {
-
+export function setSiteContents() {
     /** @type InfoPopup */
     let infoPopup = document.querySelector("info-popup");
 
@@ -47,16 +39,12 @@ export function setSiteContents(
     mapView = document.querySelector("map-view");
     galleryView = document.querySelector("gallery-view");
 
-    polaroidHtmls.img = imgPolaroidHtml;
-    polaroidHtmls.txt = txtPolaroidHtml;
-
     header.setButtonFunctions(goToStartView.bind(this, false),
         goToMapView,
         galleryView.toggleRegionDropdown.bind(galleryView),
         galleryView.toggleRegionInfo.bind(galleryView, null),
         galleryView.showFilter.bind(galleryView),
         infoPopup.open.bind(infoPopup, null));
-    addRemoveTransparent([header], true);
 }
 
 function setCurrentView(pageName) {
@@ -133,6 +121,10 @@ export function onSelectNewRegion(regionId, isPopped, isNewGallery) {
             }
         }, DEFAULT_TIMEOUT);
     }
+}
+
+export function getHeader(){
+    return header;
 }
 
 /**

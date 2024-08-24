@@ -1,10 +1,12 @@
 /// IMPORTS
 import BasePolaroid from "../base-polaroid/base-polaroid.js"
 import { DEFAULT_TIMEOUT, SHORT_DATETIME_FORMAT_EN, SHORT_DATETIME_FORMAT_JP } from '../../../../../js/constants.js'
-import { polaroidHtmls } from "../../../../../js/globals.js";
 import {
-    addRemoveNoDisplay, addRemoveTransparent, getBilingualText, getPictureDate
+    addRemoveNoDisplay, addRemoveTransparent, fetchInnerHtml, getBilingualText, getPictureDate
 } from '../../../../../js/utils.js';
+
+let imgPolaroidTemplate = document.createElement("template");
+fetchInnerHtml("views/gallery-view/components/polaroid/img-polaroid/img-polaroid.html", imgPolaroidTemplate, false);
 
 /**
  * The Image Polaroid object.
@@ -34,13 +36,13 @@ export default class ImagePolaroid extends BasePolaroid {
         /** The Japanese image caption. @type string */
         this.jpCaption = jpCaption;
         this.title = getBilingualText("Expand image", "画像を拡大する");
-        this.innerHTML = polaroidHtmls.img;
+        this.shadowRoot.appendChild(imgPolaroidTemplate.content.cloneNode(true));
     }
 
     connectedCallback() {
         super.connectedCallback();
-        
-        const polaroid = this.querySelector(".polaroid-frame");
+
+        const polaroid = this.shadowRoot.querySelector(".polaroid-frame");
         const img = polaroid.querySelector("img");
         if (img) {
             img.onload = function () {
@@ -54,9 +56,8 @@ export default class ImagePolaroid extends BasePolaroid {
                 }, DEFAULT_TIMEOUT);
             }
             img.setAttribute("src", this.src);
-
-
         }
+
         const dates = polaroid.querySelector(".polaroid-date").querySelectorAll("span");
         if (dates) {
             if (this.date) {

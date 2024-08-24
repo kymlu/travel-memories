@@ -1,7 +1,8 @@
+import BaseElement from "../../../../../js/base-element.js";
 import { isPortraitMode } from "../../../../../js/utils.js";
 
 /** The base drawer. */
-export default class BaseDrawer extends HTMLElement {
+export default class BaseDrawer extends BaseElement {
     constructor() {
         super();
         this.startYValue;
@@ -12,8 +13,8 @@ export default class BaseDrawer extends HTMLElement {
     connectedCallback() { 
         // TODO: test (not sure if touchend is ok)
         setTimeout(() => {
-            this.querySelector(".drawer-handle-container")?.addEventListener("touchstart", this.onStartHandleDrag, false);
-            this.querySelector(".drawer-handle-container")?.addEventListener("touchend", this.onEndHandleDrag, false);
+            this.shadowRoot.querySelector(".drawer-handle-container")?.addEventListener("touchstart", this.onStartHandleDrag, false);
+            this.shadowRoot.querySelector(".drawer-handle-container")?.addEventListener("touchend", this.onEndHandleDrag, false);
         }, 50);
     }
 

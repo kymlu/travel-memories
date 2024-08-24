@@ -89,6 +89,7 @@ button:active,
   color: white;
   box-shadow: inset 900px 0 0 0 rgba(var(--main-color));
 }
+
 .base-tag,
 .action-btn {
   padding: 2px 5px;
@@ -259,4 +260,14 @@ button:active,
 .divider.filter {
   min-height: 1px;
   height: 1px;
+}
+
+custom-header {
+  z-index: 10;
+}
+
+start-view,
+map-view,
+gallery-view {
+  z-index: 1;
 }

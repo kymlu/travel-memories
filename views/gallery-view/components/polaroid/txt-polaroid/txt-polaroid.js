@@ -1,7 +1,9 @@
 /// IMPORTS
 import BasePolaroid from "../base-polaroid/base-polaroid.js"
-import { polaroidHtmls } from "../../../../../js/globals.js";
-import { getBilingualText } from '../../../../../js/utils.js';
+import { fetchInnerHtml, getBilingualText } from '../../../../../js/utils.js';
+
+let txtPolaroidTemplate = document.createElement("template");
+fetchInnerHtml("views/gallery-view/components/polaroid/txt-polaroid/txt-polaroid.html", txtPolaroidTemplate, false);
 
 /**
  * The Text Polaroid object.
@@ -17,14 +19,14 @@ export default class TextPolaroid extends BasePolaroid {
         super(isAngledLeft, true);
         /** The text to display in the middle of the polaroid. @type string */
         this.text = getBilingualText(englishName, japaneseName);
-        /** The region the polaroid represents. @type string */
-        this.innerHTML = polaroidHtmls.txt;
         this.title = getBilingualText(`See images from ${englishName}`, `${japaneseName}の写真を表示する`);
+
+        this.shadowRoot.appendChild(txtPolaroidTemplate.content.cloneNode(true));
     }
 
     connectedCallback() {
         super.connectedCallback();
-        const polaroidImg = this.querySelector(".polaroid-img");
+        const polaroidImg = this.shadowRoot.querySelector(".polaroid-img");
         polaroidImg.innerHTML = this.text;
     }
 }

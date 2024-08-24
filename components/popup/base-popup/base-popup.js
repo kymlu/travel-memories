@@ -1,11 +1,12 @@
 /// IMPORTS
+import BaseElement from '../../../js/base-element.js';
 import { ATTRIBUTES, DEFAULT_TIMEOUT } from '../../../js/constants.js';
 import { 
     addRemoveClass, addRemoveNoDisplay, addRemoveTransparent, setBilingualProperty 
 } from '../../../js/utils.js'
 
 /** * The Base Popup object. */
-export default class BasePopup extends HTMLElement {
+export default class BasePopup extends BaseElement {
     constructor() {
         super();
         this.isOpen = false;
@@ -18,8 +19,8 @@ export default class BasePopup extends HTMLElement {
     connectedCallback() {
         if (!this.previouslyOpened) {
             setTimeout(() => {
-                setBilingualProperty([[this.querySelector(".close-btn"), "Close", "閉じる"]], ATTRIBUTES.TITLE);
-                this.querySelector(".popup").addEventListener("click", (event) => {
+                setBilingualProperty([[this.shadowRoot.querySelector(".close-btn"), "Close", "閉じる"]], ATTRIBUTES.TITLE);
+                this.shadowRoot.querySelector(".popup").addEventListener("click", (event) => {
                     event.stopPropagation();
                 });
                 addRemoveNoDisplay([this], true);
@@ -33,9 +34,9 @@ export default class BasePopup extends HTMLElement {
 
     /** Opens the popup. */
     open(openFunction) {
-        let popupContent = this.querySelector(".popup-content");
-        let popup = this.querySelector(".popup");
-        let popupBg = this.querySelector(".popup-bg");
+        let popupContent = this.shadowRoot.querySelector(".popup-content");
+        let popup = this.shadowRoot.querySelector(".popup");
+        let popupBg = this.shadowRoot.querySelector(".popup-bg");
         addRemoveNoDisplay([this], false);
 
         setTimeout(() => {
@@ -45,8 +46,8 @@ export default class BasePopup extends HTMLElement {
                 addRemoveNoDisplay([popupContent], false);
                 addRemoveTransparent([popupContent], false);
                 addRemoveClass([popup], "popup-height", true);
-                this.querySelector(".close-btn").addEventListener("click", () => { this.close(false); });
-                this.querySelector(".popup-bg").addEventListener("click", () => { this.close(true); });
+                this.shadowRoot.querySelector(".close-btn").addEventListener("click", () => { this.close(false); });
+                this.shadowRoot.querySelector(".popup-bg").addEventListener("click", () => { this.close(true); });
                 if(openFunction){
                     openFunction();
                 }
@@ -76,9 +77,9 @@ export default class BasePopup extends HTMLElement {
         document.removeEventListener("keydown", this.handleKeydown.bind(this));
 
         this.isOpen = false;
-        let popupContent = this.querySelector(".popup-content");
-        let popup = this.querySelector(".popup");
-        let popupBg = this.querySelector(".popup-bg");
+        let popupContent = this.shadowRoot.querySelector(".popup-content");
+        let popup = this.shadowRoot.querySelector(".popup");
+        let popupBg = this.shadowRoot.querySelector(".popup-bg");
 
         // if forced close, everything should happen at once, hence timeout length of 0
         let timeout = forceClose ? 0 : DEFAULT_TIMEOUT;

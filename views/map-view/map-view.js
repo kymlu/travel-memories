@@ -1,3 +1,4 @@
+import BaseElement from "../../js/base-element.js";
 import { ATTRIBUTES, DEFAULT_TIMEOUT } from "../../js/constants.js";
 import {
 	getAppColor, getCurrentCountry, getTranslucentAppColor, onSelectNewRegion
@@ -8,7 +9,7 @@ import {
 } from "../../js/utils.js";
 
 /** The Map View. */
-export default class MapView extends HTMLElement {
+export default class MapView extends BaseElement {
 	#elements;
 
 	constructor() {
@@ -25,18 +26,18 @@ export default class MapView extends HTMLElement {
 	}
 
 	connectedCallback() {
-		fetchInnerHtml("views/map-view/map-view.html", this)
+		fetchInnerHtml("views/map-view/map-view.html", this, true)
 			.then(() => {
 				setTimeout(() => {
 					this.#elements = {
-						view: this.querySelector(".map-view"),
-						mapControl: this.querySelector("#map-control"),
-						mapContainer: this.querySelector("#map-container"),
-						map: this.querySelector("#country-map"),
-						mainTitle: this.querySelector("#main-title"),
-						mainTitleText: this.querySelector("#main-title-text"),
-						zoomIn: this.querySelector("#zoom-in"),
-						zoomOut: this.querySelector("#zoom-out"),
+						view: this.shadowRoot.querySelector(".map-view"),
+						mapControl: this.shadowRoot.querySelector("#map-control"),
+						mapContainer: this.shadowRoot.querySelector("#map-container"),
+						map: this.shadowRoot.querySelector("#country-map"),
+						mainTitle: this.shadowRoot.querySelector("#main-title"),
+						mainTitleText: this.shadowRoot.querySelector("#main-title-text"),
+						zoomIn: this.shadowRoot.querySelector("#zoom-in"),
+						zoomOut: this.shadowRoot.querySelector("#zoom-out"),
 					}
 
 					setTimeout(() => {

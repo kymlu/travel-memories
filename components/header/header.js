@@ -1,3 +1,4 @@
+import BaseElement from "../../js/base-element.js";
 import { ATTRIBUTES } from "../../js/constants.js";
 import { isGalleryView, isMapView, isStartView } from "../../js/globals.js";
 import {
@@ -11,7 +12,7 @@ import {
 } from "../../js/utils.js";
 
 /** The CustomHeader class. */
-export default class CustomHeader extends HTMLElement {
+export default class CustomHeader extends BaseElement {
     constructor() {
         super();
         this.globeFunc = null;
@@ -22,30 +23,29 @@ export default class CustomHeader extends HTMLElement {
         this.creatorFunc = null;
         this.buttons = {};
         this.sections = {};
-
     }
 
     connectedCallback() {
-        fetchInnerHtml("components/header/header.html", this)
+        fetchInnerHtml("components/header/header.html", this, true)
             .then(() => {
                 this.classList.add("opacity-transition");
 
                 /** CustomHeader sections */
                 this.sections = {
-                    header: this.querySelector("header"),
-                    left: this.querySelector("#left-section"),
-                    centre: this.querySelector("#center-section"),
-                    right: this.querySelector("#right-section"),
+                    header: this.shadowRoot.querySelector("header"),
+                    left: this.shadowRoot.querySelector("#left-section"),
+                    centre: this.shadowRoot.querySelector("#center-section"),
+                    right: this.shadowRoot.querySelector("#right-section"),
                 };
 
                 /** CustomHeader buttons */
                 this.buttons = {
-                    globe: this.querySelector("#globe-btn"),
-                    map: this.querySelector("#map-btn"),
-                    regionDropdown: this.querySelector("#rgn-title-btn"),
-                    regionInfo: this.querySelector("#region-info-btn"),
-                    filter: this.querySelector("#filter-btn"),
-                    creator: this.querySelector("#creator-btn")
+                    globe: this.shadowRoot.querySelector("#globe-btn"),
+                    map: this.shadowRoot.querySelector("#map-btn"),
+                    regionDropdown: this.shadowRoot.querySelector("#rgn-title-btn"),
+                    regionInfo: this.shadowRoot.querySelector("#region-info-btn"),
+                    filter: this.shadowRoot.querySelector("#filter-btn"),
+                    creator: this.shadowRoot.querySelector("#creator-btn")
                 };
 
                 setTimeout(() => {
@@ -92,15 +92,15 @@ export default class CustomHeader extends HTMLElement {
      * @param {boolean} isVisible 
      */
     toggleFilterIndicator(isVisible) {
-        addRemoveNoDisplay("filter-indicator", !isVisible);
+        addRemoveNoDisplay(this.shadowRoot.querySelector("#filter-indicator"), !isVisible);
     }
 
     setRegionTitle(newContent) {
-        this.querySelector("#rgn-name").innerHTML = newContent;
+        this.shadowRoot.querySelector("#rgn-name").innerHTML = newContent;
     }
 
     flipRegionNameArrow(isUp) {
-        flipArrow(this.querySelector("#rgn-name-arrow"), isUp);
+        flipArrow(this.shadowRoot.querySelector("#rgn-name-arrow"), isUp);
     }
 
     /** Changes values when the selected country changes. */

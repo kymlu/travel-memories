@@ -13,9 +13,9 @@ export default class InfoPopup extends BasePopup {
     
     /** @inheritdoc */
     connectedCallback(){
-        fetchInnerHtml("components/popup/info-popup/info-popup.html", this)
+        fetchInnerHtml("components/popup/info-popup/info-popup.html", this, true)
         .then(() => {
-            this.querySelectorAll(".action-btn").forEach(element => {
+            this.shadowRoot.querySelectorAll(".action-btn").forEach(element => {
                 element.addEventListener("click", () => { this.goToGithub(); });
             });
             super.connectedCallback();

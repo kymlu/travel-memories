@@ -18,35 +18,18 @@ import {
 import {
 	scrollToTop,
 } from './utils.js';
-import ImagePolaroid from '../views/gallery-view/components/polaroid/img-polaroid/img-polaroid.js';
-import TextPolaroid from '../views/gallery-view/components/polaroid/txt-polaroid/txt-polaroid.js';
 
 /// VARIABLES
 // Booleans
 /** @type {Loader} */
 let loader = null;
 
-async function fetchHtml(address, type) {
-	try {
-		const response = await fetch(address);
-		const html = await response.text();
-		return html;
-	} catch (error) {
-		console.error(`Error loading ${type}.`, error);
-	}
-}
-
 /**** Data Loading/Setup ****/
 function initializeSite() {
 	loader = new Loader();
 	document.body.append(loader);
 
-	Promise.all([
-		fetchHtml("views/gallery-view/components/polaroid/img-polaroid/img-polaroid.html", ImagePolaroid.name),
-		fetchHtml("views/gallery-view/components/polaroid/txt-polaroid/txt-polaroid.html", TextPolaroid.name),
-	]).then(([imgPolaroid, txtPolaroid]) => {
-		setSiteContents(imgPolaroid, txtPolaroid);
-	});
+	setSiteContents();
 
 	// document.addEventListener("contextmenu", function (e) {
 	// 	if (e.target.nodeName === "IMG") {
@@ -73,8 +56,6 @@ function initializeSite() {
  * Gets all the data for the site.
  */
 function fetchData() {
-	let hasError = false;
-
 	fetch("js/data.json")
 		.then(response => {
 			return response.json();
