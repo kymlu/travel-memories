@@ -30,9 +30,9 @@ import MapView from '../views/map-view/map-view.js';
 /** @type {Loader} */
 let loader = null;
 
-async function fetchHtml(fileName, type) {
+async function fetchHtml(address, type) {
 	try {
-		const response = await fetch(fileName);
+		const response = await fetch(address);
 		const html = await response.text();
 		return html;
 	} catch (error) {

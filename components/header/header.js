@@ -5,6 +5,7 @@ import {
     addRemoveClass,
     addRemoveNoDisplay,
     addRemoveTransparent,
+    fetchInnerHtml,
     flipArrow,
     setBilingualProperty
 } from "../../js/utils.js";

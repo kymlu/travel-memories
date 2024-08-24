@@ -1,4 +1,4 @@
-import { getCurrentCountry, onSelectNewRegion } from "../../../../js/globals.js";
+import { getCurrentCountry, getHeader, onSelectNewRegion } from "../../../../js/globals.js";
 import {
 	addClickListeners, addRemoveNoDisplay, addRemoveTransparent, fetchInnerHtml, getBilingualText
 } from "../../../../js/utils.js";
@@ -7,9 +7,9 @@ import {
 export default class RegionDropdown extends HTMLElement {
 	#elements;
 
-	constructor(headerElement) {
+	constructor() {
 		super();
-		this.header = headerElement;
+		this.header = getHeader();
 		this.hasOpenedForRegion = false;
 		this.currentRegionId = null;
 		this.#elements = {};

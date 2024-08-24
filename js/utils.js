@@ -5,7 +5,7 @@ import { ATTRIBUTES } from "./constants.js";
  * @param {string} address 
  * @param {HTMLElement} element 
  */
-export function fetchInnerHtml(address, element) {
+export async function fetchInnerHtml(address, element) {
 	fetch(address)
 		.then(response => response.text())
 		.then(html => {

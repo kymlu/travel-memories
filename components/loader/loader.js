@@ -2,7 +2,9 @@ import {
     CUSTOM_EVENT_TYPES, DEFAULT_TIMEOUT, LOAD_ANIMATION_TIME, LOAD_DOT_COUNT
 } from "../../js/constants.js";
 import { getCurrentCountry, isCountrySelected } from "../../js/globals.js";
-import { addRemoveClass, addRemoveNoDisplay, addRemoveTransparent, fetchInnerHtml } from "../../js/utils.js";
+import {
+    addRemoveClass, addRemoveNoDisplay, addRemoveTransparent, fetchInnerHtml
+} from "../../js/utils.js";
 
 /** The Loader. */
 export default class Loader extends HTMLElement {
@@ -15,24 +17,25 @@ export default class Loader extends HTMLElement {
         this.#startTime = null;
         this.#elements = null;
 
-        // Get component html
-        fetchInnerHtml("components/loader/loader.html", this);
         this.style.zIndex = 100;
     }
 
 
     connectedCallback() {
-        setTimeout(() => {
-            addRemoveClass([this], "opacity-transition", true);
-            this.#elements = {
-                dots: Array.from(document.querySelectorAll(".loader-dot")),
-                icon: document.querySelector(".loader-icon"),
-                error: document.querySelector(".error-btn")
-            }
-            this.#elements.error.addEventListener("click", this.retry.bind(this));
-            addRemoveNoDisplay([this.#elements.error], true);
-            this.start();
-        }, 50);
+        fetchInnerHtml("components/loader/loader.html", this)
+            .then(() => {
+                setTimeout(() => {
+                    addRemoveClass([this], "opacity-transition", true);
+                    this.#elements = {
+                        dots: Array.from(document.querySelectorAll(".loader-dot")),
+                        icon: document.querySelector(".loader-icon"),
+                        error: document.querySelector(".error-btn")
+                    }
+                    this.#elements.error.addEventListener("click", this.retry.bind(this));
+                    addRemoveNoDisplay([this.#elements.error], true);
+                    this.start();
+                }, 50);
+            });
     }
 
     /**

@@ -1,5 +1,5 @@
 import { ATTRIBUTES, DEFAULT_TIMEOUT } from "../../../../../js/constants.js";
-import { getAppColor, getCurrentCountry } from "../../../../../js/globals.js";
+import { getAppColor, getCurrentCountry, getHeader } from "../../../../../js/globals.js";
 import {
     addRemoveTransparent, addRemoveNoDisplay, getBilingualText,
     setBilingualProperty, addClickListeners, scrollToTop,
@@ -12,11 +12,11 @@ import BaseDrawer from "../base-drawer/base-drawer.js";
 export default class RegionInfo extends BaseDrawer {
     #elements;
 
-    constructor(headerElement) {
+    constructor() {
         super();
         this.isVisible = false;
         this.isThrottling = false;
-        this.header = headerElement;
+        this.header = getHeader();
         this.hasMapLoaded = false;
         this.currentCountry = null;
         this.isNewGallery = true;

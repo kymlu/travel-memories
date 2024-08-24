@@ -1,6 +1,6 @@
 /// IMPORTS
 import FilterPopup from './components/filter-popup/filter-popup.js'
-import { getCurrentCountry, isGalleryView, onSelectNewRegion } from '../../js/globals.js';
+import { getCurrentCountry, getHeader, isGalleryView, onSelectNewRegion } from '../../js/globals.js';
 import {
 	addClickListeners, addRemoveClass, addRemoveNoDisplay, addRemoveTransparent, getBilingualText,
 	getImageAddress, isPortraitMode, scrollToTop, setBilingualProperty, sortImgs
@@ -18,7 +18,7 @@ import RegionInfo from './components/drawer/region-info/region-info.js';
 /** The Gallery View. */
 export default class GalleryView extends HTMLElement {
 	#elements;
-	constructor(innerHTML, fullscreenElement, headerElement) {
+	constructor(innerHTML, fullscreenElement) {
 		super();
 		this.innerHTML = innerHTML;
 
@@ -26,14 +26,14 @@ export default class GalleryView extends HTMLElement {
 		// filter
 		/** @type {FilterPopup} */
 		this.filterPopup = new FilterPopup();
+		/** @type {CustomHeader} */
+		this.header = getHeader();
 		/** @type {RegionDropdown} */
-		this.regionDropdown = new RegionDropdown(headerElement);
+		this.regionDropdown = new RegionDropdown();
 		/** @type {RegionInfo} */
-		this.regionInfo = new RegionInfo(headerElement);
+		this.regionInfo = new RegionInfo();
 		/** @type {Fullscreen} */
 		this.fullscreen = fullscreenElement;
-		/** @type {CustomHeader} */
-		this.header = headerElement;
 
 		// region info
 		this.currentRegion = null;

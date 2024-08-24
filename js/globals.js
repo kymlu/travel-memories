@@ -55,7 +55,7 @@ export function setSiteContents(
     mapView.style.zIndex = 1;
     fullscreen = new Fullscreen(fullscreenHtml);
     fullscreen.style.zIndex = 100;
-    galleryView = new GalleryView(galleryHtml, fullscreen, header);
+    galleryView = new GalleryView(galleryHtml, fullscreen);
     galleryView.style.zIndex = 1;
 
     polaroidHtmls.img = imgPolaroidHtml;
@@ -150,6 +150,10 @@ export function onSelectNewRegion(regionId, isPopped, isNewGallery) {
             }
         }, DEFAULT_TIMEOUT);
     }
+}
+
+export function getHeader(){
+    return header;
 }
 
 /**
