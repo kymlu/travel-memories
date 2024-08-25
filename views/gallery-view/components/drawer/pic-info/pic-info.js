@@ -26,39 +26,39 @@ export default class PicInfo extends BaseDrawer {
 			.then(() => {
 				super.connectedCallback();
 				this.#elements = {
-					drawer: this.shadowRoot.querySelector("#pic-info-drawer"),
-					dateEn: this.shadowRoot.querySelector("#fullscreen-eng-date"),
-					dateJp: this.shadowRoot.querySelector("#fullscreen-jp-date"),
-					cityEn: this.shadowRoot.querySelector("#fullscreen-eng-city"),
-					cityJp: this.shadowRoot.querySelector("#fullscreen-jp-city"),
-					captionEn: this.shadowRoot.querySelector("#fullscreen-eng-caption"),
-					captionJp: this.shadowRoot.querySelector("#fullscreen-jp-caption"),
-					camera: this.shadowRoot.querySelector("#camera-info"),
-					lens: this.shadowRoot.querySelector("#lens-info"),
-					technical: this.shadowRoot.querySelector("#technical-info"),
-					tags: this.shadowRoot.querySelector("#img-tags")
+					drawer: this.queryById("pic-info-drawer"),
+					dateEn: this.queryById("fullscreen-eng-date"),
+					dateJp: this.queryById("fullscreen-jp-date"),
+					cityEn: this.queryById("fullscreen-eng-city"),
+					cityJp: this.queryById("fullscreen-jp-city"),
+					captionEn: this.queryById("fullscreen-eng-caption"),
+					captionJp: this.queryById("fullscreen-jp-caption"),
+					camera: this.queryById("camera-info"),
+					lens: this.queryById("lens-info"),
+					technical: this.queryById("technical-info"),
+					tags: this.queryById("img-tags")
 				};
 				setTimeout(() => {
 					setBilingualProperty([
-						[this.shadowRoot.querySelector("#search-eng"), "Google in English", "英語でググる"],
-						[this.shadowRoot.querySelector("#search-jp"), "Google in Japanese", "日本語でググる"],
-						[this.shadowRoot.querySelector(".close-btn"), "Close", "閉じる"]
+						[this.queryById("search-eng"), "Google in English", "英語でググる"],
+						[this.queryById("search-jp"), "Google in Japanese", "日本語でググる"],
+						[this.queryByClassName("close-btn"), "Close", "閉じる"]
 					], ATTRIBUTES.TITLE);
 
 					addClickListeners([
-						[this.shadowRoot.querySelector("#pic-info-bg"), this.hide.bind(this)],
-						[this.shadowRoot.querySelector("#pic-info-drawer"), (event) => { event.stopPropagation(); }],
-						[this.shadowRoot.querySelector("#pic-info-close-btn"), this.hide.bind(this)],
-						[this.shadowRoot.querySelector("#search-eng"), this.searchEnglish.bind(this)],
-						[this.shadowRoot.querySelector("#search-jp"), this.searchJapanese.bind(this)]
+						[this.queryById("pic-info-bg"), this.hide.bind(this)],
+						[this.queryById("pic-info-drawer"), (event) => { event.stopPropagation(); }],
+						[this.queryById("pic-info-close-btn"), this.hide.bind(this)],
+						[this.queryById("search-eng"), this.searchEnglish.bind(this)],
+						[this.queryById("search-jp"), this.searchJapanese.bind(this)]
 					]);
 
 					// currently remove because it will not work on Apple <- what is this lol
-					this.shadowRoot.querySelector("#pic-info-details").addEventListener("touchstart", (event) => {
+					this.queryById("pic-info-details").addEventListener("touchstart", (event) => {
 						event.stopPropagation();
 					});
 
-					this.shadowRoot.querySelector("#pic-info-details").addEventListener("touchmove", (event) => {
+					this.queryById("pic-info-details").addEventListener("touchmove", (event) => {
 						event.stopPropagation();
 					});
 
@@ -133,7 +133,7 @@ export default class PicInfo extends BaseDrawer {
 	/** Sets the picture information. */
 	setPicInfo(newPicture, countryId) {
 		this.currentPic = newPicture;
-		this.shadowRoot.querySelector("#pic-info-details").scrollTo({ top: 0, behaviour: "instant" });
+		this.queryById("pic-info-details").scrollTo({ top: 0, behaviour: "instant" });
 		// get dates
 		if (this.currentPic.date) {
 			let date = getPictureDate(new Date(this.currentPic.date), this.currentPic.offset);

@@ -33,19 +33,19 @@ export default class CustomHeader extends BaseElement {
                 /** CustomHeader sections */
                 this.sections = {
                     header: this.shadowRoot.querySelector("header"),
-                    left: this.shadowRoot.querySelector("#left-section"),
-                    centre: this.shadowRoot.querySelector("#center-section"),
-                    right: this.shadowRoot.querySelector("#right-section"),
+                    left: this.queryById("left-section"),
+                    centre: this.queryById("center-section"),
+                    right: this.queryById("right-section"),
                 };
 
                 /** CustomHeader buttons */
                 this.buttons = {
-                    globe: this.shadowRoot.querySelector("#globe-btn"),
-                    map: this.shadowRoot.querySelector("#map-btn"),
-                    regionDropdown: this.shadowRoot.querySelector("#rgn-title-btn"),
-                    regionInfo: this.shadowRoot.querySelector("#region-info-btn"),
-                    filter: this.shadowRoot.querySelector("#filter-btn"),
-                    creator: this.shadowRoot.querySelector("#creator-btn")
+                    globe: this.queryById("globe-btn"),
+                    map: this.queryById("map-btn"),
+                    regionDropdown: this.queryById("rgn-title-btn"),
+                    regionInfo: this.queryById("region-info-btn"),
+                    filter: this.queryById("filter-btn"),
+                    creator: this.queryById("creator-btn")
                 };
 
                 setTimeout(() => {
@@ -92,15 +92,15 @@ export default class CustomHeader extends BaseElement {
      * @param {boolean} isVisible 
      */
     toggleFilterIndicator(isVisible) {
-        addRemoveNoDisplay(this.shadowRoot.querySelector("#filter-indicator"), !isVisible);
+        addRemoveNoDisplay(this.queryById("filter-indicator"), !isVisible);
     }
 
     setRegionTitle(newContent) {
-        this.shadowRoot.querySelector("#rgn-name").innerHTML = newContent;
+        this.queryById("rgn-name").innerHTML = newContent;
     }
 
     flipRegionNameArrow(isUp) {
-        flipArrow(this.shadowRoot.querySelector("#rgn-name-arrow"), isUp);
+        flipArrow(this.queryById("rgn-name-arrow"), isUp);
     }
 
     /** Changes values when the selected country changes. */

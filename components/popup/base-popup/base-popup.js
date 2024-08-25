@@ -19,8 +19,8 @@ export default class BasePopup extends BaseElement {
     connectedCallback() {
         if (!this.previouslyOpened) {
             setTimeout(() => {
-                setBilingualProperty([[this.shadowRoot.querySelector(".close-btn"), "Close", "閉じる"]], ATTRIBUTES.TITLE);
-                this.shadowRoot.querySelector(".popup").addEventListener("click", (event) => {
+                setBilingualProperty([[this.queryByClassName("close-btn"), "Close", "閉じる"]], ATTRIBUTES.TITLE);
+                this.queryByClassName("popup").addEventListener("click", (event) => {
                     event.stopPropagation();
                 });
                 addRemoveNoDisplay([this], true);
@@ -34,9 +34,9 @@ export default class BasePopup extends BaseElement {
 
     /** Opens the popup. */
     open(openFunction) {
-        let popupContent = this.shadowRoot.querySelector(".popup-content");
-        let popup = this.shadowRoot.querySelector(".popup");
-        let popupBg = this.shadowRoot.querySelector(".popup-bg");
+        let popupContent = this.queryByClassName("popup-content");
+        let popup = this.queryByClassName("popup");
+        let popupBg = this.queryByClassName("popup-bg");
         addRemoveNoDisplay([this], false);
 
         setTimeout(() => {
@@ -46,8 +46,8 @@ export default class BasePopup extends BaseElement {
                 addRemoveNoDisplay([popupContent], false);
                 addRemoveTransparent([popupContent], false);
                 addRemoveClass([popup], "popup-height", true);
-                this.shadowRoot.querySelector(".close-btn").addEventListener("click", () => { this.close(false); });
-                this.shadowRoot.querySelector(".popup-bg").addEventListener("click", () => { this.close(true); });
+                this.queryByClassName("close-btn").addEventListener("click", () => { this.close(false); });
+                this.queryByClassName("popup-bg").addEventListener("click", () => { this.close(true); });
                 if(openFunction){
                     openFunction();
                 }
@@ -77,9 +77,9 @@ export default class BasePopup extends BaseElement {
         document.removeEventListener("keydown", this.handleKeydown.bind(this));
 
         this.isOpen = false;
-        let popupContent = this.shadowRoot.querySelector(".popup-content");
-        let popup = this.shadowRoot.querySelector(".popup");
-        let popupBg = this.shadowRoot.querySelector(".popup-bg");
+        let popupContent = this.queryByClassName("popup-content");
+        let popup = this.queryByClassName("popup");
+        let popupBg = this.queryByClassName("popup-bg");
 
         // if forced close, everything should happen at once, hence timeout length of 0
         let timeout = forceClose ? 0 : DEFAULT_TIMEOUT;

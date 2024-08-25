@@ -26,15 +26,15 @@ export default class RegionDropdown extends BaseElement {
 		fetchInnerHtml("views/gallery-view/components/region-dropdown/region-dropdown.html", this, true)
 			.then(() => {
 				this.#elements = {
-					background: this.shadowRoot.querySelector("#rgn-drop-down-bg"),
-					content: this.shadowRoot.querySelector("#rgn-drop-down"),
+					background: this.queryById("rgn-drop-down-bg"),
+					content: this.queryById("rgn-drop-down"),
 				}
 				setTimeout(() => {
 					addClickListeners([
 						[this.#elements.background, this.close.bind(this, null)]
 					]);
 					addRemoveNoDisplay([this], true);
-					addRemoveTransparent([this.shadowRoot.querySelector(".transparent")], false);
+					addRemoveTransparent([this.queryByClassName("transparent")], false);
 				}, 50);
 			});
 	}
@@ -84,13 +84,13 @@ export default class RegionDropdown extends BaseElement {
 	*/
 	changeSelectedRegion(oldRegionId, newRegionId) {
 		if (oldRegionId) {
-			this.shadowRoot.querySelector(this.#getDropdownElementId(oldRegionId))?.classList.remove("active");
+			this.queryById(this.#getDropdownElementId(oldRegionId))?.classList.remove("active");
 		}
 
 		if (newRegionId) {
 			this.hasOpenedForRegion = false;
 			this.currentRegionId = newRegionId;
-			this.shadowRoot.querySelector(this.#getDropdownElementId(newRegionId))?.classList.add("active");
+			this.queryById(this.#getDropdownElementId(newRegionId))?.classList.add("active");
 		}
 
 		this.close();
@@ -103,7 +103,7 @@ export default class RegionDropdown extends BaseElement {
 		if (!this.hasOpenedForRegion) {
 			this.hasOpenedForRegion = true;
 			if (this.currentRegionId) {
-				this.shadowRoot.querySelector(this.#getDropdownElementId(this.currentRegionId)).scrollIntoView({ behavior: "smooth", block: "center" });
+				this.queryById(this.#getDropdownElementId(this.currentRegionId)).scrollIntoView({ behavior: "smooth", block: "center" });
 			} else {
 				this.#elements.content.scrollTo({ top: 0, behavior: "instant" });
 			}
@@ -116,7 +116,7 @@ export default class RegionDropdown extends BaseElement {
 	}
 
 	#getDropdownElementId(name) {
-		return `#${name}-dropdown`;
+		return `${name}-dropdown`;
 	}
 }
 

@@ -28,29 +28,3 @@
   background-color: rgba(var(--main-color));
   z-index: 200;
 }
-
-.rgn-info {
-  display: flex;
-  flex-direction: row;
-  gap: 15px;
-  align-content: stretch;
-  overflow-y: auto;
-}
-
-@media only screen and (orientation: portrait) {
-  .rgn-info {
-    flex-direction: column;
-  }
-}
-
-.rgn-info-text {
-  gap: 15px;
-  overflow-y: auto;
-}
-
-@media only screen and (orientation: portrait) {
-  .rgn-info-text {
-    gap: 15px;
-    overflow-y: visible;
-  }
-}

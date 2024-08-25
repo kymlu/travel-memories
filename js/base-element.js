@@ -15,4 +15,12 @@ export default class BaseElement extends HTMLElement {
         this.shadowRoot.appendChild(globalStyleSheet.cloneNode(true));
         this.shadowRoot.appendChild(fontAwesomeStyleSheet.cloneNode(true));
     }
+    
+    queryById(id){
+        return this.shadowRoot.querySelector(`#${id}`);
+    }
+
+    queryByClassName(className){
+        return this.shadowRoot.querySelector(`.${className}`);
+    }
 }

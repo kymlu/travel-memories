@@ -28,8 +28,8 @@ export default class Loader extends BaseElement {
                     addRemoveClass([this], "opacity-transition", true);
                     this.#elements = {
                         dots: Array.from(this.shadowRoot.querySelectorAll(".loader-dot")),
-                        icon: this.shadowRoot.querySelector(".loader-icon"),
-                        error: this.shadowRoot.querySelector(".error-btn")
+                        icon: this.queryByClassName("loader-icon"),
+                        error: this.queryByClassName("error-btn")
                     }
                     this.#elements.error.addEventListener("click", this.retry.bind(this));
                     addRemoveNoDisplay([this.#elements.error], true);

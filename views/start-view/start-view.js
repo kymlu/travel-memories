@@ -113,8 +113,8 @@ export default class StartView extends BaseElement {
     }
 
     highlightCountry(abbreviation, isHover) {
-        addRemoveTransparent([this.shadowRoot.querySelector(`#${abbreviation}-start-icon-c`)], isHover);
-        addRemoveClass([this.shadowRoot.querySelector(`#${abbreviation}-start-icon`)], "animated", isHover);
+        addRemoveTransparent([this.queryById(`${abbreviation}-start-icon-c`)], isHover);
+        addRemoveClass([this.queryById(`${abbreviation}-start-icon`)], "animated", isHover);
     }
 }
 

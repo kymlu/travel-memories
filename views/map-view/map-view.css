@@ -1,7 +1,7 @@
 .map-view {
     display: flex;
     flex-direction: column;
-    justify-content: start;
+    justify-content: space-between;
     padding: 50px 75px;
     gap: 20px;
     height: 100vh;
@@ -10,9 +10,8 @@
 
 @media only screen and (orientation: portrait) {
     .map-view {
-        padding: 0px;
-        /* justify-content: start; */
-        padding-top: 10vh;
+        padding: 10vh 0vh;
+        justify-content: start;
     }
 }
 
@@ -22,9 +21,12 @@
     max-height: 70vh;
     width: 70vh;
     align-self: center;
-    -webkit-user-select: none; /* Safari */
-    -ms-user-select: none; /* IE 10 and IE 11 */
-    user-select: none; /* Standard syntax */
+    -webkit-user-select: none;
+    /* Safari */
+    -ms-user-select: none;
+    /* IE 10 and IE 11 */
+    user-select: none;
+    /* Standard syntax */
 }
 
 @media only screen and (orientation: portrait) {
@@ -55,14 +57,6 @@
     .scale-1 {
         height: 100% !important;
     }
-    
-    /* .scale-2 {
-        height: 200% !important;
-    }
-    
-    .scale-3 {
-        height: 300% !important;
-    } */
 }
 
 #zoom-buttons {

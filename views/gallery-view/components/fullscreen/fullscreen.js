@@ -41,14 +41,14 @@ export default class Fullscreen extends BaseElement {
 		fetchInnerHtml("views/gallery-view/components/fullscreen/fullscreen.html", this, true)
 			.then(() => {
 				this.#elements = {
-					view: this.shadowRoot.querySelector("#fullscreen"),
-					control: this.shadowRoot.querySelector("#fullscreen-ctrl"),
-					background: this.shadowRoot.querySelector(".popup-bg"),
-					picture: this.shadowRoot.querySelector("#fullscreen-pic"),
-					nextPicture: this.shadowRoot.querySelector("#fullscreen-pic-next"),
-					leftArrow: this.shadowRoot.querySelector("#left-arrow"),
-					rightArrow: this.shadowRoot.querySelector("#right-arrow"),
-					picInfoButton: this.shadowRoot.querySelector("#pic-info-btn")
+					view: this.queryById("fullscreen"),
+					control: this.queryById("fullscreen-ctrl"),
+					background: this.queryByClassName("popup-bg"),
+					picture: this.queryById("fullscreen-pic"),
+					nextPicture: this.queryById("fullscreen-pic-next"),
+					leftArrow: this.queryById("left-arrow"),
+					rightArrow: this.queryById("right-arrow"),
+					picInfoButton: this.queryById("pic-info-btn")
 				};
 				this.picInfo = this.shadowRoot.querySelector("pic-info");
 				setTimeout(() => {

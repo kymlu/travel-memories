@@ -3,11 +3,10 @@ import FilterPopup from './components/filter-popup/filter-popup.js'
 import { getCurrentCountry, isGalleryView, onSelectNewRegion } from '../../js/globals.js';
 import {
 	addClickListeners, addRemoveClass, addRemoveNoDisplay, addRemoveTransparent,
-	fetchInnerHtml, getBilingualText, getImageAddress, isPortraitMode, scrollToTop,
-	setBilingualProperty, sortImgs
+	fetchInnerHtml, getBilingualText, getImageAddress, scrollToTop, sortImgs
 } from '../../js/utils.js';
 import {
-	ATTRIBUTES, CUSTOM_EVENT_TYPES, DEFAULT_TIMEOUT, SCROLL_THRESHOLD, TAGS
+	CUSTOM_EVENT_TYPES, DEFAULT_TIMEOUT, SCROLL_THRESHOLD, TAGS
 } from '../../js/constants.js'
 import Fullscreen from './components/fullscreen/fullscreen.js';
 import CustomHeader from '../../components/header/header.js';
@@ -61,13 +60,14 @@ export default class GalleryView extends BaseElement {
 			.then(() => {
 				setTimeout(() => {
 					this.#elements = {
-						view: this.shadowRoot.querySelector("#gallery-view"),
-						gallery: this.shadowRoot.querySelector("#gallery"),
-						toTopButton: this.shadowRoot.querySelector("#to-top-btn"),
+						view: this.queryById("gallery-view"),
+						gallery: this.queryById("gallery"),
+						toTopButton: this.queryById("to-top-btn"),
 						regionDropdown: this.shadowRoot.querySelector("region-dropdown"),
 						regionInfo: this.shadowRoot.querySelector("region-info"),
-						fullscreen: this.shadowRoot.querySelector("fullscreen-component")
+						fullscreen: this.shadowRoot.querySelector("fullscreen-component") 
 					}
+					// TODO: add filter popup to ^
 
 					this.classList.add("opacity-transition");
 
@@ -106,7 +106,7 @@ export default class GalleryView extends BaseElement {
 						}
 					});
 
-					this.appendChild(this.filterPopup);
+					this.shadowRoot.appendChild(this.filterPopup);
 
 					setTimeout(() => {
 						addClickListeners([

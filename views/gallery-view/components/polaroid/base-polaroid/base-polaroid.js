@@ -27,7 +27,7 @@ export default class BasePolaroid extends BaseElement {
         const obs = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    addRemoveTransparent([this.shadowRoot.querySelector(".polaroid-frame")], false);
+                    addRemoveTransparent([this.queryByClassName("polaroid-frame")], false);
                     observer.disconnect();
                 }
             });
@@ -36,7 +36,7 @@ export default class BasePolaroid extends BaseElement {
     }
 
     connectedCallback() {
-        const polaroid = this.shadowRoot.querySelector(".polaroid-frame");
+        const polaroid = this.queryByClassName("polaroid-frame");
         polaroid.classList.add(this.getRandomAngleClass());
     }
 

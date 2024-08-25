@@ -10,12 +10,10 @@ export default class BaseDrawer extends BaseElement {
         this.isVisible;
     }
 
-    connectedCallback() { 
+    connectedCallback() {
         // TODO: test (not sure if touchend is ok)
-        setTimeout(() => {
-            this.shadowRoot.querySelector(".drawer-handle-container")?.addEventListener("touchstart", this.onStartHandleDrag, false);
-            this.shadowRoot.querySelector(".drawer-handle-container")?.addEventListener("touchend", this.onEndHandleDrag, false);
-        }, 50);
+        this.queryByClassName("drawer-handle-container")?.addEventListener("touchstart", this.onStartHandleDrag, false);
+        this.queryByClassName("drawer-handle-container")?.addEventListener("touchend", this.onEndHandleDrag, false);
     }
 
     /**

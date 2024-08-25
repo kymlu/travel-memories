@@ -30,14 +30,14 @@ export default class MapView extends BaseElement {
 			.then(() => {
 				setTimeout(() => {
 					this.#elements = {
-						view: this.shadowRoot.querySelector(".map-view"),
-						mapControl: this.shadowRoot.querySelector("#map-control"),
-						mapContainer: this.shadowRoot.querySelector("#map-container"),
-						map: this.shadowRoot.querySelector("#country-map"),
-						mainTitle: this.shadowRoot.querySelector("#main-title"),
-						mainTitleText: this.shadowRoot.querySelector("#main-title-text"),
-						zoomIn: this.shadowRoot.querySelector("#zoom-in"),
-						zoomOut: this.shadowRoot.querySelector("#zoom-out"),
+						view: this.queryByClassName("map-view"),
+						mapControl: this.queryById("map-control"),
+						mapContainer: this.queryById("map-container"),
+						map: this.queryById("country-map"),
+						mainTitle: this.queryById("main-title"),
+						mainTitleText: this.queryById("main-title-text"),
+						zoomIn: this.queryById("zoom-in"),
+						zoomOut: this.queryById("zoom-out"),
 					}
 
 					setTimeout(() => {

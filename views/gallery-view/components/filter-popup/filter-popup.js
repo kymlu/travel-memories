@@ -3,9 +3,7 @@ import BasePopup from "../../../../components/popup/base-popup/base-popup.js"
 import { CUSTOM_EVENT_TYPES, ATTRIBUTES } from "../../../../js/constants.js";
 import {
     addRemoveNoDisplay, getBilingualText, flipArrow, sortByEnglishName,
-    addClickListeners,
-    setBilingualProperty,
-    fetchInnerHtml
+    addClickListeners, setBilingualProperty, fetchInnerHtml
 } from '../../../../js/utils.js';
 
 /**
@@ -60,33 +58,33 @@ export default class FilterPopup extends BasePopup {
             .then(() => {
                 super.connectedCallback();
                 this.#elements = {
-                    favourite: this.shadowRoot.querySelector("#filter-fav-input"),
-                    keyword: this.shadowRoot.querySelector("#filter-kw-input"),
-                    keywordClearBtn: this.shadowRoot.querySelector("#filter-kw-clear-btn")
+                    favourite: this.queryById("filter-fav-input"),
+                    keyword: this.queryById("filter-kw-input"),
+                    keywordClearBtn: this.queryById("filter-kw-clear-btn")
                 }
                 setTimeout(() => {
                     setBilingualProperty([
-                        [this.shadowRoot.querySelector("#filter-title"), "Filters", "フィルター"],
-                        [this.shadowRoot.querySelector("#filter-fav-title"), "Favourites", "お気に入り"],
-                        [this.shadowRoot.querySelector("#filter-kw-title"), "Keyword", "キーワード"],
-                        [this.shadowRoot.querySelector("#filter-tags-title"), "Tags", "タグ"],
-                        [this.shadowRoot.querySelector("#filter-camera-title"), "Camera", "カメラ"],
-                        [this.shadowRoot.querySelector("#filter-areas-title"), "Areas", "場所"],
-                        [this.shadowRoot.querySelector("#filter-clear-btn"), "Clear", "クリアする"],
-                        [this.shadowRoot.querySelector("#filter-submit-btn"), "Apply", "適用する"]
+                        [this.queryById("filter-title"), "Filters", "フィルター"],
+                        [this.queryById("filter-fav-title"), "Favourites", "お気に入り"],
+                        [this.queryById("filter-kw-title"), "Keyword", "キーワード"],
+                        [this.queryById("filter-tags-title"), "Tags", "タグ"],
+                        [this.queryById("filter-camera-title"), "Camera", "カメラ"],
+                        [this.queryById("filter-areas-title"), "Areas", "場所"],
+                        [this.queryById("filter-clear-btn"), "Clear", "クリアする"],
+                        [this.queryById("filter-submit-btn"), "Apply", "適用する"]
                     ], ATTRIBUTES.INNERHTML);
-                    this.shadowRoot.querySelector("#filter-fav-label").childNodes[0].textContent = getBilingualText("Filter favourites", "お気に入りだけを表示する");
+                    this.queryById("filter-fav-label").childNodes[0].textContent = getBilingualText("Filter favourites", "お気に入りだけを表示する");
                     setBilingualProperty([
                         [this.#elements.keywordClearBtn, "Clear keyword", "キーワードをクリアする"],
                     ], ATTRIBUTES.TITLE);
 
                     addClickListeners([
-                        [this.shadowRoot.querySelector("#filter-regions-header"), this.toggleFilterGroup.bind(this, "regions", undefined)],
-                        [this.shadowRoot.querySelector("#filter-areas-header"), this.toggleFilterGroup.bind(this, "areas", undefined)],
-                        [this.shadowRoot.querySelector("#filter-tags-header"), this.toggleFilterGroup.bind(this, "tags", undefined)],
-                        [this.shadowRoot.querySelector("#filter-camera-header"), this.toggleFilterGroup.bind(this, "camera", undefined)],
-                        [this.shadowRoot.querySelector("#filter-clear-btn"), this.clearFilters.bind(this)],
-                        [this.shadowRoot.querySelector("#filter-submit-btn"), this.submitFilters.bind(this)],
+                        [this.queryById("filter-regions-header"), this.toggleFilterGroup.bind(this, "regions", undefined)],
+                        [this.queryById("filter-areas-header"), this.toggleFilterGroup.bind(this, "areas", undefined)],
+                        [this.queryById("filter-tags-header"), this.toggleFilterGroup.bind(this, "tags", undefined)],
+                        [this.queryById("filter-camera-header"), this.toggleFilterGroup.bind(this, "camera", undefined)],
+                        [this.queryById("filter-clear-btn"), this.clearFilters.bind(this)],
+                        [this.queryById("filter-submit-btn"), this.submitFilters.bind(this)],
                         [this.#elements.keywordClearBtn, this.clearKeyword.bind(this)]
                     ]);
                     this.#elements.keyword.addEventListener("input", this.checkEmptyKeywordInput.bind(this));
@@ -101,7 +99,7 @@ export default class FilterPopup extends BasePopup {
      * @param {boolean} isString 
      */
     refreshFilterButtons(htmlListId, selectedList) {
-        Array.from(this.shadowRoot.querySelector(`#${htmlListId}`).querySelectorAll("button")).forEach(button => {
+        Array.from(this.queryById(htmlListId).querySelectorAll("button")).forEach(button => {
             if (selectedList.some(item => item.replace(" ", "") == button.id)) {
                 button.classList.add("active");
             } else {
@@ -119,7 +117,7 @@ export default class FilterPopup extends BasePopup {
 
     /** Scrolls the filter list to top. */
     scrollToTop() {
-        this.shadowRoot.querySelector("#filters").scrollTo({ top: 0, behavior: "instant" });
+        this.queryById("filters").scrollTo({ top: 0, behavior: "instant" });
     }
 
     /**
@@ -169,7 +167,7 @@ export default class FilterPopup extends BasePopup {
         areas, tags, cameras, regionNameEn, regionNameJp) {
         this.previouslyOpened = false;
         this.clearFilters();
-        this.shadowRoot.querySelector("#filter-regions-title").innerHTML = getBilingualText(regionNameEn, regionNameJp);
+        this.queryById("filter-regions-title").innerHTML = getBilingualText(regionNameEn, regionNameJp);
         this.allRegions = regions.sort(sortByEnglishName);
         this.currentRegions = [];
         this.allAreas = areas.sort(sortByEnglishName);
@@ -188,21 +186,21 @@ export default class FilterPopup extends BasePopup {
         this.currentCameras = [];
 
         if (isSingleRegion) {
-            addRemoveNoDisplay([this.shadowRoot.querySelector("#filter-regions")], true);
-            addRemoveNoDisplay([this.shadowRoot.querySelector("#filter-areas")], false);
-            let filterAreas = this.shadowRoot.querySelector("#filter-areas-list");
+            addRemoveNoDisplay([this.queryById("filter-regions")], true);
+            addRemoveNoDisplay([this.queryById("filter-areas")], false);
+            let filterAreas = this.queryById("filter-areas-list");
             this.createFilterSection(filterAreas, this.allAreas, this.toggleArea.bind(this), "areas");
         } else {
-            addRemoveNoDisplay([this.shadowRoot.querySelector("#filter-regions")], false);
-            addRemoveNoDisplay([this.shadowRoot.querySelector("#filter-areas")], true);
-            let filterRegions = this.shadowRoot.querySelector("#filter-regions-list");
+            addRemoveNoDisplay([this.queryById("filter-regions")], false);
+            addRemoveNoDisplay([this.queryById("filter-areas")], true);
+            let filterRegions = this.queryById("filter-regions-list");
             this.createFilterSection(filterRegions, this.allRegions, this.toggleRegion.bind(this), "regions");
         }
 
-        let filterTags = this.shadowRoot.querySelector("#filter-tags-list");
+        let filterTags = this.queryById("filter-tags-list");
         this.createFilterSection(filterTags, this.allTags, this.toggleTag.bind(this), "tags");
 
-        let filterCameras = this.shadowRoot.querySelector("#filter-camera-list");
+        let filterCameras = this.queryById("filter-camera-list");
         this.createFilterSection(filterCameras, this.allCameras, this.toggleCamera.bind(this), "camera");
     }
 
@@ -257,8 +255,8 @@ export default class FilterPopup extends BasePopup {
      * ```False``` if not, ```undefined``` to toggle expand/collapse.
      */
     toggleFilterGroup(groupName, expandGroup) {
-        let headerButton = this.shadowRoot.querySelector(`#filter-${groupName}-header`).querySelector("button");
-        let filterTagList = this.shadowRoot.querySelector(`#filter-${groupName}-list`);
+        let headerButton = this.queryById(`filter-${groupName}-header`).querySelector("button");
+        let filterTagList = this.queryById(`filter-${groupName}-list`);
         if (expandGroup == undefined) {
             // toggle
             flipArrow(headerButton);
@@ -323,7 +321,7 @@ export default class FilterPopup extends BasePopup {
         setTimeout(() => {
             if (this.#elements.keyword.value == "") {
                 addRemoveNoDisplay([this.#elements.keywordClearBtn], true);
-            } else if (this.shadowRoot.querySelector("#filter-kw-clear-btn").classList.contains("no-display")) {
+            } else if (this.queryById("filter-kw-clear-btn").classList.contains("no-display")) {
                 addRemoveNoDisplay([this.#elements.keywordClearBtn], false);
             }
         }, 10);

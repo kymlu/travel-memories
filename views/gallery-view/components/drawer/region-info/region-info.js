@@ -18,12 +18,14 @@ export default class RegionInfo extends BaseDrawer {
         super();
         this.isVisible = false;
         this.isThrottling = false;
+        this.hasMapLoaded = false;
+        this.isNewGallery = true;
+
+        this.currentCountry = null;
         /** @type {CustomHeader} */
         this.header = getHeader();
         document.addEventListener(CUSTOM_EVENT_TYPES.HEADER_CHANGED, (event) => { this.header = event.detail.header });
-        this.hasMapLoaded = false;
-        this.currentCountry = null;
-        this.isNewGallery = true;
+
         this.#elements = {};
     }
 
@@ -32,23 +34,27 @@ export default class RegionInfo extends BaseDrawer {
             .then(() => {
                 super.connectedCallback();
                 this.#elements = {
-                    regionInfo: this.shadowRoot.querySelector("#rgn-info"),
-                    background: this.shadowRoot.querySelector("#rgn-info-bg"),
-                    drawer: this.shadowRoot.querySelector("#rgn-info-drawer"),
-                    map: this.shadowRoot.querySelector("#country-map-mini"),
-                    areasTitle: this.shadowRoot.querySelector("#areas-title"),
-                    datesSection: this.shadowRoot.querySelector("#rgn-info-dates"),
-                    dates: this.shadowRoot.querySelector("#rgn-dates"),
-                    descriptionEnglish: this.shadowRoot.querySelector("#rgn-desc-eng"),
-                    descriptionJapanese: this.shadowRoot.querySelector("#rgn-desc-jp"),
-                    descriptionTitle: this.shadowRoot.querySelector("#description-title"),
-                    areasList: this.shadowRoot.querySelector("#rgn-areas"),
+                    regionInfo: this.queryById("rgn-info"),
+                    background: this.queryById("rgn-info-bg"),
+                    drawer: this.queryById("rgn-info-drawer"),
+                    map: this.queryById("country-map-mini"),
+                    areasTitle: this.queryById("areas-title"),
+                    datesSection: this.queryById("rgn-info-dates"),
+                    dates: this.queryById("rgn-dates"),
+                    descriptionEnglish: this.queryById("rgn-desc-eng"),
+                    descriptionJapanese: this.queryById("rgn-desc-jp"),
+                    descriptionTitle: this.queryById("description-title"),
+                    areasList: this.queryById("rgn-areas"),
                 };
 
                 setTimeout(() => {
                     addClickListeners([
                         [this.#elements.background, this.toggleVisibility.bind(this, false)],
                     ]);
+
+                    setBilingualProperty(
+                        [[this.queryById("dates-title"), "Dates visited", "訪れた日付"]]
+                        , ATTRIBUTES.INNERHTML);
                     addRemoveTransparent([this.#elements.drawer]);
                     addRemoveNoDisplay([this], true);
                 }, 50);
@@ -118,8 +124,7 @@ export default class RegionInfo extends BaseDrawer {
 
             setBilingualProperty([
                 [this.#elements.areasTitle, this.currentCountry.officialRegionNameEnglish + "s", this.currentCountry.officialRegionNameJapanese],
-                [this.#elements.descriptionTitle, "About", "国について"],
-                [this.shadowRoot.querySelector("#dates-title"), "Dates visited", "訪れた日付"]]
+                [this.#elements.descriptionTitle, "About", "国について"]]
                 , ATTRIBUTES.INNERHTML);
 
             [
@@ -133,7 +138,7 @@ export default class RegionInfo extends BaseDrawer {
             });
             this.filterMiniMap(null);
         }
-        this.shadowRoot.querySelector(".rgn-info").scrollTo({ top: 0, behavior: "smooth" });
+        this.queryByClassName("rgn-info").scrollTo({ top: 0, behavior: "smooth" });
     }
 
     /** Shows the region info section.
@@ -145,7 +150,7 @@ export default class RegionInfo extends BaseDrawer {
         }
 
         if (isPortraitMode()) {
-            this.shadowRoot.querySelector("#dates-title").scrollIntoView({ block: isPortraitMode() ? "end" : "start" });
+            this.queryById("dates-title").scrollIntoView({ block: isPortraitMode() ? "end" : "start" });
         }
 
         this.isVisible = true;
