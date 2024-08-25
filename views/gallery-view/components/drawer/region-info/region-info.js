@@ -12,8 +12,6 @@ import BaseDrawer from "../base-drawer/base-drawer.js";
 
 /** The Region Info. */
 export default class RegionInfo extends BaseDrawer {
-    #elements;
-
     constructor() {
         super();
         this.isVisible = false;
@@ -25,15 +23,13 @@ export default class RegionInfo extends BaseDrawer {
         /** @type {CustomHeader} */
         this.header = getHeader();
         document.addEventListener(CUSTOM_EVENT_TYPES.HEADER_CHANGED, (event) => { this.header = event.detail.header });
-
-        this.#elements = {};
     }
 
     connectedCallback() {
         fetchInnerHtml("views/gallery-view/components/drawer/region-info/region-info.html", this, true)
             .then(() => {
                 super.connectedCallback();
-                this.#elements = {
+                this._elements = {
                     regionInfo: this.queryById("rgn-info"),
                     background: this.queryById("rgn-info-bg"),
                     drawer: this.queryById("rgn-info-drawer"),
@@ -49,13 +45,13 @@ export default class RegionInfo extends BaseDrawer {
 
                 setTimeout(() => {
                     addClickListeners([
-                        [this.#elements.background, this.toggleVisibility.bind(this, false)],
+                        [this._elements.background, this.toggleVisibility.bind(this, false)],
                     ]);
 
                     setBilingualProperty(
                         [[this.queryById("dates-title"), "Dates visited", "訪れた日付"]]
                         , ATTRIBUTES.INNERHTML);
-                    addRemoveTransparent([this.#elements.drawer]);
+                    addRemoveTransparent([this._elements.drawer]);
                     addRemoveNoDisplay([this], true);
                 }, 50);
             });
@@ -72,7 +68,7 @@ export default class RegionInfo extends BaseDrawer {
     }
 
     repositionBackground() {
-        this.#elements.background.style.top = this.header.getHeight();
+        this._elements.background.style.top = this.header.getHeight();
     }
 
     /** Makes value changes based on new country.
@@ -81,7 +77,7 @@ export default class RegionInfo extends BaseDrawer {
     handleNewCountry() {
         addRemoveNoDisplay([this], false);
         this.currentCountry = getCurrentCountry();
-        this.#elements.map.data = `assets/img/country/${this.currentCountry.id}.svg`;
+        this._elements.map.data = `assets/img/country/${this.currentCountry.id}.svg`;
     }
 
     /** Sets the info for a new region.
@@ -92,51 +88,55 @@ export default class RegionInfo extends BaseDrawer {
     setNewRegionInfo(regionList, areaList, isSingleRegionSelected, isNewGallery) {
         if (isNewGallery) {
             this.isNewGallery = true;
-            addRemoveTransparent([this.#elements.regionInfo], true);
+            addRemoveTransparent([this._elements.regionInfo], true);
         } else {
-            addRemoveTransparent([this.#elements.background], false);
-            addRemoveClass([this.#elements.background], "visibility-hidden", false);
+            addRemoveTransparent([this._elements.background], false);
+            addRemoveClass([this._elements.background], "visibility-hidden", false);
         }
 
         this.isVisible = true;
 
         if (isSingleRegionSelected) {
-            addRemoveNoDisplay(this.#elements.datesSection, false);
+            addRemoveNoDisplay(this._elements.datesSection, false);
             let currentRegion = regionList[0];
             setBilingualProperty([
-                [this.#elements.areasTitle, "Areas", "所"],
-                [this.#elements.dates, currentRegion.datesEnglish, currentRegion.datesJapanese],
-                [this.#elements.descriptionTitle, "About", this.currentCountry.officialRegionNameJapanese + "について"]
+                [this._elements.areasTitle, "Areas", "所"],
+                [this._elements.dates, currentRegion.datesEnglish, currentRegion.datesJapanese],
+                [this._elements.descriptionTitle, "About", this.currentCountry.officialRegionNameJapanese + "について"]
             ], ATTRIBUTES.INNERHTML);
 
             [
-                [this.#elements.descriptionEnglish, currentRegion.descriptionEnglish],
-                [this.#elements.descriptionJapanese, currentRegion.descriptionJapanese],
-                [this.#elements.areasList, areaList.map(area => {
+                [this._elements.descriptionEnglish, currentRegion.descriptionEnglish],
+                [this._elements.descriptionJapanese, currentRegion.descriptionJapanese],
+                [this._elements.areasList, areaList.map(area => {
                     return getBilingualText(area.englishName, area.japaneseName);
                 }).sort().join(" | ")]
             ].forEach(([element, text]) => {
                 element.innerHTML = text;
             });
-            this.filterMiniMap(currentRegion);
+            setTimeout(() => {
+                this.filterMiniMap(currentRegion);
+            }, 0);
         } else {
-            addRemoveNoDisplay(this.#elements.datesSection, true);
+            addRemoveNoDisplay(this._elements.datesSection, true);
 
             setBilingualProperty([
-                [this.#elements.areasTitle, this.currentCountry.officialRegionNameEnglish + "s", this.currentCountry.officialRegionNameJapanese],
-                [this.#elements.descriptionTitle, "About", "国について"]]
+                [this._elements.areasTitle, this.currentCountry.officialRegionNameEnglish + "s", this.currentCountry.officialRegionNameJapanese],
+                [this._elements.descriptionTitle, "About", "国について"]]
                 , ATTRIBUTES.INNERHTML);
 
             [
-                [this.#elements.descriptionEnglish, this.currentCountry.descriptionEnglish],
-                [this.#elements.descriptionJapanese, this.currentCountry.descriptionJapanese],
-                [this.#elements.areasList, regionList.map(area => {
+                [this._elements.descriptionEnglish, this.currentCountry.descriptionEnglish],
+                [this._elements.descriptionJapanese, this.currentCountry.descriptionJapanese],
+                [this._elements.areasList, regionList.map(area => {
                     return getBilingualText(area.englishName, area.japaneseName);
                 }).sort().join(" | ")]
             ].forEach(([element, text]) => {
                 element.innerHTML = text;
             });
-            this.filterMiniMap(null);
+            setTimeout(() => {
+                this.filterMiniMap(null);
+            }, 0);
         }
         this.queryByClassName("rgn-info").scrollTo({ top: 0, behavior: "smooth" });
     }
@@ -154,18 +154,18 @@ export default class RegionInfo extends BaseDrawer {
         }
 
         this.isVisible = true;
-        addRemoveTransparent([this.#elements.background, this.#elements.drawer], false);
-        addRemoveClass([this.#elements.background], "visibility-hidden", false);
+        addRemoveTransparent([this._elements.background, this._elements.drawer], false);
+        addRemoveClass([this._elements.background], "visibility-hidden", false);
         if (isForced) {
             if (document.body.scrollTop < this.getBoundingClientRect().height) {
                 scrollToTop(true);
             } else {
-                this.#elements.regionInfo.style.position = "sticky";
-                this.#elements.regionInfo.style.top = this.header.getHeight();
+                this._elements.regionInfo.style.position = "sticky";
+                this._elements.regionInfo.style.top = this.header.getHeight();
             }
         }
         if (this.isNewGallery) {
-            addRemoveTransparent([this.#elements.regionInfo], false);
+            addRemoveTransparent([this._elements.regionInfo], false);
             this.isNewGallery = false;
         }
     }
@@ -176,7 +176,7 @@ export default class RegionInfo extends BaseDrawer {
     hide(isForced) {
         this.isVisible = false;
         if (isForced) {
-            let rgnInfoOffset = this.#elements.drawer.getBoundingClientRect().height;
+            let rgnInfoOffset = this._elements.drawer.getBoundingClientRect().height;
             if (document.body.scrollTop <= rgnInfoOffset) {
                 window.scrollTo({
                     top: rgnInfoOffset,
@@ -185,12 +185,12 @@ export default class RegionInfo extends BaseDrawer {
                 });
             }
         }
-        addRemoveTransparent([this.#elements.background, this.#elements.drawer], true);
+        addRemoveTransparent([this._elements.background, this._elements.drawer], true);
         setTimeout(() => {
-            addRemoveClass([this.#elements.background], "visibility-hidden", true);
-            this.#elements.regionInfo.style.position = "relative";
-            this.#elements.regionInfo.style.top = "0";
-            addRemoveTransparent([this.#elements.drawer], false);
+            addRemoveClass([this._elements.background], "visibility-hidden", true);
+            this._elements.regionInfo.style.position = "relative";
+            this._elements.regionInfo.style.top = "0";
+            addRemoveTransparent([this._elements.drawer], false);
         }, DEFAULT_TIMEOUT);
     }
 
@@ -229,20 +229,21 @@ export default class RegionInfo extends BaseDrawer {
 
     /** Filter the mini map. */
     filterMiniMap(currentRegion) {
-        if (!this.#elements.map.hasAttribute("data") || this.#elements.map.data == "") {
+        if (!this._elements.map.hasAttribute("data") || this._elements.map.data == "") {
             setTimeout(() => {
                 this.filterMiniMap(currentRegion);
                 return;
             }, 0);
         };
         setTimeout(() => {
-            const svgDoc = this.#elements.map.contentDocument;
+            const svgDoc = this._elements.map.contentDocument;
             const appColour = getAppColor();
             const regionList = this.currentCountry.regionGroups.flatMap(grp => grp.regions);
             try {
                 regionList.forEach(rgn => {
                     const rgnImg = svgDoc.getElementById(`${rgn.id}-img`);
                     if (rgnImg) {
+                        console.log(rgnImg);
                         if (currentRegion == null) {
                             if (rgn.visited) {
                                 rgnImg.setAttribute("fill", appColour);

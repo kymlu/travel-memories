@@ -8,8 +8,6 @@ import {
 
 /** The Region Dropdown. */
 export default class RegionDropdown extends BaseElement {
-	#elements;
-
 	constructor() {
 		super();
 		/** @type {CustomHeader} */
@@ -18,20 +16,18 @@ export default class RegionDropdown extends BaseElement {
 
 		this.hasOpenedForRegion = false;
 		this.currentRegionId = null;
-
-		this.#elements = {};
 	}
 
 	connectedCallback() {
 		fetchInnerHtml("views/gallery-view/components/region-dropdown/region-dropdown.html", this, true)
 			.then(() => {
-				this.#elements = {
+				this._elements = {
 					background: this.queryById("rgn-drop-down-bg"),
 					content: this.queryById("rgn-drop-down"),
 				}
 				setTimeout(() => {
 					addClickListeners([
-						[this.#elements.background, this.close.bind(this, null)]
+						[this._elements.background, this.close.bind(this, null)]
 					]);
 					addRemoveNoDisplay([this], true);
 					addRemoveTransparent([this.queryByClassName("transparent")], false);
@@ -44,7 +40,7 @@ export default class RegionDropdown extends BaseElement {
 	 */
 	handleNewCountry() {
 		// the dropdown object
-		const dropDownList = this.#elements.content;
+		const dropDownList = this._elements.content;
 		dropDownList.replaceChildren();
 
 		// region group text and regions
@@ -105,7 +101,7 @@ export default class RegionDropdown extends BaseElement {
 			if (this.currentRegionId) {
 				this.queryById(this.#getDropdownElementId(this.currentRegionId)).scrollIntoView({ behavior: "smooth", block: "center" });
 			} else {
-				this.#elements.content.scrollTo({ top: 0, behavior: "instant" });
+				this._elements.content.scrollTo({ top: 0, behavior: "instant" });
 			}
 		}
 	}

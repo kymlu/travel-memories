@@ -10,8 +10,6 @@ import {
 
 /** The Map View. */
 export default class MapView extends BaseElement {
-	#elements;
-
 	constructor() {
 		super();
 		this.defaultMainTitleText = "";
@@ -22,14 +20,13 @@ export default class MapView extends BaseElement {
 		this.outlineThickness = 0;
 		this.scaleLevel = 1;
 		this.isScaling = false;
-		this.#elements = {};
 	}
 
 	connectedCallback() {
 		fetchInnerHtml("views/map-view/map-view.html", this, true)
 			.then(() => {
 				setTimeout(() => {
-					this.#elements = {
+					this._elements = {
 						view: this.queryByClassName("map-view"),
 						mapControl: this.queryById("map-control"),
 						mapContainer: this.queryById("map-container"),
@@ -41,17 +38,17 @@ export default class MapView extends BaseElement {
 					}
 
 					setTimeout(() => {
-						this.#elements.map.addEventListener("load", this.colourMap.bind(this));
+						this._elements.map.addEventListener("load", this.colourMap.bind(this));
 						addClickListeners([
-							[this.#elements.mainTitle, () => { onSelectNewRegion(this.selectedRegion, null, true); }],
-							[this.#elements.zoomIn, this.scaleMap.bind(this, undefined, true)],
-							[this.#elements.zoomOut, this.scaleMap.bind(this, undefined, false)]
+							[this._elements.mainTitle, () => { onSelectNewRegion(this.selectedRegion, null, true); }],
+							[this._elements.zoomIn, this.scaleMap.bind(this, undefined, true)],
+							[this._elements.zoomOut, this.scaleMap.bind(this, undefined, false)]
 						]);
-						this.#elements.mainTitle.addEventListener("mouseover", () => {
-							this.#elements.mainTitle.querySelector("i").classList.add("white");
+						this._elements.mainTitle.addEventListener("mouseover", () => {
+							this._elements.mainTitle.querySelector("i").classList.add("white");
 						});
-						this.#elements.mainTitle.addEventListener("mouseout", () => {
-							this.#elements.mainTitle.querySelector("i").classList.remove("white");
+						this._elements.mainTitle.addEventListener("mouseout", () => {
+							this._elements.mainTitle.querySelector("i").classList.remove("white");
 						});
 					}, 50);
 
@@ -77,18 +74,18 @@ export default class MapView extends BaseElement {
 		addRemoveNoDisplay([this], false);
 		this.scaleMap(1);
 		this.selectedRegion = null;
-		this.#elements.mainTitleText.innerHTML = this.defaultMainTitleText;
-		this.#elements.mainTitle.title = this.defaultMainTitleTitle;
+		this._elements.mainTitleText.innerHTML = this.defaultMainTitleText;
+		this._elements.mainTitle.title = this.defaultMainTitleTitle;
 		scrollToTop(false);
 		// Note: for some reason making "this" transparent does not work.
 		setTimeout(() => {
-			addRemoveTransparent([this.#elements.view], false);
+			addRemoveTransparent([this._elements.view], false);
 		}, 0);
 	}
 
 	/** Hide the map view. */
 	hide() {
-		addRemoveTransparent([this.#elements.view], true);
+		addRemoveTransparent([this._elements.view], true);
 		setTimeout(() => {
 			addRemoveNoDisplay([this], true);
 		}, DEFAULT_TIMEOUT);
@@ -96,15 +93,15 @@ export default class MapView extends BaseElement {
 
 	/** Sets the appropriate map. */
 	createMap() {
-		this.#elements.map.data = `assets/img/country/${this.currentCountry.id}.svg`;
+		this._elements.map.data = `assets/img/country/${this.currentCountry.id}.svg`;
 	}
 
 	/** Colours the map according to which regions have been visited. */
 	colourMap() {
 		setTimeout(() => {
-			if (!this.#elements.map.hasAttribute("data") || this.#elements.map.data == "") return;
+			if (!this._elements.map.hasAttribute("data") || this._elements.map.data == "") return;
 
-			const svgDoc = this.#elements.map.contentDocument;
+			const svgDoc = this._elements.map.contentDocument;
 			this.outlineThickness = parseInt(svgDoc.querySelector("svg").getAttribute("width")) * 0.025;
 			const rgnList = this.currentCountry.regionGroups.flatMap(rgnGrp => rgnGrp.regions);
 
@@ -143,23 +140,23 @@ export default class MapView extends BaseElement {
 		this.isSelectingRegion = true;
 
 		if (this.selectedRegion) {
-			const oldRegionSvg = this.#elements.map.contentDocument.getElementById(`${this.selectedRegion}-img`);
+			const oldRegionSvg = this._elements.map.contentDocument.getElementById(`${this.selectedRegion}-img`);
 			oldRegionSvg.setAttribute("fill", getAppColor());
 			oldRegionSvg.setAttribute("stroke", "none");
 		}
 
 		if (this.selectedRegion == region.id) {
 			this.selectedRegion = null;
-			this.#elements.mainTitleText.innerHTML = this.defaultMainTitleText;
-			this.#elements.mainTitle.title = this.defaultMainTitleTitle;
+			this._elements.mainTitleText.innerHTML = this.defaultMainTitleText;
+			this._elements.mainTitle.title = this.defaultMainTitleTitle;
 		} else {
 			this.selectedRegion = region.id;
-			const newRegionSvg = this.#elements.map.contentDocument.getElementById(`${this.selectedRegion}-img`);
+			const newRegionSvg = this._elements.map.contentDocument.getElementById(`${this.selectedRegion}-img`);
 			newRegionSvg.setAttribute("fill", getTranslucentAppColor());
 			newRegionSvg.setAttribute("stroke", getAppColor());
 			newRegionSvg.setAttribute("stroke-width", this.outlineThickness);
-			this.#elements.mainTitleText.innerHTML = getBilingualText(region.englishName, region.japaneseName);
-			this.#elements.mainTitle.title = this.defaultMainTitleTitle = getBilingualText(`See all images from ${region.englishName}`, `${region.japaneseName}の写真をすべて表示する`);
+			this._elements.mainTitleText.innerHTML = getBilingualText(region.englishName, region.japaneseName);
+			this._elements.mainTitle.title = this.defaultMainTitleTitle = getBilingualText(`See all images from ${region.englishName}`, `${region.japaneseName}の写真をすべて表示する`);
 		}
 
 		setTimeout(() => {
@@ -191,14 +188,14 @@ export default class MapView extends BaseElement {
 			this.scaleLevel = newScaleValue;
 		}
 
-		addRemoveClass([this.#elements.zoomIn], "disabled", this.scaleLevel == maxScale);
-		addRemoveClass([this.#elements.zoomOut], "disabled", this.scaleLevel == minScale);
+		addRemoveClass([this._elements.zoomIn], "disabled", this.scaleLevel == maxScale);
+		addRemoveClass([this._elements.zoomOut], "disabled", this.scaleLevel == minScale);
 
-		this.#elements.map.classList.remove(`scale-${oldScale}`);
-		this.#elements.map.classList.add(`scale-${this.scaleLevel}`);
+		this._elements.map.classList.remove(`scale-${oldScale}`);
+		this._elements.map.classList.add(`scale-${this.scaleLevel}`);
 
-		const mapSize = this.#elements.map.getBoundingClientRect();
-		this.#elements.mapContainer.scrollTo({
+		const mapSize = this._elements.map.getBoundingClientRect();
+		this._elements.mapContainer.scrollTo({
 			top: 0.5 * (this.scaleLevel - 1) * mapSize.height / this.scaleLevel,
 			left: 0.5 * (this.scaleLevel - 1) * mapSize.width / this.scaleLevel
 		});

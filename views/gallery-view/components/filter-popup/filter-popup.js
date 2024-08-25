@@ -11,8 +11,6 @@ import {
  * @extends BasePopup
  */
 export default class FilterPopup extends BasePopup {
-    #elements; // TOOD: add
-
     constructor() {
         super();
 
@@ -57,7 +55,7 @@ export default class FilterPopup extends BasePopup {
         fetchInnerHtml("views/gallery-view/components/filter-popup/filter-popup.html", this, true)
             .then(() => {
                 super.connectedCallback();
-                this.#elements = {
+                this._elements = {
                     favourite: this.queryById("filter-fav-input"),
                     keyword: this.queryById("filter-kw-input"),
                     keywordClearBtn: this.queryById("filter-kw-clear-btn")
@@ -75,7 +73,7 @@ export default class FilterPopup extends BasePopup {
                     ], ATTRIBUTES.INNERHTML);
                     this.queryById("filter-fav-label").childNodes[0].textContent = getBilingualText("Filter favourites", "お気に入りだけを表示する");
                     setBilingualProperty([
-                        [this.#elements.keywordClearBtn, "Clear keyword", "キーワードをクリアする"],
+                        [this._elements.keywordClearBtn, "Clear keyword", "キーワードをクリアする"],
                     ], ATTRIBUTES.TITLE);
 
                     addClickListeners([
@@ -85,9 +83,9 @@ export default class FilterPopup extends BasePopup {
                         [this.queryById("filter-camera-header"), this.toggleFilterGroup.bind(this, "camera", undefined)],
                         [this.queryById("filter-clear-btn"), this.clearFilters.bind(this)],
                         [this.queryById("filter-submit-btn"), this.submitFilters.bind(this)],
-                        [this.#elements.keywordClearBtn, this.clearKeyword.bind(this)]
+                        [this._elements.keywordClearBtn, this.clearKeyword.bind(this)]
                     ]);
-                    this.#elements.keyword.addEventListener("input", this.checkEmptyKeywordInput.bind(this));
+                    this._elements.keyword.addEventListener("input", this.checkEmptyKeywordInput.bind(this));
                 }, 0);
             });
     }
@@ -128,8 +126,8 @@ export default class FilterPopup extends BasePopup {
         // if the user changed their mind on the filters,
         // reset the filters to their states before the popup was opened.
         if (!isSubmit) {
-            this.#elements.favourite.checked = this.currentFavourites;
-            this.#elements.keyword.value = this.currentKeyword;
+            this._elements.favourite.checked = this.currentFavourites;
+            this._elements.keyword.value = this.currentKeyword;
             this.checkEmptyKeywordInput();
 
             this.selectedRegions = [...this.currentRegions];
@@ -142,8 +140,8 @@ export default class FilterPopup extends BasePopup {
             this.refreshFilterButtons("filter-tags-list", this.selectedTags);
         } else {
             // save current state
-            this.currentFavourites = this.#elements.favourite.checked;
-            this.currentKeyword = this.#elements.keyword.value;
+            this.currentFavourites = this._elements.favourite.checked;
+            this.currentKeyword = this._elements.keyword.value;
             this.currentRegions = [...this.selectedRegions];
             this.currentAreas = [...this.selectedAreas];
             this.currentTags = [...this.selectedTags];
@@ -319,22 +317,22 @@ export default class FilterPopup extends BasePopup {
 
     checkEmptyKeywordInput() {
         setTimeout(() => {
-            if (this.#elements.keyword.value == "") {
-                addRemoveNoDisplay([this.#elements.keywordClearBtn], true);
+            if (this._elements.keyword.value == "") {
+                addRemoveNoDisplay([this._elements.keywordClearBtn], true);
             } else if (this.queryById("filter-kw-clear-btn").classList.contains("no-display")) {
-                addRemoveNoDisplay([this.#elements.keywordClearBtn], false);
+                addRemoveNoDisplay([this._elements.keywordClearBtn], false);
             }
         }, 10);
     }
 
     clearKeyword() {
-        this.#elements.keyword.value = "";
+        this._elements.keyword.value = "";
         this.checkEmptyKeywordInput();
     }
 
     /** Clears all the currently selected filters. */
     clearFilters() {
-        this.#elements.favourite.checked = false;
+        this._elements.favourite.checked = false;
         this.clearKeyword();
         this.selectedRegions = [];
         this.selectedAreas = [];
@@ -351,8 +349,8 @@ export default class FilterPopup extends BasePopup {
     submitFilters() {
         const filterSubmitEvent = new CustomEvent(CUSTOM_EVENT_TYPES.FILTER_POPUP_SUBMITTED, {
             detail: {
-                isOnlyFavs: this.#elements.favourite.checked,
-                keyword: this.#elements.keyword.value,
+                isOnlyFavs: this._elements.favourite.checked,
+                keyword: this._elements.keyword.value,
                 selectedRegions: this.selectedRegions,
                 selectedAreas: this.selectedAreas,
                 selectedTags: this.selectedTags,

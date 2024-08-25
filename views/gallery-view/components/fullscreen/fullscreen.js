@@ -10,8 +10,6 @@ import PicInfo from '../drawer/pic-info/pic-info.js';
 
 /** The Fullscreen View. */
 export default class Fullscreen extends BaseElement {
-	#elements;
-
 	constructor() {
 		/// VARIABLES
 		// booleans
@@ -40,7 +38,7 @@ export default class Fullscreen extends BaseElement {
 	connectedCallback() {
 		fetchInnerHtml("views/gallery-view/components/fullscreen/fullscreen.html", this, true)
 			.then(() => {
-				this.#elements = {
+				this._elements = {
 					view: this.queryById("fullscreen"),
 					control: this.queryById("fullscreen-ctrl"),
 					background: this.queryByClassName("popup-bg"),
@@ -53,24 +51,24 @@ export default class Fullscreen extends BaseElement {
 				this.picInfo = this.shadowRoot.querySelector("pic-info");
 				setTimeout(() => {
 					setBilingualProperty([
-						[this.#elements.picInfoButton, "See picture information", "写真の情報を見る"],
-						[this.#elements.leftArrow, "Previous picture", "前の写真"],
-						[this.#elements.rightArrow, "Next picture", "次の写真"],
+						[this._elements.picInfoButton, "See picture information", "写真の情報を見る"],
+						[this._elements.leftArrow, "Previous picture", "前の写真"],
+						[this._elements.rightArrow, "Next picture", "次の写真"],
 					], ATTRIBUTES.TITLE);
 
 					addClickListeners([
-						[this.#elements.background, this.close.bind(this, true)],
-						[this.#elements.control, this.close.bind(this, true)],
-						[this.#elements.picInfoButton, this.picInfo.toggleVisibility.bind(this.picInfo, null)],
-						[this.#elements.leftArrow, (event) => { event.stopPropagation(); }],
-						[this.#elements.picture, (event) => { event.stopPropagation(); }],
-						[this.#elements.rightArrow, (event) => { event.stopPropagation(); }],
-						[this.#elements.leftArrow, this.changePicture.bind(this, false)],
-						[this.#elements.rightArrow, this.changePicture.bind(this, true)]
+						[this._elements.background, this.close.bind(this, true)],
+						[this._elements.control, this.close.bind(this, true)],
+						[this._elements.picInfoButton, this.picInfo.toggleVisibility.bind(this.picInfo, null)],
+						[this._elements.leftArrow, (event) => { event.stopPropagation(); }],
+						[this._elements.picture, (event) => { event.stopPropagation(); }],
+						[this._elements.rightArrow, (event) => { event.stopPropagation(); }],
+						[this._elements.leftArrow, this.changePicture.bind(this, false)],
+						[this._elements.rightArrow, this.changePicture.bind(this, true)]
 					]);
 
-					this.#elements.view.addEventListener("touchstart", this.startFullscreenSwipe, false);
-					this.#elements.view.addEventListener("touchmove", this.moveFullscreenSwipe, false);
+					this._elements.view.addEventListener("touchstart", this.startFullscreenSwipe, false);
+					this._elements.view.addEventListener("touchmove", this.moveFullscreenSwipe, false);
 					this.close(true);
 				}, 50);
 			});
@@ -101,8 +99,8 @@ export default class Fullscreen extends BaseElement {
 		}
 		this.isFullscreen = true;
 		document.body.style.overflowY = "hidden";
-		this.#elements.view.classList.remove("visibility-hidden");
-		addRemoveTransparent([this.#elements.view, this.#elements.background], false);
+		this._elements.view.classList.remove("visibility-hidden");
+		addRemoveTransparent([this._elements.view, this._elements.background], false);
 		document.addEventListener("keydown", this.handleKeydown.bind(this));
 	}
 
@@ -115,13 +113,13 @@ export default class Fullscreen extends BaseElement {
 		this.isFullscreen = false;
 		document.body.style.overflowY = "auto";
 		if (forceClose) {
-			this.#elements.view.classList.add("visibility-hidden");
-			addRemoveTransparent([this.#elements.view, this.#elements.background], true);
+			this._elements.view.classList.add("visibility-hidden");
+			addRemoveTransparent([this._elements.view, this._elements.background], true);
 			addRemoveNoDisplay([this], true);
 		} else {
-			addRemoveTransparent([this.#elements.view, this.#elements.background], true);
+			addRemoveTransparent([this._elements.view, this._elements.background], true);
 			setTimeout(() => {
-				this.#elements.view.classList.add("visibility-hidden");
+				this._elements.view.classList.add("visibility-hidden");
 				addRemoveNoDisplay([this], true);
 			}, DEFAULT_TIMEOUT);
 		}
@@ -242,12 +240,12 @@ export default class Fullscreen extends BaseElement {
 		let src = getImageAddress(this.currentCountryId, this.currentPic.region.id, this.currentPic.fileName);
 
 		if (this.isNewFullscreenInstance || (new Date() - this.lastSwipeTime) < 300) {
-			this.#elements.picture.src = src;
+			this._elements.picture.src = src;
 			this.isNewFullscreenInstance = false;
 			this.isChangingPicture = false;
 		} else {
-			let nextPic = this.#elements.nextPicture;
-			let currentPic = this.#elements.picture;
+			let nextPic = this._elements.nextPicture;
+			let currentPic = this._elements.picture;
 
 			addRemoveNoDisplay([nextPic], true);
 			nextPic.src = src;

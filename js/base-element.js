@@ -11,6 +11,7 @@ fontAwesomeStyleSheet.setAttribute('href', 'https://cdnjs.cloudflare.com/ajax/li
 export default class BaseElement extends HTMLElement {
     constructor() {
         super();
+        this._elements = {};
         this.attachShadow({ mode: 'open' });
         this.shadowRoot.appendChild(globalStyleSheet.cloneNode(true));
         this.shadowRoot.appendChild(fontAwesomeStyleSheet.cloneNode(true));

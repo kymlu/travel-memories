@@ -18,13 +18,10 @@ import BaseElement from '../../js/base-element.js';
 
 /** The Gallery View. */
 export default class GalleryView extends BaseElement {
-	#elements;
 	constructor() {
 		super();
 		/// VARIABLES
 		// filter
-		/** @type {FilterPopup} */
-		this.filterPopup = new FilterPopup();
 		/** @type {CustomHeader} */
 		this.header = null;
 		document.addEventListener(CUSTOM_EVENT_TYPES.HEADER_CHANGED, (event) => { this.header = event.detail.header });
@@ -46,8 +43,6 @@ export default class GalleryView extends BaseElement {
 		this.isImageAngledLeft = true;
 		this.imageLoadLimit = 10;
 
-		this.#elements = {};
-
 		this.noPicturesText = getBilingualText("No pictures available (yet)", "写真は(まだ)ありません");
 
 		this.changeFilterQueryButton = document.createElement("button");
@@ -59,15 +54,15 @@ export default class GalleryView extends BaseElement {
 		fetchInnerHtml("views/gallery-view/gallery-view.html", this, true)
 			.then(() => {
 				setTimeout(() => {
-					this.#elements = {
+					this._elements = {
 						view: this.queryById("gallery-view"),
 						gallery: this.queryById("gallery"),
 						toTopButton: this.queryById("to-top-btn"),
 						regionDropdown: this.shadowRoot.querySelector("region-dropdown"),
 						regionInfo: this.shadowRoot.querySelector("region-info"),
-						fullscreen: this.shadowRoot.querySelector("fullscreen-component") 
+						fullscreen: this.shadowRoot.querySelector("fullscreen-component"),
+						filterPopup: this.shadowRoot.querySelector("filter-popup")
 					}
-					// TODO: add filter popup to ^
 
 					this.classList.add("opacity-transition");
 
@@ -79,12 +74,12 @@ export default class GalleryView extends BaseElement {
 
 					window.onresize = () => {
 						if (isGalleryView()) {
-							this.#elements.view.style.marginTop = this.header.getHeight();
-							this.#elements.regionInfo.repositionBackground();
+							this._elements.view.style.marginTop = this.header.getHeight();
+							this._elements.regionInfo.repositionBackground();
 						}
 					};
 
-					this.filterPopup.addEventListener(CUSTOM_EVENT_TYPES.FILTER_POPUP_SUBMITTED, event => {
+					this._elements.filterPopup.addEventListener(CUSTOM_EVENT_TYPES.FILTER_POPUP_SUBMITTED, event => {
 						this.filterImages(event.detail.isOnlyFavs,
 							event.detail.keyword,
 							event.detail.selectedRegions,
@@ -93,28 +88,26 @@ export default class GalleryView extends BaseElement {
 							event.detail.selectedCameras);
 
 						scrollToTop(true);
-						this.#elements.gallery.replaceChildren();
+						this._elements.gallery.replaceChildren();
 						if (this.visibleImages.length == 0) {
-							this.#elements.gallery.innerHTML = this.noPicturesText;
-							this.#elements.gallery.appendChild(this.changeFilterQueryButton);
-							addRemoveClass([this.#elements.gallery], "flex-column", true);
+							this._elements.gallery.innerHTML = this.noPicturesText;
+							this._elements.gallery.appendChild(this.changeFilterQueryButton);
+							addRemoveClass([this._elements.gallery], "flex-column", true);
 						} else {
-							addRemoveClass([this.#elements.gallery], "flex-column", false);
+							addRemoveClass([this._elements.gallery], "flex-column", false);
 							this.imageLoadIndex = 0;
 							this.currentPolaroidCount = 0;
 							this.loadImages();
 						}
 					});
 
-					this.shadowRoot.appendChild(this.filterPopup);
-
 					setTimeout(() => {
 						addClickListeners([
-							[this.#elements.toTopButton, scrollToTop],
-							[this.changeFilterQueryButton, this.filterPopup.open.bind(this.filterPopup, null)]
+							[this._elements.toTopButton, scrollToTop],
+							[this.changeFilterQueryButton, this._elements.filterPopup.open.bind(this._elements.filterPopup, null)]
 						]);
 
-						this.#elements.toTopButton.title = getBilingualText("Go to top", "トップに移動する");
+						this._elements.toTopButton.title = getBilingualText("Go to top", "トップに移動する");
 						addRemoveNoDisplay([this], true);
 					}, 50);
 
@@ -124,20 +117,20 @@ export default class GalleryView extends BaseElement {
 
 	/** Open the gallery page */
 	show() {
-		this.#elements.view.style.marginTop = this.header.getHeight();
-		this.#elements.regionDropdown.close();
+		this._elements.view.style.marginTop = this.header.getHeight();
+		this._elements.regionDropdown.close();
 		scrollToTop(false);
 		//addRemoveNoDisplay([this], false);
-		addRemoveTransparent([this.#elements.view], false);
-		this.#elements.regionInfo.show(false);
+		addRemoveTransparent([this._elements.view], false);
+		this._elements.regionInfo.show(false);
 	}
 
 	/** Close the gallery page */
 	hide() {
-		this.#elements.regionDropdown.close();
-		this.#elements.regionInfo.hide(false);
+		this._elements.regionDropdown.close();
+		this._elements.regionInfo.hide(false);
 		scrollToTop(false);
-		addRemoveTransparent([this.#elements.view], true);
+		addRemoveTransparent([this._elements.view], true);
 		setTimeout(() => {
 			addRemoveNoDisplay([this], true);
 		}, DEFAULT_TIMEOUT);
@@ -150,8 +143,8 @@ export default class GalleryView extends BaseElement {
 		this.allImages = [];
 		this.visibleImages = [];
 		this.currentCountry = getCurrentCountry();
-		this.#elements.regionDropdown.handleNewCountry();
-		this.#elements.regionInfo.handleNewCountry();
+		this._elements.regionDropdown.handleNewCountry();
+		this._elements.regionInfo.handleNewCountry();
 	}
 
 	/** Set values based on a new user-selected region.
@@ -163,7 +156,7 @@ export default class GalleryView extends BaseElement {
 		addRemoveNoDisplay([this], false);
 		this.isNewGallery = isNewGallery;
 		setTimeout(() => {
-			this.#elements.regionDropdown.changeSelectedRegion(
+			this._elements.regionDropdown.changeSelectedRegion(
 				!this.isNewCountry ? this.currentRegion?.id : null,
 				isSingleRegionSelected ? regionData[0]?.id : null);
 
@@ -191,7 +184,7 @@ export default class GalleryView extends BaseElement {
 				this.header.setRegionTitle(this.currentCountry.englishName, this.currentCountry.japaneseName);
 			}
 
-			this.#elements.regionInfo.setNewRegionInfo(regionsList, areaList, isSingleRegionSelected, isNewGallery);
+			this._elements.regionInfo.setNewRegionInfo(regionsList, areaList, isSingleRegionSelected, isNewGallery);
 
 			// get all images
 			this.allImages = regionData.flatMap(rgn => {
@@ -220,7 +213,7 @@ export default class GalleryView extends BaseElement {
 			let tempTags = new Set(this.allImages.flatMap(x => { return x.tags }));
 			let tagList = TAGS.filter(x => tempTags.has(x.id));
 			let cameraList = [...new Set(this.allImages.map(x => x.cameraModel))];
-			this.filterPopup.regenerateFilters(
+			this._elements.filterPopup.regenerateFilters(
 				this.currentRegion != null,
 				regionsList,
 				areaList,
@@ -234,7 +227,7 @@ export default class GalleryView extends BaseElement {
 			this.header.flipRegionNameArrow(false);
 
 			// clear existing gallery
-			this.#elements.gallery.replaceChildren();
+			this._elements.gallery.replaceChildren();
 			this.isImageAngledLeft = false;
 			this.imageLoadIndex = 0;
 			this.currentPolaroidCount = 0;
@@ -244,7 +237,7 @@ export default class GalleryView extends BaseElement {
 			if (this.allImages.length > 0) {
 				this.loadImages();
 			} else {
-				this.#elements.gallery.innerHTML = this.noPicturesText;
+				this._elements.gallery.innerHTML = this.noPicturesText;
 			}
 		}, 0);
 	}
@@ -259,12 +252,12 @@ export default class GalleryView extends BaseElement {
 				this.previousRegion = img.region.id;
 				let blankPol = this.createPolaroidBlank(img.region, this.isImageAngledLeft);
 				this.isImageAngledLeft = !this.isImageAngledLeft;
-				this.#elements.gallery.appendChild(blankPol);
+				this._elements.gallery.appendChild(blankPol);
 			} else {
 				// image polaroid
 				let pol = this.createPolaroidImg(img, this.isImageAngledLeft);
 				this.isImageAngledLeft = !this.isImageAngledLeft;
-				this.#elements.gallery.appendChild(pol);
+				this._elements.gallery.appendChild(pol);
 				this.imageLoadIndex++;
 			}
 
@@ -291,7 +284,7 @@ export default class GalleryView extends BaseElement {
 		);
 
 		// listeners
-		newPolaroid.addEventListener("click", () => { this.#elements.fullscreen.open(this.visibleImages, img, this.currentCountry.id); });
+		newPolaroid.addEventListener("click", () => { this._elements.fullscreen.open(this.visibleImages, img, this.currentCountry.id); });
 
 		return newPolaroid;
 	}
@@ -311,7 +304,7 @@ export default class GalleryView extends BaseElement {
 	// image filtering
 	/** Shows the filter popup. */
 	showFilter() {
-		this.filterPopup.open();
+		this._elements.filterPopup.open();
 	}
 
 	/** Check whether the text contains the keyword. */
@@ -390,7 +383,7 @@ export default class GalleryView extends BaseElement {
 	// scrolling behaviours
 	onScrollFunction() {
 		this.toggleFloatingButton();
-		this.#elements.regionInfo.handleScroll();
+		this._elements.regionInfo.handleScroll();
 
 		if (!this.isLoadingImages && this.imageLoadIndex < this.visibleImages.length &&
 			(window.innerHeight + Math.round(window.scrollY)) >= document.body.offsetHeight - 200) {
@@ -400,23 +393,23 @@ export default class GalleryView extends BaseElement {
 
 	toggleFloatingButton() {
 		if (document.body.scrollTop > SCROLL_THRESHOLD && !this.isToTopVisible) {
-			addRemoveNoDisplay([this.#elements.toTopButton], false);
-			addRemoveTransparent([this.#elements.toTopButton], false);
+			addRemoveNoDisplay([this._elements.toTopButton], false);
+			addRemoveTransparent([this._elements.toTopButton], false);
 			this.isToTopVisible = true;
 		} else if (document.body.scrollTop <= SCROLL_THRESHOLD && this.isToTopVisible) {
-			addRemoveTransparent([this.#elements.toTopButton], true);
-			setTimeout(() => { addRemoveNoDisplay([this.#elements.toTopButton], true); }, DEFAULT_TIMEOUT)
+			addRemoveTransparent([this._elements.toTopButton], true);
+			setTimeout(() => { addRemoveNoDisplay([this._elements.toTopButton], true); }, DEFAULT_TIMEOUT)
 			this.isToTopVisible = false;
 		}
 	}
 
 	// other elements
 	toggleRegionDropdown() {
-		this.#elements.regionDropdown.toggleVisibility();
+		this._elements.regionDropdown.toggleVisibility();
 	}
 
 	toggleRegionInfo(isVisible) {
-		this.#elements.regionInfo.toggleVisibility(isVisible);
+		this._elements.regionInfo.toggleVisibility(isVisible);
 	}
 }
 

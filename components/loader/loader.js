@@ -10,13 +10,11 @@ import {
 /** The Loader. */
 export default class Loader extends BaseElement {
     #startTime;
-    #elements;
 
     constructor() {
         super();
         this.functionToRetry = null;
         this.#startTime = null;
-        this.#elements = null;
 
         this.style.zIndex = 100;
     }
@@ -26,13 +24,13 @@ export default class Loader extends BaseElement {
             .then(() => {
                 setTimeout(() => {
                     addRemoveClass([this], "opacity-transition", true);
-                    this.#elements = {
+                    this._elements = {
                         dots: Array.from(this.shadowRoot.querySelectorAll(".loader-dot")),
                         icon: this.queryByClassName("loader-icon"),
                         error: this.queryByClassName("error-btn")
                     }
-                    this.#elements.error.addEventListener("click", this.retry.bind(this));
-                    addRemoveNoDisplay([this.#elements.error], true);
+                    this._elements.error.addEventListener("click", this.retry.bind(this));
+                    addRemoveNoDisplay([this._elements.error], true);
                     this.start();
                 }, 50);
             });
@@ -46,11 +44,11 @@ export default class Loader extends BaseElement {
         this.#startTime = new Date();
 
         if (isCountrySelected()) {
-            addRemoveNoDisplay([this.#elements.icon], false);
-            this.#elements.icon.src = `assets/icons/${getCurrentCountry()?.symbol}.svg`;
+            addRemoveNoDisplay([this._elements.icon], false);
+            this._elements.icon.src = `assets/icons/${getCurrentCountry()?.symbol}.svg`;
         }
 
-        this.#elements.dots.forEach(dot => {
+        this._elements.dots.forEach(dot => {
             dot.style.animationIterationCount = "infinite";
         });
     }
@@ -77,9 +75,9 @@ export default class Loader extends BaseElement {
             }
         }
 
-        this.#elements.dots[LOAD_DOT_COUNT].addEventListener("animationend", handleAnimationEnd.bind(this));
+        this._elements.dots[LOAD_DOT_COUNT].addEventListener("animationend", handleAnimationEnd.bind(this));
         let iterationCount = Math.ceil((new Date() - this.#startTime) / LOAD_ANIMATION_TIME);
-        this.#elements.dots.forEach(dot => {
+        this._elements.dots.forEach(dot => {
             dot.style.animationIterationCount = iterationCount
         });
     }
@@ -89,8 +87,8 @@ export default class Loader extends BaseElement {
      */
     showDataLoadError(func) {
         this.functionToRetry = func;
-        addRemoveNoDisplay([this.#elements.error], false);
-        addRemoveTransparent([this.#elements.error], false);
+        addRemoveNoDisplay([this._elements.error], false);
+        addRemoveTransparent([this._elements.error], false);
         this.#setLoaderState("paused");
     }
 
@@ -98,9 +96,9 @@ export default class Loader extends BaseElement {
      * Retries the loading function.
     */
     retry() {
-        addRemoveTransparent([this.#elements.error], true);
+        addRemoveTransparent([this._elements.error], true);
         setTimeout(() => {
-            addRemoveNoDisplay([this.#elements.error], true);
+            addRemoveNoDisplay([this._elements.error], true);
         }, DEFAULT_TIMEOUT);
         this.#setLoaderState("running");
         if (this.functionToRetry) {
@@ -113,7 +111,7 @@ export default class Loader extends BaseElement {
      * @param {string} state 
      */
     #setLoaderState(state) {
-        this.#elements.dots.forEach(dot => {
+        this._elements.dots.forEach(dot => {
             dot.style.animationPlayState = state;
         });
     }
