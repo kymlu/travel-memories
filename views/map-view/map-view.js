@@ -129,15 +129,19 @@ export default class MapView extends BaseElement {
 					rgnImg.setAttribute("cursor", "pointer");
 					rgnImg.setAttribute("transition", "opacity 0.3 ease-in-out");
 
-					rgnImg.addEventListener("mouseover", () => {
-						rgnImg.setAttribute("opacity", "50%");
+					["touchstart", "mouseover"].forEach(eventName => {
+						rgnImg.addEventListener(eventName, () => {
+							rgnImg.setAttribute("opacity", "50%");
+						});
+					});
+
+					["touchend", "mouseout"].forEach(eventName => {
+						rgnImg.addEventListener(eventName, () => {
+							rgnImg.setAttribute("opacity", "100%");
+						});
 					});
 
 					rgnImg.addEventListener("mouseup", this.selectRegion.bind(this, rgn));
-
-					rgnImg.addEventListener("mouseout", () => {
-						rgnImg.setAttribute("opacity", "100%");
-					});
 
 				} else {
 					rgnImg.setAttribute("fill", "lightgrey");
