@@ -12,6 +12,7 @@
     .map-view {
         padding: 10vh 0vh;
         justify-content: start;
+        height: auto;
     }
 }
 
@@ -32,6 +33,8 @@
 @media only screen and (orientation: portrait) {
     #map-control {
         width: 80vw;
+        max-height: 60vh;
+        height: 60vh;
     }
 }
 
