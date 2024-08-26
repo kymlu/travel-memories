@@ -19,7 +19,7 @@ export default class RegionInfo extends BaseDrawer {
         this.isNewGallery = true;
 
         this.currentCountry = null;
-		document.addEventListener(CUSTOM_EVENT_TYPES.NEW_COUNTRY_SELECTED, this.handleNewCountry.bind(this));
+        document.addEventListener(CUSTOM_EVENT_TYPES.NEW_COUNTRY_SELECTED, this.handleNewCountry.bind(this));
     }
 
     connectedCallback() {
@@ -69,22 +69,39 @@ export default class RegionInfo extends BaseDrawer {
     }
 
     /** Makes value changes based on new country.
-     * @param {string} countryId 
+     * @param {string} countryId
      */
     handleNewCountry() {
         addRemoveNoDisplay([this], false);
         this.currentCountry = getCurrentCountry();
-        this._elements.map.data = `assets/img/country/${this.currentCountry.id}.svg`;
+        addRemoveTransparent([this._elements.map], true);
+        setTimeout(() => {
+            this.createMap();
+        }, 50);
+    }
+
+    /** Sets the appropriate map. 
+     * Simply setting the data attribute does not work.
+     * @link https://stackoverflow.com/questions/55175178/how-to-update-the-source-of-an-embedded-svg-element
+    */
+    createMap() {
+        let newMap = document.createElement("object");
+        newMap.setAttribute("class", "mini-map opacity-transition");
+        newMap.setAttribute("type", "image/svg+xml");
+        newMap.setAttribute("data", `assets/img/country/${this.currentCountry.id}.svg`);
+        this._elements.map.parentElement.replaceChild(newMap, this._elements.map);
+        this._elements.map = newMap;
     }
 
     /** Sets the info for a new region.
-     * @param {any[]} regionList 
-     * @param {any[]} areaList 
-     * @param {boolean} isSingleRegionSelected 
+     * @param {any[]} regionList
+     * @param {any[]} areaList
+     * @param {boolean} isSingleRegionSelected
      */
     setNewRegionInfo(regionList, areaList, isSingleRegionSelected, isNewGallery) {
-        if (isNewGallery) {
-            this.isNewGallery = true;
+        this.isNewGallery = isNewGallery;
+
+        if (this.isNewGallery) {
             addRemoveTransparent([this._elements.regionInfo], true);
         } else {
             addRemoveTransparent([this._elements.background], false);
@@ -139,7 +156,7 @@ export default class RegionInfo extends BaseDrawer {
     }
 
     /** Shows the region info section.
-     * @param {true} isForced 
+     * @param {true} isForced
      */
     show(isForced) {
         if (this.isNewGallery) {
@@ -168,7 +185,7 @@ export default class RegionInfo extends BaseDrawer {
     }
 
     /** Hides the region info section.
-     * @param {boolean} isForced 
+     * @param {boolean} isForced
      */
     hide(isForced) {
         this.isVisible = false;
@@ -230,47 +247,48 @@ export default class RegionInfo extends BaseDrawer {
 
     /** Filter the mini map. */
     filterMiniMap(currentRegion) {
-        if (!this._elements.map.hasAttribute("data") || this._elements.map.data == "") {
-            setTimeout(() => {
-                this.filterMiniMap(currentRegion);
-                return;
-            }, 0);
-        };
         setTimeout(() => {
+            if (!this._elements.map.hasAttribute("data") || this._elements.map.data == "") {
+                setTimeout(() => {
+                    this.filterMiniMap(currentRegion);
+                    return;
+                }, 0);
+            };
             const svgDoc = this._elements.map.contentDocument;
             const appColour = getAppColor();
             const regionList = this.currentCountry.regionGroups.flatMap(grp => grp.regions);
             try {
-                    regionList.forEach(rgn => {
-                        const rgnImg = svgDoc.getElementById(`${rgn.id}-img`);
-                        if (rgnImg) {
-                            if (currentRegion == null) {
-                                if (rgn.visited) {
-                                    rgnImg.setAttribute("fill", appColour);
-                                } else {
-                                    rgnImg.setAttribute("fill", "lightgrey");
-                                }
-                            } else if (rgn.id != currentRegion.id) {
-                                rgnImg.setAttribute("fill", "none");
-                            } else {
+                regionList.forEach(rgn => {
+                    const rgnImg = svgDoc.getElementById(`${rgn.id}-img`);
+                    if (rgnImg) {
+                        if (currentRegion == null) {
+                            if (rgn.visited) {
                                 rgnImg.setAttribute("fill", appColour);
+                            } else {
+                                rgnImg.setAttribute("fill", "lightgrey");
                             }
-                            rgnImg.setAttribute("stroke", "none");
+                        } else if (rgn.id == currentRegion.id) {
+                            rgnImg.setAttribute("fill", appColour);
+                        } else {
+                            rgnImg.setAttribute("fill", "none");
                         }
-                    });
-    
-                    // zoom into the specific region
-                    const countryImg = svgDoc.getElementById(this.currentCountry.id + "-img");
-                    if (currentRegion) {
-                        countryImg?.setAttribute("viewBox", currentRegion.viewbox);
-                    } else {
-                        countryImg?.setAttribute("viewBox", `0 0 ${countryImg.width.baseVal.valueInSpecifiedUnits} ${countryImg.height.baseVal.valueInSpecifiedUnits}`);
+                        rgnImg.setAttribute("stroke", "none");
                     }
+                });
+
+                // zoom into the specific region
+                const countryImg = svgDoc.getElementById(this.currentCountry.id + "-img");
+                if (currentRegion) {
+                    countryImg?.setAttribute("viewBox", currentRegion.viewbox);
+                } else {
+                    countryImg?.setAttribute("viewBox", `0 0 ${countryImg.width.baseVal.valueInSpecifiedUnits} ${countryImg.height.baseVal.valueInSpecifiedUnits}`);
+                }
+                addRemoveTransparent([this._elements.map], false);
             } catch (error) {
                 console.error(error);
                 this.filterMiniMap(currentRegion);
             }
-        }, 100);
+        }, 50);
     }
 }
 

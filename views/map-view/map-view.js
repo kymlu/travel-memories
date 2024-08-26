@@ -74,7 +74,12 @@ export default class MapView extends BaseElement {
 	show() {
 		addRemoveNoDisplay([this], false);
 		this.scaleMap(1);
-		this.selectedRegion = null;
+
+		if(this.selectedRegion != null){
+			this.colourMap();
+			this.selectedRegion = null;
+		}
+
 		this._elements.mainTitleText.innerHTML = this.defaultMainTitleText;
 		this._elements.mainTitle.title = this.defaultMainTitleTitle;
 		scrollToTop(false);

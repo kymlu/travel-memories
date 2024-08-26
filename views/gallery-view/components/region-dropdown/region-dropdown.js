@@ -1,4 +1,3 @@
-import CustomHeader from "../../../../components/header/header.js";
 import BaseElement from "../../../../js/base-element.js";
 import { CUSTOM_EVENT_TYPES } from "../../../../js/constants.js";
 import { getCurrentCountry, getHeader, onSelectNewRegion } from "../../../../js/globals.js";
@@ -81,9 +80,10 @@ export default class RegionDropdown extends BaseElement {
 			this.queryById(this.#getDropdownElementId(oldRegionId))?.classList.remove("active");
 		}
 
-		if (newRegionId) {
+		this.currentRegionId = newRegionId;
+
+		if (this.currentRegionId) {
 			this.hasOpenedForRegion = false;
-			this.currentRegionId = newRegionId;
 			this.queryById(this.#getDropdownElementId(newRegionId))?.classList.add("active");
 		}
 
@@ -97,7 +97,7 @@ export default class RegionDropdown extends BaseElement {
 		if (!this.hasOpenedForRegion) {
 			this.hasOpenedForRegion = true;
 			if (this.currentRegionId) {
-				this.queryById(this.#getDropdownElementId(this.currentRegionId)).scrollIntoView({ behavior: "smooth", block: "center" });
+				this.queryById(this.#getDropdownElementId(this.currentRegionId))?.scrollIntoView({ behavior: "smooth", block: "center" });
 			} else {
 				this._elements.content.scrollTo({ top: 0, behavior: "instant" });
 			}
