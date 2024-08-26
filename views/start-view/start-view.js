@@ -22,7 +22,7 @@ export default class StartView extends BaseElement {
     /** Initializes the start view contents. */
     initialize() {
         const btn = document.createElement("button");
-        btn.classList.add("start-btn", "highlight-btn", "text-btn");
+        btn.classList.add("start-btn", "text-btn");
         const text = document.createElement("div");
         text.classList.add("country-text");
         const iconSection = document.createElement("div");
@@ -69,12 +69,19 @@ export default class StartView extends BaseElement {
             newBtn.appendChild(newIconSection);
             newBtn.appendChild(jpTxt);
 
-            // TODO: check if this is ok
             ["mouseover", "touchstart"].forEach(eventName => {
-                newBtn.addEventListener(eventName, this.highlightCountry.bind(this, abb, true));
+                newBtn.addEventListener(eventName, () => {
+                    addRemoveClass([newBtn], "animated", true);
+                    addRemoveTransparent([imgColor], true);
+                    addRemoveClass([newIconSection], "animated", true);
+                });
             });
             ["mouseout", "touchend"].forEach(eventName => {
-                newBtn.addEventListener(eventName, this.highlightCountry.bind(this, abb, false));
+                newBtn.addEventListener(eventName, () =>{
+                    addRemoveClass([newBtn], "animated", false);
+                    addRemoveTransparent([imgColor], false);
+                    addRemoveClass([newIconSection], "animated", false);
+                } );
             });
 
             startViewWrapper.appendChild(newBtn)
@@ -112,11 +119,6 @@ export default class StartView extends BaseElement {
     selectCountry(countryId, countryColor) {
         setCurrentCountry(countryId, countryColor, false);
         this.hide();
-    }
-
-    highlightCountry(abbreviation, isHover) {
-        addRemoveTransparent([this.queryById(`${abbreviation}-start-icon-c`)], isHover);
-        addRemoveClass([this.queryById(`${abbreviation}-start-icon`)], "animated", isHover);
     }
 }
 

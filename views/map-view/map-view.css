@@ -99,7 +99,7 @@
     }
 }
 
-#main-title:hover {
+#main-title.animated {
     color: white !important;
     box-shadow: inset 100vw 0 0 0 rgba(var(--main-color));
 }

@@ -26,6 +26,12 @@
     gap: 10px;
     margin: auto 30px;
     cursor: pointer;
+    text-align: start;
+    transition: color .3s ease-in-out, box-shadow .5s ease-in-out;
+}
+
+.start-btn.animated {
+    color: white;
 }
 
 @media only screen and (orientation: portrait) {
@@ -39,7 +45,7 @@
     box-shadow: inset 0 0 0 0 rgba(var(--jp-color));
 }
 
-.start-btn.jp:hover {
+.start-btn.jp.animated {
     box-shadow: inset 100vw 0 0 0 rgba(var(--jp-color));
 }
 
@@ -47,7 +53,7 @@
     box-shadow: inset 0 0 0 0 rgba(var(--tw-color));
 }
 
-.start-btn.tw:hover {
+.start-btn.tw.animated {
     box-shadow: inset 100vw 0 0 0 rgba(var(--tw-color));
 }
 
@@ -55,7 +61,7 @@
     box-shadow: inset 0 0 0 0 rgba(var(--au-color));
 }
 
-.start-btn.au:hover {
+.start-btn.au.animated {
     box-shadow: inset 100vw 0 0 0 rgba(var(--au-color));
 }
 
@@ -63,7 +69,7 @@
     box-shadow: inset 0 0 0 0 rgba(var(--nz-color));
 }
 
-.start-btn.nz:hover {
+.start-btn.nz.animated {
     box-shadow: inset 100vw 0 0 0 rgba(var(--nz-color));
 }
 

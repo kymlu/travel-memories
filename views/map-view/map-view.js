@@ -47,11 +47,13 @@ export default class MapView extends BaseElement {
 						]);
 						["mouseover", "touchstart"].forEach(eventName => {
 							this._elements.mainTitle.addEventListener(eventName, () => {
+								addRemoveClass([this._elements.mainTitle], "animated", true);
 								this._elements.mainTitle.querySelector("i").classList.add("white");
 							});
 						});
 						["mouseout", "touchend"].forEach(eventName => {
 							this._elements.mainTitle.addEventListener(eventName, () => {
+								addRemoveClass([this._elements.mainTitle], "animated", false);
 								this._elements.mainTitle.querySelector("i").classList.remove("white");
 							});
 						});
