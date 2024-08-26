@@ -23,6 +23,23 @@ export async function fetchInnerHtml(address, element, hasShadowRoot) {
 }
 
 /**
+ * Fetches the html from a given address and inserts it into the element.
+ * @param {string} address 
+ * @param {CSSStyleSheet} styleSheet 
+ */
+export async function fetchStyle(address, styleSheet) {
+	await fetch(address)
+		.then(response => response.text())
+		.then(css => {
+			styleSheet.replace(css);
+		})
+		.catch(error => {
+			console.error(`Error loading ${address}.`, error);
+		});
+}
+
+
+/**
  * Gets the date to the appropriate timezone
  * @param {Date} date - the date in UTC
  * @param {number} timezoneOffset - the offset of the image date in hours

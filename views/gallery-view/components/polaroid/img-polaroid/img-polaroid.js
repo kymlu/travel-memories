@@ -2,11 +2,13 @@
 import BasePolaroid from "../base-polaroid/base-polaroid.js"
 import { DEFAULT_TIMEOUT, SHORT_DATETIME_FORMAT_EN, SHORT_DATETIME_FORMAT_JP } from '../../../../../js/constants.js'
 import {
-    addRemoveNoDisplay, addRemoveTransparent, fetchInnerHtml, getBilingualText, getPictureDate
+    addRemoveNoDisplay, addRemoveTransparent, fetchInnerHtml, fetchStyle, getBilingualText, getPictureDate
 } from '../../../../../js/utils.js';
 
 let imgPolaroidTemplate = document.createElement("template");
 fetchInnerHtml("views/gallery-view/components/polaroid/img-polaroid/img-polaroid.html", imgPolaroidTemplate, false);
+let imgPolaroidStyle = new CSSStyleSheet();
+fetchStyle("views/gallery-view/components/polaroid/img-polaroid/img-polaroid.css", imgPolaroidStyle);
 
 /**
  * The Image Polaroid object.
@@ -25,6 +27,9 @@ export default class ImagePolaroid extends BasePolaroid {
     constructor(isAngledLeft, src, isFavourite, date, offset, enCaption, jpCaption) {
         super(isAngledLeft, false);
 
+        this.shadowRoot.adoptedStyleSheets.push(imgPolaroidStyle);
+        this.shadowRoot.appendChild(imgPolaroidTemplate.content.cloneNode(true));
+
         /** The image source. @type string */
         this.src = src;
         /** ```True``` if the image is one of my favourites. @type boolean */
@@ -36,7 +41,6 @@ export default class ImagePolaroid extends BasePolaroid {
         /** The Japanese image caption. @type string */
         this.jpCaption = jpCaption;
         this.title = getBilingualText("Expand image", "画像を拡大する");
-        this.shadowRoot.appendChild(imgPolaroidTemplate.content.cloneNode(true));
     }
 
     connectedCallback() {

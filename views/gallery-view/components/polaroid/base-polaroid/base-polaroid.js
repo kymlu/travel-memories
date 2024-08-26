@@ -1,5 +1,8 @@
 import BaseElement from "../../../../../js/base-element.js";
-import { addRemoveTransparent } from "../../../../../js/utils.js";
+import { addRemoveTransparent, fetchStyle } from "../../../../../js/utils.js";
+
+let basePolaroidStyle = new CSSStyleSheet();
+fetchStyle("views/gallery-view/components/polaroid/base-polaroid/base-polaroid.css", basePolaroidStyle);
 
 /**
  * The Base Polaroid object.
@@ -11,6 +14,9 @@ export default class BasePolaroid extends BaseElement {
      */
     constructor(isAngledLeft, isBlank) {
         super();
+        
+        this.shadowRoot.adoptedStyleSheets.push(basePolaroidStyle);
+
         /**
          * ```True``` if the polaroid should face left, otherwise faces right.
          *  @type Boolean
