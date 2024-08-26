@@ -70,7 +70,8 @@ export const CUSTOM_EVENT_TYPES = {
 	FILTER_POPUP_SUBMITTED: "filter-popup-submitted",
 	LOADING_STARTED: "loading-started",
 	LOADING_COMPLETE: "loading-complete",
-	HEADER_CHANGED: "header-changed"
+	HEADER_SET: "header-set",
+	HEADER_UPDATED: "header-updated"
 }
 
 const LONG_DATETIME_FORMAT_OPTIONS = {

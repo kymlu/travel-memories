@@ -45,11 +45,15 @@ export default class MapView extends BaseElement {
 							[this._elements.zoomIn, this.scaleMap.bind(this, undefined, true)],
 							[this._elements.zoomOut, this.scaleMap.bind(this, undefined, false)]
 						]);
-						this._elements.mainTitle.addEventListener("mouseover", () => {
-							this._elements.mainTitle.querySelector("i").classList.add("white");
+						["mouseover", "touchstart"].forEach(eventName => {
+							this._elements.mainTitle.addEventListener(eventName, () => {
+								this._elements.mainTitle.querySelector("i").classList.add("white");
+							});
 						});
-						this._elements.mainTitle.addEventListener("mouseout", () => {
-							this._elements.mainTitle.querySelector("i").classList.remove("white");
+						["mouseout", "touchend"].forEach(eventName => {
+							this._elements.mainTitle.addEventListener(eventName, () => {
+								this._elements.mainTitle.querySelector("i").classList.remove("white");
+							});
 						});
 					}, 50);
 
@@ -75,7 +79,7 @@ export default class MapView extends BaseElement {
 		addRemoveNoDisplay([this], false);
 		this.scaleMap(1);
 
-		if(this.selectedRegion != null){
+		if (this.selectedRegion != null) {
 			this.colourMap();
 			this.selectedRegion = null;
 		}

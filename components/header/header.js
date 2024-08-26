@@ -1,5 +1,5 @@
 import BaseElement from "../../js/base-element.js";
-import { ATTRIBUTES } from "../../js/constants.js";
+import { ATTRIBUTES, CUSTOM_EVENT_TYPES } from "../../js/constants.js";
 import { isGalleryView, isMapView, isStartView } from "../../js/globals.js";
 import {
     addClickListeners,
@@ -126,6 +126,8 @@ export default class CustomHeader extends BaseElement {
         } else {
             console.error("View does not exist.");
         }
+        const headerUpdatedEvent = new CustomEvent(CUSTOM_EVENT_TYPES.HEADER_UPDATED);
+        document.dispatchEvent(headerUpdatedEvent);
     }
 }
 

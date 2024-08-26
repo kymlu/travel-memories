@@ -24,7 +24,7 @@ export default class GalleryView extends BaseElement {
 		// filter
 		/** @type {CustomHeader} */
 		this.header = null;
-		document.addEventListener(CUSTOM_EVENT_TYPES.HEADER_CHANGED, (event) => { this.header = event.detail.header });
+		document.addEventListener(CUSTOM_EVENT_TYPES.HEADER_SET, (event) => { this.header = event.detail.header });
 
 		// region info
 		this.currentRegion = null;

@@ -23,6 +23,9 @@ export default class RegionDropdown extends BaseElement {
 					content: this.queryById("rgn-drop-down"),
 				}
 				setTimeout(() => {
+					document.addEventListener(CUSTOM_EVENT_TYPES.HEADER_UPDATED, () => {
+						this._elements.content.style.top = `${getHeader()?.getHeight()}px`;
+					});
 					addClickListeners([
 						[this._elements.background, this.close.bind(this, null)]
 					]);
@@ -75,7 +78,7 @@ export default class RegionDropdown extends BaseElement {
 	 * @param {string} oldRegionId 
 	 * @param {string} newRegionId 
 	*/
-	changeSelectedRegion(oldRegionId, newRegionId) {
+	changeSelectedRegion(oldRegionId, newRegionId) {		
 		if (oldRegionId) {
 			this.queryById(this.#getDropdownElementId(oldRegionId))?.classList.remove("active");
 		}

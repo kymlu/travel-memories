@@ -32,7 +32,7 @@ export function setSiteContents() {
     let infoPopup = document.querySelector("info-popup");
 
     header = document.querySelector("custom-header");
-    const headerSetEvent = new CustomEvent(CUSTOM_EVENT_TYPES.HEADER_CHANGED, { detail: { header: header } });
+    const headerSetEvent = new CustomEvent(CUSTOM_EVENT_TYPES.HEADER_SET, { detail: { header: header } });
     document.dispatchEvent(headerSetEvent);
 
     startView = document.querySelector("start-view");

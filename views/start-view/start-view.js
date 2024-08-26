@@ -70,10 +70,12 @@ export default class StartView extends BaseElement {
             newBtn.appendChild(jpTxt);
 
             // TODO: check if this is ok
-            newBtn.addEventListener("mouseover", this.highlightCountry.bind(this, abb, true));
-            newBtn.addEventListener("touchstart", this.highlightCountry.bind(this, abb, true));
-            newBtn.addEventListener("mouseout", this.highlightCountry.bind(this, abb, false));
-            newBtn.addEventListener("touchend", this.highlightCountry.bind(this, abb, false));
+            ["mouseover", "touchstart"].forEach(eventName => {
+                newBtn.addEventListener(eventName, this.highlightCountry.bind(this, abb, true));
+            });
+            ["mouseout", "touchend"].forEach(eventName => {
+                newBtn.addEventListener(eventName, this.highlightCountry.bind(this, abb, false));
+            });
 
             startViewWrapper.appendChild(newBtn)
         });
