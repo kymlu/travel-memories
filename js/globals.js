@@ -178,8 +178,8 @@ export function setCurrentCountry(countryId, countryColor, isPopped) {
         const loader = new Loader();
         document.body.append(loader);
 
-        mapView.handleNewCountry();
-        galleryView.handleNewCountry();
+        const newCountryEvent = new CustomEvent(CUSTOM_EVENT_TYPES.NEW_COUNTRY_SELECTED);
+        document.dispatchEvent(newCountryEvent);
 
         setTimeout(() => {
             loader.stop(mapView.show.bind(mapView));

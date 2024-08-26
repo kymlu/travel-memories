@@ -10,12 +10,10 @@ import {
 export default class RegionDropdown extends BaseElement {
 	constructor() {
 		super();
-		/** @type {CustomHeader} */
-		this.header = getHeader();
-		document.addEventListener(CUSTOM_EVENT_TYPES.HEADER_CHANGED, (event) => { this.header = event.detail.header });
-
 		this.hasOpenedForRegion = false;
 		this.currentRegionId = null;
+
+		document.addEventListener(CUSTOM_EVENT_TYPES.NEW_COUNTRY_SELECTED, this.handleNewCountry.bind(this));
 	}
 
 	connectedCallback() {
@@ -95,7 +93,7 @@ export default class RegionDropdown extends BaseElement {
 	/** Toggles the visibility of the dropdown. */
 	toggleVisibility() {
 		this.classList.toggle("no-display");
-		this.header.flipRegionNameArrow();
+		getHeader()?.flipRegionNameArrow();
 		if (!this.hasOpenedForRegion) {
 			this.hasOpenedForRegion = true;
 			if (this.currentRegionId) {
@@ -108,7 +106,7 @@ export default class RegionDropdown extends BaseElement {
 
 	close() {
 		addRemoveNoDisplay([this], true);
-		this.header.flipRegionNameArrow(false);
+		getHeader()?.flipRegionNameArrow(false);
 	}
 
 	#getDropdownElementId(name) {

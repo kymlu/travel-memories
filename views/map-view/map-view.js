@@ -1,5 +1,5 @@
 import BaseElement from "../../js/base-element.js";
-import { ATTRIBUTES, DEFAULT_TIMEOUT } from "../../js/constants.js";
+import { ATTRIBUTES, CUSTOM_EVENT_TYPES, DEFAULT_TIMEOUT } from "../../js/constants.js";
 import {
 	getAppColor, getCurrentCountry, getTranslucentAppColor, onSelectNewRegion
 } from "../../js/globals.js";
@@ -20,6 +20,7 @@ export default class MapView extends BaseElement {
 		this.outlineThickness = 0;
 		this.scaleLevel = 1;
 		this.isScaling = false;
+		document.addEventListener(CUSTOM_EVENT_TYPES.NEW_COUNTRY_SELECTED, this.handleNewCountry.bind(this));
 	}
 
 	connectedCallback() {

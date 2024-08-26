@@ -48,6 +48,8 @@ export default class GalleryView extends BaseElement {
 		this.changeFilterQueryButton = document.createElement("button");
 		this.changeFilterQueryButton.classList.add("action-btn");
 		this.changeFilterQueryButton.innerHTML = getBilingualText("Change filters", "フィルターを変更する");
+		
+		document.addEventListener(CUSTOM_EVENT_TYPES.NEW_COUNTRY_SELECTED, this.handleNewCountry.bind(this));
 	}
 
 	connectedCallback() {
@@ -143,8 +145,6 @@ export default class GalleryView extends BaseElement {
 		this.allImages = [];
 		this.visibleImages = [];
 		this.currentCountry = getCurrentCountry();
-		this._elements.regionDropdown.handleNewCountry();
-		this._elements.regionInfo.handleNewCountry();
 	}
 
 	/** Set values based on a new user-selected region.

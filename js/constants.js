@@ -66,6 +66,7 @@ export const TAGS = [
 ];
 
 export const CUSTOM_EVENT_TYPES = {
+	NEW_COUNTRY_SELECTED: "new-country-selected",
 	FILTER_POPUP_SUBMITTED: "filter-popup-submitted",
 	LOADING_STARTED: "loading-started",
 	LOADING_COMPLETE: "loading-complete",

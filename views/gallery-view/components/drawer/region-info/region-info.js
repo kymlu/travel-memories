@@ -1,4 +1,3 @@
-import CustomHeader from "../../../../../components/header/header.js";
 import { ATTRIBUTES, CUSTOM_EVENT_TYPES, DEFAULT_TIMEOUT } from "../../../../../js/constants.js";
 import { getAppColor, getCurrentCountry, getHeader } from "../../../../../js/globals.js";
 import {
@@ -20,9 +19,7 @@ export default class RegionInfo extends BaseDrawer {
         this.isNewGallery = true;
 
         this.currentCountry = null;
-        /** @type {CustomHeader} */
-        this.header = getHeader();
-        document.addEventListener(CUSTOM_EVENT_TYPES.HEADER_CHANGED, (event) => { this.header = event.detail.header });
+		document.addEventListener(CUSTOM_EVENT_TYPES.NEW_COUNTRY_SELECTED, this.handleNewCountry.bind(this));
     }
 
     connectedCallback() {
@@ -68,7 +65,7 @@ export default class RegionInfo extends BaseDrawer {
     }
 
     repositionBackground() {
-        this._elements.background.style.top = this.header.getHeight();
+        this._elements.background.style.top = `${getHeader()?.getHeight()}px`;
     }
 
     /** Makes value changes based on new country.
@@ -161,7 +158,7 @@ export default class RegionInfo extends BaseDrawer {
                 scrollToTop(true);
             } else {
                 this._elements.regionInfo.style.position = "sticky";
-                this._elements.regionInfo.style.top = this.header.getHeight();
+                this._elements.regionInfo.style.top = `${getHeader()?.getHeight()}px`;
             }
         }
         if (this.isNewGallery) {
@@ -244,31 +241,31 @@ export default class RegionInfo extends BaseDrawer {
             const appColour = getAppColor();
             const regionList = this.currentCountry.regionGroups.flatMap(grp => grp.regions);
             try {
-                regionList.forEach(rgn => {
-                    const rgnImg = svgDoc.getElementById(`${rgn.id}-img`);
-                    if (rgnImg) {
-                        if (currentRegion == null) {
-                            if (rgn.visited) {
-                                rgnImg.setAttribute("fill", appColour);
+                    regionList.forEach(rgn => {
+                        const rgnImg = svgDoc.getElementById(`${rgn.id}-img`);
+                        if (rgnImg) {
+                            if (currentRegion == null) {
+                                if (rgn.visited) {
+                                    rgnImg.setAttribute("fill", appColour);
+                                } else {
+                                    rgnImg.setAttribute("fill", "lightgrey");
+                                }
+                            } else if (rgn.id != currentRegion.id) {
+                                rgnImg.setAttribute("fill", "none");
                             } else {
-                                rgnImg.setAttribute("fill", "lightgrey");
+                                rgnImg.setAttribute("fill", appColour);
                             }
-                        } else if (rgn.id != currentRegion.id) {
-                            rgnImg.setAttribute("fill", "none");
-                        } else {
-                            rgnImg.setAttribute("fill", appColour);
+                            rgnImg.setAttribute("stroke", "none");
                         }
-                        rgnImg.setAttribute("stroke", "none");
+                    });
+    
+                    // zoom into the specific region
+                    const countryImg = svgDoc.getElementById(this.currentCountry.id + "-img");
+                    if (currentRegion) {
+                        countryImg?.setAttribute("viewBox", currentRegion.viewbox);
+                    } else {
+                        countryImg?.setAttribute("viewBox", `0 0 ${countryImg.width.baseVal.valueInSpecifiedUnits} ${countryImg.height.baseVal.valueInSpecifiedUnits}`);
                     }
-                });
-
-                // zoom into the specific region
-                const countryImg = svgDoc.getElementById(this.currentCountry.id + "-img");
-                if (currentRegion) {
-                    countryImg?.setAttribute("viewBox", currentRegion.viewbox);
-                } else {
-                    countryImg?.setAttribute("viewBox", `0 0 ${countryImg.width.baseVal.valueInSpecifiedUnits} ${countryImg.height.baseVal.valueInSpecifiedUnits}`);
-                }
             } catch (error) {
                 console.error(error);
                 this.filterMiniMap(currentRegion);
