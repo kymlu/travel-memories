@@ -32,6 +32,7 @@ export default class Loader extends BaseElement {
                     this._elements.error.addEventListener("click", this.retry.bind(this));
                     addRemoveNoDisplay([this._elements.error], true);
                     this.start();
+                    this.#dispatchLoadingStartedEvent();
                 }, 50);
             });
     }
@@ -58,7 +59,7 @@ export default class Loader extends BaseElement {
      */
     quickStop() {
         addRemoveTransparent([this], true);
-        setTimeout(this.#dispatchLoadingEvent.bind(this), DEFAULT_TIMEOUT);
+        setTimeout(this.#dispatchLoadingCompleteEvent.bind(this), DEFAULT_TIMEOUT);
     }
 
     /**
@@ -66,7 +67,7 @@ export default class Loader extends BaseElement {
      * @param {Function} animationEndFunction 
      */
     stop(animationEndFunction) {
-        let dispatchFunction = this.#dispatchLoadingEvent.bind(this);
+        let dispatchFunction = this.#dispatchLoadingCompleteEvent.bind(this);
         let handleAnimationEnd = function () {
             addRemoveTransparent([this], true);
             dispatchFunction();
@@ -116,8 +117,14 @@ export default class Loader extends BaseElement {
         });
     }
 
+    /** Dispatches the loading started event. */
+    #dispatchLoadingStartedEvent(){
+        const loadingStartedEvent = new CustomEvent(CUSTOM_EVENT_TYPES.LOADING_STARTED);
+        this.dispatchEvent(loadingStartedEvent);
+    }
+    
     /** Dispatches the loading complete event. */
-    #dispatchLoadingEvent() {
+    #dispatchLoadingCompleteEvent() {
         const loadingCompleteEvent = new CustomEvent(CUSTOM_EVENT_TYPES.LOADING_COMPLETE);
         this.dispatchEvent(loadingCompleteEvent);
     }

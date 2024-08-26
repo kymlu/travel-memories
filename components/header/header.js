@@ -15,12 +15,6 @@ import {
 export default class CustomHeader extends BaseElement {
     constructor() {
         super();
-        this.globeFunc = null;
-        this.mapFunc = null;
-        this.regionDropdownFunc = null;
-        this.infoFunc = null;
-        this.filterFunc = null;
-        this.creatorFunc = null;
         this.buttons = {};
         this.sections = {};
     }
@@ -55,15 +49,6 @@ export default class CustomHeader extends BaseElement {
                         [this.buttons.creator, "About the site", "このサイトについて"],
                         [this.buttons.filter, "Filter Pictures", "写真をフィルターする"]
                     ], ATTRIBUTES.TITLE);
-
-                    addClickListeners([
-                        [this.buttons.globe, this.globeFunc],
-                        [this.buttons.map, this.mapFunc],
-                        [this.buttons.regionDropdown, this.regionDropdownFunc],
-                        [this.buttons.regionInfo, this.infoFunc],
-                        [this.buttons.filter, this.filterFunc],
-                        [this.buttons.creator, this.creatorFunc]
-                    ]);
                 }, 50);
             });
     }
@@ -73,12 +58,14 @@ export default class CustomHeader extends BaseElement {
     }
 
     setButtonFunctions(globeFunc, mapFunc, regionDropdownFunc, infoFunc, filterFunc, creatorFunc) {
-        this.globeFunc = globeFunc;
-        this.mapFunc = mapFunc;
-        this.regionDropdownFunc = regionDropdownFunc;
-        this.infoFunc = infoFunc;
-        this.filterFunc = filterFunc;
-        this.creatorFunc = creatorFunc;
+        addClickListeners([
+            [this.buttons.globe, globeFunc],
+            [this.buttons.map, mapFunc],
+            [this.buttons.regionDropdown, regionDropdownFunc],
+            [this.buttons.regionInfo, infoFunc],
+            [this.buttons.filter, filterFunc],
+            [this.buttons.creator, creatorFunc]
+        ]);
     }
 
     /** Shows/hides the header.

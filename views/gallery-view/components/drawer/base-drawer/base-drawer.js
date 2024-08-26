@@ -11,9 +11,8 @@ export default class BaseDrawer extends BaseElement {
     }
 
     connectedCallback() {
-        // TODO: test (not sure if touchend is ok)
-        this.queryByClassName("drawer-handle-container")?.addEventListener("touchstart", this.onStartHandleDrag, false);
-        this.queryByClassName("drawer-handle-container")?.addEventListener("touchend", this.onEndHandleDrag, false);
+        this.queryByClassName("drawer-handle-container")?.addEventListener("touchstart", this.onStartHandleDrag.bind(this), false);
+        this.queryByClassName("drawer-handle-container")?.addEventListener("touchend", this.onEndHandleDrag.bind(this), false);
     }
 
     /**
@@ -33,7 +32,7 @@ export default class BaseDrawer extends BaseElement {
      * @param {TouchEvent} e - the touch event.
      */
     onEndHandleDrag(e) {
-        if (isHandleGrabbed) {
+        if (this.isHandleGrabbed) {
             let endYValue = e.changedTouches[0].clientY;
             if (endYValue > this.startYValue) {
                 this.dragDownFunction();

@@ -178,11 +178,15 @@ export default class RegionInfo extends BaseDrawer {
         if (isForced) {
             let rgnInfoOffset = this._elements.drawer.getBoundingClientRect().height;
             if (document.body.scrollTop <= rgnInfoOffset) {
+                this.isThrottling = true;
                 window.scrollTo({
                     top: rgnInfoOffset,
                     left: 0,
                     behavior: 'smooth'
                 });
+                setTimeout(() => {
+                    this.isThrottling = false;
+                }, DEFAULT_TIMEOUT);
             }
         }
         addRemoveTransparent([this._elements.background, this._elements.drawer], true);
@@ -243,7 +247,6 @@ export default class RegionInfo extends BaseDrawer {
                 regionList.forEach(rgn => {
                     const rgnImg = svgDoc.getElementById(`${rgn.id}-img`);
                     if (rgnImg) {
-                        console.log(rgnImg);
                         if (currentRegion == null) {
                             if (rgn.visited) {
                                 rgnImg.setAttribute("fill", appColour);

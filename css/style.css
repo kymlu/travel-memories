@@ -118,6 +118,15 @@ button:active,
   margin-bottom: 10px;
 }
 
+.close-btn {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  border-radius: 5px;
+  background-color: white;
+  color: rgba(var(--main-color));
+}
+
 /* General Text */
 .text-main-color {
   color: rgba(var(--main-color));

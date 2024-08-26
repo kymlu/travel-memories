@@ -77,9 +77,8 @@ export default class PicInfo extends BaseDrawer {
 			});
 	}
 
-	dragDownFunction() {
-		super.dragDownFunction();
-		this.hide();
+	getIsVisible(){
+		return this.isVisible;
 	}
 
 	/** Show the pic info section. */

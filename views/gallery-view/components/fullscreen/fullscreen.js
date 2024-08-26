@@ -24,7 +24,6 @@ export default class Fullscreen extends BaseElement {
 		this.visibleImages = [];
 
 		// pic info
-		this.isPicInfoVisible = true;
 		this.lastSwipeTime = null;
 		this.currentCountryId = null;
 
@@ -67,8 +66,8 @@ export default class Fullscreen extends BaseElement {
 						[this._elements.rightArrow, this.changePicture.bind(this, true)]
 					]);
 
-					this._elements.view.addEventListener("touchstart", this.startFullscreenSwipe, false);
-					this._elements.view.addEventListener("touchmove", this.moveFullscreenSwipe, false);
+					this._elements.view.addEventListener("touchstart", this.startFullscreenSwipe.bind(this), false);
+					this._elements.view.addEventListener("touchmove", this.moveFullscreenSwipe.bind(this), false);
 					this.close(true);
 				}, 50);
 			});
@@ -94,7 +93,6 @@ export default class Fullscreen extends BaseElement {
 		this.lastSwipeTime = new Date();
 
 		if (isPortraitMode()) {
-			this.isPicInfoVisible = false;
 			this.picInfo.hide(true);
 		}
 		this.isFullscreen = true;
@@ -149,11 +147,9 @@ export default class Fullscreen extends BaseElement {
 				}
 				break;
 			case "ArrowUp":
-				this.isPicInfoVisible = true;
 				this.picInfo.show();
 				break;
 			case "ArrowDown":
-				this.isPicInfoVisible = false;
 				this.picInfo.hide();
 				break;
 			case "Escape":
@@ -182,8 +178,8 @@ export default class Fullscreen extends BaseElement {
 			let currentX = e.touches[0].clientX;
 			let currentY = e.touches[0].clientY;
 
-			let diffX = initialX - currentX;
-			let diffY = initialY - currentY;
+			let diffX = this.initialX - currentX;
+			let diffY = this.initialY - currentY;
 
 			// horizontal swipe
 			if (Math.abs(diffX) > Math.abs(diffY)) {
@@ -195,13 +191,12 @@ export default class Fullscreen extends BaseElement {
 			} else if (isPortraitMode()) {
 				//vertical swipe - only for showing/hiding pic info
 				if (diffY > 0) {
-					if (!this.isPicInfoVisible) {
-						this.show();
+					if (!this.picInfo.getIsVisible()) {
+						this.picInfo.show();
 					}
-					// removed because will not work with Apple
 				} else {
-					if (this.isPicInfoVisible) {
-						this.hide();
+					if (this.picInfo.getIsVisible()) {
+						this.picInfo.hide();
 					}
 				}
 			}

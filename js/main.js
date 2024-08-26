@@ -26,9 +26,6 @@ let loader = null;
 
 /**** Data Loading/Setup ****/
 function initializeSite() {
-	loader = new Loader();
-	document.body.append(loader);
-
 	setSiteContents();
 
 	// document.addEventListener("contextmenu", function (e) {
@@ -68,16 +65,20 @@ function fetchData() {
 				loader.addEventListener(CUSTOM_EVENT_TYPES.LOADING_COMPLETE, loader.remove);
 			}
 		}).catch(error => {
+			console.error("Error loading data.", error);
 			loader.showDataLoadError(fetchData);
 			hasError = true;
-			console.error("Error loading data.", error);
 		});
 }
 
 document.addEventListener("DOMContentLoaded", () => {
 	scrollToTop(false);
-	initializeSite();
-	setTimeout(() => {
-		fetchData();
-	}, 100);
+	loader = new Loader();
+	loader.addEventListener(CUSTOM_EVENT_TYPES.LOADING_STARTED, () => {
+		initializeSite();
+		setTimeout(() => {
+			fetchData();
+		}, 100);
+	})
+	document.body.append(loader);
 });
