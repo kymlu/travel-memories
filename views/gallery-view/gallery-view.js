@@ -90,6 +90,7 @@ export default class GalleryView extends BaseElement {
 
 						scrollToTop(true);
 						this._elements.gallery.replaceChildren();
+						this.previousRegion = null;
 						if (this.visibleImages.length == 0) {
 							this._elements.gallery.innerHTML = this.noPicturesText;
 							this._elements.gallery.appendChild(changeFilterQueryButton);

@@ -60,6 +60,7 @@ export default class ImagePolaroid extends BasePolaroid {
                 }, 0);
             }
             img.setAttribute("src", this.src);
+            img.setAttribute("alt", "");
         }
 
         const dates = polaroid.querySelector(".polaroid-date").querySelectorAll("span");

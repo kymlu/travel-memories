@@ -87,6 +87,7 @@ export default class RegionInfo extends BaseDrawer {
         newMap.setAttribute("class", "mini-map opacity-transition");
         newMap.setAttribute("type", "image/svg+xml");
         newMap.setAttribute("data", `assets/img/country/${this.currentCountry.id}.svg`);
+        newMap.setAttribute("alt", getBilingualText("Map", "地図"));
         this._elements.map.parentElement.replaceChild(newMap, this._elements.map);
         this._elements.map = newMap;
     }
@@ -109,7 +110,7 @@ export default class RegionInfo extends BaseDrawer {
 
             setTimeout(() => {
                 this.filterMiniMap(currentRegion);
-            }, 0);
+            }, 50);
 
             setBilingualProperty([
                 [this._elements.areasTitle, "Areas", "所"],
@@ -129,7 +130,7 @@ export default class RegionInfo extends BaseDrawer {
         } else {
             setTimeout(() => {
                 this.filterMiniMap(null);
-            }, 0);
+            }, 50);
 
             setBilingualProperty([
                 [this._elements.areasTitle, this.currentCountry.officialRegionNameEnglish + "s", this.currentCountry.officialRegionNameJapanese],
@@ -234,7 +235,6 @@ export default class RegionInfo extends BaseDrawer {
         setTimeout(() => {
             if (!this._elements.map.hasAttribute("data") || this._elements.map.data == "") {
                 setTimeout(() => {
-                    this.filterMiniMap(currentRegion);
                     return;
                 }, 0);
             };

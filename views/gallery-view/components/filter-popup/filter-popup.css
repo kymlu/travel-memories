@@ -10,8 +10,6 @@
     user-select: none;
 }
 
-/*TODO: set a height for the checkmark, maybe make it more spacious*/
-
 .filter-area {
     gap: 15px;
     overflow-y: auto;
@@ -100,7 +98,7 @@
 
 #filters {
     height: 100%;
-    gap: 15px;
+    gap: 10px;
     overflow-y: auto;
 }
 

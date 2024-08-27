@@ -5,11 +5,11 @@
             <i class="large-icon fa fa-close"></i>
         </button>
         <div class="popup-content opacity-transition flex-column" style="overflow-y: hidden;">
-            <div class="flex-column" style="overflow-y: auto;">
+            <div class="flex-column" style="overflow-y: auto; flex-grow: 1;">
                 <p id="filter-title" class="bold-text"></p>
                 <div id="filters" class="flex-column">
                     <div id="filter-fav">
-                        <div class="filter-header">
+                        <div class="filter-header" style="pointer-events: none;">
                             <label id="filter-fav-title" class="bold-text capitalize-text"></label>
                         </div>
                         <div class="tag-list">
@@ -21,7 +21,7 @@
                         <hr class="divider filter">
                     </div>
                     <div id="filter-kw">
-                        <div class="filter-header">
+                        <div class="filter-header" style="pointer-events: none;">
                             <label id="filter-kw-title" class="bold-text capitalize-text" for="filter-kw-input"></label>
                         </div>
                         <div class="tag-list" style="align-items: center;">

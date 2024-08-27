@@ -25,6 +25,7 @@
 .popup-content {
     gap: 15px;
     overflow-y: auto;
+    height: 100%;
 }
 
 .popup-width {
