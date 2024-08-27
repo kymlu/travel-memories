@@ -145,13 +145,14 @@ export default class PicInfo extends BaseDrawer {
 			this._elements.dateJp.innerHTML = "不明な日付";
 		}
 		let area = this.currentPic.area;
+		let region = this.currentPic.region;
 
 		// English text for searching
-		this.searchTermEng = this.#getEnglishLocation(countryId) + (area.englishName ?? "");
+		this.#setEnglishLocation(countryId, area.englishName, region.englishName);
 		this._elements.cityEn.innerHTML = this.searchTermEng;
 
 		// Japanese text for searching
-		this.searchTermJp = (area.japaneseName ?? area.englishName ?? "") + this.#getJapaneseLocation(countryId);
+		this.#setJapaneseLocation(countryId, area.japaneseName ?? area.englishName, region.japaneseName ?? region.englishName)
 		this._elements.cityJp.innerHTML = this.searchTermJp;
 
 		// image description
@@ -241,7 +242,7 @@ export default class PicInfo extends BaseDrawer {
 	}
 
 	/** Gets the appropriate location text for the English section. */
-	#getEnglishLocation(countryId) {
+	#setEnglishLocation(countryId, areaName, regionName) {
 		let location = null;
 		if (this.currentPic.locationEnglish) {
 			location = this.currentPic.locationEnglish;
@@ -250,11 +251,15 @@ export default class PicInfo extends BaseDrawer {
 		} else if (countryId === TAIWAN && this.currentPic.locationChinese) {
 			location = this.currentPic.locationChinese;
 		}
-		return location ? `${location}, ` : "";
+		let list = [];
+		if (location) list.push(location);
+		if (areaName) list.push(areaName);
+		if (regionName) list.push(regionName);
+		this.searchTermEng = list.join(", ");
 	}
 
 	/** Gets the appropriate location text for the Japanese section. */
-	#getJapaneseLocation(countryId) {
+	#setJapaneseLocation(countryId, areaName, regionName) {
 		let location = null;
 		if (this.currentPic.locationJapanese) {
 			location = this.currentPic.locationJapanese;
@@ -263,7 +268,11 @@ export default class PicInfo extends BaseDrawer {
 		} else if (this.currentPic.locationEnglish) {
 			location = this.currentPic.locationEnglish;
 		}
-		return location ? `　${location}` : "";
+		let list = [];
+		if (regionName) list.push(regionName);
+		if (areaName) list.push(areaName);
+		if (location) list.push(location);
+		this.searchTermJp = list.join("　");
 	}
 }
 

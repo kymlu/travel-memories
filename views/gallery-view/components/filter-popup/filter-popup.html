@@ -4,15 +4,15 @@
         <button class="close-btn">
             <i class="large-icon fa fa-close"></i>
         </button>
-        <div class="popup-content opacity-transition flex-column" style="overflow-y: hidden;">
+        <div class="popup-content opacity-transition flex-column">
             <div class="flex-column" style="overflow-y: auto; flex-grow: 1;">
                 <p id="filter-title" class="bold-text"></p>
                 <div id="filters" class="flex-column">
                     <div id="filter-fav">
-                        <div class="filter-header" style="pointer-events: none;">
+                        <div class="filter-header">
                             <label id="filter-fav-title" class="bold-text capitalize-text"></label>
                         </div>
-                        <div class="tag-list">
+                        <div class="filter-section">
                             <label id="filter-fav-label" class="regular-text container">
                                 <input type="checkbox" id="filter-fav-input">
                                 <span class="checkmark"></span>
@@ -21,10 +21,10 @@
                         <hr class="divider filter">
                     </div>
                     <div id="filter-kw">
-                        <div class="filter-header" style="pointer-events: none;">
+                        <div class="filter-header">
                             <label id="filter-kw-title" class="bold-text capitalize-text" for="filter-kw-input"></label>
                         </div>
-                        <div class="tag-list" style="align-items: center;">
+                        <div class="filter-section">
                             <input type="text" class="text-input" id="filter-kw-input">
                             <button id="filter-kw-clear-btn" class="no-display clear-icon">
                                 <i class="fa fa-times-circle"></i>
@@ -33,47 +33,43 @@
                         <hr class="divider filter">
                     </div>
                     <div id="filter-regions">
-                        <div id="filter-regions-header" class="filter-header">
-                            <label id="filter-regions-title" class="bold-text capitalize-text"
-                                style="cursor: inherit;"></label>
+                        <div id="filter-regions-header" class="filter-header clickable">
+                            <label id="filter-regions-title" class="bold-text capitalize-text"></label>
                             <button class="text-main-color transform-transition arrow-up">
                                 <i class="large-icon fa fa-caret-down"></i>
                             </button>
                         </div>
-                        <div id="filter-regions-list" class="tag-list"></div>
+                        <div id="filter-regions-list" class="tag-list filter-section"></div>
                         <hr class="divider filter">
                     </div>
                     <div id="filter-areas">
-                        <div id="filter-areas-header" class="filter-header">
-                            <label id="filter-areas-title" class="bold-text capitalize-text"
-                                style="cursor: inherit;"></label>
+                        <div id="filter-areas-header" class="filter-header clickable">
+                            <label id="filter-areas-title" class="bold-text capitalize-text"></label>
                             <button class="text-main-color transform-transition arrow-up">
                                 <i class="large-icon fa fa-caret-down"></i>
                             </button>
                         </div>
-                        <div id="filter-areas-list" class="tag-list"></div>
+                        <div id="filter-areas-list" class="tag-list filter-section"></div>
                         <hr class="divider filter">
                     </div>
                     <div id="filter-tags">
-                        <div id="filter-tags-header" class="filter-header">
-                            <label id="filter-tags-title" class="bold-text capitalize-text"
-                                style="cursor: inherit;"></label>
+                        <div id="filter-tags-header" class="filter-header clickable">
+                            <label id="filter-tags-title" class="bold-text capitalize-text"></label>
                             <button class="text-main-color transform-transition arrow-up">
                                 <i class="large-icon fa fa-caret-down"></i>
                             </button>
                         </div>
-                        <div id="filter-tags-list" class="tag-list"></div>
+                        <div id="filter-tags-list" class="tag-list filter-section"></div>
                         <hr class="divider filter">
                     </div>
                     <div id="filter-camera">
-                        <div id="filter-camera-header" class="filter-header">
-                            <label id="filter-camera-title" class="bold-text capitalize-text"
-                                style="cursor: inherit;"></label>
+                        <div id="filter-camera-header" class="filter-header clickable">
+                            <label id="filter-camera-title" class="bold-text capitalize-text"></label>
                             <button class="text-main-color transform-transition arrow-up">
                                 <i class="large-icon fa fa-caret-down"></i>
                             </button>
                         </div>
-                        <div id="filter-camera-list" class="tag-list"></div>
+                        <div id="filter-camera-list" class="tag-list filter-section"></div>
                     </div>
                 </div>
             </div>

@@ -205,7 +205,8 @@ export default class MapView extends BaseElement {
 		} else {
 			this.scaleLevel = newScaleValue;
 		}
-
+		
+		addRemoveClass([this._elements.mapContainer], "scaled", this.scaleLevel > minScale);
 		addRemoveClass([this._elements.zoomIn], "disabled", this.scaleLevel == maxScale);
 		addRemoveClass([this._elements.zoomOut], "disabled", this.scaleLevel == minScale);
 

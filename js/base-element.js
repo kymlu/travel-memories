@@ -11,8 +11,8 @@ export default class BaseElement extends HTMLElement {
         super();
         this._elements = {};
         this.attachShadow({ mode: 'open' });
-        this.shadowRoot.adoptedStyleSheets.push(globalStyleSheet);
         this.shadowRoot.adoptedStyleSheets.push(fontAwesomeStyleSheet);
+        this.shadowRoot.adoptedStyleSheets.push(globalStyleSheet);
     }
     
     queryById(id){

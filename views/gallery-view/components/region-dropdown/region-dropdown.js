@@ -1,6 +1,6 @@
 import BaseElement from "../../../../js/base-element.js";
 import { CUSTOM_EVENT_TYPES } from "../../../../js/constants.js";
-import { getCurrentCountry, getHeader, onSelectNewRegion } from "../../../../js/globals.js";
+import { getCurrentCountry, getHeader, isGalleryView, onSelectNewRegion } from "../../../../js/globals.js";
 import {
 	addClickListeners, addRemoveNoDisplay, addRemoveTransparent, fetchInnerHtml, getBilingualText
 } from "../../../../js/utils.js";
@@ -23,8 +23,11 @@ export default class RegionDropdown extends BaseElement {
 					content: this.queryById("rgn-drop-down"),
 				}
 				setTimeout(() => {
-					document.addEventListener(CUSTOM_EVENT_TYPES.HEADER_UPDATED, () => {
-						this._elements.content.style.top = `${getHeader()?.getHeight()}px`;
+					document.addEventListener(CUSTOM_EVENT_TYPES.HEADER_UPDATED, this.#adjustPosition.bind(this));
+					window.addEventListener("resize", () =>{
+						if (isGalleryView()) {
+							this.#adjustPosition();
+						}
 					});
 					addClickListeners([
 						[this._elements.background, this.close.bind(this, null)]
@@ -65,7 +68,6 @@ export default class RegionDropdown extends BaseElement {
 					regionButton.innerHTML = getBilingualText(rgn.englishName, rgn.japaneseName);
 					regionButton.id = this.#getDropdownElementId(rgn.id);
 					regionButton.title = getBilingualText(`See images from ${rgn.englishName}`, `${rgn.japaneseName}の写真を表示する`);
-					regionButton.classList.add("visited-rgn-text");
 					regionButton.addEventListener("click", () => { onSelectNewRegion(rgn.id, null, false) }, false);
 					dropDownList.appendChild(regionButton);
 				}
@@ -113,6 +115,10 @@ export default class RegionDropdown extends BaseElement {
 
 	#getDropdownElementId(name) {
 		return `${name}-dropdown`;
+	}
+
+	#adjustPosition(){
+		this._elements.content.style.top = `${getHeader()?.getHeight()}px`;
 	}
 }
 

@@ -2,7 +2,8 @@ import { ATTRIBUTES, CUSTOM_EVENT_TYPES, DEFAULT_TIMEOUT } from "../../../../../
 import { getAppColor, getCurrentCountry, getHeader } from "../../../../../js/globals.js";
 import {
     addClickListeners, addRemoveTransparent, addRemoveNoDisplay, getBilingualText,
-    fetchInnerHtml, isPortraitMode, scrollToTop, setBilingualProperty
+    fetchInnerHtml, isPortraitMode, scrollToTop, setBilingualProperty,
+    getScrollPosition
 } from "../../../../../js/utils.js";
 import BaseDrawer from "../base-drawer/base-drawer.js";
 
@@ -37,7 +38,7 @@ export default class RegionInfo extends BaseDrawer {
                 };
 
                 document.addEventListener(CUSTOM_EVENT_TYPES.HEADER_UPDATED, () => {
-                    this._elements.background.style.top = `${getHeader()?.getHeight()}px`;
+                    this._elements.regionInfo.style.top = `${getHeader()?.getHeight()}px`;
                 });
 
                 setTimeout(() => {
@@ -161,12 +162,18 @@ export default class RegionInfo extends BaseDrawer {
         this.isVisible = true;
         addRemoveTransparent([this._elements.regionInfo], false);
         if (isForced) {
-            if (document.body.scrollTop < this.getBoundingClientRect().height) {
+            if (getScrollPosition() < this.getBoundingClientRect().height) {
+                this.isThrottling = true;
                 scrollToTop(true);
+                setTimeout(() => {
+                    this.isThrottling = false;
+                }, DEFAULT_TIMEOUT*2);
             } else {
                 this._elements.regionInfo.style.position = "sticky";
                 this._elements.regionInfo.style.top = `${getHeader()?.getHeight()}px`;
             }
+        } else {
+            this._elements.regionInfo.style.top = "0px";
         }
     }
 
@@ -177,8 +184,8 @@ export default class RegionInfo extends BaseDrawer {
         this.isVisible = false;
         if (isForced) {
             let rgnInfoOffset = this._elements.drawer.getBoundingClientRect().height;
-            if (document.body.scrollTop <= rgnInfoOffset) {
-                this.isThrottling = true;
+            if (getScrollPosition() <= rgnInfoOffset) {
+                this.isThrottling = true; //TODO: FIX
                 window.scrollTo({
                     top: rgnInfoOffset,
                     left: 0,
@@ -186,13 +193,12 @@ export default class RegionInfo extends BaseDrawer {
                 });
                 setTimeout(() => {
                     this.isThrottling = false;
-                }, DEFAULT_TIMEOUT);
+                }, DEFAULT_TIMEOUT*2);
             }
         }
         addRemoveTransparent([this._elements.regionInfo], true);
         setTimeout(() => {
             this._elements.regionInfo.style.position = "relative";
-            this._elements.regionInfo.style.top = "0";
             addRemoveTransparent([this._elements.drawer], false);
         }, DEFAULT_TIMEOUT);
     }
@@ -203,10 +209,11 @@ export default class RegionInfo extends BaseDrawer {
 
         this.isThrottling = true;
         setTimeout(() => {
-            let rgnInfoOffset = this.getBoundingClientRect().height / 2;
-            if (this.isVisible && document.body.scrollTop > rgnInfoOffset) {
+            let rgnInfoOffset = this._elements.drawer.getBoundingClientRect().height / 2;
+            let userPosition = getScrollPosition();
+            if (this.isVisible && userPosition > rgnInfoOffset) {
                 this.hide(false);
-            } else if (!this.isVisible && document.body.scrollTop < rgnInfoOffset) {
+            } else if (!this.isVisible && userPosition < rgnInfoOffset) {
                 this.show(false);
             }
             this.isThrottling = false;

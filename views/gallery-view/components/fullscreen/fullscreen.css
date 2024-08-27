@@ -52,12 +52,7 @@
 .fullscreen-arrow {
   margin: 20px;
   color: white;
-}
-
-@media only screen and (orientation: landscape) and (min-width: 768px) {
-  .fullscreen-arrow {
-    font-size: var(--lrg-icn-text-size);
-  }
+  font-size: var(--lrg-icn-text-size) !important;
 }
 
 .fullscreen-fns {

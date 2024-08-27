@@ -27,5 +27,5 @@
   border-radius: 50%;
   color: white;
   background-color: rgba(var(--main-color));
-  z-index: 200;
+  z-index: 150;
 }

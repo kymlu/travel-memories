@@ -2,6 +2,7 @@
 	align-self: center;
 	position: fixed;
 	max-height: 250px;
+	max-width: 500px;
 	padding: 0px 20px 20px 20px;
 	border-radius: 0px 0px 10px 10px;
 	box-shadow: 0px 5px 3px 0px #00000050;
@@ -10,15 +11,15 @@
 	z-index: 2;
 }
 
+@media only screen and (orientation: portrait) {
+	#rgn-drop-down {
+		align-items: center;
+	}
+}
+
 #rgn-drop-down-bg {
 	z-index: 2;
 	pointer-events: all !important;
-}
-
-@media only screen and (max-width: 768px) {
-	#rgn-drop-down {
-		top: 95px;
-	}
 }
 
 .rgn-grp {
@@ -65,6 +66,7 @@
 	vertical-align: bottom;
 	padding: 5px;
 	margin-bottom: 5px;
+	width: 100%;
 	font-family: Zen Maru Gothic;
 	font-size: var(--reg-text-size);
 	font-weight: normal;
@@ -73,26 +75,17 @@
 	text-align: start;
 	box-shadow: inset 0 0 0 0 rgba(var(--main-color));
 	transition: color .3s ease-in-out, box-shadow .5s ease-in-out;
+	border-radius: 5px;
 }
 
 .rgn-txt:hover,
 .rgn-txt.active {
 	color: white;
-	box-shadow: inset 900px 0 0 0 rgba(var(--main-color));
+	box-shadow: inset 400px 0 0 0 rgba(var(--main-color));
 }
 
-.visited-rgn-text {
-	border-radius: 5px;
-}
-
-@media only screen and (orientation: portrait) {
-	.visited-rgn-text {
-		text-align: center;
-	}
-}
-
-.visited-rgn-text:visited,
-.visited-rgn-text:active {
+.rgn-text:visited,
+.rgn-text:active {
 	color: var(--text-color);
 	background-color: white;
 }

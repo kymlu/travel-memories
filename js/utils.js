@@ -38,6 +38,10 @@ export async function fetchStyle(address, styleSheet) {
 		});
 }
 
+/** Gets the scroll position in the document. Some are deprecated and some don't work on specific browsers. */
+export function getScrollPosition() {
+	return window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+}
 
 /**
  * Gets the date to the appropriate timezone

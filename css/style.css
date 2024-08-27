@@ -11,7 +11,7 @@
   --lrg-text-size: 1.5rem;
   --xlrg-text-size: 2.2rem;
   --icn-text-size: 2.0rem;
-  --lrg-icn-text-size: 4rem;
+  --lrg-icn-text-size: 3.0rem;
 }
 
 /* Fonts */
@@ -103,8 +103,6 @@ button:active,
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  margin-bottom: 10px;
-  min-height: 34px;;
 }
 
 .close-btn {
@@ -122,7 +120,7 @@ button:active,
 }
 
 .large-icon {
-  font-size: var(--icn-text-size) !important;
+  font-size: var(--icn-text-size);
 }
 
 .regular-text {
