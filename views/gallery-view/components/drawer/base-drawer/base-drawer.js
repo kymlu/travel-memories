@@ -1,5 +1,8 @@
 import BaseElement from "../../../../../js/base-element.js";
-import { isPortraitMode } from "../../../../../js/utils.js";
+import { fetchStyle, isPortraitMode } from "../../../../../js/utils.js";
+
+let baseDrawerStyle = new CSSStyleSheet();
+fetchStyle("views/gallery-view/components/drawer/base-drawer/base-drawer.css", baseDrawerStyle);
 
 /** The base drawer. */
 export default class BaseDrawer extends BaseElement {
@@ -8,6 +11,7 @@ export default class BaseDrawer extends BaseElement {
         this.startYValue;
         this.isHandleGrabbed = false;
         this.isVisible;
+        this.shadowRoot.adoptedStyleSheets.push(baseDrawerStyle);
     }
 
     connectedCallback() {

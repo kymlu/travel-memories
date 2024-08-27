@@ -90,25 +90,7 @@
   transform: rotate(-8deg);
 }
 
-@media only screen and (orientation: portrait) {
-  .pic-rotate.rotate-left-1 {
-    transform: rotate(-4deg);
-  }
-
-  .pic-rotate.rotate-left-3 {
-    transform: rotate(-6deg);
-  }
-
-  .pic-rotate.rotate-right-1 {
-    transform: rotate(5deg);
-  }
-
-  .pic-rotate.rotate-right-3 {
-    transform: rotate(8deg);
-  }
-}
-
 .pic-rotate:hover {
-  transform: rotate(0deg) scale(115%);
+  transform: rotate(0deg) scale(120%);
   z-index: 100;
 }

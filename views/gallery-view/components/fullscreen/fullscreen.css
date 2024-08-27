@@ -73,9 +73,3 @@
     justify-content: end;
   }
 }
-
-@media only screen and (orientation: portrait) {
-  #pic-info-btn {
-    order: 2;
-  }
-}

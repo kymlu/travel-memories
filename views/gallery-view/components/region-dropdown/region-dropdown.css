@@ -22,30 +22,6 @@
 	pointer-events: all !important;
 }
 
-.rgn-grp {
-	display: flex;
-	flex-direction: column;
-	flex-wrap: nowrap;
-	margin-bottom: 10px;
-}
-
-.rgn-grp.none {
-	flex-direction: row;
-	flex-wrap: wrap;
-	gap: 25px;
-	justify-content: space-around;
-}
-
-@media only screen and (orientation: portrait) {
-	.rgn-grp {
-		text-align: center;
-	}
-
-	.rgn-grp.none {
-		gap: 10px;
-	}
-}
-
 .rgn-grp-text {
 	vertical-align: bottom;
 	padding: 0px 5px;
