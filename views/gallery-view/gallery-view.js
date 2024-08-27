@@ -48,7 +48,7 @@ export default class GalleryView extends BaseElement {
 		this.changeFilterQueryButton = document.createElement("button");
 		this.changeFilterQueryButton.classList.add("action-btn");
 		this.changeFilterQueryButton.innerHTML = getBilingualText("Change filters", "フィルターを変更する");
-		
+
 		document.addEventListener(CUSTOM_EVENT_TYPES.NEW_COUNTRY_SELECTED, this.handleNewCountry.bind(this));
 	}
 
@@ -263,7 +263,7 @@ export default class GalleryView extends BaseElement {
 
 			// set the limit to something different if the size of the screen changed
 			if (i == 0) {
-				let imgsPerScreen = Math.max(Math.floor(window.innerWidth / 265) * Math.floor(window.innerHeight / 325), 5);
+				let imgsPerScreen = Math.max(Math.floor(this._elements.gallery.getBoundingClientRect().width / 275) * (Math.floor(window.innerHeight / 350)), 5);
 				// fill the remainder if the number of images does not fill the screen
 				this.imageLoadLimit = imgsPerScreen * 2 + (imgsPerScreen - (this.currentPolaroidCount % imgsPerScreen / 2));
 			}
