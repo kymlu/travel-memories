@@ -108,11 +108,17 @@ export default class RegionInfo extends BaseDrawer {
             addRemoveClass([this._elements.background], "visibility-hidden", false);
         }
 
+        addRemoveNoDisplay([this._elements.datesSection], !isSingleRegionSelected);
+
         this.isVisible = true;
 
         if (isSingleRegionSelected) {
-            addRemoveNoDisplay(this._elements.datesSection, false);
             let currentRegion = regionList[0];
+
+            setTimeout(() => {
+                this.filterMiniMap(currentRegion);
+            }, 0);
+            
             setBilingualProperty([
                 [this._elements.areasTitle, "Areas", "所"],
                 [this._elements.dates, currentRegion.datesEnglish, currentRegion.datesJapanese],
@@ -128,11 +134,10 @@ export default class RegionInfo extends BaseDrawer {
             ].forEach(([element, text]) => {
                 element.innerHTML = text;
             });
-            setTimeout(() => {
-                this.filterMiniMap(currentRegion);
-            }, 0);
         } else {
-            addRemoveNoDisplay(this._elements.datesSection, true);
+            setTimeout(() => {
+                this.filterMiniMap(null);
+            }, 0);
 
             setBilingualProperty([
                 [this._elements.areasTitle, this.currentCountry.officialRegionNameEnglish + "s", this.currentCountry.officialRegionNameJapanese],
@@ -148,9 +153,6 @@ export default class RegionInfo extends BaseDrawer {
             ].forEach(([element, text]) => {
                 element.innerHTML = text;
             });
-            setTimeout(() => {
-                this.filterMiniMap(null);
-            }, 0);
         }
         this.queryByClassName("rgn-info").scrollTo({ top: 0, behavior: "smooth" });
     }

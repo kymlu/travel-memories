@@ -85,14 +85,21 @@ export function goToMapView() {
 }
 
 export function onSelectNewRegion(regionId, isPopped, isNewGallery) {
-    let loader = null;
     if (isMapView()) {
+		document.body.style.overflowY = "hidden";
         mapView.hide();
         header.toggleVisibility(false);
-        loader = new Loader();
+        let loader = new Loader();
+        loader.addEventListener(CUSTOM_EVENT_TYPES.LOADING_STARTED, () => {
+            setCurrentRegion(regionId, isPopped, isNewGallery, loader);
+        })
         document.body.append(loader);
+    } else {
+        setCurrentRegion(regionId, isPopped, isNewGallery, null);
     }
+}
 
+function setCurrentRegion(regionId, isPopped, isNewGallery, loader){
     if (isPopped == null) {
         window.history.pushState({ type: VIEW_NAMES.GALLERY, regionId: regionId }, "", null);
     }
@@ -105,22 +112,22 @@ export function onSelectNewRegion(regionId, isPopped, isNewGallery) {
         galleryView.setNewRegion(visitedRgns, false, isNewGallery);
     }
 
-    if (!isGalleryView()) {
-        setTimeout(() => {
-            header.toggleVisibility(true);
-            setCurrentView(VIEW_NAMES.GALLERY);
-            galleryView.show();
-
-            if (loader) {
-                loader.quickStop();
-                loader.addEventListener(CUSTOM_EVENT_TYPES.LOADING_COMPLETE, () => {
-                    setTimeout(() => {
-                        loader.remove();
-                    }, 0);
-                });
-            }
-        }, DEFAULT_TIMEOUT);
+    if (loader) {
+        loader.addEventListener(CUSTOM_EVENT_TYPES.LOADING_COMPLETE, () => {
+            loader.remove();
+            goToGalleryView();
+			document.body.style.overflowY = "auto";
+        });
+        loader.stop();
+    } else {
+        goToGalleryView();
     }
+}
+
+function goToGalleryView() {
+    setCurrentView(VIEW_NAMES.GALLERY);
+    header.toggleVisibility(true);
+    galleryView.show();
 }
 
 export function getHeader(){

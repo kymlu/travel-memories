@@ -132,9 +132,11 @@ export default class GalleryView extends BaseElement {
 		this._elements.regionDropdown.close();
 		this._elements.regionInfo.hide(false);
 		scrollToTop(false);
+		document.body.style.overflowY = "hidden";
 		addRemoveTransparent([this._elements.view], true);
 		setTimeout(() => {
 			addRemoveNoDisplay([this], true);
+			document.body.style.overflowY = "auto";
 		}, DEFAULT_TIMEOUT);
 	}
 
