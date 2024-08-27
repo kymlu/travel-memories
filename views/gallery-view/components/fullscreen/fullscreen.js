@@ -97,7 +97,6 @@ export default class Fullscreen extends BaseElement {
 		}
 		this.isFullscreen = true;
 		document.body.style.overflowY = "hidden";
-		this._elements.view.classList.remove("visibility-hidden");
 		addRemoveTransparent([this._elements.view, this._elements.background], false);
 		document.addEventListener("keydown", this.handleKeydown.bind(this));
 	}
@@ -111,13 +110,11 @@ export default class Fullscreen extends BaseElement {
 		this.isFullscreen = false;
 		document.body.style.overflowY = "auto";
 		if (forceClose) {
-			this._elements.view.classList.add("visibility-hidden");
 			addRemoveTransparent([this._elements.view, this._elements.background], true);
 			addRemoveNoDisplay([this], true);
 		} else {
 			addRemoveTransparent([this._elements.view, this._elements.background], true);
 			setTimeout(() => {
-				this._elements.view.classList.add("visibility-hidden");
 				addRemoveNoDisplay([this], true);
 			}, DEFAULT_TIMEOUT);
 		}

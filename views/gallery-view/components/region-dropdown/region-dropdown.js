@@ -48,14 +48,13 @@ export default class RegionDropdown extends BaseElement {
 		regionGroupTemplate.classList.add("rgn-grp-text", "regular-text");
 
 		let regionTemplate = document.createElement("button");
-		regionTemplate.classList.add("rgn-txt", "regular-text", "highlight-btn", "text-btn");
+		regionTemplate.classList.add("rgn-txt", "regular-text");
 
 		// Iterate each unofficial and official region, sort by visited/not visited
 		const currentCountry = getCurrentCountry();
 		currentCountry.regionGroups.filter(grp => grp.regions.some(rgn => rgn.visited)).forEach(grp => {
-			let regionGroupElement = regionGroupTemplate.cloneNode();
-
 			if (currentCountry.showUnofficialRegions) {
+				let regionGroupElement = regionGroupTemplate.cloneNode();
 				regionGroupElement.innerHTML = getBilingualText(grp.englishName, grp.japaneseName);
 				dropDownList.appendChild(regionGroupElement);
 			}

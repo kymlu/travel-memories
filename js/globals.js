@@ -1,7 +1,6 @@
 import { CUSTOM_EVENT_TYPES, DEFAULT_TIMEOUT, VIEW_NAMES } from "./constants.js";
 import { sortImgs } from "./utils.js";
 import CustomHeader from "../components/header/header.js";
-import Loader from "../components/loader/loader.js";
 import InfoPopup from "../components/popup/info-popup/info-popup.js";
 import GalleryView from "../views/gallery-view/gallery-view.js";
 import MapView from "../views/map-view/map-view.js";
@@ -31,20 +30,22 @@ export function setSiteContents() {
     /** @type InfoPopup */
     let infoPopup = document.querySelector("info-popup");
 
-    header = document.querySelector("custom-header");
-    const headerSetEvent = new CustomEvent(CUSTOM_EVENT_TYPES.HEADER_SET, { detail: { header: header } });
-    document.dispatchEvent(headerSetEvent);
-
     startView = document.querySelector("start-view");
     mapView = document.querySelector("map-view");
     galleryView = document.querySelector("gallery-view");
-
-    header.setButtonFunctions(goToStartView.bind(this, false),
+    
+    header = document.querySelector("custom-header");
+    header.addEventListener(CUSTOM_EVENT_TYPES.LOADING_COMPLETE, () => {
+        header.setButtonFunctions(goToStartView.bind(this, false),
         goToMapView,
         galleryView.toggleRegionDropdown.bind(galleryView),
         galleryView.toggleRegionInfo.bind(galleryView, null),
         galleryView.showFilter.bind(galleryView),
         infoPopup.open.bind(infoPopup, null));
+    })
+    const headerSetEvent = new CustomEvent(CUSTOM_EVENT_TYPES.HEADER_SET, { detail: { header: header } });
+    document.dispatchEvent(headerSetEvent);
+
 }
 
 function setCurrentView(pageName) {
@@ -88,22 +89,12 @@ export function onSelectNewRegion(regionId, isPopped, isNewGallery) {
     if (isMapView()) {
 		document.body.style.overflowY = "hidden";
         mapView.hide();
-        header.toggleVisibility(false);
-        let loader = new Loader();
-        loader.addEventListener(CUSTOM_EVENT_TYPES.LOADING_STARTED, () => {
-            setCurrentRegion(regionId, isPopped, isNewGallery, loader);
-        })
-        document.body.append(loader);
-    } else {
-        setCurrentRegion(regionId, isPopped, isNewGallery, null);
     }
-}
 
-function setCurrentRegion(regionId, isPopped, isNewGallery, loader){
     if (isPopped == null) {
         window.history.pushState({ type: VIEW_NAMES.GALLERY, regionId: regionId }, "", null);
     }
-
+    
     if (regionId != undefined && regionId != null) {
         let newRegion = currentCountry.regionGroups.flatMap(x => x.regions).filter(rgn => rgn.id == regionId);
         galleryView.setNewRegion(newRegion, true, isNewGallery);
@@ -111,23 +102,12 @@ function setCurrentRegion(regionId, isPopped, isNewGallery, loader){
         let visitedRgns = currentCountry.regionGroups.flatMap(grp => grp.regions.filter(rgn => rgn.visited));
         galleryView.setNewRegion(visitedRgns, false, isNewGallery);
     }
-
-    if (loader) {
-        loader.addEventListener(CUSTOM_EVENT_TYPES.LOADING_COMPLETE, () => {
-            loader.remove();
-            goToGalleryView();
-			document.body.style.overflowY = "auto";
-        });
-        loader.stop();
-    } else {
-        goToGalleryView();
-    }
-}
-
-function goToGalleryView() {
-    setCurrentView(VIEW_NAMES.GALLERY);
-    header.toggleVisibility(true);
-    galleryView.show();
+    
+    setTimeout(() => {
+        document.body.style.overflowY = "auto";
+        setCurrentView(VIEW_NAMES.GALLERY);
+        galleryView.show();
+    }, 50);
 }
 
 export function getHeader(){
@@ -182,21 +162,19 @@ export function setCurrentCountry(countryId, countryColor, isPopped) {
             });
         });
         setAppColor(countryColor);
-        const loader = new Loader();
-        document.body.append(loader);
 
         const newCountryEvent = new CustomEvent(CUSTOM_EVENT_TYPES.NEW_COUNTRY_SELECTED);
         document.dispatchEvent(newCountryEvent);
 
-        setTimeout(() => {
-            loader.stop(mapView.show.bind(mapView));
-            loader.addEventListener(CUSTOM_EVENT_TYPES.LOADING_COMPLETE, () => {
-                loader.remove();
-                header.toggleVisibility(true);
-                setCurrentView(VIEW_NAMES.MAP);
-            });
-        }, 1200);
+        mapView.addEventListener(CUSTOM_EVENT_TYPES.LOADING_COMPLETE, showMap);
     }
+}
+
+function showMap(){
+    mapView.show();
+    header.toggleVisibility(true);
+    setCurrentView(VIEW_NAMES.MAP);
+    mapView.removeEventListener(CUSTOM_EVENT_TYPES.LOADING_COMPLETE, showMap);
 }
 
 /**

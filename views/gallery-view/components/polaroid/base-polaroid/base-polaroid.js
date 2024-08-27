@@ -14,7 +14,7 @@ export default class BasePolaroid extends BaseElement {
      */
     constructor(isAngledLeft, isBlank) {
         super();
-        
+
         this.shadowRoot.adoptedStyleSheets.push(basePolaroidStyle);
 
         /**

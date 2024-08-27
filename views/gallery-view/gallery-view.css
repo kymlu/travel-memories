@@ -14,6 +14,7 @@
 @media only screen and (orientation: portrait) {
   .gallery {
     overflow: hidden;
+    margin-top: 0px;
   }
 }
 

@@ -78,18 +78,6 @@ button:active,
   border-radius: 10px;
 }
 
-.highlight-btn {
-  text-align: start;
-  box-shadow: inset 0 0 0 0 rgba(var(--main-color));
-  transition: color .3s ease-in-out, box-shadow .5s ease-in-out;
-}
-
-.highlight-btn:hover,
-.highlight-btn.active {
-  color: white;
-  box-shadow: inset 900px 0 0 0 rgba(var(--main-color));
-}
-
 .base-tag,
 .action-btn {
   padding: 2px 5px;
@@ -116,6 +104,7 @@ button:active,
   flex-wrap: wrap;
   gap: 10px;
   margin-bottom: 10px;
+  min-height: 34px;;
 }
 
 .close-btn {
@@ -146,11 +135,6 @@ button:active,
 
 .capitalize-text {
   text-transform: capitalize;
-}
-
-/* Visibility */
-.visibility-hidden {
-  visibility: hidden;
 }
 
 .transparent {
@@ -272,7 +256,8 @@ button:active,
 }
 
 custom-header {
-  z-index: 10;
+  z-index: 250;
+  pointer-events: none;
 }
 
 start-view,

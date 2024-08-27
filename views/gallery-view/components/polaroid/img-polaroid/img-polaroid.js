@@ -1,6 +1,6 @@
 /// IMPORTS
 import BasePolaroid from "../base-polaroid/base-polaroid.js"
-import { DEFAULT_TIMEOUT, SHORT_DATETIME_FORMAT_EN, SHORT_DATETIME_FORMAT_JP } from '../../../../../js/constants.js'
+import { SHORT_DATETIME_FORMAT_EN, SHORT_DATETIME_FORMAT_JP } from '../../../../../js/constants.js'
 import {
     addRemoveNoDisplay, addRemoveTransparent, fetchInnerHtml, fetchStyle, getBilingualText, getPictureDate
 } from '../../../../../js/utils.js';
@@ -57,7 +57,7 @@ export default class ImagePolaroid extends BasePolaroid {
                 }
                 setTimeout(() => {
                     addRemoveTransparent([img], false);
-                }, DEFAULT_TIMEOUT);
+                }, 0);
             }
             img.setAttribute("src", this.src);
         }

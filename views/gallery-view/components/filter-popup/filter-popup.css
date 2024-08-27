@@ -10,6 +10,8 @@
     user-select: none;
 }
 
+/*TODO: set a height for the checkmark, maybe make it more spacious*/
+
 .filter-area {
     gap: 15px;
     overflow-y: auto;
@@ -76,7 +78,6 @@
     border-radius: 10px;
     font-family: Zen Maru Gothic;
     font-size: var(--reg-text-size);
-    margin-bottom: 10px;
     padding-left: 10px;
 }
 
@@ -86,8 +87,7 @@
 }
 
 .clear-icon {
-    margin-left: -30px;
-    margin-top: -10px;
+    margin-left: -35px;
     color: var(--text-color);
     font-size: var(--reg-text-size);
 }

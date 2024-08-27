@@ -1,16 +1,17 @@
 .polaroid-frame {
   display: flex;
+  position: relative;
+  padding: 25px 10px 10px 10px;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+  border-radius: 10px;
   width: 255px;
   height: 315px;
   max-width: 255px;
   max-height: 315px;
-  padding: 25px 10px 10px 10px;
-  background-color: white;
-  border-radius: 10px;
   box-shadow: inset 4px 5px 20px 5px #fffaf050, 8px 8px 20px #00000050;
+  background-color: white;
   cursor: pointer;
 }
 
@@ -19,7 +20,7 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  filter: saturate(0.95);
+  filter: saturate(0.9);
   width: 230px;
   height: 235px;
 }
@@ -109,5 +110,5 @@
 
 .pic-rotate:hover {
   transform: rotate(0deg) scale(115%);
-  z-index: 10;
+  z-index: 100;
 }

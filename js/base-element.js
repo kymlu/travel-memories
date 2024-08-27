@@ -1,20 +1,18 @@
-const globalStyleSheet = document.createElement('link');
-globalStyleSheet.setAttribute('rel', 'stylesheet');
-globalStyleSheet.setAttribute('type', "text/css");
-globalStyleSheet.setAttribute('href', 'css/style.css');
+import { fetchStyle } from "./utils.js";
 
-const fontAwesomeStyleSheet = document.createElement('link');
-fontAwesomeStyleSheet.setAttribute('rel', 'stylesheet');
-fontAwesomeStyleSheet.setAttribute('type', "text/css");
-fontAwesomeStyleSheet.setAttribute('href', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css');
+let globalStyleSheet = new CSSStyleSheet();
+fetchStyle("css/style.css", globalStyleSheet);
+
+const fontAwesomeStyleSheet = new CSSStyleSheet();
+fetchStyle("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css", fontAwesomeStyleSheet);
 
 export default class BaseElement extends HTMLElement {
     constructor() {
         super();
         this._elements = {};
         this.attachShadow({ mode: 'open' });
-        this.shadowRoot.appendChild(globalStyleSheet.cloneNode(true));
-        this.shadowRoot.appendChild(fontAwesomeStyleSheet.cloneNode(true));
+        this.shadowRoot.adoptedStyleSheets.push(globalStyleSheet);
+        this.shadowRoot.adoptedStyleSheets.push(fontAwesomeStyleSheet);
     }
     
     queryById(id){

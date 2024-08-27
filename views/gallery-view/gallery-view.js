@@ -45,10 +45,6 @@ export default class GalleryView extends BaseElement {
 
 		this.noPicturesText = getBilingualText("No pictures available (yet)", "写真は(まだ)ありません");
 
-		this.changeFilterQueryButton = document.createElement("button");
-		this.changeFilterQueryButton.classList.add("action-btn");
-		this.changeFilterQueryButton.innerHTML = getBilingualText("Change filters", "フィルターを変更する");
-
 		document.addEventListener(CUSTOM_EVENT_TYPES.NEW_COUNTRY_SELECTED, this.handleNewCountry.bind(this));
 	}
 
@@ -77,9 +73,12 @@ export default class GalleryView extends BaseElement {
 					window.onresize = () => {
 						if (isGalleryView()) {
 							this._elements.view.style.marginTop = this.header.getHeight();
-							this._elements.regionInfo.repositionBackground();
 						}
 					};
+
+					let changeFilterQueryButton = document.createElement("button");
+					changeFilterQueryButton.classList.add("action-btn");
+					changeFilterQueryButton.innerHTML = getBilingualText("Change filters", "フィルターを変更する");
 
 					this._elements.filterPopup.addEventListener(CUSTOM_EVENT_TYPES.FILTER_POPUP_SUBMITTED, event => {
 						this.filterImages(event.detail.isOnlyFavs,
@@ -93,7 +92,7 @@ export default class GalleryView extends BaseElement {
 						this._elements.gallery.replaceChildren();
 						if (this.visibleImages.length == 0) {
 							this._elements.gallery.innerHTML = this.noPicturesText;
-							this._elements.gallery.appendChild(this.changeFilterQueryButton);
+							this._elements.gallery.appendChild(changeFilterQueryButton);
 							addRemoveClass([this._elements.gallery], "flex-column", true);
 						} else {
 							addRemoveClass([this._elements.gallery], "flex-column", false);
@@ -106,7 +105,7 @@ export default class GalleryView extends BaseElement {
 					setTimeout(() => {
 						addClickListeners([
 							[this._elements.toTopButton, scrollToTop],
-							[this.changeFilterQueryButton, this._elements.filterPopup.open.bind(this._elements.filterPopup, null)]
+							[changeFilterQueryButton, this._elements.filterPopup.open.bind(this._elements.filterPopup, null)]
 						]);
 
 						this._elements.toTopButton.title = getBilingualText("Go to top", "トップに移動する");
@@ -121,10 +120,9 @@ export default class GalleryView extends BaseElement {
 	show() {
 		this._elements.view.style.marginTop = this.header.getHeight();
 		this._elements.regionDropdown.close();
-		scrollToTop(false);
-		//addRemoveNoDisplay([this], false);
-		addRemoveTransparent([this._elements.view], false);
 		this._elements.regionInfo.show(false);
+		scrollToTop(false);
+		addRemoveTransparent([this._elements.view], false);
 	}
 
 	/** Close the gallery page */
@@ -156,7 +154,7 @@ export default class GalleryView extends BaseElement {
 	setNewRegion(regionData, isSingleRegionSelected, isNewGallery) {
 		scrollToTop(false);
 		addRemoveNoDisplay([this], false);
-		this.isNewGallery = isNewGallery;
+		addRemoveTransparent([this._elements.view], true);
 		setTimeout(() => {
 			this._elements.regionDropdown.changeSelectedRegion(
 				!this.isNewCountry ? this.currentRegion?.id : null,

@@ -142,7 +142,9 @@ export default class MapView extends BaseElement {
 					});
 
 					rgnImg.addEventListener("mouseup", this.selectRegion.bind(this, rgn));
-
+					
+					const loadingCompleteEvent = new CustomEvent(CUSTOM_EVENT_TYPES.LOADING_COMPLETE);
+					this.dispatchEvent(loadingCompleteEvent);
 				} else {
 					rgnImg.setAttribute("fill", "lightgrey");
 				}

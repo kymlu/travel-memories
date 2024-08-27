@@ -41,6 +41,9 @@ export default class CustomHeader extends BaseElement {
                     filter: this.queryById("filter-btn"),
                     creator: this.queryById("creator-btn")
                 };
+                
+                const loadingCompleteEvent = new CustomEvent(CUSTOM_EVENT_TYPES.LOADING_COMPLETE);
+                this.dispatchEvent(loadingCompleteEvent);
 
                 setTimeout(() => {
                     setBilingualProperty([
@@ -79,7 +82,7 @@ export default class CustomHeader extends BaseElement {
      * @param {boolean} isVisible 
      */
     toggleFilterIndicator(isVisible) {
-        addRemoveNoDisplay(this.queryById("filter-indicator"), !isVisible);
+        addRemoveNoDisplay([this.queryById("filter-indicator")], !isVisible);
     }
 
     setRegionTitle(newContent) {
