@@ -21,8 +21,8 @@ export default class RegionDropdown extends BaseElement {
 		fetchInnerHtml("views/gallery-view/components/region-dropdown/region-dropdown.html", this, true)
 			.then(() => {
 				this._elements = {
-					background: this.queryById("rgn-drop-down-bg"),
-					content: this.queryById("rgn-drop-down"),
+					background: this.queryById("background"),
+					content: this.queryById("dropdown"),
 				}
 				setTimeout(() => {
 					document.addEventListener(CUSTOM_EVENT_TYPES.HEADER_UPDATED,
@@ -60,14 +60,14 @@ export default class RegionDropdown extends BaseElement {
 		newCountry.regionGroups.filter(grp => grp.regions.some(rgn => rgn.visited)).forEach(grp => {
 			if (newCountry.showUnofficialRegions) {
 				let regionGroupElement = regionGroupTemplate.cloneNode();
-				regionGroupElement.innerHTML = getBilingualText(grp.englishName, grp.japaneseName);
+				regionGroupElement.innerText = getBilingualText(grp.englishName, grp.japaneseName);
 				dropDownList.appendChild(regionGroupElement);
 			}
 
 			grp.regions.filter(rgn => rgn.visited).forEach(rgn => {
 				if (rgn.visited) {
 					let regionButton = regionTemplate.cloneNode();
-					regionButton.innerHTML = getBilingualText(rgn.englishName, rgn.japaneseName);
+					regionButton.innerText = getBilingualText(rgn.englishName, rgn.japaneseName);
 					regionButton.id = this.#getDropdownElementId(rgn.id);
 					regionButton.title = getBilingualText(`See images from ${rgn.englishName}`, `${rgn.japaneseName}の写真を表示する`);
 					regionButton.addEventListener("click", () => { onSelectNewRegion(rgn.id, null, false) }, false);

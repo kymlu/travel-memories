@@ -44,10 +44,10 @@ export default class StartView extends BaseElement {
             newBtn.addEventListener("click", this.selectCountry.bind(this, country.id, `--${abb}-color`));
 
             let engTxt = text.cloneNode();
-            engTxt.innerHTML = country.englishName;
+            engTxt.innerText = country.englishName;
 
             let jpTxt = text.cloneNode();
-            jpTxt.innerHTML = country.japaneseName;
+            jpTxt.innerText = country.japaneseName;
 
             let newIconSection = iconSection.cloneNode();
             newIconSection.id = `${abb}-start-icon`;

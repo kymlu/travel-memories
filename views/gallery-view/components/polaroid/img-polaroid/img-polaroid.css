@@ -8,14 +8,14 @@
   height: 100%;
 }
 
-.polaroid-caption {
+.caption {
   width: 100%;
   display: flex;
   flex-direction: column;
   margin: 0px;
 }
 
-.polaroid-caption-text-container {
+.caption-text-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -29,7 +29,7 @@
   margin: 0px 0px 0px 0px;
 }
 
-.polaroid-pin-star {
+.star {
   position: fixed;
   color: white;
   opacity: 60%;

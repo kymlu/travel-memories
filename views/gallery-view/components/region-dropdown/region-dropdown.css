@@ -1,4 +1,4 @@
-#rgn-drop-down {
+#dropdown {
 	align-self: center;
 	position: fixed;
 	max-height: 250px;
@@ -12,12 +12,12 @@
 }
 
 @media only screen and (orientation: portrait) {
-	#rgn-drop-down {
+	#dropdown {
 		align-items: center;
 	}
 }
 
-#rgn-drop-down-bg {
+#background {
 	z-index: 2;
 	pointer-events: all !important;
 }

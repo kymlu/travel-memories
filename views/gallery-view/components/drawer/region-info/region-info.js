@@ -25,17 +25,17 @@ export default class RegionInfo extends BaseDrawer {
             .then(() => {
                 super.connectedCallback();
                 this._elements = {
-                    regionInfo: this.queryById("rgn-info-wrapper"),
-                    background: this.queryById("rgn-info-bg"),
-                    drawer: this.queryById("rgn-info-drawer"),
-                    map: this.queryById("country-map-mini"),
+                    regionInfo: this.queryById("wrapper"),
+                    background: this.queryById("background"),
+                    drawer: this.queryById("drawer"),
+                    map: this.queryById("map"),
                     areasTitle: this.queryById("areas-title"),
-                    datesSection: this.queryById("rgn-info-dates"),
-                    dates: this.queryById("rgn-dates"),
-                    descriptionEnglish: this.queryById("rgn-desc-eng"),
-                    descriptionJapanese: this.queryById("rgn-desc-jp"),
+                    datesSection: this.queryById("dates-section"),
+                    dates: this.queryById("dates-text"),
+                    descriptionEnglish: this.queryById("description-english"),
+                    descriptionJapanese: this.queryById("description-japanese"),
                     descriptionTitle: this.queryById("description-title"),
-                    areasList: this.queryById("rgn-areas"),
+                    areasList: this.queryById("areas-text"),
                 };
 
                 document.addEventListener(CUSTOM_EVENT_TYPES.HEADER_UPDATED, (event) => {
@@ -51,7 +51,7 @@ export default class RegionInfo extends BaseDrawer {
 
                     setBilingualProperty(
                         [[this.queryById("dates-title"), "Dates visited", "訪れた日付"]]
-                        , ATTRIBUTES.INNERHTML);
+                        , ATTRIBUTES.INNERTEXT);
                     addRemoveTransparent([this._elements.regionInfo], true);
                     addRemoveNoDisplay([this], true);
                 }, 50);
@@ -118,7 +118,7 @@ export default class RegionInfo extends BaseDrawer {
                 [this._elements.areasTitle, "Areas", "所"],
                 [this._elements.dates, currentRegion.datesEnglish, currentRegion.datesJapanese],
                 [this._elements.descriptionTitle, "About", this.currentCountry.officialRegionNameJapanese + "について"]
-            ], ATTRIBUTES.INNERHTML);
+            ], ATTRIBUTES.INNERTEXT);
 
             [
                 [this._elements.descriptionEnglish, currentRegion.descriptionEnglish],
@@ -127,7 +127,7 @@ export default class RegionInfo extends BaseDrawer {
                     return getBilingualText(area.englishName, area.japaneseName);
                 }).sort().join(" | ")]
             ].forEach(([element, text]) => {
-                element.innerHTML = text;
+                element.innerText = text;
             });
         } else {
             setTimeout(() => {
@@ -137,7 +137,7 @@ export default class RegionInfo extends BaseDrawer {
             setBilingualProperty([
                 [this._elements.areasTitle, this.currentCountry.officialRegionNameEnglish + "s", this.currentCountry.officialRegionNameJapanese],
                 [this._elements.descriptionTitle, "About", "国について"]]
-                , ATTRIBUTES.INNERHTML);
+                , ATTRIBUTES.INNERTEXT);
 
             [
                 [this._elements.descriptionEnglish, this.currentCountry.descriptionEnglish],
@@ -146,7 +146,7 @@ export default class RegionInfo extends BaseDrawer {
                     return getBilingualText(area.englishName, area.japaneseName);
                 }).sort().join(" | ")]
             ].forEach(([element, text]) => {
-                element.innerHTML = text;
+                element.innerText = text;
             });
         }
         this.queryByClassName("rgn-info").scrollTo({ top: 0, behavior: "smooth" });

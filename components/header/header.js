@@ -90,7 +90,7 @@ export default class CustomHeader extends BaseElement {
     }
 
     setRegionTitle(newContent) {
-        this.queryById("rgn-name").innerHTML = newContent;
+        this.queryById("rgn-name").innerText = newContent;
     }
 
     flipRegionNameArrow(isUp) {

@@ -31,9 +31,8 @@ export default class MapView extends BaseElement {
 				setTimeout(() => {
 					this._elements = {
 						view: this.queryByClassName("map-view"),
-						mapControl: this.queryById("map-control"),
 						mapContainer: this.queryById("map-container"),
-						map: this.queryById("country-map"),
+						map: this.queryById("map"),
 						mainTitle: this.queryById("main-title"),
 						mainTitleText: this.queryById("main-title-text"),
 						zoomIn: this.queryById("zoom-in"),
@@ -92,7 +91,7 @@ export default class MapView extends BaseElement {
 			this.selectedRegion = null;
 		}
 
-		this._elements.mainTitleText.innerHTML = this.defaultMainTitleText;
+		this._elements.mainTitleText.innerText = this.defaultMainTitleText;
 		this._elements.mainTitle.title = this.defaultMainTitleTitle;
 		scrollToTop(false);
 		// Note: for some reason making "this" transparent does not work.
@@ -128,7 +127,7 @@ export default class MapView extends BaseElement {
 				if (rgn.visited) {
 					// CSS won't work on document objects
 					let imgTitle = document.createElementNS("http://www.w3.org/2000/svg", ATTRIBUTES.TITLE);
-					imgTitle.innerHTML = getBilingualText(`Toggle ${rgn.englishName}`, `${rgn.japaneseName}をトグルする`);
+					imgTitle.innerText = getBilingualText(`Toggle ${rgn.englishName}`, `${rgn.japaneseName}をトグルする`);
 					rgnImg.appendChild(imgTitle);
 					rgnImg.setAttribute("fill", getAppColor());
 					rgnImg.setAttribute("stroke", "none");
@@ -171,7 +170,7 @@ export default class MapView extends BaseElement {
 
 		if (this.selectedRegion == region.id) {
 			this.selectedRegion = null;
-			this._elements.mainTitleText.innerHTML = this.defaultMainTitleText;
+			this._elements.mainTitleText.innerText = this.defaultMainTitleText;
 			this._elements.mainTitle.title = this.defaultMainTitleTitle;
 		} else {
 			this.selectedRegion = region.id;
@@ -179,7 +178,7 @@ export default class MapView extends BaseElement {
 			newRegionSvg.setAttribute("fill", getTranslucentAppColor());
 			newRegionSvg.setAttribute("stroke", getAppColor());
 			newRegionSvg.setAttribute("stroke-width", this.outlineThickness);
-			this._elements.mainTitleText.innerHTML = getBilingualText(region.englishName, region.japaneseName);
+			this._elements.mainTitleText.innerText = getBilingualText(region.englishName, region.japaneseName);
 			this._elements.mainTitle.title = this.defaultMainTitleTitle = getBilingualText(`See all images from ${region.englishName}`, `${region.japaneseName}の写真をすべて表示する`);
 		}
 

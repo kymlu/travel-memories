@@ -26,8 +26,8 @@ export default class TextPolaroid extends BasePolaroid {
 
     connectedCallback() {
         super.connectedCallback();
-        const polaroidImg = this.queryByClassName("polaroid-img");
-        polaroidImg.innerHTML = this.text;
+        const polaroidImg = this.queryByClassName("img-wrapper");
+        polaroidImg.innerText = this.text;
     }
 }
 

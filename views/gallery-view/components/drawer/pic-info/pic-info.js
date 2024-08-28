@@ -24,13 +24,14 @@ export default class PicInfo extends BaseDrawer {
 			.then(() => {
 				super.connectedCallback();
 				this._elements = {
-					drawer: this.queryById("pic-info-drawer"),
-					dateEn: this.queryById("fullscreen-eng-date"),
-					dateJp: this.queryById("fullscreen-jp-date"),
-					cityEn: this.queryById("fullscreen-eng-city"),
-					cityJp: this.queryById("fullscreen-jp-city"),
-					captionEn: this.queryById("fullscreen-eng-caption"),
-					captionJp: this.queryById("fullscreen-jp-caption"),
+					drawer: this.queryById("drawer"),
+					contents: this.queryById("contents"),
+					dateEn: this.queryById("date-english"),
+					dateJp: this.queryById("date-japanese"),
+					cityEn: this.queryById("city-english"),
+					cityJp: this.queryById("city-japanese"),
+					captionEn: this.queryById("caption-english"),
+					captionJp: this.queryById("caption-japanese"),
 					camera: this.queryById("camera-info"),
 					lens: this.queryById("lens-info"),
 					technical: this.queryById("technical-info"),
@@ -44,19 +45,19 @@ export default class PicInfo extends BaseDrawer {
 					], ATTRIBUTES.TITLE);
 
 					addClickListeners([
-						[this.queryById("pic-info-bg"), this.hide.bind(this)],
-						[this.queryById("pic-info-drawer"), (event) => { event.stopPropagation(); }],
+						[this.queryById("background"), this.hide.bind(this)],
+						[this._elements.drawer, (event) => { event.stopPropagation(); }],
 						[this.queryById("pic-info-close-btn"), this.hide.bind(this)],
 						[this.queryById("search-eng"), this.searchEnglish.bind(this)],
 						[this.queryById("search-jp"), this.searchJapanese.bind(this)]
 					]);
 
 					// currently remove because it will not work on Apple <- what is this lol
-					this.queryById("pic-info-details").addEventListener("touchstart", (event) => {
+					this.queryById("contents").addEventListener("touchstart", (event) => {
 						event.stopPropagation();
 					});
 
-					this.queryById("pic-info-details").addEventListener("touchmove", (event) => {
+					this.queryById("contents").addEventListener("touchmove", (event) => {
 						event.stopPropagation();
 					});
 
@@ -66,7 +67,7 @@ export default class PicInfo extends BaseDrawer {
 						let tagIcon = document.createElement("i");
 						tagIcon.classList.add("fa", tag.faClass);
 						let tagText = document.createElement("span");
-						tagText.innerHTML = getBilingualText(tag.englishName, tag.japaneseName);
+						tagText.innerText = getBilingualText(tag.englishName, tag.japaneseName);
 						tagElement.appendChild(tagIcon);
 						tagElement.appendChild(tagText);
 						tagElement.dataset.tagId = tag.id;
@@ -130,30 +131,30 @@ export default class PicInfo extends BaseDrawer {
 	/** Sets the picture information. */
 	setPicInfo(newPicture, countryId) {
 		this.currentPic = newPicture;
-		this.queryById("pic-info-details").scrollTo({ top: 0, behaviour: "instant" });
+		this.queryById("contents").scrollTo({ top: 0, behaviour: "instant" });
 		// get dates
 		if (this.currentPic.date) {
 			let date = getPictureDate(new Date(this.currentPic.date), this.currentPic.offset);
 			try {
-				this._elements.dateEn.innerHTML = LONG_DATETIME_FORMAT_EN.format(date);
-				this._elements.dateJp.innerHTML = LONG_DATETIME_FORMAT_JP.format(date);
+				this._elements.dateEn.innerText = LONG_DATETIME_FORMAT_EN.format(date);
+				this._elements.dateJp.innerText = LONG_DATETIME_FORMAT_JP.format(date);
 			} catch (error) {
 				console.error(error);
 			}
 		} else {
-			this._elements.dateEn.innerHTML = "Unknown date";
-			this._elements.dateJp.innerHTML = "不明な日付";
+			this._elements.dateEn.innerText = "Unknown date";
+			this._elements.dateJp.innerText = "不明な日付";
 		}
 		let area = this.currentPic.area;
 		let region = this.currentPic.region;
 
 		// English text for searching
 		this.#setEnglishLocation(countryId, area.englishName, region.englishName);
-		this._elements.cityEn.innerHTML = this.searchTermEng;
+		this._elements.cityEn.innerText = this.searchTermEng;
 
 		// Japanese text for searching
 		this.#setJapaneseLocation(countryId, area.japaneseName ?? area.englishName, region.japaneseName ?? region.englishName)
-		this._elements.cityJp.innerHTML = this.searchTermJp;
+		this._elements.cityJp.innerText = this.searchTermJp;
 
 		// image description
 		this.editDetail(this.currentPic.descriptionEnglish, this._elements.captionEn);
@@ -166,19 +167,19 @@ export default class PicInfo extends BaseDrawer {
 		let technicalCount = 0;
 		if (this.currentPic.fStop) {
 			let tempElement = document.createElement("span");
-			tempElement.innerHTML = `\u0192/${this.currentPic.fStop}`;
+			tempElement.innerText = `\u0192/${this.currentPic.fStop}`;
 			this._elements.technical.appendChild(tempElement);
 			technicalCount++;
 		}
 		if (this.currentPic.shutterSpeed) {
 			let tempElement = document.createElement("span");
-			tempElement.innerHTML = this.currentPic.shutterSpeed;
+			tempElement.innerText = this.currentPic.shutterSpeed;
 			this._elements.technical.appendChild(tempElement);
 			technicalCount++;
 		}
 		if (this.currentPic.iso) {
 			let tempElement = document.createElement("span");
-			tempElement.innerHTML = `iso ${this.currentPic.iso}`;
+			tempElement.innerText = `iso ${this.currentPic.iso}`;
 			this._elements.technical.appendChild(tempElement);
 			technicalCount++;
 		}
@@ -207,7 +208,7 @@ export default class PicInfo extends BaseDrawer {
 	editDetail(detail, element) {
 		if (detail) {
 			addRemoveNoDisplay([element], false);
-			element.innerHTML = detail;
+			element.innerText = detail;
 		} else {
 			addRemoveNoDisplay([element], true);
 		}
@@ -227,7 +228,7 @@ export default class PicInfo extends BaseDrawer {
 	#createfavouriteTag() {
 		let tempElement = document.createElement("div");
 		tempElement.classList.add("base-tag", "img-tag");
-		tempElement.innerHTML = getBilingualText("Favourite", "お気に入り");
+		tempElement.innerText = getBilingualText("Favourite", "お気に入り");
 		let tempStar = document.createElement("i");
 		tempStar.classList.add("fa", "fa-star");
 		tempElement.prepend(tempStar);

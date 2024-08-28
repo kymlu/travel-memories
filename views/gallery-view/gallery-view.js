@@ -93,7 +93,7 @@ export default class GalleryView extends BaseElement {
 
 					let changeFilterQueryButton = document.createElement("button");
 					changeFilterQueryButton.classList.add("action-btn");
-					changeFilterQueryButton.innerHTML = getBilingualText("Change filters", "フィルターを変更する");
+					changeFilterQueryButton.innerText = getBilingualText("Change filters", "フィルターを変更する");
 
 					this.filterPopup.addEventListener(CUSTOM_EVENT_TYPES.FILTER_POPUP_SUBMITTED, event => {
 						this.filterImages(event.detail.isOnlyFavs,
@@ -107,7 +107,7 @@ export default class GalleryView extends BaseElement {
 						this._elements.gallery.replaceChildren();
 						this.previousRegion = null;
 						if (this.visibleImages.length == 0) {
-							this._elements.gallery.innerHTML = this.noPicturesText;
+							this._elements.gallery.innerText = this.noPicturesText;
 							this._elements.gallery.appendChild(changeFilterQueryButton);
 							addRemoveClass([this._elements.gallery], "flex-column", true);
 						} else {
@@ -252,7 +252,7 @@ export default class GalleryView extends BaseElement {
 			if (this.allImages.length > 0) {
 				this.loadImages();
 			} else {
-				this._elements.gallery.innerHTML = this.noPicturesText;
+				this._elements.gallery.innerText = this.noPicturesText;
 			}
 		}, 0);
 	}

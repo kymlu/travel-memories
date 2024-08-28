@@ -1,4 +1,4 @@
-#rgn-info-wrapper {
+#wrapper {
 	z-index: 50;
 	position: relative;
 }
@@ -30,7 +30,7 @@
 	}
 }
 
-.rgn-info-drawer {
+.drawer {
 	position: relative;
 	width: 100%;
 	max-height: 50vh;
@@ -41,7 +41,7 @@
 }
 
 @media only screen and (orientation: portrait) {
-	.rgn-info-drawer {
+	.drawer {
 		max-height: 60vh;
 		padding: 20px 20px 10px 20px;
 	}

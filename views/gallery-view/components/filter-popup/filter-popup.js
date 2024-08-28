@@ -70,7 +70,7 @@ export default class FilterPopup extends BasePopup {
                         [this.queryById("filter-areas-title"), "Areas", "場所"],
                         [this.queryById("filter-clear-btn"), "Clear", "クリアする"],
                         [this.queryById("filter-submit-btn"), "Apply", "適用する"]
-                    ], ATTRIBUTES.INNERHTML);
+                    ], ATTRIBUTES.INNERTEXT);
 
                     this.queryById("filter-fav-label").childNodes[0].textContent = getBilingualText("Filter favourites", "お気に入りだけを表示する");
 
@@ -167,7 +167,7 @@ export default class FilterPopup extends BasePopup {
         areas, tags, cameras, regionNameEn, regionNameJp) {
         this.previouslyOpened = false;
         this.clearFilters();
-        this.queryById("filter-regions-title").innerHTML = getBilingualText(regionNameEn, regionNameJp);
+        this.queryById("filter-regions-title").innerText = getBilingualText(regionNameEn, regionNameJp);
         this.allRegions = regions.sort(sortByEnglishName);
         this.currentRegions = [];
         this.allAreas = areas.sort(sortByEnglishName);
@@ -217,14 +217,14 @@ export default class FilterPopup extends BasePopup {
             if (item) {
                 let newButton = this.filterOptionButton.cloneNode(true);
                 if (typeof (item) == "string") {
-                    newButton.innerHTML = item;
+                    newButton.innerText = item;
                     newButton.id = item.replace(" ", "");
                     newButton.addEventListener("click", () => {
                         toggleFunction(item);
                         newButton.classList.toggle("active");
                     });
                 } else {
-                    newButton.innerHTML = getBilingualText(item.englishName, item.japaneseName);
+                    newButton.innerText = getBilingualText(item.englishName, item.japaneseName);
                     newButton.id = item.id;
                     newButton.addEventListener("click", () => {
                         toggleFunction(item.id);

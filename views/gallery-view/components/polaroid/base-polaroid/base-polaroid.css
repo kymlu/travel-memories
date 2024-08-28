@@ -1,4 +1,4 @@
-.polaroid-frame {
+.frame {
   display: flex;
   position: relative;
   padding: 25px 10px 10px 10px;
@@ -15,7 +15,7 @@
   cursor: pointer;
 }
 
-.polaroid-img {
+.img-wrapper {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -25,7 +25,7 @@
   height: 235px;
 }
 
-.polaroid-img.blank {
+.img-wrapper.blank {
   background-color: rgb(220 220 220);
   font-size: var(--lrg-text-size);
   text-align: center;
@@ -33,7 +33,7 @@
   box-sizing: border-box;
 }
 
-.polaroid-pin {
+.pin {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -44,18 +44,18 @@
   border-radius: 50%;
   background-color: rgba(var(--main-color));
   box-shadow: 0px 4px 5px 1px #00000050, inset 1px -1px 7px 1px #00000002;
-}
 
-.polaroid-pin-shine {
-  position: fixed;
-  top: 8px;
-  margin-left: 2px;
-  height: 1px;
-  width: 1px;
-  border-radius: 50%;
-  box-shadow: 0px 0 6px 3px #FFFFFF;
-  background-color: #AAAAAA;
-  z-index: 100;
+  .shine {
+    position: fixed;
+    top: 8px;
+    margin-left: 2px;
+    height: 1px;
+    width: 1px;
+    border-radius: 50%;
+    box-shadow: 0px 0 6px 3px #FFFFFF;
+    background-color: #AAAAAA;
+    z-index: 100;
+  }
 }
 
 .pic-rotate.left-1 {

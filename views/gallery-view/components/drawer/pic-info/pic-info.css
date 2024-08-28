@@ -1,4 +1,4 @@
-.pic-info-drawer {
+.drawer {
     align-items: flex-start;
     gap: 15px;
     padding: 50px;
@@ -8,7 +8,7 @@
 }
 
 @media only screen and (orientation: portrait) {
-    .pic-info-drawer {
+    .drawer {
         position: fixed;
         bottom: 0;
         padding: 10px 20px 20px 20px;
@@ -18,13 +18,13 @@
     }
 }
 
-#pic-info-details {
+#contents {
     gap: 15px;
     width: 100%;
     overflow-y: auto;
 }
 
-#pic-info-bg {
+#background {
     opacity: 0% !important;
 }
 

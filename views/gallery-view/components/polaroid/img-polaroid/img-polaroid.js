@@ -46,7 +46,7 @@ export default class ImagePolaroid extends BasePolaroid {
     connectedCallback() {
         super.connectedCallback();
 
-        const polaroid = this.queryByClassName("polaroid-frame");
+        const polaroid = this.queryByClassName("frame");
         const img = polaroid.querySelector("img");
         if (img) {
             img.onload = function () {
@@ -66,22 +66,22 @@ export default class ImagePolaroid extends BasePolaroid {
         const dates = polaroid.querySelector(".polaroid-date").querySelectorAll("span");
         if (dates) {
             if (this.date) {
-                dates[0].innerHTML = SHORT_DATETIME_FORMAT_EN.format(this.date);
-                dates[1].innerHTML = SHORT_DATETIME_FORMAT_JP.format(this.date);
+                dates[0].innerText = SHORT_DATETIME_FORMAT_EN.format(this.date);
+                dates[1].innerText = SHORT_DATETIME_FORMAT_JP.format(this.date);
             } else {
-                dates[0].innerHTML = "";
-                dates[1].innerHTML = "";
+                dates[0].innerText = "";
+                dates[1].innerText = "";
             }
         }
 
-        const captions = polaroid.querySelector(".polaroid-caption-text-container").querySelectorAll("span");
+        const captions = polaroid.querySelector(".caption-text-container").querySelectorAll("span");
         if (captions) {
-            captions[0].innerHTML = this.enCaption ?? "";
-            captions[1].innerHTML = this.jpCaption ?? "";
+            captions[0].innerText = this.enCaption ?? "";
+            captions[1].innerText = this.jpCaption ?? "";
         }
 
         if (this.isFavourite) {
-            addRemoveNoDisplay([polaroid.querySelector(".polaroid-pin-star")], false);
+            addRemoveNoDisplay([polaroid.querySelector(".star")], false);
         }
     }
 }

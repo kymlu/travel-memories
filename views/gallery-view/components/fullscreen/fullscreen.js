@@ -38,11 +38,11 @@ export default class Fullscreen extends BaseElement {
 		fetchInnerHtml("views/gallery-view/components/fullscreen/fullscreen.html", this, true)
 			.then(() => {
 				this._elements = {
-					view: this.queryById("fullscreen"),
-					control: this.queryById("fullscreen-ctrl"),
+					view: this.queryById("wrapper"),
+					control: this.queryById("main-control"),
 					background: this.queryByClassName("popup-bg"),
-					picture: this.queryById("fullscreen-pic"),
-					nextPicture: this.queryById("fullscreen-pic-next"),
+					picture: this.queryById("current-pic"),
+					nextPicture: this.queryById("next-pic"),
 					leftArrow: this.queryById("left-arrow"),
 					rightArrow: this.queryById("right-arrow"),
 					picInfoButton: this.queryById("pic-info-btn")

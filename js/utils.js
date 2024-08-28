@@ -182,8 +182,8 @@ export function getImageAddress(countryId, regionId, fileName) {
 export function setBilingualProperty(elements, property) {
 	elements.forEach(([element, englishText, japaneseText]) => {
 		try {
-			if (property == ATTRIBUTES.INNERHTML) {
-				element.innerHTML = getBilingualText(englishText, japaneseText);
+			if (property == ATTRIBUTES.INNERTEXT) {
+				element.innerText = getBilingualText(englishText, japaneseText);
 			} else if (property == ATTRIBUTES.TITLE) {
 				element.title = getBilingualText(englishText, japaneseText);
 			} else {
