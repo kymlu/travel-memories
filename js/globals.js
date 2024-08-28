@@ -8,6 +8,7 @@ import StartView from "../views/start-view/start-view.js";
 
 /** @type {string} */
 let appColor = null;
+/** @type {string} */
 let translucentAppColor = null;
 /** @type {any} */
 let currentCountry = null;
@@ -33,15 +34,15 @@ export function setSiteContents() {
     startView = document.querySelector("start-view");
     mapView = document.querySelector("map-view");
     galleryView = document.querySelector("gallery-view");
-    
+
     header = document.querySelector("custom-header");
     header.addEventListener(CUSTOM_EVENT_TYPES.LOADING_COMPLETE, () => {
         header.setButtonFunctions(goToStartView.bind(this, false),
-        goToMapView,
-        galleryView.toggleRegionDropdown.bind(galleryView),
-        galleryView.toggleRegionInfo.bind(galleryView, null),
-        galleryView.showFilter.bind(galleryView),
-        infoPopup.open.bind(infoPopup, null));
+            goToMapView,
+            galleryView.toggleRegionDropdown.bind(galleryView),
+            galleryView.toggleRegionInfo.bind(galleryView, null),
+            galleryView.showFilter.bind(galleryView),
+            infoPopup.open.bind(infoPopup, null));
     })
     const headerSetEvent = new CustomEvent(CUSTOM_EVENT_TYPES.HEADER_SET, { detail: { header: header } });
     document.dispatchEvent(headerSetEvent);
@@ -87,14 +88,14 @@ export function goToMapView() {
 
 export function onSelectNewRegion(regionId, isPopped, isNewGallery) {
     if (isMapView()) {
-		document.body.style.overflowY = "hidden";
+        document.body.style.overflowY = "hidden";
         mapView.hide();
     }
 
     if (isPopped == null) {
         window.history.pushState({ type: VIEW_NAMES.GALLERY, regionId: regionId }, "", null);
     }
-    
+
     if (regionId != undefined && regionId != null) {
         let newRegion = currentCountry.regionGroups.flatMap(x => x.regions).filter(rgn => rgn.id == regionId);
         galleryView.setNewRegion(newRegion, true, isNewGallery);
@@ -102,7 +103,7 @@ export function onSelectNewRegion(regionId, isPopped, isNewGallery) {
         let visitedRgns = currentCountry.regionGroups.flatMap(grp => grp.regions.filter(rgn => rgn.visited));
         galleryView.setNewRegion(visitedRgns, false, isNewGallery);
     }
-    
+
     setTimeout(() => {
         document.body.style.overflowY = "auto";
         setCurrentView(VIEW_NAMES.GALLERY);
@@ -110,7 +111,7 @@ export function onSelectNewRegion(regionId, isPopped, isNewGallery) {
     }, 50);
 }
 
-export function getHeader(){
+export function getHeader() {
     return header;
 }
 
@@ -163,31 +164,16 @@ export function setCurrentCountry(countryId, countryColor, isPopped) {
         });
         setAppColor(countryColor);
 
-        const newCountryEvent = new CustomEvent(CUSTOM_EVENT_TYPES.NEW_COUNTRY_SELECTED);
+        const newCountryEvent = new CustomEvent(CUSTOM_EVENT_TYPES.NEW_COUNTRY_SELECTED, { detail: { country: currentCountry } });
         document.dispatchEvent(newCountryEvent);
 
         mapView.addEventListener(CUSTOM_EVENT_TYPES.LOADING_COMPLETE, showMap);
     }
 }
 
-function showMap(){
+function showMap() {
     mapView.show();
     header.toggleVisibility(true);
     setCurrentView(VIEW_NAMES.MAP);
     mapView.removeEventListener(CUSTOM_EVENT_TYPES.LOADING_COMPLETE, showMap);
-}
-
-/**
- * Gets the current country.
- * @returns the current country.
- */
-export function getCurrentCountry() {
-    return currentCountry;
-}
-
-/**
- * @returns ```True``` if a country is currently selected.
- */
-export function isCountrySelected() {
-    return currentCountry != null;
 }

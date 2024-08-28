@@ -1,11 +1,12 @@
 import BaseElement from "../../js/base-element.js";
 import { ATTRIBUTES, CUSTOM_EVENT_TYPES, DEFAULT_TIMEOUT } from "../../js/constants.js";
 import {
-	getAppColor, getCurrentCountry, getTranslucentAppColor, onSelectNewRegion
+	getAppColor, getTranslucentAppColor, onSelectNewRegion
 } from "../../js/globals.js";
 import {
 	addClickListeners, addRemoveClass, addRemoveNoDisplay,
-	addRemoveTransparent, fetchInnerHtml, getBilingualText, scrollToTop
+	addRemoveTransparent, fetchInnerHtml, getBilingualText, 
+	scrollToTop, setBilingualProperty
 } from "../../js/utils.js";
 
 /** The Map View. */
@@ -20,7 +21,8 @@ export default class MapView extends BaseElement {
 		this.outlineThickness = 0;
 		this.scaleLevel = 1;
 		this.isScaling = false;
-		document.addEventListener(CUSTOM_EVENT_TYPES.NEW_COUNTRY_SELECTED, this.handleNewCountry.bind(this));
+		document.addEventListener(CUSTOM_EVENT_TYPES.NEW_COUNTRY_SELECTED,
+			(event) => { this.handleNewCountry(event.detail.country) });
 	}
 
 	connectedCallback() {
@@ -40,6 +42,10 @@ export default class MapView extends BaseElement {
 
 					setTimeout(() => {
 						this._elements.map.addEventListener("load", this.colourMap.bind(this));
+
+						setBilingualProperty([[this._elements.zoomIn, "Zoom in", "ズームイン"],
+						[this._elements.zoomOut, "Zoom out", "ズームアウト"]], ATTRIBUTES.TITLE);
+
 						addClickListeners([
 							[this._elements.mainTitle, () => { onSelectNewRegion(this.selectedRegion, null, true); }],
 							[this._elements.zoomIn, this.scaleMap.bind(this, undefined, true)],
@@ -65,9 +71,9 @@ export default class MapView extends BaseElement {
 	}
 
 	/** Function to run when a new country is selected. */
-	handleNewCountry() {
+	handleNewCountry(newCountry) {
 		addRemoveNoDisplay([this], false);
-		this.currentCountry = getCurrentCountry();
+		this.currentCountry = newCountry;
 		this.defaultMainTitleText = getBilingualText(this.currentCountry.englishName, this.currentCountry.japaneseName);
 		this.defaultMainTitleTitle = getBilingualText(`See all images from ${this.currentCountry.englishName}`, `${this.currentCountry.japaneseName}の写真をすべて表示する`);
 
@@ -142,7 +148,7 @@ export default class MapView extends BaseElement {
 					});
 
 					rgnImg.addEventListener("mouseup", this.selectRegion.bind(this, rgn));
-					
+
 					const loadingCompleteEvent = new CustomEvent(CUSTOM_EVENT_TYPES.LOADING_COMPLETE);
 					this.dispatchEvent(loadingCompleteEvent);
 				} else {
@@ -205,7 +211,7 @@ export default class MapView extends BaseElement {
 		} else {
 			this.scaleLevel = newScaleValue;
 		}
-		
+
 		addRemoveClass([this._elements.mapContainer], "scaled", this.scaleLevel > minScale);
 		addRemoveClass([this._elements.zoomIn], "disabled", this.scaleLevel == maxScale);
 		addRemoveClass([this._elements.zoomOut], "disabled", this.scaleLevel == minScale);

@@ -2,8 +2,9 @@ import { ATTRIBUTES } from "./constants.js";
 
 /**
  * Fetches the html from a given address and inserts it into the element.
- * @param {string} address 
- * @param {HTMLElement} element 
+ * @param {string} address
+ * @param {HTMLElement} element
+ * @param {bool} hasShadowRoot
  */
 export async function fetchInnerHtml(address, element, hasShadowRoot) {
 	await fetch(address)
@@ -23,9 +24,9 @@ export async function fetchInnerHtml(address, element, hasShadowRoot) {
 }
 
 /**
- * Fetches the html from a given address and inserts it into the element.
- * @param {string} address 
- * @param {CSSStyleSheet} styleSheet 
+ * Fetches the css from a given address and adds it to the stylesheet.
+ * @param {string} address
+ * @param {CSSStyleSheet} styleSheet
  */
 export async function fetchStyle(address, styleSheet) {
 	await fetch(address)
@@ -103,28 +104,26 @@ export function sortImgs(a, b) {
 
 /**
  * Adds or removes a specified class from element(s)' class lists.
- * @param {Element[]} elements - an element name, a list of element names, or a list of element objects.
+ * @param {HTMLElement[]} elements - an element name, a list of element names, or a list of element objects.
  * @param {string} className - the name of the class to add or remove.
  * @param {boolean} isAdd -  ```True``` if adding, ```False``` if removing.
  */
 export function addRemoveClass(elements, className, isAdd) {
-	if (elements) {
-		if (elements.length > 0) {
-			elements.forEach(element => {
-				var e = typeof element == "string" ? document.getElementById(element) : element;
-				if (isAdd) {
-					e?.classList?.add(className);
-				} else {
-					e?.classList?.remove(className);
-				}
-			});
-		}
+	if (elements?.length > 0) {
+		elements.forEach(element => {
+			var e = typeof element == "string" ? document.getElementById(element) : element;
+			if (isAdd) {
+				e?.classList?.add(className);
+			} else {
+				e?.classList?.remove(className);
+			}
+		});
 	}
 }
 
 /**
  * Adds or removes the "transparent" class.
- * @param {Element[]} elements - an element name, a list of element names, or a list of element objects.
+ * @param {HTMLElement[]} elements - an element name, a list of element names, or a list of element objects.
  * @param {boolean} isAdd -  ```True``` if adding, ```False``` if removing.
  */
 export function addRemoveTransparent(elements, isAdd) {
@@ -133,7 +132,7 @@ export function addRemoveTransparent(elements, isAdd) {
 
 /**
  * Adds or removes the "no-display" class.
- * @param {Element[]} elements - an element name, a list of element names, or a list of element objects.
+ * @param {HTMLElement[]} elements - an element name, a list of element names, or a list of element objects.
  * @param {boolean} isAdd -  ```True``` if adding, ```False``` if removing.
  */
 export function addRemoveNoDisplay(elements, isAdd) {
@@ -176,12 +175,13 @@ export function getImageAddress(countryId, regionId, fileName) {
 	return `assets/img/${countryId}/${regionId}/${fileName}`;
 }
 
+/** 
+ * @param {any[][]} elements
+ * @param {string}} property  
+ */
 export function setBilingualProperty(elements, property) {
 	elements.forEach(([element, englishText, japaneseText]) => {
 		try {
-			if (typeof element == "string") {
-				element = document.getElementById(element);
-			}
 			if (property == ATTRIBUTES.INNERHTML) {
 				element.innerHTML = getBilingualText(englishText, japaneseText);
 			} else if (property == ATTRIBUTES.TITLE) {
@@ -195,6 +195,9 @@ export function setBilingualProperty(elements, property) {
 	});
 }
 
+/**
+ * @param {any[][]} elements 
+ */
 export function addClickListeners(elements) {
 	elements.forEach(([element, callback]) => {
 		try {

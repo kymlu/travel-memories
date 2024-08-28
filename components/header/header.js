@@ -17,6 +17,10 @@ export default class CustomHeader extends BaseElement {
         super();
         this.buttons = {};
         this.sections = {};
+        document.addEventListener(CUSTOM_EVENT_TYPES.NEW_COUNTRY_SELECTED,
+            (event) => {
+                this.handleNewCountry(event.detail.country)
+            });
     }
 
     connectedCallback() {
@@ -41,7 +45,7 @@ export default class CustomHeader extends BaseElement {
                     filter: this.queryById("filter-btn"),
                     creator: this.queryById("creator-btn")
                 };
-                
+
                 const loadingCompleteEvent = new CustomEvent(CUSTOM_EVENT_TYPES.LOADING_COMPLETE);
                 this.dispatchEvent(loadingCompleteEvent);
 
@@ -94,10 +98,10 @@ export default class CustomHeader extends BaseElement {
     }
 
     /** Changes values when the selected country changes. */
-    onChangeCountry(englishRegionName, japaneseRegionName) {
+    handleNewCountry(newCountry) {
         setBilingualProperty([
-            [this.buttons.regionDropdown, `Change ${englishRegionName}`, `${japaneseRegionName}を切り替える`],
-            [this.buttons.info, `Toggle ${englishRegionName} info`, `${japaneseRegionName}の情報をトグル`],
+            [this.buttons.regionDropdown, `Change ${newCountry.officialRegionNameEnglish}`, `${newCountry.officialRegionNameJapanese}を切り替える`],
+            [this.buttons.regionInfo, `Toggle ${newCountry.officialRegionNameEnglish} info`, `${newCountry.officialRegionNameJapanese}の情報をトグル`],
         ], ATTRIBUTES.TITLE);
     }
 
@@ -129,7 +133,7 @@ export default class CustomHeader extends BaseElement {
         } else {
             console.error("View does not exist.");
         }
-        const headerUpdatedEvent = new CustomEvent(CUSTOM_EVENT_TYPES.HEADER_UPDATED);
+        const headerUpdatedEvent = new CustomEvent(CUSTOM_EVENT_TYPES.HEADER_UPDATED, { detail: { header: this } });
         document.dispatchEvent(headerUpdatedEvent);
     }
 }

@@ -3,6 +3,7 @@
   width: 100%;
   height: 100%;
   flex-direction: row;
+  z-index: 500;
 }
 
 .fullscreen-gallery {
@@ -19,11 +20,16 @@
   }
 }
 
+.popup-bg{
+  z-index: 0;
+}
+
 .fullscreen-ctrl {
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  z-index: 1;
 }
 
 .fullscreen-pic-right {
@@ -58,12 +64,13 @@
 .fullscreen-fns {
   position: absolute;
   display: flex;
-  justify-content: space-between;
   flex-direction: column;
+  justify-content: space-between;
   top: 0px;
   right: 0px;
   padding: 10px;
   box-sizing: border-box;
+  z-index: 3;
 }
 
 @media only screen and (orientation: portrait) {
@@ -72,4 +79,8 @@
     bottom: 0px;
     justify-content: end;
   }
+}
+
+pic-info {
+  z-index: 10;
 }

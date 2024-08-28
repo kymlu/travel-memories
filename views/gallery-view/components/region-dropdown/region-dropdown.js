@@ -1,8 +1,9 @@
 import BaseElement from "../../../../js/base-element.js";
 import { CUSTOM_EVENT_TYPES } from "../../../../js/constants.js";
-import { getCurrentCountry, getHeader, isGalleryView, onSelectNewRegion } from "../../../../js/globals.js";
+import { getHeader, isGalleryView, onSelectNewRegion } from "../../../../js/globals.js";
 import {
-	addClickListeners, addRemoveNoDisplay, addRemoveTransparent, fetchInnerHtml, getBilingualText
+	addClickListeners, addRemoveNoDisplay, addRemoveTransparent, 
+	fetchInnerHtml, getBilingualText
 } from "../../../../js/utils.js";
 
 /** The Region Dropdown. */
@@ -12,7 +13,8 @@ export default class RegionDropdown extends BaseElement {
 		this.hasOpenedForRegion = false;
 		this.currentRegionId = null;
 
-		document.addEventListener(CUSTOM_EVENT_TYPES.NEW_COUNTRY_SELECTED, this.handleNewCountry.bind(this));
+		document.addEventListener(CUSTOM_EVENT_TYPES.NEW_COUNTRY_SELECTED,
+			(event) => { this.handleNewCountry(event.detail.country) });
 	}
 
 	connectedCallback() {
@@ -23,8 +25,9 @@ export default class RegionDropdown extends BaseElement {
 					content: this.queryById("rgn-drop-down"),
 				}
 				setTimeout(() => {
-					document.addEventListener(CUSTOM_EVENT_TYPES.HEADER_UPDATED, this.#adjustPosition.bind(this));
-					window.addEventListener("resize", () =>{
+					document.addEventListener(CUSTOM_EVENT_TYPES.HEADER_UPDATED,
+						(event) => { this.#adjustPosition(event.detail.header) });
+					window.addEventListener("resize", () => {
 						if (isGalleryView()) {
 							this.#adjustPosition();
 						}
@@ -41,7 +44,7 @@ export default class RegionDropdown extends BaseElement {
 	/** 
 	 * Creates the region drop down list.
 	 */
-	handleNewCountry() {
+	handleNewCountry(newCountry) {
 		// the dropdown object
 		const dropDownList = this._elements.content;
 		dropDownList.replaceChildren();
@@ -54,9 +57,8 @@ export default class RegionDropdown extends BaseElement {
 		regionTemplate.classList.add("rgn-txt", "regular-text");
 
 		// Iterate each unofficial and official region, sort by visited/not visited
-		const currentCountry = getCurrentCountry();
-		currentCountry.regionGroups.filter(grp => grp.regions.some(rgn => rgn.visited)).forEach(grp => {
-			if (currentCountry.showUnofficialRegions) {
+		newCountry.regionGroups.filter(grp => grp.regions.some(rgn => rgn.visited)).forEach(grp => {
+			if (newCountry.showUnofficialRegions) {
 				let regionGroupElement = regionGroupTemplate.cloneNode();
 				regionGroupElement.innerHTML = getBilingualText(grp.englishName, grp.japaneseName);
 				dropDownList.appendChild(regionGroupElement);
@@ -79,7 +81,7 @@ export default class RegionDropdown extends BaseElement {
 	 * @param {string} oldRegionId 
 	 * @param {string} newRegionId 
 	*/
-	changeSelectedRegion(oldRegionId, newRegionId) {		
+	changeSelectedRegion(oldRegionId, newRegionId) {
 		if (oldRegionId) {
 			this.queryById(this.#getDropdownElementId(oldRegionId))?.classList.remove("active");
 		}
@@ -117,8 +119,8 @@ export default class RegionDropdown extends BaseElement {
 		return `${name}-dropdown`;
 	}
 
-	#adjustPosition(){
-		this._elements.content.style.top = `${getHeader()?.getHeight()}px`;
+	#adjustPosition(header) {
+		this._elements.content.style.top = `${header?.getHeight()}px`;
 	}
 }
 

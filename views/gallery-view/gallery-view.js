@@ -3,7 +3,7 @@ import BaseElement from '../../js/base-element.js';
 import {
 	CUSTOM_EVENT_TYPES, DEFAULT_TIMEOUT, SCROLL_THRESHOLD, TAGS
 } from '../../js/constants.js'
-import { getCurrentCountry, isGalleryView, onSelectNewRegion } from '../../js/globals.js';
+import { isGalleryView, onSelectNewRegion } from '../../js/globals.js';
 import {
 	addClickListeners, addRemoveClass, addRemoveNoDisplay, addRemoveTransparent,
 	fetchInnerHtml, getBilingualText, getImageAddress, getScrollPosition, scrollToTop, sortImgs
@@ -24,8 +24,12 @@ export default class GalleryView extends BaseElement {
 		// filter
 		/** @type {CustomHeader} */
 		this.header = null;
-		document.addEventListener(CUSTOM_EVENT_TYPES.HEADER_SET, (event) => { this.header = event.detail.header });
-		document.addEventListener(CUSTOM_EVENT_TYPES.HEADER_UPDATED, this.#adjustPosition.bind(this));
+		document.addEventListener(CUSTOM_EVENT_TYPES.HEADER_SET,
+			(event) => {
+				this.header = event.detail.header;
+			});
+		document.addEventListener(CUSTOM_EVENT_TYPES.HEADER_UPDATED,
+			() => { this.#adjustPosition(); });
 
 		// region info
 		this.currentRegion = null;
@@ -54,7 +58,8 @@ export default class GalleryView extends BaseElement {
 
 		this.noPicturesText = getBilingualText("No pictures available (yet)", "写真は(まだ)ありません");
 
-		document.addEventListener(CUSTOM_EVENT_TYPES.NEW_COUNTRY_SELECTED, this.handleNewCountry.bind(this));
+		document.addEventListener(CUSTOM_EVENT_TYPES.NEW_COUNTRY_SELECTED,
+			(event) => { this.handleNewCountry(event.detail.country) });
 	}
 
 	connectedCallback() {
@@ -150,11 +155,11 @@ export default class GalleryView extends BaseElement {
 
 	// regenerating data
 	/** Reset some country-dependant variables. */
-	handleNewCountry() {
+	handleNewCountry(newCountry) {
 		this.isNewCountry = true;
+		this.currentCountry = newCountry;
 		this.allImages = [];
 		this.visibleImages = [];
-		this.currentCountry = getCurrentCountry();
 	}
 
 	/** Set values based on a new user-selected region.
@@ -401,8 +406,8 @@ export default class GalleryView extends BaseElement {
 		}
 	}
 
-	#adjustPosition(){
-		if(this._elements.view && this._elements.view.style){
+	#adjustPosition() {
+		if (this._elements.view && this._elements.view.style) {
 			this._elements.view.style.marginTop = `${this.header?.getHeight()}px`;
 		}
 	}
@@ -419,7 +424,7 @@ export default class GalleryView extends BaseElement {
 			this.isToTopVisible = false;
 		}
 	}
-	
+
 	toggleRegionDropdown() {
 		this.regionDropdown.toggleVisibility();
 	}

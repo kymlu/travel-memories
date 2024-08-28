@@ -59,14 +59,13 @@ function fetchData() {
 			}
 		}).catch(error => {
 			console.error("Error loading data.", error);
-			hasError = true;
 		});
 }
 
 document.addEventListener("DOMContentLoaded", () => {
 	scrollToTop(false);
-		initializeSite();
-		setTimeout(() => {
-			fetchData();
-		}, 100);
+	initializeSite();
+	setTimeout(() => {
+		fetchData();
+	}, 100);
 });

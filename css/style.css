@@ -145,7 +145,7 @@ button:active,
 }
 
 /* Popup */
-.overlay {
+.wrapper {
   position: absolute;
   z-index: 10000;
 }

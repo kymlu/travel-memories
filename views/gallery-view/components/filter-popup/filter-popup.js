@@ -71,7 +71,9 @@ export default class FilterPopup extends BasePopup {
                         [this.queryById("filter-clear-btn"), "Clear", "クリアする"],
                         [this.queryById("filter-submit-btn"), "Apply", "適用する"]
                     ], ATTRIBUTES.INNERHTML);
+
                     this.queryById("filter-fav-label").childNodes[0].textContent = getBilingualText("Filter favourites", "お気に入りだけを表示する");
+
                     setBilingualProperty([
                         [this._elements.keywordClearBtn, "Clear keyword", "キーワードをクリアする"],
                     ], ATTRIBUTES.TITLE);

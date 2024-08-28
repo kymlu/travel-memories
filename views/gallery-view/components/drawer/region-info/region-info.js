@@ -1,5 +1,5 @@
 import { ATTRIBUTES, CUSTOM_EVENT_TYPES, DEFAULT_TIMEOUT } from "../../../../../js/constants.js";
-import { getAppColor, getCurrentCountry, getHeader } from "../../../../../js/globals.js";
+import { getAppColor, getHeader } from "../../../../../js/globals.js";
 import {
     addClickListeners, addRemoveTransparent, addRemoveNoDisplay, getBilingualText,
     fetchInnerHtml, isPortraitMode, scrollToTop, setBilingualProperty,
@@ -16,7 +16,8 @@ export default class RegionInfo extends BaseDrawer {
         this.hasMapLoaded = false;
 
         this.currentCountry = null;
-        document.addEventListener(CUSTOM_EVENT_TYPES.NEW_COUNTRY_SELECTED, this.handleNewCountry.bind(this));
+        document.addEventListener(CUSTOM_EVENT_TYPES.NEW_COUNTRY_SELECTED,
+            (event) => { this.handleNewCountry(event.detail.country) });
     }
 
     connectedCallback() {
@@ -24,7 +25,7 @@ export default class RegionInfo extends BaseDrawer {
             .then(() => {
                 super.connectedCallback();
                 this._elements = {
-                    regionInfo: this.queryById("rgn-info"),
+                    regionInfo: this.queryById("rgn-info-wrapper"),
                     background: this.queryById("rgn-info-bg"),
                     drawer: this.queryById("rgn-info-drawer"),
                     map: this.queryById("country-map-mini"),
@@ -37,8 +38,8 @@ export default class RegionInfo extends BaseDrawer {
                     areasList: this.queryById("rgn-areas"),
                 };
 
-                document.addEventListener(CUSTOM_EVENT_TYPES.HEADER_UPDATED, () => {
-                    this._elements.regionInfo.style.top = `${getHeader()?.getHeight()}px`;
+                document.addEventListener(CUSTOM_EVENT_TYPES.HEADER_UPDATED, (event) => {
+                    this._elements.regionInfo.style.top = `${event.detail.header?.getHeight()}px`;
                 });
 
                 setTimeout(() => {
@@ -70,9 +71,9 @@ export default class RegionInfo extends BaseDrawer {
     /** Makes value changes based on new country.
      * @param {string} countryId
      */
-    handleNewCountry() {
+    handleNewCountry(newCountry) {
         addRemoveNoDisplay([this], false);
-        this.currentCountry = getCurrentCountry();
+        this.currentCountry = newCountry;
         addRemoveTransparent([this._elements.map], true);
         setTimeout(() => {
             this.createMap();
@@ -88,7 +89,7 @@ export default class RegionInfo extends BaseDrawer {
         newMap.setAttribute("class", "mini-map opacity-transition");
         newMap.setAttribute("type", "image/svg+xml");
         newMap.setAttribute("data", `assets/img/country/${this.currentCountry.id}.svg`);
-        newMap.setAttribute("alt", getBilingualText("Map", "地図"));
+        newMap.setAttribute("title", getBilingualText("Map", "地図"));
         this._elements.map.parentElement.replaceChild(newMap, this._elements.map);
         this._elements.map = newMap;
     }
@@ -102,7 +103,7 @@ export default class RegionInfo extends BaseDrawer {
         if (!isNewGallery) {
             addRemoveTransparent([this._elements.background], false);
         }
-        
+
         this.isVisible = true;
         addRemoveNoDisplay([this._elements.datesSection], !isSingleRegionSelected);
 
@@ -167,7 +168,7 @@ export default class RegionInfo extends BaseDrawer {
                 scrollToTop(true);
                 setTimeout(() => {
                     this.isThrottling = false;
-                }, DEFAULT_TIMEOUT*2);
+                }, DEFAULT_TIMEOUT * 2);
             } else {
                 this._elements.regionInfo.style.position = "sticky";
                 this._elements.regionInfo.style.top = `${getHeader()?.getHeight()}px`;
@@ -193,7 +194,7 @@ export default class RegionInfo extends BaseDrawer {
                 });
                 setTimeout(() => {
                     this.isThrottling = false;
-                }, DEFAULT_TIMEOUT*2);
+                }, DEFAULT_TIMEOUT * 2);
             }
         }
         addRemoveTransparent([this._elements.regionInfo], true);
@@ -209,7 +210,7 @@ export default class RegionInfo extends BaseDrawer {
 
         this.isThrottling = true;
         setTimeout(() => {
-            let rgnInfoOffset = this._elements.drawer.getBoundingClientRect().height / 2;
+            let rgnInfoOffset = this._elements.drawer.getBoundingClientRect().height * 0.9;
             let userPosition = getScrollPosition();
             if (this.isVisible && userPosition > rgnInfoOffset) {
                 this.hide(false);
@@ -240,10 +241,8 @@ export default class RegionInfo extends BaseDrawer {
     /** Filter the mini map. */
     filterMiniMap(currentRegion) {
         setTimeout(() => {
-            if (!this._elements.map.hasAttribute("data") || this._elements.map.data == "") {
-                setTimeout(() => {
-                    return;
-                }, 0);
+            if (!this._elements.map.hasAttribute("data") || this._elements.map.data == "" || this.currentCountry.regionGroups == null) {
+                return;
             };
             const svgDoc = this._elements.map.contentDocument;
             const appColour = getAppColor();

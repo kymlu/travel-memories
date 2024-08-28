@@ -1,9 +1,8 @@
-<div id="fullscreen" class="centered overlay opacity-transition transparent fullscreen-container"
-	style="z-index: 500;">
+<div id="fullscreen" class="centered wrapper opacity-transition transparent fullscreen-container">
 	<div id="fullscreen-gallery" class="fullscreen-gallery">
-		<div id="fullscreen-bg" class="popup-bg opacity-transition transparent" style="z-index: 0;"></div>
-		<div id="fullscreen-ctrl" class="fullscreen-ctrl" style="z-index: 1;">
-			<button id="left-arrow">
+		<div id="fullscreen-bg" class="popup-bg opacity-transition transparent"></div>
+		<div id="fullscreen-ctrl" class="fullscreen-ctrl">
+			<button id="left-arrow" aria-label="See previous picture">
 				<i class="fullscreen-arrow fa fa-caret-left"></i>
 			</button>
 			<div>
@@ -11,16 +10,16 @@
 					style="position: absolute;" />
 				<img id="fullscreen-pic" class="fullscreen-pic centered" style="position: absolute;" />
 			</div>
-			<button id="right-arrow">
+			<button id="right-arrow" aria-label="See next picture">
 				<i class="fullscreen-arrow fa fa-caret-right"></i>
 			</button>
 		</div>
-		<div class="fullscreen-fns" style="z-index: 3;">
-			<button id="pic-info-btn">
+		<div class="fullscreen-fns">
+			<button id="pic-info-btn" aria-label="Toggle picture info">
 				<i class="white large-icon fa fa-info-circle"></i>
 			</button>
 		</div>
 	</div>
-	<pic-info style="z-index: 10;"></pic-info>
+	<pic-info></pic-info>
 </div>
 <link rel="stylesheet" type="text/css" href="views/gallery-view/components/fullscreen/fullscreen.css">
