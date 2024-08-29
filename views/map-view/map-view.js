@@ -5,7 +5,7 @@ import {
 } from "../../js/globals.js";
 import {
 	addClickListeners, addRemoveClass, addRemoveNoDisplay,
-	addRemoveTransparent, fetchInnerHtml, getBilingualText, 
+	addRemoveTransparent, fetchInnerHtml, getBilingualText,
 	scrollToTop, setBilingualProperty
 } from "../../js/utils.js";
 

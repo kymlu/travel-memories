@@ -7,23 +7,23 @@ import BasePopup from "../base-popup/base-popup.js"
  * @extends BasePopup
  */
 export default class InfoPopup extends BasePopup {
-    constructor(){
+    constructor() {
         super();
     }
-    
+
     /** @inheritdoc */
-    connectedCallback(){
+    connectedCallback() {
         fetchInnerHtml("components/popup/info-popup/info-popup.html", this, true)
-        .then(() => {
-            this.shadowRoot.querySelectorAll(".action-btn").forEach(element => {
-                element.addEventListener("click", () => { this.goToGithub(); });
+            .then(() => {
+                this.shadowRoot.querySelectorAll(".action-btn").forEach(element => {
+                    element.addEventListener("click", () => { this.goToGithub(); });
+                });
+                super.connectedCallback();
             });
-            super.connectedCallback();
-        });
     }
 
     /** Opens a new page on this project's Github repo. */
-    goToGithub(){
+    goToGithub() {
         window.open("https://github.com/kymlu/travel-memories");
     }
 }

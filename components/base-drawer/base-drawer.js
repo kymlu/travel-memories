@@ -15,8 +15,8 @@ export default class BaseDrawer extends BaseElement {
     }
 
     connectedCallback() {
-        this.queryByClassName("drawer-handle-container")?.addEventListener("touchstart", this.onStartHandleDrag.bind(this), false);
-        this.queryByClassName("drawer-handle-container")?.addEventListener("touchend", this.onEndHandleDrag.bind(this), false);
+        this.queryByClassName("drawer-handle-wrapper")?.addEventListener("touchstart", this.onStartHandleDrag.bind(this), false);
+        this.queryByClassName("drawer-handle-wrapper")?.addEventListener("touchend", this.onEndHandleDrag.bind(this), false);
     }
 
     /**

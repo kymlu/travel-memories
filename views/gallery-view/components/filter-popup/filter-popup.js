@@ -321,7 +321,7 @@ export default class FilterPopup extends BasePopup {
         setTimeout(() => {
             if (this._elements.keyword.value == "") {
                 addRemoveNoDisplay([this._elements.keywordClearBtn], true);
-            } else if (this.queryById("filter-kw-clear-btn").classList.contains("no-display")) {
+            } else if (this._elements.keywordClearBtn.classList.contains("no-display")) {
                 addRemoveNoDisplay([this._elements.keywordClearBtn], false);
             }
         }, 10);

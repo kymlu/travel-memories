@@ -1,4 +1,4 @@
-.gallery {
+#gallery {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
@@ -11,10 +11,14 @@
 }
 
 @media only screen and (orientation: portrait) {
-  .gallery {
+  #gallery {
     overflow: hidden;
     margin-top: 0px;
   }
+}
+
+.space-on-top {
+  margin-top: 20px !important;
 }
 
 .floating-btn {

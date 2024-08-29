@@ -34,6 +34,10 @@
     font-size: var(--xlrg-text-size);
     font-weight: normal;
     text-transform: uppercase;
+    
+    span {
+        text-align: center;
+    }
 }
 
 .start-btn.animated {

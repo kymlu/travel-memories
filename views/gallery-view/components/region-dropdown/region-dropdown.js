@@ -2,7 +2,7 @@ import BaseElement from "../../../../js/base-element.js";
 import { CUSTOM_EVENT_TYPES } from "../../../../js/constants.js";
 import { getHeader, isGalleryView, onSelectNewRegion } from "../../../../js/globals.js";
 import {
-	addClickListeners, addRemoveNoDisplay, addRemoveTransparent, 
+	addClickListeners, addRemoveNoDisplay, addRemoveTransparent,
 	fetchInnerHtml, getBilingualText
 } from "../../../../js/utils.js";
 

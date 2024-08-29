@@ -67,7 +67,7 @@ export default class GalleryView extends BaseElement {
 			.then(() => {
 				setTimeout(() => {
 					this._elements = {
-						view: this.queryById("gallery-view"),
+						view: this.queryById("container"),
 						gallery: this.queryById("gallery"),
 						toTopButton: this.queryById("to-top-btn"),
 					}
@@ -104,13 +104,16 @@ export default class GalleryView extends BaseElement {
 							event.detail.selectedCameras);
 
 						scrollToTop(true);
+						this.regionInfo.resetPosition();
 						this._elements.gallery.replaceChildren();
 						this.previousRegion = null;
 						if (this.visibleImages.length == 0) {
 							this._elements.gallery.innerText = this.noPicturesText;
 							this._elements.gallery.appendChild(changeFilterQueryButton);
 							addRemoveClass([this._elements.gallery], "flex-column", true);
+							addRemoveClass([this._elements.gallery], "space-on-top", true);
 						} else {
+							addRemoveClass([this._elements.gallery], "space-on-top", false);
 							addRemoveClass([this._elements.gallery], "flex-column", false);
 							this.imageLoadIndex = 0;
 							this.currentPolaroidCount = 0;
@@ -137,7 +140,10 @@ export default class GalleryView extends BaseElement {
 		this.regionDropdown.close();
 		this.regionInfo.show(false);
 		scrollToTop(false);
-		addRemoveTransparent([this._elements.view], false);
+		setTimeout(() => {
+			// Delayed so the region info will show at same time
+			addRemoveTransparent([this._elements.view], false);
+		}, DEFAULT_TIMEOUT);
 	}
 
 	/** Close the gallery page */

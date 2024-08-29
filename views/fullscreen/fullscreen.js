@@ -39,7 +39,7 @@ export default class Fullscreen extends BaseElement {
 		fetchInnerHtml("views/fullscreen/fullscreen.html", this, true)
 			.then(() => {
 				this._elements = {
-					view: this.queryById("wrapper"),
+					view: this.queryByClassName("wrapper"),
 					control: this.queryById("main-control"),
 					background: this.queryByClassName("popup-bg"),
 					picture: this.queryById("current-pic"),
@@ -242,20 +242,20 @@ export default class Fullscreen extends BaseElement {
 
 			addRemoveNoDisplay([nextPic], true);
 			nextPic.src = src;
-			nextPic.classList.add(isMovingRight ? "fullscreen-pic-right" : "fullscreen-pic-left");
+			nextPic.classList.add(isMovingRight ? "right" : "left");
 
 			setTimeout(() => {
 				addRemoveNoDisplay([nextPic], false);
 				addRemoveTransparent([nextPic], false);
 				addRemoveTransparent([currentPic], true);
-				nextPic.classList.remove(isMovingRight ? "fullscreen-pic-right" : "fullscreen-pic-left");
-				currentPic.classList.add(isMovingRight ? "fullscreen-pic-left" : "fullscreen-pic-right");
+				nextPic.classList.remove(isMovingRight ? "right" : "left");
+				currentPic.classList.add(isMovingRight ? "left" : "right");
 
 				setTimeout(() => {
 					addRemoveNoDisplay([currentPic], true);
 					addRemoveTransparent([currentPic], false);
 					currentPic.src = src;
-					currentPic.classList.remove(isMovingRight ? "fullscreen-pic-left" : "fullscreen-pic-right");
+					currentPic.classList.remove(isMovingRight ? "left" : "right");
 					setTimeout(() => {
 						addRemoveNoDisplay([currentPic], false);
 						addRemoveNoDisplay([nextPic], true);

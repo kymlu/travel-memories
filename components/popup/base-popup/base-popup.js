@@ -1,8 +1,8 @@
 /// IMPORTS
 import BaseElement from '../../../js/base-element.js';
 import { ATTRIBUTES, DEFAULT_TIMEOUT } from '../../../js/constants.js';
-import { 
-    addRemoveClass, addRemoveNoDisplay, addRemoveTransparent, fetchStyle, setBilingualProperty 
+import {
+    addRemoveClass, addRemoveNoDisplay, addRemoveTransparent, fetchStyle, setBilingualProperty
 } from '../../../js/utils.js'
 
 let basePopupStyleSheet = new CSSStyleSheet();
@@ -22,13 +22,11 @@ export default class BasePopup extends BaseElement {
     /** Sets up the popup. */
     connectedCallback() {
         if (!this.previouslyOpened) {
-            setTimeout(() => {
-                setBilingualProperty([[this.queryByClassName("close-btn"), "Close", "閉じる"]], ATTRIBUTES.TITLE);
-                this.queryByClassName("popup").addEventListener("click", (event) => {
-                    event.stopPropagation();
-                });
-                addRemoveNoDisplay([this], true);
-            }, 50);
+            setBilingualProperty([[this.queryByClassName("close-btn"), "Close", "閉じる"]], ATTRIBUTES.TITLE);
+            this.queryByClassName("popup").addEventListener("click", (event) => {
+                event.stopPropagation();
+            });
+            addRemoveNoDisplay([this], true);
         }
     }
 
@@ -52,7 +50,7 @@ export default class BasePopup extends BaseElement {
                 addRemoveClass([popup], "popup-height", true);
                 this.queryByClassName("close-btn").addEventListener("click", () => { this.close(false); });
                 this.queryByClassName("popup-bg").addEventListener("click", () => { this.close(true); });
-                if(openFunction){
+                if (openFunction) {
                     openFunction();
                 }
             }, DEFAULT_TIMEOUT);

@@ -22,12 +22,6 @@ import {
 function initializeSite() {
 	setSiteContents();
 
-	// document.addEventListener("contextmenu", function (e) {
-	// 	if (e.target.nodeName === "IMG") {
-	// 		e.preventDefault();
-	// 	}
-	// }, false);
-
 	// Back button detections
 	window.addEventListener('popstate', (event) => {
 		if (event.state.type == VIEW_NAMES.MAP) {

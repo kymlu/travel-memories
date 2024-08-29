@@ -25,10 +25,10 @@ export default class RegionInfo extends BaseDrawer {
             .then(() => {
                 super.connectedCallback();
                 this._elements = {
-                    regionInfo: this.queryById("wrapper"),
+                    wrapper: this.queryById("wrapper"),
                     background: this.queryById("background"),
                     drawer: this.queryById("drawer"),
-                    map: this.queryById("map"),
+                    map: this.queryByClassName("mini-map"),
                     areasTitle: this.queryById("areas-title"),
                     datesSection: this.queryById("dates-section"),
                     dates: this.queryById("dates-text"),
@@ -39,7 +39,7 @@ export default class RegionInfo extends BaseDrawer {
                 };
 
                 document.addEventListener(CUSTOM_EVENT_TYPES.HEADER_UPDATED, (event) => {
-                    this._elements.regionInfo.style.top = `${event.detail.header?.getHeight()}px`;
+                    this._elements.wrapper.style.top = `${event.detail.header?.getHeight()}px`;
                 });
 
                 setTimeout(() => {
@@ -52,7 +52,7 @@ export default class RegionInfo extends BaseDrawer {
                     setBilingualProperty(
                         [[this.queryById("dates-title"), "Dates visited", "訪れた日付"]]
                         , ATTRIBUTES.INNERTEXT);
-                    addRemoveTransparent([this._elements.regionInfo], true);
+                    addRemoveTransparent([this._elements.wrapper], true);
                     addRemoveNoDisplay([this], true);
                 }, 50);
             });
@@ -90,6 +90,7 @@ export default class RegionInfo extends BaseDrawer {
         newMap.setAttribute("type", "image/svg+xml");
         newMap.setAttribute("data", `assets/img/country/${this.currentCountry.id}.svg`);
         newMap.setAttribute("title", getBilingualText("Map", "地図"));
+        newMap.addEventListener("load", this.filterMiniMap.bind(this, null));
         this._elements.map.parentElement.replaceChild(newMap, this._elements.map);
         this._elements.map = newMap;
     }
@@ -161,7 +162,7 @@ export default class RegionInfo extends BaseDrawer {
         }
 
         this.isVisible = true;
-        addRemoveTransparent([this._elements.regionInfo], false);
+        addRemoveTransparent([this._elements.wrapper, this._elements.background], false);
         if (isForced) {
             if (getScrollPosition() < this.getBoundingClientRect().height) {
                 this.isThrottling = true;
@@ -170,11 +171,11 @@ export default class RegionInfo extends BaseDrawer {
                     this.isThrottling = false;
                 }, DEFAULT_TIMEOUT * 2);
             } else {
-                this._elements.regionInfo.style.position = "sticky";
-                this._elements.regionInfo.style.top = `${getHeader()?.getHeight()}px`;
+                this._elements.wrapper.style.position = "sticky";
+                this._elements.wrapper.style.top = `${getHeader()?.getHeight()}px`;
             }
         } else {
-            this._elements.regionInfo.style.top = "0px";
+            this._elements.wrapper.style.top = "0px";
         }
     }
 
@@ -183,7 +184,6 @@ export default class RegionInfo extends BaseDrawer {
      */
     hide(isForced) {
         this.isVisible = false;
-        let isOffscreen = true;
         if (isForced) {
             let rgnInfoOffset = this._elements.drawer.getBoundingClientRect().height;
             if (getScrollPosition() <= rgnInfoOffset) {
@@ -193,19 +193,27 @@ export default class RegionInfo extends BaseDrawer {
                     left: 0,
                     behavior: 'smooth'
                 });
-                isOffscreen = rgnInfoOffset < getScrollPosition();
                 setTimeout(() => {
                     this.isThrottling = false;
                 }, DEFAULT_TIMEOUT * 2);
             }
         }
-        if(isOffscreen){
-            addRemoveTransparent([this._elements.regionInfo], true);
+        if (window.innerHeight < document.body.getBoundingClientRect().height) {
+            addRemoveTransparent([this._elements.wrapper], true);
+        } else {
+            addRemoveTransparent([this._elements.background], true);
         }
         setTimeout(() => {
-            this._elements.regionInfo.style.position = "relative";
+            this._elements.wrapper.style.position = "relative";
             addRemoveTransparent([this._elements.drawer], false);
         }, DEFAULT_TIMEOUT);
+    }
+
+    /** Shows the background. */
+    resetPosition(){
+        this._elements.map.scrollIntoView();
+        addRemoveTransparent([this._elements.background], false);
+        this.isVisible = true;
     }
 
     /** Shows/hides the pic info section if user scrolls to a certain point. */

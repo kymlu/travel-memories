@@ -47,7 +47,7 @@ export default class PicInfo extends BaseDrawer {
 					addClickListeners([
 						[this.queryById("background"), this.hide.bind(this)],
 						[this._elements.drawer, (event) => { event.stopPropagation(); }],
-						[this.queryById("pic-info-close-btn"), this.hide.bind(this)],
+						[this.queryByClassName("close-btn"), this.hide.bind(this)],
 						[this.queryById("search-en"), this.searchEn.bind(this)],
 						[this.queryById("search-jp"), this.searchJp.bind(this)]
 					]);
@@ -78,7 +78,7 @@ export default class PicInfo extends BaseDrawer {
 			});
 	}
 
-	getIsVisible(){
+	getIsVisible() {
 		return this.isVisible;
 	}
 
