@@ -138,9 +138,9 @@ export default class GalleryView extends BaseElement {
 	/** Open the gallery page */
 	show() {
 		this.regionDropdown.close();
-		this.regionInfo.show(false);
 		scrollToTop(false);
 		addRemoveTransparent([this._elements.view], false);
+		this.regionInfo.show(false);
 	}
 
 	/** Close the gallery page */
