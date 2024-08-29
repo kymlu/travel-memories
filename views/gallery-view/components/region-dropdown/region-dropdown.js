@@ -2,7 +2,7 @@ import BaseElement from "../../../../js/base-element.js";
 import { CUSTOM_EVENT_TYPES } from "../../../../js/constants.js";
 import { getHeader, isGalleryView, onSelectNewRegion } from "../../../../js/globals.js";
 import {
-	addClickListeners, addRemoveNoDisplay, addRemoveTransparent,
+	addClickListeners, addRemoveClass, addRemoveNoDisplay, addRemoveTransparent,
 	fetchInnerHtml, getBilingualText
 } from "../../../../js/utils.js";
 
@@ -71,6 +71,12 @@ export default class RegionDropdown extends BaseElement {
 					regionButton.id = this.#getDropdownElementId(rgn.id);
 					regionButton.title = getBilingualText(`See images from ${rgn.nameEn}`, `${rgn.nameJp}の写真を表示する`);
 					regionButton.addEventListener("click", () => { onSelectNewRegion(rgn.id, null, false) }, false);
+					regionButton.addEventListener("pointerover", () => {
+						addRemoveClass([regionButton], "animated", true);
+					});
+					regionButton.addEventListener("pointerout", () => {
+						addRemoveClass([regionButton], "animated", false);
+					});
 					dropDownList.appendChild(regionButton);
 				}
 			});

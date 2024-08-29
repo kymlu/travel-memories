@@ -68,19 +68,15 @@ export default class StartView extends BaseElement {
             newBtn.appendChild(newIconSection);
             newBtn.appendChild(txtJp);
 
-            ["mouseover", "touchstart"].forEach(eventName => {
-                newBtn.addEventListener(eventName, () => {
-                    addRemoveClass([newBtn], "animated", true);
-                    addRemoveTransparent([imgColor], true);
-                    addRemoveClass([newIconSection], "animated", true);
-                });
+            newBtn.addEventListener("pointerover", () => {
+                addRemoveClass([newBtn], "animated", true);
+                addRemoveTransparent([imgColor], true);
+                addRemoveClass([newIconSection], "animated", true);
             });
-            ["mouseout", "touchend"].forEach(eventName => {
-                newBtn.addEventListener(eventName, () =>{
-                    addRemoveClass([newBtn], "animated", false);
-                    addRemoveTransparent([imgColor], false);
-                    addRemoveClass([newIconSection], "animated", false);
-                } );
+            newBtn.addEventListener("pointerout", () => {
+                addRemoveClass([newBtn], "animated", false);
+                addRemoveTransparent([imgColor], false);
+                addRemoveClass([newIconSection], "animated", false);
             });
 
             startViewWrapper.appendChild(newBtn)

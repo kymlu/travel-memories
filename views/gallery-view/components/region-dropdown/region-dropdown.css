@@ -54,7 +54,7 @@
 	border-radius: 5px;
 }
 
-.rgn-txt:hover,
+.rgn-txt.animated,
 .rgn-txt.active {
 	color: white;
 	box-shadow: inset 400px 0 0 0 rgba(var(--main-color));

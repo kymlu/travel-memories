@@ -50,17 +50,13 @@ export default class MapView extends BaseElement {
 							[this._elements.zoomIn, this.scaleMap.bind(this, undefined, true)],
 							[this._elements.zoomOut, this.scaleMap.bind(this, undefined, false)]
 						]);
-						["mouseover", "touchstart"].forEach(eventName => {
-							this._elements.mainTitle.addEventListener(eventName, () => {
-								addRemoveClass([this._elements.mainTitle], "animated", true);
-								this._elements.mainTitle.querySelector("i").classList.add("white");
-							});
+						this._elements.mainTitle.addEventListener("pointerover", () => {
+							addRemoveClass([this._elements.mainTitle], "animated", true);
+							this._elements.mainTitle.querySelector("i").classList.add("white");
 						});
-						["mouseout", "touchend"].forEach(eventName => {
-							this._elements.mainTitle.addEventListener(eventName, () => {
-								addRemoveClass([this._elements.mainTitle], "animated", false);
-								this._elements.mainTitle.querySelector("i").classList.remove("white");
-							});
+						this._elements.mainTitle.addEventListener("pointerout", () => {
+							addRemoveClass([this._elements.mainTitle], "animated", false);
+							this._elements.mainTitle.querySelector("i").classList.remove("white");
 						});
 					}, 50);
 
@@ -134,16 +130,12 @@ export default class MapView extends BaseElement {
 					rgnImg.setAttribute("cursor", "pointer");
 					rgnImg.setAttribute("transition", "opacity 0.3 ease-in-out");
 
-					["touchstart", "mouseover"].forEach(eventName => {
-						rgnImg.addEventListener(eventName, () => {
-							rgnImg.setAttribute("opacity", "50%");
-						});
+					rgnImg.addEventListener("pointerover", () => {
+						rgnImg.setAttribute("opacity", "50%");
 					});
 
-					["touchend", "mouseout"].forEach(eventName => {
-						rgnImg.addEventListener(eventName, () => {
-							rgnImg.setAttribute("opacity", "100%");
-						});
+					rgnImg.addEventListener("pointerout", () => {
+						rgnImg.setAttribute("opacity", "100%");
 					});
 
 					rgnImg.addEventListener("mouseup", this.selectRegion.bind(this, rgn));

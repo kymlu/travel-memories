@@ -211,7 +211,7 @@ export default class RegionInfo extends BaseDrawer {
 
     /** Shows the background. */
     resetPosition(){
-        this._elements.map.scrollIntoView();
+        this.queryByClassName("rgn-info").scrollTo({top: 0});
         addRemoveTransparent([this._elements.background], false);
         this.isVisible = true;
     }
