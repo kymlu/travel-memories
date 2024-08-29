@@ -140,10 +140,7 @@ export default class GalleryView extends BaseElement {
 		this.regionDropdown.close();
 		this.regionInfo.show(false);
 		scrollToTop(false);
-		setTimeout(() => {
-			// Delayed so the region info will show at same time
-			addRemoveTransparent([this._elements.view], false);
-		}, DEFAULT_TIMEOUT);
+		addRemoveTransparent([this._elements.view], false);
 	}
 
 	/** Close the gallery page */
