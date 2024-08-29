@@ -2,7 +2,7 @@
 import BasePopup from "../../../../components/popup/base-popup/base-popup.js"
 import { CUSTOM_EVENT_TYPES, ATTRIBUTES } from "../../../../js/constants.js";
 import {
-    addRemoveNoDisplay, getBilingualText, flipArrow, sortByEnglishName,
+    addRemoveNoDisplay, getBilingualText, flipArrow, sortBynameEn,
     addClickListeners, setBilingualProperty, fetchInnerHtml
 } from '../../../../js/utils.js';
 
@@ -160,19 +160,19 @@ export default class FilterPopup extends BasePopup {
      * @param {*} areas 
      * @param {*} tags 
      * @param {string[]} cameras 
-     * @param {string} regionNameEn 
-     * @param {string} regionNameJp 
+     * @param {string} regionTypeEn 
+     * @param {string} regionTypeJp 
      */
     regenerateFilters(isSingleRegion, regions,
-        areas, tags, cameras, regionNameEn, regionNameJp) {
+        areas, tags, cameras, regionTypeEn, regionTypeJp) {
         this.previouslyOpened = false;
         this.clearFilters();
-        this.queryById("filter-regions-title").innerText = getBilingualText(regionNameEn, regionNameJp);
-        this.allRegions = regions.sort(sortByEnglishName);
+        this.queryById("filter-regions-title").innerText = getBilingualText(regionTypeEn, regionTypeJp);
+        this.allRegions = regions.sort(sortBynameEn);
         this.currentRegions = [];
-        this.allAreas = areas.sort(sortByEnglishName);
+        this.allAreas = areas.sort(sortBynameEn);
         this.currentAreas = [];
-        this.allTags = tags.sort(sortByEnglishName);
+        this.allTags = tags.sort(sortBynameEn);
         this.currentTags = [];
         this.allCameras = cameras.sort((a, b) => {
             if (a.toLowerCase() < b.toLowerCase()) {
@@ -224,7 +224,7 @@ export default class FilterPopup extends BasePopup {
                         newButton.classList.toggle("active");
                     });
                 } else {
-                    newButton.innerText = getBilingualText(item.englishName, item.japaneseName);
+                    newButton.innerText = getBilingualText(item.nameEn, item.nameJp);
                     newButton.id = item.id;
                     newButton.addEventListener("click", () => {
                         toggleFunction(item.id);

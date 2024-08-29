@@ -39,15 +39,15 @@ export default class StartView extends BaseElement {
 
             let newBtn = btn.cloneNode();
             newBtn.id = `start-btn-${abb}`;
-            newBtn.title = getBilingualText(`See ${country.englishName}`, `${country.japaneseName}へ`);
+            newBtn.title = getBilingualText(`See ${country.nameEn}`, `${country.nameJp}へ`);
             newBtn.classList.add(abb);
             newBtn.addEventListener("click", this.selectCountry.bind(this, country.id, `--${abb}-color`));
 
-            let engTxt = text.cloneNode();
-            engTxt.innerText = country.englishName;
+            let txtEn = text.cloneNode();
+            txtEn.innerText = country.nameEn;
 
-            let jpTxt = text.cloneNode();
-            jpTxt.innerText = country.japaneseName;
+            let txtJp = text.cloneNode();
+            txtJp.innerText = country.nameJp;
 
             let newIconSection = iconSection.cloneNode();
             newIconSection.id = `${abb}-start-icon`;
@@ -64,9 +64,9 @@ export default class StartView extends BaseElement {
             newIconSection.appendChild(imgWhite);
             newIconSection.appendChild(imgColor);
 
-            newBtn.appendChild(engTxt);
+            newBtn.appendChild(txtEn);
             newBtn.appendChild(newIconSection);
-            newBtn.appendChild(jpTxt);
+            newBtn.appendChild(txtJp);
 
             ["mouseover", "touchstart"].forEach(eventName => {
                 newBtn.addEventListener(eventName, () => {

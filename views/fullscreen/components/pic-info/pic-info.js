@@ -3,35 +3,35 @@ import {
 } from "../../../../../../js/constants.js";
 import {
 	addClickListeners, addRemoveNoDisplay, getBilingualText,
-	getPictureDate, setBilingualProperty, sortByEnglishName
+	getPictureDate, setBilingualProperty, sortBynameEn
 } from "../../../../../../js/utils.js";
-import { fetchInnerHtml } from "../../../../../js/utils.js";
-import BaseDrawer from "../base-drawer/base-drawer.js";
+import { fetchInnerHtml } from "../../../../js/utils.js";
+import BaseDrawer from "../../../../components/base-drawer/base-drawer.js";
 
 /** The Pic Info class. */
 export default class PicInfo extends BaseDrawer {
 	constructor() {
 		super();
 		this.isVisible = true;
-		this.searchTermEng = "";
+		this.searchTermEn = "";
 		this.searchTermJp = "";
 		this.favouriteTag = this.#createfavouriteTag();
 		this.isMoving = false;
 	}
 
 	connectedCallback() {
-		fetchInnerHtml("views/gallery-view/components/drawer/pic-info/pic-info.html", this, true)
+		fetchInnerHtml("views/fullscreen/components/pic-info/pic-info.html", this, true)
 			.then(() => {
 				super.connectedCallback();
 				this._elements = {
 					drawer: this.queryById("drawer"),
 					contents: this.queryById("contents"),
-					dateEn: this.queryById("date-english"),
-					dateJp: this.queryById("date-japanese"),
-					cityEn: this.queryById("city-english"),
-					cityJp: this.queryById("city-japanese"),
-					captionEn: this.queryById("caption-english"),
-					captionJp: this.queryById("caption-japanese"),
+					dateEn: this.queryById("date-en"),
+					dateJp: this.queryById("date-jp"),
+					cityEn: this.queryById("city-en"),
+					cityJp: this.queryById("city-jp"),
+					captionEn: this.queryById("caption-en"),
+					captionJp: this.queryById("caption-jp"),
 					camera: this.queryById("camera-info"),
 					lens: this.queryById("lens-info"),
 					technical: this.queryById("technical-info"),
@@ -39,7 +39,7 @@ export default class PicInfo extends BaseDrawer {
 				};
 				setTimeout(() => {
 					setBilingualProperty([
-						[this.queryById("search-eng"), "Google in English", "英語でググる"],
+						[this.queryById("search-en"), "Google in English", "英語でググる"],
 						[this.queryById("search-jp"), "Google in Japanese", "日本語でググる"],
 						[this.queryByClassName("close-btn"), "Close", "閉じる"]
 					], ATTRIBUTES.TITLE);
@@ -48,8 +48,8 @@ export default class PicInfo extends BaseDrawer {
 						[this.queryById("background"), this.hide.bind(this)],
 						[this._elements.drawer, (event) => { event.stopPropagation(); }],
 						[this.queryById("pic-info-close-btn"), this.hide.bind(this)],
-						[this.queryById("search-eng"), this.searchEnglish.bind(this)],
-						[this.queryById("search-jp"), this.searchJapanese.bind(this)]
+						[this.queryById("search-en"), this.searchEn.bind(this)],
+						[this.queryById("search-jp"), this.searchJp.bind(this)]
 					]);
 
 					// currently remove because it will not work on Apple <- what is this lol
@@ -61,13 +61,13 @@ export default class PicInfo extends BaseDrawer {
 						event.stopPropagation();
 					});
 
-					TAGS.sort(sortByEnglishName).forEach(tag => {
+					TAGS.sort(sortBynameEn).forEach(tag => {
 						let tagElement = document.createElement("div");
 						tagElement.classList.add("base-tag", "img-tag");
 						let tagIcon = document.createElement("i");
 						tagIcon.classList.add("fa", tag.faClass);
 						let tagText = document.createElement("span");
-						tagText.innerText = getBilingualText(tag.englishName, tag.japaneseName);
+						tagText.innerText = getBilingualText(tag.nameEn, tag.nameJp);
 						tagElement.appendChild(tagIcon);
 						tagElement.appendChild(tagText);
 						tagElement.dataset.tagId = tag.id;
@@ -149,16 +149,16 @@ export default class PicInfo extends BaseDrawer {
 		let region = this.currentPic.region;
 
 		// English text for searching
-		this.#setEnglishLocation(countryId, area.englishName, region.englishName);
-		this._elements.cityEn.innerText = this.searchTermEng;
+		this.#setLocationEn(countryId, area.nameEn, region.nameEn);
+		this._elements.cityEn.innerText = this.searchTermEn;
 
 		// Japanese text for searching
-		this.#setJapaneseLocation(countryId, area.japaneseName ?? area.englishName, region.japaneseName ?? region.englishName)
+		this.#setLocationJp(countryId, area.nameJp ?? area.nameEn, region.nameJp ?? region.nameEn)
 		this._elements.cityJp.innerText = this.searchTermJp;
 
 		// image description
-		this.editDetail(this.currentPic.descriptionEnglish, this._elements.captionEn);
-		this.editDetail(this.currentPic.descriptionJapanese, this._elements.captionJp);
+		this.editDetail(this.currentPic.descriptionEn, this._elements.captionEn);
+		this.editDetail(this.currentPic.descriptionJp, this._elements.captionJp);
 		// image exif info
 		this.editDetail(this.currentPic.cameraModel, this._elements.camera);
 		this.editDetail(this.currentPic.lens, this._elements.lens);
@@ -215,12 +215,12 @@ export default class PicInfo extends BaseDrawer {
 	}
 
 	/** Searches the English search term. */
-	searchEnglish() {
-		this.#search(this.searchTermEng);
+	searchEn() {
+		this.#search(this.searchTermEn);
 	}
 
 	/** Searches the Japanese search term. */
-	searchJapanese() {
+	searchJp() {
 		this.#search(this.searchTermJp)
 	}
 
@@ -243,12 +243,12 @@ export default class PicInfo extends BaseDrawer {
 	}
 
 	/** Gets the appropriate location text for the English section. */
-	#setEnglishLocation(countryId, areaName, regionName) {
+	#setLocationEn(countryId, areaName, regionName) {
 		let location = null;
-		if (this.currentPic.locationEnglish) {
-			location = this.currentPic.locationEnglish;
-		} else if (countryId === JAPAN && this.currentPic.locationJapanese) {
-			location = this.currentPic.locationJapanese;
+		if (this.currentPic.locationEn) {
+			location = this.currentPic.locationEn;
+		} else if (countryId === JAPAN && this.currentPic.locationJp) {
+			location = this.currentPic.locationJp;
 		} else if (countryId === TAIWAN && this.currentPic.locationChinese) {
 			location = this.currentPic.locationChinese;
 		}
@@ -256,18 +256,18 @@ export default class PicInfo extends BaseDrawer {
 		if (location) list.push(location);
 		if (areaName) list.push(areaName);
 		if (regionName) list.push(regionName);
-		this.searchTermEng = list.join(", ");
+		this.searchTermEn = list.join(", ");
 	}
 
 	/** Gets the appropriate location text for the Japanese section. */
-	#setJapaneseLocation(countryId, areaName, regionName) {
+	#setLocationJp(countryId, areaName, regionName) {
 		let location = null;
-		if (this.currentPic.locationJapanese) {
-			location = this.currentPic.locationJapanese;
+		if (this.currentPic.locationJp) {
+			location = this.currentPic.locationJp;
 		} else if (countryId === TAIWAN && this.currentPic.locationChinese) {
 			location = this.currentPic.locationChinese;
-		} else if (this.currentPic.locationEnglish) {
-			location = this.currentPic.locationEnglish;
+		} else if (this.currentPic.locationEn) {
+			location = this.currentPic.locationEn;
 		}
 		let list = [];
 		if (regionName) list.push(regionName);

@@ -2,14 +2,18 @@
 import BaseElement from '../../../js/base-element.js';
 import { ATTRIBUTES, DEFAULT_TIMEOUT } from '../../../js/constants.js';
 import { 
-    addRemoveClass, addRemoveNoDisplay, addRemoveTransparent, setBilingualProperty 
+    addRemoveClass, addRemoveNoDisplay, addRemoveTransparent, fetchStyle, setBilingualProperty 
 } from '../../../js/utils.js'
+
+let basePopupStyleSheet = new CSSStyleSheet();
+fetchStyle("components/popup/base-popup/base-popup.css", basePopupStyleSheet);
 
 /** * The Base Popup object. */
 export default class BasePopup extends BaseElement {
     constructor() {
         super();
         this.isOpen = false;
+        this.shadowRoot.adoptedStyleSheets.push(basePopupStyleSheet);
 
         /** ```True``` if the popup has been opened before. @type boolean */
         this.previouslyOpened = false;

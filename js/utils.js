@@ -79,9 +79,9 @@ export function isPortraitMode() {
  * @param {object} b - The second object
  * @returns The sort order of the two objects.
  */
-export function sortByEnglishName(a, b) {
-	let a1 = a.englishName.toLowerCase();
-	let b1 = b.englishName.toLowerCase();
+export function sortBynameEn(a, b) {
+	let a1 = a.nameEn.toLowerCase();
+	let b1 = b.nameEn.toLowerCase();
 
 	if (a1 < b1) {
 		return -1;

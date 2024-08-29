@@ -73,8 +73,8 @@ export default class MapView extends BaseElement {
 	handleNewCountry(newCountry) {
 		addRemoveNoDisplay([this], false);
 		this.currentCountry = newCountry;
-		this.defaultMainTitleText = getBilingualText(this.currentCountry.englishName, this.currentCountry.japaneseName);
-		this.defaultMainTitleTitle = getBilingualText(`See all images from ${this.currentCountry.englishName}`, `${this.currentCountry.japaneseName}の写真をすべて表示する`);
+		this.defaultMainTitleText = getBilingualText(this.currentCountry.nameEn, this.currentCountry.nameJp);
+		this.defaultMainTitleTitle = getBilingualText(`See all images from ${this.currentCountry.nameEn}`, `${this.currentCountry.nameJp}の写真をすべて表示する`);
 
 		setTimeout(() => {
 			this.createMap();
@@ -127,7 +127,7 @@ export default class MapView extends BaseElement {
 				if (rgn.visited) {
 					// CSS won't work on document objects
 					let imgTitle = document.createElementNS("http://www.w3.org/2000/svg", ATTRIBUTES.TITLE);
-					imgTitle.innerText = getBilingualText(`Toggle ${rgn.englishName}`, `${rgn.japaneseName}をトグルする`);
+					imgTitle.innerText = getBilingualText(`Toggle ${rgn.nameEn}`, `${rgn.nameJp}をトグルする`);
 					rgnImg.appendChild(imgTitle);
 					rgnImg.setAttribute("fill", getAppColor());
 					rgnImg.setAttribute("stroke", "none");
@@ -178,8 +178,8 @@ export default class MapView extends BaseElement {
 			newRegionSvg.setAttribute("fill", getTranslucentAppColor());
 			newRegionSvg.setAttribute("stroke", getAppColor());
 			newRegionSvg.setAttribute("stroke-width", this.outlineThickness);
-			this._elements.mainTitleText.innerText = getBilingualText(region.englishName, region.japaneseName);
-			this._elements.mainTitle.title = this.defaultMainTitleTitle = getBilingualText(`See all images from ${region.englishName}`, `${region.japaneseName}の写真をすべて表示する`);
+			this._elements.mainTitleText.innerText = getBilingualText(region.nameEn, region.nameJp);
+			this._elements.mainTitle.title = this.defaultMainTitleTitle = getBilingualText(`See all images from ${region.nameEn}`, `${region.nameJp}の写真をすべて表示する`);
 		}
 
 		setTimeout(() => {

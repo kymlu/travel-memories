@@ -2,7 +2,7 @@ import BaseElement from "../../../../../js/base-element.js";
 import { fetchStyle, isPortraitMode } from "../../../../../js/utils.js";
 
 let baseDrawerStyle = new CSSStyleSheet();
-fetchStyle("views/gallery-view/components/drawer/base-drawer/base-drawer.css", baseDrawerStyle);
+fetchStyle("components/base-drawer/base-drawer.css", baseDrawerStyle);
 
 /** The base drawer. */
 export default class BaseDrawer extends BaseElement {

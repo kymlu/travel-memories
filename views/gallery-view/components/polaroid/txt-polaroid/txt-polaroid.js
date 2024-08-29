@@ -12,14 +12,14 @@ fetchInnerHtml("views/gallery-view/components/polaroid/txt-polaroid/txt-polaroid
 export default class TextPolaroid extends BasePolaroid {
     /**
      * @param {boolean} isAngledLeft 
-     * @param {string} englishName 
-     * @param {string} japaneseName 
+     * @param {string} nameEn 
+     * @param {string} nameJp 
      */
-    constructor(isAngledLeft, englishName, japaneseName) {
+    constructor(isAngledLeft, nameEn, nameJp) {
         super(isAngledLeft, true);
         /** The text to display in the middle of the polaroid. @type string */
-        this.text = getBilingualText(englishName, japaneseName);
-        this.title = getBilingualText(`See images from ${englishName}`, `${japaneseName}の写真を表示する`);
+        this.text = getBilingualText(nameEn, nameJp);
+        this.title = getBilingualText(`See images from ${nameEn}`, `${nameJp}の写真を表示する`);
 
         this.shadowRoot.appendChild(txtPolaroidTemplate.content.cloneNode(true));
     }

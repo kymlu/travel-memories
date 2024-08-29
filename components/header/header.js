@@ -100,8 +100,8 @@ export default class CustomHeader extends BaseElement {
     /** Changes values when the selected country changes. */
     handleNewCountry(newCountry) {
         setBilingualProperty([
-            [this.buttons.regionDropdown, `Change ${newCountry.officialRegionNameEnglish}`, `${newCountry.officialRegionNameJapanese}を切り替える`],
-            [this.buttons.regionInfo, `Toggle ${newCountry.officialRegionNameEnglish} info`, `${newCountry.officialRegionNameJapanese}の情報をトグル`],
+            [this.buttons.regionDropdown, `Change ${newCountry.regionTypeEn}`, `${newCountry.regionTypeJp}を切り替える`],
+            [this.buttons.regionInfo, `Toggle ${newCountry.regionTypeEn} info`, `${newCountry.regionTypeJp}の情報をトグル`],
         ], ATTRIBUTES.TITLE);
     }
 

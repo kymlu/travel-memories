@@ -1,12 +1,12 @@
 /// IMPORTS
-import BaseElement from '../../../../js/base-element.js';
-import { DEFAULT_TIMEOUT, ATTRIBUTES } from '../../../../js/constants.js'
+import BaseElement from '../../js/base-element.js';
+import { DEFAULT_TIMEOUT, ATTRIBUTES } from '../../js/constants.js'
 import {
 	addClickListeners, addRemoveNoDisplay, addRemoveTransparent,
 	fetchInnerHtml,
 	getImageAddress, isPortraitMode, setBilingualProperty,
-} from '../../../../js/utils.js';
-import PicInfo from '../drawer/pic-info/pic-info.js';
+} from '../../js/utils.js';
+import PicInfo from './components/pic-info/pic-info.js';
 
 /** The Fullscreen View. */
 export default class Fullscreen extends BaseElement {
@@ -31,11 +31,12 @@ export default class Fullscreen extends BaseElement {
 		this.initialX = null;
 		this.initialY = null;
 
+		/** @type PicInfo */
 		this.picInfo = null;
 	}
 
 	connectedCallback() {
-		fetchInnerHtml("views/gallery-view/components/fullscreen/fullscreen.html", this, true)
+		fetchInnerHtml("views/fullscreen/fullscreen.html", this, true)
 			.then(() => {
 				this._elements = {
 					view: this.queryById("wrapper"),

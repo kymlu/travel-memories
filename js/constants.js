@@ -17,50 +17,50 @@ export const VIEW_NAMES = {
 export const TAGS = [
 	{
 		"id": "animal",
-		"englishName": "Animals",
-		"japaneseName": "動物",
+		"nameEn": "Animals",
+		"nameJp": "動物",
 		"faClass": "fa-paw"
 	},
 	{
 		"id": "attractions",
-		"englishName": "Attractions",
-		"japaneseName": "観光地",
+		"nameEn": "Attractions",
+		"nameJp": "観光地",
 		"faClass": "fa-map-pin"
 	},
 	{
 		"id": "art",
-		"englishName": "Art",
-		"japaneseName": "美術",
+		"nameEn": "Art",
+		"nameJp": "美術",
 		"faClass": "fa-paint-brush"
 	},
 	{
 		"id": "event",
-		"englishName": "Events",
-		"japaneseName": "イベント",
+		"nameEn": "Events",
+		"nameJp": "イベント",
 		"faClass": "fa-calendar"
 	},
 	{
 		"id": "food",
-		"englishName": "Food",
-		"japaneseName": "食べ物",
+		"nameEn": "Food",
+		"nameJp": "食べ物",
 		"faClass": "fa-cutlery"
 	},
 	{
 		"id": "nature",
-		"englishName": "Nature",
-		"japaneseName": "自然",
+		"nameEn": "Nature",
+		"nameJp": "自然",
 		"faClass": "fa-leaf"
 	},
 	{
 		"id": "relax",
-		"englishName": "Daily life",
-		"japaneseName": "日常",
+		"nameEn": "Daily life",
+		"nameJp": "日常",
 		"faClass": "fa-home"
 	},
 	{
 		"id": "town",
-		"englishName": "Around town",
-		"japaneseName": "街中で",
+		"nameEn": "Around town",
+		"nameJp": "街中で",
 		"faClass": "fa-building"
 	}
 ];
@@ -83,7 +83,7 @@ const LONG_DATETIME_FORMAT_OPTIONS = {
 	minute: "numeric",
 	second: "numeric",
 	hour12: true,
-	timeZoneName: "longOffset"
+	timeZoneName: "shortOffset"
 };
 export const LONG_DATETIME_FORMAT_EN = new Intl.DateTimeFormat('en-US', LONG_DATETIME_FORMAT_OPTIONS);
 export const LONG_DATETIME_FORMAT_JP = new Intl.DateTimeFormat('ja-JP', LONG_DATETIME_FORMAT_OPTIONS);

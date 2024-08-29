@@ -9,9 +9,9 @@ import {
 	fetchInnerHtml, getBilingualText, getImageAddress, getScrollPosition, scrollToTop, sortImgs
 } from '../../js/utils.js';
 import CustomHeader from '../../components/header/header.js';
-import RegionInfo from './components/drawer/region-info/region-info.js';
+import RegionInfo from './components/region-info/region-info.js';
 import FilterPopup from './components/filter-popup/filter-popup.js'
-import Fullscreen from './components/fullscreen/fullscreen.js';
+import Fullscreen from '../fullscreen/fullscreen.js';
 import ImagePolaroid from './components/polaroid/img-polaroid/img-polaroid.js';
 import TextPolaroid from './components/polaroid/txt-polaroid/txt-polaroid.js';
 import RegionDropdown from './components/region-dropdown/region-dropdown.js';
@@ -185,18 +185,18 @@ export default class GalleryView extends BaseElement {
 			if (isSingleRegionSelected) {
 				regionsList = [this.currentRegion];
 				areaList = this.currentRegion.areas;
-				this.header.setRegionTitle(this.currentRegion.englishName, this.currentRegion.japaneseName);
+				this.header.setRegionTitle(this.currentRegion.nameEn, this.currentRegion.nameJp);
 			} else {
 				regionsList = regionData.map(rgn => {
 					return {
 						"id": rgn.id,
-						"englishName": rgn.englishName,
-						"japaneseName": rgn.japaneseName
+						"nameEn": rgn.nameEn,
+						"nameJp": rgn.nameJp
 					}
 				});
 
 				areaList = regionData.flatMap(rgn => rgn.areas);
-				this.header.setRegionTitle(this.currentCountry.englishName, this.currentCountry.japaneseName);
+				this.header.setRegionTitle(this.currentCountry.nameEn, this.currentCountry.nameJp);
 			}
 
 			this.regionInfo.setNewRegionInfo(regionsList, areaList, isSingleRegionSelected, isNewGallery);
@@ -210,13 +210,13 @@ export default class GalleryView extends BaseElement {
 						isVisible: true,
 						region: {
 							"id": rgn.id,
-							"englishName": rgn.englishName,
-							"japaneseName": rgn.japaneseName
+							"nameEn": rgn.nameEn,
+							"nameJp": rgn.nameJp
 						},
 						area: {
 							"id": area.id,
-							"englishName": area.englishName,
-							"japaneseName": area.japaneseName
+							"nameEn": area.nameEn,
+							"nameJp": area.nameJp
 						}
 					})
 				});
@@ -234,8 +234,8 @@ export default class GalleryView extends BaseElement {
 				areaList,
 				tagList,
 				cameraList,
-				this.currentCountry.officialRegionNameEnglish,
-				this.currentCountry.officialRegionNameJapanese
+				this.currentCountry.regionTypeEn,
+				this.currentCountry.regionTypeJp
 			);
 
 			this.header.toggleFilterIndicator(false);
@@ -294,8 +294,8 @@ export default class GalleryView extends BaseElement {
 			img.isFavourite ?? false,
 			img.date,
 			img.offset,
-			img.descriptionEnglish ?? "",
-			img.descriptionJapanese ?? ""
+			img.descriptionEn ?? "",
+			img.descriptionJp ?? ""
 		);
 
 		// listeners
@@ -307,8 +307,8 @@ export default class GalleryView extends BaseElement {
 	createPolaroidBlank(rgn, isImageAngledLeft) {
 		let newPolaroid = new TextPolaroid(
 			isImageAngledLeft,
-			rgn.englishName,
-			rgn.japaneseName
+			rgn.nameEn,
+			rgn.nameJp
 		);
 
 		newPolaroid.addEventListener("click", () => { onSelectNewRegion(rgn.id, null, false) });
@@ -347,17 +347,17 @@ export default class GalleryView extends BaseElement {
 		let region = img.region;
 		let area = img.area;
 		let tagsWithKeyword = TAGS.filter(tag => img.tags.includes(tag.id) &&
-			(this.doesTextIncludeKeyword(tag.englishName, keywordSearchTerm) ||
-				this.doesTextIncludeKeyword(tag.japaneseName, keywordSearchTerm)));
+			(this.doesTextIncludeKeyword(tag.nameEn, keywordSearchTerm) ||
+				this.doesTextIncludeKeyword(tag.nameJp, keywordSearchTerm)));
 		let keywordsToSearch = [
-			img.descriptionEnglish,
-			img.descriptionJapanese,
-			img.locationEnglish,
-			img.locationJapanese,
-			region?.englishName,
-			region?.japaneseName,
-			area?.englishName,
-			area?.japaneseName,
+			img.descriptionEn,
+			img.descriptionJp,
+			img.locationEn,
+			img.locationJp,
+			region?.nameEn,
+			region?.nameJp,
+			area?.nameEn,
+			area?.nameJp,
 			img.cameraModel
 		].filter(Boolean);
 

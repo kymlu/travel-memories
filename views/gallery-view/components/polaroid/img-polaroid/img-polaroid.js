@@ -21,10 +21,10 @@ export default class ImagePolaroid extends BasePolaroid {
      * @param {boolean} isFavourite 
      * @param {Date} date 
      * @param {number} offset 
-     * @param {string} enCaption 
-     * @param {string} jpCaption 
+     * @param {string} captionEn 
+     * @param {string} captionJp 
      */
-    constructor(isAngledLeft, src, isFavourite, date, offset, enCaption, jpCaption) {
+    constructor(isAngledLeft, src, isFavourite, date, offset, captionEn, captionJp) {
         super(isAngledLeft, false);
 
         this.shadowRoot.adoptedStyleSheets.push(imgPolaroidStyle);
@@ -37,9 +37,9 @@ export default class ImagePolaroid extends BasePolaroid {
         /** The image date. @type Date */
         this.date = getPictureDate(new Date(date), offset);
         /** The English image caption. @type string */
-        this.enCaption = enCaption;
+        this.captionEn = captionEn;
         /** The Japanese image caption. @type string */
-        this.jpCaption = jpCaption;
+        this.captionJp = captionJp;
         this.title = getBilingualText("Expand image", "画像を拡大する");
     }
 
@@ -76,8 +76,8 @@ export default class ImagePolaroid extends BasePolaroid {
 
         const captions = polaroid.querySelector(".caption-text-container").querySelectorAll("span");
         if (captions) {
-            captions[0].innerText = this.enCaption ?? "";
-            captions[1].innerText = this.jpCaption ?? "";
+            captions[0].innerText = this.captionEn ?? "";
+            captions[1].innerText = this.captionJp ?? "";
         }
 
         if (this.isFavourite) {

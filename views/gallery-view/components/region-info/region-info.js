@@ -1,11 +1,11 @@
-import { ATTRIBUTES, CUSTOM_EVENT_TYPES, DEFAULT_TIMEOUT } from "../../../../../js/constants.js";
-import { getAppColor, getHeader } from "../../../../../js/globals.js";
+import { ATTRIBUTES, CUSTOM_EVENT_TYPES, DEFAULT_TIMEOUT } from "../../../../js/constants.js";
+import { getAppColor, getHeader } from "../../../../js/globals.js";
 import {
     addClickListeners, addRemoveTransparent, addRemoveNoDisplay, getBilingualText,
     fetchInnerHtml, isPortraitMode, scrollToTop, setBilingualProperty,
     getScrollPosition
-} from "../../../../../js/utils.js";
-import BaseDrawer from "../base-drawer/base-drawer.js";
+} from "../../../../js/utils.js";
+import BaseDrawer from "../../../../components/base-drawer/base-drawer.js";
 
 /** The Region Info. */
 export default class RegionInfo extends BaseDrawer {
@@ -21,7 +21,7 @@ export default class RegionInfo extends BaseDrawer {
     }
 
     connectedCallback() {
-        fetchInnerHtml("views/gallery-view/components/drawer/region-info/region-info.html", this, true)
+        fetchInnerHtml("views/gallery-view/components/region-info/region-info.html", this, true)
             .then(() => {
                 super.connectedCallback();
                 this._elements = {
@@ -32,8 +32,8 @@ export default class RegionInfo extends BaseDrawer {
                     areasTitle: this.queryById("areas-title"),
                     datesSection: this.queryById("dates-section"),
                     dates: this.queryById("dates-text"),
-                    descriptionEnglish: this.queryById("description-english"),
-                    descriptionJapanese: this.queryById("description-japanese"),
+                    descriptionEn: this.queryById("description-en"),
+                    descriptionJp: this.queryById("description-jp"),
                     descriptionTitle: this.queryById("description-title"),
                     areasList: this.queryById("areas-text"),
                 };
@@ -116,15 +116,15 @@ export default class RegionInfo extends BaseDrawer {
 
             setBilingualProperty([
                 [this._elements.areasTitle, "Areas", "所"],
-                [this._elements.dates, currentRegion.datesEnglish, currentRegion.datesJapanese],
-                [this._elements.descriptionTitle, "About", this.currentCountry.officialRegionNameJapanese + "について"]
+                [this._elements.dates, currentRegion.datesEn, currentRegion.datesJp],
+                [this._elements.descriptionTitle, "About", this.currentCountry.regionTypeJp + "について"]
             ], ATTRIBUTES.INNERTEXT);
 
             [
-                [this._elements.descriptionEnglish, currentRegion.descriptionEnglish],
-                [this._elements.descriptionJapanese, currentRegion.descriptionJapanese],
+                [this._elements.descriptionEn, currentRegion.descriptionEn],
+                [this._elements.descriptionJp, currentRegion.descriptionJp],
                 [this._elements.areasList, areaList.map(area => {
-                    return getBilingualText(area.englishName, area.japaneseName);
+                    return getBilingualText(area.nameEn, area.nameJp);
                 }).sort().join(" | ")]
             ].forEach(([element, text]) => {
                 element.innerText = text;
@@ -135,15 +135,15 @@ export default class RegionInfo extends BaseDrawer {
             }, 50);
 
             setBilingualProperty([
-                [this._elements.areasTitle, this.currentCountry.officialRegionNameEnglish + "s", this.currentCountry.officialRegionNameJapanese],
+                [this._elements.areasTitle, this.currentCountry.regionTypeEn + "s", this.currentCountry.regionTypeJp],
                 [this._elements.descriptionTitle, "About", "国について"]]
                 , ATTRIBUTES.INNERTEXT);
 
             [
-                [this._elements.descriptionEnglish, this.currentCountry.descriptionEnglish],
-                [this._elements.descriptionJapanese, this.currentCountry.descriptionJapanese],
+                [this._elements.descriptionEn, this.currentCountry.descriptionEn],
+                [this._elements.descriptionJp, this.currentCountry.descriptionJp],
                 [this._elements.areasList, regionList.map(area => {
-                    return getBilingualText(area.englishName, area.japaneseName);
+                    return getBilingualText(area.nameEn, area.nameJp);
                 }).sort().join(" | ")]
             ].forEach(([element, text]) => {
                 element.innerText = text;
@@ -183,21 +183,25 @@ export default class RegionInfo extends BaseDrawer {
      */
     hide(isForced) {
         this.isVisible = false;
+        let isOffscreen = true;
         if (isForced) {
             let rgnInfoOffset = this._elements.drawer.getBoundingClientRect().height;
             if (getScrollPosition() <= rgnInfoOffset) {
-                this.isThrottling = true; //TODO: FIX
+                this.isThrottling = true;
                 window.scrollTo({
                     top: rgnInfoOffset,
                     left: 0,
                     behavior: 'smooth'
                 });
+                isOffscreen = rgnInfoOffset < getScrollPosition();
                 setTimeout(() => {
                     this.isThrottling = false;
                 }, DEFAULT_TIMEOUT * 2);
             }
         }
-        addRemoveTransparent([this._elements.regionInfo], true);
+        if(isOffscreen){
+            addRemoveTransparent([this._elements.regionInfo], true);
+        }
         setTimeout(() => {
             this._elements.regionInfo.style.position = "relative";
             addRemoveTransparent([this._elements.drawer], false);

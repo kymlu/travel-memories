@@ -60,16 +60,16 @@ export default class RegionDropdown extends BaseElement {
 		newCountry.regionGroups.filter(grp => grp.regions.some(rgn => rgn.visited)).forEach(grp => {
 			if (newCountry.showUnofficialRegions) {
 				let regionGroupElement = regionGroupTemplate.cloneNode();
-				regionGroupElement.innerText = getBilingualText(grp.englishName, grp.japaneseName);
+				regionGroupElement.innerText = getBilingualText(grp.nameEn, grp.nameJp);
 				dropDownList.appendChild(regionGroupElement);
 			}
 
 			grp.regions.filter(rgn => rgn.visited).forEach(rgn => {
 				if (rgn.visited) {
 					let regionButton = regionTemplate.cloneNode();
-					regionButton.innerText = getBilingualText(rgn.englishName, rgn.japaneseName);
+					regionButton.innerText = getBilingualText(rgn.nameEn, rgn.nameJp);
 					regionButton.id = this.#getDropdownElementId(rgn.id);
-					regionButton.title = getBilingualText(`See images from ${rgn.englishName}`, `${rgn.japaneseName}の写真を表示する`);
+					regionButton.title = getBilingualText(`See images from ${rgn.nameEn}`, `${rgn.nameJp}の写真を表示する`);
 					regionButton.addEventListener("click", () => { onSelectNewRegion(rgn.id, null, false) }, false);
 					dropDownList.appendChild(regionButton);
 				}
