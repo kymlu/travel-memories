@@ -1,5 +1,5 @@
-import BaseElement from "../../../../../js/base-element.js";
-import { fetchStyle, isPortraitMode } from "../../../../../js/utils.js";
+import BaseElement from "../../js/base-element.js";
+import { fetchStyle, isPortraitMode } from "../../js/utils.js";
 
 let baseDrawerStyle = new CSSStyleSheet();
 fetchStyle("components/base-drawer/base-drawer.css", baseDrawerStyle);

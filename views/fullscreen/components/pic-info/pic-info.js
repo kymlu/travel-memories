@@ -1,11 +1,10 @@
 import {
 	ATTRIBUTES, DEFAULT_TIMEOUT, JAPAN, LONG_DATETIME_FORMAT_EN, LONG_DATETIME_FORMAT_JP, TAIWAN, TAGS
-} from "../../../../../../js/constants.js";
+} from "../../../../js/constants.js";
 import {
-	addClickListeners, addRemoveNoDisplay, getBilingualText,
+	addClickListeners, addRemoveNoDisplay, getBilingualText, fetchInnerHtml,
 	getPictureDate, setBilingualProperty, sortBynameEn
-} from "../../../../../../js/utils.js";
-import { fetchInnerHtml } from "../../../../js/utils.js";
+} from "../../../../js/utils.js";
 import BaseDrawer from "../../../../components/base-drawer/base-drawer.js";
 
 /** The Pic Info class. */

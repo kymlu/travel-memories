@@ -1,4 +1,4 @@
-import { CUSTOM_EVENT_TYPES, DEFAULT_TIMEOUT, VIEW_NAMES } from "./constants.js";
+import { CUSTOM_EVENT_TYPES, VIEW_NAMES } from "./constants.js";
 import { sortImgs } from "./utils.js";
 import CustomHeader from "../components/header/header.js";
 import InfoPopup from "../components/popup/info-popup/info-popup.js";
