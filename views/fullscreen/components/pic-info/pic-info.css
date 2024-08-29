@@ -1,0 +1,40 @@
+.drawer {
+    align-items: flex-start;
+    gap: 15px;
+    padding: 50px;
+    width: 30vw;
+    height: 100%;
+    transition: margin-right 0.5s ease-in-out, bottom 0.5s ease-in-out;
+}
+
+@media only screen and (orientation: portrait) {
+    .drawer {
+        position: fixed;
+        bottom: 0;
+        padding: 10px 20px 20px 20px;
+        width: 100%;
+        height: 80vh;
+        border-radius: 20px 20px 0px 0px;
+    }
+}
+
+#contents {
+    gap: 15px;
+    width: 100%;
+    overflow-y: auto;
+}
+
+#background {
+    opacity: 0% !important;
+}
+
+#pic-info-handle {
+    align-self: center;
+}
+
+.img-tag {
+  background-color: rgba(var(--main-color));
+  color: white;
+  cursor: default;
+  text-align: center;
+}

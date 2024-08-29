@@ -1,0 +1,47 @@
+.popup {
+    display: flex;
+    flex-direction: column;
+    width: 0vw;
+    height: 10vh;
+    max-height: 75vh;
+    margin: 0px;
+    padding: 40px;
+    border-radius: 10px;
+    background-color: white;
+    color: var(--text-color);
+    font-size: var(--reg-text-size);
+    font-weight: normal;
+    text-align: start;
+    transition: width 0.5s ease-in-out, height 0.5s ease-in-out, opacity 0.5s ease-in-out;
+}
+
+@media only screen and (orientation: portrait) {
+    .popup {
+        padding: 30px;
+        max-height: 70vh;
+    }
+}
+
+.popup-content {
+    gap: 15px;
+    overflow-y: auto;
+    height: 100%;
+}
+
+.popup-width {
+    width: 50vw;
+}
+
+.popup-height {
+    height: 60vh;
+}
+
+@media only screen and (orientation: portrait) {
+    .popup-width {
+        width: 80vw;
+    }
+
+    .popup-height {
+        height: 70vh;
+    }
+}

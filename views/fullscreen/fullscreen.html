@@ -1,0 +1,27 @@
+<div class="wrapper centered opacity-transition transparent">
+	<div id="fullscreen-gallery">
+		<div id="background" class="popup-bg opacity-transition transparent"></div>
+		<div id="main-control">
+			<button id="left-arrow" aria-label="See previous picture">
+				<i class="arrow fa fa-caret-left"></i>
+			</button>
+			<div>
+				<img id="next-pic" class="transparent centered no-display"
+					style="position: absolute;" />
+				<img id="current-pic" class="centered" style="position: absolute;" />
+			</div>
+			<button id="right-arrow" aria-label="See next picture">
+				<i class="arrow fa fa-caret-right"></i>
+			</button>
+		</div>
+		<div class="additional-functions">
+			<button id="pic-info-btn" aria-label="Toggle picture info">
+				<i class="white large-icon fa fa-info-circle"></i>
+			</button>
+		</div>
+	</div>
+	<pic-info></pic-info>
+</div>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="views/fullscreen/fullscreen.css">

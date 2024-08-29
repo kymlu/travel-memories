@@ -1,0 +1,61 @@
+.portrait-img {
+  width: 100%;
+  height: auto;
+}
+
+.landscape-img {
+  width: auto;
+  height: 100%;
+}
+
+.caption {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: 0px;
+}
+
+.caption-text-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 3.5em;
+}
+
+.polaroid-date {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 0px 0px 0px 0px;
+}
+
+.star {
+  position: fixed;
+  color: white;
+  opacity: 60%;
+  font-size: 15px;
+}
+
+.date-text {
+  margin: 0px;
+  vertical-align: bottom;
+  color: var(--text-color);
+  font-size: var(--sml-text-size);
+  font-weight: normal;
+  text-align: center;
+}
+
+.caption-text {
+  vertical-align: bottom;
+  color: var(--text-color);
+  font-weight: normal;
+  font-size: var(--reg-text-size);
+}
+
+.one-line-text {
+  max-height: 1.5em;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-align: center;
+}

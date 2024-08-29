@@ -1,260 +1,35 @@
+<!DOCTYPE html>
 <head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1" name="viewport" />
-  <title>Travel Memories — 旅行の思い出</title>
-  <link rel="apple-touch-icon" sizes="57x57" href="img/icons/favicon/apple-icon-57x57.png">
-  <link rel="apple-touch-icon" sizes="60x60" href="img/icons/favicon/apple-icon-60x60.png">
-  <link rel="apple-touch-icon" sizes="72x72" href="img/icons/favicon/apple-icon-72x72.png">
-  <link rel="apple-touch-icon" sizes="76x76" href="img/icons/favicon/apple-icon-76x76.png">
-  <link rel="apple-touch-icon" sizes="114x114" href="img/icons/favicon/apple-icon-114x114.png">
-  <link rel="apple-touch-icon" sizes="120x120" href="img/icons/favicon/apple-icon-120x120.png">
-  <link rel="apple-touch-icon" sizes="144x144" href="img/icons/favicon/apple-icon-144x144.png">
-  <link rel="apple-touch-icon" sizes="152x152" href="img/icons/favicon/apple-icon-152x152.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="img/icons/favicon/apple-icon-180x180.png">
-  <link rel="icon" type="image/png" sizes="192x192"  href="img/icons/favicon/android-icon-192x192.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="img/icons/favicon/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="96x96" href="img/icons/favicon/favicon-96x96.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="img/icons/favicon/favicon-16x16.png">
-  <link rel="manifest" href="img/icons/favicon/manifest.json">
-  <meta name="msapplication-TileColor" content="#ffffff">
-  <meta name="msapplication-TileImage" content="img/icons/favicon/ms-icon-144x144.png">
-  <link rel="stylesheet" type="text/css" href="css/style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<meta charset="utf-8">
+	<meta content="width=device-width, initial-scale=1" name="viewport" />
+	<title>Travel Memories — 旅行の思い出</title>
+	<link rel="apple-touch-icon" sizes="57x57" href="assets/icons/favicon/apple-icon-57x57.png">
+	<link rel="apple-touch-icon" sizes="60x60" href="assets/icons/favicon/apple-icon-60x60.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="assets/icons/favicon/apple-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="76x76" href="assets/icons/favicon/apple-icon-76x76.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="assets/icons/favicon/apple-icon-114x114.png">
+	<link rel="apple-touch-icon" sizes="120x120" href="assets/icons/favicon/apple-icon-120x120.png">
+	<link rel="apple-touch-icon" sizes="144x144" href="assets/icons/favicon/apple-icon-144x144.png">
+	<link rel="apple-touch-icon" sizes="152x152" href="assets/icons/favicon/apple-icon-152x152.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="assets/icons/favicon/apple-icon-180x180.png">
+	<link rel="icon" type="image/png" sizes="192x192" href="assets/icons/favicon/android-icon-192x192.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="96x96" href="assets/icons/favicon/favicon-96x96.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="assets/icons/favicon/favicon-16x16.png">
+	<link rel="manifest" href="assets/icons/favicon/manifest.json">
+	<meta name="msapplication-TileColor" content="#ffffff">
+	<meta name="msapplication-TileImage" content="assets/icons/favicon/ms-icon-144x144.png">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
-<body class="page-bg">
-  <!-- Top bar -->
-  <div id="top-bar" class="top-bar transparent" style="z-index: 5000; pointer-events: none;">
-    <div id="btn-grp-left" class="btn-grp" style="pointer-events: auto;">
-      <button id="globe-btn" class="text-main-color large-icon" style="z-index: 5001;">&#xf0ac</button>
-      <button id="map-btn" class="text-main-color large-icon no-display" style="z-index: 5001;">&#xf279</button>
-    </div>
-    <div id="rgn-title" style="display: flex; justify-content: center; pointer-events: auto;">
-      <div id="rgn-title-btn" class="rgn-title no-display">
-        <div id="rgn-name" class="regular-text bold-text" style="text-align: center;"></div>
-        <button id="rgn-name-arrow" class="text-main-color large-icon transform-transition arrow-down">&#xf0d7</button>
-      </div>
-    </div>
-    <div id="btn-grp-right" class="btn-grp" style="pointer-events: auto;">
-      <button id="filter-btn" class="text-main-color large-icon no-display"> &#xf0b0</button>
-      <button id="info-btn" class="text-main-color large-icon no-display">&#xf05a</button>
-      <button id="creator-btn" class="text-main-color large-icon">&#xf005</button>
-    </div>
-  </div>
-
-  <!-- Dropdown official region selector -->
-  <div id="rgn-drop-down-container" class="flex-column no-display" style="z-index: 5001;">
-    <div id="rgn-drop-down-bg" class="popup-bg opacity-transition transparent"></div>
-    <div id="rgn-drop-down" class="rgn-drop-down regular-text flex-column"></div>
-  </div>
-
-  <!-- Map Page (Map and Official Region List) -->
-  <div id="map-page" class="map-page transparent opacity-transition">
-    <!-- TODO: change map size to prevent scroll-->
-    <object id="country-map" type="image/svg+xml" class="country-map"></object>
-    <button id="main-title"></button>
-  </div>
-
-  <!-- Official Region Info -->
-  <div id="rgn-info" class="no-display" style="z-index: 4999; position: relative;">
-    <div id="rgn-info-bg" class="popup-bg opacity-transition portrait-only transparent"></div>
-    <div id="rgn-info-drawer" class="rgn-info-container no-display">
-      <div class="rgn-info">
-        <object id="country-map-mini" type="image/svg+xml" class="mini-map opacity-transition" data="img/country/japan.svg"></object>
-        <div id="rgn-info-txt" class="flex-column regular-text rgn-info-text">
-          <div id="rgn-info-dates">
-            <div id="dates-title" class="bold-text capitalize-text"></div>
-            <div id="rgn-dates"></div>
-          </div>
-          <div id="rgn-info-areas">
-            <div id="areas-title" class="bold-text capitalize-text"></div>
-            <div id="rgn-areas"></div>
-          </div>
-          <div id="rgn-info-desc">
-            <div id="description-title" class="bold-text capitalize-text"></div>
-            <div id="rgn-desc">
-              <div id="rgn-desc-eng"></div>
-              <div id="rgn-desc-jp"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div id="rgn-info-handle">
-        <hr class="drawer-handle" />
-      </div>
-    </div>
-  </div>
-
-  <!-- Picture Gallery -->
-  <div id="gallery" class="gallery no-display"></div>
-
-  <!-- Scroll to top btn -->
-  <button id="to-top-btn" class="large-icon floating-btn opacity-transform-transition arrow-down no-display">&#xf103</button>
-
-  <!-- Filter Popup -->
-  <div id="filter-popup" class="hidden-popup" style="z-index: 10000;">
-    <div id="filter-popup-bg" class="popup-bg opacity-transition transparent"></div>
-    <div id="img-filter-popup" class="popup centered transparent">
-      <button id="filter-popup-close-btn" class="large-icon close-btn">&#xf00d</button>
-      <div id="filters" class="flex-column popup-content transparent opacity-transition no-display" style="height: 100%; gap: 15px;">
-        <p id="filter-title" class="bold-text" style="margin-bottom: 0; text-transform: uppercase; text-align: center;"></p>
-        <div id="filter-fav">
-          <label id="filter-fav-title" class="bold-text capitalize-text"></label><br>
-          <div class="tag-list" style="margin-top: 5px;">
-            <label id="filter-fav-label" class="regular-text container">
-              <input type="checkbox" id="filter-fav-input">
-              <span class="checkmark"></span>
-            </label>
-          </div>
-          <hr class="divider filter">
-        </div>
-        <div id="filter-kw">
-          <label id="filter-kw-title" class="bold-text capitalize-text" for="filter-kw-input"></label><br>
-          <div style="display: flex; align-items: center; margin-top: 5px;">
-            <input type="text" class="text-input" id="filter-kw-input">
-            <button id="filter-kw-clear-btn" class="clear-icon no-display">&#xf057</button>
-          </div>
-          <hr class="divider filter">
-        </div>
-        <div id="filter-rgns">
-          <div id="filter-rgns-header" class="filter-header">
-            <label id="filter-rgns-title" class="bold-text capitalize-text" style="cursor: inherit;"></label>
-            <button class="text-main-color large-icon transform-transition arrow-up">&#xf0d7</button>
-          </div>
-          <div id="filter-rgns-list" class="tag-list"></div>
-          <hr class="divider filter">
-        </div>
-        <div id="filter-areas">
-          <div id="filter-areas-header" class="filter-header">
-            <label id="filter-areas-title" class="bold-text capitalize-text" style="cursor: inherit;"></label>
-            <button class="text-main-color large-icon transform-transition arrow-up">&#xf0d7</button>
-          </div>
-          <div id="filter-areas-list" class="tag-list"></div>
-          <hr class="divider filter">
-        </div>
-        <div id="filter-tags">
-          <div id="filter-tags-header" class="filter-header">
-            <label id="filter-tags-title" class="bold-text capitalize-text" style="cursor: inherit;"></label>
-            <button class="text-main-color large-icon transform-transition arrow-up">&#xf0d7</button>
-          </div>
-          <div id="filter-tags-list" class="tag-list"></div>
-          <hr class="divider filter">
-        </div>
-        <div id="filter-camera">
-          <div id="filter-camera-header" class="filter-header">
-            <label id="filter-camera-title" class="bold-text capitalize-text" style="cursor: inherit;"></label>
-            <button class="text-main-color large-icon transform-transition arrow-up">&#xf0d7</button>
-          </div>
-          <div id="filter-camera-list" class="tag-list"></div>
-        </div>
-      </div>
-      <div id="filter-btns" class="transparent opacity-transition" style="display: flex; width: 100%; justify-content: center; gap: 15px; margin-top: 15px;">
-        <button id="filter-clear-btn" class="action-btn"></button>
-        <button id="filter-submit-btn" class="action-btn"></button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Info Popup -->
-  <div id="info-popup" class="hidden-popup" style="z-index: 10000;">
-    <div id="popup-bg" class="popup-bg opacity-transition transparent"></div>
-    <div id="site-info-popup" class="popup centered transparent">
-      <button id="site-info-close-btn" class="large-icon close-btn">&#xf00d</button>
-      <div id="site-info" class="flex-column opacity-transition popup-content transparent no-display">
-        <div class="regular-text">
-          <p class="bold-text">About this site</p>
-          <p>I was in Japan on exchange in September 2022 - April 2023. After Japan, I decided to travel around to Taiwan, Australia, and New Zealand in April and May 2023.
-            This site contains the highlights of all the trips that I made. For privacy reasons, I do not plan to upload close-up pictures of myself or my friends to this page.</p>
-          <p>Design, coding, and photography: Katherine (Katie) Lu</p>
-          <p>Thank you to my mom, dad, Benson, Ricky, Kazu, and other friends who gave me advice and feedback in the development of the site.</p>
-          <button onclick="goToGithub()" class="action-btn"><span class="in-btn-icon">&#xf09b</span> View Github</button>
-        </div>
-        <div class="regular-text">
-          <p class="bold-text">このサイトについて</p>
-          <p>留学のため、2022年9月から2023年4月まで日本に滞在しました。出国した後、台湾、オーストラリアとニュージーランドの旅行もした。
-            このウェブサイトでは、皆さんに私の旅行のハイライトを紹介したいと思います。プライバシーのため、自分と知り合いの写真を掲載しません。</p>
-          <p>デザイン・プログラミング・写真：ルー・キャサリン（ケイティー）</p>
-          <p>このサイトのデザインと修正に協力してくれた母、父、ベンソン、リッキー、かず、他の友達に深く感謝します。</p>
-          <button onclick="goToGithub()" class="action-btn"><span class="in-btn-icon">&#xf09b</span> Githubリポジトリを見る</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Fullscreen Picture -->
-  <div id="fullscreen" class="centered hidden-popup opacity-transition transparent fullscreen-container" style="z-index: 6000;">
-    <div id="fullscreen-gallery" class="fullscreen-gallery">
-      <div id="fullscreen-bg" class="popup-bg opacity-transition transparent" style="z-index: 0;"></div>
-      <div id="fullscreen-ctrl" class="fullscreen-ctrl" style="z-index: 1;">
-        <button id="left-arrow" class="large-icon fullscreen-arrow">&#xf0d9</button>
-        <div>
-          <img id="fullscreen-pic-next" class="fullscreen-pic transparent centered no-display" style="position: absolute;" />
-          <img id="fullscreen-pic" class="fullscreen-pic centered" style="position: absolute;" />
-        </div>
-        <button id="right-arrow" class="large-icon fullscreen-arrow">&#xf0da</button>
-      </div>
-      <div class="fullscreen-fns" style="z-index: 3;">
-        <button id="pic-info-btn" class="large-icon fullscreen-fn-btn">&#xf05a</button>
-        <div class="flex-column" style="display: none;">
-          <button id="zoom-in-btn" class="large-icon fullscreen-fn-btn">&#xf00e</button>
-          <button id="zoom-out-btn" class="large-icon fullscreen-fn-btn">&#xf010</button>
-        </div>
-      </div>
-    </div>
-    <div id="pic-info" style="z-index: 3;">
-      <div id="pic-info-bg" class="portrait-only popup-bg transparent"></div>
-      <div id="pic-info-drawer" class="pic-info-container">
-        <button id="pic-info-close-btn" class="large-icon close-btn portrait-only">&#xf00d</button>
-        <div id="pic-info-handle" style="align-self: center;">
-          <hr class="drawer-handle" />
-        </div>
-        <div id="pic-info-details" class="flex-column pic-info-details caption-text">
-          <div id="fullscreen-eng-date"></div>
-          <div><span id="fullscreen-eng-city"></span> <span id="search-eng"
-              class="inline-icon">&#xf002</span></div>
-          <div id="fullscreen-eng-caption"></div>
-          <hr class="divider">
-          <div id="fullscreen-jp-date"></div>
-          <div><span id="fullscreen-jp-city"></span> <span id="search-jp"
-              class="inline-icon">&#xf002</span></div>
-          <div id="fullscreen-jp-caption"></div>
-          <hr class="divider">
-          <div id="camera-info"></div>
-          <div id="lens-info"></div>
-          <div id="technical-info" class="flex-row"></div>
-          <div id="img-tags" class="tag-list"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Start Screen -->
-  <div id="start-screen" class="start-screen opacity-transition transparent no-display" style="z-index: 4000">
-  </div>
-
-  <!-- Loading circle -->
-  <div id="loading-screen" class="loader centered opacity-transition">
-    <div class="centered">
-      <div id="load0" class="loader-dot" style="transform: rotate(270deg) translate(80px) rotate(270deg); animation-delay: 0s;"></div>
-      <div id="load1" class="loader-dot" style="transform: rotate(315deg) translate(80px) rotate(315deg); animation-delay: 0.1875s;"></div>
-      <div id="load2" class="loader-dot" style="transform: rotate(0deg) translate(80px) rotate(0deg); animation-delay: 0.375s;"></div>
-      <div id="load3" class="loader-dot" style="transform: rotate(45deg) translate(80px) rotate(45deg); animation-delay: 0.5625s;"></div>
-      <div id="load4" class="loader-dot" style="transform: rotate(90deg) translate(80px) rotate(90deg); animation-delay: 0.75s;"></div>
-      <div id="load5" class="loader-dot" style="transform: rotate(135deg) translate(80px) rotate(135deg); animation-delay: 0.9375s;"></div>
-      <div id="load6" class="loader-dot" style="transform: rotate(180deg) translate(80px) rotate(180deg); animation-delay: 1.125s;"></div>
-      <div id="load7" class="loader-dot" style="transform: rotate(225deg) translate(80px) rotate(225deg); animation-delay: 1.3125s;"></div>
-      <div id="load8" class="loader-dot" style="transform: rotate(270deg) translate(80px) rotate(270deg); animation-delay: 1.5s;"></div>
-      <img id="load-icon" class="start-icon img centered no-display" style="margin-left: 10px; margin-top: 10px;">
-    </div>
-  </div>
-  <!-- Error button -->
-  <div id="error-btn" class="error-btn centered loader-text" onclick="retry()">
-    <p>Failed to fetch data. Try again?</p>
-    <p>データアクセスに失敗しました。再試行する？</p>
-  </div>
-
-  <!-- Scripts -->
-  <script src="js/main.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/exif-js/2.3.0/exif.js"></script>
+<body>
+	<custom-header class="transparent"></custom-header>
+	<div id="views">
+		<start-view class="opacity-transition transparent no-display"></start-view>
+		<map-view></map-view>
+		<gallery-view></gallery-view>
+	</div>
+	<info-popup></info-popup>
+	<script type="module" src="js/main.js"></script>
 </body>

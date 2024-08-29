@@ -1,0 +1,29 @@
+.base-drawer {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  box-sizing: border-box;
+}
+
+.drawer-handle-wrapper {
+  display: block;
+  width: 100%;
+}
+
+.drawer-handle {
+  display: none;
+}
+
+@media only screen and (orientation: portrait) {
+  .drawer-handle {
+    display: block;
+    height: 6px;
+    width: 30vw;
+    margin: 15px auto;
+    border-width: 0px;
+    border-radius: 3px;
+    background-color: rgba(var(--main-color));
+    color: rgba(var(--main-color));
+    cursor: grab;
+  }
+}

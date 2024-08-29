@@ -15,11 +15,12 @@ The code is written in **Javascript**, **HTML**, and **CSS**. I also use a **JSO
 
 Since I couldn't use exif-js, I utilized **ExifTool by Phil Harvey** to extract the metadata of each individual picture I uploaded. I also employed **Microsoft Excel** macros to reformat the extracted data, enter captions and additional data, and format the required data into JSON. The resizing and compressing of images was done in **Pixillion**.
 
-The site is optimized for both mobile and web environments. I implemented lazy loading of images using an intersection observer to minimize the data load on the user's device.
-
-If I had the time, I would refactor the site to use components. Couldn't figure out how to do it when I started development and continued rolling with it... but I tried to minimize the amount of redudant code and separate the code into its respective parts so that it would be easier to read. 
+The site is optimized for both mobile and web environments. I implemented dynamic and lazy loading of images using an intersection observer to minimize the data load on the user's device.
 
 Note that there are at least 500 more commits than necessary because the beginning of development was done on Github web on my iPad.
+
+### Code Updates
+July 2024 - Refactored the site to use components.
 
 ## Design
 The website was initially creately only for pictures from the Japan portion of the trip. My design always included the map of Japan with the highlighted regions. The English and Japanese bilingual text is also intentional since the pictures were from Japan. However, I quickly realized that I wanted to show others my pictures from the other countries too, so adding the pictures from the other countries would streamline the presentation.
@@ -48,13 +49,12 @@ Thank you for looking at my project! I hope you enjoyed perusing my photos and g
 
 exif-jsを使用できなかったため、**ExifTool by Phil Harvey**を使用して各写真のメタデータを抽出しました。また、**Microsoft Excel**のマクロを使用してそのデータを再フォーマットし、キャプションやその他の情報を追加し、JSON形式に成形しました。写真のリサイズと圧縮は**Pixillion**を使用しました。
 
-このサイトは、最適化のため、遅延読み込みを使います。
-
-時間あれば、もう一度このサイトを開発したら、コンポーネントを使います。このままで、ファイルの長さは長すぎます。しかし、長くても、読みやすくするため、コードをそれぞれの機能に分けました。
+このサイトは、モバイルとウェブの環境の両方に最適化されています。最適化のため、ダイナミックローディング遅延読み込みを使用します。
 
 このリポジトリのコミットが必要以上に500以上です。これは、開発の始まりがiPadでGithubのウェブインターフェースに行いました。
 
-このサイトはモバイルとウェブの環境の両方に最適化されています。写真はレイジーローディングも使用しました。
+###コードのアップデート
+２０２４年７月　ー　コンポーネントの使用するためのリファクタリング
 
 ## デザイン
 最初はウェブサイトは日本の写真のみを表示するために作成されました。訪れた都道府県をハイライトに表示したかったです。また、私が日本で留学したため、全部が英語と日本語のバイリンガルにしたかったです。他の国の写真も友達に見せたかったので、その写真も追加して、統一しました。

@@ -1,0 +1,112 @@
+.map-view {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 50px 75px;
+    gap: 20px;
+    height: 100vh;
+    box-sizing: border-box;
+}
+
+@media only screen and (orientation: portrait) {
+    .map-view {
+        padding: 10vh 0vh;
+        justify-content: start;
+        height: auto;
+    }
+}
+
+#map-control {
+    position: relative;
+    display: flex;
+    max-height: 70vh;
+    width: 70vh;
+    align-self: center;
+    -webkit-user-select: none;
+    /* Safari */
+    -ms-user-select: none;
+    /* IE 10 and IE 11 */
+    user-select: none;
+    /* Standard syntax */
+}
+
+@media only screen and (orientation: portrait) {
+    #map-control {
+        width: 80vw;
+        max-height: 60vh;
+        height: 60vh;
+    }
+}
+
+#map-container {
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+}
+
+#map-container.scaled {
+    overflow: auto;
+}
+
+.scale-1 {
+    width: 100% !important;
+}
+
+.scale-2 {
+    width: 200% !important;
+}
+
+.scale-3 {
+    width: 300% !important;
+}
+
+@media only screen and (orientation: portrait) {
+    .scale-1 {
+        height: 100% !important;
+    }
+}
+
+#zoom-buttons {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    right: 0px;
+    bottom: 0px;
+    margin: 10px;
+
+    .fa {
+        text-shadow: white 0 0 10px;
+    }
+}
+
+.disabled {
+    opacity: 50% !important;
+    pointer-events: none !important;
+}
+
+#main-title {
+    vertical-align: bottom;
+    color: var(--text-color);
+    font-family: Zen Maru Gothic;
+    font-size: var(--xlrg-text-size);
+    font-weight: bolder;
+    text-transform: uppercase;
+    text-align: center;
+    opacity: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: inset 0 0 0 0 rgba(var(--main-color));
+    transition: color .3s ease-in-out, box-shadow .5s ease-in-out;
+}
+
+@media only screen and (orientation: portrait) {
+    #main-title {
+        margin: 0px 50px;
+    }
+}
+
+#main-title.animated {
+    color: white !important;
+    box-shadow: inset 100vw 0 0 0 rgba(var(--main-color));
+}
