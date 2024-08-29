@@ -4,8 +4,8 @@ import {
     getAllCountryData, setAppColor, setCurrentCountry,
 } from "../../js/globals.js";
 import {
-    addRemoveClass, addRemoveNoDisplay, addRemoveTransparent,
-    getBilingualText, scrollToTop
+    addHoverListener, addRemoveClass, addRemoveNoDisplay, 
+    addRemoveTransparent, getBilingualText, scrollToTop
 } from "../../js/utils.js";
 
 /** The Start View. */
@@ -68,12 +68,11 @@ export default class StartView extends BaseElement {
             newBtn.appendChild(newIconSection);
             newBtn.appendChild(txtJp);
 
-            newBtn.addEventListener("pointerover", () => {
+            addHoverListener(newBtn, () => {
                 addRemoveClass([newBtn], "animated", true);
                 addRemoveTransparent([imgColor], true);
                 addRemoveClass([newIconSection], "animated", true);
-            });
-            newBtn.addEventListener("pointerout", () => {
+            }, () => {
                 addRemoveClass([newBtn], "animated", false);
                 addRemoveTransparent([imgColor], false);
                 addRemoveClass([newIconSection], "animated", false);

@@ -211,3 +211,18 @@ export function addClickListeners(elements) {
 		}
 	});
 }
+
+/**
+ * Adds listeners for both mouse and touch that would emulate hovering.
+ * @param {HTMLElement} element 
+ * @param {Function} startFunction 
+ * @param {Function} endFunction 
+ */
+export function addHoverListener(element, startFunction, endFunction){
+	["mouseover", "touchstart"].forEach(eventName => {
+		element.addEventListener(eventName, startFunction);
+	});
+	["mouseout", "touchend"].forEach(eventName => {
+		element.addEventListener(eventName, endFunction);
+	});
+}

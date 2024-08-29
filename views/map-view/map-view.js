@@ -4,9 +4,9 @@ import {
 	getAppColor, getTranslucentAppColor, onSelectNewRegion
 } from "../../js/globals.js";
 import {
-	addClickListeners, addRemoveClass, addRemoveNoDisplay,
-	addRemoveTransparent, fetchInnerHtml, getBilingualText,
-	scrollToTop, setBilingualProperty
+	addClickListeners, addHoverListener, addRemoveClass, 
+	addRemoveNoDisplay,	addRemoveTransparent, fetchInnerHtml, 
+	getBilingualText, scrollToTop, setBilingualProperty
 } from "../../js/utils.js";
 
 /** The Map View. */
@@ -50,14 +50,15 @@ export default class MapView extends BaseElement {
 							[this._elements.zoomIn, this.scaleMap.bind(this, undefined, true)],
 							[this._elements.zoomOut, this.scaleMap.bind(this, undefined, false)]
 						]);
-						this._elements.mainTitle.addEventListener("pointerover", () => {
-							addRemoveClass([this._elements.mainTitle], "animated", true);
-							this._elements.mainTitle.querySelector("i").classList.add("white");
-						});
-						this._elements.mainTitle.addEventListener("pointerout", () => {
-							addRemoveClass([this._elements.mainTitle], "animated", false);
-							this._elements.mainTitle.querySelector("i").classList.remove("white");
-						});
+						addHoverListener(this._elements.mainTitle,
+							() => {
+								addRemoveClass([this._elements.mainTitle], "animated", true);
+								this._elements.mainTitle.querySelector("i").classList.add("white");
+							}, 
+							() => {
+								addRemoveClass([this._elements.mainTitle], "animated", false);
+								this._elements.mainTitle.querySelector("i").classList.remove("white");
+							});
 					}, 50);
 
 					addRemoveNoDisplay([this]);
@@ -130,13 +131,9 @@ export default class MapView extends BaseElement {
 					rgnImg.setAttribute("cursor", "pointer");
 					rgnImg.setAttribute("transition", "opacity 0.3 ease-in-out");
 
-					rgnImg.addEventListener("pointerover", () => {
-						rgnImg.setAttribute("opacity", "50%");
-					});
-
-					rgnImg.addEventListener("pointerout", () => {
-						rgnImg.setAttribute("opacity", "100%");
-					});
+					addHoverListener(rgnImg,
+						() => { rgnImg.setAttribute("opacity", "50%"); },
+						() => { rgnImg.setAttribute("opacity", "100%"); });
 
 					rgnImg.addEventListener("mouseup", this.selectRegion.bind(this, rgn));
 
