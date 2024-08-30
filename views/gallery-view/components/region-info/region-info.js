@@ -175,6 +175,7 @@ export default class RegionInfo extends BaseDrawer {
                 this._elements.wrapper.style.top = `${getHeader()?.getHeight()}px`;
             }
         } else {
+            this._elements.wrapper.style.position = "relative";
             this._elements.wrapper.style.top = "0px";
         }
     }
