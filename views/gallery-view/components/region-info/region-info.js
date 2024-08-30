@@ -199,7 +199,7 @@ export default class RegionInfo extends BaseDrawer {
                 }, DEFAULT_TIMEOUT * 2);
             }
         }
-        if (window.innerHeight < document.body.getBoundingClientRect().height) {
+        if ((window.innerHeight * 2) < document.body.getBoundingClientRect().height) {
             addRemoveTransparent([this._elements.wrapper], true);
         } else {
             addRemoveTransparent([this._elements.background], true);
@@ -208,13 +208,6 @@ export default class RegionInfo extends BaseDrawer {
             this._elements.wrapper.style.position = "relative";
             addRemoveTransparent([this._elements.drawer], false);
         }, DEFAULT_TIMEOUT);
-    }
-
-    /** Shows the background. */
-    resetPosition(){
-        this.queryByClassName("rgn-info").scrollTo({top: 0});
-        addRemoveTransparent([this._elements.background], false);
-        this.isVisible = true;
     }
 
     /** Shows/hides the pic info section if user scrolls to a certain point. */

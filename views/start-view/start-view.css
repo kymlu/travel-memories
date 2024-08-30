@@ -52,35 +52,35 @@
 }
 
 .start-btn.jp {
-    box-shadow: inset 0 0 0 0 rgba(var(--jp-color));
+    box-shadow: inset 0 0 rgba(var(--jp-color));
 }
 
 .start-btn.jp.animated {
-    box-shadow: inset 100vw 0 0 0 rgba(var(--jp-color));
+    box-shadow: inset 100vw 0 rgba(var(--jp-color));
 }
 
 .start-btn.tw {
-    box-shadow: inset 0 0 0 0 rgba(var(--tw-color));
+    box-shadow: inset 0 0 rgba(var(--tw-color));
 }
 
 .start-btn.tw.animated {
-    box-shadow: inset 100vw 0 0 0 rgba(var(--tw-color));
+    box-shadow: inset 100vw 0 rgba(var(--tw-color));
 }
 
 .start-btn.au {
-    box-shadow: inset 0 0 0 0 rgba(var(--au-color));
+    box-shadow: inset 0 0 rgba(var(--au-color));
 }
 
 .start-btn.au.animated {
-    box-shadow: inset 100vw 0 0 0 rgba(var(--au-color));
+    box-shadow: inset 100vw 0 rgba(var(--au-color));
 }
 
 .start-btn.nz {
-    box-shadow: inset 0 0 0 0 rgba(var(--nz-color));
+    box-shadow: inset 0 0 rgba(var(--nz-color));
 }
 
 .start-btn.nz.animated {
-    box-shadow: inset 100vw 0 0 0 rgba(var(--nz-color));
+    box-shadow: inset 100vw 0 rgba(var(--nz-color));
 }
 
 .start-icon {

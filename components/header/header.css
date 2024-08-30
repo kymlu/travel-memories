@@ -13,10 +13,10 @@ header {
     pointer-events: none;
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (orientation: portrait) and (max-width: 768px) {
     header {
         flex-wrap: wrap;
-        padding: 20px;
+        padding: 20px 20px 10px 20px;
     }
 }
 
@@ -61,7 +61,7 @@ header {
     }
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (orientation: portrait) and (max-width: 768px) {
     #center-section {
         margin: auto;
         order: 2;

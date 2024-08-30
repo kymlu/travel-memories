@@ -18,7 +18,8 @@ export default class TextPolaroid extends BasePolaroid {
     constructor(isAngledLeft, nameEn, nameJp) {
         super(isAngledLeft, true);
         /** The text to display in the middle of the polaroid. @type string */
-        this.text = getBilingualText(nameEn, nameJp);
+        this.nameEn = nameEn;
+        this.nameJp = nameJp;
         this.title = getBilingualText(`See images from ${nameEn}`, `${nameJp}の写真を表示する`);
 
         this.shadowRoot.appendChild(txtPolaroidTemplate.content.cloneNode(true));
@@ -26,8 +27,8 @@ export default class TextPolaroid extends BasePolaroid {
 
     connectedCallback() {
         super.connectedCallback();
-        const polaroidImg = this.queryByClassName("img-wrapper");
-        polaroidImg.innerText = this.text;
+        this.queryById("name-en").innerText = this.nameEn;
+        this.queryById("name-jp").innerText = this.nameJp;
     }
 }
 

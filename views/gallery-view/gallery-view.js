@@ -1,12 +1,14 @@
 /// IMPORTS
 import BaseElement from '../../js/base-element.js';
 import {
-	CUSTOM_EVENT_TYPES, DEFAULT_TIMEOUT, SCROLL_THRESHOLD, TAGS
+	ATTRIBUTES,	CUSTOM_EVENT_TYPES, DEFAULT_TIMEOUT, 
+	SCROLL_THRESHOLD, TAGS
 } from '../../js/constants.js'
 import { isGalleryView, onSelectNewRegion } from '../../js/globals.js';
 import {
 	addClickListeners, addRemoveClass, addRemoveNoDisplay, addRemoveTransparent,
-	fetchInnerHtml, getBilingualText, getImageAddress, getScrollPosition, scrollToTop, sortImgs
+	fetchInnerHtml, getBilingualText, getImageAddress, getScrollPosition, 
+	scrollToTop, setBilingualProperty, sortImgs
 } from '../../js/utils.js';
 import CustomHeader from '../../components/header/header.js';
 import RegionInfo from './components/region-info/region-info.js';
@@ -70,6 +72,7 @@ export default class GalleryView extends BaseElement {
 						view: this.queryById("container"),
 						gallery: this.queryById("gallery"),
 						toTopButton: this.queryById("to-top-btn"),
+						pictureCount: this.queryById("picture-count"),
 					}
 
 					this.regionDropdown = this.shadowRoot.querySelector("region-dropdown");
@@ -103,16 +106,18 @@ export default class GalleryView extends BaseElement {
 							event.detail.selectedTags,
 							event.detail.selectedCameras);
 
+						this.regionInfo.show(false);
 						scrollToTop(true);
-						this.regionInfo.resetPosition();
 						this._elements.gallery.replaceChildren();
 						this.previousRegion = null;
+						addRemoveNoDisplay([this._elements.pictureCount], true);
 						if (this.visibleImages.length == 0) {
 							this._elements.gallery.innerText = this.noPicturesText;
 							this._elements.gallery.appendChild(changeFilterQueryButton);
 							addRemoveClass([this._elements.gallery], "flex-column", true);
 							addRemoveClass([this._elements.gallery], "space-on-top", true);
 						} else {
+							this.setImageCount();
 							addRemoveClass([this._elements.gallery], "space-on-top", false);
 							addRemoveClass([this._elements.gallery], "flex-column", false);
 							this.imageLoadIndex = 0;
@@ -172,6 +177,7 @@ export default class GalleryView extends BaseElement {
 	setNewRegion(regionData, isSingleRegionSelected, isNewGallery) {
 		scrollToTop(false);
 		addRemoveNoDisplay([this], false);
+		addRemoveNoDisplay([this._elements.pictureCount], true);
 		addRemoveTransparent([this._elements.view], true);
 		setTimeout(() => {
 			this.regionDropdown.changeSelectedRegion(
@@ -253,6 +259,7 @@ export default class GalleryView extends BaseElement {
 
 			// add pictures
 			if (this.allImages.length > 0) {
+				this.setImageCount();
 				this.loadImages();
 			} else {
 				this._elements.gallery.innerText = this.noPicturesText;
@@ -286,6 +293,9 @@ export default class GalleryView extends BaseElement {
 				this.imageLoadLimit = imgsPerScreen * 2 + (imgsPerScreen - (this.currentPolaroidCount % imgsPerScreen / 2));
 			}
 		}
+		if(this.imageLoadIndex == this.visibleImages.length) {
+			addRemoveNoDisplay([this._elements.pictureCount], false);
+		}
 		this.isLoadingImages = false;
 	}
 
@@ -317,6 +327,22 @@ export default class GalleryView extends BaseElement {
 		newPolaroid.addEventListener("click", () => { onSelectNewRegion(rgn.id, null, false) });
 
 		return newPolaroid;
+	}
+
+	setImageCount() {
+		if (this.visibleImages.length == this.allImages.length) {
+			setBilingualProperty([
+				[this._elements.pictureCount,
+				`${this.allImages.length} pictures`,
+				`${this.allImages.length} 枚`]
+			], ATTRIBUTES.INNERTEXT);
+		} else {
+			setBilingualProperty([
+				[this._elements.pictureCount,
+				`${this.visibleImages.length}/${this.allImages.length} pictures`,
+				`${this.visibleImages.length}/${this.allImages.length} 枚`]
+			], ATTRIBUTES.INNERTEXT);
+		}
 	}
 
 	// image filtering
