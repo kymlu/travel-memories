@@ -10,9 +10,9 @@
 
 @media only screen and (orientation: portrait) {
     .map-view {
-        padding: 10vh 0vh;
+        padding: 10vh 0vh 5vh 0vh;
         justify-content: start;
-        height: auto;
+        height: 100svh;
     }
 }
 
@@ -71,12 +71,24 @@
     display: flex;
     flex-direction: column;
     align-items: end;
-    right: 0px;
-    bottom: 0px;
-    margin: 10px;
+    right: 10px;
+    bottom: 10px;
+    gap: 2px;
 
+    .fa,
+    #region-count {
+        background-color: rgba(255, 255, 255, 0.5);
+        border-radius: 10px;
+    }
+    
     .fa {
-        text-shadow: white 0 0 10px;
+        padding: 2px;
+    }
+
+    #region-count {
+        padding: 0 5px;
+        font-size: var(--sml-text-size);
+        text-align: center;
     }
 }
 

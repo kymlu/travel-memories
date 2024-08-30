@@ -4,8 +4,8 @@ import {
 	getAppColor, getTranslucentAppColor, onSelectNewRegion
 } from "../../js/globals.js";
 import {
-	addClickListeners, addHoverListener, addRemoveClass, 
-	addRemoveNoDisplay,	addRemoveTransparent, fetchInnerHtml, 
+	addClickListeners, addHoverListener, addRemoveClass,
+	addRemoveNoDisplay, addRemoveTransparent, fetchInnerHtml,
 	getBilingualText, scrollToTop, setBilingualProperty
 } from "../../js/utils.js";
 
@@ -54,7 +54,7 @@ export default class MapView extends BaseElement {
 							() => {
 								addRemoveClass([this._elements.mainTitle], "animated", true);
 								this._elements.mainTitle.querySelector("i").classList.add("white");
-							}, 
+							},
 							() => {
 								addRemoveClass([this._elements.mainTitle], "animated", false);
 								this._elements.mainTitle.querySelector("i").classList.remove("white");
@@ -72,7 +72,10 @@ export default class MapView extends BaseElement {
 		this.currentCountry = newCountry;
 		this.defaultMainTitleText = getBilingualText(this.currentCountry.nameEn, this.currentCountry.nameJp);
 		this.defaultMainTitleTitle = getBilingualText(`See all images from ${this.currentCountry.nameEn}`, `${this.currentCountry.nameJp}の写真をすべて表示する`);
-
+		let regions = this.currentCountry.regionGroups.flatMap(regionGroup => regionGroup.regions);
+		const visitedCount = regions.filter(region => region.visited).length;
+		const totalCount = regions.length;
+		this.queryById("region-count").innerText = `${visitedCount}/${totalCount}`;
 		setTimeout(() => {
 			this.createMap();
 		}, 50);
