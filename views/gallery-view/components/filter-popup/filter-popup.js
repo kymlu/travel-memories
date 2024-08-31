@@ -100,7 +100,7 @@ export default class FilterPopup extends BasePopup {
      */
     refreshFilterButtons(htmlListId, selectedList) {
         Array.from(this.queryById(htmlListId).querySelectorAll("button")).forEach(button => {
-            if (selectedList.some(item => item.replace(" ", "") == button.id)) {
+            if (selectedList.some(item => item == button.dataset.value)) {
                 button.classList.add("active");
             } else {
                 button.classList.remove("active");
@@ -218,14 +218,14 @@ export default class FilterPopup extends BasePopup {
                 let newButton = this.filterOptionButton.cloneNode(true);
                 if (typeof (item) == "string") {
                     newButton.innerText = item;
-                    newButton.id = item.replace(" ", "");
+                    newButton.dataset.value = item;
                     newButton.addEventListener("click", () => {
                         toggleFunction(item);
                         newButton.classList.toggle("active");
                     });
                 } else {
                     newButton.innerText = getBilingualText(item.nameEn, item.nameJp);
-                    newButton.id = item.id;
+                    newButton.dataset.value = item.id;
                     newButton.addEventListener("click", () => {
                         toggleFunction(item.id);
                         newButton.classList.toggle("active");
