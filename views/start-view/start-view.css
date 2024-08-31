@@ -40,6 +40,12 @@
     }
 }
 
+@media only screen and (orientation: portrait) and (max-width: 768px)  {
+    .start-btn {
+        font-size: var(--lrg-text-size);
+    }
+}
+
 .start-btn.animated {
     color: white;
 }

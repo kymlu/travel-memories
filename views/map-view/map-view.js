@@ -59,6 +59,9 @@ export default class MapView extends BaseElement {
 								addRemoveClass([this._elements.mainTitle], "animated", false);
 								this._elements.mainTitle.querySelector("i").classList.remove("white");
 							});
+
+						this.addEventListener(CUSTOM_EVENT_TYPES.LOADING_COMPLETE, this.showView.bind(this));
+
 					}, 50);
 
 					addRemoveNoDisplay([this]);
@@ -86,15 +89,17 @@ export default class MapView extends BaseElement {
 		addRemoveNoDisplay([this], false);
 		this.scaleMap(1);
 
+		scrollToTop(false);
+		this._elements.mainTitleText.innerText = this.defaultMainTitleText;
+		this._elements.mainTitle.title = this.defaultMainTitleTitle;
+
 		if (this.selectedRegion != null) {
 			this.colourMap();
 			this.selectedRegion = null;
 		}
+	}
 
-		this._elements.mainTitleText.innerText = this.defaultMainTitleText;
-		this._elements.mainTitle.title = this.defaultMainTitleTitle;
-		scrollToTop(false);
-		// Note: for some reason making "this" transparent does not work.
+	showView() {
 		setTimeout(() => {
 			addRemoveTransparent([this._elements.view], false);
 		}, 0);
@@ -139,13 +144,13 @@ export default class MapView extends BaseElement {
 						() => { rgnImg.setAttribute("opacity", "100%"); });
 
 					rgnImg.addEventListener("mouseup", this.selectRegion.bind(this, rgn));
-
-					const loadingCompleteEvent = new CustomEvent(CUSTOM_EVENT_TYPES.LOADING_COMPLETE);
-					this.dispatchEvent(loadingCompleteEvent);
 				} else {
 					rgnImg.setAttribute("fill", "lightgrey");
 				}
 			});
+
+			const loadingCompleteEvent = new CustomEvent(CUSTOM_EVENT_TYPES.LOADING_COMPLETE);
+			this.dispatchEvent(loadingCompleteEvent);
 		}, 50);
 	}
 

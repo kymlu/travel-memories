@@ -150,17 +150,13 @@ export default class RegionInfo extends BaseDrawer {
                 element.innerText = text;
             });
         }
-        this.queryByClassName("rgn-info").scrollTo({ top: 0, behavior: "smooth" });
+        this.queryById("contents").scrollTo({ top: 0, behavior: "smooth" });
     }
 
     /** Shows the region info section.
      * @param {true} isForced
      */
     show(isForced) {
-        if (isPortraitMode()) {
-            this.queryById("dates-title").scrollIntoView({ block: isPortraitMode() ? "end" : "start" });
-        }
-
         this.isVisible = true;
         addRemoveTransparent([this._elements.wrapper, this._elements.background], false);
         if (isForced) {
