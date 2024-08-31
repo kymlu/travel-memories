@@ -24,20 +24,18 @@ export default class RegionDropdown extends BaseElement {
 					background: this.queryById("background"),
 					content: this.queryById("dropdown"),
 				}
-				setTimeout(() => {
-					document.addEventListener(CUSTOM_EVENT_TYPES.HEADER_UPDATED,
-						(event) => { this.#adjustPosition(event.detail.header) });
-					window.addEventListener("resize", () => {
-						if (isGalleryView()) {
-							this.#adjustPosition();
-						}
-					});
-					addClickListeners([
-						[this._elements.background, this.close.bind(this, null)]
-					]);
-					addRemoveNoDisplay([this], true);
-					addRemoveTransparent([this.queryByClassName("transparent")], false);
-				}, 50);
+				document.addEventListener(CUSTOM_EVENT_TYPES.HEADER_UPDATED,
+					(event) => { this.#adjustPosition(event.detail.header) });
+				window.addEventListener("resize", () => {
+					if (isGalleryView()) {
+						this.#adjustPosition();
+					}
+				});
+				addClickListeners([
+					[this._elements.background, this.close.bind(this, null)]
+				]);
+				addRemoveNoDisplay([this], true);
+				addRemoveTransparent([this.queryByClassName("transparent")], false);
 			});
 	}
 

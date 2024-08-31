@@ -28,44 +28,40 @@ export default class MapView extends BaseElement {
 	connectedCallback() {
 		fetchInnerHtml("views/map-view/map-view.html", this, true)
 			.then(() => {
-				setTimeout(() => {
-					this._elements = {
-						view: this.queryByClassName("map-view"),
-						mapContainer: this.queryById("map-container"),
-						map: this.queryById("map"),
-						mainTitle: this.queryById("main-title"),
-						mainTitleText: this.queryById("main-title-text"),
-						zoomIn: this.queryById("zoom-in"),
-						zoomOut: this.queryById("zoom-out"),
-					}
+				this._elements = {
+					view: this.queryByClassName("map-view"),
+					mapContainer: this.queryById("map-container"),
+					map: this.queryById("map"),
+					mainTitle: this.queryById("main-title"),
+					mainTitleText: this.queryById("main-title-text"),
+					zoomIn: this.queryById("zoom-in"),
+					zoomOut: this.queryById("zoom-out"),
+				}
 
-					setTimeout(() => {
-						this._elements.map.addEventListener("load", this.colourMap.bind(this));
+				this._elements.map.addEventListener("load", this.colourMap.bind(this));
 
-						setBilingualProperty([[this._elements.zoomIn, "Zoom in", "ズームイン"],
-						[this._elements.zoomOut, "Zoom out", "ズームアウト"]], ATTRIBUTES.TITLE);
+				setBilingualProperty([[this._elements.zoomIn, "Zoom in", "ズームイン"],
+				[this._elements.zoomOut, "Zoom out", "ズームアウト"]], ATTRIBUTES.TITLE);
 
-						addClickListeners([
-							[this._elements.mainTitle, () => { onSelectNewRegion(this.selectedRegion, null, true); }],
-							[this._elements.zoomIn, this.scaleMap.bind(this, undefined, true)],
-							[this._elements.zoomOut, this.scaleMap.bind(this, undefined, false)]
-						]);
-						addHoverListener(this._elements.mainTitle,
-							() => {
-								addRemoveClass([this._elements.mainTitle], "animated", true);
-								this._elements.mainTitle.querySelector("i").classList.add("white");
-							},
-							() => {
-								addRemoveClass([this._elements.mainTitle], "animated", false);
-								this._elements.mainTitle.querySelector("i").classList.remove("white");
-							});
+				addClickListeners([
+					[this._elements.mainTitle, () => { onSelectNewRegion(this.selectedRegion, null, true); }],
+					[this._elements.zoomIn, this.scaleMap.bind(this, undefined, true)],
+					[this._elements.zoomOut, this.scaleMap.bind(this, undefined, false)]
+				]);
+				addHoverListener(this._elements.mainTitle,
+					() => {
+						addRemoveClass([this._elements.mainTitle], "animated", true);
+						this._elements.mainTitle.querySelector("i").classList.add("white");
+					},
+					() => {
+						addRemoveClass([this._elements.mainTitle], "animated", false);
+						this._elements.mainTitle.querySelector("i").classList.remove("white");
+					});
 
-						this.addEventListener(CUSTOM_EVENT_TYPES.LOADING_COMPLETE, this.showView.bind(this));
+				this.addEventListener(CUSTOM_EVENT_TYPES.LOADING_COMPLETE, this.showView.bind(this));
 
-					}, 50);
 
-					addRemoveNoDisplay([this]);
-				}, 50);
+				addRemoveNoDisplay([this]);
 			});
 	}
 

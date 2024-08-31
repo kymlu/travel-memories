@@ -60,35 +60,33 @@ export default class FilterPopup extends BasePopup {
                     keyword: this.queryById("filter-kw-input"),
                     keywordClearBtn: this.queryById("filter-kw-clear-btn")
                 }
-                setTimeout(() => {
-                    setBilingualProperty([
-                        [this.queryById("filter-title"), "Filters", "フィルター"],
-                        [this.queryById("filter-fav-title"), "Favourites", "お気に入り"],
-                        [this.queryById("filter-kw-title"), "Keyword", "キーワード"],
-                        [this.queryById("filter-tags-title"), "Tags", "タグ"],
-                        [this.queryById("filter-camera-title"), "Camera", "カメラ"],
-                        [this.queryById("filter-areas-title"), "Areas", "場所"],
-                        [this.queryById("filter-clear-btn"), "Clear", "クリアする"],
-                        [this.queryById("filter-submit-btn"), "Apply", "適用する"]
-                    ], ATTRIBUTES.INNERTEXT);
+                setBilingualProperty([
+                    [this.queryById("filter-title"), "Filters", "フィルター"],
+                    [this.queryById("filter-fav-title"), "Favourites", "お気に入り"],
+                    [this.queryById("filter-kw-title"), "Keyword", "キーワード"],
+                    [this.queryById("filter-tags-title"), "Tags", "タグ"],
+                    [this.queryById("filter-camera-title"), "Camera", "カメラ"],
+                    [this.queryById("filter-areas-title"), "Areas", "場所"],
+                    [this.queryById("filter-clear-btn"), "Clear", "クリアする"],
+                    [this.queryById("filter-submit-btn"), "Apply", "適用する"]
+                ], ATTRIBUTES.INNERTEXT);
 
-                    this.queryById("filter-fav-label").childNodes[0].textContent = getBilingualText("Filter favourites", "お気に入りだけを表示する");
+                this.queryById("filter-fav-label").childNodes[0].textContent = getBilingualText("Filter favourites", "お気に入りだけを表示する");
 
-                    setBilingualProperty([
-                        [this._elements.keywordClearBtn, "Clear keyword", "キーワードをクリアする"],
-                    ], ATTRIBUTES.TITLE);
+                setBilingualProperty([
+                    [this._elements.keywordClearBtn, "Clear keyword", "キーワードをクリアする"],
+                ], ATTRIBUTES.TITLE);
 
-                    addClickListeners([
-                        [this.queryById("filter-regions-header"), this.toggleFilterGroup.bind(this, "regions", undefined)],
-                        [this.queryById("filter-areas-header"), this.toggleFilterGroup.bind(this, "areas", undefined)],
-                        [this.queryById("filter-tags-header"), this.toggleFilterGroup.bind(this, "tags", undefined)],
-                        [this.queryById("filter-camera-header"), this.toggleFilterGroup.bind(this, "camera", undefined)],
-                        [this.queryById("filter-clear-btn"), this.clearFilters.bind(this)],
-                        [this.queryById("filter-submit-btn"), this.submitFilters.bind(this)],
-                        [this._elements.keywordClearBtn, this.clearKeyword.bind(this)]
-                    ]);
-                    this._elements.keyword.addEventListener("input", this.checkEmptyKeywordInput.bind(this));
-                }, 0);
+                addClickListeners([
+                    [this.queryById("filter-regions-header"), this.toggleFilterGroup.bind(this, "regions", undefined)],
+                    [this.queryById("filter-areas-header"), this.toggleFilterGroup.bind(this, "areas", undefined)],
+                    [this.queryById("filter-tags-header"), this.toggleFilterGroup.bind(this, "tags", undefined)],
+                    [this.queryById("filter-camera-header"), this.toggleFilterGroup.bind(this, "camera", undefined)],
+                    [this.queryById("filter-clear-btn"), this.clearFilters.bind(this)],
+                    [this.queryById("filter-submit-btn"), this.submitFilters.bind(this)],
+                    [this._elements.keywordClearBtn, this.clearKeyword.bind(this)]
+                ]);
+                this._elements.keyword.addEventListener("input", this.checkEmptyKeywordInput.bind(this));
             });
     }
 

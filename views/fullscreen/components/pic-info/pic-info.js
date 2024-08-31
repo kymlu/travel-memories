@@ -36,44 +36,42 @@ export default class PicInfo extends BaseDrawer {
 					technical: this.queryById("technical-info"),
 					tags: this.queryById("img-tags")
 				};
-				setTimeout(() => {
-					setBilingualProperty([
-						[this.queryById("search-en"), "Google in English", "英語でググる"],
-						[this.queryById("search-jp"), "Google in Japanese", "日本語でググる"],
-						[this.queryByClassName("close-btn"), "Close", "閉じる"]
-					], ATTRIBUTES.TITLE);
+				setBilingualProperty([
+					[this.queryById("search-en"), "Google in English", "英語でググる"],
+					[this.queryById("search-jp"), "Google in Japanese", "日本語でググる"],
+					[this.queryByClassName("close-btn"), "Close", "閉じる"]
+				], ATTRIBUTES.TITLE);
 
-					addClickListeners([
-						[this.queryById("background"), this.hide.bind(this)],
-						[this._elements.drawer, (event) => { event.stopPropagation(); }],
-						[this.queryByClassName("close-btn"), this.hide.bind(this)],
-						[this.queryById("search-en"), this.searchEn.bind(this)],
-						[this.queryById("search-jp"), this.searchJp.bind(this)]
-					]);
+				addClickListeners([
+					[this.queryById("background"), this.hide.bind(this)],
+					[this._elements.drawer, (event) => { event.stopPropagation(); }],
+					[this.queryByClassName("close-btn"), this.hide.bind(this)],
+					[this.queryById("search-en"), this.searchEn.bind(this)],
+					[this.queryById("search-jp"), this.searchJp.bind(this)]
+				]);
 
-					// currently remove because it will not work on Apple <- what is this lol
-					this.queryById("contents").addEventListener("touchstart", (event) => {
-						event.stopPropagation();
-					});
+				// currently remove because it will not work on Apple <- what is this lol
+				this.queryById("contents").addEventListener("touchstart", (event) => {
+					event.stopPropagation();
+				});
 
-					this.queryById("contents").addEventListener("touchmove", (event) => {
-						event.stopPropagation();
-					});
+				this.queryById("contents").addEventListener("touchmove", (event) => {
+					event.stopPropagation();
+				});
 
-					TAGS.sort(sortBynameEn).forEach(tag => {
-						let tagElement = document.createElement("div");
-						tagElement.classList.add("base-tag", "img-tag");
-						let tagIcon = document.createElement("i");
-						tagIcon.classList.add("fa", tag.faClass);
-						let tagText = document.createElement("span");
-						tagText.innerText = getBilingualText(tag.nameEn, tag.nameJp);
-						tagElement.appendChild(tagIcon);
-						tagElement.appendChild(tagText);
-						tagElement.dataset.tagId = tag.id;
-						this._elements.tags.appendChild(tagElement);
-					});
-					this._elements.tags.appendChild(this.#createfavouriteTag());
-				}, 50);
+				TAGS.sort(sortBynameEn).forEach(tag => {
+					let tagElement = document.createElement("div");
+					tagElement.classList.add("base-tag", "img-tag");
+					let tagIcon = document.createElement("i");
+					tagIcon.classList.add("fa", tag.faClass);
+					let tagText = document.createElement("span");
+					tagText.innerText = getBilingualText(tag.nameEn, tag.nameJp);
+					tagElement.appendChild(tagIcon);
+					tagElement.appendChild(tagText);
+					tagElement.dataset.tagId = tag.id;
+					this._elements.tags.appendChild(tagElement);
+				});
+				this._elements.tags.appendChild(this.#createfavouriteTag());
 			});
 	}
 

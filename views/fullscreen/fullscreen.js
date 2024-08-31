@@ -49,28 +49,26 @@ export default class Fullscreen extends BaseElement {
 					picInfoButton: this.queryById("pic-info-btn")
 				};
 				this.picInfo = this.shadowRoot.querySelector("pic-info");
-				setTimeout(() => {
-					setBilingualProperty([
-						[this._elements.picInfoButton, "See picture information", "写真の情報を見る"],
-						[this._elements.leftArrow, "Previous picture", "前の写真"],
-						[this._elements.rightArrow, "Next picture", "次の写真"],
-					], ATTRIBUTES.TITLE);
+				setBilingualProperty([
+					[this._elements.picInfoButton, "See picture information", "写真の情報を見る"],
+					[this._elements.leftArrow, "Previous picture", "前の写真"],
+					[this._elements.rightArrow, "Next picture", "次の写真"],
+				], ATTRIBUTES.TITLE);
 
-					addClickListeners([
-						[this._elements.background, this.close.bind(this, true)],
-						[this._elements.control, this.close.bind(this, true)],
-						[this._elements.picInfoButton, this.picInfo.toggleVisibility.bind(this.picInfo, null)],
-						[this._elements.leftArrow, (event) => { event.stopPropagation(); }],
-						[this._elements.picture, (event) => { event.stopPropagation(); }],
-						[this._elements.rightArrow, (event) => { event.stopPropagation(); }],
-						[this._elements.leftArrow, this.changePicture.bind(this, false)],
-						[this._elements.rightArrow, this.changePicture.bind(this, true)]
-					]);
+				addClickListeners([
+					[this._elements.background, this.close.bind(this, true)],
+					[this._elements.control, this.close.bind(this, true)],
+					[this._elements.picInfoButton, this.picInfo.toggleVisibility.bind(this.picInfo, null)],
+					[this._elements.leftArrow, (event) => { event.stopPropagation(); }],
+					[this._elements.picture, (event) => { event.stopPropagation(); }],
+					[this._elements.rightArrow, (event) => { event.stopPropagation(); }],
+					[this._elements.leftArrow, this.changePicture.bind(this, false)],
+					[this._elements.rightArrow, this.changePicture.bind(this, true)]
+				]);
 
-					this._elements.view.addEventListener("touchstart", this.startFullscreenSwipe.bind(this), false);
-					this._elements.view.addEventListener("touchmove", this.moveFullscreenSwipe.bind(this), false);
-					this.close(true);
-				}, 50);
+				this._elements.view.addEventListener("touchstart", this.startFullscreenSwipe.bind(this), false);
+				this._elements.view.addEventListener("touchmove", this.moveFullscreenSwipe.bind(this), false);
+				this.close(true);
 			});
 	}
 

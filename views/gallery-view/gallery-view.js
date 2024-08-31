@@ -1,13 +1,14 @@
 /// IMPORTS
 import BaseElement from '../../js/base-element.js';
 import {
-	ATTRIBUTES,	CUSTOM_EVENT_TYPES, DEFAULT_TIMEOUT, 
+	ATTRIBUTES, CUSTOM_EVENT_TYPES, DEFAULT_TIMEOUT,
 	SCROLL_THRESHOLD, TAGS
 } from '../../js/constants.js'
 import { isGalleryView, onSelectNewRegion } from '../../js/globals.js';
 import {
-	addClickListeners, addRemoveClass, addRemoveNoDisplay, addRemoveTransparent,
-	fetchInnerHtml, getBilingualText, getImageAddress, getScrollPosition, 
+	addClickListeners, addRemoveClass, addRemoveNoDisplay,
+	addRemoveTransparent, fetchInnerHtml, getBilingualText,
+	getImageAddress, getScrollPosition, isPortraitMode,
 	scrollToTop, setBilingualProperty, sortImgs
 } from '../../js/utils.js';
 import CustomHeader from '../../components/header/header.js';
@@ -67,76 +68,72 @@ export default class GalleryView extends BaseElement {
 	connectedCallback() {
 		fetchInnerHtml("views/gallery-view/gallery-view.html", this, true)
 			.then(() => {
-				setTimeout(() => {
-					this._elements = {
-						view: this.queryById("container"),
-						gallery: this.queryById("gallery"),
-						toTopButton: this.queryById("to-top-btn"),
-						pictureCount: this.queryById("picture-count"),
+				this._elements = {
+					view: this.queryById("container"),
+					gallery: this.queryById("gallery"),
+					toTopButton: this.queryById("to-top-btn"),
+					pictureCount: this.queryById("picture-count"),
+				}
+
+				this.regionDropdown = this.shadowRoot.querySelector("region-dropdown");
+				this.regionInfo = this.shadowRoot.querySelector("region-info");
+				this.fullscreen = this.shadowRoot.querySelector("fullscreen-component");
+				this.filterPopup = this.shadowRoot.querySelector("filter-popup");
+
+				this.classList.add("opacity-transition");
+
+				window.onscroll = () => {
+					if (isGalleryView()) {
+						this.onScrollFunction();
 					}
+				};
 
-					this.regionDropdown = this.shadowRoot.querySelector("region-dropdown");
-					this.regionInfo = this.shadowRoot.querySelector("region-info");
-					this.fullscreen = this.shadowRoot.querySelector("fullscreen-component");
-					this.filterPopup = this.shadowRoot.querySelector("filter-popup");
+				window.addEventListener("resize", () => {
+					if (isGalleryView()) {
+						this.#adjustPosition();
+					}
+				});
 
-					this.classList.add("opacity-transition");
+				let changeFilterQueryButton = document.createElement("button");
+				changeFilterQueryButton.classList.add("action-btn");
+				changeFilterQueryButton.innerText = getBilingualText("Change filters", "フィルターを変更する");
 
-					window.onscroll = () => {
-						if (isGalleryView()) {
-							this.onScrollFunction();
-						}
-					};
+				this.filterPopup.addEventListener(CUSTOM_EVENT_TYPES.FILTER_POPUP_SUBMITTED, event => {
+					this.filterImages(event.detail.isOnlyFavs,
+						event.detail.keyword,
+						event.detail.selectedRegions,
+						event.detail.selectedAreas,
+						event.detail.selectedTags,
+						event.detail.selectedCameras);
 
-					window.addEventListener("resize", () => {
-						if (isGalleryView()) {
-							this.#adjustPosition();
-						}
-					});
+					this.regionInfo.show(false);
+					scrollToTop(true);
+					this._elements.gallery.replaceChildren();
+					this.previousRegion = null;
+					addRemoveNoDisplay([this._elements.pictureCount], true);
+					if (this.visibleImages.length == 0) {
+						this._elements.gallery.innerText = this.noPicturesText;
+						this._elements.gallery.appendChild(changeFilterQueryButton);
+						addRemoveClass([this._elements.gallery], "flex-column", true);
+						addRemoveClass([this._elements.gallery], "space-on-top", true);
+					} else {
+						this.setImageCount();
+						addRemoveClass([this._elements.gallery], "space-on-top", false);
+						addRemoveClass([this._elements.gallery], "flex-column", false);
+						this.imageLoadIndex = 0;
+						this.currentPolaroidCount = 0;
+						this.loadImages();
+					}
+				});
 
-					let changeFilterQueryButton = document.createElement("button");
-					changeFilterQueryButton.classList.add("action-btn");
-					changeFilterQueryButton.innerText = getBilingualText("Change filters", "フィルターを変更する");
+				addClickListeners([
+					[this._elements.toTopButton, scrollToTop],
+					[changeFilterQueryButton, this.filterPopup.open.bind(this.filterPopup, null)]
+				]);
 
-					this.filterPopup.addEventListener(CUSTOM_EVENT_TYPES.FILTER_POPUP_SUBMITTED, event => {
-						this.filterImages(event.detail.isOnlyFavs,
-							event.detail.keyword,
-							event.detail.selectedRegions,
-							event.detail.selectedAreas,
-							event.detail.selectedTags,
-							event.detail.selectedCameras);
+				this._elements.toTopButton.title = getBilingualText("Go to top", "トップに移動する");
+				addRemoveNoDisplay([this], true);
 
-						this.regionInfo.show(false);
-						scrollToTop(true);
-						this._elements.gallery.replaceChildren();
-						this.previousRegion = null;
-						addRemoveNoDisplay([this._elements.pictureCount], true);
-						if (this.visibleImages.length == 0) {
-							this._elements.gallery.innerText = this.noPicturesText;
-							this._elements.gallery.appendChild(changeFilterQueryButton);
-							addRemoveClass([this._elements.gallery], "flex-column", true);
-							addRemoveClass([this._elements.gallery], "space-on-top", true);
-						} else {
-							this.setImageCount();
-							addRemoveClass([this._elements.gallery], "space-on-top", false);
-							addRemoveClass([this._elements.gallery], "flex-column", false);
-							this.imageLoadIndex = 0;
-							this.currentPolaroidCount = 0;
-							this.loadImages();
-						}
-					});
-
-					setTimeout(() => {
-						addClickListeners([
-							[this._elements.toTopButton, scrollToTop],
-							[changeFilterQueryButton, this.filterPopup.open.bind(this.filterPopup, null)]
-						]);
-
-						this._elements.toTopButton.title = getBilingualText("Go to top", "トップに移動する");
-						addRemoveNoDisplay([this], true);
-					}, 50);
-
-				}, 50);
 			});
 	}
 
@@ -293,7 +290,7 @@ export default class GalleryView extends BaseElement {
 				this.imageLoadLimit = imgsPerScreen * 2 + (imgsPerScreen - (this.currentPolaroidCount % imgsPerScreen / 2));
 			}
 		}
-		if(this.imageLoadIndex == this.visibleImages.length) {
+		if (this.imageLoadIndex == this.visibleImages.length) {
 			addRemoveNoDisplay([this._elements.pictureCount], false);
 		}
 		this.isLoadingImages = false;
@@ -330,19 +327,15 @@ export default class GalleryView extends BaseElement {
 	}
 
 	setImageCount() {
-		if (this.visibleImages.length == this.allImages.length) {
-			setBilingualProperty([
-				[this._elements.pictureCount,
-				`${this.allImages.length} pictures`,
-				`${this.allImages.length} 枚`]
-			], ATTRIBUTES.INNERTEXT);
-		} else {
-			setBilingualProperty([
-				[this._elements.pictureCount,
-				`${this.visibleImages.length}/${this.allImages.length} pictures`,
-				`${this.visibleImages.length}/${this.allImages.length} 枚`]
-			], ATTRIBUTES.INNERTEXT);
-		}
+		let countText = this.visibleImages.length == this.allImages.length ?
+			`${this.allImages.length}` :
+			`${this.visibleImages.length}/${this.allImages.length}`;
+
+		setBilingualProperty([
+			[this._elements.pictureCount,
+			`${countText} pictures`,
+			`${countText} 枚`]
+		], ATTRIBUTES.INNERTEXT);
 	}
 
 	// image filtering
@@ -430,7 +423,7 @@ export default class GalleryView extends BaseElement {
 		this.regionInfo.handleScroll();
 
 		if (!this.isLoadingImages && this.imageLoadIndex < this.visibleImages.length &&
-			(window.innerHeight + Math.round(window.scrollY)) >= document.body.offsetHeight - 200) {
+			(window.innerHeight + Math.round(window.scrollY)) >= document.body.offsetHeight - (isPortraitMode() ? 200 : 400)) {
 			this.loadImages();
 		}
 	}

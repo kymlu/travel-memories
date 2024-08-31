@@ -38,3 +38,7 @@
   cursor: default;
   text-align: center;
 }
+
+.fa-search {
+    margin-top: -6px;
+}

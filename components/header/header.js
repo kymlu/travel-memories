@@ -49,14 +49,12 @@ export default class CustomHeader extends BaseElement {
                 const loadingCompleteEvent = new CustomEvent(CUSTOM_EVENT_TYPES.LOADING_COMPLETE);
                 this.dispatchEvent(loadingCompleteEvent);
 
-                setTimeout(() => {
-                    setBilingualProperty([
-                        [this.buttons.globe, "Return to country picker", "国の選択へ戻る"],
-                        [this.buttons.map, "Return to map", "地図に戻る"],
-                        [this.buttons.creator, "About the site", "このサイトについて"],
-                        [this.buttons.filter, "Filter Pictures", "写真をフィルターする"]
-                    ], ATTRIBUTES.TITLE);
-                }, 50);
+                setBilingualProperty([
+                    [this.buttons.globe, "Return to country picker", "国の選択へ戻る"],
+                    [this.buttons.map, "Return to map", "地図に戻る"],
+                    [this.buttons.creator, "About the site", "このサイトについて"],
+                    [this.buttons.filter, "Filter Pictures", "写真をフィルターする"]
+                ], ATTRIBUTES.TITLE);
             });
     }
 
