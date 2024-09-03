@@ -1394,8 +1394,8 @@
                 "area": "sendai",
                 "locationEn": "",
                 "locationJp": "そばの神田 東一屋 駅前南町通り店",
-                "descriptionEn": "",
-                "descriptionJp": "",
+                "descriptionEn": "Cheap soba",
+                "descriptionJp": "そば安い",
                 "tags": [
                   "food"
                 ],
@@ -1787,8 +1787,8 @@
                 "area": "sendai",
                 "locationEn": "Yomenya Goemon",
                 "locationJp": "洋麺屋五右衛門 仙台名掛丁店",
-                "descriptionEn": "",
-                "descriptionJp": "",
+                "descriptionEn": "Had a spaghetti craving...",
+                "descriptionJp": "急にスパゲッティー食べたかった。。。",
                 "tags": [
                   "nature"
                 ],
@@ -2434,8 +2434,8 @@
                 "area": "yamagata",
                 "locationEn": "Old Saiseikan Hospital Building",
                 "locationJp": "山形市立郷土館",
-                "descriptionEn": "",
-                "descriptionJp": "",
+                "descriptionEn": "Medical history museum",
+                "descriptionJp": "歴史の博物館",
                 "tags": [
                   "attractions"
                 ],
@@ -2466,8 +2466,8 @@
                 "date": "2024-06-11T09:35:03.000Z",
                 "offset": 9,
                 "area": "yamagata",
-                "descriptionEn": "",
-                "descriptionJp": "",
+                "descriptionEn": "City view",
+                "descriptionJp": "都市の景色",
                 "tags": [
                   "town"
                 ],
@@ -2499,8 +2499,9 @@
                 "date": "2024-06-11T10:08:23.000Z",
                 "offset": 9,
                 "area": "yamagata",
-                "descriptionEn": "",
-                "descriptionJp": "",
+                "locationJp": "ネオ メルス",
+                "descriptionEn": "Stuffed chicken wings",
+                "descriptionJp": "手羽先",
                 "tags": [
                   "food"
                 ],
@@ -2516,8 +2517,9 @@
                 "date": "2024-06-11T10:30:34.000Z",
                 "offset": 9,
                 "area": "yamagata",
-                "descriptionEn": "",
-                "descriptionJp": "",
+                "locationJp": "ネオ メルス",
+                "descriptionEn": "Karaage",
+                "descriptionJp": "唐揚げ",
                 "tags": [
                   "food"
                 ],
@@ -2534,8 +2536,8 @@
                 "area": "yamagata",
                 "locationEn": "VIE DE FRANCE Yamagata",
                 "locationJp": "",
-                "descriptionEn": "",
-                "descriptionJp": "",
+                "descriptionEn": "Migrated from Hokkaido",
+                "descriptionJp": "北海道出身",
                 "tags": [
                   "food"
                 ],
@@ -2591,8 +2593,8 @@
                 "area": "yamadera",
                 "locationEn": "1,015 stone steps of Yamadera",
                 "locationJp": "山寺の石段",
-                "descriptionEn": "",
-                "descriptionJp": "",
+                "descriptionEn": "Jizo",
+                "descriptionJp": "地蔵",
                 "tags": [
                   "attractions",
                   "nature"
@@ -2610,8 +2612,8 @@
                 "area": "yamadera",
                 "locationEn": "Yamadera Station",
                 "locationJp": "山寺駅",
-                "descriptionEn": "",
-                "descriptionJp": "",
+                "descriptionEn": "Glad I could come here",
+                "descriptionJp": "行けてよかった",
                 "tags": [
                   "town"
                 ],
@@ -12191,6 +12193,8 @@
                 "date": "2022-12-09T23:06:15.000Z",
                 "offset": 9,
                 "area": "hakone",
+                "locationEn": "Kinokuniya Ryokan",
+                "locationJp": "箱根芦之湯温泉 きのくにや旅館",
                 "descriptionEn": "Breakfast",
                 "descriptionJp": "\u671D\u3054\u306F\u3093",
                 "tags": [
@@ -12436,6 +12440,8 @@
                 "date": "2022-12-09T08:11:53.000Z",
                 "offset": 9,
                 "area": "hakone",
+                "locationEn": "Kinokuniya Ryokan",
+                "locationJp": "箱根芦之湯温泉 きのくにや旅館",
                 "descriptionEn": "Picked a yukata for myself",
                 "descriptionJp": "\u81EA\u5206\u306E\u6D74\u8863\u9078\u3079\u3089\u308C\u308B",
                 "tags": [
@@ -12454,6 +12460,8 @@
                 "date": "2022-12-09T09:09:19.000Z",
                 "offset": 9,
                 "area": "hakone",
+                "locationEn": "Kinokuniya Ryokan",
+                "locationJp": "箱根芦之湯温泉 きのくにや旅館",
                 "descriptionEn": "Kaiseki dinner",
                 "descriptionJp": "\u61D0\u77F3",
                 "tags": [
@@ -12471,6 +12479,8 @@
                 "date": "2022-12-09T11:17:56.000Z",
                 "offset": 9,
                 "area": "hakone",
+                "locationEn": "Kinokuniya Ryokan",
+                "locationJp": "箱根芦之湯温泉 きのくにや旅館",
                 "descriptionEn": "Won at chess somehow",
                 "descriptionJp": "\u306A\u3093\u3068\u306A\u304F\u52DD\u3063\u305F",
                 "tags": [
@@ -12764,7 +12774,7 @@
                 "locationEn": "Chigogafuchi Abyss",
                 "locationJp": "\u7A1A\u5150\u30F6\u6DF5",
                 "descriptionEn": "My pants got wet :(",
-                "descriptionJp": "\u30D1\u30F3\u30C4\u6FE1\u308C\u305F(T_T)",
+                "descriptionJp": "ズボン濡れた(T_T)",
                 "tags": [
                   "nature"
                 ],
@@ -12803,7 +12813,7 @@
                 "locationEn": "Chigogafuchi Abyss",
                 "locationJp": "\u7A1A\u5150\u30F6\u6DF5",
                 "descriptionEn": "Beautiful place, very slippery",
-                "descriptionJp": "\u3044\u3044\u3068\u3053\u308D\u3051\u3069\u3001\u6ED1\u308A\u3084\u3059\u3044",
+                "descriptionJp": "いいところだけど、滑りやすい",
                 "tags": [
                   "nature",
                   "attractions"
@@ -13292,7 +13302,7 @@
                 "area": "hakone",
                 "locationEn": "Hakone Shrine",
                 "locationJp": "\u7BB1\u6839\u795E\u793E",
-                "descriptionEn": "No patience to line up",
+                "descriptionEn": "I had no patience to line up",
                 "descriptionJp": "\u4E26\u3073\u305F\u304F\u306A\u304B\u3063\u305F",
                 "tags": [
                   "attractions"
@@ -13408,7 +13418,7 @@
                 "locationEn": "Owakudani",
                 "locationJp": "\u5927\u6D8C\u8C37",
                 "descriptionEn": "People were lining up to take pictures with this egg",
-                "descriptionJp": "\u307F\u3093\u306A\u4E26\u3093\u3067\u3001\u5375\u3068\u5199\u771F\u3092\u64AE\u3063\u305F",
+                "descriptionJp": "みんながこの卵と写真を撮りたかったらしい。",
                 "tags": [
                   "attractions"
                 ],
@@ -13427,7 +13437,7 @@
                 "locationEn": "Yokohama Chinatown",
                 "locationJp": "\u6A2A\u6D5C\u4E2D\u83EF\u8857",
                 "descriptionEn": "Came for the lion dances. Left not being able to find any.",
-                "descriptionJp": "\u7345\u5B50\u821E\u3092\u898B\u306B\u6765\u305F\u3002\u898B\u3064\u3051\u306A\u304B\u3063\u305F\u3051\u3069\u3002",
+                "descriptionJp": "獅子舞を見に来たんだけど何も見つけなかった。",
                 "tags": [
                   "event"
                 ],
@@ -13908,7 +13918,7 @@
                 "locationEn": "Kansui Park",
                 "locationJp": "\u5BCC\u5CA9\u904B\u6CB3\u74B0\u6C34\u516C\u5712",
                 "descriptionEn": "Nighttime Starbucks with cherry blossoms",
-                "descriptionJp": "\u30B9\u30BF\u30D0\u306E\u591C\u666F\uFF0B\u685C",
+                "descriptionJp": "スタバの夜景と桜",
                 "tags": [
                   "nature",
                   "town"
