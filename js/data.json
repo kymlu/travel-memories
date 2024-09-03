@@ -76,7 +76,7 @@
                 "locationEn": "Mr. Donut",
                 "locationJp": "ミスタードーナツ",
                 "descriptionEn": "The classics",
-                "descriptionJp": "",
+                "descriptionJp": "定番",
                 "tags": [
                   "food"
                 ],
@@ -112,7 +112,7 @@
                 "locationEn": "Hana Momiji Sapporo",
                 "locationJp": "花もみじ",
                 "descriptionEn": "Manju reheating device",
-                "descriptionJp": "",
+                "descriptionJp": "饅頭加熱器",
                 "tags": [
                   "food"
                 ],
@@ -145,8 +145,8 @@
                 "date": "2024-06-05T07:08:19.000Z",
                 "offset": 9,
                 "area": "jozankei",
-                "descriptionEn": "",
-                "descriptionJp": "",
+                "descriptionEn": "Somehow gruesome",
+                "descriptionJp": "なんかグロ",
                 "tags": [
                   "town"
                 ],
@@ -231,8 +231,8 @@
                 "area": "jozankei",
                 "locationEn": "Hana Momiji Sapporo",
                 "locationJp": "花もみじ",
-                "descriptionEn": "",
-                "descriptionJp": "",
+                "descriptionEn": "I came to this onsen for this parfait",
+                "descriptionJp": "このパフェを食べに来た",
                 "tags": [
                   "food"
                 ],
@@ -250,8 +250,8 @@
                 "area": "jozankei",
                 "locationEn": "Hana Momiji Sapporo",
                 "locationJp": "花もみじ",
-                "descriptionEn": "",
-                "descriptionJp": "",
+                "descriptionEn": "It's kind of a lot of food",
+                "descriptionJp": "晩ご飯の量が多いなぁ",
                 "tags": [
                   "food"
                 ],
@@ -268,8 +268,8 @@
                 "area": "jozankei",
                 "locationEn": "Hana Momiji Sapporo",
                 "locationJp": "花もみじ",
-                "descriptionEn": "",
-                "descriptionJp": "",
+                "descriptionEn": "Salad...?",
+                "descriptionJp": "これはサラダ？",
                 "tags": [
                   "food"
                 ],
@@ -286,8 +286,8 @@
                 "area": "jozankei",
                 "locationEn": "Hana Momiji Sapporo",
                 "locationJp": "花もみじ",
-                "descriptionEn": "",
-                "descriptionJp": "",
+                "descriptionEn": "Fresh",
+                "descriptionJp": "新鮮",
                 "tags": [
                   "food"
                 ],
@@ -304,8 +304,8 @@
                 "area": "jozankei",
                 "locationEn": "Hana Momiji Sapporo",
                 "locationJp": "花もみじ",
-                "descriptionEn": "",
-                "descriptionJp": "",
+                "descriptionEn": "Eating children",
+                "descriptionJp": "子供食い",
                 "tags": [
                   "food"
                 ],
@@ -322,8 +322,8 @@
                 "area": "jozankei",
                 "locationEn": "Hana Momiji Sapporo",
                 "locationJp": "花もみじ",
-                "descriptionEn": "",
-                "descriptionJp": "",
+                "descriptionEn": "Sukiyaki",
+                "descriptionJp": "すき焼き",
                 "tags": [
                   "food"
                 ],
@@ -340,8 +340,8 @@
                 "area": "jozankei",
                 "locationEn": "Hana Momiji Sapporo",
                 "locationJp": "花もみじ",
-                "descriptionEn": "",
-                "descriptionJp": "",
+                "descriptionEn": "First time eating bamboo shoot rice... Too bad I ate so fricking much before this or I would've finished all of this.",
+                "descriptionJp": "初たけのこご飯！他のおかずが多すぎて食べきれなかった（ ;  ; ）",
                 "tags": [
                   "food"
                 ],
@@ -410,8 +410,8 @@
                 "date": "2024-06-06T00:30:12.000Z",
                 "offset": 9,
                 "area": "jozankei",
-                "descriptionEn": "",
-                "descriptionJp": "",
+                "descriptionEn": "Purrrrince",
+                "descriptionJp": "ノブ二ャガ",
                 "tags": [
                   "town",
                   "animal"
@@ -463,7 +463,7 @@
                 "offset": 9,
                 "area": "jozankei",
                 "descriptionEn": "Who's having raves in the forest?",
-                "descriptionJp": "",
+                "descriptionJp": "かっぱたちが夜にクラブへ",
                 "tags": [
                   "nature"
                 ],
@@ -516,8 +516,8 @@
                 "area": "sapporo",
                 "locationEn": "Shiroi Koibito Park",
                 "locationJp": "白い恋人パーク",
-                "descriptionEn": "",
-                "descriptionJp": "",
+                "descriptionEn": "Cursed",
+                "descriptionJp": "なんか恐ろしい",
                 "tags": [
                   "attractions"
                 ],
@@ -534,8 +534,8 @@
                 "area": "sapporo",
                 "locationEn": "Shiroi Koibito Park",
                 "locationJp": "白い恋人パーク",
-                "descriptionEn": "",
-                "descriptionJp": "",
+                "descriptionEn": "Chicken cheese soup curry",
+                "descriptionJp": "チキンチーズスープカレー",
                 "tags": [
                   "attractions",
                   "food"
@@ -553,8 +553,8 @@
                 "area": "sapporo",
                 "locationEn": "Shiroi Koibito Park",
                 "locationJp": "白い恋人パーク",
-                "descriptionEn": "",
-                "descriptionJp": "",
+                "descriptionEn": "The cookie is included in admission",
+                "descriptionJp": "入場料はクッキー付き",
                 "tags": [
                   "attractions",
                   "food"
@@ -572,8 +572,8 @@
                 "area": "sapporo",
                 "locationEn": "Shiroi Koibito Park",
                 "locationJp": "白い恋人パーク",
-                "descriptionEn": "",
-                "descriptionJp": "",
+                "descriptionEn": "Where the magic happens",
+                "descriptionJp": "魔法の世界",
                 "tags": [
                   "attractions"
                 ],
@@ -590,8 +590,8 @@
                 "area": "sapporo",
                 "locationEn": "Shiroi Koibito Park",
                 "locationJp": "白い恋人パーク",
-                "descriptionEn": "",
-                "descriptionJp": "",
+                "descriptionEn": "Custom",
+                "descriptionJp": "カスタム",
                 "tags": [
                   "attractions",
                   "food"
@@ -610,8 +610,8 @@
                 "area": "sapporo",
                 "locationEn": "Shiroi Koibito Park",
                 "locationJp": "白い恋人パーク",
-                "descriptionEn": "",
-                "descriptionJp": "",
+                "descriptionEn": "The legendary factory",
+                "descriptionJp": "伝説の工場",
                 "tags": [
                   "attractions"
                 ],
@@ -663,7 +663,7 @@
                 "locationEn": "Sapporo TV Tower",
                 "locationJp": "さっぽろテレビ塔",
                 "descriptionEn": "The closest I got to the tower",
-                "descriptionJp": "",
+                "descriptionJp": "上らなかった",
                 "tags": [
                   "town",
                   "attractions"
@@ -754,8 +754,8 @@
                 "area": "sapporo",
                 "locationEn": "",
                 "locationJp": "海さくら 蝦夷海＆ミチマロ",
-                "descriptionEn": "",
-                "descriptionJp": "",
+                "descriptionEn": "Very instagrammable",
+                "descriptionJp": "インスタ映え",
                 "tags": [
                   "food"
                 ],
@@ -772,8 +772,8 @@
                 "area": "sapporo",
                 "locationEn": "",
                 "locationJp": "海さくら 蝦夷海＆ミチマロ",
-                "descriptionEn": "",
-                "descriptionJp": "",
+                "descriptionEn": "Employee of the decade",
+                "descriptionJp": "一番勤勉な店員さん",
                 "tags": [
                   "food"
                 ],
@@ -846,8 +846,8 @@
                 "date": "2024-06-08T11:03:30.000Z",
                 "offset": 9,
                 "area": "sapporo",
-                "descriptionEn": "",
-                "descriptionJp": "",
+                "descriptionEn": "Second place for best souvenir",
+                "descriptionJp": "最高のお土産の二位",
                 "tags": [
                   "town"
                 ],
@@ -862,8 +862,8 @@
                 "date": "2024-06-08T12:15:52.000Z",
                 "offset": 9,
                 "area": "sapporo",
-                "descriptionEn": "",
-                "descriptionJp": "",
+                "descriptionEn": "Cheese okaki was really good",
+                "descriptionJp": "チーズおかきめっちゃ美味しかった",
                 "tags": [
                   "food"
                 ],
@@ -880,8 +880,8 @@
                 "area": "sapporo",
                 "locationEn": "New Chitose Airport",
                 "locationJp": "新千歳空港",
-                "descriptionEn": "",
-                "descriptionJp": "",
+                "descriptionEn": "I wish this was my place",
+                "descriptionJp": "これ乗りたかった",
                 "tags": [
                   "town"
                 ],
