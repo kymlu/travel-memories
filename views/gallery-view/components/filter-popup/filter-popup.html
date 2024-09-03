@@ -8,10 +8,13 @@
             <div class="flex-column" style="overflow-y: auto; flex-grow: 1;">
                 <p id="filter-title" class="bold-text"></p>
                 <div id="filters" class="flex-column">
+                    <div id="sorting">
+                        <label id="sorting-title" class="filter-header bold-text capitalize-text"></label>
+                        <div id="sort-options-list" class="tag-list filter-section"></div>
+                        <hr class="divider filter">
+                    </div>
                     <div id="filter-fav">
-                        <div class="filter-header">
-                            <label id="filter-fav-title" class="bold-text capitalize-text"></label>
-                        </div>
+                        <label id="filter-fav-title" class="filter-header bold-text capitalize-text"></label>
                         <div class="filter-section">
                             <label id="filter-fav-label" class="regular-text container">
                                 <input type="checkbox" id="filter-fav-input">
@@ -21,9 +24,8 @@
                         <hr class="divider filter">
                     </div>
                     <div id="filter-kw">
-                        <div class="filter-header">
-                            <label id="filter-kw-title" class="bold-text capitalize-text" for="filter-kw-input"></label>
-                        </div>
+                        <label id="filter-kw-title" class="filter-header bold-text capitalize-text"
+                            for="filter-kw-input"></label>
                         <div class="filter-section">
                             <input type="text" class="text-input" id="filter-kw-input">
                             <button id="filter-kw-clear-btn" class="no-display" aria-label="Clear keyword field">
@@ -35,7 +37,8 @@
                     <div id="filter-regions">
                         <div id="filter-regions-header" class="filter-header clickable">
                             <label id="filter-regions-title" class="bold-text capitalize-text"></label>
-                            <button class="text-main-color transform-transition arrow-up" aria-label="Toggle region filters">
+                            <button class="text-main-color transform-transition arrow-up"
+                                aria-label="Toggle region filters">
                                 <i class="large-icon fa fa-caret-down"></i>
                             </button>
                         </div>
@@ -45,7 +48,8 @@
                     <div id="filter-areas">
                         <div id="filter-areas-header" class="filter-header clickable">
                             <label id="filter-areas-title" class="bold-text capitalize-text"></label>
-                            <button class="text-main-color transform-transition arrow-up" aria-label="Toggle area filters">
+                            <button class="text-main-color transform-transition arrow-up"
+                                aria-label="Toggle area filters">
                                 <i class="large-icon fa fa-caret-down"></i>
                             </button>
                         </div>
@@ -55,7 +59,8 @@
                     <div id="filter-tags">
                         <div id="filter-tags-header" class="filter-header clickable">
                             <label id="filter-tags-title" class="bold-text capitalize-text"></label>
-                            <button class="text-main-color transform-transition arrow-up" aria-label="Toggle image tag filters">
+                            <button class="text-main-color transform-transition arrow-up"
+                                aria-label="Toggle image tag filters">
                                 <i class="large-icon fa fa-caret-down"></i>
                             </button>
                         </div>
@@ -65,7 +70,8 @@
                     <div id="filter-camera">
                         <div id="filter-camera-header" class="filter-header clickable">
                             <label id="filter-camera-title" class="bold-text capitalize-text"></label>
-                            <button class="text-main-color transform-transition arrow-up" aria-label="Toggle camera filters">
+                            <button class="text-main-color transform-transition arrow-up"
+                                aria-label="Toggle camera filters">
                                 <i class="large-icon fa fa-caret-down"></i>
                             </button>
                         </div>

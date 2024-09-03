@@ -2,7 +2,7 @@
 import BaseElement from '../../js/base-element.js';
 import {
 	ATTRIBUTES, CUSTOM_EVENT_TYPES, DEFAULT_TIMEOUT,
-	SCROLL_THRESHOLD, TAGS
+	SCROLL_THRESHOLD, SORT_TYPES, TAGS
 } from '../../js/constants.js'
 import { isGalleryView, onSelectNewRegion } from '../../js/globals.js';
 import {
@@ -43,6 +43,7 @@ export default class GalleryView extends BaseElement {
 		this.isToTopVisible = false;
 
 		// image loading
+		this.showSeparators = true;
 		this.allImages = null;
 		this.visibleImages = [];
 		this.isLoadingImages = false;
@@ -98,33 +99,8 @@ export default class GalleryView extends BaseElement {
 				changeFilterQueryButton.classList.add("action-btn");
 				changeFilterQueryButton.innerText = getBilingualText("Change filters", "フィルターを変更する");
 
-				this.filterPopup.addEventListener(CUSTOM_EVENT_TYPES.FILTER_POPUP_SUBMITTED, event => {
-					this.filterImages(event.detail.isOnlyFavs,
-						event.detail.keyword,
-						event.detail.selectedRegions,
-						event.detail.selectedAreas,
-						event.detail.selectedTags,
-						event.detail.selectedCameras);
-
-					this.regionInfo.show(false);
-					scrollToTop(true);
-					this._elements.gallery.replaceChildren();
-					this.previousRegion = null;
-					addRemoveNoDisplay([this._elements.pictureCount], true);
-					if (this.visibleImages.length == 0) {
-						this._elements.gallery.innerText = this.noPicturesText;
-						this._elements.gallery.appendChild(changeFilterQueryButton);
-						addRemoveClass([this._elements.gallery], "flex-column", true);
-						addRemoveClass([this._elements.gallery], "space-on-top", true);
-					} else {
-						this.setImageCount();
-						addRemoveClass([this._elements.gallery], "space-on-top", false);
-						addRemoveClass([this._elements.gallery], "flex-column", false);
-						this.imageLoadIndex = 0;
-						this.currentPolaroidCount = 0;
-						this.loadImages();
-					}
-				});
+				this.filterPopup.addEventListener(CUSTOM_EVENT_TYPES.FILTER_POPUP_SUBMITTED,
+					(event) => { this.handleNewFilter(event.detail) });
 
 				addClickListeners([
 					[this._elements.toTopButton, scrollToTop],
@@ -133,7 +109,6 @@ export default class GalleryView extends BaseElement {
 
 				this._elements.toTopButton.title = getBilingualText("Go to top", "トップに移動する");
 				addRemoveNoDisplay([this], true);
-
 			});
 	}
 
@@ -176,6 +151,7 @@ export default class GalleryView extends BaseElement {
 		addRemoveNoDisplay([this], false);
 		addRemoveNoDisplay([this._elements.pictureCount], true);
 		addRemoveTransparent([this._elements.view], true);
+		this.showSeparators = true;
 		setTimeout(() => {
 			this.regionDropdown.changeSelectedRegion(
 				!this.isNewCountry ? this.currentRegion?.id : null,
@@ -264,12 +240,20 @@ export default class GalleryView extends BaseElement {
 		}, 0);
 	}
 
+	randomSortImages() {
+		for (let i = this.visibleImages.length - 1; i > 0; i--) {
+			const j = Math.floor(Math.random() * (i + 1));
+			[this.visibleImages[i], this.visibleImages[j]] = [this.visibleImages[j], this.visibleImages[i]];
+		}
+	}
+
 	loadImages() {
 		this.isLoadingImages = true;
 		// dynamically load next set of images
 		for (let i = 0; this.imageLoadIndex < this.visibleImages.length && i < this.imageLoadLimit; i++, this.currentPolaroidCount++) {
 			let img = this.visibleImages[this.imageLoadIndex];
-			if (this.currentRegion == null && (this.previousRegion == null || this.previousRegion != img.region.id)) {
+			if (this.currentRegion == null && this.showSeparators && 
+				(this.previousRegion == null || this.previousRegion != img.region.id)) {
 				// text separator polaroid
 				this.previousRegion = img.region.id;
 				let blankPol = this.createPolaroidBlank(img.region, this.isImageAngledLeft);
@@ -339,6 +323,36 @@ export default class GalleryView extends BaseElement {
 	}
 
 	// image filtering
+	handleNewFilter(newFilter) {
+		this.filterImages(
+			newFilter.sort,
+			newFilter.isOnlyFavs,
+			newFilter.keyword,
+			newFilter.selectedRegions,
+			newFilter.selectedAreas,
+			newFilter.selectedTags,
+			newFilter.selectedCameras);
+
+		this.regionInfo.show(false);
+		scrollToTop(true);
+		this._elements.gallery.replaceChildren();
+		this.previousRegion = null;
+		addRemoveNoDisplay([this._elements.pictureCount], true);
+		if (this.visibleImages.length == 0) {
+			this._elements.gallery.innerText = this.noPicturesText;
+			this._elements.gallery.appendChild(changeFilterQueryButton);
+			addRemoveClass([this._elements.gallery], "flex-column", true);
+			addRemoveClass([this._elements.gallery], "space-on-top", true);
+		} else {
+			this.setImageCount();
+			addRemoveClass([this._elements.gallery], "space-on-top", false);
+			addRemoveClass([this._elements.gallery], "flex-column", false);
+			this.imageLoadIndex = 0;
+			this.currentPolaroidCount = 0;
+			this.loadImages();
+		}
+	}
+
 	/** Shows the filter popup. */
 	showFilter() {
 		this.filterPopup.open();
@@ -394,6 +408,7 @@ export default class GalleryView extends BaseElement {
 	}
 
 	/**
+	 * @param {string} sort 
 	 * @param {boolean} isOnlyFavs 
 	 * @param {string} keyword 
 	 * @param {string[]} selectedRegions 
@@ -401,7 +416,9 @@ export default class GalleryView extends BaseElement {
 	 * @param {string[]} selectedTags 
 	 * @param {string[]} selectedCameras 
 	 */
-	filterImages(isOnlyFavs,
+	filterImages(
+		sort,
+		isOnlyFavs,
 		keyword,
 		selectedRegions,
 		selectedAreas,
@@ -414,6 +431,11 @@ export default class GalleryView extends BaseElement {
 			selectedAreas,
 			selectedTags,
 			selectedCameras));
+		
+		this.showSeparators = sort == SORT_TYPES.chronological.id;
+		if (sort == SORT_TYPES.random.id){
+			this.randomSortImages()
+		};
 		this.header.toggleFilterIndicator(this.allImages.length != this.visibleImages.length);
 	}
 

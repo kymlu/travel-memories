@@ -65,6 +65,21 @@ export const TAGS = [
 	}
 ];
 
+export const SORT_TYPES = {
+	chronological: {
+		id: "chronological",
+		nameEn: "Chronological Order",
+		nameJp: "時系列",
+		faClass: "fa-clock-o"
+	},
+	random: {
+		id: "random",
+		nameEn: "Random",
+		nameJp: "ランドム",
+		faClass: "fa-random"
+	}
+}
+
 export const CUSTOM_EVENT_TYPES = {
 	NEW_COUNTRY_SELECTED: "new-country-selected",
 	FILTER_POPUP_SUBMITTED: "filter-popup-submitted",
