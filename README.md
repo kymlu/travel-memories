@@ -11,7 +11,7 @@ Thank you to mom, dad, Benson, Ricky, Kazu, and other friends for helping me ref
 The site: https://kymlu.github.io/travel-memories/
 
 ## Code
-The code is written in **Javascript**, **HTML**, and **CSS**. I also use a **JSON** file to store my data. I wanted to use ReactJS, Handlebars, and exif-js among other libraries, but I had difficulty installing npm on my laptop. As a result, my code only uses vanilla Javascript.
+The code is written in **Javascript**, **HTML**, and **CSS**. I also use a **JSON** file to store my data. I only use vanilla Javascript as I had issues installing frameworks and libraries (ReactJS, Handlebars, and exif-js) onto my laptop.
 
 Since I couldn't use exif-js, I utilized **ExifTool by Phil Harvey** to extract the metadata of each individual picture I uploaded. I also employed **Microsoft Excel** macros to reformat the extracted data, enter captions and additional data, and format the required data into JSON. The resizing and compressing of images was done in **Pixillion**.
 
@@ -20,7 +20,7 @@ The site is optimized for both mobile and web environments. I implemented dynami
 Note that there are at least 500 more commits than necessary because the beginning of development was done on Github web on my iPad.
 
 ### Code Updates
-July 2024 - Refactored the site to use components.
+July-August 2024 - Refactored the site to use components. Added order randomizer.
 
 ## Design
 The website was initially creately only for pictures from the Japan portion of the trip. My design always included the map of Japan with the highlighted regions. The English and Japanese bilingual text is also intentional since the pictures were from Japan. However, I quickly realized that I wanted to show others my pictures from the other countries too, so adding the pictures from the other countries would streamline the presentation.
@@ -54,10 +54,10 @@ exif-jsを使用できなかったため、**ExifTool by Phil Harvey**を使用�
 このリポジトリのコミットが必要以上に500以上です。これは、開発の始まりがiPadでGithubのウェブインターフェースに行いました。
 
 ###コードのアップデート
-２０２４年７月　ー　コンポーネントの使用するためのリファクタリング
+２０２４年７月〜８月　ー　コンポーネントの使用するためのリファクタリング。ランダムな並び替えのオプションを追加しました。
 
 ## デザイン
-最初はウェブサイトは日本の写真のみを表示するために作成されました。訪れた都道府県をハイライトに表示したかったです。また、私が日本で留学したため、全部が英語と日本語のバイリンガルにしたかったです。他の国の写真も友達に見せたかったので、その写真も追加して、統一しました。
+最初はウェブサイトは日本の写真のみを表示するために作成されました。訪れた都道府県をハイライトに表示したかったです。また、私が日本で留学したため、全部が英語と日本語のバイリンガルにしたかったです。他の国の写真も友達に見せたかったので、その写真も追加しました。
 
 友達のエイミーからのインスピレーションで、写真がポラロイドの風にしました。留学の最後の何日は彼女のインスタントカメラで友達の写真をいっぱい撮って、日本に持ってきたポラロイドを使い切れました。
 
