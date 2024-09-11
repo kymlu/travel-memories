@@ -334,7 +334,10 @@ export default class GalleryView extends BaseElement {
 			newFilter.selectedCameras);
 
 		this.regionInfo.show(false);
-		scrollToTop(true);
+		setTimeout(() => {
+			// timed out to let the region info position properly
+			scrollToTop(true);
+		}, 0);
 		this._elements.gallery.replaceChildren();
 		this.previousRegion = null;
 		addRemoveNoDisplay([this._elements.pictureCount], true);
