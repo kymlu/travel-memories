@@ -18,13 +18,13 @@
 	}
 }
 
-.rgn-info-text {
+#rgn-info-text {
 	gap: 15px;
 	overflow-y: auto;
 }
 
 @media only screen and (orientation: portrait) {
-	.rgn-info-text {
+	#rgn-info-text {
 		gap: 15px;
 		overflow-y: visible;
 	}

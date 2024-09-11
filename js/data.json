@@ -1929,7 +1929,7 @@
                 "locationEn": "Sato Yosuke Akita",
                 "locationJp": "\u4F50\u85E4\u990A\u52A9 \u79CB\u7530\u5E97",
                 "descriptionEn": "Inaniwa Udon + Kiritanpo hotpot - two Akita specialties. Udon is fantastic, kiritanpo was ok",
-                "descriptionJp": "\u7A32\u5EAD\u3046\u3069\u3093\uFF0B\u304D\u308A\u305F\u3093\u307D\u934B\uFF01\u3046\u3069\u3093\u306F\u7F8E\u5473\u3057\u304B\u3063\u305F\u3051\u3069\u304D\u308A\u305F\u3093\u307D\u304C\u305D\u3093\u306A\u306B\u8208\u5473\u306A\u304B\u3063\u305F",
+                "descriptionJp": "稲庭うどん＋きりたんぽ鍋！うどんは美味しかったけど、きりたんぽは、、、まあまあ",
                 "tags": [
                   "food"
                 ],
@@ -2039,7 +2039,7 @@
                 "offset": 9,
                 "area": "yurihonjo",
                 "descriptionEn": "Climbed a mountain to access the Niiyama Shrine - first time climbing alone was kinda scary ngl",
-                "descriptionJp": "\u521D\u3081\u3066\u4E00\u4EBA\u3067\u5C0F\u3055\u306A\u5C71\u767B\u3063\u3066\u3001\u3061\u3087\u3063\u3068\u6016\u304B\u3063\u305F\uFF57",
+                "descriptionJp": "初めて一人で小さな山に登ったんだけど、ちょっと怖かったｗ",
                 "tags": [
                   "nature"
                 ],
@@ -2177,7 +2177,7 @@
                 "offset": 9,
                 "area": "yurihonjo",
                 "descriptionEn": "Gift from a stranger that I attached to my coin purse. As I didn't know him at all, I was worried for a few hours that it was bugged or something.",
-                "descriptionJp": "\u30B3\u30F3\u30AF\u30FC\u30EB\u3067\u4F1A\u3063\u305F\u304A\u3058\u3055\u3093\u304B\u3089\u30DF\u30CB\u3066\u307E\u308A\u3082\u3089\u3063\u305F\uFF01\u77E5\u3089\u306A\u3044\u4EBA\u3060\u3063\u305F\u304B\u3089\u3001\u300C\u4E2D\u306B\u4F55\u304B\u306EGPS\u30C8\u30E9\u30C3\u30AB\u30FC\u3042\u308B\u304B\u306A\u3041\u30FC\u300D\u3068\u3081\u3063\u3061\u3083\u60A9\u3093\u3067\u3044\u305F\u3002\u3067\u3082\u3082\u3089\u3063\u3066\u3059\u3054\u304F\u5B09\u3057\u3044\u3002",
+                "descriptionJp": "コンクールで会ったおじさんからミニてまりもらった！知らない人だから、「中に何かのGPSトラッカーあるかなぁー」とめっちゃ悩んでいた。でももらってすごく嬉しい。",
                 "tags": [
                   "art"
                 ],
@@ -2943,7 +2943,7 @@
                 "locationEn": "Chichibu Festival",
                 "locationJp": "\u79E9\u7236\u591C\u796D",
                 "descriptionEn": "Waited a long time for fireworks that didn't change colour much.",
-                "descriptionJp": "\u82B1\u706B\u3092\u9577\u304F\u5F85\u3063\u3066\u3044\u305F\u3002",
+                "descriptionJp": "花火を長く待っていた。 花火は全部が白くてそんなにかっこよくなくてちょっとがっかり。",
                 "tags": [
                   "event"
                 ],
@@ -14425,7 +14425,7 @@
                 "locationEn": "Europe-ken",
                 "locationJp": "\u30E8\u30FC\u30ED\u30C3\u30D1\u8ED2",
                 "descriptionEn": "Sauce katsu has different breading from normal katsu. It's not as crunchy and more savoury, but it's also tasty and something I can get behind.",
-                "descriptionJp": "\u30BD\u30FC\u30B9\u30AB\u30C4\u306E\u8863\u304C\u666E\u901A\u306E\u30AB\u30C4\u3068\u9055\u3063\u3066\u3001\u30AB\u30EA\u30AB\u30EA\u3058\u3083\u306A\u304F\u3066\u3001\u3082\u3063\u3068\u5869\u3063\u3071\u3044\u3002\u3067\u3082\u7F8E\u5473\u3057\u304F\u3066\u3001\u3053\u306E\u4F5C\u308A\u65B9\u3082\u597D\u304D\u3002",
+                "descriptionJp": "ソースカツの衣が普通のカツと違う：カリカリじゃなく、もっと塩っぱい。でも美味しくて、この作り方も好き。",
                 "tags": [
                   "food"
                 ],
@@ -14607,7 +14607,7 @@
                 "locationEn": "Fukui Station",
                 "locationJp": "\u798F\u4E95\u99C5",
                 "descriptionEn": "The WBC match of Japan vs. Mexico was on. They had a setup in front of Fukui station where a lot of people were watching. Every good play was met with applause, it was adorable.",
-                "descriptionJp": "\u798F\u4E95\u306B\u3044\u305F\u6642\u3001\u65E5\u672C\u5BFE\u30E1\u30AD\u30B7\u30B3\u306EWBC\u306E\u8A66\u5408\u3042\u3063\u305F\u3002\u798F\u4E95\u99C5\u306E\u524D\u306B\u3001\u4EBA\u304C\u96C6\u307E\u3063\u3066\u3044\u3066\u3001\u30C6\u30EC\u30D3\u3067\u898B\u305F\u3002\u30B9\u30C8\u30E9\u30A4\u30AF\u3068\u304B\u3042\u3063\u305F\u6642\u3001\u307F\u3093\u306A\u30D1\u30C1\u30D1\u30C1\u3057\u3066\u3001\u3081\u3063\u3061\u3083\u53EF\u611B\u304B\u3063\u305F\u3002",
+                "descriptionJp": "福井にいた時、日本対メキシコのWBCの試合あった。福井駅の前に、人が集まっていて、このテレビで見た。ストライクとかあった時、みんなパチパチして、めっちゃ可愛かったと思う。",
                 "tags": [
                   "town",
                   "event"
@@ -14705,7 +14705,7 @@
                 "locationEn": "Kanaz Forest of Creation",
                 "locationJp": "\u91D1\u6D25\u5275\u4F5C\u306E\u68EE\u7F8E\u8853\u9928",
                 "descriptionEn": "The museum interior - to be honest, the museum portion was significantly more interesting than the installations outside. The statues were too modern for my tastes. If you come here you should at least book a workshop too.",
-                "descriptionJp": "\u7F8E\u8853\u9928\u306E\u4E2D\uFF0D\u4E2D\u306E\u90E8\u5206\u306F\u5916\u306E\u90E8\u5206\u3088\u308A\u3044\u3044\u3068\u601D\u3046\u3002\u5916\u306E\u4F5C\u54C1\u306F\u30E2\u30C0\u30F3\u3059\u304E\u3066\u3044\u3084\u3060\u3002\u3053\u3053\u306B\u6765\u305F\u3089\u3001\u30EF\u30FC\u30AF\u30B7\u30E7\u30C3\u30D7\u3084\u3063\u305F\u65B9\u304C\u3044\u3044\u3068\u601D\u3046\u3002",
+                "descriptionJp": "美術館の中の部分は外の部分よりいいと思う。正直と言うと、外の作品はモダンすぎていやだ。ここに来たら、ワークショップやったらもっと楽しく過ごせると思う。",
                 "tags": [
                   "attractions"
                 ],
@@ -15169,7 +15169,7 @@
                 "locationEn": "Hida Takayama Retro Museum",
                 "locationJp": "\u98DB\u9A28\u9AD8\u5C71\u30EC\u30C8\u30ED\u30DF\u30E5\u30FC\u30B8\u30A2\u30E0",
                 "descriptionEn": "At night, the dolls get up and move around (probably)",
-                "descriptionJp": "\u535A\u7269\u9928\u304C\u9589\u307E\u3063\u305F\u6642\u306B\u3001\u4EBA\u5F62\u304C\u5168\u90E8\u81EA\u7531\u306B\u52D5\u304F\u304B\u3082",
+                "descriptionJp": "夜に、博物館が閉まった後、人形が全部自由に動く（多分）",
                 "tags": [
                   "attractions"
                 ],
@@ -16286,8 +16286,8 @@
                 "date": "2023-03-26T02:06:56.000Z",
                 "offset": 9,
                 "area": "matsuzaki",
-                "descriptionEn": "Received seaweed as a gift",
-                "descriptionJp": "\u6D77\u85FB\u3082\u3089\u3063\u305F",
+                "descriptionEn": "Received fresh seaweed as a gift",
+                "descriptionJp": "新鮮な海藻もらった",
                 "tags": [
                   "food"
                 ],
@@ -16485,7 +16485,7 @@
                 "locationEn": "Muro Iwa Cave",
                 "locationJp": "\u5BA4\u5CA9\u6D1E",
                 "descriptionEn": "Rocks were cut out here to be delivered to Edo",
-                "descriptionJp": "昔の時に、江戸城の一部はここの石で作られた。",
+                "descriptionJp": "昔の時に、江戸城の一部はこの石で作られた。",
                 "tags": [
                   "attractions"
                 ],
@@ -16601,7 +16601,7 @@
                 "offset": 9,
                 "area": "matsuzaki",
                 "descriptionEn": "This boat would typically ferry fishermen to small surrounding islands to fish for the entire day.",
-                "descriptionJp": "釣りたい人のためのサービスがあって、この船に乗って、行きたい場所に送って迎えるらしい。",
+                "descriptionJp": "釣りたい人はこの船に乗って、行きたい場所に送って迎えるサービス。",
                 "tags": [
                   "nature"
                 ],
@@ -16618,7 +16618,7 @@
                 "offset": 9,
                 "area": "matsuzaki",
                 "descriptionEn": "Tiny island rocks that people visit to fish",
-                "descriptionJp": "小さな島で釣りに行く",
+                "descriptionJp": "小さな島まで釣りに行ける",
                 "tags": [
                   "nature"
                 ],
@@ -17105,7 +17105,7 @@
                 "locationEn": "Hikone Castle",
                 "locationJp": "\u5F66\u6839\u57CE",
                 "descriptionEn": "A friend taught me the history of the castle. After starting work there for a few months, he's already gone 3 times for his work.",
-                "descriptionJp": "彦根で働いている友達から彦根城の歴史を学んだ。数か月前仕事始まったから、仕事のためもう３回行った。",
+                "descriptionJp": "彦根で働いている友達から彦根城の歴史を学んだ。数か月前仕事始まったから、仕事のためもう３回そのお城に行った。",
                 "tags": [
                   "attractions"
                 ],
@@ -17123,8 +17123,8 @@
                 "area": "hikone",
                 "locationEn": "Hikone Castle",
                 "locationJp": "\u5F66\u6839\u57CE",
-                "descriptionEn": "This sakura species blooms twice a year, I was surprised to see it in November.",
-                "descriptionJp": "彦根八重桜は秋も春も咲いて、11月に桜が見えるのがびっくりした。",
+                "descriptionEn": "This sakura species blooms twice a year. I was surprised to see it in November.",
+                "descriptionJp": "彦根八重桜は秋も春も咲く。11月に桜が見えるのがびっくりした。",
                 "tags": [
                   "nature"
                 ],
@@ -19207,7 +19207,7 @@
                 "locationEn": "Nara Park",
                 "locationJp": "\u5948\u826F\u516C\u5712",
                 "descriptionEn": "Deer eyeing its food, hoping someone can pay for it since it can't make money for itself.",
-                "descriptionJp": "鹿はお金を持っていないから、鹿せんべいを売っているところにじっと待っている。",
+                "descriptionJp": "鹿はお金を持っていないから、じっと待っている。",
                 "tags": [
                   "animal"
                 ],
@@ -19227,7 +19227,7 @@
                 "locationEn": "Nara Park",
                 "locationJp": "\u5948\u826F\u516C\u5712",
                 "descriptionEn": "There are two type of people who buy deer crackers: ones who will give the food to the deer if the deer approaches and ones who will throw it at the deer and run.",
-                "descriptionJp": "\u9E7F\u306B\u990C\u3092\u3042\u3052\u308B\u4EBA\u306F\u4E8C\u30BF\u30A4\u30D7\u3044\u308B\uFF1A\u4E00\u3064\u306F\u666E\u901A\u306B\u9E7F\u304C\u8FD1\u3065\u3044\u305F\u3089\u3001\u990C\u3042\u3052\u308B\u30BF\u30A4\u30D7\u3002\u4E8C\u30BF\u30A4\u30D7\u306F\u9E7F\u304C\u8FD1\u3065\u3044\u305F\u3089\u3001\u305B\u3093\u3079\u3044\u3092\u305D\u3061\u3089\u306B\u6295\u3052\u3066\u3001\u9003\u3052\u3061\u3083\u3046\u30BF\u30A4\u30D7\u3002",
+                "descriptionJp": "鹿に餌をあげる人は二タイプいる：一つ目は普通に鹿が近づいたら、餌あげるタイプ。二つ目は鹿が近づいたら、せんべいをあちらに投げて逃げちゃうタイプ。",
                 "tags": [
                   "animal"
                 ],

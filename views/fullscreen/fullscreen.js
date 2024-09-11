@@ -233,7 +233,9 @@ export default class Fullscreen extends BaseElement {
 		if (this.isNewFullscreenInstance || (new Date() - this.lastSwipeTime) < 300) {
 			this._elements.picture.src = src;
 			this.isNewFullscreenInstance = false;
-			this.isChangingPicture = false;
+			setTimeout(() => {
+				this.isChangingPicture = false;
+			}, 50);
 		} else {
 			let nextPic = this._elements.nextPicture;
 			let currentPic = this._elements.picture;
