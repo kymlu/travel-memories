@@ -2,7 +2,7 @@
 import BaseElement from '../../js/base-element.js';
 import { DEFAULT_TIMEOUT, ATTRIBUTES } from '../../js/constants.js'
 import {
-	addClickListeners, addRemoveNoDisplay, addRemoveTransparent,
+	addClickListeners, toggleNoDisplay, toggleTransparent,
 	fetchInnerHtml,
 	getImageAddress, isPortraitMode, setBilingualProperty,
 } from '../../js/utils.js';
@@ -80,7 +80,7 @@ export default class Fullscreen extends BaseElement {
 	 * @param {string} countryId 
 	 */
 	open(visibleImageList, imageToDisplay, countryId) {
-		addRemoveNoDisplay([this], false);
+		toggleNoDisplay([this], false);
 		this.visibleImages = visibleImageList;
 		this.currentPic = imageToDisplay;
 		this.currentPicIndex = this.visibleImages.indexOf(this.currentPic);
@@ -96,7 +96,7 @@ export default class Fullscreen extends BaseElement {
 		}
 		this.isFullscreen = true;
 		document.body.style.overflowY = "hidden";
-		addRemoveTransparent([this._elements.view, this._elements.background], false);
+		toggleTransparent([this._elements.view, this._elements.background], false);
 		document.addEventListener("keydown", this.handleKeydown.bind(this));
 	}
 
@@ -109,12 +109,12 @@ export default class Fullscreen extends BaseElement {
 		this.isFullscreen = false;
 		document.body.style.overflowY = "auto";
 		if (forceClose) {
-			addRemoveTransparent([this._elements.view, this._elements.background], true);
-			addRemoveNoDisplay([this], true);
+			toggleTransparent([this._elements.view, this._elements.background], true);
+			toggleNoDisplay([this], true);
 		} else {
-			addRemoveTransparent([this._elements.view, this._elements.background], true);
+			toggleTransparent([this._elements.view, this._elements.background], true);
 			setTimeout(() => {
-				addRemoveNoDisplay([this], true);
+				toggleNoDisplay([this], true);
 			}, DEFAULT_TIMEOUT);
 		}
 	}
@@ -240,26 +240,26 @@ export default class Fullscreen extends BaseElement {
 			let nextPic = this._elements.nextPicture;
 			let currentPic = this._elements.picture;
 
-			addRemoveNoDisplay([nextPic], true);
+			toggleNoDisplay([nextPic], true);
 			nextPic.src = src;
 			nextPic.classList.add(isMovingRight ? "right" : "left");
 
 			setTimeout(() => {
-				addRemoveNoDisplay([nextPic], false);
-				addRemoveTransparent([nextPic], false);
-				addRemoveTransparent([currentPic], true);
+				toggleNoDisplay([nextPic], false);
+				toggleTransparent([nextPic], false);
+				toggleTransparent([currentPic], true);
 				nextPic.classList.remove(isMovingRight ? "right" : "left");
 				currentPic.classList.add(isMovingRight ? "left" : "right");
 
 				setTimeout(() => {
-					addRemoveNoDisplay([currentPic], true);
-					addRemoveTransparent([currentPic], false);
+					toggleNoDisplay([currentPic], true);
+					toggleTransparent([currentPic], false);
 					currentPic.src = src;
 					currentPic.classList.remove(isMovingRight ? "left" : "right");
 					setTimeout(() => {
-						addRemoveNoDisplay([currentPic], false);
-						addRemoveNoDisplay([nextPic], true);
-						addRemoveTransparent([nextPic], true);
+						toggleNoDisplay([currentPic], false);
+						toggleNoDisplay([nextPic], true);
+						toggleTransparent([nextPic], true);
 						this.isChangingPicture = false;
 					}, 100);
 				}, 100);

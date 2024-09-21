@@ -2,7 +2,7 @@ import {
 	ATTRIBUTES, DEFAULT_TIMEOUT, JAPAN, LONG_DATETIME_FORMAT_EN, LONG_DATETIME_FORMAT_JP, TAIWAN, TAGS
 } from "../../../../js/constants.js";
 import {
-	addClickListeners, addRemoveNoDisplay, getBilingualText, fetchInnerHtml,
+	addClickListeners, toggleNoDisplay, getBilingualText, fetchInnerHtml,
 	getPictureDate, setBilingualProperty, sortBynameEn
 } from "../../../../js/utils.js";
 import BaseDrawer from "../../../../components/base-drawer/base-drawer.js";
@@ -84,9 +84,9 @@ export default class PicInfo extends BaseDrawer {
 		if (this.isMoving || this.isVisible) return;
 		this.isMoving = true;
 		this.isVisible = true;
-		addRemoveNoDisplay([this], false);
+		toggleNoDisplay([this], false);
 		let drawer = this._elements.drawer;
-		addRemoveNoDisplay([drawer], false);
+		toggleNoDisplay([drawer], false);
 		setTimeout(() => {
 			drawer.style.bottom = "0";
 			drawer.style.marginRight = "0px";
@@ -106,8 +106,8 @@ export default class PicInfo extends BaseDrawer {
 		drawer.style.bottom = `-${drawer.getBoundingClientRect().height}px`;
 		drawer.style.marginRight = `-${drawer.getBoundingClientRect().width}px`;
 		setTimeout(() => {
-			addRemoveNoDisplay([drawer], true);
-			addRemoveNoDisplay([this], true);
+			toggleNoDisplay([drawer], true);
+			toggleNoDisplay([this], true);
 			this.isMoving = false;
 		}, isNewFullscreenInstance ? 0 : DEFAULT_TIMEOUT);
 	}
@@ -181,18 +181,18 @@ export default class PicInfo extends BaseDrawer {
 			technicalCount++;
 		}
 		if (technicalCount == 0) {
-			addRemoveNoDisplay([this._elements.technical], true);
+			toggleNoDisplay([this._elements.technical], true);
 		} else {
-			addRemoveNoDisplay([this._elements.technical], false);
+			toggleNoDisplay([this._elements.technical], false);
 		}
 
 		// show/hide appropriate tags
 		let allTags = Array.from(this._elements.tags.children);
 		allTags.forEach(tag => {
 			if (tag.dataset.tagId == undefined) {
-				addRemoveNoDisplay([tag], !this.currentPic.isFavourite);
+				toggleNoDisplay([tag], !this.currentPic.isFavourite);
 			} else {
-				addRemoveNoDisplay([tag], !this.currentPic.tags.includes(tag.dataset.tagId));
+				toggleNoDisplay([tag], !this.currentPic.tags.includes(tag.dataset.tagId));
 			}
 		});
 	}
@@ -204,10 +204,10 @@ export default class PicInfo extends BaseDrawer {
 	 */
 	editDetail(detail, element) {
 		if (detail) {
-			addRemoveNoDisplay([element], false);
+			toggleNoDisplay([element], false);
 			element.innerText = detail;
 		} else {
-			addRemoveNoDisplay([element], true);
+			toggleNoDisplay([element], true);
 		}
 	}
 

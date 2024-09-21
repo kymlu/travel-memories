@@ -2,7 +2,7 @@
 import BasePolaroid from "../base-polaroid/base-polaroid.js"
 import { SHORT_DATETIME_FORMAT_EN, SHORT_DATETIME_FORMAT_JP } from '../../../../../js/constants.js'
 import {
-    addRemoveNoDisplay, addRemoveTransparent, fetchInnerHtml, fetchStyle, getBilingualText, getPictureDate
+    toggleNoDisplay, toggleTransparent, fetchInnerHtml, fetchStyle, getBilingualText, getPictureDate
 } from '../../../../../js/utils.js';
 
 let imgPolaroidTemplate = document.createElement("template");
@@ -56,7 +56,7 @@ export default class ImagePolaroid extends BasePolaroid {
                     img.classList.add("portrait-img");
                 }
                 setTimeout(() => {
-                    addRemoveTransparent([img], false);
+                    toggleTransparent([img], false);
                 }, 0);
             }
             img.setAttribute("src", this.src);
@@ -81,7 +81,7 @@ export default class ImagePolaroid extends BasePolaroid {
         }
 
         if (this.isFavourite) {
-            addRemoveNoDisplay([polaroid.querySelector(".star")], false);
+            toggleNoDisplay([polaroid.querySelector(".star")], false);
         }
     }
 }

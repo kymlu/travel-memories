@@ -2,7 +2,7 @@
 import BasePopup from "../../../../components/popup/base-popup/base-popup.js"
 import { CUSTOM_EVENT_TYPES, ATTRIBUTES, SORT_TYPES } from "../../../../js/constants.js";
 import {
-    addRemoveClass, addRemoveNoDisplay, getBilingualText, 
+    toggleClass, toggleNoDisplay, getBilingualText, 
     flipArrow, sortBynameEn, addClickListeners, 
     setBilingualProperty, fetchInnerHtml,
 } from '../../../../js/utils.js';
@@ -105,7 +105,7 @@ export default class FilterPopup extends BasePopup {
 
     refreshSortingButtons() {
         [SORT_TYPES.chronological.id, SORT_TYPES.random.id].forEach(sortType => {
-            addRemoveClass([this.queryById(sortType)], "active", this.selectedSort == sortType);
+            toggleClass([this.queryById(sortType)], "active", this.selectedSort == sortType);
         })
     }
 
@@ -208,17 +208,17 @@ export default class FilterPopup extends BasePopup {
         this.currentSort = SORT_TYPES.chronological.id;
 
         Array.from(this.queryById("sort-options-list").childNodes).forEach(button => {
-            addRemoveClass([button], "active", this.currentSort == button.dataset.value);
+            toggleClass([button], "active", this.currentSort == button.dataset.value);
         });
 
         if (isSingleRegion) {
-            addRemoveNoDisplay([this.queryById("filter-regions")], true);
-            addRemoveNoDisplay([this.queryById("filter-areas")], false);
+            toggleNoDisplay([this.queryById("filter-regions")], true);
+            toggleNoDisplay([this.queryById("filter-areas")], false);
             let filterAreas = this.queryById("filter-areas-list");
             this.createFilterSection(filterAreas, this.allAreas, this.toggleArea.bind(this), "areas", false, true);
         } else {
-            addRemoveNoDisplay([this.queryById("filter-regions")], false);
-            addRemoveNoDisplay([this.queryById("filter-areas")], true);
+            toggleNoDisplay([this.queryById("filter-regions")], false);
+            toggleNoDisplay([this.queryById("filter-areas")], true);
             let filterRegions = this.queryById("filter-regions-list");
             this.createFilterSection(filterRegions, this.allRegions, this.toggleRegion.bind(this), "regions", false, true);
         }
@@ -292,26 +292,15 @@ export default class FilterPopup extends BasePopup {
     toggleFilterGroup(groupName, expandGroup) {
         let headerButton = this.queryById(`filter-${groupName}-header`).querySelector("button");
         let filterTagList = this.queryById(`filter-${groupName}-list`);
-        if (expandGroup == undefined) {
-            // toggle
-            flipArrow(headerButton);
-            filterTagList.classList.toggle("no-display");
-        } else if (expandGroup) {
-            // expand
-            flipArrow(headerButton, true);
-            addRemoveNoDisplay([filterTagList], false);
-        } else {
-            // collapse
-            flipArrow(headerButton, false);
-            addRemoveNoDisplay([filterTagList], true);
-        }
+        flipArrow(headerButton, expandGroup);
+        toggleNoDisplay([filterTagList], expandGroup == undefined ? undefined : !expandGroup);
     }
 
     toggleSortingMethod(item) {
         if (this.selectedSort != item) {
             this.selectedSort = item;
             Array.from(this.queryById("sort-options-list").childNodes).forEach(button => {
-                addRemoveClass([button], "active", button.dataset.value == item);
+                toggleClass([button], "active", button.dataset.value == item);
             });
         }
     }
@@ -364,9 +353,9 @@ export default class FilterPopup extends BasePopup {
     checkEmptyKeywordInput() {
         setTimeout(() => {
             if (this._elements.keyword.value == "") {
-                addRemoveNoDisplay([this._elements.keywordClearBtn], true);
+                toggleNoDisplay([this._elements.keywordClearBtn], true);
             } else if (this._elements.keywordClearBtn.classList.contains("no-display")) {
-                addRemoveNoDisplay([this._elements.keywordClearBtn], false);
+                toggleNoDisplay([this._elements.keywordClearBtn], false);
             }
         }, 10);
     }
@@ -385,7 +374,7 @@ export default class FilterPopup extends BasePopup {
         this.selectedAreas = [];
         this.selectedTags = [];
         this.selectedCameras = [];
-        addRemoveClass(this.shadowRoot.querySelectorAll(".active"), "active", false);
+        toggleClass(this.shadowRoot.querySelectorAll(".active"), "active", false);
         this.queryById(SORT_TYPES.chronological.id).classList.add("active");
     }
 

@@ -2,7 +2,7 @@ import BaseElement from "../../../../js/base-element.js";
 import { CUSTOM_EVENT_TYPES } from "../../../../js/constants.js";
 import { getHeader, isGalleryView, onSelectNewRegion } from "../../../../js/globals.js";
 import {
-	addClickListeners, addHoverListener, addRemoveClass, addRemoveNoDisplay, addRemoveTransparent,
+	addClickListeners, addHoverListener, toggleClass, toggleNoDisplay, toggleTransparent,
 	fetchInnerHtml, getBilingualText
 } from "../../../../js/utils.js";
 
@@ -34,8 +34,8 @@ export default class RegionDropdown extends BaseElement {
 				addClickListeners([
 					[this._elements.background, this.close.bind(this, null)]
 				]);
-				addRemoveNoDisplay([this], true);
-				addRemoveTransparent([this.queryByClassName("transparent")], false);
+				toggleNoDisplay([this], true);
+				toggleTransparent([this.queryByClassName("transparent")], false);
 			});
 	}
 
@@ -70,8 +70,8 @@ export default class RegionDropdown extends BaseElement {
 					regionButton.title = getBilingualText(`See images from ${rgn.nameEn}`, `${rgn.nameJp}の写真を表示する`);
 					regionButton.addEventListener("click", () => { onSelectNewRegion(rgn.id, null, false) }, false);
 					addHoverListener(regionButton,
-						() => { addRemoveClass([regionButton], "animated", true); },
-						() => { addRemoveClass([regionButton], "animated", false); });
+						() => { toggleClass([regionButton], "animated", true); },
+						() => { toggleClass([regionButton], "animated", false); });
 					dropDownList.appendChild(regionButton);
 				}
 			});
@@ -112,7 +112,7 @@ export default class RegionDropdown extends BaseElement {
 	}
 
 	close() {
-		addRemoveNoDisplay([this], true);
+		toggleNoDisplay([this], true);
 		getHeader()?.flipRegionNameArrow(false);
 	}
 

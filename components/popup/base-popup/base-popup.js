@@ -2,7 +2,7 @@
 import BaseElement from '../../../js/base-element.js';
 import { ATTRIBUTES, DEFAULT_TIMEOUT } from '../../../js/constants.js';
 import {
-    addRemoveClass, addRemoveNoDisplay, addRemoveTransparent, fetchStyle, setBilingualProperty
+    toggleClass, toggleNoDisplay, toggleTransparent, fetchStyle, setBilingualProperty
 } from '../../../js/utils.js'
 
 let basePopupStyleSheet = new CSSStyleSheet();
@@ -26,7 +26,7 @@ export default class BasePopup extends BaseElement {
             this.queryByClassName("popup").addEventListener("click", (event) => {
                 event.stopPropagation();
             });
-            addRemoveNoDisplay([this], true);
+            toggleNoDisplay([this], true);
         }
     }
 
@@ -39,15 +39,15 @@ export default class BasePopup extends BaseElement {
         let popupContent = this.queryByClassName("popup-content");
         let popup = this.queryByClassName("popup");
         let popupBg = this.queryByClassName("popup-bg");
-        addRemoveNoDisplay([this], false);
+        toggleNoDisplay([this], false);
 
         setTimeout(() => {
-            addRemoveTransparent([popup, popupBg], false);
-            addRemoveClass([popup], "popup-width", true);
+            toggleTransparent([popup, popupBg], false);
+            toggleClass([popup], "popup-width", true);
             setTimeout(() => {
-                addRemoveNoDisplay([popupContent], false);
-                addRemoveTransparent([popupContent], false);
-                addRemoveClass([popup], "popup-height", true);
+                toggleNoDisplay([popupContent], false);
+                toggleTransparent([popupContent], false);
+                toggleClass([popup], "popup-height", true);
                 this.queryByClassName("close-btn").addEventListener("click", () => { this.close(false); });
                 this.queryByClassName("popup-bg").addEventListener("click", () => { this.close(true); });
                 if (openFunction) {
@@ -87,19 +87,19 @@ export default class BasePopup extends BaseElement {
         let timeout = forceClose ? 0 : DEFAULT_TIMEOUT;
 
         // hide content
-        addRemoveTransparent([popupContent], true);
+        toggleTransparent([popupContent], true);
         setTimeout(() => {
             // height transition
-            addRemoveClass([popup], "popup-height", false);
+            toggleClass([popup], "popup-height", false);
             setTimeout(() => {
                 // remove content and width transition
-                addRemoveNoDisplay([popupContent], true);
-                addRemoveClass([popup], "popup-width", false);
+                toggleNoDisplay([popupContent], true);
+                toggleClass([popup], "popup-width", false);
                 setTimeout(() => {
                     // hide popup and bg
-                    addRemoveTransparent([popup, popupBg], true);
+                    toggleTransparent([popup, popupBg], true);
                     setTimeout(() => {
-                        addRemoveNoDisplay([this], true);
+                        toggleNoDisplay([this], true);
                     }, timeout);
                 }, timeout);
             }, timeout);

@@ -108,15 +108,11 @@ export function sortImgs(a, b) {
  * @param {string} className - the name of the class to add or remove.
  * @param {boolean} isAdd -  ```True``` if adding, ```False``` if removing.
  */
-export function addRemoveClass(elements, className, isAdd) {
+export function toggleClass(elements, className, isAdd) {
 	if (elements?.length > 0) {
 		elements.forEach(element => {
 			var e = typeof element == "string" ? document.getElementById(element) : element;
-			if (isAdd) {
-				e?.classList?.add(className);
-			} else {
-				e?.classList?.remove(className);
-			}
+			e?.classList.toggle(className, isAdd);
 		});
 	}
 }
@@ -126,8 +122,8 @@ export function addRemoveClass(elements, className, isAdd) {
  * @param {HTMLElement[]} elements - an element name, a list of element names, or a list of element objects.
  * @param {boolean} isAdd -  ```True``` if adding, ```False``` if removing.
  */
-export function addRemoveTransparent(elements, isAdd) {
-	addRemoveClass(elements, "transparent", isAdd);
+export function toggleTransparent(elements, isAdd) {
+	toggleClass(elements, "transparent", isAdd);
 }
 
 /**
@@ -135,8 +131,8 @@ export function addRemoveTransparent(elements, isAdd) {
  * @param {HTMLElement[]} elements - an element name, a list of element names, or a list of element objects.
  * @param {boolean} isAdd -  ```True``` if adding, ```False``` if removing.
  */
-export function addRemoveNoDisplay(elements, isAdd) {
-	addRemoveClass(elements, "no-display", isAdd);
+export function toggleNoDisplay(elements, isAdd) {
+	toggleClass(elements, "no-display", isAdd);
 }
 
 /**
@@ -145,13 +141,8 @@ export function addRemoveNoDisplay(elements, isAdd) {
  * @param {boolean} isUp - ```True``` if arrow should point up, ```False``` if arrow should point down, undefined if meant to toggle.
  */
 export function flipArrow(arrow, isUp) {
-	if (isUp == undefined) {
-		arrow.classList.toggle("arrow-up");
-		arrow.classList.toggle("arrow-down");
-	} else {
-		addRemoveClass([arrow], "arrow-up", isUp);
-		addRemoveClass([arrow], "arrow-down", !isUp);
-	}
+	toggleClass([arrow], "arrow-up", isUp);
+	toggleClass([arrow], "arrow-down", isUp == undefined ? undefined : !isUp);
 }
 
 /**

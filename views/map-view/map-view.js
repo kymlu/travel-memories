@@ -4,8 +4,8 @@ import {
 	getAppColor, getTranslucentAppColor, onSelectNewRegion
 } from "../../js/globals.js";
 import {
-	addClickListeners, addHoverListener, addRemoveClass,
-	addRemoveNoDisplay, addRemoveTransparent, fetchInnerHtml,
+	addClickListeners, addHoverListener, toggleClass,
+	toggleNoDisplay, toggleTransparent, fetchInnerHtml,
 	getBilingualText, scrollToTop, setBilingualProperty
 } from "../../js/utils.js";
 
@@ -50,24 +50,24 @@ export default class MapView extends BaseElement {
 				]);
 				addHoverListener(this._elements.mainTitle,
 					() => {
-						addRemoveClass([this._elements.mainTitle], "animated", true);
+						toggleClass([this._elements.mainTitle], "animated", true);
 						this._elements.mainTitle.querySelector("i").classList.add("white");
 					},
 					() => {
-						addRemoveClass([this._elements.mainTitle], "animated", false);
+						toggleClass([this._elements.mainTitle], "animated", false);
 						this._elements.mainTitle.querySelector("i").classList.remove("white");
 					});
 
 				this.addEventListener(CUSTOM_EVENT_TYPES.LOADING_COMPLETE, this.showView.bind(this));
 
 
-				addRemoveNoDisplay([this]);
+				toggleNoDisplay([this]);
 			});
 	}
 
 	/** Function to run when a new country is selected. */
 	handleNewCountry(newCountry) {
-		addRemoveNoDisplay([this], false);
+		toggleNoDisplay([this], false);
 		this.currentCountry = newCountry;
 		this.defaultMainTitleText = getBilingualText(this.currentCountry.nameEn, this.currentCountry.nameJp);
 		this.defaultMainTitleTitle = getBilingualText(`See all images from ${this.currentCountry.nameEn}`, `${this.currentCountry.nameJp}の写真をすべて表示する`);
@@ -82,7 +82,7 @@ export default class MapView extends BaseElement {
 
 	/** Show the map view. */
 	show() {
-		addRemoveNoDisplay([this], false);
+		toggleNoDisplay([this], false);
 		this.scaleMap(1);
 
 		scrollToTop(false);
@@ -97,15 +97,15 @@ export default class MapView extends BaseElement {
 
 	showView() {
 		setTimeout(() => {
-			addRemoveTransparent([this._elements.view], false);
+			toggleTransparent([this._elements.view], false);
 		}, 0);
 	}
 
 	/** Hide the map view. */
 	hide() {
-		addRemoveTransparent([this._elements.view], true);
+		toggleTransparent([this._elements.view], true);
 		setTimeout(() => {
-			addRemoveNoDisplay([this], true);
+			toggleNoDisplay([this], true);
 		}, DEFAULT_TIMEOUT);
 	}
 
@@ -204,9 +204,9 @@ export default class MapView extends BaseElement {
 			this.scaleLevel = newScaleValue;
 		}
 
-		addRemoveClass([this._elements.mapContainer], "scaled", this.scaleLevel > minScale);
-		addRemoveClass([this._elements.zoomIn], "disabled", this.scaleLevel == maxScale);
-		addRemoveClass([this._elements.zoomOut], "disabled", this.scaleLevel == minScale);
+		toggleClass([this._elements.mapContainer], "scaled", this.scaleLevel > minScale);
+		toggleClass([this._elements.zoomIn], "disabled", this.scaleLevel == maxScale);
+		toggleClass([this._elements.zoomOut], "disabled", this.scaleLevel == minScale);
 
 		this._elements.map.classList.remove(`scale-${oldScale}`);
 		this._elements.map.classList.add(`scale-${this.scaleLevel}`);

@@ -167,7 +167,7 @@ export function setCurrentCountry(countryId, countryColor, isPopped) {
         const newCountryEvent = new CustomEvent(CUSTOM_EVENT_TYPES.NEW_COUNTRY_SELECTED, { detail: { country: currentCountry } });
         document.dispatchEvent(newCountryEvent);
 
-        mapView.addEventListener(CUSTOM_EVENT_TYPES.LOADING_COMPLETE, showMap);
+        mapView.addEventListener(CUSTOM_EVENT_TYPES.LOADING_COMPLETE, showMap, {once: true});
     }
 }
 
@@ -175,5 +175,4 @@ function showMap() {
     mapView.show();
     header.toggleVisibility(true);
     setCurrentView(VIEW_NAMES.MAP);
-    mapView.removeEventListener(CUSTOM_EVENT_TYPES.LOADING_COMPLETE, showMap);
 }

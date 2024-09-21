@@ -6,8 +6,8 @@ import {
 } from '../../js/constants.js'
 import { isGalleryView, onSelectNewRegion } from '../../js/globals.js';
 import {
-	addClickListeners, addRemoveClass, addRemoveNoDisplay,
-	addRemoveTransparent, fetchInnerHtml, getBilingualText,
+	addClickListeners, toggleClass, toggleNoDisplay,
+	toggleTransparent, fetchInnerHtml, getBilingualText,
 	getImageAddress, getScrollPosition, isPortraitMode,
 	scrollToTop, setBilingualProperty, sortImgs
 } from '../../js/utils.js';
@@ -108,7 +108,7 @@ export default class GalleryView extends BaseElement {
 				]);
 
 				this._elements.toTopButton.title = getBilingualText("Go to top", "トップに移動する");
-				addRemoveNoDisplay([this], true);
+				toggleNoDisplay([this], true);
 			});
 	}
 
@@ -116,7 +116,7 @@ export default class GalleryView extends BaseElement {
 	show() {
 		this.regionDropdown.close();
 		scrollToTop(false);
-		addRemoveTransparent([this._elements.view], false);
+		toggleTransparent([this._elements.view], false);
 		this.regionInfo.show(false);
 	}
 
@@ -126,9 +126,9 @@ export default class GalleryView extends BaseElement {
 		this.regionInfo.hide(false);
 		scrollToTop(false);
 		document.body.style.overflowY = "hidden";
-		addRemoveTransparent([this._elements.view], true);
+		toggleTransparent([this._elements.view], true);
 		setTimeout(() => {
-			addRemoveNoDisplay([this], true);
+			toggleNoDisplay([this], true);
 			document.body.style.overflowY = "auto";
 		}, DEFAULT_TIMEOUT);
 	}
@@ -148,9 +148,9 @@ export default class GalleryView extends BaseElement {
 	 */
 	setNewRegion(regionData, isSingleRegionSelected, isNewGallery) {
 		scrollToTop(false);
-		addRemoveNoDisplay([this], false);
-		addRemoveNoDisplay([this._elements.pictureCount], true);
-		addRemoveTransparent([this._elements.view], true);
+		toggleNoDisplay([this], false);
+		toggleNoDisplay([this._elements.pictureCount], true);
+		toggleTransparent([this._elements.view], true);
 		this.showSeparators = true;
 		setTimeout(() => {
 			this.regionDropdown.changeSelectedRegion(
@@ -275,7 +275,7 @@ export default class GalleryView extends BaseElement {
 			}
 		}
 		if (this.imageLoadIndex == this.visibleImages.length) {
-			addRemoveNoDisplay([this._elements.pictureCount], false);
+			toggleNoDisplay([this._elements.pictureCount], false);
 		}
 		this.isLoadingImages = false;
 	}
@@ -340,16 +340,16 @@ export default class GalleryView extends BaseElement {
 		}, 0);
 		this._elements.gallery.replaceChildren();
 		this.previousRegion = null;
-		addRemoveNoDisplay([this._elements.pictureCount], true);
+		toggleNoDisplay([this._elements.pictureCount], true);
 		if (this.visibleImages.length == 0) {
 			this._elements.gallery.innerText = this.noPicturesText;
 			this._elements.gallery.appendChild(changeFilterQueryButton);
-			addRemoveClass([this._elements.gallery], "flex-column", true);
-			addRemoveClass([this._elements.gallery], "space-on-top", true);
+			toggleClass([this._elements.gallery], "flex-column", true);
+			toggleClass([this._elements.gallery], "space-on-top", true);
 		} else {
 			this.setImageCount();
-			addRemoveClass([this._elements.gallery], "space-on-top", false);
-			addRemoveClass([this._elements.gallery], "flex-column", false);
+			toggleClass([this._elements.gallery], "space-on-top", false);
+			toggleClass([this._elements.gallery], "flex-column", false);
 			this.imageLoadIndex = 0;
 			this.currentPolaroidCount = 0;
 			this.loadImages();
@@ -462,12 +462,12 @@ export default class GalleryView extends BaseElement {
 	// other elements
 	toggleFloatingButton() {
 		if (getScrollPosition() > SCROLL_THRESHOLD && !this.isToTopVisible) {
-			addRemoveNoDisplay([this._elements.toTopButton], false);
-			addRemoveTransparent([this._elements.toTopButton], false);
+			toggleNoDisplay([this._elements.toTopButton], false);
+			toggleTransparent([this._elements.toTopButton], false);
 			this.isToTopVisible = true;
 		} else if (getScrollPosition() <= SCROLL_THRESHOLD && this.isToTopVisible) {
-			addRemoveTransparent([this._elements.toTopButton], true);
-			setTimeout(() => { addRemoveNoDisplay([this._elements.toTopButton], true); }, DEFAULT_TIMEOUT)
+			toggleTransparent([this._elements.toTopButton], true);
+			setTimeout(() => { toggleNoDisplay([this._elements.toTopButton], true); }, DEFAULT_TIMEOUT)
 			this.isToTopVisible = false;
 		}
 	}

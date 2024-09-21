@@ -4,8 +4,8 @@ import {
     getAllCountryData, setAppColor, setCurrentCountry,
 } from "../../js/globals.js";
 import {
-    addHoverListener, addRemoveClass, addRemoveNoDisplay, 
-    addRemoveTransparent, getBilingualText, scrollToTop
+    addHoverListener, toggleClass, toggleNoDisplay, 
+    toggleTransparent, getBilingualText, scrollToTop
 } from "../../js/utils.js";
 
 /** The Start View. */
@@ -69,13 +69,13 @@ export default class StartView extends BaseElement {
             newBtn.appendChild(txtJp);
 
             addHoverListener(newBtn, () => {
-                addRemoveClass([newBtn], "animated", true);
-                addRemoveTransparent([imgColor], true);
-                addRemoveClass([newIconSection], "animated", true);
+                toggleClass([newBtn], "animated", true);
+                toggleTransparent([imgColor], true);
+                toggleClass([newIconSection], "animated", true);
             }, () => {
-                addRemoveClass([newBtn], "animated", false);
-                addRemoveTransparent([imgColor], false);
-                addRemoveClass([newIconSection], "animated", false);
+                toggleClass([newBtn], "animated", false);
+                toggleTransparent([imgColor], false);
+                toggleClass([newIconSection], "animated", false);
             });
 
             startViewWrapper.appendChild(newBtn)
@@ -92,21 +92,21 @@ export default class StartView extends BaseElement {
         setCurrentCountry(null, null, false);
         scrollToTop(false);
         setAppColor("--default-color");
-        addRemoveNoDisplay([this], false);
+        toggleNoDisplay([this], false);
         this.scrollTo({
             top: 0,
             left: 0,
             behavior: "instant"
         });
         setTimeout(() => {
-            addRemoveTransparent([this], false);
+            toggleTransparent([this], false);
         }, 10);
     }
 
     hide() {
-        addRemoveTransparent([this], true);
+        toggleTransparent([this], true);
         setTimeout(() => {
-            addRemoveNoDisplay([this], true);
+            toggleNoDisplay([this], true);
         }, DEFAULT_TIMEOUT);
     }
 

@@ -1,7 +1,7 @@
 import { ATTRIBUTES, CUSTOM_EVENT_TYPES, DEFAULT_TIMEOUT } from "../../../../js/constants.js";
 import { getAppColor, getHeader } from "../../../../js/globals.js";
 import {
-    addClickListeners, addRemoveTransparent, addRemoveNoDisplay, getBilingualText,
+    addClickListeners, toggleTransparent, toggleNoDisplay, getBilingualText,
     fetchInnerHtml, isPortraitMode, scrollToTop, setBilingualProperty,
     getScrollPosition
 } from "../../../../js/utils.js";
@@ -52,8 +52,8 @@ export default class RegionInfo extends BaseDrawer {
                     setBilingualProperty(
                         [[this.queryById("dates-title"), "Dates visited", "訪れた日付"]]
                         , ATTRIBUTES.INNERTEXT);
-                    addRemoveTransparent([this._elements.wrapper], true);
-                    addRemoveNoDisplay([this], true);
+                    toggleTransparent([this._elements.wrapper], true);
+                    toggleNoDisplay([this], true);
                 }, 50);
             });
     }
@@ -72,9 +72,9 @@ export default class RegionInfo extends BaseDrawer {
      * @param {string} countryId
      */
     handleNewCountry(newCountry) {
-        addRemoveNoDisplay([this], false);
+        toggleNoDisplay([this], false);
         this.currentCountry = newCountry;
-        addRemoveTransparent([this._elements.map], true);
+        toggleTransparent([this._elements.map], true);
         setTimeout(() => {
             this.createMap();
         }, 50);
@@ -102,11 +102,11 @@ export default class RegionInfo extends BaseDrawer {
      */
     setNewRegionInfo(regionList, areaList, isSingleRegionSelected, isNewGallery) {
         if (!isNewGallery) {
-            addRemoveTransparent([this._elements.background], false);
+            toggleTransparent([this._elements.background], false);
         }
 
         this.isVisible = true;
-        addRemoveNoDisplay([this._elements.datesSection], !isSingleRegionSelected);
+        toggleNoDisplay([this._elements.datesSection], !isSingleRegionSelected);
 
         if (isSingleRegionSelected) {
             let currentRegion = regionList[0];
@@ -158,7 +158,7 @@ export default class RegionInfo extends BaseDrawer {
      */
     show(isForced) {
         this.isVisible = true;
-        addRemoveTransparent([this._elements.wrapper, this._elements.background], false);
+        toggleTransparent([this._elements.wrapper, this._elements.background], false);
         if (isForced) {
             if (getScrollPosition() < this.getBoundingClientRect().height) {
                 this.isThrottling = true;
@@ -196,13 +196,13 @@ export default class RegionInfo extends BaseDrawer {
             }
         }
         if ((window.innerHeight * 2) < document.body.getBoundingClientRect().height) {
-            addRemoveTransparent([this._elements.wrapper], true);
+            toggleTransparent([this._elements.wrapper], true);
         } else {
-            addRemoveTransparent([this._elements.background], true);
+            toggleTransparent([this._elements.background], true);
         }
         setTimeout(() => {
             this._elements.wrapper.style.position = "relative";
-            addRemoveTransparent([this._elements.drawer], false);
+            toggleTransparent([this._elements.drawer], false);
         }, DEFAULT_TIMEOUT);
     }
 
@@ -275,7 +275,7 @@ export default class RegionInfo extends BaseDrawer {
                 } else {
                     countryImg?.setAttribute("viewBox", `0 0 ${countryImg.width.baseVal.valueInSpecifiedUnits} ${countryImg.height.baseVal.valueInSpecifiedUnits}`);
                 }
-                addRemoveTransparent([this._elements.map], false);
+                toggleTransparent([this._elements.map], false);
             } catch (error) {
                 console.error(error);
                 this.filterMiniMap(currentRegion);

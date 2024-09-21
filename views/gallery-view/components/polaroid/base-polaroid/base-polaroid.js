@@ -1,5 +1,5 @@
 import BaseElement from "../../../../../js/base-element.js";
-import { addRemoveTransparent, fetchStyle } from "../../../../../js/utils.js";
+import { toggleTransparent, fetchStyle } from "../../../../../js/utils.js";
 
 let basePolaroidStyle = new CSSStyleSheet();
 fetchStyle("views/gallery-view/components/polaroid/base-polaroid/base-polaroid.css", basePolaroidStyle);
@@ -33,7 +33,7 @@ export default class BasePolaroid extends BaseElement {
         const obs = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    addRemoveTransparent([this.queryByClassName("frame")], false);
+                    toggleTransparent([this.queryByClassName("frame")], false);
                     observer.disconnect();
                 }
             });

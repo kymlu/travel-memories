@@ -3,9 +3,9 @@ import { ATTRIBUTES, CUSTOM_EVENT_TYPES } from "../../js/constants.js";
 import { isGalleryView, isMapView, isStartView } from "../../js/globals.js";
 import {
     addClickListeners,
-    addRemoveClass,
-    addRemoveNoDisplay,
-    addRemoveTransparent,
+    toggleClass,
+    toggleNoDisplay,
+    toggleTransparent,
     fetchInnerHtml,
     flipArrow,
     setBilingualProperty
@@ -77,14 +77,14 @@ export default class CustomHeader extends BaseElement {
      * @param {boolean} isVisible 
      */
     toggleVisibility(isVisible) {
-        addRemoveTransparent([this], !isVisible);
+        toggleTransparent([this], !isVisible);
     }
 
     /** Shows/hides the filter indicator.
      * @param {boolean} isVisible 
      */
     toggleFilterIndicator(isVisible) {
-        addRemoveNoDisplay([this.queryById("filter-indicator")], !isVisible);
+        toggleNoDisplay([this.queryById("filter-indicator")], !isVisible);
     }
 
     setRegionTitle(newContent) {
@@ -107,27 +107,27 @@ export default class CustomHeader extends BaseElement {
     onChangeView() {
         if (isStartView()) {
             // Only shows the creator button
-            addRemoveClass([this.sections.right], "justify-end", true);
-            addRemoveNoDisplay([this.sections.left, this.sections.centre], true);
+            toggleClass([this.sections.right], "justify-end", true);
+            toggleNoDisplay([this.sections.left, this.sections.centre], true);
         } else if (isMapView()) {
             // Only shows the creator and globe buttons
-            addRemoveClass([this.sections.left], "left-section", false);
-            addRemoveClass([this.sections.right], "right-section", false);
-            addRemoveClass([this.sections.right], "justify-end", false);
-            addRemoveClass([this], "fixed-top", true);
-            addRemoveClass([this], "sticky-top", false);
+            toggleClass([this.sections.left], "left-section", false);
+            toggleClass([this.sections.right], "right-section", false);
+            toggleClass([this.sections.right], "justify-end", false);
+            toggleClass([this], "fixed-top", true);
+            toggleClass([this], "sticky-top", false);
             this.sections.header.style.backgroundColor = "transparent";
-            addRemoveNoDisplay([this.buttons.globe, this.sections.left], false);
-            addRemoveNoDisplay([this.sections.centre, this.buttons.map, this.buttons.filter, this.buttons.regionInfo], true);
+            toggleNoDisplay([this.buttons.globe, this.sections.left], false);
+            toggleNoDisplay([this.sections.centre, this.buttons.map, this.buttons.filter, this.buttons.regionInfo], true);
         } else if (isGalleryView()) {
             // Shows all buttons except the globe button
-            addRemoveClass([this.sections.left], "left-section", true);
-            addRemoveClass([this.sections.right], "right-section", true);
-            addRemoveClass([this], "sticky-top", true);
-            addRemoveClass([this], "fixed-top", false);
+            toggleClass([this.sections.left], "left-section", true);
+            toggleClass([this.sections.right], "right-section", true);
+            toggleClass([this], "sticky-top", true);
+            toggleClass([this], "fixed-top", false);
             this.sections.header.style.backgroundColor = "white";
-            addRemoveNoDisplay([this.buttons.globe], true);
-            addRemoveNoDisplay([this.sections.centre, this.buttons.filter, this.buttons.map, this.buttons.regionInfo], false);
+            toggleNoDisplay([this.buttons.globe], true);
+            toggleNoDisplay([this.sections.centre, this.buttons.filter, this.buttons.map, this.buttons.regionInfo], false);
         } else {
             console.error("View does not exist.");
         }
