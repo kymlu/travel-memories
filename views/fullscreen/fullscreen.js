@@ -72,7 +72,7 @@ export default class Fullscreen extends BaseElement {
 			});
 	}
 
-	//// FUNCTIONS
+	/// FUNCTIONS
 	// open and close
 	/**
 	 * Displays a given image in fullscreen.
@@ -159,6 +159,7 @@ export default class Fullscreen extends BaseElement {
 	// swiping functions
 	/**
 	 * Starts procedures for swiping in fullscreen
+	 * @param {TouchEvent} e 
 	 */
 	startFullscreenSwipe(e) {
 		if (e.touches.length == 1) {
@@ -167,6 +168,10 @@ export default class Fullscreen extends BaseElement {
 		}
 	}
 
+	/**
+	 * Procedures when in the middle of swiping.
+	 * @param {TouchEvent} e 
+	 */
 	moveFullscreenSwipe(e) {
 		if (this.initialX === null || this.initialY === null) return;
 
@@ -224,8 +229,7 @@ export default class Fullscreen extends BaseElement {
 	}
 
 	/**
-	 * 
-	 * @param {boolean} isMovingRight - ```True``` if the next picture is after the current one.
+	 * @param {boolean} isMovingRight - ```True``` if the next picture is to the right of the current one.
 	 */
 	setNewPicture(isMovingRight) {
 		let src = getImageAddress(this.currentCountryId, this.currentPic.region.id, this.currentPic.fileName);

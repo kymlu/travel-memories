@@ -1,4 +1,3 @@
-/// IMPORTS
 import BaseElement from '../../js/base-element.js';
 import {
 	ATTRIBUTES, CUSTOM_EVENT_TYPES, DEFAULT_TIMEOUT,
@@ -23,10 +22,10 @@ import RegionDropdown from './components/region-dropdown/region-dropdown.js';
 export default class GalleryView extends BaseElement {
 	constructor() {
 		super();
-		/// VARIABLES
 		// filter
 		/** @type {CustomHeader} */
 		this.header = null;
+
 		document.addEventListener(CUSTOM_EVENT_TYPES.HEADER_SET,
 			(event) => {
 				this.header = event.detail.header;

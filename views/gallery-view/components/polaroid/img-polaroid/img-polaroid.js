@@ -1,4 +1,3 @@
-/// IMPORTS
 import BasePolaroid from "../base-polaroid/base-polaroid.js"
 import { SHORT_DATETIME_FORMAT_EN, SHORT_DATETIME_FORMAT_JP } from '../../../../../js/constants.js'
 import {
@@ -40,6 +39,7 @@ export default class ImagePolaroid extends BasePolaroid {
         this.captionEn = captionEn;
         /** The Japanese image caption. @type string */
         this.captionJp = captionJp;
+        
         this.title = getBilingualText("Expand image", "画像を拡大する");
     }
 

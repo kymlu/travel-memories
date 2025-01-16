@@ -2,8 +2,7 @@ import { ATTRIBUTES, CUSTOM_EVENT_TYPES, DEFAULT_TIMEOUT } from "../../../../js/
 import { getAppColor, getHeader } from "../../../../js/globals.js";
 import {
     addClickListeners, toggleTransparent, toggleNoDisplay, getBilingualText,
-    fetchInnerHtml, isPortraitMode, scrollToTop, setBilingualProperty,
-    getScrollPosition
+    fetchInnerHtml, scrollToTop, setBilingualProperty, getScrollPosition
 } from "../../../../js/utils.js";
 import BaseDrawer from "../../../../components/base-drawer/base-drawer.js";
 
@@ -43,8 +42,6 @@ export default class RegionInfo extends BaseDrawer {
                 });
 
                 setTimeout(() => {
-                    this._elements.map.addEventListener("load", this.filterMiniMap.bind(this, null));
-
                     addClickListeners([
                         [this._elements.background, this.toggleVisibility.bind(this, false)],
                     ]);
@@ -90,14 +87,13 @@ export default class RegionInfo extends BaseDrawer {
         newMap.setAttribute("type", "image/svg+xml");
         newMap.setAttribute("data", `assets/img/country/${this.currentCountry.id}.svg`);
         newMap.setAttribute("title", getBilingualText("Map", "地図"));
-        newMap.addEventListener("load", this.filterMiniMap.bind(this, null));
         this._elements.map.parentElement.replaceChild(newMap, this._elements.map);
         this._elements.map = newMap;
     }
 
     /** Sets the info for a new region.
-     * @param {any[]} regionList
-     * @param {any[]} areaList
+     * @param {object[]} regionList
+     * @param {object[]} areaList
      * @param {boolean} isSingleRegionSelected
      */
     setNewRegionInfo(regionList, areaList, isSingleRegionSelected, isNewGallery) {
@@ -195,11 +191,13 @@ export default class RegionInfo extends BaseDrawer {
                 }, DEFAULT_TIMEOUT * 2);
             }
         }
+
         if ((window.innerHeight * 2) < document.body.getBoundingClientRect().height) {
             toggleTransparent([this._elements.wrapper], true);
         } else {
             toggleTransparent([this._elements.background], true);
         }
+
         setTimeout(() => {
             this._elements.wrapper.style.position = "relative";
             toggleTransparent([this._elements.drawer], false);

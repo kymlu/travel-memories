@@ -1,4 +1,3 @@
-/// IMPORTS
 import { fetchInnerHtml } from "../../../js/utils.js";
 import BasePopup from "../base-popup/base-popup.js"
 
@@ -11,7 +10,6 @@ export default class InfoPopup extends BasePopup {
         super();
     }
 
-    /** @inheritdoc */
     connectedCallback() {
         fetchInnerHtml("components/popup/info-popup/info-popup.html", this, true)
             .then(() => {
@@ -22,7 +20,7 @@ export default class InfoPopup extends BasePopup {
             });
     }
 
-    /** Opens a new page on this project's Github repo. */
+    /** Opens this project's Github repo in a anew tab. */
     goToGithub() {
         window.open("https://github.com/kymlu/travel-memories");
     }

@@ -1,4 +1,3 @@
-/// IMPORTS
 import BasePopup from "../../../../components/popup/base-popup/base-popup.js"
 import { CUSTOM_EVENT_TYPES, ATTRIBUTES, SORT_TYPES } from "../../../../js/constants.js";
 import {
@@ -15,7 +14,9 @@ export default class FilterPopup extends BasePopup {
     constructor() {
         super();
 
+        /** @type {string} */
         this.currentSort = SORT_TYPES.chronological.id;
+        /** @type {string} */
         this.selectedSort = null;
         /** @type {boolean} */
         this.currentFavourites = false;
@@ -51,9 +52,6 @@ export default class FilterPopup extends BasePopup {
         this.filterOptionButton.classList.add("base-tag", "filter-option");
     }
 
-    /**
-     * @inheritdoc
-    */
     connectedCallback() {
         fetchInnerHtml("views/gallery-view/components/filter-popup/filter-popup.html", this, true)
             .then(() => {
@@ -78,6 +76,7 @@ export default class FilterPopup extends BasePopup {
                 this.queryById("filter-fav-label").childNodes[0].textContent = getBilingualText("Filter favourites", "お気に入りだけを表示する");
 
                 this.initializeSortingButtons();
+
                 setBilingualProperty([
                     [this._elements.keywordClearBtn, "Clear keyword", "キーワードをクリアする"],
                 ], ATTRIBUTES.TITLE);
@@ -100,9 +99,12 @@ export default class FilterPopup extends BasePopup {
             this.queryById("sort-options-list"), 
             [SORT_TYPES.chronological, SORT_TYPES.random], 
             this.toggleSortingMethod.bind(this),
-            null, true, false);
+            null,
+            true,
+            false);
     }
 
+    /** Set the sorting button states back to the selection before the popup opened. */
     refreshSortingButtons() {
         [SORT_TYPES.chronological.id, SORT_TYPES.random.id].forEach(sortType => {
             toggleClass([this.queryById(sortType)], "active", this.selectedSort == sortType);
@@ -110,10 +112,9 @@ export default class FilterPopup extends BasePopup {
     }
 
     /**
-     * 
-     * @param {string} htmlListId 
-     * @param {string[]} selectedList
-     * @param {boolean} isString 
+     * Sets the filter buttons back to the selection before the popup opened.
+     * @param {string} htmlListId The id of the element containing the filter buttons.
+     * @param {string[]} selectedList The list of selected items.
      */
     refreshFilterButtons(htmlListId, selectedList) {
         Array.from(this.queryById(htmlListId).querySelectorAll("button")).forEach(button => {
@@ -175,11 +176,11 @@ export default class FilterPopup extends BasePopup {
     }
 
     /**
-     * 
+     * Recreates the entire filter popup with new region/country information.
      * @param {boolean} isSingleRegion 
-     * @param {*} regions 
-     * @param {*} areas 
-     * @param {*} tags 
+     * @param {object[]} regions 
+     * @param {object[]} areas 
+     * @param {object[]} tags 
      * @param {string[]} cameras 
      * @param {string} regionTypeEn 
      * @param {string} regionTypeJp 
@@ -232,13 +233,16 @@ export default class FilterPopup extends BasePopup {
 
     /**
      * Create the section for the appropriate filter type.
-     * @param {HTMLElement} htmlList 
-     * @param {string[] | HTMLElement[]} allList - the list of strings or objects to include in the filter group.
-     * @param {Function} toggleFunction - the function for toggling show/hide for the filter group.
-     * @param {string} sectionName - the name of the section.
+     * @param {HTMLElement} htmlList The html element that will contain the list.
+     * @param {string[] | HTMLElement[]} allList The list of strings or objects to include in the filter group.
+     * @param {Function} toggleFunction The function for toggling show/hide for the filter group.
+     * @param {string} sectionName The name of the section. Optional.
+     * @param {boolean} isAddId ```True``` if the button needs an id. 
+     * @param {boolean} isMultiselect ```True``` if multiple buttons can be selected. 
      */
     createFilterSection(htmlList, allList, toggleFunction, sectionName, isAddId, isMultiselect) {
         htmlList.replaceChildren();
+
         allList.forEach(item => {
             if (item) {
                 let newButton = this.filterOptionButton.cloneNode(true);

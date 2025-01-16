@@ -60,7 +60,6 @@ export default class MapView extends BaseElement {
 
 				this.addEventListener(CUSTOM_EVENT_TYPES.LOADING_COMPLETE, this.showView.bind(this));
 
-
 				toggleNoDisplay([this]);
 			});
 	}
@@ -153,6 +152,7 @@ export default class MapView extends BaseElement {
 	/** Highlights the appropriate region. */
 	selectRegion(region) {
 		if (this.isSelectingRegion) return;
+
 		this.isSelectingRegion = true;
 
 		if (this.selectedRegion) {
@@ -180,15 +180,21 @@ export default class MapView extends BaseElement {
 		}, 50);
 	}
 
-	/** Change the scale of the map. */
+	/**
+	 * Change the scale of the map. Only one of the parameters should be present at a time.
+	 * @param {number} newScaleValue The new scale value. Optional.
+	 * @param {boolean} isIncrease Is true if zooming in. Optional.
+	 */
 	scaleMap(newScaleValue, isIncrease) {
 		if (this.isScaling) return;
 
 		const minScale = 1;
 		const maxScale = 4;
 		if ((newScaleValue != undefined && (newScaleValue > maxScale || newScaleValue < minScale)) ||
-			(isIncrease && this.scaleLevel >= maxScale) ||
-			(!isIncrease && this.scaleLevel <= minScale)) return;
+			(newScaleValue == undefined && 
+				((isIncrease && this.scaleLevel >= maxScale) || 
+				(!isIncrease && this.scaleLevel <= minScale)))) 
+			return;
 
 		this.isScaling = true;
 
@@ -204,13 +210,16 @@ export default class MapView extends BaseElement {
 			this.scaleLevel = newScaleValue;
 		}
 
+		// Enable/disable buttons
 		toggleClass([this._elements.mapContainer], "scaled", this.scaleLevel > minScale);
 		toggleClass([this._elements.zoomIn], "disabled", this.scaleLevel == maxScale);
 		toggleClass([this._elements.zoomOut], "disabled", this.scaleLevel == minScale);
 
+		// Scale map
 		this._elements.map.classList.remove(`scale-${oldScale}`);
 		this._elements.map.classList.add(`scale-${this.scaleLevel}`);
 
+		// Center map
 		const mapSize = this._elements.map.getBoundingClientRect();
 		this._elements.mapContainer.scrollTo({
 			top: 0.5 * (this.scaleLevel - 1) * mapSize.height / this.scaleLevel,

@@ -6,7 +6,10 @@ fetchStyle("css/style.css", globalStyleSheet);
 export default class BaseElement extends HTMLElement {
     constructor() {
         super();
+        
+        /** An object where every property repesents an element within the element. */
         this._elements = {};
+        
         this.attachShadow({ mode: 'open' });
         this.shadowRoot.adoptedStyleSheets.push(globalStyleSheet);
     }

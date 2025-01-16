@@ -62,6 +62,15 @@ export default class CustomHeader extends BaseElement {
         return this.sections.header.getBoundingClientRect().height;
     }
 
+    /**
+     * Sets the header button functions.
+     * @param {Function} globeFunc The function for the globe button.
+     * @param {Function} mapFunc The function for the map button.
+     * @param {Function} regionDropdownFunc The function for the region dropdown.
+     * @param {Function} infoFunc The function for the info (i) button.
+     * @param {Function} filterFunc The function for the filter button.
+     * @param {Function} creatorFunc The function for the creator (star) button.
+     */
     setButtonFunctions(globeFunc, mapFunc, regionDropdownFunc, infoFunc, filterFunc, creatorFunc) {
         addClickListeners([
             [this.buttons.globe, globeFunc],
@@ -95,7 +104,10 @@ export default class CustomHeader extends BaseElement {
         flipArrow(this.queryById("rgn-name-arrow"), isUp);
     }
 
-    /** Changes values when the selected country changes. */
+    /**
+     * Changes values when the selected country changes.
+     * @param {object} newCountry The newly selected country
+     */
     handleNewCountry(newCountry) {
         setBilingualProperty([
             [this.buttons.regionDropdown, `Change ${newCountry.regionTypeEn}`, `${newCountry.regionTypeJp}を切り替える`],
@@ -131,6 +143,7 @@ export default class CustomHeader extends BaseElement {
         } else {
             console.error("View does not exist.");
         }
+
         const headerUpdatedEvent = new CustomEvent(CUSTOM_EVENT_TYPES.HEADER_UPDATED, { detail: { header: this } });
         document.dispatchEvent(headerUpdatedEvent);
     }

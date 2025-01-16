@@ -1,4 +1,3 @@
-/// IMPORTS
 import BasePolaroid from "../base-polaroid/base-polaroid.js"
 import { fetchInnerHtml, getBilingualText } from '../../../../../js/utils.js';
 
@@ -17,9 +16,11 @@ export default class TextPolaroid extends BasePolaroid {
      */
     constructor(isAngledLeft, nameEn, nameJp) {
         super(isAngledLeft, true);
-        /** The text to display in the middle of the polaroid. @type string */
+        /** The English text to display in the middle of the polaroid. @type string */
         this.nameEn = nameEn;
+        /** The Japanese text to display in the middle of the polaroid. @type string */
         this.nameJp = nameJp;
+
         this.title = getBilingualText(`See images from ${nameEn}`, `${nameJp}の写真を表示する`);
 
         this.shadowRoot.appendChild(txtPolaroidTemplate.content.cloneNode(true));

@@ -40,7 +40,8 @@ export default class RegionDropdown extends BaseElement {
 	}
 
 	/** 
-	 * Creates the region drop down list.
+	 * Creates the region drop down list for the country.
+	 * @param {object} newCountry The newly selected country. 
 	 */
 	handleNewCountry(newCountry) {
 		// the dropdown object
@@ -62,19 +63,20 @@ export default class RegionDropdown extends BaseElement {
 				dropDownList.appendChild(regionGroupElement);
 			}
 
-			grp.regions.filter(rgn => rgn.visited).forEach(rgn => {
-				if (rgn.visited) {
-					let regionButton = regionTemplate.cloneNode();
-					regionButton.innerText = getBilingualText(rgn.nameEn, rgn.nameJp);
-					regionButton.id = this.#getDropdownElementId(rgn.id);
-					regionButton.title = getBilingualText(`See images from ${rgn.nameEn}`, `${rgn.nameJp}の写真を表示する`);
-					regionButton.addEventListener("click", () => { onSelectNewRegion(rgn.id, null, false) }, false);
-					addHoverListener(regionButton,
-						() => { toggleClass([regionButton], "animated", true); },
-						() => { toggleClass([regionButton], "animated", false); });
-					dropDownList.appendChild(regionButton);
-				}
-			});
+			grp.regions.filter(rgn => rgn.visited)
+				.forEach(rgn => {
+					if (rgn.visited) {
+						let regionButton = regionTemplate.cloneNode();
+						regionButton.innerText = getBilingualText(rgn.nameEn, rgn.nameJp);
+						regionButton.id = this.#getDropdownElementId(rgn.id);
+						regionButton.title = getBilingualText(`See images from ${rgn.nameEn}`, `${rgn.nameJp}の写真を表示する`);
+						regionButton.addEventListener("click", () => { onSelectNewRegion(rgn.id, null, false) }, false);
+						addHoverListener(regionButton,
+							() => { toggleClass([regionButton], "animated", true); },
+							() => { toggleClass([regionButton], "animated", false); });
+						dropDownList.appendChild(regionButton);
+					}
+				});	
 		});
 	}
 

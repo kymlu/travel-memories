@@ -86,6 +86,11 @@ export function goToMapView() {
     mapView.show();
 }
 
+/**
+ * @param {string} regionId The id of the new region. 
+ * @param {boolean} isPopped ```True``` if the region was selected by pressing the back/forward button. 
+ * @param {boolean} isNewGallery ```True``` if the gallery hasn't yet been opened for the country.
+ */
 export function onSelectNewRegion(regionId, isPopped, isNewGallery) {
     if (isMapView()) {
         document.body.style.overflowY = "hidden";

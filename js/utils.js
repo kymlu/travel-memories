@@ -75,8 +75,8 @@ export function isPortraitMode() {
 
 /**
  * The sort function for objects with both an English and Japanese name.
- * @param {object} a - The first object
- * @param {object} b - The second object
+ * @param {object} a - The first object.
+ * @param {object} b - The second object.
  * @returns The sort order of the two objects.
  */
 export function sortBynameEn(a, b) {
@@ -94,9 +94,9 @@ export function sortBynameEn(a, b) {
 
 /**
  * The sort function for images with a date.
- * @param {object} a - The first object
- * @param {object} b - The second object
- * @returns The sort order of the two objects.
+ * @param {object} a - The first image.
+ * @param {object} b - The second image.
+ * @returns The sort order of the two images.
  */
 export function sortImgs(a, b) {
 	return new Date(a.date) - new Date(b.date);
@@ -167,8 +167,9 @@ export function getImageAddress(countryId, regionId, fileName) {
 }
 
 /** 
- * @param {any[][]} elements
- * @param {string}} property  
+ * Sets the property of given elements to a formatted bilingual string.
+ * @param {any[][]} elements Each sublist contains the element, the English text, and the Japanese text.
+ * @param {string}} property The property to set.
  */
 export function setBilingualProperty(elements, property) {
 	elements.forEach(([element, englishText, japaneseText]) => {
@@ -187,7 +188,7 @@ export function setBilingualProperty(elements, property) {
 }
 
 /**
- * @param {any[][]} elements 
+ * @param {any[][]} elements Each sublist contains an element and a callback when the element is clicked.
  */
 export function addClickListeners(elements) {
 	elements.forEach(([element, callback]) => {

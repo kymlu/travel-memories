@@ -1,4 +1,3 @@
-/// IMPORTS
 import BaseElement from '../../../js/base-element.js';
 import { ATTRIBUTES, DEFAULT_TIMEOUT } from '../../../js/constants.js';
 import {
@@ -19,7 +18,6 @@ export default class BasePopup extends BaseElement {
         this.previouslyOpened = false;
     }
 
-    /** Sets up the popup. */
     connectedCallback() {
         if (!this.previouslyOpened) {
             setBilingualProperty([[this.queryByClassName("close-btn"), "Close", "閉じる"]], ATTRIBUTES.TITLE);
