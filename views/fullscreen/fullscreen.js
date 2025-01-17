@@ -1,4 +1,3 @@
-/// IMPORTS
 import BaseElement from '../../js/base-element.js';
 import { DEFAULT_TIMEOUT, ATTRIBUTES } from '../../js/constants.js'
 import {
@@ -11,7 +10,6 @@ import PicInfo from './components/pic-info/pic-info.js';
 /** The Fullscreen View. */
 export default class Fullscreen extends BaseElement {
 	constructor() {
-		/// VARIABLES
 		// booleans
 		super();
 		this.isNewFullscreenInstance = true;
@@ -76,7 +74,8 @@ export default class Fullscreen extends BaseElement {
 	// open and close
 	/**
 	 * Displays a given image in fullscreen.
-	 * @param {any} imageToDisplay 
+	 * @param {object[]} visibleImageList 
+	 * @param {object} imageToDisplay 
 	 * @param {string} countryId 
 	 */
 	open(visibleImageList, imageToDisplay, countryId) {
@@ -94,6 +93,7 @@ export default class Fullscreen extends BaseElement {
 		if (isPortraitMode()) {
 			this.picInfo.hide(true);
 		}
+
 		this.isFullscreen = true;
 		document.body.style.overflowY = "hidden";
 		toggleTransparent([this._elements.view, this._elements.background], false);
@@ -209,8 +209,13 @@ export default class Fullscreen extends BaseElement {
 		}
 	}
 
+	/**
+	 * Determine the next picture and set it.
+	 * @param {boolean} isMovingRight ```True``` if the next picture is to the right of the current one.
+	 */
 	changePicture(isMovingRight) {
 		this.isChangingPicture = true;
+
 		if (isMovingRight) {
 			if (this.currentPicIndex == this.visibleImages.length - 1) {
 				this.currentPicIndex = 0;
@@ -224,12 +229,14 @@ export default class Fullscreen extends BaseElement {
 				this.currentPicIndex--;
 			}
 		}
+
 		this.currentPic = this.visibleImages[this.currentPicIndex];
 		this.setNewPicture(isMovingRight);
 	}
 
 	/**
-	 * @param {boolean} isMovingRight - ```True``` if the next picture is to the right of the current one.
+	 * Sets the new picture in the view.
+	 * @param {boolean} isMovingRight ```True``` if the next picture is to the right of the current one.
 	 */
 	setNewPicture(isMovingRight) {
 		let src = getImageAddress(this.currentCountryId, this.currentPic.region.id, this.currentPic.fileName);
@@ -269,6 +276,7 @@ export default class Fullscreen extends BaseElement {
 				}, 100);
 			}, 0);
 		}
+		
 		this.lastSwipeTime = new Date();
 		this.picInfo.setPicInfo(this.currentPic, this.currentCountryId);
 	}

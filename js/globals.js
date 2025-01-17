@@ -66,6 +66,10 @@ export function isGalleryView() {
     return currentView == VIEW_NAMES.GALLERY;
 }
 
+/**
+ * Opens the start view.
+ * @param {boolean} isPopped ```True``` if the region was selected by pressing the back/forward button. 
+ */
 export function goToStartView(isPopped) {
     if (isMapView()) {
         mapView.hide();
@@ -75,6 +79,9 @@ export function goToStartView(isPopped) {
     startView.show(isPopped);
 }
 
+/**
+ * Opens the map view.
+ */
 export function goToMapView() {
     if (isStartView()) {
         startView.hide();
@@ -87,6 +94,7 @@ export function goToMapView() {
 }
 
 /**
+ * Sets visuals for the new region.
  * @param {string} regionId The id of the new region. 
  * @param {boolean} isPopped ```True``` if the region was selected by pressing the back/forward button. 
  * @param {boolean} isNewGallery ```True``` if the gallery hasn't yet been opened for the country.
@@ -149,6 +157,12 @@ export function getAllCountryData() {
     return allCountryData;
 }
 
+/**
+ * Sets a new country and switches to map view.
+ * @param {string} countryId The id of the country.
+ * @param {string} countryColor The name of the css custom property representative of the country.
+ * @param {boolean} isPopped ```True``` if the region was selected by pressing the back/forward button. 
+ */
 export function setCurrentCountry(countryId, countryColor, isPopped) {
     if (countryId == null) {
         currentCountry = null;
@@ -167,6 +181,7 @@ export function setCurrentCountry(countryId, countryColor, isPopped) {
                 }
             });
         });
+
         setAppColor(countryColor);
 
         const newCountryEvent = new CustomEvent(CUSTOM_EVENT_TYPES.NEW_COUNTRY_SELECTED, { detail: { country: currentCountry } });
@@ -176,6 +191,9 @@ export function setCurrentCountry(countryId, countryColor, isPopped) {
     }
 }
 
+/**
+ * Show the map view.
+ */
 function showMap() {
     mapView.show();
     header.toggleVisibility(true);

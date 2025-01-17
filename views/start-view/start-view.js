@@ -103,6 +103,7 @@ export default class StartView extends BaseElement {
         }, 10);
     }
 
+    /** Hides the start view. */
     hide() {
         toggleTransparent([this], true);
         setTimeout(() => {
@@ -110,6 +111,11 @@ export default class StartView extends BaseElement {
         }, DEFAULT_TIMEOUT);
     }
 
+    /**
+     * Handles the user selection of new country.
+     * @param {string} countryId The id of the country.
+     * @param {string} countryColor The name of the css custom property representative of the country.
+     */
     selectCountry(countryId, countryColor) {
         setCurrentCountry(countryId, countryColor, false);
         this.hide();

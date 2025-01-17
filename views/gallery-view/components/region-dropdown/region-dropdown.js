@@ -113,15 +113,21 @@ export default class RegionDropdown extends BaseElement {
 		}
 	}
 
+	/** Close the dropdown. */
 	close() {
 		toggleNoDisplay([this], true);
 		getHeader()?.flipRegionNameArrow(false);
 	}
 
+	/** Gets the name of a button within the dropdown. */
 	#getDropdownElementId(name) {
 		return `${name}-dropdown`;
 	}
 
+	/** 
+	 * Adjusts the position of the dropdown based on the header position.
+	 * @param {HTMLElement} header The site header.
+	 */
 	#adjustPosition(header) {
 		this._elements.content.style.top = `${header?.getHeight()}px`;
 	}

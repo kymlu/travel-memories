@@ -62,6 +62,10 @@ export default class BasePopup extends BaseElement {
         document.addEventListener("keydown", this.handleKeydown.bind(this));
     }
 
+    /**
+     * Handles keydown events.
+     * @param {KeyboardEvent} event 
+     */
     handleKeydown(event) {
         if (event.key == "Escape") {
             this.close(true);

@@ -58,6 +58,7 @@ export default class CustomHeader extends BaseElement {
             });
     }
 
+    /** Gets the header height. */
     getHeight() {
         return this.sections.header.getBoundingClientRect().height;
     }
@@ -96,10 +97,17 @@ export default class CustomHeader extends BaseElement {
         toggleNoDisplay([this.queryById("filter-indicator")], !isVisible);
     }
 
-    setRegionTitle(newContent) {
-        this.queryById("rgn-name").innerText = newContent;
+    /** Sets the name of the region on top. 
+     * @param {string} newText 
+    */
+    setRegionTitle(newText) {
+        this.queryById("rgn-name").innerText = newText;
     }
 
+    /**
+     * Flips the arrow.
+     * @param {boolean} isUp 
+     */
     flipRegionNameArrow(isUp) {
         flipArrow(this.queryById("rgn-name-arrow"), isUp);
     }
@@ -115,7 +123,7 @@ export default class CustomHeader extends BaseElement {
         ], ATTRIBUTES.TITLE);
     }
 
-    /** Changes layouts when the view changes. */
+    /** Changes layouts on view change. */
     onChangeView() {
         if (isStartView()) {
             // Only shows the creator button

@@ -20,7 +20,7 @@ export default class InfoPopup extends BasePopup {
             });
     }
 
-    /** Opens this project's Github repo in a anew tab. */
+    /** Opens this project's Github repo in a new tab. */
     goToGithub() {
         window.open("https://github.com/kymlu/travel-memories");
     }

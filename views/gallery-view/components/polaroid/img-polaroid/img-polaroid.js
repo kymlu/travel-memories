@@ -47,6 +47,7 @@ export default class ImagePolaroid extends BasePolaroid {
         super.connectedCallback();
 
         const polaroid = this.queryByClassName("frame");
+        
         const img = polaroid.querySelector("img");
         if (img) {
             img.onload = function () {

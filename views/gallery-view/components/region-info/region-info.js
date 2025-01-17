@@ -13,8 +13,8 @@ export default class RegionInfo extends BaseDrawer {
         this.isVisible = false;
         this.isThrottling = false;
         this.hasMapLoaded = false;
-
         this.currentCountry = null;
+
         document.addEventListener(CUSTOM_EVENT_TYPES.NEW_COUNTRY_SELECTED,
             (event) => { this.handleNewCountry(event.detail.country) });
     }
@@ -55,18 +55,20 @@ export default class RegionInfo extends BaseDrawer {
             });
     }
 
+    /** @inheritdoc */
     dragDownFunction() {
         super.dragDownFunction();
         this.show(true);
     }
 
+    /** @inheritdoc */
     dragUpFunction() {
         super.dragUpFunction();
         this.hide(true);
     }
 
     /** Makes value changes based on new country.
-     * @param {string} countryId
+     * @param {string} newCountry
      */
     handleNewCountry(newCountry) {
         toggleNoDisplay([this], false);
@@ -91,10 +93,12 @@ export default class RegionInfo extends BaseDrawer {
         this._elements.map = newMap;
     }
 
-    /** Sets the info for a new region.
+    /** 
+     * Sets the info for a new region.
      * @param {object[]} regionList
      * @param {object[]} areaList
      * @param {boolean} isSingleRegionSelected
+     * @param {boolean} isNewGallery 
      */
     setNewRegionInfo(regionList, areaList, isSingleRegionSelected, isNewGallery) {
         if (!isNewGallery) {
@@ -221,7 +225,9 @@ export default class RegionInfo extends BaseDrawer {
         }, 50);
     }
 
-    /** Toggle the visibility of the region info section. */
+    /** Toggle the visibility of the region info section. 
+     * @param {boolean} isVisible 
+    */
     toggleVisibility(isVisible) {
         if (this.isVisible == isVisible) {
             return;
@@ -238,7 +244,9 @@ export default class RegionInfo extends BaseDrawer {
         }
     }
 
-    /** Filter the mini map. */
+    /** Filter the mini map. 
+     * @param {object} currentRegion The region object.
+    */
     filterMiniMap(currentRegion) {
         setTimeout(() => {
             if (!this._elements.map.hasAttribute("data") || this._elements.map.data == "" || this.currentCountry.regionGroups == null) {
@@ -268,11 +276,13 @@ export default class RegionInfo extends BaseDrawer {
 
                 // zoom into the specific region
                 const countryImg = svgDoc.getElementById(this.currentCountry.id + "-img");
+
                 if (currentRegion) {
                     countryImg?.setAttribute("viewBox", currentRegion.viewbox);
                 } else {
                     countryImg?.setAttribute("viewBox", `0 0 ${countryImg.width.baseVal.valueInSpecifiedUnits} ${countryImg.height.baseVal.valueInSpecifiedUnits}`);
                 }
+                
                 toggleTransparent([this._elements.map], false);
             } catch (error) {
                 console.error(error);

@@ -94,6 +94,7 @@ export default class MapView extends BaseElement {
 		}
 	}
 
+	/** Makes map view visible. */
 	showView() {
 		setTimeout(() => {
 			toggleTransparent([this._elements.view], false);

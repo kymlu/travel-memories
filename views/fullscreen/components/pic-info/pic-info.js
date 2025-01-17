@@ -50,7 +50,6 @@ export default class PicInfo extends BaseDrawer {
 					[this.queryById("search-jp"), this.searchJp.bind(this)]
 				]);
 
-				// currently remove because it will not work on Apple <- what is this lol
 				this.queryById("contents").addEventListener("touchstart", (event) => {
 					event.stopPropagation();
 				});
@@ -102,9 +101,11 @@ export default class PicInfo extends BaseDrawer {
 
 		this.isMoving = true;
 		this.isVisible = false;
+
 		let drawer = this._elements.drawer;
 		drawer.style.bottom = `-${drawer.getBoundingClientRect().height}px`;
 		drawer.style.marginRight = `-${drawer.getBoundingClientRect().width}px`;
+
 		setTimeout(() => {
 			toggleNoDisplay([drawer], true);
 			toggleNoDisplay([this], true);
@@ -129,6 +130,7 @@ export default class PicInfo extends BaseDrawer {
 	setPicInfo(newPicture, countryId) {
 		this.currentPic = newPicture;
 		this.queryById("contents").scrollTo({ top: 0, behaviour: "instant" });
+
 		// get dates
 		if (this.currentPic.date) {
 			let date = getPictureDate(new Date(this.currentPic.date), this.currentPic.offset);
@@ -142,6 +144,7 @@ export default class PicInfo extends BaseDrawer {
 			this._elements.dateEn.innerText = "Unknown date";
 			this._elements.dateJp.innerText = "不明な日付";
 		}
+
 		let area = this.currentPic.area;
 		let region = this.currentPic.region;
 
@@ -156,30 +159,35 @@ export default class PicInfo extends BaseDrawer {
 		// image description
 		this.editDetail(this.currentPic.descriptionEn, this._elements.captionEn);
 		this.editDetail(this.currentPic.descriptionJp, this._elements.captionJp);
+
 		// image exif info
 		this.editDetail(this.currentPic.cameraModel, this._elements.camera);
 		this.editDetail(this.currentPic.lens, this._elements.lens);
 
 		this._elements.technical.replaceChildren();
 		let technicalCount = 0;
+
 		if (this.currentPic.fStop) {
 			let tempElement = document.createElement("span");
 			tempElement.innerText = `\u0192/${this.currentPic.fStop}`;
 			this._elements.technical.appendChild(tempElement);
 			technicalCount++;
 		}
+
 		if (this.currentPic.shutterSpeed) {
 			let tempElement = document.createElement("span");
 			tempElement.innerText = this.currentPic.shutterSpeed;
 			this._elements.technical.appendChild(tempElement);
 			technicalCount++;
 		}
+
 		if (this.currentPic.iso) {
 			let tempElement = document.createElement("span");
 			tempElement.innerText = `iso ${this.currentPic.iso}`;
 			this._elements.technical.appendChild(tempElement);
 			technicalCount++;
 		}
+
 		if (technicalCount == 0) {
 			toggleNoDisplay([this._elements.technical], true);
 		} else {
@@ -187,8 +195,7 @@ export default class PicInfo extends BaseDrawer {
 		}
 
 		// show/hide appropriate tags
-		let allTags = Array.from(this._elements.tags.children);
-		allTags.forEach(tag => {
+		Array.from(this._elements.tags.children).forEach(tag => {
 			if (tag.dataset.tagId == undefined) {
 				toggleNoDisplay([tag], !this.currentPic.isFavourite);
 			} else {
@@ -226,9 +233,12 @@ export default class PicInfo extends BaseDrawer {
 		let tempElement = document.createElement("div");
 		tempElement.classList.add("base-tag", "img-tag");
 		tempElement.innerText = getBilingualText("Favourite", "お気に入り");
+
 		let tempStar = document.createElement("i");
 		tempStar.classList.add("fa", "fa-star");
+
 		tempElement.prepend(tempStar);
+
 		return tempElement;
 	}
 
@@ -242,6 +252,7 @@ export default class PicInfo extends BaseDrawer {
 	/** Gets the appropriate location text for the English section. */
 	#setLocationEn(countryId, areaName, regionName) {
 		let location = null;
+
 		if (this.currentPic.locationEn) {
 			location = this.currentPic.locationEn;
 		} else if (countryId === JAPAN && this.currentPic.locationJp) {
@@ -249,6 +260,7 @@ export default class PicInfo extends BaseDrawer {
 		} else if (countryId === TAIWAN && this.currentPic.locationChinese) {
 			location = this.currentPic.locationChinese;
 		}
+
 		let list = [];
 		if (location) list.push(location);
 		if (areaName) list.push(areaName);
@@ -259,6 +271,7 @@ export default class PicInfo extends BaseDrawer {
 	/** Gets the appropriate location text for the Japanese section. */
 	#setLocationJp(countryId, areaName, regionName) {
 		let location = null;
+
 		if (this.currentPic.locationJp) {
 			location = this.currentPic.locationJp;
 		} else if (countryId === TAIWAN && this.currentPic.locationChinese) {
@@ -266,6 +279,7 @@ export default class PicInfo extends BaseDrawer {
 		} else if (this.currentPic.locationEn) {
 			location = this.currentPic.locationEn;
 		}
+		
 		let list = [];
 		if (regionName) list.push(regionName);
 		if (areaName) list.push(areaName);

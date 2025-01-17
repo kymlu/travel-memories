@@ -142,8 +142,9 @@ export default class GalleryView extends BaseElement {
 	}
 
 	/** Set values based on a new user-selected region.
-	 * @param {any[]} regionData - the new region's data
+	 * @param {any[]} regionData The new region's data
 	 * @param {boolean} isSingleRegionSelected
+	 * @param {boolean} isNewGallery 
 	 */
 	setNewRegion(regionData, isSingleRegionSelected, isNewGallery) {
 		scrollToTop(false);
@@ -166,7 +167,7 @@ export default class GalleryView extends BaseElement {
 			if (isSingleRegionSelected) {
 				regionsList = [this.currentRegion];
 				areaList = this.currentRegion.areas;
-				this.header.setRegionTitle(this.currentRegion.nameEn, this.currentRegion.nameJp);
+				this.header.setRegionTitle(getBilingualText(this.currentRegion.nameEn, this.currentRegion.nameJp));
 			} else {
 				regionsList = regionData.map(rgn => {
 					return {
@@ -177,7 +178,7 @@ export default class GalleryView extends BaseElement {
 				});
 
 				areaList = regionData.flatMap(rgn => rgn.areas);
-				this.header.setRegionTitle(this.currentCountry.nameEn, this.currentCountry.nameJp);
+				this.header.setRegionTitle(getBilingualText(this.currentCountry.nameEn, this.currentCountry.nameJp));
 			}
 
 			this.regionInfo.setNewRegionInfo(regionsList, areaList, isSingleRegionSelected, isNewGallery);
@@ -239,6 +240,7 @@ export default class GalleryView extends BaseElement {
 		}, 0);
 	}
 
+	/** Sorts the images randomly. */
 	randomSortImages() {
 		for (let i = this.visibleImages.length - 1; i > 0; i--) {
 			const j = Math.floor(Math.random() * (i + 1));
@@ -246,6 +248,7 @@ export default class GalleryView extends BaseElement {
 		}
 	}
 
+	/** Loads the next set of images. */
 	loadImages() {
 		this.isLoadingImages = true;
 		// dynamically load next set of images
@@ -280,6 +283,11 @@ export default class GalleryView extends BaseElement {
 	}
 
 	// polaroids
+	/**
+	 * Creates a new image polaroid.
+	 * @param {object} img The image object.
+	 * @param {boolean} isImageAngledLeft  
+	 */
 	createPolaroidImg(img, isImageAngledLeft) {
 		let newPolaroid = new ImagePolaroid(
 			isImageAngledLeft,
@@ -291,12 +299,17 @@ export default class GalleryView extends BaseElement {
 			img.descriptionJp ?? ""
 		);
 
-		// listeners
 		newPolaroid.addEventListener("click", () => { this.fullscreen.open(this.visibleImages, img, this.currentCountry.id); });
 
 		return newPolaroid;
 	}
 
+	/**
+	 * Creates a new blank polaroid.
+	 * @param {object[]} rgn The region info.
+	 * @param {boolean} isImageAngledLeft 
+	 * @returns 
+	 */
 	createPolaroidBlank(rgn, isImageAngledLeft) {
 		let newPolaroid = new TextPolaroid(
 			isImageAngledLeft,
@@ -309,6 +322,7 @@ export default class GalleryView extends BaseElement {
 		return newPolaroid;
 	}
 
+	/** Sets the image count on the bottom of the screen. */
 	setImageCount() {
 		let countText = this.visibleImages.length == this.allImages.length ?
 			`${this.allImages.length}` :
@@ -322,6 +336,9 @@ export default class GalleryView extends BaseElement {
 	}
 
 	// image filtering
+	/** Filters images based on new settings.
+	 * @param {object} newFilter The object with the new filter settings. 
+	 */
 	handleNewFilter(newFilter) {
 		this.filterImages(
 			newFilter.sort,
@@ -333,13 +350,16 @@ export default class GalleryView extends BaseElement {
 			newFilter.selectedCameras);
 
 		this.regionInfo.show(false);
+
 		setTimeout(() => {
 			// timed out to let the region info position properly
 			scrollToTop(true);
 		}, 0);
+
 		this._elements.gallery.replaceChildren();
 		this.previousRegion = null;
 		toggleNoDisplay([this._elements.pictureCount], true);
+
 		if (this.visibleImages.length == 0) {
 			this._elements.gallery.innerText = this.noPicturesText;
 			this._elements.gallery.appendChild(changeFilterQueryButton);
@@ -409,7 +429,7 @@ export default class GalleryView extends BaseElement {
 			(selectedCameras.length == 0 || selectedCameras.includes(img.cameraModel));
 	}
 
-	/**
+	/** Filters the images.
 	 * @param {string} sort 
 	 * @param {boolean} isOnlyFavs 
 	 * @param {string} keyword 
@@ -442,6 +462,7 @@ export default class GalleryView extends BaseElement {
 	}
 
 	// scrolling behaviours
+	/** Function to run when scrolling. */
 	onScrollFunction() {
 		this.toggleFloatingButton();
 		this.regionInfo.handleScroll();
@@ -452,6 +473,7 @@ export default class GalleryView extends BaseElement {
 		}
 	}
 
+	/** If the header size changes, change the view offset to fit nicely on screen. */
 	#adjustPosition() {
 		if (this._elements.view && this._elements.view.style) {
 			this._elements.view.style.marginTop = `${this.header?.getHeight()}px`;
@@ -459,6 +481,7 @@ export default class GalleryView extends BaseElement {
 	}
 
 	// other elements
+	/** Determine whether to show floating to-top button. */
 	toggleFloatingButton() {
 		if (getScrollPosition() > SCROLL_THRESHOLD && !this.isToTopVisible) {
 			toggleNoDisplay([this._elements.toTopButton], false);

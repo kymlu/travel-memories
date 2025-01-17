@@ -94,6 +94,7 @@ export default class FilterPopup extends BasePopup {
             });
     }
 
+    /** Creates the sorting buttons. */
     initializeSortingButtons() {
         this.createFilterSection(
             this.queryById("sort-options-list"), 
@@ -140,7 +141,7 @@ export default class FilterPopup extends BasePopup {
 
     /**
      * @inheritdoc
-     * @param {boolean} [isSubmit=false] 
+     * @param {boolean} [isSubmit=false] ```True``` if submitting.
      */
     close(forceClose, isSubmit = false) {
         // if the user changed their mind on the filters,
@@ -289,17 +290,22 @@ export default class FilterPopup extends BasePopup {
 
     /**
      * Toggles the filter group specified by the filter type.
-     * @param {string} groupName
+     * @param {string} groupName The group type.
      * @param {boolean | undefined} expandGroup - ```True``` if the group should be expanded, 
      * ```False``` if not, ```undefined``` to toggle expand/collapse.
      */
     toggleFilterGroup(groupName, expandGroup) {
         let headerButton = this.queryById(`filter-${groupName}-header`).querySelector("button");
         let filterTagList = this.queryById(`filter-${groupName}-list`);
+
         flipArrow(headerButton, expandGroup);
         toggleNoDisplay([filterTagList], expandGroup == undefined ? undefined : !expandGroup);
     }
 
+    /**
+     * Selects a sorting method.
+     * @param {string} item The name of the sorting method.
+     */
     toggleSortingMethod(item) {
         if (this.selectedSort != item) {
             this.selectedSort = item;
@@ -311,8 +317,8 @@ export default class FilterPopup extends BasePopup {
 
     /**
      * Toggles the button for the filter item of the specified id.
-     * @param {string} id
-     * @param {*} array
+     * @param {string} id The id of the filter item.
+     * @param {any[]} array The list of selected filters.
      */
     toggleFilter(id, array) {
         if (array.includes(id)) {
@@ -324,7 +330,7 @@ export default class FilterPopup extends BasePopup {
 
     /**
      * Toggles the filter button for the selected region.
-     * @param {string} id 
+     * @param {string} id The id of the filter item.
      */
     toggleRegion(id) {
         this.toggleFilter(id, this.selectedRegions);
@@ -332,7 +338,7 @@ export default class FilterPopup extends BasePopup {
 
     /**
      * Toggles the filter button for the selected area.
-     * @param {string} id 
+     * @param {string} id The id of the filter item.
      */
     toggleArea(id) {
         this.toggleFilter(id, this.selectedAreas);
@@ -340,7 +346,7 @@ export default class FilterPopup extends BasePopup {
 
     /**
      * Toggles the filter button for the selected tag.
-     * @param {string} id 
+     * @param {string} id The id of the filter item.
      */
     toggleTag(id) {
         this.toggleFilter(id, this.selectedTags);
@@ -348,12 +354,13 @@ export default class FilterPopup extends BasePopup {
 
     /**
      * Toggles the filter button for the selected camera.
-     * @param {string} item 
+     * @param {string} item The name of the filter item.
      */
     toggleCamera(item) {
         this.toggleFilter(item, this.selectedCameras);
     }
 
+    /** Show the clear button if there is text in the input. */
     checkEmptyKeywordInput() {
         setTimeout(() => {
             if (this._elements.keyword.value == "") {
@@ -364,6 +371,7 @@ export default class FilterPopup extends BasePopup {
         }, 10);
     }
 
+    /** Clear keyboard contents. */
     clearKeyword() {
         this._elements.keyword.value = "";
         this.checkEmptyKeywordInput();
@@ -382,9 +390,7 @@ export default class FilterPopup extends BasePopup {
         this.queryById(SORT_TYPES.chronological.id).classList.add("active");
     }
 
-    /**
-     * Submits the new filter parameters to the gallery.
-     */
+    /** Submits the new filter parameters to the gallery. */
     submitFilters() {
         const filterSubmitEvent = new CustomEvent(CUSTOM_EVENT_TYPES.FILTER_POPUP_SUBMITTED, {
             detail: {
