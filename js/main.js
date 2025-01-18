@@ -41,7 +41,7 @@ function initializeSite() {
  * Gets all the data for the site.
  */
 function fetchData() {
-	fetch("js/data.json")
+	fetch("data/data.json")
 		.then(response => {
 			return response.json();
 		}).then(d => {
