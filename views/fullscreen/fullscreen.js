@@ -102,7 +102,7 @@ export default class Fullscreen extends BaseElement {
 
 	/** 
 	 * Close the 
-	 * @param {boolean} forceClose - ```True``` if the user has forcefully closed fullscreen mode.
+	 * @param {boolean} forceClose - `True` if the user has forcefully closed fullscreen mode.
 	*/
 	close(forceClose) {
 		document.removeEventListener("keydown", this.handleKeydown.bind(this));
@@ -211,7 +211,7 @@ export default class Fullscreen extends BaseElement {
 
 	/**
 	 * Determine the next picture and set it.
-	 * @param {boolean} isMovingRight ```True``` if the next picture is to the right of the current one.
+	 * @param {boolean} isMovingRight `True` if the next picture is to the right of the current one.
 	 */
 	changePicture(isMovingRight) {
 		this.isChangingPicture = true;
@@ -236,7 +236,7 @@ export default class Fullscreen extends BaseElement {
 
 	/**
 	 * Sets the new picture in the view.
-	 * @param {boolean} isMovingRight ```True``` if the next picture is to the right of the current one.
+	 * @param {boolean} isMovingRight `True` if the next picture is to the right of the current one.
 	 */
 	setNewPicture(isMovingRight) {
 		let src = getImageAddress(this.currentCountryId, this.currentPic.region.id, this.currentPic.fileName);

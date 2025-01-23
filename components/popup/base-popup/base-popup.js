@@ -14,7 +14,7 @@ export default class BasePopup extends BaseElement {
         this.isOpen = false;
         this.shadowRoot.adoptedStyleSheets.push(basePopupStyleSheet);
 
-        /** ```True``` if the popup has been opened before. @type boolean */
+        /** `True` if the popup has been opened before. @type boolean */
         this.previouslyOpened = false;
     }
 
@@ -74,7 +74,7 @@ export default class BasePopup extends BaseElement {
 
     /** 
      * Closes the popup.
-     * @param {boolean} forceClose - ```True``` if the user has forcefully closed 
+     * @param {boolean} forceClose - `True` if the user has forcefully closed 
      * the popup through the esc key or clicking the background.
      */
     close(forceClose) {

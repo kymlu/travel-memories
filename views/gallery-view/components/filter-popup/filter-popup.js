@@ -141,7 +141,7 @@ export default class FilterPopup extends BasePopup {
 
     /**
      * @inheritdoc
-     * @param {boolean} [isSubmit=false] ```True``` if submitting.
+     * @param {boolean} [isSubmit=false] `True` if submitting.
      */
     close(forceClose, isSubmit = false) {
         // if the user changed their mind on the filters,
@@ -238,8 +238,8 @@ export default class FilterPopup extends BasePopup {
      * @param {string[] | HTMLElement[]} allList The list of strings or objects to include in the filter group.
      * @param {Function} toggleFunction The function for toggling show/hide for the filter group.
      * @param {string} sectionName The name of the section. Optional.
-     * @param {boolean} isAddId ```True``` if the button needs an id. 
-     * @param {boolean} isMultiselect ```True``` if multiple buttons can be selected. 
+     * @param {boolean} isAddId `True` if the button needs an id. 
+     * @param {boolean} isMultiselect `True` if multiple buttons can be selected. 
      */
     createFilterSection(htmlList, allList, toggleFunction, sectionName, isAddId, isMultiselect) {
         htmlList.replaceChildren();
@@ -291,8 +291,8 @@ export default class FilterPopup extends BasePopup {
     /**
      * Toggles the filter group specified by the filter type.
      * @param {string} groupName The group type.
-     * @param {boolean | undefined} expandGroup - ```True``` if the group should be expanded, 
-     * ```False``` if not, ```undefined``` to toggle expand/collapse.
+     * @param {boolean | undefined} expandGroup - `True` if the group should be expanded, 
+     * `False` if not, `undefined` to toggle expand/collapse.
      */
     toggleFilterGroup(groupName, expandGroup) {
         let headerButton = this.queryById(`filter-${groupName}-header`).querySelector("button");

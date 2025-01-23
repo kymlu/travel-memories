@@ -68,7 +68,7 @@ export function isGalleryView() {
 
 /**
  * Opens the start view.
- * @param {boolean} isPopped ```True``` if the region was selected by pressing the back/forward button. 
+ * @param {boolean} isPopped `True` if the region was selected by pressing the back/forward button. 
  */
 export function goToStartView(isPopped) {
     if (isMapView()) {
@@ -96,8 +96,8 @@ export function goToMapView() {
 /**
  * Sets visuals for the new region.
  * @param {string} regionId The id of the new region. 
- * @param {boolean} isPopped ```True``` if the region was selected by pressing the back/forward button. 
- * @param {boolean} isNewGallery ```True``` if the gallery hasn't yet been opened for the country.
+ * @param {boolean} isPopped `True` if the region was selected by pressing the back/forward button. 
+ * @param {boolean} isNewGallery `True` if the gallery hasn't yet been opened for the country.
  */
 export function onSelectNewRegion(regionId, isPopped, isNewGallery) {
     if (isMapView()) {
@@ -161,7 +161,7 @@ export function getAllCountryData() {
  * Sets a new country and switches to map view.
  * @param {string} countryId The id of the country.
  * @param {string} countryColor The name of the css custom property representative of the country.
- * @param {boolean} isPopped ```True``` if the region was selected by pressing the back/forward button. 
+ * @param {boolean} isPopped `True` if the region was selected by pressing the back/forward button. 
  */
 export function setCurrentCountry(countryId, countryColor, isPopped) {
     if (countryId == null) {

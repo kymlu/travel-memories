@@ -31,7 +31,7 @@ export default class ImagePolaroid extends BasePolaroid {
 
         /** The image source. @type string */
         this.src = src;
-        /** ```True``` if the image is one of my favourites. @type boolean */
+        /** `True` if the image is one of my favourites. @type boolean */
         this.isFavourite = isFavourite;
         /** The image date. @type Date */
         this.date = getPictureDate(new Date(date), offset);

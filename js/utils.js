@@ -106,7 +106,7 @@ export function sortImgs(a, b) {
  * Adds or removes a specified class from element(s)' class lists.
  * @param {HTMLElement[]} elements - an element name, a list of element names, or a list of element objects.
  * @param {string} className - the name of the class to add or remove.
- * @param {boolean} isAdd -  ```True``` if adding, ```False``` if removing.
+ * @param {boolean} isAdd -  `True` if adding, `False` if removing.
  */
 export function toggleClass(elements, className, isAdd) {
 	if (elements?.length > 0) {
@@ -120,7 +120,7 @@ export function toggleClass(elements, className, isAdd) {
 /**
  * Adds or removes the "transparent" class.
  * @param {HTMLElement[]} elements - an element name, a list of element names, or a list of element objects.
- * @param {boolean} isAdd -  ```True``` if adding, ```False``` if removing.
+ * @param {boolean} isAdd -  `True` if adding, `False` if removing.
  */
 export function toggleTransparent(elements, isAdd) {
 	toggleClass(elements, "transparent", isAdd);
@@ -129,7 +129,7 @@ export function toggleTransparent(elements, isAdd) {
 /**
  * Adds or removes the "no-display" class.
  * @param {HTMLElement[]} elements - an element name, a list of element names, or a list of element objects.
- * @param {boolean} isAdd -  ```True``` if adding, ```False``` if removing.
+ * @param {boolean} isAdd -  `True` if adding, `False` if removing.
  */
 export function toggleNoDisplay(elements, isAdd) {
 	toggleClass(elements, "no-display", isAdd);
@@ -138,7 +138,7 @@ export function toggleNoDisplay(elements, isAdd) {
 /**
  * Flips an arrow element up or down.
  * @param {HTMLElement} arrow
- * @param {boolean} isUp - ```True``` if arrow should point up, ```False``` if arrow should point down, undefined if meant to toggle.
+ * @param {boolean} isUp - `True` if arrow should point up, `False` if arrow should point down, undefined if meant to toggle.
  */
 export function flipArrow(arrow, isUp) {
 	toggleClass([arrow], "arrow-up", isUp);
@@ -146,7 +146,7 @@ export function flipArrow(arrow, isUp) {
 }
 
 /**
- * @param {boolean} isSmooth - ```True``` if scroll should be smooth, ```False``` if instant.
+ * @param {boolean} isSmooth - `True` if scroll should be smooth, `False` if instant.
  */
 export function scrollToTop(isSmooth) {
 	window.scrollTo({

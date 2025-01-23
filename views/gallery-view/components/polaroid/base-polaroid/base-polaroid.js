@@ -18,12 +18,12 @@ export default class BasePolaroid extends BaseElement {
         this.shadowRoot.adoptedStyleSheets.push(basePolaroidStyle);
 
         /**
-         * ```True``` if the polaroid should face left, otherwise faces right.
+         * `True` if the polaroid should face left, otherwise faces right.
          *  @type Boolean
          */
         this.isAngledLeft = isAngledLeft;
         /**
-         * ```True``` if the polaroid does not have a picture inside.
+         * `True` if the polaroid does not have a picture inside.
          * @type Boolean
          */
         this.isBlank = isBlank;
